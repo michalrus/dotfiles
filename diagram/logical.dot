@@ -1,0 +1,48 @@
+digraph {
+    init [label="~/.shell/env"]
+    login [label="~/.shell/login"]
+    interactive [label="~/.shell/interactive"]
+    logout [label="~/.shell/logout"]
+
+    bash_init [label="~/.bash/env"]
+    bash_login [label="~/.bash/login"]
+    bash_interactive [label="~/.bash/interactive"]
+    bash_logout [label="~/.bash/logout"]
+
+    zsh_init [label="~/.zsh/env"]
+    zsh_login [label="~/.zsh/login"]
+    zsh_interactive [label="~/.zsh/interactive"]
+    zsh_logout [label="~/.zsh/logout"]
+
+    graph [ranksep=1]
+    edge [style=dotted]
+
+    init -> login
+    init -> interactive
+
+    login -> interactive
+
+    edge [style=solid]
+
+    edge [minlen=1]
+
+    bash_init -> init
+    bash_login -> login
+    bash_interactive -> interactive
+    bash_logout -> logout
+
+    zsh_init -> init
+    zsh_login -> login
+    zsh_interactive -> interactive
+    zsh_logout -> logout
+
+    edge [minlen=2]
+
+    bash_init -> bash_login
+    bash_init -> bash_interactive
+    bash_login -> bash_interactive
+
+    zsh_init -> zsh_login
+    zsh_init -> zsh_interactive
+    zsh_login -> zsh_interactive
+}

@@ -1,0 +1,204 @@
+digraph {
+//    {rank=same;
+//    bash
+//    zsh
+//    sh
+//    }
+
+    bash_login [label="login"]
+    bash_non_login [label="non-login"]
+    bash_interactive [label="interactive"]
+    bash_non_interactive [label="non-interactive"]
+    bash_remote_shell [label="remote shell"]
+
+    sh_login [label="login"]
+    sh_non_login [label="non-login"]
+    sh_interactive [label="interactive"]
+    sh_non_interactive [label="non-interactive"]
+
+    zsh_login [label="login"]
+    zsh_non_login [label="non-login"]
+    zsh_interactive [label="interactive"]
+    zsh_non_interactive [label="non-interactive"]
+
+    bash_running [label="running..."]
+    sh_running [label="running..."]
+    zsh_running [label="running..."]
+
+    // order here is important, see below
+    etc_profile [ordering=in]
+    {rank=same;
+    dot_bash_profile
+    dot_bash_login
+    dot_profile
+    }
+
+    etc_bashrc [label="/etc/bash.bashrc"]
+    etc_profile [label="/etc/profile"]
+    etc_zshenv [label="/etc/zshenv"]
+
+    dot_bash_login [label="~/.bash_login"]
+    dot_bash_logout [label="~/.bash_logout"]
+    dot_bash_profile [label="~/.bash_profile"]
+    dot_bashrc [label="~/.bashrc"]
+    dot_profile [label="~/.profile"]
+    dot_zlogin [label="~/.zlogin"]
+    dot_zlogout [label="~/.zlogout"]
+    {rank=same;
+    dot_zprofile [label="~/.zprofile"]
+    dot_zshrc [label="~/.zshrc"]
+    }
+    dot_zshenv [label="~/.zshenv"]
+
+    env [label="$ENV"]
+    bash_env [label="$BASH_ENV"]
+
+    // BASH
+
+    // PATH: bash, login, interactive
+    edge [color=red, style=solid]
+    bash -> bash_login
+    bash_login -> bash_interactive
+    bash_interactive -> etc_profile
+
+    // order important, see above
+    etc_profile -> dot_bash_profile
+    etc_profile -> dot_bash_login
+    etc_profile -> dot_profile
+
+    dot_bash_profile -> bash_running
+    dot_bash_login -> bash_running
+    dot_profile -> bash_running
+
+    bash_running -> dot_bash_logout
+
+    // PATH: bash, login, non-interactive
+    edge [color=orange, style=solid]
+    bash -> bash_login
+    bash_login -> bash_non_interactive
+    bash_non_interactive -> etc_profile
+
+    // order important, see above
+    etc_profile -> dot_bash_profile
+    etc_profile -> dot_bash_login
+    etc_profile -> dot_profile
+
+    dot_bash_profile -> bash_env
+    dot_bash_login -> bash_env
+    dot_profile -> bash_env
+
+    bash_env -> bash_running
+
+    bash_running -> dot_bash_logout
+
+    // PATH: bash, non-login, interactive
+    edge [color=green, style=solid]
+    bash -> bash_non_login
+    bash_non_login -> bash_interactive
+    bash_interactive -> etc_bashrc
+    etc_bashrc -> dot_bashrc
+
+    dot_bashrc -> bash_running
+
+    // PATH: bash, non-login, non-interactive
+    edge [color=blue, style=solid]
+    bash -> bash_non_login
+    bash_non_login -> bash_non_interactive
+    bash_non_interactive -> bash_env
+
+    // PATH: bash, remote shell
+    edge [color=purple, style=solid]
+    bash -> bash_remote_shell
+    bash_remote_shell -> dot_bashrc
+
+    dot_bashrc -> bash_running
+
+    // ZSH
+
+    // PATH: zsh, login, interactive
+    edge [color=red, style=solid]
+    zsh -> zsh_login
+    zsh_login -> zsh_interactive
+
+    zsh_interactive -> etc_zshenv
+    etc_zshenv -> dot_zshenv
+    dot_zshenv -> dot_zprofile
+    dot_zprofile -> dot_zshrc
+    dot_zshrc -> dot_zlogin
+
+    dot_zlogin -> zsh_running
+
+    zsh_running -> dot_zlogout
+
+    // PATH: zsh, login, non-interactive
+    edge [color=orange, style=solid]
+    zsh -> zsh_login
+    zsh_login -> zsh_non_interactive
+
+    zsh_non_interactive -> etc_zshenv
+    etc_zshenv -> dot_zshenv
+    dot_zshenv -> dot_zprofile
+    dot_zprofile -> dot_zlogin
+
+    dot_zlogin -> zsh_running
+
+    zsh_running -> dot_zlogout
+
+    // PATH: zsh, non-login, interactive
+    edge [color=green, style=solid]
+    zsh -> zsh_non_login
+    zsh_non_login -> zsh_interactive
+
+    zsh_interactive -> etc_zshenv
+    etc_zshenv -> dot_zshenv
+    dot_zshenv -> dot_zshrc
+
+    dot_zshrc -> zsh_running
+
+    // PATH: zsh, non-login, non-interactive
+    edge [color=blue, style=solid]
+    zsh -> zsh_non_login
+    zsh_non_login -> zsh_non_interactive
+
+    zsh_non_interactive -> etc_zshenv
+    etc_zshenv -> dot_zshenv
+
+    dot_zshenv -> zsh_running
+
+    // SH
+
+    // PATH: sh, login, interactive
+    edge [color=red, style=dashed]
+    sh -> sh_login
+    sh_login -> sh_interactive
+
+    sh_interactive -> dot_profile
+    dot_profile -> env
+
+    dot_profile -> sh_running
+
+    // PATH: sh, login, non-interactive
+    edge [color=orange, style=dashed]
+    sh -> sh_login
+    sh_login -> sh_non_interactive
+
+    sh_non_interactive -> dot_profile
+
+    dot_profile -> sh_running
+
+    // PATH: sh, non-login, interactive
+    edge [color=green, style=dashed]
+    sh -> sh_non_login
+    sh_non_login -> sh_interactive
+
+    sh_interactive -> env
+
+    env -> sh_running
+
+    // PATH: sh, non-login, non-interactive
+    edge [color=blue, style=dashed]
+    sh -> sh_non_login
+    sh_non_login -> sh_non_interactive
+
+    sh_non_interactive -> sh_running
+}
