@@ -1,0 +1,4 @@
+# set with `$ crontab -e'
+
+@reboot screen -wipe
+@reboot screen -dmS m
