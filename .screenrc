@@ -3,7 +3,7 @@ autodetach on
 startup_message off
 bell_msg ""
 
-# escape ^E
+# escape ^Ee
 
 bind - resize -3
 bind = resize +3
