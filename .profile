@@ -32,7 +32,12 @@ fi
 
 if [ "$GNU" == 'yes' ] ; then
 	eval "$(dircolors "${HOME}/.dircolors")"
-	alias d="ls --color --group-directories-first -lhA"
+	if [ "$SYSTEM" == 'macosx' ] ; then
+		LS='gls'
+	else
+		LS='ls'
+	fi
+	alias d="${LS} --color --group-directories-first -lhA"
 elif [ "$SYSTEM" == 'macosx' ] ; then
 	export CLICOLOR='1'
 	alias d='ls -lhAG'
