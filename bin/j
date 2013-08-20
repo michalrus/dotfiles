@@ -32,7 +32,6 @@ chkdeps()
 	which head		|| die "no head"
 	which tr		|| die "no tr"
 	which gm		|| die "no gm"
-	which mencoder	|| die "no mencoder"
 }
 
 chkdeps >/dev/null
@@ -446,48 +445,6 @@ case $OPMODE in
 
 			hlpr_optimize -p "${1}"
 			hlpr_setftime "${1}"
-
-			echo
-			shift
-		done
-		;;
-
-	xvid)
-		test $# -gt 1 || die "error: no files to process"
-
-		PARAM="${1}"
-		shift
-
-		PARAM=$(echo "${PARAM}" | grep -Po '^[0-9]+$')
-		test $? -eq 0 || die "error: invalid \$brate"
-		test $PARAM -ge 128 || die "error: \$brate < 128"
-
-		if [ "${1}" = "-rot" ] ; then
-			ROT=" -vf rotate=1 "
-			shift
-		else
-			ROT=""
-		fi
-
-		while [ $# -gt 0 ] ; do
-			hlpr_header "${1}"
-
-			BASE=$(echo "${1}" | sed -re 's/\.[^.]+$//')
-			LOG="${BASE}.log"
-			OUT="${BASE}.out.avi"
-
-			test '!' -e "${LOG}" || die "error: ${LOG} already exists"
-			test '!' -e "${OUT}" || die "error: ${OUT} already exists"
-
-			mencoder "${1}" $ROT -nosound -passlogfile "${LOG}" -ovc xvid \
-				-xvidencopts chroma_opt:vhq=4:bvhq=1:quant_type=mpeg:pass=1 -o /dev/null \
-				|| die "error: mencoder (pass 1)"
-
-			mencoder "${1}" $ROT -oac mp3lame -lameopts cbr:br=128 -passlogfile "${LOG}" -ovc xvid \
-				-xvidencopts chroma_opt:vhq=4:bvhq=1:quant_type=mpeg:pass=2:bitrate=$PARAM -o "${OUT}" \
-				|| die "error: mencoder (pass 2)"
-
-			hlpr_copyftime "${1}" "${OUT}"
 
 			echo
 			shift
