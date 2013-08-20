@@ -1,0 +1,13 @@
+#!/bin/sh
+
+caller_tty=/dev/$(ps | grep $$ | sed -re 's/\s+/ /g' | sed -re 's/^\s+|\s+$//g' | cut -d ' ' -f 2)
+
+F=$(tempfile)
+
+cat > $F
+
+$EDITOR $F <$caller_tty >$caller_tty
+
+cat $F
+
+rm -f $F

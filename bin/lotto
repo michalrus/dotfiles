@@ -1,0 +1,31 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+use List::Util 'shuffle';
+
+my $numSets = 1;
+my $numInSet = 6;
+
+my $lower = 1;
+my $upper = 49;
+
+my $rand;
+
+my $i;
+my $j;
+
+my @choice;
+my @possible;
+
+for ($i = 0; $i < $numSets; $i++) {
+	@possible = $lower .. $upper;
+
+	for ($j = 0; $j < $numInSet; $j++) {
+		@possible = shuffle(@possible);
+		print shift(@possible), '  ';
+	}
+
+	print "\n";
+}

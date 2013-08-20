@@ -1,0 +1,80 @@
+#!/bin/sh
+
+OUTBAT="$(pwd)/conv.bat"
+OUTSH="$(pwd)/conv.sh"
+
+if [ -e "${OUTBAT}" ] ; then
+	echo "${OUTBAT}: file exists, exiting"
+	exit 4
+fi
+
+if [ -e "${OUTSH}" ] ; then
+	echo "${OUTSH}: file exists, exiting"
+	exit 4
+fi
+
+usage() {
+	echo "${0}: ${1}"
+	echo
+	echo "usage: ${0} <mode> <file1>[ <file2> [...]]"
+	echo
+	echo "available <mode>'s:"
+	echo "    -x : generates windows .BAT file (conv. to x264+AAC@mp4)"
+}
+
+if [ $# -eq 0 ] ; then
+	usage "no mode specified"
+	exit 1
+fi
+
+MODE=${1}
+shift
+
+if [ $# -eq 0 ] ; then
+	usage "no input files"
+	exit 2
+fi
+
+while [ $# -gt 0 ] ; do
+	FILE=$(echo "${1}" | sed -re 's/\//\\\\/g')
+	if [ -n "$(echo "${FILE}" | grep -P '\.mp4$')" ] ; then
+		ORIG=$(echo "${FILE}" | sed -re 's/(\.[^\.]*)$/-original\1/')
+		echo ren \""${FILE}"\" \""${ORIG}"\" >>"${OUTBAT}"
+	else
+		ORIG="${FILE}"
+	fi
+	BASE=$(echo "${FILE}" | sed -re 's/\.[^\.]*$//')
+	shift
+
+	case "${MODE}" in
+		"-x")
+			echo ffmpeg -threads 4 -i \""${ORIG}"\" -vn -af \"aresample=48000:resampler=soxr\" -acodec pcm_s16le \""${BASE}"-audio.wav\" >>"${OUTBAT}"
+			echo normalize \""${BASE}"-audio.wav\" >>"${OUTBAT}"
+			echo neroAacEnc -if \""${BASE}"-audio.wav\" -of \""${BASE}"-audio.mp4\" >>"${OUTBAT}"
+			echo del \""${BASE}"-audio.wav\" >>"${OUTBAT}"
+			echo x264 --preset veryslow --tune film --crf 25 --vbv-maxrate 17500 --vbv-bufsize 17500 --level 3.1 -o \""${BASE}"-video.mp4\" \""${ORIG}"\" >>"${OUTBAT}"
+			echo mp4box -add \""${BASE}"-video.mp4\" \""${BASE}".mp4\" >>"${OUTBAT}"
+			echo mp4box -add \""${BASE}"-audio.mp4\" \""${BASE}".mp4\" >>"${OUTBAT}"
+			echo del \""${BASE}"-audio.mp4\" >>"${OUTBAT}"
+			echo del \""${BASE}"-video.mp4\" >>"${OUTBAT}"
+			echo >>"${OUTBAT}"
+
+			echo cptime \""${ORIG}"\" \""${BASE}".mp4\" >>"${OUTSH}"
+
+			;;
+		"-ogg")
+			echo ffmpeg -threads 4 -i \""${ORIG}"\" -acodec libvorbis -aq 60 \""${BASE}".ogg\" >>"${OUTBAT}"
+
+			;;
+		*)
+			usage "unknown mode"
+			exit 3
+			;;
+	esac
+
+
+#	I="${1}"
+#	O=$(echo "${I}" | sed -e 's/\.[^\.]*$/.mkv/')
+#	cptime "${I}" "${O}"
+
+done

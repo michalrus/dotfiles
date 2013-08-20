@@ -1,0 +1,500 @@
+#!/bin/sh
+
+die()
+{
+	E=$?
+	echo "j: ${1}" >&2
+	exit $E
+}
+
+# deps
+chkdeps()
+{
+	which test		|| die "no test"
+	which uuid		|| die "no uuid"
+	which exiv2		|| die "no exiv2"
+	which hexdump	|| die "no hexdump"
+	which dirname	|| die "no dirname"
+	which basename	|| die "no basename"
+	which touch		|| die "no touch"
+	which date		|| die "no date"
+	which stat		|| die "no stat"
+	which bc		|| die "no bc"
+	which cp		|| die "no cp"
+	which rm		|| die "no rm"
+	which mv		|| die "no mv"
+	which echo		|| die "no echo"
+	which jpegtran	|| die "no jpegtran"
+	which grep		|| die "no grep"
+	which sed		|| die "no sed"
+	which jhead		|| die "no jhead"
+	which avconv	|| die "no avconv"
+	which head		|| die "no head"
+	which tr		|| die "no tr"
+	which gm		|| die "no gm"
+	which mencoder	|| die "no mencoder"
+}
+
+chkdeps >/dev/null
+
+hlpr_uuid_b()
+{
+	UUID="/"
+	while [ -e "${UUID}" ] ; do
+		UUID=$(uuid)
+		test $? -eq 0 || die "error: uuid: $?"
+		UUID="${1}-${UUID}.jpg"
+	done
+
+	cp -a "${1}" "${UUID}" || die "error: uuid_b: cp: $?"
+	exiv2 -f extract "${UUID}" >/dev/null || die "error: uuid_b: exiv2 extract: $?"
+}
+
+hlpr_uuid_e()
+{
+	exiv2 -v insert "${UUID}" >/dev/null || die "error: uuid_e: exiv2 insert: $?"
+	HUE_D=$(dirname "${UUID}")
+	HUE_B=$(basename "${UUID}" .jpg)
+	rm -f "${HUE_D}/${HUE_B}.exv" || die "error: uuid_e: rm"
+	mv -f "${UUID}" "${1}" || die "error: uuid_e: mv"
+}
+
+hlpr_header()
+{
+	echo "------- ${1} -------"
+	test -f "${1}" || die "error: not a regular file"
+}
+
+hlpr_change_modtime()
+{
+	echo "-- changing modtime: ${2}"
+	touch -t $(date --date='@'$(echo $(stat -c %Y "${1}") "${2}" | bc) +'%Y%m%d%H%M.%S') "${1}" || die "error: failed"
+}
+
+hlpr_optimize()
+{
+	if [ "${1}" != "-p" ] ; then
+		echo "-- optimizing Huffman table"
+		OPT=""
+	else
+		echo "-- optimizing Huffman table (with -progressive switch)"
+		OPT="-progressive"
+	fi
+
+	hlpr_uuid_b "${2}"
+	jpegtran $OPT -optimize -outfile "${UUID}.tmp" "${UUID}" || die "error: optimize: jpegtran: $?"
+	mv "${UUID}.tmp" "${UUID}" || die "error: optimize: mv: $?"
+	hlpr_uuid_e "${2}"
+}
+
+hlpr_extract()
+{
+	echo "-- extracting Exif metadata to *.exv file"
+	exiv2 -f extract "${1}" >/dev/null || die "error: exiv2 extract: $?"
+}
+
+hlpr_copyftime()
+{
+	R=$(stat '-c%y' "${1}")
+	test $? -eq 0 || die "error: stat: $?"
+
+	R=$(echo "${R}" | sed -e 's/[- ]*//g ; s/:// ; s/\..*// ; s/:/./' | grep -Po '\d{12}.\d{2}')
+	test $? -eq 0 || die "error: stat: date-time pattern not found"
+
+	touch -t "${R}" "${2}" || die "error: touch: $?"
+}
+
+hlpr_getftime()
+{
+	hlpr_copyftime "${1}" "${1}.tmstamp"
+}
+
+hlpr_setftime()
+{
+	echo "-- restoring file time"
+	hlpr_copyftime "${1}.tmstamp" "${1}"
+	jhead -ft "${1}" >/dev/null || die "error: jhead filetime: $?"
+	rm "${1}.tmstamp" || die "error: rm: $?"
+}
+
+USAGE="usage: $0 <mode>[ <param>] <file1>[ <file2>[ ...]]
+  modt <+-sec>  inc-/decrease modtime by \$sec
+  pr            print metadata
+  author <name> set author tags to <name>
+  opt           optimizes JPEG Huffman table
+  rot           rotates by 90 deg cw and clears orientation tag
+  extr          extracts Exif metadata to *.exv file(s)
+  insrt         inserts Exif metadata from *.exv file(s)
+  my            ?!
+  ren           rename only
+  renn          rename only, with previous name after \" - \"
+  renthm        mv \$name.THM to \$thm_time.thm and then mv \$name.* \$thm_time.*
+  renmp4        mv \$name.mp4 to \$mp4_ctime.mp4
+  renmov        mv \$name.(avi|mp4|...) to (\$mod_time - \$duration).\$ext
+  res           -quality 80
+  res2          -resize 50% -quality 60, progressive optimization
+  xvid <brate> [-rot]  convert to XviD (2-pass, bitrate=\$brate kb/s)
+                       + MP3 (128 kb/s) [opt.: rotate 90 CW]"
+
+test $# -gt 0 -a "${1}" != "-h" -a "${1}" != "--help" || die "${USAGE}"
+test $# -gt 1 || die "error: no files to process"
+
+OPMODE="${1}"
+shift
+
+case $OPMODE in
+	modt)
+		test $# -gt 1 || die "error: no files to process"
+
+		PARAM="${1}"
+		shift
+
+		PARAM=$(echo "${PARAM}" | grep -Po '^[+\-][0-9]+$')
+		test $? -eq 0 || die "error: invalid \$sec"
+
+		while [ $# -gt 0 ] ; do
+			hlpr_header "${1}"
+
+			hlpr_change_modtime "${1}" "${PARAM}"
+
+			echo
+			shift
+		done
+		;;
+
+	pr)
+		while [ $# -gt 0 ] ; do
+			hlpr_header "${1}"
+
+			echo "-- printing Exif metadata"
+			exiv2 pr -p a "${1}"
+
+			echo
+			shift
+		done
+		;;
+
+	opt)
+		while [ $# -gt 0 ] ; do
+			hlpr_header "${1}"
+			hlpr_getftime "${1}"
+			hlpr_optimize -n "${1}"
+			hlpr_setftime "${1}"
+
+			echo
+			shift
+		done
+		;;
+
+	rot)
+		while [ $# -gt 0 ] ; do
+			hlpr_header "${1}"
+			hlpr_getftime "${1}"
+
+			echo "-- rotating by 90 deg CW"
+			hlpr_uuid_b "${1}"
+			jpegtran -rotate 270 -outfile "${UUID}.tmp" "${UUID}" || die "error: jpegtran rotate: $?"
+			mv "${UUID}.tmp" "${UUID}" || die "error: mv: $?"
+			hlpr_uuid_e "${1}"
+
+			echo "-- clearing orientation tag"
+			jhead -norot "${1}" >/dev/null || die "error: jhead norot: $?"
+
+			hlpr_setftime "${1}"
+
+			echo
+			shift
+		done
+		;;
+
+	extr)
+		while [ $# -gt 0 ] ; do
+			hlpr_header "${1}"
+			hlpr_extract "${1}"
+
+			echo
+			shift
+		done
+		;;
+
+	insrt)
+		while [ $# -gt 0 ] ; do
+			hlpr_header "${1}"
+			hlpr_getftime "${1}"
+
+			echo "-- inserting Exif metadata from *.exv file [TEST-RUN]"
+			exiv2 -v insert "${1}" >/dev/null || die "error: exiv2 insert [TEST-RUN]: $?"
+
+			echo "-- clearing metadata"
+			jhead -purejpg "${1}" >/dev/null || die "error: jhead purejpg: $?"
+
+			hlpr_optimize -n "${1}"
+
+			echo "-- inserting Exif metadata from *.exv file"
+			exiv2 -v insert -v "${1}" >/dev/null || die "error: exiv2 insert: $?"
+
+			hlpr_setftime "${1}"
+
+			echo
+			shift
+		done
+		;;
+
+	my)
+		while [ $# -gt 0 ] ; do
+			hlpr_header "${1}"
+			hlpr_getftime "${1}"
+
+			echo "-- removing: Exif thumbnail, IPTC data, XMP packet, JPEG comment"
+			exiv2 rm -d tixc "${1}" >/dev/null || die "error: exiv2 rm: $?"
+
+			echo "-- autorotating, renaming"
+			R=$(jhead -exonly -autorot -nf'%Y%m%d-%H%M%S' "${1}")
+			test $? -eq 0 -o '(' $? -eq 1 -a -z "${R}" ')' || die "error: jhead autorot/rename: $R"
+
+			if [ -n "${R}" ] ; then
+				D=$(dirname "${1}")
+				F=$(echo "${R}" | grep -Po ' --> (.+/)?\d{8}-\d{6}.?\.jpg' | grep -Po '\d{8}-\d{6}.?\.jpg')
+				test $? -eq 0 || die "error: new-name pattern not found: $?"
+				F="${D}/${F}"
+				mv "${1}.tmstamp" "${F}.tmstamp" || die "error: mv tmstamp: $?"
+			else
+				F="${1}"
+			fi
+			echo "-- new filename: ${F}"
+
+			hlpr_extract "${F}"
+			hlpr_optimize -n "${F}"
+			hlpr_setftime "${F}"
+
+			echo
+			shift
+		done
+		;;
+
+	ren)
+		while [ $# -gt 0 ] ; do
+			hlpr_header "${1}"
+
+			echo "-- renaming"
+			jhead -nf'%Y%m%d-%H%M%S' -exonly "${1}" || die "error: jhead rename: $?"
+
+			echo
+			shift
+		done
+		;;
+
+	renn)
+		while [ $# -gt 0 ] ; do
+			hlpr_header "${1}"
+
+			echo "-- renaming"
+			jhead -nf'%Y%m%d-%H%M%S - %f' -exonly "${1}" || die "error: jhead rename: $?"
+
+			echo
+			shift
+		done
+		;;
+
+	renthm)
+		while [ $# -gt 0 ] ; do
+			hlpr_header "${1}"
+
+			BASE=$(echo "${1}" | sed -re 's/\.[^.]+$//')
+
+			echo "-- renaming THM"
+			R=$(jhead -exonly -ft -nf'%Y%m%d-%H%M%S' "${1}")
+			test $? -eq 0 -o '(' $? -eq 1 -a -z "${R}" ')' || die "error: jhead rename: $R"
+
+			if [ -n "${R}" ] ; then
+				D=$(dirname "${1}")
+				F=$(echo "${R}" | grep -Po ' --> (.+/)?\d{8}-\d{6}.?\.jpg' | grep -Po '\d{8}-\d{6}.?\.jpg')
+				test $? -eq 0 || die "error: new-name pattern not found: $?"
+				F="${D}/${F}"
+			else
+				F="${1}"
+			fi
+
+			NF=$(echo "${F}" | sed -e 's/\.jpg$/\.thm/')
+			test '!' -e "${NF}" || die "error: ${NF} already exists, leaving ${F}"
+			mv "${F}" "${NF}"
+
+			F="${NF}"
+			NBASE=$(echo "${F}" | sed -e 's/\.thm$//')
+
+			echo "-- new filename: ${F}"
+
+			echo "-- renaming ${BASE}.*"
+			for I in "${BASE}".* ; do
+				IEXT=$(echo "${I}" | grep -Po '\.[^.]+$' | tr -s '[A-Z]' '[a-z]')
+				NI="${NBASE}${IEXT}"
+				test '!' -e "${NI}" || die "error: ${NI} already exists"
+				mv "${I}" "${NI}"
+			done
+
+			echo
+			shift
+		done
+		;;
+
+	renmp4)
+		while [ $# -gt 0 ] ; do
+			hlpr_header "${1}"
+
+			echo "-- renaming"
+
+			EXT=$(echo "${1}" | grep -Po '\.[^.]+$' | tr -s '[A-Z]' '[a-z]')
+
+			R=$(avconv -i "${1}" 2>&1 | grep creation_time)
+			test $? -eq 0 || die "error: creation_time not found"
+
+			CTIME=$(echo "${R}" | sed -e 's/[^0-9]//g' | sed -re 's/(........)(......)$/\1-\2/' | head -n 1)
+
+			D=$(dirname "${1}")
+
+			NF="${D}/${CTIME}${EXT}"
+			test '!' -e "${NF}" || die "error: ${NF} already exists, leaving ${1}"
+
+			echo "-- new file name: ${NF}"
+
+			mv "${1}" "${NF}"
+
+			echo
+			shift
+		done
+		;;
+
+	renmov)
+		while [ $# -gt 0 ] ; do
+			hlpr_header "${1}"
+
+			R=$(avconv -i "${1}" 2>&1 | grep -Po 'Duration: \d\d:\d\d:\d\d')
+			test $? -eq 0 || die "error: Duration not found"
+
+			DUR=$(echo "${R}" | sed -e 's/[^0-9]//g' | sed -re 's/^(..)(..)(..)$/\1 * 3600 + \2 * 60 + \3/' | bc)
+
+			echo "-- duration: ${DUR} s"
+
+			EXT=$(echo "${1}" | grep -Po '\.[^.]+$' | tr -s '[A-Z]' '[a-z]')
+
+			D=$(dirname "${1}")
+
+			NF=$(date --date='@'$(echo $(stat -c %Y "${1}") "- ${DUR}" | bc) +'%Y%m%d-%H%M%S')
+			NF="${D}/${NF}${EXT}"
+			test '!' -e "${NF}" || die "error: ${NF} already exists, leaving ${1}"
+
+			echo "-- new file name: ${NF}"
+
+			mv "${1}" "${NF}"
+
+			echo
+			shift
+		done
+		;;
+
+	author)
+		test $# -gt 1 || die "error: no files to process"
+		AUTHOR="${1}"
+		UCS2=$(echo -n "${AUTHOR}" | iconv -f utf8 -t ucs2)
+		test $? -eq 0 || die "iconv: illegal input (supply utf-8 string)"
+		UCS2=$(echo -n "${UCS2}" | hexdump -v -e '/1 "%u "')
+		shift
+		while [ $# -gt 0 ] ; do
+			hlpr_header "${1}"
+			hlpr_getftime "${1}"
+
+			echo "-- setting Exif.Image.XPAuthor tag"
+			exiv2 -M "set Exif.Image.XPAuthor ${UCS2}" modify "${1}" || die "error: exiv2 Exif.Image.XPAuthor: $?"
+			echo "-- setting Exif.Image.Artist tag"
+			exiv2 -M "set Exif.Image.Artist ${AUTHOR}" modify "${1}" || die "error: exiv2 Exif.Image.Artist: $?"
+
+			#hlpr_optimize -n "${1}"
+			hlpr_setftime "${1}"
+
+			echo
+			shift
+		done
+		;;
+
+	res)
+		while [ $# -gt 0 ] ; do
+			hlpr_header "${1}"
+			hlpr_getftime "${1}"
+
+			echo "-- converting to quality-80 JPEG image"
+			hlpr_uuid_b "${1}"
+			gm mogrify -quality 80 "${UUID}" || die "error: mogrify 80: $?"
+			hlpr_uuid_e "${1}"
+
+			hlpr_optimize -n "${1}"
+			hlpr_setftime "${1}"
+
+			echo
+			shift
+		done
+		;;
+
+	res2)
+		while [ $# -gt 0 ] ; do
+			hlpr_header "${1}"
+			hlpr_getftime "${1}"
+
+			echo "-- converting to half-size, quality-60 JPEG image"
+			hlpr_uuid_b "${1}"
+			gm mogrify -resize 50% -quality 60 "${UUID}" || die "error: mogrify 50%-70: $?"
+			hlpr_uuid_e "${1}"
+
+			hlpr_optimize -p "${1}"
+			hlpr_setftime "${1}"
+
+			echo
+			shift
+		done
+		;;
+
+	xvid)
+		test $# -gt 1 || die "error: no files to process"
+
+		PARAM="${1}"
+		shift
+
+		PARAM=$(echo "${PARAM}" | grep -Po '^[0-9]+$')
+		test $? -eq 0 || die "error: invalid \$brate"
+		test $PARAM -ge 128 || die "error: \$brate < 128"
+
+		if [ "${1}" = "-rot" ] ; then
+			ROT=" -vf rotate=1 "
+			shift
+		else
+			ROT=""
+		fi
+
+		while [ $# -gt 0 ] ; do
+			hlpr_header "${1}"
+
+			BASE=$(echo "${1}" | sed -re 's/\.[^.]+$//')
+			LOG="${BASE}.log"
+			OUT="${BASE}.out.avi"
+
+			test '!' -e "${LOG}" || die "error: ${LOG} already exists"
+			test '!' -e "${OUT}" || die "error: ${OUT} already exists"
+
+			mencoder "${1}" $ROT -nosound -passlogfile "${LOG}" -ovc xvid \
+				-xvidencopts chroma_opt:vhq=4:bvhq=1:quant_type=mpeg:pass=1 -o /dev/null \
+				|| die "error: mencoder (pass 1)"
+
+			mencoder "${1}" $ROT -oac mp3lame -lameopts cbr:br=128 -passlogfile "${LOG}" -ovc xvid \
+				-xvidencopts chroma_opt:vhq=4:bvhq=1:quant_type=mpeg:pass=2:bitrate=$PARAM -o "${OUT}" \
+				|| die "error: mencoder (pass 2)"
+
+			hlpr_copyftime "${1}" "${OUT}"
+
+			echo
+			shift
+		done
+		;;
+
+	*)
+		echo "j: invalid mode: ${OPMODE}"
+		exit 2
+esac

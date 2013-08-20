@@ -1,0 +1,38 @@
+#!/bin/sh
+
+die()
+{
+	E=$?
+	echo "cptime: ${1}"
+	exit $E
+}
+
+which "touch" >/dev/null || die "\"touch\" executable not found in \$PATH"
+which "stat"  >/dev/null || die "\"stat\" executable not found in \$PATH"
+
+USAGE="usage: $0 <src> <dst1>[ <dst2>...]"
+
+test $# -gt 0 -a "${1}" != "-h" -a "${1}" != "--help" || die "${USAGE}"
+test $# -gt 1 || die "error: no files to process"
+
+# -- get src's ftime
+
+test -f "${1}" || die "error: ${1}: not a regular file"
+
+R=$(stat '-c%y' "${1}")
+test $? -eq 0 || die "error: stat: $?"
+
+R=$(echo "${R}" | sed -e 's/[- ]*//g ; s/:// ; s/\..*// ; s/:/./' | grep -Po '\d{12}.\d{2}')
+test $? -eq 0 || die "error: stat: date-time pattern not found"
+
+echo "${1} <-- ${R}"
+shift
+
+# -- set dsts' ftime
+
+while [ $# -gt 0 ] ; do
+	echo "  --> ${1}"
+	test -f "${1}" || die "error: ${1}: not a regular file"
+	touch -t "${R}" "${1}" || die "error: touch: $?"
+	shift
+done

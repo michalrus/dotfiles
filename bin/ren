@@ -1,0 +1,76 @@
+#!/bin/sh
+
+USAGE="ren [--help|-h] [--preserve-names|-n] <file1>[ <file2> ...]"
+
+die()
+{
+	E=$?
+	echo "ren: ${1}"
+	exit $E
+}
+
+which "getopt" >/dev/null || die "no \"getopt\" executable found in \$PATH"
+which "dirname" >/dev/null || die "no \"dirname\" executable found in \$PATH"
+which "basename" >/dev/null || die "no \"basename\" executable found in \$PATH"
+
+getopt -T >/dev/null 2>&1
+test $? -eq 4 || die "old \"getopt\" found, not a GNU enhanced one"
+
+OPT=$(getopt -n ren -o nh --long preserve-names,help -- "$@")
+test $? -eq 0 || exit $?
+
+eval set -- "${OPT}"
+
+NAMES=0
+
+while true ; do
+	case "${1}" in
+		-h|--help) echo "${USAGE}" ; exit ; shift ;;
+		-n|--preserve-names) NAMES=1 ; shift ;;
+		--) shift ; break ;;
+		*) die "wtf: ${1}" ;;
+	esac
+done
+
+test $# -gt 0 || die "no files to rename"
+
+while [ $# -gt 0 ] ; do
+	test -f "${1}" || die "${1}: not a regular file"
+
+	D=$(dirname "${1}") ; test $? -eq 0 || die "${1}: dirname: ${?}"
+	B=$(basename "${1}") ; test $? -eq 0 || die "${1}: basename: ${?}"
+
+	if [ -n "${B##*.*}" ] ; then
+		N="${B}"
+		E=""
+	else
+		N="${B%.*}"
+		E=".${B##*.}"
+		E=$(echo "${E}" | tr 'A-Z' 'a-z') ; test $? -eq 0 || die "${1}: tr: ${?}"
+	fi
+	ST=$(stat '-c%Y' "${1}") ; test $? -eq 0 || die "${1}: stat: ${?}"
+	NN=$(date --date "1970-01-01 ${ST} sec UTC" "+%Y%m%d-%H%M%S") ; test $? -eq 0 || die "${1}: date: ${?}"
+
+	RN=""
+	if [ $NAMES -eq 1 ] ; then
+		RN=" - ${N}"
+	fi
+
+	OK=0
+	APP="a b c d e f g h i j k l m n o p q r s t u v w x y z"
+	for a in "" $APP ; do
+		NF="${D}/${NN}${a}${RN}${E}"
+		if [ '!' -e "${NF}" ] ; then
+			mv -nv "${1}" "${NF}" || die "${1}: mv: ${?}"
+			OK=1
+			break
+		elif [ "${1}" -ef "${NF}" ] ; then
+			echo "\`${1}' unchanged"
+			OK=1
+			break
+		fi
+	done
+	test $OK -eq 1 || die "${1}: all possible file names already taken"
+
+	shift
+done

@@ -1,0 +1,13 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+my $ln;
+
+while ($ln = <>) {
+	$ln =~ s/\s//g;
+	print $ln;
+}
+
+print "\n";
