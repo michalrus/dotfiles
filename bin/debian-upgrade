@@ -1,0 +1,4 @@
+#!/bin/sh
+
+DEBIAN_FRONTEND=noninteractive apt-get -q -y update
+DEBIAN_FRONTEND=noninteractive apt-get -q -dy dist-upgrade
