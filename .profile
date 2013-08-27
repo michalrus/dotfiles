@@ -51,5 +51,7 @@ alias nchmod='chmod -R u=rwX,g=rX,o=rX'
 alias pchmod='chmod -R u=rwX,g=,o='
 alias clear='for i in $(seq 25) ; do echo ; done && clear'
 
+alias indent='indent -kr -ci2 -cli2 -i2 -l80 -nut'
+
 alias j='TZ=Europe/Warsaw j'
 alias ren='TZ=Europe/Warsaw ren'
