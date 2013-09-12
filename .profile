@@ -2,6 +2,10 @@ umask 077
 
 alias mshell='curl -L -o "${HOME}/.mshell.tgz" "https://michalrus.com/mshell" && tar -xzvf "${HOME}/.mshell.tgz" -C "${HOME}/"'
 
+if [ -e /etc/bash_completion ] ; then
+	. /etc/bash_completion
+fi
+
 if [ -d "${HOME}/bin" ] ; then
 	export PATH="${HOME}/bin:${PATH}"
 fi
