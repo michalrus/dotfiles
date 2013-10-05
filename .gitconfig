@@ -4,3 +4,6 @@
 [alias]
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date-order
 	st = status
+	ciff = diff --cached
+[core]
+	safecrlf = false
