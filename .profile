@@ -34,6 +34,8 @@ if ( uname | grep -i darwin >/dev/null ); then
 	fi
 elif ( uname | grep -i bsd >/dev/null ) ; then
 	SYSTEM='bsd'
+elif ( uname | grep -i mingw >/dev/null ) ; then
+	SYSTEM='windows'
 else
 	GNU='yes'
 fi
@@ -49,6 +51,8 @@ if [ "$GNU" == 'yes' ] ; then
 elif [ "$SYSTEM" == 'macosx' ] ; then
 	export CLICOLOR='1'
 	alias d='ls -lhAG'
+elif [ "$SYSTEM" == 'windows' ] ; then
+	alias d='ls --color -lhA'
 elif [ "$SYSTEM" == 'bsd' ] ; then
 	alias d='ls -lhAG'
 fi
