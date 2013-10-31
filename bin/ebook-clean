@@ -1,0 +1,14 @@
+#!/usr/bin/perl
+
+while ($line = <>) {
+  $line =~ s/<span class=".*?">([^<]*)<\/span>/\1/g;
+  $line =~ s/padding-left:\s*\d+\s*..;?//g;
+  $line =~ s/(<(p|ul|li)[^a-z])/\n\1/g;
+  $line =~ s/<\/?(li|ul)[^>]*>//g;
+  $line =~ s/(<p.*?display:\s*inline.*?>)/\1&mdash; /g;
+  $line =~ s/(\s)-(\s|<)/\1&mdash;\2/g;
+  $line =~ s/<p.*?><br\/><\/p>//g;
+  $line =~ s/<p\s.*?>/<p>/g;
+  $line =~ s/<p>(Rozdzia.*?)<\/p>/<h2>\1<\/h2>/g;
+  print $line;
+}
