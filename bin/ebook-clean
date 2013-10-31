@@ -10,5 +10,7 @@ while ($line = <>) {
   $line =~ s/<p.*?><br\/><\/p>//g;
   $line =~ s/<p\s.*?>/<p>/g;
   $line =~ s/<p>(Rozdzia.*?)<\/p>/<h2>\1<\/h2>/g;
+  $line =~ s/<p>\s*-/<p>&mdash;/g;
+  $line =~ s/-\s*<\/p>/&mdash;</p>/g;
   print $line;
 }
