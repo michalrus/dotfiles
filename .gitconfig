@@ -7,3 +7,5 @@
 	ciff = diff --cached
 [core]
 	safecrlf = false
+[color]
+	ui = true
