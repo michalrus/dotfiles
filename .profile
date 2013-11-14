@@ -4,7 +4,22 @@ alias mshell='curl -L -o "${HOME}/.mshell.tgz" "https://michalrus.com/mshell" &&
 
 if [ -e /etc/bash_completion ] ; then
 	. /etc/bash_completion
+	export GIT_PS1_SHOWDIRTYSTATE=1
+	HAVE_GIT_PS='yes'
+else
+	HAVE_GIT_PS='no'
 fi
+
+my_git_ps() {
+	if [ "$HAVE_GIT_PS" == 'yes' ] ; then
+		local tmp="$(__git_ps1 '%s')"
+		if [ -n "${tmp}" ] ; then
+			local d="\e[1;${1}m"
+			local l="\e[0;${2}m"
+			echo -e "${d}:(${l}${tmp}${d})"
+		fi
+	fi
+}
 
 if [ -d "${HOME}/bin" ] ; then
 	export PATH="${HOME}/bin:${PATH}"
@@ -18,9 +33,9 @@ export EDITOR='nano'
 export VISUAL='nano'
 
 if [[ ${EUID} == 0 ]] ; then
-	PS1='\[\033[01;35m\]\u\[\033[01;31m\]@\[\033[01;35m\]\h\[\033[31;01m\]:\[\033[01;35m\]\w\[\033[31;01m\]\$\[\033[00m\] '
+	PS1='\[\033[01;35m\]\u\[\033[01;31m\]@\[\033[01;35m\]\h\[\033[31;01m\]:\[\033[01;35m\]\w$(my_git_ps 31 35)\[\033[31;01m\]\$\[\033[00m\] '
 else
-	PS1='\[\033[01;36m\]\u\[\033[01;34m\]@\[\033[01;36m\]\h\[\033[34;01m\]:\[\033[01;36m\]\w\[\033[34;01m\]\$\[\033[00m\] '
+	PS1='\[\033[01;36m\]\u\[\033[01;34m\]@\[\033[01;36m\]\h\[\033[34;01m\]:\[\033[01;36m\]\w$(my_git_ps 34 36)\[\033[34;01m\]\$\[\033[00m\] '
 fi
 
 SYSTEM='?'
