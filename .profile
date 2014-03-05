@@ -1,5 +1,8 @@
 umask 077
 
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+
 alias mshell='curl -L -o "${HOME}/.mshell.tgz" "https://michalrus.com/mshell" && tar -xzvf "${HOME}/.mshell.tgz" --no-same-owner -C "${HOME}/"'
 
 if [ -e /etc/bash_completion ] ; then
