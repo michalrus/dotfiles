@@ -1,5 +1,5 @@
 [user]
-	name = Michał Rus
+	name = Michal Rus
 	email = m@michalrus.com
 [alias]
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date-order
@@ -9,3 +9,5 @@
 	safecrlf = false
 [color]
 	ui = true
+[merge]
+	conflictstyle = diff3
