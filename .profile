@@ -8,14 +8,16 @@ alias mshell='curl -L -o "${HOME}/.mshell.tgz" "https://michalrus.com/mshell" &&
 
 if [ -e /etc/bash_completion ] ; then
 	. /etc/bash_completion
+fi
 
+HAVE_GIT_PS='no'
+
+if ( __git_ps1 >/dev/null 2>&1 ); then
 	HAVE_GIT_PS='yes'
 	export GIT_PS1_SHOWDIRTYSTATE=1
 	export GIT_PS1_SHOWSTASHSTATE=1
 	export GIT_PS1_SHOWUNTRACKEDFILES=1
 	export GIT_PS1_SHOWUPSTREAM='verbose'
-else
-	HAVE_GIT_PS='no'
 fi
 
 my_git_ps() {
