@@ -30,3 +30,55 @@ if [ "$EUID" -eq 0 ] ; then
 else
 	PS1='\[\033[01;36m\]\u\[\033[01;34m\]@\[\033[01;36m\]\h\[\033[34;01m\]:\[\033[01;36m\]\w$(my_git_ps 34 36)\[\033[34;01m\]\$\[\033[00m\] '
 fi
+
+alias mshell='curl -L -o "${HOME}/.mshell.tgz" "https://michalrus.com/mshell" && tar -xzvf "${HOME}/.mshell.tgz" --no-same-owner -C "${HOME}/"'
+
+alias s='exec screen -d -r'
+alias nano='nano -UwT 4'
+alias nchmod='chmod -R u=rwX,g=rX,o=rX'
+alias pchmod='chmod -R u=rwX,g=,o='
+alias clear='for i in $(seq 25) ; do echo ; done && clear'
+
+alias indent='indent -kr -ci2 -cli2 -i2 -l80 -nut'
+
+alias j='TZ=Europe/Warsaw j'
+alias ren='TZ=Europe/Warsaw ren'
+
+MSHELL_SYS='?'
+MSHELL_GNU=false
+
+if ( uname | grep -i linux >/dev/null ); then
+	MSHELL_SYS='linux'
+	MSHELL_GNU=true
+elif ( uname | grep -i darwin >/dev/null ); then
+	MSHELL_SYS='macosx'
+	( which gls >/dev/null ) && MSHELL_GNU=true
+elif ( uname | grep -i bsd >/dev/null ) ; then
+	MSHELL_SYS='bsd'
+elif ( uname | grep -i mingw >/dev/null ) ; then
+	MSHELL_SYS='windows'
+fi
+
+MSHELL_LS='ls'
+
+if ( $MSHELL_GNU ) ; then
+	eval "$(dircolors "${HOME}/.dircolors")"
+	[ $MSHELL_SYS = 'macosx' ] && MSHELL_LS='gls'
+elif [ $MSHELL_SYS = 'macosx' ] ; then
+	export CLICOLOR='1'
+fi
+
+d () {
+	local HIDDEN=true
+	[ $PWD = $HOME ] && [ $# -eq 0 ] && local HIDDEN=false
+
+	if ( $MSHELL_GNU ) ; then
+		$MSHELL_LS --color --group-directories-first -lh $($HIDDEN && echo "-A") "$@"
+	elif [ $MSHELL_SYS = 'macosx' ] ; then
+		$MSHELL_LS -lhG $($HIDDEN && echo "-A") "$@"
+	elif [ $MSHELL_SYS = 'windows' ] ; then
+		$MSHELL_LS --color -lh $($HIDDEN && echo "-A") "$@"
+	elif [ $MSHELL_SYS = 'bsd' ] ; then
+		$MSHELL_LS -lhG $($HIDDEN && echo "-A") "$@"
+	fi
+}
