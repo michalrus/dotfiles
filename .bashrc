@@ -4,6 +4,8 @@ if [ -e /etc/bash_completion ] ; then
 	. /etc/bash_completion
 fi
 
+unalias -a
+
 HAVE_GIT_PS='no'
 
 if ( __git_ps1 >/dev/null 2>&1 ); then
