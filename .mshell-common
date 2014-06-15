@@ -5,6 +5,7 @@ export LANG=en_US.UTF-8
 export LANGUAGE=en_US:en
 
 [ -d "/usr/local/bin" ] && export PATH="/usr/local/bin:${PATH}"
+[ -d "${HOME}/.bin" ] && export PATH="${HOME}/.bin:${PATH}"
 [ -d "${HOME}/bin" ] && export PATH="${HOME}/bin:${PATH}"
 
 export EDITOR='nano'
