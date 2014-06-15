@@ -59,6 +59,9 @@ elif ( uname | grep -i bsd >/dev/null ) ; then
 	MSHELL_SYS='bsd'
 elif ( uname | grep -i mingw >/dev/null ) ; then
 	MSHELL_SYS='windows'
+elif ( uname | grep -i cygwin >/dev/null ); then
+	MSHELL_SYS='cygwin'
+	MSHELL_GNU=true
 fi
 
 MSHELL_LS='ls'
@@ -75,7 +78,7 @@ d () {
 	[ $PWD = $HOME ] && [ $# -eq 0 ] && local HIDDEN=false
 
 	if ( $MSHELL_GNU ) ; then
-		$MSHELL_LS --color --group-directories-first -lh $($HIDDEN && echo "-A") "$@"
+		$MSHELL_LS --color --group-directories-first -lh $($HIDDEN && echo "-A") "$@" | less -S -R -F
 	elif [ $MSHELL_SYS = 'macosx' ] ; then
 		$MSHELL_LS -lhG $($HIDDEN && echo "-A") "$@"
 	elif [ $MSHELL_SYS = 'windows' ] ; then
