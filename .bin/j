@@ -11,7 +11,7 @@ die()
 chkdeps()
 {
 	which test		|| die "no test"
-	which uuid		|| die "no uuid"
+	which uuidgen	|| die "no uuidgen"
 	which exiv2		|| die "no exiv2"
 	which hexdump	|| die "no hexdump"
 	which dirname	|| die "no dirname"
@@ -28,7 +28,7 @@ chkdeps()
 	which grep		|| die "no grep"
 	which sed		|| die "no sed"
 	which jhead		|| die "no jhead"
-	which avconv	|| die "no avconv"
+	which ffmpeg	|| die "no ffmpeg"
 	which head		|| die "no head"
 	which tr		|| die "no tr"
 	which gm		|| die "no gm"
@@ -40,8 +40,8 @@ hlpr_uuid_b()
 {
 	UUID="/"
 	while [ -e "${UUID}" ] ; do
-		UUID=$(uuid)
-		test $? -eq 0 || die "error: uuid: $?"
+		UUID=$(uuidgen)
+		test $? -eq 0 || die "error: uuidgen: $?"
 		UUID="${1}-${UUID}.jpg"
 	done
 
@@ -344,7 +344,7 @@ case $OPMODE in
 
 			EXT=$(echo "${1}" | grep -Po '\.[^.]+$' | tr -s '[A-Z]' '[a-z]')
 
-			R=$(avconv -i "${1}" 2>&1 | grep creation_time)
+			R=$(ffmpeg -i "${1}" 2>&1 | grep creation_time)
 			test $? -eq 0 || die "error: creation_time not found"
 
 			CTIME=$(echo "${R}" | sed -e 's/[^0-9]//g' | sed -re 's/(........)(......)$/\1-\2/' | head -n 1)
@@ -367,7 +367,7 @@ case $OPMODE in
 		while [ $# -gt 0 ] ; do
 			hlpr_header "${1}"
 
-			R=$(avconv -i "${1}" 2>&1 | grep -Po 'Duration: \d\d:\d\d:\d\d')
+			R=$(ffmpeg -i "${1}" 2>&1 | grep -Po 'Duration: \d\d:\d\d:\d\d')
 			test $? -eq 0 || die "error: Duration not found"
 
 			DUR=$(echo "${R}" | sed -e 's/[^0-9]//g' | sed -re 's/^(..)(..)(..)$/\1 * 3600 + \2 * 60 + \3/' | bc)
