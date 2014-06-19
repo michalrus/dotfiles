@@ -10,3 +10,5 @@ export LANGUAGE=en_US:en
 
 export EDITOR='nano'
 export VISUAL='nano'
+
+export ANDROID_HOME="${HOME}/.local/opt/android-sdk-linux"
