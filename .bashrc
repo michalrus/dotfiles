@@ -27,10 +27,12 @@ my_git_ps() {
 	fi
 }
 
+MSHELL_HOSTNAME=$(ischroot 2>/dev/null && cat /etc/hostname || echo '\h')
+
 if [ "$EUID" -eq 0 ] ; then
-	PS1='\[\033[01;35m\]\u\[\033[01;31m\]@\[\033[01;35m\]\h\[\033[31;01m\]:\[\033[01;35m\]\w$(my_git_ps 31 35)\[\033[31;01m\]\$\[\033[00m\] '
+	PS1='\[\033[01;35m\]\u\[\033[01;31m\]@\[\033[01;35m\]'$MSHELL_HOSTNAME'\[\033[31;01m\]:\[\033[01;35m\]\w$(my_git_ps 31 35)\[\033[31;01m\]\$\[\033[00m\] '
 else
-	PS1='\[\033[01;36m\]\u\[\033[01;34m\]@\[\033[01;36m\]\h\[\033[34;01m\]:\[\033[01;36m\]\w$(my_git_ps 34 36)\[\033[34;01m\]\$\[\033[00m\] '
+	PS1='\[\033[01;36m\]\u\[\033[01;34m\]@\[\033[01;36m\]'$MSHELL_HOSTNAME'\[\033[34;01m\]:\[\033[01;36m\]\w$(my_git_ps 34 36)\[\033[34;01m\]\$\[\033[00m\] '
 fi
 
 alias mshell='curl -L -o "${HOME}/.mshell.tgz" "https://michalrus.com/mshell" && tar -xzvf "${HOME}/.mshell.tgz" --no-same-owner -C "${HOME}/"'
