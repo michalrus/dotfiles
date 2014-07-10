@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use List::Util 'shuffle';
+use List::Util qw[shuffle max];
 
 my $numSets = 1;
 my $numInSet = 6;
@@ -18,6 +18,8 @@ my $j;
 
 my @choice;
 my @possible;
+
+$numSets = max(1, 0 + $ARGV[0]) if (scalar @ARGV);
 
 for ($i = 0; $i < $numSets; $i++) {
 	@possible = $lower .. $upper;
