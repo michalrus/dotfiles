@@ -4,6 +4,10 @@ if [ -e /etc/bash_completion ] ; then
 	. /etc/bash_completion
 fi
 
+if [ -e /usr/share/git/completion/git-prompt.sh ] ; then
+	. /usr/share/git/completion/git-prompt.sh
+fi
+
 unalias -a
 
 HAVE_GIT_PS='no'
