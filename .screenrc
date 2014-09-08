@@ -3,6 +3,9 @@ autodetach on
 startup_message off
 bell_msg ""
 
+altscreen on
+defscrollback 10000
+
 # escape ^Ee
 
 bind - resize -3
