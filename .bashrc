@@ -81,7 +81,7 @@ fi
 
 d () {
 	local HIDDEN=true
-	[ $PWD = $HOME ] && [ $# -eq 0 ] && local HIDDEN=false
+	[ "$PWD" = "$HOME" ] && [ $# -eq 0 ] && local HIDDEN=false
 
 	if ( $MSHELL_GNU ) ; then
 		$MSHELL_LS --color --group-directories-first -lh $($HIDDEN && echo "-A") "$@" | less -S -R -F -X
