@@ -84,7 +84,7 @@ d () {
 	[ "$PWD" = "$HOME" ] && [ $# -eq 0 ] && local HIDDEN=false
 
 	if ( $MSHELL_GNU ) ; then
-		$MSHELL_LS --color --group-directories-first -lh $($HIDDEN && echo "-A") "$@" | less -S -R -F -X
+		$MSHELL_LS --color --group-directories-first -lh $($HIDDEN && echo "-A") "$@"
 	elif [ $MSHELL_SYS = 'macosx' ] ; then
 		$MSHELL_LS -lhG $($HIDDEN && echo "-A") "$@"
 	elif [ $MSHELL_SYS = 'windows' ] ; then
