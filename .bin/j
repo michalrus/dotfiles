@@ -28,16 +28,26 @@ chkdeps()
 	which grep		|| die "no grep"
 	which sed		|| die "no sed"
 	which jhead		|| die "no jhead"
-	which avconv	|| die "no avconv"
 	which head		|| die "no head"
 	which tr		|| die "no tr"
 	which gm		|| die "no gm"
 	which sox		|| die "no sox"
-	which normalize-audio	|| die "no normalize-audio"
 	which neroAacEnc	|| die "no neroAacEnc"
 	which x264		|| die "no x264"
 	which MP4Box	|| die "no MP4Box"
 	which cptime	|| die "no cptime"
+
+	ffmpeg=ffmpeg
+	which $ffmpeg 2>/dev/null || {
+		ffmpeg=avconv
+		which $ffmpeg || die "no ffmpeg/avconv"
+	}
+
+	normalize=normalize
+	which $normalize 2>/dev/null || {
+		normalize=normalize-audio
+		which $normalize || die "no normalize/normalize-audio"
+	}
 }
 
 chkdeps >/dev/null
@@ -349,7 +359,7 @@ case $OPMODE in
 
 			EXT=$(echo "${1}" | grep -Po '\.[^.]+$' | tr -s '[A-Z]' '[a-z]')
 
-			R=$(avconv -i "${1}" 2>&1 | grep creation_time)
+			R=$($ffmpeg -i "${1}" 2>&1 | grep creation_time)
 			test $? -eq 0 || die "error: creation_time not found"
 
 			CTIME=$(echo "${R}" | sed -e 's/[^0-9]//g' | sed -re 's/(........)(......)$/\1-\2/' | head -n 1)
@@ -372,7 +382,7 @@ case $OPMODE in
 		while [ $# -gt 0 ] ; do
 			hlpr_header "${1}"
 
-			R=$(avconv -i "${1}" 2>&1 | grep -Po 'Duration: \d\d:\d\d:\d\d')
+			R=$($ffmpeg -i "${1}" 2>&1 | grep -Po 'Duration: \d\d:\d\d:\d\d')
 			test $? -eq 0 || die "error: Duration not found"
 
 			DUR=$(echo "${R}" | sed -e 's/[^0-9]//g' | sed -re 's/^(..)(..)(..)$/\1 * 3600 + \2 * 60 + \3/' | bc)
@@ -471,21 +481,22 @@ case $OPMODE in
 			BASE=$(echo "${FILE}" | sed -re 's/\.[^\.]*$//')
 
 			echo "-- extracting audio as PCM S16LE WAV"
-			avconv -threads 4 -i "${ORIG}" -vn -acodec pcm_s16le "${BASE}-audio-preres.wav" || die "error: avconv"
+			$ffmpeg -threads 4 -i "${ORIG}" -vn -acodec pcm_s16le "${BASE}-audio-preres.wav" || die "error: $ffmpeg"
 
 			echo "-- resampling audio to 48000 Hz"
 			sox "${BASE}-audio-preres.wav" -V -e signed-integer -r 48000 "${BASE}-audio.wav" || die "error: sox"
 			rm -v "${BASE}-audio-preres.wav" || die "error: unable to rm extracted audio"
 
 			echo "-- normalizing audio (stay calm, using peak value!)"
-			normalize-audio --peak "${BASE}-audio.wav" || die "error: unable to normalize-audio"
+			$normalize --peak "${BASE}-audio.wav" || die "error: unable to $normalize"
 
 			echo "-- compressing audio using AAC encoder by Nero"
 			neroAacEnc -if "${BASE}-audio.wav" -of "${BASE}-audio.mp4" || die "error: unable to compress audio"
 			rm -v "${BASE}-audio.wav" || die "error: unable to rm normalized audio"
 
 			echo "-- compressing video using x264 (level 3.1)"
-			x264 --preset veryslow --tune film --crf 25 --vbv-maxrate 17500 --vbv-bufsize 17500 --level 3.1 -o "${BASE}-video.mp4" "${ORIG}" || die "error: x264 failed"
+			#x264 --preset veryslow --tune film --crf 25 --vbv-maxrate 17500 --vbv-bufsize 17500 --level 3.1 -o "${BASE}-video.mp4" "${ORIG}" || die "error: x264 failed"
+			x264 --preset veryslow --tune film --crf 21 --level 3.1 -o "${BASE}-video.mp4" "${ORIG}" || die "error: x264 failed"
 
 			echo "-- adding video to MP4 container"
 			MP4Box -add "${BASE}-video.mp4" "${BASE}.mp4" || die "error: MP4Box failed"
