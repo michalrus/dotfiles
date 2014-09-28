@@ -5,9 +5,12 @@ export LANG=en_US.UTF-8
 export LANGUAGE=en_US:en
 export LC_PAPER="en_GB.UTF-8"
 
-[ -d "/usr/local/bin" ] && export PATH="/usr/local/bin:${PATH}"
-[ -d "${HOME}/.bin" ] && export PATH="${HOME}/.bin:${PATH}"
-[ -d "${HOME}/bin" ] && export PATH="${HOME}/bin:${PATH}"
+[ -d "/usr/local/bin"     ] && export PATH="/usr/local/bin:${PATH}"
+[ -d "${HOME}/bin"        ] && export PATH="${HOME}/bin:${PATH}"
+[ -d "${HOME}/.cabal/bin" ] && export PATH="${HOME}/.cabal/bin:${PATH}"
+
+export PATH="${HOME}/.bin:${PATH}"
+export WINELOADER="${HOME}/.bin/wine"
 
 export EDITOR='nano'
 export VISUAL='nano'

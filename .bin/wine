@@ -1,0 +1,9 @@
+#!/bin/sh
+
+if [ -z "${WINEPREFIX}" ] ; then
+  echo 'WINEPREFIX environment variable is not set.' >&2
+  echo 'Will not use the default. Aborting.' >&2
+  exit -1
+fi
+
+exec nonet /usr/bin/wine "$@"
