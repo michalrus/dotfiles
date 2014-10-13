@@ -46,6 +46,7 @@ alias nano='nano -UwT 4'
 alias nchmod='chmod -R u=rwX,g=rX,o=rX'
 alias pchmod='chmod -R u=rwX,g=,o='
 alias clear='for i in $(seq 25) ; do echo ; done && clear'
+alias grep='grep --color=always -E'
 
 alias indent='indent -kr -ci2 -cli2 -i2 -l80 -nut'
 
@@ -92,4 +93,8 @@ d () {
 	elif [ $MSHELL_SYS = 'bsd' ] ; then
 		$MSHELL_LS -lhG $($HIDDEN && echo "-A") "$@"
 	fi
+}
+
+dl () {
+	d "$@" | less -S -R -I
 }
