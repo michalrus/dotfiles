@@ -1,0 +1,11 @@
+#!/bin/sh
+
+if [ "$1" == "pull" ] ; then
+  echo 'git: '\''pull'\'' is deliberately disabled.'
+  echo
+  echo 'Merge manually after using:'
+  echo '	git fetch'
+  exit 1
+else
+  exec /usr/bin/git "$@"
+fi
