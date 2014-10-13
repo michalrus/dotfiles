@@ -3,7 +3,7 @@
 if [ "$1" == "pull" ] ; then
   echo 'git: '\''pull'\'' is deliberately disabled.'
   echo
-  echo 'Merge manually after using:'
+  echo 'Merge/rebase manually after issuing:'
   echo '	git fetch'
   exit 1
 else
