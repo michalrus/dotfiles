@@ -1,0 +1,48 @@
+#!/bin/sh
+
+function die () {
+  echo "$@" >&2
+  exit -1
+}
+
+[ $# -ne 5 ] && die "Usage: $0 <url> <name> <surname> <date> <retry-every-n-sec>"
+
+function nohtml () {
+  cat | sed 's/<[^>]\+>/ /g' | sed -r 's/\s+/ /g' | sed -r 's/^\s+|\s+$//g' | grep -v '^$'
+}
+
+function xcurl () {
+  [ $# -le 1 ] && die 'curl: argc?'
+  local cookiejar="$1"
+  shift
+
+  curl '-#' --fail --location --connect-timeout 5 --cookie "$cookiejar" --cookie-jar "$cookiejar" "$@"
+}
+
+function gooo () {
+  [ $# -ne 4 ] && die 'gooo: argc?'
+  local url="$1"
+  local name="$2"
+  local surname="$3"
+  local date="$4"
+
+  echo '——— (re)trying…'
+
+  local cookiejar=$(mktemp)
+
+  token=$(xcurl "$cookiejar" -L "$url" | grep -E 'name="token"' | grep -Eio '[0-9a-z]{20,}')
+
+  xcurl "$cookiejar" "$url" --data \
+    "name=${name}&surname=${surname}&date=${date}&token=${token}" | nohtml | grep -Ei 'zapisan'
+  local rv=$?
+
+  rm "$cookiejar"
+
+  echo
+  [ $rv -eq 0 ] && die '——— Success!'
+}
+
+while true ; do
+  gooo "$1" "$2" "$3" "$4"
+  sleep "$5"
+done
