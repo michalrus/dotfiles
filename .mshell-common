@@ -22,3 +22,6 @@ export DEBEMAIL=m@michalrus.com
 export DEBFULLNAME="Michal Rus"
 
 export CHROMIUM_USER_FLAGS='--ssl-version-min=tls1'
+
+# needed for ~/.XCompose in GNOME using en-US.UTF-8 locale
+export GTK_IM_MODULE=xim
