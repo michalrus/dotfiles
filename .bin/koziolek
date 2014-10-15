@@ -5,44 +5,30 @@ function die () {
   exit -1
 }
 
-[ $# -ne 5 ] && die "Usage: $0 <url> <name> <surname> <date> <retry-every-n-sec>"
+[ $# -eq 5 ] || die "Usage: $0 <url> <name> <surname> <date> <retry-every-n-sec>"
 
 function nohtml () {
   cat | sed 's/<[^>]\+>/ /g' | sed -r 's/\s+/ /g' | sed -r 's/^\s+|\s+$//g' | grep -v '^$'
 }
 
-function xcurl () {
-  [ $# -le 1 ] && die 'curl: argc?'
-  local cookiejar="$1"
-  shift
-
-  curl '-#' --fail --location --connect-timeout 5 --cookie "$cookiejar" --cookie-jar "$cookiejar" "$@"
+function curl () {
+  local cj=$1 ; shift ; /usr/bin/curl '-#' --fail --location --connect-timeout 5 --cookie "$cj" --cookie-jar "$cj" "$@"
 }
 
-function gooo () {
-  [ $# -ne 4 ] && die 'gooo: argc?'
-  local url="$1"
-  local name="$2"
-  local surname="$3"
-  local date="$4"
+function try () {
+  [ $# -ne 4 ] && die 'Wtf?'
 
   echo '——— (re)trying…'
 
-  local cookiejar=$(mktemp)
+  local ckjar=$(mktemp)
+  local token=$(curl "$ckjar" "$1" | grep -E 'name="token"' | grep -Eio '[0-9a-z]{20,}')
+  local reslt=$(curl "$ckjar" "$1" --data "name=${2}&surname=${3}&date=${4}&token=${token}" | nohtml | grep -Ei 'zapisan')
+  rm "$ckjar"
 
-  token=$(xcurl "$cookiejar" -L "$url" | grep -E 'name="token"' | grep -Eio '[0-9a-z]{20,}')
-
-  xcurl "$cookiejar" "$url" --data \
-    "name=${name}&surname=${surname}&date=${date}&token=${token}" | nohtml | grep -Ei 'zapisan'
-  local rv=$?
-
-  rm "$cookiejar"
-
-  echo
-  [ $rv -eq 0 ] && die '——— Success!'
+  echo && [ -n "$reslt" ] && echo "$reslt" && die '——— Success!'
 }
 
 while true ; do
-  gooo "$1" "$2" "$3" "$4"
+  try "$1" "$2" "$3" "$4"
   sleep "$5"
 done
