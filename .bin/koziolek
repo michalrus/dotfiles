@@ -12,20 +12,23 @@ function nohtml () {
 }
 
 function curl () {
-  local cj=$1 ; shift ; /usr/bin/curl '-#' --fail --location --connect-timeout 5 --cookie "$cj" --cookie-jar "$cj" "$@"
+  local cj=$1 ; shift ; /usr/bin/curl --silent --show-error --fail --location --connect-timeout 7 --cookie "$cj" --cookie-jar "$cj" "$@"
 }
 
 function try () {
   [ $# -ne 4 ] && die 'Wtf?'
 
   echo '——— (re)trying…'
+  echo "date  \"$(date)\""
 
   local ckjar=$(mktemp)
   local token=$(curl "$ckjar" "$1" | grep -E 'name="token"' | grep -Eio '[0-9a-z]{20,}')
-  local reslt=$(curl "$ckjar" "$1" --data "name=${2}&surname=${3}&date=${4}&token=${token}" | nohtml | grep -Ei 'zapisan')
+  echo "token \"$token\""
+  [ -n "$token" ] && local reslt=$(curl "$ckjar" "$1" --data "name=${2}&surname=${3}&date=${4}&token=${token}" | nohtml | grep -Ei 'zapisan')
   rm "$ckjar"
 
-  echo && [ -n "$reslt" ] && echo "$reslt" && die '——— Success!'
+  [ -n "$reslt" ] && echo "reslt \"$reslt\"" && die '——— Success!'
+  echo
 }
 
 while true ; do
