@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ "$1" == "pull" ] ; then
+if [ "$1" = "pull" ] ; then
   echo 'git: '\''pull'\'' is deliberately disabled.'
   echo
   echo 'Merge/rebase manually after issuing:'
