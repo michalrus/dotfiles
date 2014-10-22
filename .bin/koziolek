@@ -1,21 +1,21 @@
 #!/bin/sh
 
-function die () {
+die () {
   echo "$@" >&2
-  exit -1
+  exit 1
 }
 
 [ $# -eq 5 ] || die "Usage: $0 <url> <name> <surname> <date> <retry-every-n-sec>"
 
-function nohtml () {
+nohtml () {
   cat | sed 's/<[^>]\+>/ /g' | sed -r 's/\s+/ /g' | sed -r 's/^\s+|\s+$//g' | grep -v '^$'
 }
 
-function curl () {
+curl () {
   local cj=$1 ; shift ; /usr/bin/curl --silent --show-error --fail --location --connect-timeout 7 --cookie "$cj" --cookie-jar "$cj" "$@"
 }
 
-function try () {
+try () {
   [ $# -ne 4 ] && die 'Wtf?'
 
   echo '——— (re)trying…'
