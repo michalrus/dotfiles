@@ -13,5 +13,6 @@
 	ui = true
 [merge]
 	conflictstyle = diff3
+	defaultToUpstream = true
 [push]
 	default = nothing
