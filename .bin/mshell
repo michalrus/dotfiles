@@ -1,4 +1,21 @@
 #!/bin/sh
 
-curl -L -o "${HOME}/.mshell.tgz" 'https://michalrus.com/mshell' && \
-  tar -xzvf "${HOME}/.mshell.tgz" --no-same-owner -C "${HOME}/"
+die() {
+  echo 'fatal:' "$@" >&2
+  exit 1
+}
+
+ftar="${HOME}/.mshell.tgz"
+floc="${HOME}/.mshell-local"
+
+curl -L -o "$ftar" 'https://michalrus.com/mshell' || die "curl"
+
+echo
+
+tar -xzvf "$ftar" --no-same-owner -C "${HOME}/" || die "tar"
+
+if [ -x "$floc" ] ; then
+  echo
+  echo "Executing local mods..."
+  "$floc" && echo 'done.'
+fi
