@@ -23,8 +23,7 @@ EOF
 # Include all `*.nanorc`s in your own one.
 #
 
-echo -n > "${HOME}/.nanorc"
-ls /usr/share/nano/*.nanorc 2>/dev/null | while read f ; do echo "include \"$f\"" >> "${HOME}/.nanorc" ; done
+recreate-nanorc
 
 # Add AdBlock to your Google Chrome:
 #
