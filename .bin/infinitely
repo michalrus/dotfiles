@@ -1,0 +1,10 @@
+#!/bin/sh
+
+[ "$#" -eq 0 ] && {
+  echo "usage: $0 <command>[ <arg1>[ <arg2>[ ...]]]" >&2
+  exit 1
+}
+
+while true ; do
+  "$@" || break
+done
