@@ -1,27 +1,11 @@
-. ~/.mshell-common
-
-if [ -e /etc/bash_completion ] ; then
-	. /etc/bash_completion
-fi
-
-if [ -e /usr/share/git/completion/git-prompt.sh ] ; then
-	. /usr/share/git/completion/git-prompt.sh
-fi
-
 unalias -a
 
-HAVE_GIT_PS='no'
+. ~/.mshell-common
 
-if ( __git_ps1 >/dev/null 2>&1 ); then
-	HAVE_GIT_PS='yes'
-	export GIT_PS1_SHOWDIRTYSTATE=1
-	export GIT_PS1_SHOWSTASHSTATE=1
-	export GIT_PS1_SHOWUNTRACKEDFILES=1
-	export GIT_PS1_SHOWUPSTREAM='verbose'
-fi
+. /etc/bash_completion 2>/dev/null
 
 my_git_ps() {
-	if [ "$HAVE_GIT_PS" == 'yes' ] ; then
+	if [ "$MSHELL_HAS_GIT_PS" == 'yes' ] ; then
 		local tmp="$(__git_ps1 '%s')"
 		if [ -n "${tmp}" ] ; then
 			local d="\e[1;${1}m"
@@ -31,27 +15,11 @@ my_git_ps() {
 	fi
 }
 
-MSHELL_HOSTNAME=$(ischroot 2>/dev/null && cat /etc/hostname || echo '\h')
-
 if [ "$EUID" -eq 0 ] ; then
 	PS1='\[\033[01;35m\]\u\[\033[01;31m\]@\[\033[01;35m\]'$MSHELL_HOSTNAME'\[\033[31;01m\]:\[\033[01;35m\]\w$(my_git_ps 31 35)\[\033[31;01m\]\$\[\033[00m\] '
 else
 	PS1='\[\033[01;36m\]\u\[\033[01;34m\]@\[\033[01;36m\]'$MSHELL_HOSTNAME'\[\033[34;01m\]:\[\033[01;36m\]\w$(my_git_ps 34 36)\[\033[34;01m\]\$\[\033[00m\] '
 fi
-
-alias mshell='curl -L -o "${HOME}/.mshell.tgz" "https://michalrus.com/mshell" && tar -xzvf "${HOME}/.mshell.tgz" --no-same-owner -C "${HOME}/"'
-
-alias s='exec screen -d -r'
-alias nano='nano -UwT 4'
-alias nchmod='chmod -R u=rwX,g=rX,o=rX'
-alias pchmod='chmod -R u=rwX,g=,o='
-alias clear='for i in $(seq 25) ; do echo ; done && clear'
-alias grep='grep --color=always -E'
-
-alias indent='indent -kr -ci2 -cli2 -i2 -l80 -nut'
-
-alias j='TZ=Europe/Warsaw j'
-alias ren='TZ=Europe/Warsaw ren'
 
 MSHELL_SYS='?'
 MSHELL_GNU=false

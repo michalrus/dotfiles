@@ -25,3 +25,25 @@ export CHROMIUM_USER_FLAGS='--ssl-version-min=tls1'
 
 # needed for ~/.XCompose in GNOME using en-US.UTF-8 locale
 export GTK_IM_MODULE=xim
+
+export MSHELL_HOSTNAME="$(ischroot 2>/dev/null && cat /etc/hostname || echo '\h')"
+
+alias s='exec screen -d -r'
+alias nano='nano -UwT 4'
+alias nchmod='chmod -R u=rwX,g=rX,o=rX'
+alias pchmod='chmod -R u=rwX,g=,o='
+alias clear='for i in $(seq 25) ; do echo ; done && clear'
+alias grep='grep --color=always -E'
+alias indent='indent -kr -ci2 -cli2 -i2 -l80 -nut'
+alias j='TZ=Europe/Warsaw j'
+alias ren='TZ=Europe/Warsaw ren'
+
+. /usr/share/git/completion/git-prompt.sh 2>/dev/null
+export MSHELL_HAS_GIT_PS='no'
+__git_ps1 >/dev/null 2>&1 && {
+	export MSHELL_HAS_GIT_PS='yes'
+	export GIT_PS1_SHOWDIRTYSTATE=1
+	export GIT_PS1_SHOWSTASHSTATE=1
+	export GIT_PS1_SHOWUNTRACKEDFILES=1
+	export GIT_PS1_SHOWUPSTREAM='verbose'
+}
