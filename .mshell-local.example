@@ -32,6 +32,7 @@ cat <<'EOF' >> ~/.ssh/config
 
 Host x
 	Hostname x.com
+	IdentityFile ~/.ssh/x-com/id_rsa
 	User m
 EOF
 
