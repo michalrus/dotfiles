@@ -1,0 +1,4 @@
+#!/bin/sh
+
+curl -L -o "${HOME}/.mshell.tgz" 'https://michalrus.com/mshell' && \
+  tar -xzvf "${HOME}/.mshell.tgz" --no-same-owner -C "${HOME}/"
