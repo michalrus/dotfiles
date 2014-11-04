@@ -12,7 +12,3 @@ bind - resize -3
 bind = resize +3
 bind + resize =
 
-shell "/bin/bash"
-
-screen -t 'ssh'       0 bash
-screen -t '~'         1 bash -c 'cd ~ ; exec bash'
