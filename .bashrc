@@ -1,12 +1,20 @@
 unalias -a
 
-shopt -s checkwinsize
-
 . ~/.mshell-common
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+shopt -s checkwinsize
 
 [ -r /etc/bash_completion ] && . /etc/bash_completion
 
 [ -r /usr/share/doc/pkgfile/command-not-found.bash ] && . /usr/share/doc/pkgfile/command-not-found.bash
+
+[ -r /usr/share/git/completion/git-prompt.sh ] && . /usr/share/git/completion/git-prompt.sh
+
+export MSHELL_HAS_GIT_PS='no'
+__git_ps1 >/dev/null 2>&1 && export MSHELL_HAS_GIT_PS='yes'
 
 my_git_ps() {
 	if [ "$MSHELL_HAS_GIT_PS" == 'yes' ] ; then
