@@ -1,8 +1,12 @@
 unalias -a
 
+shopt -s checkwinsize
+
 . ~/.mshell-common
 
-[ -e /etc/bash_completion ] && . /etc/bash_completion
+[ -r /etc/bash_completion ] && . /etc/bash_completion
+
+[ -r /usr/share/doc/pkgfile/command-not-found.bash ] && . /usr/share/doc/pkgfile/command-not-found.bash
 
 my_git_ps() {
 	if [ "$MSHELL_HAS_GIT_PS" == 'yes' ] ; then
