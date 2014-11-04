@@ -6,8 +6,6 @@ bell_msg ""
 altscreen on
 defscrollback 10000
 
-# escape ^Ee
-
 bind - resize -3
 bind = resize +3
 bind + resize =

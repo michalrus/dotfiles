@@ -5,7 +5,35 @@
 # This script will be called at the very end of `~/.bin/mshell`.
 #
 
-cat <<EOF >> "${HOME}/.screenrc"
-screen -t 'ssh'       0 bash
-screen -t '~'         1 bash -c 'cd ~ ; exec bash'
+cat <<'EOF' >> "${HOME}/.screenrc"
+escape ^Ee
+screen -t 'ssh'       0 $SHELL
+screen -t 'mtr'       1 infinitely mtr 8.8.8.8
+screen -t 'htop'      2 infinitely htop
 EOF
+
+# If you're using `screen`, you'll probably want to add:
+#
+#   @reboot screen -wipe
+#   @reboot screen -dmS m
+#
+# … to your crontab with `$ crontab -e`.
+#
+
+# Add AdBlock to your Google Chrome:
+#
+#   → http://getadblock.com/
+#   → https://michalrus.com/adblock.txt
+#
+
+# To reverse all scrolling devices:
+#
+
+echo 'pointer = 1 2 3 5 4 7 6 8 9 10 11 12' >> ~/.Xmodmap
+
+# However, to TRULY (in all GNOME windows) reverse scrollin on a TOUCH device:
+#
+#   $ xinput list
+#   $ xinput list-props <ID> | grep -i scroll
+#   $ xinput set-prop <ID> <PROP-ID> -<previous1> -<previous2>
+#
