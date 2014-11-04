@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# Copy this file to `~/.mshell-local` and modify this copy to suit your needs.
+#
+# This script will be called at the very end of `~/.bin/mshell`.
+#
+
+cat <<EOF >> "${HOME}/.screenrc"
+screen -t 'ssh'       0 bash
+screen -t '~'         1 bash -c 'cd ~ ; exec bash'
+EOF
