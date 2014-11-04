@@ -38,7 +38,7 @@ alias indent='indent -kr -ci2 -cli2 -i2 -l80 -nut'
 alias j='TZ=Europe/Warsaw j'
 alias ren='TZ=Europe/Warsaw ren'
 
-. /usr/share/git/completion/git-prompt.sh 2>/dev/null
+[ -f /usr/share/git/completion/git-prompt.sh ] && . /usr/share/git/completion/git-prompt.sh
 export MSHELL_HAS_GIT_PS='no'
 __git_ps1 >/dev/null 2>&1 && {
 	export MSHELL_HAS_GIT_PS='yes'

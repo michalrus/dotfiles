@@ -2,7 +2,7 @@ unalias -a
 
 . ~/.mshell-common
 
-. /etc/bash_completion 2>/dev/null
+[ -e /etc/bash_completion ] && . /etc/bash_completion
 
 my_git_ps() {
 	if [ "$MSHELL_HAS_GIT_PS" == 'yes' ] ; then
