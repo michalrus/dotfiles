@@ -14,6 +14,8 @@ EOF
 
 # If you're using `screen`, you'll probably want to add:
 #
+#   SHELL=/bin/bash
+#
 #   @reboot screen -wipe
 #   @reboot screen -dmS m
 #
