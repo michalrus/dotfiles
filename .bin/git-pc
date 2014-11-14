@@ -1,0 +1,7 @@
+#!/bin/sh
+
+tl="$(git rev-parse --show-toplevel)" || exit 1
+
+hook="$tl"/.git/hooks/pre-commit
+
+[ -x "$hook" ] && "$hook" || exit 1
