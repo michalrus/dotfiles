@@ -28,7 +28,6 @@ export GTK_IM_MODULE=xim
 
 export MSHELL_HOSTNAME="$(ischroot 2>/dev/null && cat /etc/hostname || echo '\h')"
 
-alias g='git'
 alias s='screen -d -r ; exit'
 alias nano='nano -UwT 4'
 alias nchmod='chmod -R u=rwX,g=rX,o=rX'
