@@ -15,8 +15,8 @@ setopt HIST_IGNORE_DUPS
 setopt APPEND_HISTORY
 setopt EXTENDED_HISTORY
 export HISTFILE=~/.zsh_history
-export HISTSIZE=2000
-export SAVEHIST=2000
+export HISTSIZE=100000
+export SAVEHIST=$HISTSIZE
 
 . ~/.local/share/git-prompt.sh
 

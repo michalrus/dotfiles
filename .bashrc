@@ -7,6 +7,12 @@ unalias -a
 
 shopt -s checkwinsize
 
+shopt -s histappend
+export HISTFILE=~/.bash_history
+export HISTCONTROL=ignoredups:erasedups
+export HISTSIZE=100000
+export HISTFILESIZE=$HISTSIZE
+
 [ -r /etc/bash_completion ] && . /etc/bash_completion
 
 [ -r /usr/share/doc/pkgfile/command-not-found.bash ] && . /usr/share/doc/pkgfile/command-not-found.bash
