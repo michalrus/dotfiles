@@ -11,7 +11,7 @@ shopt -s checkwinsize
 
 [ -r /usr/share/doc/pkgfile/command-not-found.bash ] && . /usr/share/doc/pkgfile/command-not-found.bash
 
-[ -r /usr/share/git/completion/git-prompt.sh ] && . /usr/share/git/completion/git-prompt.sh
+. ~/.local/share/git-prompt.sh
 
 export MSHELL_HAS_GIT_PS='no'
 __git_ps1 >/dev/null 2>&1 && export MSHELL_HAS_GIT_PS='yes'
