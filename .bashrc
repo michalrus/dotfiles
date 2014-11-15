@@ -28,48 +28,6 @@ else
 	PS1='\[\033[01;36m\]\u\[\033[01;34m\]@\[\033[01;36m\]'$MSHELL_HOSTNAME'\[\033[34;01m\]:\[\033[01;36m\]\w$(my_git_ps 34 36)\[\033[34;01m\]\$\[\033[00m\] '
 fi
 
-MSHELL_SYS='?'
-MSHELL_GNU=false
+export CLICOLOR='1'
 
-if ( uname | grep -i linux >/dev/null ); then
-	MSHELL_SYS='linux'
-	MSHELL_GNU=true
-elif ( uname | grep -i darwin >/dev/null ); then
-	MSHELL_SYS='macosx'
-	( which gls >/dev/null ) && MSHELL_GNU=true
-elif ( uname | grep -i bsd >/dev/null ) ; then
-	MSHELL_SYS='bsd'
-elif ( uname | grep -i mingw >/dev/null ) ; then
-	MSHELL_SYS='windows'
-elif ( uname | grep -i cygwin >/dev/null ); then
-	MSHELL_SYS='cygwin'
-	MSHELL_GNU=true
-fi
-
-MSHELL_LS='ls'
-
-if ( $MSHELL_GNU ) ; then
-	eval "$(dircolors "${HOME}/.dircolors")"
-	[ $MSHELL_SYS = 'macosx' ] && MSHELL_LS='gls'
-elif [ $MSHELL_SYS = 'macosx' ] ; then
-	export CLICOLOR='1'
-fi
-
-d () {
-	local HIDDEN=true
-	[ "$PWD" = "$HOME" ] && [ $# -eq 0 ] && local HIDDEN=false
-
-	if ( $MSHELL_GNU ) ; then
-		$MSHELL_LS --color --group-directories-first -lh $($HIDDEN && echo "-A") "$@"
-	elif [ $MSHELL_SYS = 'macosx' ] ; then
-		$MSHELL_LS -lhG $($HIDDEN && echo "-A") "$@"
-	elif [ $MSHELL_SYS = 'windows' ] ; then
-		$MSHELL_LS --color -lh $($HIDDEN && echo "-A") "$@"
-	elif [ $MSHELL_SYS = 'bsd' ] ; then
-		$MSHELL_LS -lhG $($HIDDEN && echo "-A") "$@"
-	fi
-}
-
-dl () {
-	d "$@" | less -S -R -I
-}
+command -v dircolors >/dev/null && eval "$(dircolors ~/.dircolors)"

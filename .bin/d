@@ -1,0 +1,24 @@
+#!/bin/sh
+
+HIDDEN=true
+[ "$PWD" = "$HOME" ] && [ $# -eq 0 ] && HIDDEN=false
+
+gnu() {
+  local LS="$1"
+  shift
+  "$LS" --color --group-directories-first -lh $($HIDDEN && echo "-A") "$@"
+}
+
+bsd() {
+  ls -lhG $($HIDDEN && echo "-A") "$@"
+}
+
+if uname | grep -qi linux ; then
+  gnu ls "$@"
+elif uname | grep -qi darwin ; then
+  command -v gls >/dev/null && gnu gls "$@" || bsd "$@"
+elif uname | grep -qi bsd ; then
+  bsd "$@"
+elif uname | grep -qi mingw ; then
+  ls --color -lh $($HIDDEN && echo "-A") "$@"
+fi
