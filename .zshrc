@@ -9,6 +9,7 @@ unalias -m '*'
 
 autoload -U compinit && compinit
 zstyle ':completion:*' menu select
+zstyle ':completion:*:hosts' hosts ''
 setopt completealiases
 
 setopt HIST_IGNORE_DUPS
