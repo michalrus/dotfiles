@@ -15,6 +15,9 @@ export WINELOADER="${HOME}/.bin/wine"
 export EDITOR='nano'
 export VISUAL='nano'
 
+export CLICOLOR='1'
+command -v dircolors >/dev/null && eval "$(dircolors ~/.dircolors)"
+
 export ANDROID_HOME="${HOME}/.local/opt/android-sdk"
 export ANDROID_NDK_HOME="${HOME}/.local/opt/android-ndk"
 
@@ -26,7 +29,7 @@ export CHROMIUM_USER_FLAGS='--ssl-version-min=tls1'
 # needed for ~/.XCompose in GNOME using en-US.UTF-8 locale
 export GTK_IM_MODULE=xim
 
-export MSHELL_HOSTNAME="$(ischroot 2>/dev/null && cat /etc/hostname || echo '\h')"
+export __mshell_hostname="$(ischroot 2>/dev/null && cat /etc/hostname || hostname)"
 
 alias s='screen -d -r ; exit'
 alias nano='nano -UwT 4'
