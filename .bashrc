@@ -13,17 +13,12 @@ shopt -s checkwinsize
 
 . ~/.local/share/git-prompt.sh
 
-export MSHELL_HAS_GIT_PS='no'
-__git_ps1 >/dev/null 2>&1 && export MSHELL_HAS_GIT_PS='yes'
-
 my_git_ps() {
-	if [ "$MSHELL_HAS_GIT_PS" == 'yes' ] ; then
-		local tmp="$(__git_ps1 '%s')"
-		if [ -n "${tmp}" ] ; then
-			local d="\e[1;${1}m"
-			local l="\e[0;${2}m"
-			echo -e "${d}:(${l}${tmp}${d})"
-		fi
+	local tmp="$(__git_ps1 '%s')"
+	if [ -n "${tmp}" ] ; then
+		local d="\e[1;${1}m"
+		local l="\e[0;${2}m"
+		echo -e "${d}:(${l}${tmp}${d})"
 	fi
 }
 
