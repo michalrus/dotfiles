@@ -9,5 +9,3 @@
 "\e[4~": end-of-line          # End
 "\e[5~": beginning-of-history # PgUp
 "\e[6~": end-of-history       # PgDn
-
-"\e[24~":   # F12

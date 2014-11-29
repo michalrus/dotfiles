@@ -68,8 +68,3 @@ bindkey "\e[3~" delete-char
 bindkey "\e[4~" end-of-line
 bindkey "\e[5~" beginning-of-buffer-or-history
 bindkey "\e[6~" end-of-buffer-or-history
-
-ignore-widget() {
-}
-zle -N ignore-widget
-bindkey "\e[24~" ignore-widget    # F12
