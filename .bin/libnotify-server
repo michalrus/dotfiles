@@ -1,0 +1,51 @@
+#!/usr/bin/perl -w
+
+# based on https://github.com/itsamenathan/libnotify-over-ssh
+
+use strict;
+use warnings;
+
+use IO::Socket;
+use File::Basename;
+use Cwd 'abs_path';
+
+my $scriptpath = dirname(abs_path($0));
+
+my $HOST = '127.0.0.1';
+my $PORT = '1216';
+
+my $socket = IO::Socket::INET->new('LocalPort' => $PORT, 'Proto' => 'tcp', 'Listen' => 4) or die "Can't create socket ($!)\n";
+
+while (my $client = $socket->accept) {
+  my ($tag, $title, $summary, $x, $ok);
+  $ok = 0;
+  while (my $buf = <$client>) {
+    chomp $buf;
+    $x++;
+    if ($x == 1) { $tag = $buf; }
+    if ($x == 2) { $title = $buf; }
+    if ($x == 3) { $summary = $buf; $ok = 1; }
+    if ($x >= 4) { $summary .= "\n" . $buf; }
+  }
+  message($tag, $title, $summary) if ($ok);
+  close $client or die "Can't close ($!)\n";
+}
+
+sub sanitize {
+  my ($r) = @_;
+  $r =~ s/&/&amp;/g;
+  $r =~ s/</&lt;/g;
+  $r =~ s/>/&gt;/g;
+  return $r;
+}
+
+sub message {
+  my ($tag, $title, $summary) = @_;
+  $title = sanitize($title);
+  $summary = sanitize($summary);
+
+  #if ($tag eq 'system'){
+    my @args = ('/usr/bin/notify-send', '-h', 'int:transient:1', $title, $summary);
+    system @args;
+  #}
+}
