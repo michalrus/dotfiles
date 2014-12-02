@@ -17,17 +17,35 @@ my $PORT = '1216';
 my $socket = IO::Socket::INET->new('LocalPort' => $PORT, 'Proto' => 'tcp', 'Listen' => 4) or die "Can't create socket ($!)\n";
 
 while (my $client = $socket->accept) {
-  my ($tag, $title, $summary, $x, $ok);
-  $ok = 0;
-  while (my $buf = <$client>) {
-    chomp $buf;
-    $x++;
-    if ($x == 1) { $tag = $buf; }
-    if ($x == 2) { $title = $buf; }
-    if ($x == 3) { $summary = $buf; $ok = 1; }
-    if ($x >= 4) { $summary .= "\n" . $buf; }
-  }
-  message($tag, $title, $summary) if ($ok);
+  eval {
+    local $SIG{ALRM} = sub { die 'timeout'; };
+    alarm 3; # 3 seconds time-out for ALL communication
+    if (defined(my $cmd = <$client>)) {
+      $cmd =~ s/\s+$//g;
+      if ($cmd eq "ping") {
+        $client->send("pong\r\n");
+      }
+      elsif ($cmd eq "notify") {
+        my ($tag, $summary, $body);
+        my $ok = 0;
+        my $x = 0;
+        while (($ok == 0) && (my $buf = <$client>)) {
+          $buf =~ s/\s+$//g;
+          $x++;
+          if    ($x == 1) { $tag = $buf; }
+          elsif ($x == 2) { $summary = $buf; }
+          else            { $body = $buf; $ok = 1; }
+        }
+        message($tag, $summary, $body) if ($ok);
+        $client->send("ok\n");
+      }
+      else {
+        $client->send("unknown command; possible 2 usages:\n   ping\\n\n   notify\\n\<tag>\\n\<summary>\\n\<body>\\n\n");
+      }
+    }
+    alarm 0;
+  };
+  alarm 0; # race condition protection
   close $client or die "Can't close ($!)\n";
 }
 
@@ -40,12 +58,12 @@ sub sanitize {
 }
 
 sub message {
-  my ($tag, $title, $summary) = @_;
-  $title = sanitize($title);
+  my ($tag, $summary, $body) = @_;
   $summary = sanitize($summary);
+  $body = sanitize($body);
 
   #if ($tag eq 'system'){
-    my @args = ('/usr/bin/notify-send', '-h', 'int:transient:1', $title, $summary);
+    my @args = ('/usr/bin/notify-send', '-h', 'int:transient:1', $summary, $body);
     system @args;
   #}
 }
