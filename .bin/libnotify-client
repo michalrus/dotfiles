@@ -40,6 +40,7 @@ if ($msg) {
     my $resp = <$sock>;
     close $sock;
 
+    die 'invalid' unless (defined($resp));
     $resp =~ s/\s+$//g;
     die 'invalid' unless ($resp eq $expect);
     alarm 0;
