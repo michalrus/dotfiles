@@ -59,7 +59,7 @@ sub sanitize {
 
 sub message {
   my ($tag, $summary, $body) = @_;
-  $summary = sanitize($summary);
+  # $summary = sanitize($summary);   # summary seems to be displayed as-is
   $body = sanitize($body);
 
   #if ($tag eq 'system'){
