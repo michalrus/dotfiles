@@ -34,7 +34,7 @@ export __mshell_hostname="$(ischroot 2>/dev/null && cat /etc/hostname || hostnam
 alias s='screen -d -r ; exit'
 alias nano='nano -UwT 4'
 alias clear='for i in $(seq 100) ; do echo ; done && clear'
-alias grep='grep --color=always -E'
+alias grep='grep --color=auto'
 alias indent='indent -kr -ci2 -cli2 -i2 -l80 -nut'
 alias j='TZ=Europe/Warsaw j'
 alias ren='TZ=Europe/Warsaw ren'
