@@ -63,7 +63,7 @@ sub message {
   $body = sanitize($body);
 
   #if ($tag eq 'system'){
-    my @args = ('/usr/bin/notify-send', '-h', 'int:transient:1', $summary, $body);
+    my @args = ('/usr/bin/notify-send', '-h', 'int:transient:1', '-a', 'libnotify-server', '-i', 'terminal', $summary, $body);
     system @args;
   #}
 }

@@ -7,12 +7,17 @@ die() {
 
 ftar="${HOME}/.mshell.tgz"
 floc="${HOME}/.mshell-local"
+frem="${HOME}/.mshell-removals"
 
 curl -L -o "$ftar" 'https://michalrus.com/mshell' || die "curl"
 
 echo
 
 tar -xzvf "$ftar" --no-same-owner -C "${HOME}/" || die "tar"
+
+cat "$frem" | while IFS= read -r file ; do
+  rm -v "${HOME}/${file}"
+done
 
 if [ -x "$floc" ] ; then
   echo
