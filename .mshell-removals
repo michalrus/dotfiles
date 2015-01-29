@@ -1,1 +1,5 @@
 .config/autostart/libnotify-server.desktop
+.sbtrc
+.mshell-misc
+.Xmodmap
+.bin/batman
