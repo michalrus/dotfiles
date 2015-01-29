@@ -3,3 +3,5 @@
 .mshell-misc
 .Xmodmap
 .bin/batman
+.misc
+.crontab.sample
