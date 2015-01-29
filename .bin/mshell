@@ -15,8 +15,9 @@ echo
 
 tar -xzvf "$ftar" --no-same-owner -C "${HOME}/" || die "tar"
 
+echo
 cat "$frem" | while IFS= read -r file ; do
-  rm -v "${HOME}/${file}"
+  rm -v "${HOME}/${file}" 2>/dev/null
 done
 
 if [ -x "$floc" ] ; then
