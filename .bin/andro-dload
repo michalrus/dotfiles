@@ -33,8 +33,10 @@ which cptime >/dev/null
 
 for dir in "DCIM" "Download" "InCallRecorder" "Pictures" "Snapchat" ; do
   find "$dir" -type d -exec mkdir -p "$local_root/{}" ';'
-  find "$dir" -type f \
-    -exec echo "$mtp_root/{}" ';' \
-    -exec gvfs-copy --progress --preserve "$mtp_root/{}" "$local_root/{}" ';' \
-    -exec cptime "{}" "$local_root/{}" ';'
+  find "$dir" -type f | while IFS= read -r file ; do
+    echo "$mtp_root/$file"
+    urlencoded="$(printf "$file" | perl -pe 's/([^a-zA-Z0-9\/_.-])/sprintf("%%%02X", ord($1))/ge')"
+    gvfs-copy --progress --preserve "$mtp_root/$urlencoded" "$local_root/$file"
+    cptime "$file" "$local_root/$file"
+  done
 done
