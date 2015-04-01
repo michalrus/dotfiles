@@ -68,3 +68,6 @@ bindkey "\e[3~" delete-char
 bindkey "\e[4~" end-of-line
 bindkey "\e[5~" beginning-of-buffer-or-history
 bindkey "\e[6~" end-of-buffer-or-history
+
+bindkey "\e[1;5C" forward-word
+bindkey "\e[1;5D" backward-word
