@@ -1,0 +1,7 @@
+Export:
+ $ sqlite3 ".config/google-chrome/Default/Web Data/Web Data" ".dump keywords" > .chrome-keywords.sql
+
+Import:
+ $ sqlite3 ".config/google-chrome/Default/Web Data"
+ > drop table keywords;
+ > .read .chrome-keywords.sql
