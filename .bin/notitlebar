@@ -1,0 +1,3 @@
+#!/bin/sh
+
+wmctrl -l | cut -d ' ' -f 1 | while read id ; do xprop -id $id -f _GTK_HIDE_TITLEBAR_WHEN_MAXIMIZED 32c -set _GTK_HIDE_TITLEBAR_WHEN_MAXIMIZED 0x1 ; done
