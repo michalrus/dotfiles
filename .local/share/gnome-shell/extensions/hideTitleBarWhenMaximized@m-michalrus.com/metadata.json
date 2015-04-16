@@ -1,1 +1,1 @@
-{"description": "Hides title bar for new windows after they are maximized", "name": "Hide title bar when maximized", "shell-version": ["3.16.0"], "uuid": "hideTitleBarWhenMaximized@m-michalrus.com"}
+{"description": "Hides title bar for new windows after they are maximized", "name": "Hide title bar when maximized", "shell-version": ["3.16.0", "3.16.1"], "uuid": "hideTitleBarWhenMaximized@m-michalrus.com"}
