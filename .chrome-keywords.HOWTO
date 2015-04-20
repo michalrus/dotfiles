@@ -1,5 +1,8 @@
 Export:
- $ sqlite3 ".config/google-chrome/Default/Web Data" ".dump keywords" > .chrome-keywords.sql
+ cp ".config/google-chrome/Default/Web Data" /tmp/kupa
+ sqlite3 /tmp/kupa "update keywords set usage_count = 0"
+ sqlite3 /tmp/kupa ".dump keywords" > .chrome-keywords.sql
+ rm /tmp/kupa
 
 Import:
  $ sqlite3 ".config/google-chrome/Default/Web Data"
