@@ -40,3 +40,16 @@ for dir in "DCIM" "Download" "InCallRecorder" "Pictures" "Snapchat" ; do
     cptime "$file" "$local_root/$file"
   done
 done
+
+cd "$local_root"
+
+find -type d -exec chmod 700 '{}' ';'
+find -type f -exec chmod 600 '{}' ';'
+
+find 'DCIM/Camera' -name '*_*.jpg' -exec j my '{}' ';'
+find 'DCIM/Camera' -name '*.exv' -exec rm '{}' ';'
+find 'DCIM/Camera' -name '*.mp4' -exec ren '{}' ';'
+
+find 'Snapchat' -name 'Snapchat-*.*' -exec ren '{}' ';'
+
+find 'Pictures' '(' -name '*.jpg' -o -name '*.jpeg' -o -name '*.png' ')' -exec ren '{}' ';'
