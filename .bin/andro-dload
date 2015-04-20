@@ -32,6 +32,7 @@ echo "  times \`$(pwd)'"
 which cptime >/dev/null
 
 for dir in "DCIM" "Download" "InCallRecorder" "Pictures" "Snapchat" ; do
+  [ -d "$dir" ] || continue
   find "$dir" -type d -exec mkdir -p "$local_root/{}" ';'
   find "$dir" -type f | while IFS= read -r file ; do
     echo "$mtp_root/$file"
@@ -46,10 +47,10 @@ cd "$local_root"
 find -type d -exec chmod 700 '{}' ';'
 find -type f -exec chmod 600 '{}' ';'
 
-find 'DCIM/Camera' -name '*_*.jpg' -exec j my '{}' ';'
-find 'DCIM/Camera' -name '*.exv' -exec rm '{}' ';'
-find 'DCIM/Camera' -name '*.mp4' -exec ren '{}' ';'
+find 'DCIM/Camera' -name '*_*.jpg' -exec j my '{}' ';' || true
+find 'DCIM/Camera' -name '*.exv' -exec rm '{}' ';' || true
+find 'DCIM/Camera' -name '*.mp4' -exec ren '{}' ';' || true
 
-find 'Snapchat' -name 'Snapchat-*.*' -exec ren '{}' ';'
+find 'Snapchat' -name 'Snapchat-*.*' -exec ren '{}' ';' || true
 
-find 'Pictures' '(' -name '*.jpg' -o -name '*.jpeg' -o -name '*.png' ')' -exec ren '{}' ';'
+find 'Pictures' '(' -name '*.jpg' -o -name '*.jpeg' -o -name '*.png' ')' -exec ren '{}' ';' || true
