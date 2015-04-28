@@ -1,0 +1,67 @@
+==================================================================
+https://keybase.io/michalrus
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://michalrus.com
+  * I am michalrus (https://keybase.io/michalrus) on keybase.
+  * I have a public key with fingerprint 2A3C E42B E22A 3C5E FBFD  C7F8 1341 64FA 6FAF E075
+
+To do so, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "eldest_kid": "0101e1e400f34eaae51bf94f0cf96409c506aff52ebcb19e4238fe8d7dbbae1ca6280a",
+            "fingerprint": "2a3ce42be22a3c5efbfdc7f8134164fa6fafe075",
+            "host": "keybase.io",
+            "key_id": "134164fa6fafe075",
+            "kid": "0101e1e400f34eaae51bf94f0cf96409c506aff52ebcb19e4238fe8d7dbbae1ca6280a",
+            "uid": "1fc6c92e6c1bf37b0bf7d8f12c6c2219",
+            "username": "michalrus"
+        },
+        "service": {
+            "hostname": "michalrus.com",
+            "protocol": "https:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "ctime": 1447928903,
+    "expire_in": 157680000,
+    "prev": "a944342e7f21ffb3f743c8811e2899c783f248427a1ca3d638771c5ecf60866b",
+    "seqno": 4,
+    "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: GnuPG v2
+
+owGtUltIVEEYXktDLUmiFCHEhnzIbDszZ/ZcNiWIIgJ96gJFtM3MmVkP7e7Zzh6t
+WDcqojIiLKzEzAgCnwzJoB6KyqIUUdTuEUlESz0UdEG6UDTH6iV6bF5m5p/v+/7v
+/+dvLZoeKMwxo3T87qaK7pyhNzSwof58fRpQx9oFwmmwjU9tPGbxlBfZZlsgDBSo
+QA45VhShYk4ID0EqTCwUJkwNKyYLKRoRIoQ4ZRSaHCPVENywdItSwiEjGjIUAqqB
+sBNR7iZdO+FJWURUJrGUI/8U4oIKi+nCgCqGGhZEE0RwRQ9JYoOT8hnSHCUpHrQd
+GZOXyJS9f+D/s+/GX3kE05iJuMakjKpThQrdMgREMowQNH1girsJEucSHbdZA4m5
+jSmQqQYy3GQz7nfWL+VvSJA5cclOuo7nMCcmnxo8L5kK+1RvV9LH7uA08lslQu2E
+JTspGU3cTdlOAoShRDLP9mUhxrqJDFNRqwHfmbRdHrF9REjXDEUuPw9vkpLExFjd
+hBHXBYJCUFXoWGWGASGXdJPphioQNjDSieyFammqoetQfhQTmmJoGgV+YdsTDghj
+6ZNEpWbKjiaI1+hykClsyZmfG8gpDMzIm+bPWKCwoPjP4L1V8wP7j5d8z+57VDBJ
+8y/UXu9C95s7JvrmVvc8ES9qg6hr53BxsqMiebpjVtudSQVt/Jx3pGx01HLAnpnL
+hjvXNpHcBcWTFZfO3Dh2k31aBG8ejWVe9dY9TX/KntSnl49U1l1uHrs2x31svHqQ
+HfzR0dtWN7755erylaE2uu5gpd36YU5p2ms5/H5s/uvyoYLLWy9md7fXdG+JaWdF
+f/DEw5GPK87dmnfqeHBVZmzF8v7eI/VH+eSl9s7cpTXxp3SgLPux9MA3pWR9X9XV
+Z6BoYuzQ7OiagfYXEfC1dOHEw9EfZTV77/V82b6y9gS+UFHVEk8Pjr5bElu8LzPQ
+fOV5SevX17d/Ag==
+=m4dz
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/michalrus
+
+==================================================================
