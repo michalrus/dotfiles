@@ -20,9 +20,6 @@ export VISUAL='nano'
 export CLICOLOR='1'
 command -v dircolors >/dev/null && eval "$(dircolors ~/.dircolors)"
 
-export ANDROID_HOME="${HOME}/.local/opt/android-sdk"
-export ANDROID_NDK_HOME="${HOME}/.local/opt/android-ndk"
-
 export DEBEMAIL=m@michalrus.com
 export DEBFULLNAME="Michal Rus"
 
