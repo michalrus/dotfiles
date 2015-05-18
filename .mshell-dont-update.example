@@ -1,8 +1,0 @@
-#
-# If you don't want to update, say ~/.zshrc, move this file to ~/.mshell-dont-update
-# and uncomment the following line:
-#
-#./.zshrc
-#
-# Etc.
-#

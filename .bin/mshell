@@ -7,7 +7,7 @@ die() {
 
 ftar="${HOME}/.mshell.tgz"
 floc="${HOME}/.mshell-local"
-fexc="${HOME}/.mshell-dont-update"
+fexc="${HOME}/.mshell-exclude"
 frem="${HOME}/.mshell-removals"
 
 curl -L -o "$ftar" 'https://michalrus.com/mshell' || die "curl"
