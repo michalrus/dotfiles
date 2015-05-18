@@ -7,13 +7,23 @@ die() {
 
 ftar="${HOME}/.mshell.tgz"
 floc="${HOME}/.mshell-local"
+fexc="${HOME}/.mshell-dont-update"
 frem="${HOME}/.mshell-removals"
 
 curl -L -o "$ftar" 'https://michalrus.com/mshell' || die "curl"
 
 echo
 
-tar -xzvf "$ftar" --no-same-owner -C "${HOME}/" || die "tar"
+{
+  [ -f "$fexc" ] && cat "$fexc" | grep -Ev '^\s*(#|$)' | sed -re 's/\\/\\\\/g' | sed -re 's/'\''/'\''\\'\'''\''/g' | while IFS= read -r exc ; do
+      echo "--exclude=$exc"
+  done
+  echo '-xzvf'
+  echo "$ftar"
+  echo '--no-same-owner'
+  echo '-C'
+  echo "${HOME}/"
+} | tr '\n' '\0' | xargs -0 tar || die "tar"
 
 echo
 cat "$frem" | while IFS= read -r file ; do
