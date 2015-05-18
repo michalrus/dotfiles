@@ -4,5 +4,11 @@
 #
 #./.zshrc
 #
+# Especially, if you're not me, exclude these:
+#
+#./.ssh/authorized_keys.d/michalrus_*
+#
+# And remove the keys!
+#
 # Etc.
 #
