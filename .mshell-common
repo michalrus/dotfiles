@@ -28,7 +28,7 @@ export CHROMIUM_USER_FLAGS='--ssl-version-min=tls1'
 # needed for ~/.XCompose in GNOME using en-US.UTF-8 locale
 export GTK_IM_MODULE=xim
 
-export __mshell_hostname="$(ischroot 2>/dev/null && cat /etc/hostname || hostname)"
+export __mshell_hostname="$( ( ischroot 2>/dev/null && cat /etc/hostname || hostname ) | tr '_' '.')"
 
 alias s='screen -d -r ; exit'
 alias nano='nano -UwT 4'
