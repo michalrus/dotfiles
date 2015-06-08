@@ -1,6 +1,0 @@
-#!/bin/sh
-
-git branch --merged=master | grep -Ev '^\* | master$' | sed -re 's/^\s+|\s+$//g' | while IFS= read -r branch ; do
-  git push origin ":$branch"
-  git branch -d "$branch"
-done
