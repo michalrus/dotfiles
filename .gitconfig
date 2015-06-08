@@ -8,6 +8,8 @@
 	c = diff -M --cached
 	d = diff -M
 	a = add
+	flush = !git-flush
+	pc = !git-pc
 [core]
 	safecrlf = false
 [color]
