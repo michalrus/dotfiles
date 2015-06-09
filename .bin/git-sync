@@ -10,9 +10,18 @@ git checkout master
 
 git fetch --all
 
+git remote | while IFS= read -r remote ; do
+  git remote prune "$remote"
+done
+
 git merge --ff-only
 
-git branch --merged=master | grep -Ev '^\* | master$' | sed -re 's/^\s+|\s+$//g' | while IFS= read -r branch ; do
-  git push origin ":$branch" || true
-  git branch -d "$branch"
+git branch --merged=master | grep -Ev '^\* | master$' | sed -re 's/^\s+|\s+$//g' | while IFS= read -r local_branch ; do
+  upstream="$(git for-each-ref --format="%(upstream:short)" "refs/heads/$local_branch")"
+  if [ -n "$upstream" ] ; then
+    upstream_remote="$(echo "$upstream" | sed -re 's/^([^\/]+)\/(.*)$/\1/')"
+    upstream_branch="$(echo "$upstream" | sed -re 's/^([^\/]+)\/(.*)$/\2/')"
+    git push "$upstream_remote" ":$upstream_branch" || true
+  fi
+  git branch -d "$local_branch"
 done
