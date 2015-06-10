@@ -6,6 +6,8 @@ set -o nounset
 
 [ -n "$(git status --porcelain)" ] && { echo >&2 "error: working directory not clean, exiting" ; exit 1 ; }
 
+previous_ref="$(git symbolic-ref --short HEAD 2>/dev/null || git rev-parse HEAD)"
+
 git checkout master
 
 git fetch --all
@@ -16,6 +18,8 @@ done
 
 git merge --ff-only
 
+# DOUBT: do we really want to delete all merged branches?
+
 git branch --merged=master | grep -Ev '^\* | master$' | sed -re 's/^\s+|\s+$//g' | while IFS= read -r local_branch ; do
   upstream="$(git for-each-ref --format="%(upstream:short)" "refs/heads/$local_branch")"
   if [ -n "$upstream" ] ; then
@@ -25,3 +29,5 @@ git branch --merged=master | grep -Ev '^\* | master$' | sed -re 's/^\s+|\s+$//g'
   fi
   git branch -d "$local_branch"
 done
+
+[ -n "$previous_ref" ] && git rev-parse "$previous_ref" >/dev/null 2>&1 && git checkout "$previous_ref" || true
