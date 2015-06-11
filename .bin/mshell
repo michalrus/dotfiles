@@ -9,6 +9,7 @@ ftar="${HOME}/.mshell.tgz"
 floc="${HOME}/.mshell-local"
 fexc="${HOME}/.mshell-exclude"
 frem="${HOME}/.mshell-removals"
+fnam="${HOME}/.mshell-realname"
 
 curl -L -o "$ftar" 'https://michalrus.com/mshell' || die "curl"
 
@@ -45,3 +46,11 @@ if [ -x "$floc" ] ; then
   echo "Executing local mods..."
   "$floc" && echo 'done.'
 fi
+
+realname="Michal Rus"    # defaults
+email="m@michalrus.com"  # defaults
+[ -f "$fnam" ] && . "$fnam"
+esc_realname="$(echo "$realname" | sed -e 's/[\/&]/\\&/g')"
+esc_email="$(   echo "$email"    | sed -e 's/[\/&]/\\&/g')"
+sed -re "s/MSHELL_REALNAME/$esc_realname/g" -i "${HOME}/.mshell-common" "${HOME}/.gitconfig"
+sed -re "s/MSHELL_EMAIL/$esc_email/g"       -i "${HOME}/.mshell-common" "${HOME}/.gitconfig"

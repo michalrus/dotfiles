@@ -1,6 +1,6 @@
 [user]
-	name = Michal Rus
-	email = m@michalrus.com
+	name = MSHELL_REALNAME
+	email = MSHELL_EMAIL
 [alias]
 	lg  = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --abbrev-commit --date-order
 	lga = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --abbrev-commit --date-order --all

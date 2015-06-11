@@ -6,9 +6,9 @@
 #
 # Especially, if you're not me, exclude these:
 #
-#./.ssh/authorized_keys.d/michalrus_*
+#./.ssh/authorized_keys.d/*
 #
-# And remove the keys!
+# And remove the keys manually!
 #
 # Etc.
 #
