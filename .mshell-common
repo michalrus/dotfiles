@@ -20,8 +20,8 @@ export VISUAL='nano'
 export CLICOLOR='1'
 command -v dircolors >/dev/null && eval "$(dircolors ~/.dircolors)"
 
-export DEBFULLNAME=MSHELL_REALNAME
-export DEBEMAIL=MSHELL_EMAIL
+export DEBFULLNAME="Michal Rus"
+export DEBEMAIL="m@michalrus.com"
 
 export CHROMIUM_USER_FLAGS='--ssl-version-min=tls1'
 
