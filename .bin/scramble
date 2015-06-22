@@ -1,0 +1,36 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use utf8;
+use Encode;
+use List::Util qw(shuffle);
+
+binmode(STDOUT, ":utf8");
+binmode(STDERR, ":utf8");
+binmode(STDIN,  ":utf8");
+
+my $string;
+my $file;
+
+sub randomize_character_order {
+  return join('', shuffle(split '', shift));
+}
+
+sub scramble_word {
+  my $word = shift;
+  $word =~ s/^(.)(.*)(.)$/$1 . randomize_character_order($2) . $3/e;
+  return $word;
+}
+
+sub scramble {
+  my $text = shift;
+  $text =~ s/([\p{L}]+)/scramble_word($1)/ge;
+  return $text;
+}
+
+if (scalar(@ARGV) > 0) {
+  print join(" ", map { Encode::_utf8_on($_); scramble($_) } @ARGV) . "\n";
+} else {
+  print scramble($_) while (<>);
+}
