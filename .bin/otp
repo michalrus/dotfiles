@@ -1,0 +1,13 @@
+#!/bin/sh
+
+set -o noclobber
+set -o nounset
+set -o errexit
+
+[ $# -eq 1 ] || { echo >&2 "otp: usage: otp <service>" ; exit 1 ; }
+
+f="${HOME}/.otp/$1"
+
+[ -f "$f" ] || { echo >&2 "otp: $f: file not found" ; exit 2 ; }
+
+exec oathtool --totp -b "$(cat "$f")"
