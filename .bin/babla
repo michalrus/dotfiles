@@ -14,11 +14,13 @@ sub babla {
   my $text = get("http://en.bab.la/dictionary/polish-english/" . shift);
   $text =~ s/^.*<h4><i class="icon-chevron-right"><\/i>Summary<\/h4>(.*?)<h4><i class="icon-chevron-right"><\/i>Synonyms<\/h4>.*$/$1/gis;
   $text =~ s/<br>/ — /gis;
+  $text =~ s/<\/p>\s*<p>/\0/gis;
   $text =~ s/<.*?>/ /gis;
   $text =~ s/&nbsp;?/ /gis;
   $text =~ s/^\s+|\s+$//gis;
   $text =~ s/\s+/ /gis;
   $text =~ s/\s+full\s+details$//gis;
+  $text =~ s/\s*\0\s*/\n/gis;
   return $text;
 }
 
