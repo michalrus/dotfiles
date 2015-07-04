@@ -20,4 +20,8 @@
 	conflictstyle = diff3
 	defaultToUpstream = true
 [push]
-	default = nothing
+	default = upstream
+[fetch]
+	prune = true
+[pull]
+	ff = true
