@@ -10,19 +10,16 @@ previous_ref="$(git symbolic-ref --short HEAD 2>/dev/null || git rev-parse HEAD)
 
 git checkout master
 
-git fetch --all
-
-git remote | while IFS= read -r remote ; do
-  git remote prune "$remote"
-done
+git fetch --all --prune
 
 git merge --ff-only
 
 # DOUBT: do we really want to delete all merged branches?
 
-git branch --merged=master | grep -Ev '^\* | master$' | sed -re 's/^\s+|\s+$//g' | while IFS= read -r local_branch ; do
+git branch --merged=master | grep -Ev '^\*\s|\smaster$' | sed -re 's/^\s+|\s+$//g' | while IFS= read -r local_branch ; do
   upstream="$(git for-each-ref --format="%(upstream:short)" "refs/heads/$local_branch")"
-  if [ -n "$upstream" ] ; then
+
+  if git show-ref --verify --quiet "refs/remotes/$upstream" ; then
     upstream_remote="$(echo "$upstream" | sed -re 's/^([^\/]+)\/(.*)$/\1/')"
     upstream_branch="$(echo "$upstream" | sed -re 's/^([^\/]+)\/(.*)$/\2/')"
     git push "$upstream_remote" ":$upstream_branch" || true
