@@ -6,7 +6,9 @@ set -o nounset
 
 pwstore="$HOME/.password-store/"
 
-command -v xdotool >/dev/null || { echo >&1 'xdotool: command not found' ; exit 1 ; }
+command -v xdotool  >/dev/null || { echo >&1  'xdotool: command not found' ; exit 1 ; }
+command -v pass     >/dev/null || { echo >&1     'pass: command not found' ; exit 1 ; }
+command -v oathtool >/dev/null || { echo >&1 'oathtool: command not found' ; exit 1 ; }
 
 lockfile="$(readlink -f "$0").lock"
 ( set -o noclobber ; echo "$$" >"$lockfile" ) 2>/dev/null || { echo >&1 "$lockfile: already exists; another instance of $0 is running" ; exit 1 ; }
@@ -16,6 +18,17 @@ window="$(xdotool getactivewindow)"
 window_title="$(xdotool getwindowname "$window")"
 
 { cd "$pwstore" ; find . -name '*.autotype' | cut -c 3- ; } | while IFS= read -r patterns ; do
+	if [ -f "$pwstore/$patterns.otp" ] ; then
+		if echo "$window_title" | grep -Ff "$pwstore/$patterns.otp" >/dev/null ; then
+			pwname="$(echo "$patterns" | sed -re 's/\.autotype$//')"
+			pw="$(pass show "$pwname")"
+			pwotpkey="$(echo "$pw" | grep -Ei '^OTP:' | head -n 1 | sed -re 's/^[^:]*:\s*(.*)$/\1/')"
+			pwotp="$(oathtool --totp -b "$(pwotp)")"
+			xdotool type --window "$window" "$pwotp"
+			xdotool key  --window "$window" "Return"
+			exit 77
+		fi
+	fi
 	if echo "$window_title" | grep -Ff "$pwstore/$patterns" >/dev/null ; then
 		pwname="$(echo "$patterns" | sed -re 's/\.autotype$//')"
 		pw="$(pass show "$pwname")"
