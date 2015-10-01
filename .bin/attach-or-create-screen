@@ -1,0 +1,17 @@
+#!/bin/sh
+
+set -o noclobber
+set -o errexit
+set -o nounset
+
+command -v screen >/dev/null || { echo 'echo >&1 "screen: command not found" ; return 1' ; exit ; }
+
+[ -z "${STY:-}" ] || { echo 'echo >&1 "Already inside a screen?" ; return 1' ; exit ; }
+
+num="$(screen -ls | grep -E '^\s+[^\s]' | wc -l)"
+
+[ "$num" -eq "0" ] && { echo 'exec screen' ; exit ; }
+
+[ "$num" -ne "1" ] && { echo 'echo >&1 "More than one screen session exists." ; return 1' ; exit ; }
+
+echo 'exec screen -d -r'
