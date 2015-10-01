@@ -23,7 +23,7 @@ window_title="$(xdotool getwindowname "$window")"
 			pwname="$(echo "$patterns" | sed -re 's/\.autotype$//')"
 			pw="$(pass show "$pwname")"
 			pwotpkey="$(echo "$pw" | grep -Ei '^OTP:' | head -n 1 | sed -re 's/^[^:]*:\s*(.*)$/\1/')"
-			pwotp="$(oathtool --totp -b "$(pwotp)")"
+			pwotp="$(oathtool --totp -b "$pwotpkey")"
 			xdotool type --window "$window" "$pwotp"
 			xdotool key  --window "$window" "Return"
 			exit 77
