@@ -42,3 +42,6 @@
     (set-face-background 'default "unspecified-bg" frame)))
 (add-hook 'after-make-frame-functions 'set-term-frame-transparent)
 (add-hook 'window-setup-hook (lambda () (set-term-frame-transparent (selected-frame))))
+
+;; ido-mode
+(ido-mode 1)

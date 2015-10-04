@@ -7,6 +7,10 @@
     (cond ((boundp 'user-init-directory) user-init-directory)
 	  (t "~/.emacs.d/"))))
 
+;; to keep Custom from writing directly to init.el
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(when (file-exists-p custom-file) (load-file custom-file))
+
 ;; a function to load a file from "./init.d/" in user-emacs-directory
 (defconst user-emacs-init-parts-directory (expand-file-name "./init.d/" user-emacs-directory))
 (defun load-init-part (file)
