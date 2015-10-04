@@ -1,44 +1,25 @@
-;; sane default appearance/bahavior (w/o packages)
-(add-to-list 'default-frame-alist '(alpha 85 85))
-(load-theme 'tango-dark)
-(tool-bar-mode -1)
-(menu-bar-mode -1)
-(scroll-bar-mode -1)
-(column-number-mode 1)
-(desktop-save-mode 1)
-(set-background-color "black")
-(toggle-frame-maximized)
-(setq custom-safe-themes t)
-(setq inhibit-startup-echo-area-message "m")
-(setq inhibit-startup-message t)
+;; to keep package.el from adding (package-initialize) at the beginning of init.el
+;(package-initialize)
 
-;; turn off C-z (never used it)
-(global-unset-key "\C-z")
+;; older versions don’t have user-emacs-directory defined
+(unless (boundp 'user-emacs-directory)
+  (defconst user-emacs-directory
+    (cond ((boundp 'user-init-directory) user-init-directory)
+	  (t "~/.emacs.d/"))))
 
-;; turn off mouse
-; TODO: how?!?!/1/1
+;; a function to load a file from "./init.d/" in user-emacs-directory
+(defconst user-emacs-init-parts-directory (expand-file-name "./init.d/" user-emacs-directory))
+(defun load-init-part (file)
+  (load-file (expand-file-name file user-emacs-init-parts-directory)))
+(defun load-init-part-if-exists (file)
+  (let ((file-path (expand-file-name file user-emacs-init-parts-directory)))
+    (when (file-exists-p file-path) (load-file file-path))))
 
-;; packages
-(require 'package)
-(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
-(package-initialize)
-(unless package-archive-contents (package-refresh-contents))
-(unless (package-installed-p 'use-package) (package-install 'use-package))
-(require 'use-package)
+;; load all parts
+(load-init-part "packages.el")
+(load-init-part "appearance.el")
+(load-init-part "editing.el")
+(load-init-part "personal.el")
 
-;; disable the default theme and load monokai (if possible) with a black background
-(defun disable-all-themes () "disable all enabled themes"
-  (interactive) (dolist (i custom-enabled-themes) (disable-theme i)))
-(use-package monokai-theme
-  :config (disable-all-themes) (load-theme 'monokai) (set-background-color "black")
-  :ensure t)
-
-;; make frames transparent, when run in terminal
-(defun set-term-frame-transparent (frame)
-  (unless (display-graphic-p frame)
-    (set-face-background 'default "unspecified-bg" frame)))
-(add-hook 'after-make-frame-functions 'set-term-frame-transparent)
-(add-hook 'window-setup-hook (lambda () (set-term-frame-transparent (selected-frame))))
-
-;; load mu4e if installed (no error if not)
-(require 'mu4e nil 'noerror)
+;; optionally load parts local to the machine in local.el
+(load-init-part-if-exists "local.el")

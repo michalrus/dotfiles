@@ -51,6 +51,6 @@ if [ -f "$fnam" ] ; then
   . "$fnam"
   esc_realname="$(echo "$realname" | sed -e 's/[\/&]/\\&/g')"
   esc_email="$(   echo "$email"    | sed -e 's/[\/&]/\\&/g')"
-  sed -re "s/Michal Rus/$esc_realname/g"    -i "${HOME}/.mshell-common" "${HOME}/.gitconfig"
-  sed -re "s/m@michalrus\.com/$esc_email/g" -i "${HOME}/.mshell-common" "${HOME}/.gitconfig"
+  sed -re "s/Michal Rus/$esc_realname/g"    -i "${HOME}/.mshell-common" "${HOME}/.gitconfig" "${HOME}/.emacs.d/init.d/personal.el"
+  sed -re "s/m@michalrus\.com/$esc_email/g" -i "${HOME}/.mshell-common" "${HOME}/.gitconfig" "${HOME}/.emacs.d/init.d/personal.el"
 fi
