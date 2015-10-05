@@ -26,4 +26,4 @@
 (load-init-part "personal.el")
 
 ;; optionally load parts local to the machine in local.el
-(load-init-part-if-exists "local.el")
+(load-init-part-if-exists "mail.el")
