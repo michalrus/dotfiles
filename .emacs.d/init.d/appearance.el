@@ -36,12 +36,11 @@
   :config (disable-all-themes) (load-theme 'monokai) (set-background-color "black")
   :ensure t)
 
-;; make frames transparent, when run in terminal
-(defun set-term-frame-transparent (frame)
-  (unless (display-graphic-p frame)
-    (set-face-background 'default "unspecified-bg" frame)))
-(add-hook 'after-make-frame-functions 'set-term-frame-transparent)
-(add-hook 'window-setup-hook (lambda () (set-term-frame-transparent (selected-frame))))
+;; make frames transparent, when run in terminal, and override theme bg with "black" when in GUI
+(defun fix-new-frame-background (frame)
+  (set-face-background 'default (if (display-graphic-p frame) "black" "unspecified-bg") frame))
+(add-hook 'after-make-frame-functions 'fix-new-frame-background)
+(add-hook 'window-setup-hook (lambda () (fix-new-frame-background (selected-frame))))
 
 ;; ido-mode
 (ido-mode 1)
