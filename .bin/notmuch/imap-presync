@@ -1,0 +1,65 @@
+#!/bin/sh
+
+set -o noclobber
+set -o nounset
+#set -o errexit # commented out to ignore 'mv: x and x are the same file
+
+# physically move messages to appropriate IMAP folders, based on notmuch ±tags
+# (needed to have correct views in the Gmail apps)
+
+# To-do: mv -t $dest works only in GNU mv, not POSIX…
+# To-do: xargs -r works only in GNU mv, not POSIX…
+
+maildir="$(notmuch config get database.path)"
+
+# order is important!
+
+# trash:  move undeleted messages back to gmail.inbox or gmail.all-mail; move spam to gmail.spam
+
+# move undeleted messages with +inbox tag back to gmail.inbox
+notmuch search --output=files 'folder:trash and tag:inbox' | xargs -r mv -vt "$maildir/inbox/cur/"
+notmuch new
+
+# move undeleted messages back to gmail.all-mail
+notmuch search --output=files 'folder:trash and (not tag:deleted)' | xargs -r mv -vt "$maildir/all-mail/cur/"
+notmuch new
+
+# move spam from trash to gmail.spam
+notmuch search --output=files 'folder:trash and tag:spam' | xargs -r mv -vt "$maildir/spam/cur/"
+notmuch new
+
+# spam:  same for gmail.spam, but keep deleted messages there (as a training data for their ML algos)
+notmuch search --output=files 'folder:spam and tag:inbox' | xargs -r mv -vt "$maildir/inbox/cur/"
+notmuch new
+
+notmuch search --output=files 'folder:spam and (not tag:spam)' | xargs -r mv -vt "$maildir/all-mail/cur/"
+notmuch new
+
+# inbox:  mark as spam, delete and archive; also move +draft (IMAP +D flag, which Gmail handles *sometimes*) to drafts
+notmuch search --output=files 'folder:inbox and tag:spam' | xargs -r mv -vt "$maildir/spam/cur/"
+notmuch new
+
+notmuch search --output=files 'folder:inbox and tag:deleted' | xargs -r mv -vt "$maildir/trash/cur/"
+notmuch new
+
+notmuch search --output=files 'folder:inbox and tag:draft and (not folder:drafts)' | xargs -r mv -vt "$maildir/drafts/cur/"
+notmuch new
+
+notmuch search --output=files 'folder:inbox and (not tag:inbox)' | xargs -r mv -vt "$maildir/all-mail/cur/"
+notmuch new
+
+# all-mail:  mark as spam, delete, fix drafts, and move to inbox
+notmuch search --output=files 'folder:all-mail and tag:spam' | xargs -r mv -vt "$maildir/spam/cur/"
+notmuch new
+
+notmuch search --output=files 'folder:all-mail and tag:deleted' | xargs -r mv -vt "$maildir/trash/cur/"
+notmuch new
+
+notmuch search --output=files 'folder:all-mail and tag:draft and (not folder:drafts)' | xargs -r mv -vt "$maildir/drafts/cur/"
+notmuch new
+
+notmuch search --output=files 'folder:all-mail and tag:inbox and (not folder:inbox)' | xargs -r mv -vt "$maildir/inbox/cur/"
+notmuch new
+
+d="$(dirname "$(readlink -f "$0")")"
+"$d"/backup-spam

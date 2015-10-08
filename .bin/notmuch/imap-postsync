@@ -1,0 +1,12 @@
+#!/bin/sh
+
+set -o noclobber
+set -o nounset
+set -o errexit
+
+d="$(dirname "$(readlink -f "$0")")"
+
+notmuch new
+"$d"/initial-tagging
+"$d"/taskbar
+"$d"/backup-spam

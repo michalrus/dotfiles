@@ -11,6 +11,9 @@
 (setq show-paren-delay 0)
 (show-paren-mode 1)
 
+;; always automatically reload changed files from disk
+(global-auto-revert-mode 1)
+
 ;; automatically pair braces, quotes, etc.
 (use-package autopair :config (autopair-global-mode 1) :ensure t)
 
