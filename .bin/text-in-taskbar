@@ -1,0 +1,5 @@
+#!/bin/sh
+
+exec gdbus call --session --dest org.gnome.Shell \
+  --object-path /com/michalrus/TextInTaskBar \
+  --method com.michalrus.TextInTaskBar.setText "$1"

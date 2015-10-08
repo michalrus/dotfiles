@@ -1,0 +1,8 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Name=initial-textintaskbar
+Comment=
+Exec=sh -c 'exec "$HOME"/.bin/notmuch/taskbar'
+Icon=
+Terminal=false
+Type=Application
