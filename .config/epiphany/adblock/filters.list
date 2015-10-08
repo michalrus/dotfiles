@@ -1,11 +1,1 @@
-https://adblockcdn.com/filters/adblock_custom.txt
-https://easylist-downloads.adblockplus.org/easylist.txt
-https://raw.githubusercontent.com/adblockpolska/Adblock_PL_List/master/adblock_polska.txt
-https://easylist-downloads.adblockplus.org/fanboy-social.txt
-https://easylist-downloads.adblockplus.org/easyprivacy.txt
-https://easylist-downloads.adblockplus.org/fanboy-annoyance.txt
-https://easylist-downloads.adblockplus.org/malwaredomains_full.txt
-https://easylist-downloads.adblockplus.org/antiadblockfilters.txt
-https://spam404bl.com/spam404scamlist.txt
-https://raw.github.com/liamja/Prebake/master/obtrusive.txt
-https://michalrus.com/adblock
+https://adblockcdn.com/filters/adblock_custom.txt;https://easylist-downloads.adblockplus.org/easylist.txt;https://raw.githubusercontent.com/adblockpolska/Adblock_PL_List/master/adblock_polska.txt;https://easylist-downloads.adblockplus.org/fanboy-social.txt;https://easylist-downloads.adblockplus.org/easyprivacy.txt;https://easylist-downloads.adblockplus.org/fanboy-annoyance.txt;https://easylist-downloads.adblockplus.org/malwaredomains_full.txt;https://easylist-downloads.adblockplus.org/antiadblockfilters.txt;https://spam404bl.com/spam404scamlist.txt;https://raw.github.com/liamja/Prebake/master/obtrusive.txt;https://michalrus.com/adblock
