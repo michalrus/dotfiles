@@ -1,5 +1,14 @@
 #!/bin/sh
 
-exec gdbus call --session --dest org.gnome.Shell \
-  --object-path /com/michalrus/TextInTaskBar \
-  --method com.michalrus.TextInTaskBar.setText "$1"
+setText() {
+  gdbus call --session --dest org.gnome.Shell \
+    --object-path /com/michalrus/TextInTaskBar \
+    --method com.michalrus.TextInTaskBar.setText "$1"
+}
+
+ps -C gnome-shell -o uid=,pid= | grep -E '^\s*'$UID \
+    | sed -re 's/^[[:blank:]]*[0-9]+[[:blank:]]*([0-9]+)[[:blank:]]*$/\1/' \
+    | while IFS= read -r gnome_shell_pid ; do
+  tmp="$(grep -z DBUS_SESSION_BUS_ADDRESS /proc/$gnome_shell_pid/environ)"
+  [ -n "$tmp" ] && export "$tmp" && setText "$1"
+done

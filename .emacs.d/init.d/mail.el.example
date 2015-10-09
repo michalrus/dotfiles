@@ -23,3 +23,13 @@
 
 (add-hook 'notmuch-after-tag-hook (lambda ()
 				    (call-process "~/.bin/notmuch/taskbar" nil nil nil)))
+
+;; send-mail-function for both MessageMode of Gnus and the default MailMode
+(setq message-send-mail-function 'smtpmail-send-it
+      send-mail-function 'smtpmail-send-it)
+
+;; configure smtp-mail
+(setq smtpmail-stream-type 'starttls
+      smtpmail-smtp-server "smtp.gmail.com"
+      smtpmail-smtp-service 587)
+(require 'smtpmail)
