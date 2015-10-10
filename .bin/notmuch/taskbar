@@ -1,3 +1,3 @@
 #!/bin/sh
 
-exec "$HOME"/.bin/text-in-taskbar "$(notmuch count --output=threads tag:inbox):$(notmuch count --output=threads tag:inbox and tag:unread)"
+exec "$HOME"/.bin/text-in-taskbar "$(notmuch count --output=threads tag:inbox)"

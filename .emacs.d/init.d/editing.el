@@ -4,8 +4,8 @@
 (setq auto-save-file-name-transforms `((".*" ,user-emacs-temporary-directory t)))
 
 ;; taaabs
-(setq tab-width 2)
-(setq indent-tabs-mode nil)
+(setq-default tab-width 2)
+(setq-default indent-tabs-mode nil)
 
 ;; always hilight the corresponding parenthesis
 (setq show-paren-delay 0)
@@ -19,3 +19,6 @@
 
 ;; auto complete
 (use-package auto-complete :config (ac-config-default) :ensure t)
+
+;; visual line mode
+(visual-line-mode 1)

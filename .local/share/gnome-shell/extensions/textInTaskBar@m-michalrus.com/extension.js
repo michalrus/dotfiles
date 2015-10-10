@@ -7,7 +7,7 @@ let text = null;
 let textDBusService = null;
 
 function init() {
-    text = new St.Label({ text: "0:0", style_class: 'panel-text' });
+    text = new St.Label({ text: "0", style_class: 'panel-text' });
     textDBusService = new TextInTaskBar();
 }
 
