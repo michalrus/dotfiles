@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Copy this file to ~/.dotfiles/setup.local (the same applies to other
+# *.example files) and add any commands you want to run on this
+# machine, after setting up the symlinks.
+
+echo 'Setting up symlinks done!'

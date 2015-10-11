@@ -1,0 +1,15 @@
+#!/bin/sh
+
+set -o noclobber
+set -o nounset
+set -o errexit
+
+owndir="$(cd -P -- "$(dirname "$0")" ; pwd -P)"
+
+[ "$HOME/.dotfiles/update" = "$owndir/update" ] || { echo >&2 "fatal: $0: must be called at $HOME/.dotfiles/" ; exit 1 ; }
+
+# pull if git available
+
+# http wget if not
+
+exec "$owndir"/setup
