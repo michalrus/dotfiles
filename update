@@ -8,8 +8,27 @@ owndir="$(cd -P -- "$(dirname "$0")" ; pwd -P)"
 
 [ "$HOME/.dotfiles/update" = "$owndir/update" ] || { echo >&2 "fatal: $0: must be called at $HOME/.dotfiles/" ; exit 1 ; }
 
-# pull if git available
+if command -v git >/dev/null 2>&1 ; then
+    # pull if git available
+    [ -z "$(git status --porcelain)" ] || \
+        { echo >&2 "fatal: ~/.dotfiles/: repo status not clean" ; exit 1 ; }
+    [ "$(git rev-parse master)" = "$(git rev-parse origin/master)" ] || \
+        { echo >&2 "fatal: ~/.dotfiles/: master is not pointing at origin/master" ; exit 1 ; }
+    git checkout master
+    git fetch --all
+    git merge origin/master
+else
+    # curl if no git
+	  echo "using curl"
+    tmp="$(mktemp)"
+    curl --show-error --fail --location -o "$tmp" 'https://michalrus.com/dotfiles.tgz' || \
+        { echo >&2 "fatal: curl failed" ; exit 1 ; }
+    baksuffix="$(date +'dotfiles-bak.%Y%m%d-%H%M%S-%N')"
+    dst="$HOME/.dotfiles"
+    [ -e "$dst" ] && mv -v "$dst" "$dst.$baksuffix" || true
+    tar -xzvf "$tmp" -C "$HOME"
+    rm "$tmp"
+fi
 
-# http wget if not
-
+# finally, setup the links and all
 exec "$owndir"/setup
