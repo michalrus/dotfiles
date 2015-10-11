@@ -1,7 +1,0 @@
-#
-# If you're not me, set these variables (used for .deb, .git etc.)
-# and rename as ~/.mshell-realname
-#
-
-realname="John Doe"
-email="john@doe.com"

@@ -14,21 +14,19 @@ locale -a | grep -qi 'en_GB.utf' && export LC_PAPER='en_GB.UTF-8'
 export PATH="${HOME}/.bin:${PATH}"
 export WINELOADER="${HOME}/.bin/wine"
 
+# a default editor that is easy to exit ;-)
 export EDITOR='nano'
 export VISUAL='nano'
 
 export CLICOLOR='1'
-command -v dircolors >/dev/null && eval "$(dircolors ~/.dircolors)"
-
-export DEBFULLNAME="Michal Rus"
-export DEBEMAIL="m@michalrus.com"
+command -v dircolors >/dev/null && eval "$(dircolors "$HOME"/.dircolors)"
 
 export CHROMIUM_USER_FLAGS='--ssl-version-min=tls1'
 
 # needed for ~/.XCompose in GNOME using en-US.UTF-8 locale
 export GTK_IM_MODULE=xim
 
-export __mshell_hostname="$( ( ischroot 2>/dev/null && cat /etc/hostname || hostname ) | tr '_' '.')"
+export __dotfiles_hostname="$( ( ischroot 2>/dev/null && cat /etc/hostname || hostname ) | tr '_' '.')"
 
 alias s='eval "$(attach-or-create-screen)"'
 alias nano='nano -UwT 4'
@@ -42,3 +40,5 @@ export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWSTASHSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
 export GIT_PS1_SHOWUPSTREAM='verbose'
+
+[ -e "$HOME/.shell-agnostic.local" ] && . "$HOME/.shell-agnostic.local"

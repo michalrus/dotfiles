@@ -1,6 +1,6 @@
 unalias -m '*'
 
-. ~/.mshell-common
+. "$HOME/.shell-agnostic"
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
@@ -15,11 +15,11 @@ setopt completealiases
 setopt HIST_IGNORE_DUPS
 setopt APPEND_HISTORY
 setopt EXTENDED_HISTORY
-export HISTFILE=~/.zhistory
+export HISTFILE="$HOME/.zhistory"
 export HISTSIZE=100000
 export SAVEHIST=$HISTSIZE
 
-. ~/.local/share/git-prompt.sh
+. "$HOME/.local/share/git-prompt.sh"
 
 precmd() {
   local last_exitcode="$?"
@@ -43,7 +43,7 @@ precmd() {
   [ "$last_exitcode" -ne 0 ] && PS1+="$error"
   PS1+="$last_exitcode$reset$D)"
 
-  PS1+="$L%n$D@$L$__mshell_hostname$D:$L%~"
+  PS1+="$L%n$D@$L$__dotfiles_hostname$D:$L%~"
 
   local git="$(__git_ps1 '%s')"
   if [ -n "$git" ] ; then

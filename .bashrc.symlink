@@ -1,6 +1,6 @@
 unalias -a
 
-. ~/.mshell-common
+. "$HOME/.shell-agnostic"
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
@@ -8,7 +8,7 @@ unalias -a
 shopt -s checkwinsize
 
 shopt -s histappend
-export HISTFILE=~/.bash_history
+export HISTFILE="$HOME/.bash_history"
 export HISTCONTROL=ignoredups:erasedups
 export HISTSIZE=100000
 export HISTFILESIZE=$HISTSIZE
@@ -17,7 +17,7 @@ export HISTFILESIZE=$HISTSIZE
 
 [ -r /usr/share/doc/pkgfile/command-not-found.bash ] && . /usr/share/doc/pkgfile/command-not-found.bash
 
-. ~/.local/share/git-prompt.sh
+. "$HOME/.local/share/git-prompt.sh"
 
 __mshell_set_prompt() {
   local last_exitcode="$?"
@@ -41,7 +41,7 @@ __mshell_set_prompt() {
   [ "$last_exitcode" -ne 0 ] && PS1+="$error"
   PS1+="$last_exitcode$reset$D)"
 
-  PS1+="$L\\u$D@$L$__mshell_hostname$D:$L\\w"
+  PS1+="$L\\u$D@$L$__dotfiles_hostname$D:$L\\w"
 
   local git="$(__git_ps1 '%s')"
   if [ -n "$git" ] ; then

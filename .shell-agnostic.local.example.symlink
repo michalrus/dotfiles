@@ -1,0 +1,10 @@
+#
+# Some machine-local environment variables. Remember to copy this
+# file without the `.example' suffix.
+#
+
+export EDITOR='emacs'
+export VISUAL='emacs'
+
+export DEBFULLNAME="Michal Rus"
+export DEBEMAIL="m@michalrus.com"
