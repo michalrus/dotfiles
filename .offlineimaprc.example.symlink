@@ -4,7 +4,7 @@ accounts = m@michalrus.com
 [Account m@michalrus.com]
 localrepository = Local
 remoterepository = Remote
-presynchook  = ionice -c 3 chrt --idle 0 /bin/sh -c 'afew --all --move-mails -v'
+presynchook  = ionice -c 3 chrt --idle 0 /bin/sh -c 'exec "$HOME"/.bin/notmuch/imap-presync'
 postsynchook = ionice -c 3 chrt --idle 0 /bin/sh -c 'exec "$HOME"/.bin/notmuch/imap-postsync'
 
 [Repository Local]
@@ -13,7 +13,7 @@ localfolders = ~/.Maildir
 
 [Repository Remote]
 type = Gmail
-maxconnections = 2
+maxconnections = 1
 remoteuser = m@michalrus.com
 realdelete = no
 sslcacertfile = /etc/ssl/certs/ca-certificates.crt

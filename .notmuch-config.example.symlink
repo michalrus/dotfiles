@@ -1,0 +1,20 @@
+[database]
+path=/home/m/.Maildir
+
+[user]
+name=Michal Rus
+primary_email=m@michalrus.com
+other_email=rus.michal@gmail.com;guest@michalrus.com;test@michalrus.com;michalru@student.agh.edu.pl;stefan.sztompke@wp.pl;stefan@michalrus.com
+
+[new]
+tags=new
+ignore=
+
+[search]
+exclude_tags=deleted;spam;
+
+[maildir]
+synchronize_flags=true
+
+[crypto]
+gpg_path=gpg

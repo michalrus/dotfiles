@@ -10,3 +10,5 @@ bind - resize -3
 bind = resize +3
 bind + resize =
 
+# keep calm, if it doesn’t exist, nothing will happen!
+source ~/.screenrc.local

@@ -15,7 +15,7 @@ setopt completealiases
 setopt HIST_IGNORE_DUPS
 setopt APPEND_HISTORY
 setopt EXTENDED_HISTORY
-export HISTFILE=~/.zsh_history
+export HISTFILE=~/.zhistory
 export HISTSIZE=100000
 export SAVEHIST=$HISTSIZE
 

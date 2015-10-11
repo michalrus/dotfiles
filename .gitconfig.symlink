@@ -1,6 +1,9 @@
-[user]
-	name = Michal Rus
-	email = m@michalrus.com
+#
+# Customization: define user.name, user.email, etc. in ~/.gitconfig.local included in line 6 below.
+#
+
+[include]
+	path = .gitconfig.local
 [alias]
 	fast-forward = merge --ff-only
 	ff = merge --ff-only
