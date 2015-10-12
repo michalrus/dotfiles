@@ -1,4 +1,6 @@
-(use-package auctex
-  :ensure t
+;; -*- mode: emacs-lisp -*-
+
+(use-package tex-site
+  :ensure auctex
   :mode ("\\.tex\\'" . latex-mode)
   :commands (latex-mode LaTeX-mode plain-tex-mode plain-TeX-mode))

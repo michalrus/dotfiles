@@ -1,3 +1,5 @@
+;; -*- mode: emacs-lisp -*-
+
 ;; don’t clutter file trees with backups~ and #autosaves#
 (defconst user-emacs-temporary-directory (expand-file-name "./tmp/" user-emacs-directory))
 (setq backup-directory-alist `((".*" . ,user-emacs-temporary-directory)))

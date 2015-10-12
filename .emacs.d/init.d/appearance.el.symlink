@@ -1,3 +1,5 @@
+;; -*- mode: emacs-lisp -*-
+
 ;; sane default appearance (w/o packages)
 (add-to-list 'default-frame-alist '(alpha 85 85))
 (load-theme 'tango-dark)

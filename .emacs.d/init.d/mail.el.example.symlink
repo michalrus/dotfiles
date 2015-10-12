@@ -1,3 +1,5 @@
+;; -*- mode: emacs-lisp -*-
+
 (require 'notmuch)
 
 (setq notmuch-search-oldest-first nil)
