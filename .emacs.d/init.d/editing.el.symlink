@@ -13,6 +13,10 @@
 (setq show-paren-delay 0)
 (show-paren-mode 1)
 
+;; never visit symlinks when their targets are under version control
+;; (visit the target instead)
+(setq vc-follow-symlinks t)
+
 ;; always automatically reload changed files from disk
 (global-auto-revert-mode 1)
 
