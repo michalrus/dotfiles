@@ -47,7 +47,8 @@
 (setq message-forward-before-signature nil
       message-signature "Michal Rus"
       message-directory "~/.Maildir/"
-      message-auto-save-directory (expand-file-name "drafts/new/" message-directory))
+      message-auto-save-directory (expand-file-name "drafts/new/" message-directory)
+      message-kill-buffer-on-exit t)
 
 ;; returns Message-Id of the currently edited message
 (defun message-fetch-id ()
