@@ -20,7 +20,7 @@ if command -v git >/dev/null 2>&1 ; then
     git merge origin/master
 else
     # curl if no git
-	  echo "using curl"
+    echo >&2 "warning: no git, falling back to curl"
     tmp="$(mktemp)"
     curl --show-error --fail --location -o "$tmp" 'https://github.com/michalrus/dotfiles/archive/master.tar.gz' || \
         { echo >&2 "fatal: curl failed" ; exit 1 ; }
@@ -29,6 +29,7 @@ else
     [ -e "$dst" ] && mv -v "$dst" "$dst.$baksuffix" || true
     mkdir -p "$dst"
     tar -xzf "$tmp" --strip-components=1 -C "$dst"
+    chmod -R g=,o= "$dst"
     rm "$tmp"
 fi
 
