@@ -10,8 +10,9 @@ command -v screen >/dev/null || { echo 'echo >&1 "screen: command not found" ; r
 
 num="$(screen -ls | grep -E '^\s+[^\s]' | wc -l)"
 
-[ "$num" -eq "0" ] && { echo 'exec screen' ; exit ; }
+[ "$num" -eq "0" ] && { echo 'exec sh -c "screen ; clear ; exit"' ; exit ; }
 
 [ "$num" -ne "1" ] && { echo 'echo >&1 "More than one screen session exists." ; return 1' ; exit ; }
 
-echo 'exec screen -d -r'
+# use `exec sh -c`, as it will consume *considerably* less memory than zsh :-)
+echo 'exec sh -c "screen -d -r ; clear ; exit"'
