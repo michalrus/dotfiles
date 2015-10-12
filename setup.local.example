@@ -11,7 +11,7 @@ baksuffix="$(date +'dotfiles-bak.%Y%m%d-%H%M%S-%N')"
 
 # Include all system `*.nanorc`s in your own one.
 nanorc="$HOME/.nanorc"
-[ "$(head -n 1 "$nanorc")" = '#.dotfiles-autogen' ] || mv "$nanorc" "$nanorc.$baksuffix"
+[ -e "$nanorc" ] && [ "$(head -n 1 "$nanorc")" != '#.dotfiles-autogen' ] && mv "$nanorc" "$nanorc.$baksuffix"
 echo '#.dotfiles-autogen' > "$nanorc"
 find /usr/share/nano/ -name '*.nanorc' 2>/dev/null | while read f
   do echo "include \"$f\"" >> "$nanorc" ; done
