@@ -8,6 +8,8 @@ owndir="$(cd -P -- "$(dirname "$0")" ; pwd -P)"
 
 [ "$HOME/.dotfiles/update" = "$owndir/update" ] || { echo >&2 "fatal: $0: must be called at $HOME/.dotfiles/" ; exit 1 ; }
 
+git_failed=1
+
 if command -v git >/dev/null 2>&1 ; then
     # pull if git available
     cd "$HOME/.dotfiles/"
@@ -15,11 +17,13 @@ if command -v git >/dev/null 2>&1 ; then
         { echo >&2 "fatal: ~/.dotfiles/: repo status not clean" ; exit 1 ; }
     [ "$(git rev-parse master)" = "$(git rev-parse origin/master)" ] || \
         { echo >&2 "fatal: ~/.dotfiles/: master is not pointing at origin/master" ; exit 1 ; }
-    git checkout master
-    git fetch --all
-    git merge origin/master
-else
-    # curl if no git
+    git checkout master && \
+      git fetch --all && \
+      git merge origin/master && \
+      git_failed=''
+fi
+
+if [ $git_failed ] ; then
     echo >&2 "warning: no git, falling back to curl"
     tmp="$(mktemp)"
     curl --show-error --fail --location -o "$tmp" 'https://github.com/michalrus/dotfiles/archive/master.tar.gz' || \
