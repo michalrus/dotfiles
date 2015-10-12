@@ -15,6 +15,9 @@
 ;; turn off C-z (never used it)
 (global-unset-key "\C-z")
 
+;; yes-or-no questions are boring, use y-or-n
+(defalias 'yes-or-no-p 'y-or-n-p)
+
 ;; turn off mouse
 ; TODO: how?!?!/1/1
 
