@@ -10,6 +10,7 @@ owndir="$(cd -P -- "$(dirname "$0")" ; pwd -P)"
 
 if command -v git >/dev/null 2>&1 ; then
     # pull if git available
+    cd "$HOME/.dotfiles/"
     [ -z "$(git status --porcelain)" ] || \
         { echo >&2 "fatal: ~/.dotfiles/: repo status not clean" ; exit 1 ; }
     [ "$(git rev-parse master)" = "$(git rev-parse origin/master)" ] || \
