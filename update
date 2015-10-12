@@ -22,12 +22,13 @@ else
     # curl if no git
 	  echo "using curl"
     tmp="$(mktemp)"
-    curl --show-error --fail --location -o "$tmp" 'https://michalrus.com/dotfiles.tgz' || \
+    curl --show-error --fail --location -o "$tmp" 'https://github.com/michalrus/dotfiles/archive/master.tar.gz' || \
         { echo >&2 "fatal: curl failed" ; exit 1 ; }
     baksuffix="$(date +'dotfiles-bak.%Y%m%d-%H%M%S-%N')"
     dst="$HOME/.dotfiles"
     [ -e "$dst" ] && mv -v "$dst" "$dst.$baksuffix" || true
-    tar -xzvf "$tmp" -C "$HOME"
+    mkdir -p "$dst"
+    tar -xzf "$tmp" --strip-components=1 -C "$dst"
     rm "$tmp"
 fi
 
