@@ -98,7 +98,7 @@ notmuch tag +news:security      -- "($narrow)"' and (from:@archlinux.org OR to:@
 notmuch tag +news:coding        -- "($narrow)"' and ((not tag:list) AND (from:@typesafe.com OR to:@typesafe.com))'
 notmuch tag +news:life          -- "($narrow)"' and (from:brennan@planscope.io)'
 notmuch tag +news:life          -- "($narrow)"' and (from:rusrob@poczta.onet.pl tag:attachment (dnt OR rz OR nzb) pdf)'
-notmuch tag +news:life          -- "($narrow)"' and (pocztazdrowia.pl)'
+notmuch tag +news:life          -- "($narrow)"' and (pocztazdrowia.pl and not from:git@michalrus.com)'
 notmuch tag +news:design        -- "($narrow)"' and (from:@hackdesign.org OR to:@hackdesign.org OR from:@kadavy.net OR to:@kadavy.net)'
 notmuch tag +news:life          -- "($narrow)"' and ((to:rss.notification@michalrus.com OR from:@facebookmail.com) AND subject:"Alex Barszczewski")'
 notmuch tag +news:coding        -- "($narrow)"' and (from:@twitter.com and from:"Popular in your network")'
