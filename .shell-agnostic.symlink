@@ -44,4 +44,7 @@ export GIT_PS1_SHOWSTASHSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
 export GIT_PS1_SHOWUPSTREAM='verbose'
 
+# export GnuPG SSH agent socket, if exists
+[ -e "$HOME/.gnupg/S.gpg-agent.ssh" ] && export SSH_AUTH_SOCK="$HOME/.gnupg/S.gpg-agent.ssh"
+
 [ -e "$HOME/.shell-agnostic.local" ] && . "$HOME/.shell-agnostic.local"
