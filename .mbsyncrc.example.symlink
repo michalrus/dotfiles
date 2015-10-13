@@ -1,0 +1,50 @@
+IMAPAccount gmail
+Host imap.gmail.com
+User m@michalrus.com
+PassCmd "cat ~/.local/secret/mbsync"
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore gmail-remote
+Account gmail
+
+MaildirStore gmail-local
+Path ~/.Maildir/
+Inbox ~/.Maildir/inbox
+
+Channel channel-gmail-inbox
+Master :gmail-remote:"INBOX"
+Slave :gmail-local:inbox
+Create Slave
+SyncState *
+
+Channel channel-gmail-spam
+Master :gmail-remote:"[Gmail]/Spam"
+Slave :gmail-local:spam
+Create Slave
+SyncState *
+
+Channel channel-gmail-trash
+Master :gmail-remote:"[Gmail]/Trash"
+Slave :gmail-local:trash
+Create Slave
+SyncState *
+
+Channel channel-gmail-drafts
+Master :gmail-remote:"[Gmail]/Drafts"
+Slave :gmail-local:drafts
+Create Slave
+SyncState *
+
+Channel channel-gmail-allmail
+Master :gmail-remote:"[Gmail]/All Mail"
+Slave :gmail-local:all-mail
+Create Slave
+SyncState *
+
+Group gmail
+Channel channel-gmail-inbox
+Channel channel-gmail-spam
+Channel channel-gmail-trash
+Channel channel-gmail-drafts
+Channel channel-gmail-allmail
