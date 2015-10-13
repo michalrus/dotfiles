@@ -1,0 +1,8 @@
+#!/bin/sh
+
+"$HOME/.bin/space2ctrl"
+
+dbus-monitor --session "type='signal',interface='org.gnome.ScreenSaver'" | \
+  while IFS= read -r line; do
+    echo "$line" | grep -Fq "boolean false" && echo "screen unlocked" && "$HOME/.bin/space2ctrl"
+  done

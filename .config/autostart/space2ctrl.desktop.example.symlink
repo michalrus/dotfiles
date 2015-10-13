@@ -1,7 +1,7 @@
 [Desktop Entry]
-Name=autocutsel
+Name=space2ctrl
 Comment=
-Exec=sh -c 's2cctl start && xmodmap -e "keycode 105=Menu" && xmodmap -e "keycode 37="'
+Exec=sh -c 'exec "$HOME"/.bin/space2ctrl-gnome'
 Icon=
 Terminal=false
 Type=Application
