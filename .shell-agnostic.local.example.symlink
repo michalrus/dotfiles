@@ -3,8 +3,8 @@
 # file without the `.example' suffix.
 #
 
-export EDITOR='emacs'
-export VISUAL='emacs'
+export EDITOR='emacs --no-window-system --no-desktop'
+export VISUAL="$EDITOR"
 
 export DEBFULLNAME="Michal Rus"
 export DEBEMAIL="m@michalrus.com"
