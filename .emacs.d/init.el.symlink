@@ -7,7 +7,15 @@
 (unless (boundp 'user-emacs-directory)
   (defconst user-emacs-directory
     (cond ((boundp 'user-init-directory) user-init-directory)
-	  (t "~/.emacs.d/"))))
+          (t "~/.emacs.d/"))))
+
+;; add ~/.emacs.d/custom-info/ to Info directories
+;;
+;; Important: remember to use `$ install-info files…
+;; …/custom-info/dir` to regenerate the index any time you add some
+;; new *.info file, or otherwise these files won’t be shown in C-h i
+;; top directory.
+(add-to-list 'Info-default-directory-list (expand-file-name "./custom-info/" user-emacs-directory))
 
 ;; to keep Custom from writing directly to init.el
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))

@@ -69,3 +69,9 @@
       smtpmail-smtp-server "smtp.gmail.com"
       smtpmail-smtp-service 587)
 (require 'smtpmail)
+
+;; bbdb 3 for contacts
+(use-package bbdb :ensure t :pin melpa
+  :config
+  (bbdb-initialize 'gnus 'message)
+  (bbdb-insinuate-message))

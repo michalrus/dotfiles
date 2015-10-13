@@ -3,4 +3,5 @@
 (use-package tex-site
   :ensure auctex
   :mode ("\\.tex\\'" . latex-mode)
-  :commands (latex-mode LaTeX-mode plain-tex-mode plain-TeX-mode))
+  :commands (latex-mode LaTeX-mode plain-tex-mode plain-TeX-mode)
+  :pin gnu)

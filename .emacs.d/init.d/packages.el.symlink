@@ -2,8 +2,17 @@
 
 ;; packages
 (require 'package)
+
+;; repositories
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+(when (< emacs-major-version 24)
+  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
+
+;; initialize, refresh
 (package-initialize)
 (unless package-archive-contents (package-refresh-contents))
+
+;; (use-package)
 (unless (package-installed-p 'use-package) (package-install 'use-package))
 (require 'use-package)
