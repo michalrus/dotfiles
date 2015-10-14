@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -o noclobber
+set -o nounset
+set -o errexit
+
+d="$(dirname "$(readlink -f "$0")")"
+
+"$d"/imap-presync
+mbsync -a
+"$d"/imap-postsync

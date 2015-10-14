@@ -2,64 +2,90 @@
 
 set -o noclobber
 set -o nounset
-#set -o errexit # commented out to ignore 'mv: x and x are the same file
+set -o errexit
 
 # physically move messages to appropriate IMAP folders, based on notmuch ±tags
 # (needed to have correct views in the Gmail apps)
 
+maildir="$(notmuch config get database.path)"
+
+# See http://cr.yp.to/proto/maildir.html for maildir naming schemes
+pid="$$"
+increment="$(mktemp)"
+hostname="$(hostname)"
+rm "$increment" && echo 1 >"$increment"
+
+grep_escape='s/(\^|\$|\[|\]|\*|\.|\\)/\\\1/g'
+
+new_name(){
+    local flags="$(basename "$1" | grep -o ':.*$')"
+    local incr="$(cat "$increment")"
+    rm "$increment" && echo "$(( $incr + 1 ))" >"$increment"
+    echo "$(date '+%s').${pid}_${incr}.${hostname}${flags}"
+}
+
+to(){
+    local dest="$1"
+    local mode="$2"
+    local query="$3"
+
+    local dest_regex="^$(echo "$maildir/$dest/" | sed -re 's/\/+/\//g' | sed -re "$grep_escape")"
+
+    notmuch search --output=messages "$query" | while IFS= read -r id ; do
+        local files="$(notmuch search --output=files "$id")"
+
+        # it is possible, that this exact message already exists in
+        # $dest. If so, don’t put another copy there.
+        dest_file="$(echo "$files" | grep "$dest_regex")" || true
+        if [ '!' '(' -n "$dest_file" -a -e "$dest_file" ')' ] ; then
+            # if it’s not in $dest yet…
+            src="$(echo "$files" | head -n 1)"
+            dest_file="$maildir/$dest/cur/$(new_name "$src")"
+            [ "$mode" = "move" ] && local cmd=mv || local cmd=cp
+            "$cmd" -v "$src" "$dest_file" || true
+        fi
+
+        if [ "$mode" = "move" -a -e "$dest_file" ] ; then
+            # if this is a move, remove the message from other locations; if copy, ignore them
+            echo "$files" | grep -v "$dest_regex" | xargs rm -v || true # some file might already not exist there
+        fi
+    done
+    
+    notmuch new
+}
+
 # To-do: mv -t $dest works only in GNU mv, not POSIX…
 # To-do: xargs -r works only in GNU mv, not POSIX…
 
-maildir="$(notmuch config get database.path)"
-
 # order is important!
 
+# refresh database
+notmuch new
+
 # trash:  move undeleted messages back to gmail.inbox or gmail.all-mail; move spam to gmail.spam
-
-# move undeleted messages with +inbox tag back to gmail.inbox
-notmuch search --output=files 'folder:trash and tag:inbox' | xargs -r mv -vt "$maildir/inbox/cur/"
-notmuch new
-
-# move undeleted messages back to gmail.all-mail
-notmuch search --output=files 'folder:trash and (not tag:deleted)' | xargs -r mv -vt "$maildir/all-mail/cur/"
-notmuch new
-
-# move spam from trash to gmail.spam
-notmuch search --output=files 'folder:trash and tag:spam' | xargs -r mv -vt "$maildir/spam/cur/"
-notmuch new
+to inbox    move 'folder:trash and tag:inbox'
+to all-mail move 'folder:trash and (not tag:deleted)'
+to spam     move 'folder:trash and tag:spam'
 
 # spam:  same for gmail.spam, but keep deleted messages there (as a training data for their ML algos)
-notmuch search --output=files 'folder:spam and tag:inbox' | xargs -r mv -vt "$maildir/inbox/cur/"
-notmuch new
-
-notmuch search --output=files 'folder:spam and (not tag:spam)' | xargs -r mv -vt "$maildir/all-mail/cur/"
-notmuch new
+to inbox    move 'folder:spam and tag:inbox'
+to all-mail move 'folder:spam and (not tag:spam)'
 
 # inbox:  mark as spam, delete and archive; also move +draft (IMAP +D flag, which Gmail handles *sometimes*) to drafts
-notmuch search --output=files 'folder:inbox and tag:spam' | xargs -r mv -vt "$maildir/spam/cur/"
-notmuch new
-
-notmuch search --output=files 'folder:inbox and tag:deleted' | xargs -r mv -vt "$maildir/trash/cur/"
-notmuch new
-
-notmuch search --output=files 'folder:inbox and tag:draft and (not folder:drafts)' | xargs -r mv -vt "$maildir/drafts/cur/"
-notmuch new
-
-notmuch search --output=files 'folder:inbox and (not tag:inbox)' | xargs -r mv -vt "$maildir/all-mail/cur/"
-notmuch new
+to spam     move 'folder:inbox and tag:spam'
+to trash    move 'folder:inbox and tag:deleted'
+to drafts   move 'folder:inbox and tag:draft'
+to all-mail move 'folder:inbox and (not tag:inbox)'
 
 # all-mail:  mark as spam, delete, fix drafts, and move to inbox
-notmuch search --output=files 'folder:all-mail and tag:spam' | xargs -r mv -vt "$maildir/spam/cur/"
-notmuch new
+to spam     move 'folder:all-mail and tag:spam'
+to trash    move 'folder:all-mail and tag:deleted'
+to drafts   move 'folder:all-mail and tag:draft and (not folder:drafts)'
+to inbox    copy 'folder:all-mail and tag:inbox and (not folder:inbox)'
 
-notmuch search --output=files 'folder:all-mail and tag:deleted' | xargs -r mv -vt "$maildir/trash/cur/"
-notmuch new
+# remove the increment file
+rm "$increment"
 
-notmuch search --output=files 'folder:all-mail and tag:draft and (not folder:drafts)' | xargs -r mv -vt "$maildir/drafts/cur/"
-notmuch new
-
-notmuch search --output=files 'folder:all-mail and tag:inbox and (not folder:inbox)' | xargs -r mv -vt "$maildir/inbox/cur/"
-notmuch new
-
+# backup spam for future use
 d="$(dirname "$(readlink -f "$0")")"
 "$d"/backup-spam
