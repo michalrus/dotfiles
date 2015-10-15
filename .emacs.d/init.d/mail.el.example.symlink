@@ -10,6 +10,7 @@
       '(
         ;;(:name "inbox" :key "i" :query "tag:inbox" :sort-order oldest-first)
         (:key "i"   :name "inbox"         :query "tag:inbox")
+        (:key "l"   :name "reply-later"   :query "tag:reply-later")
         (:key "f"   :name "flagged"       :query "tag:flagged")
         (:key "d"   :name "drafts"        :query "tag:draft")
         (:key "m"   :name "sent"          :query "tag:sent")
