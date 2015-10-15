@@ -6,6 +6,10 @@ set -o errexit
 
 d="$(dirname "$(readlink -f "$0")")"
 
+lockfile="$(readlink -f "$0").lock"
+( set -o noclobber ; echo "$$" >"$lockfile" ) 2>/dev/null || { echo >&1 "$lockfile: already exists; another instance of $0 is running" ; exit 1 ; }
+trap 'e=$? ; rm -f "$lockfile" ; test $e -eq 77 && exit 0 || exit $e' INT TERM EXIT
+
 "$d"/imap-presync
 mbsync -a
 "$d"/imap-postsync
