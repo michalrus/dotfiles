@@ -35,9 +35,6 @@ to(){
     notmuch search --output=messages "$query" | while IFS= read -r id ; do
         local files="$(notmuch search --output=files "$id")"
         if [ -n "$files" ] ; then # to check for some notmuch anomaly :O
-            echo "$query"
-            echo "$id"
-
             # it is possible, that this exact message already exists in
             # $dest. If so, don’t put another copy there.
             dest_file="$(echo "$files" | grep "$dest_regex")" || true
