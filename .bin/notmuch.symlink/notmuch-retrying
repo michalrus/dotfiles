@@ -1,0 +1,30 @@
+#!/bin/sh
+
+retry_when="already locked"
+retry_times=100
+retry_delay=2
+
+tmpout="$(mktemp)"
+
+i=0
+while [ $i -lt $retry_times ] ; do
+    notmuch "$@" >"$tmpout" 2>&1
+    excode=$?
+
+    retry=
+    [ $excode -eq 1 ] && grep -qF "$retry_when" "$tmpout" && retry=1
+
+    cat "$tmpout"
+
+    [ "$retry" ] || { rm "$tmpout" ; exit $excode ; }
+
+    i=$(( $i + 1 ))
+    echo
+    echo "Retrying in $retry_delay seconds... [$i/$retry_times]"
+    echo
+    sleep $retry_delay
+done
+
+# one final retry
+rm "$tmpout"
+exec notmuch "$@"

@@ -4,6 +4,11 @@ set -o noclobber
 set -o nounset
 set -o errexit
 
+d="$(dirname "$(readlink -f "$0")")"
+tag(){
+    "$d"/notmuch-retrying tag "$@"
+}
+
 # Tip: first argument to this command (later known as $narrow) can be used to narrow down the search. By default it’s "tag:new".
 
 narrow="${1:-}"
@@ -19,7 +24,7 @@ my_emails="$( { notmuch config get user.primary_email ; notmuch config get user.
 #  initial marks done before anything else (to also tag mail in +spam, +deleted etc. with +id:*)
 
 # 8c4896872150:
-notmuch tag +id:sztompke -- "($narrow)"' and (from:stefan.sztompke@wp.pl OR to:stefan.sztompke@wp.pl OR from:stefan@michalrus.com OR to:stefan@michalrus.com)'
+tag +id:sztompke -- "($narrow)"' and (from:stefan.sztompke@wp.pl OR to:stefan.sztompke@wp.pl OR from:stefan@michalrus.com OR to:stefan@michalrus.com)'
 
 # --------------------- Gmail nonsense ---------------------
 
@@ -29,122 +34,122 @@ notmuch search --output=messages "$narrow" | while IFS= read -r id ; do
     ln="$(notmuch show --format=mbox "$id" | grep -m 1 -B999 '^$' | grep -i '^X-smssync-datatype:')"
     if [ -n "$ln" ] ; then
         val="$(echo "$ln" | sed -re 's/^[^:]+:\s*//' | tr '[:upper:]' '[:lower:]')"
-	      notmuch tag +phone "+$val" "$id"
+	      tag +phone "+$val" "$id"
     fi
 done || true
-notmuch tag -new          -- "($narrow)"' and (tag:phone)'
+tag -new          -- "($narrow)"' and (tag:phone)'
 
 # tag all in folder:spam with +spam
-notmuch tag -new +spam    -- "($narrow)"' and (folder:spam)'
+tag -new +spam    -- "($narrow)"' and (folder:spam)'
 
 # tag all in folder:trash with +deleted
-notmuch tag -new +deleted -- "($narrow)"' and (folder:trash)'
+tag -new +deleted -- "($narrow)"' and (folder:trash)'
 
 # tag all in folder:drafts with +draft (because crippled Gmail)
-notmuch tag -new +draft   -- "($narrow)"' and (folder:drafts)'
+tag -new +draft   -- "($narrow)"' and (folder:drafts)'
 
 # tag messages sent by me with +sent
-notmuch tag +sent    -- "($narrow)"' and ((folder:local-sent) or ((not tag:phone) and (not tag:draft) and from:('"$my_emails"')))'
+tag +sent    -- "($narrow)"' and ((folder:local-sent) or ((not tag:phone) and (not tag:draft) and from:('"$my_emails"')))'
 
 # tag messages sent by me to myself with +self
-notmuch tag +self         -- "($narrow)"' and (tag:sent and to:('"$my_emails"'))'
+tag +self         -- "($narrow)"' and (tag:sent and to:('"$my_emails"'))'
 
 # archive messages +sent not to my +self
-notmuch tag -new          -- "($narrow)"' and (tag:sent and not tag:self)'
+tag -new          -- "($narrow)"' and (tag:sent and not tag:self)'
 
 # do not remove +new yet! see at the end of this file
 # we want to bi-sync gmail.inbox with local.inbox
 # this line is only useful when someone moves automatically archived message to gmail.inbox on gmail
-notmuch tag +inbox        -- "($narrow)"' and (folder:inbox)'
+tag +inbox        -- "($narrow)"' and (folder:inbox)'
 
 # remove +spam tag from messages moved to inbox/all-mail in the pre-sync hook (see ./imap-pre-sync)
-notmuch tag -spam         -- "($narrow)"' and (tag:spam and (not folder:spam))'
+tag -spam         -- "($narrow)"' and (tag:spam and (not folder:spam))'
 
 # 4c2b0ab40c18 same for +deleted
-notmuch tag -deleted      -- "($narrow)"' and (tag:deleted and (not folder:trash))'
+tag -deleted      -- "($narrow)"' and (tag:deleted and (not folder:trash))'
 
 # --------------------- mailing lists ---------------------
 #  TODO: use Gnus with gmane.*
 
-notmuch tag -new +list +list:pgsql-admin      -- "($narrow)"' and (from:pgsql-admin@postgresql.org OR to:pgsql-admin@postgresql.org)'
+tag -new +list +list:pgsql-admin      -- "($narrow)"' and (from:pgsql-admin@postgresql.org OR to:pgsql-admin@postgresql.org)'
 
-notmuch tag -new +list +list:scala-on-android -- "($narrow)"' and (from:scala-on-android@googlegroups.com OR to:scala-on-android@googlegroups.com)'
+tag -new +list +list:scala-on-android -- "($narrow)"' and (from:scala-on-android@googlegroups.com OR to:scala-on-android@googlegroups.com)'
 
-notmuch tag -new +list +list:sbt-dev          -- "($narrow)"' and (from:sbt-dev@googlegroups.com OR to:sbt-dev@googlegroups.com)'
+tag -new +list +list:sbt-dev          -- "($narrow)"' and (from:sbt-dev@googlegroups.com OR to:sbt-dev@googlegroups.com)'
 
-notmuch tag -new +list +list:scala-user       -- "($narrow)"' and (from:scala-user@googlegroups.com OR to:scala-user@googlegroups.com)'
+tag -new +list +list:scala-user       -- "($narrow)"' and (from:scala-user@googlegroups.com OR to:scala-user@googlegroups.com)'
 
 # --------------------- rss etc. +news ---------------------
 
-notmuch tag +news:life          -- "($narrow)"' and (from:@filmweb.pl OR to:@filmweb.pl)'
-notmuch tag +news:life          -- "($narrow)"' and (from:@markmanson.net OR to:@markmanson.net)'
-notmuch tag +news:life          -- "($narrow)"' and (from:@jasonhunt.pl to:rss@michalrus.com)'
-notmuch tag +news:other +rss    -- "($narrow)"' and (from:scripts@michalrus.com to:rss.x@michalrus.com)'
-notmuch tag +news:security +rss -- "($narrow)"' and (from:scripts@michalrus.com to:rss.security@michalrus.com)'
-notmuch tag +news:coding +rss   -- "($narrow)"' and (from:scripts@michalrus.com to:rss.coding@michalrus.com)'
-notmuch tag +news:science       -- "($narrow)"' and (from:robbpseaton@gmail.com OR from:@rs.io)'
-notmuch tag +news:security      -- "($narrow)"' and (from:@donuts.co)'
-notmuch tag +news:quora         -- "($narrow)"' and (from:@quora.com from:(digest OR events))'
-notmuch tag +news:life          -- "($narrow)"' and (from:linkedin@e.linkedin.com)'
-notmuch tag +news:science +rss  -- "($narrow)"' and (from:scripts@michalrus.com to:rss.science@michalrus.com)'
-notmuch tag +news:life          -- "($narrow)"' and (from:@koty.pl OR to:@koty.pl)'
-notmuch tag +news:world         -- "($narrow)"' and (to:upr@* OR to:@upr.org.pl OR from:@upr.org.pl)'
-notmuch tag +news:world         -- "($narrow)"' and (from:@rzecznikrodzicow.pl)'
-notmuch tag +news:world         -- "($narrow)"' and (from:tirynatory@inspro.org.pl)'
-notmuch tag +news:life          -- "($narrow)"' and (from:@accuradio.com OR to:@accuradio.com)'
-notmuch tag +news:life          -- "($narrow)"' and (from:@gallup3.com OR to:@gallup3.com OR from:@gallup4.com OR to:@gallup4.com)'
-notmuch tag +news:life          -- "($narrow)"' and (from:@gallup3.com OR to:@gallup3.com OR from:@gallup4.com OR to:@gallup4.com)'
-notmuch tag +news:security      -- "($narrow)"' and (from:@archlinux.org OR to:@archlinux.org OR from:@achlinux.org)'
-notmuch tag +news:coding        -- "($narrow)"' and ((not tag:list) AND (from:@typesafe.com OR to:@typesafe.com))'
-notmuch tag +news:life          -- "($narrow)"' and (from:brennan@planscope.io)'
-notmuch tag +news:life          -- "($narrow)"' and (from:rusrob@poczta.onet.pl tag:attachment (dnt OR rz OR nzb) pdf)'
-notmuch tag +news:life          -- "($narrow)"' and (pocztazdrowia.pl and not from:git@michalrus.com)'
-notmuch tag +news:design        -- "($narrow)"' and (from:@hackdesign.org OR to:@hackdesign.org OR from:@kadavy.net OR to:@kadavy.net)'
-notmuch tag +news:life          -- "($narrow)"' and ((to:rss.notification@michalrus.com OR from:@facebookmail.com) AND subject:"Alex Barszczewski")'
-notmuch tag +news:coding        -- "($narrow)"' and (from:@twitter.com and from:"Popular in your network")'
-notmuch tag +news:coding        -- "($narrow)"' and (from:@stackexchange.com and subject:"Weekly Newsletter")'
+tag +news:life          -- "($narrow)"' and (from:@filmweb.pl OR to:@filmweb.pl)'
+tag +news:life          -- "($narrow)"' and (from:@markmanson.net OR to:@markmanson.net)'
+tag +news:life          -- "($narrow)"' and (from:@jasonhunt.pl to:rss@michalrus.com)'
+tag +news:other +rss    -- "($narrow)"' and (from:scripts@michalrus.com to:rss.x@michalrus.com)'
+tag +news:security +rss -- "($narrow)"' and (from:scripts@michalrus.com to:rss.security@michalrus.com)'
+tag +news:coding +rss   -- "($narrow)"' and (from:scripts@michalrus.com to:rss.coding@michalrus.com)'
+tag +news:science       -- "($narrow)"' and (from:robbpseaton@gmail.com OR from:@rs.io)'
+tag +news:security      -- "($narrow)"' and (from:@donuts.co)'
+tag +news:quora         -- "($narrow)"' and (from:@quora.com from:(digest OR events))'
+tag +news:life          -- "($narrow)"' and (from:linkedin@e.linkedin.com)'
+tag +news:science +rss  -- "($narrow)"' and (from:scripts@michalrus.com to:rss.science@michalrus.com)'
+tag +news:life          -- "($narrow)"' and (from:@koty.pl OR to:@koty.pl)'
+tag +news:world         -- "($narrow)"' and (to:upr@* OR to:@upr.org.pl OR from:@upr.org.pl)'
+tag +news:world         -- "($narrow)"' and (from:@rzecznikrodzicow.pl)'
+tag +news:world         -- "($narrow)"' and (from:tirynatory@inspro.org.pl)'
+tag +news:life          -- "($narrow)"' and (from:@accuradio.com OR to:@accuradio.com)'
+tag +news:life          -- "($narrow)"' and (from:@gallup3.com OR to:@gallup3.com OR from:@gallup4.com OR to:@gallup4.com)'
+tag +news:life          -- "($narrow)"' and (from:@gallup3.com OR to:@gallup3.com OR from:@gallup4.com OR to:@gallup4.com)'
+tag +news:security      -- "($narrow)"' and (from:@archlinux.org OR to:@archlinux.org OR from:@achlinux.org)'
+tag +news:coding        -- "($narrow)"' and ((not tag:list) AND (from:@typesafe.com OR to:@typesafe.com))'
+tag +news:life          -- "($narrow)"' and (from:brennan@planscope.io)'
+tag +news:life          -- "($narrow)"' and (from:rusrob@poczta.onet.pl tag:attachment (dnt OR rz OR nzb) pdf)'
+tag +news:life          -- "($narrow)"' and (pocztazdrowia.pl and not from:git@michalrus.com)'
+tag +news:design        -- "($narrow)"' and (from:@hackdesign.org OR to:@hackdesign.org OR from:@kadavy.net OR to:@kadavy.net)'
+tag +news:life          -- "($narrow)"' and ((to:rss.notification@michalrus.com OR from:@facebookmail.com) AND subject:"Alex Barszczewski")'
+tag +news:coding        -- "($narrow)"' and (from:@twitter.com and from:"Popular in your network")'
+tag +news:coding        -- "($narrow)"' and (from:@stackexchange.com and subject:"Weekly Newsletter")'
 
 # tag all news (up to this point) with +news -new
 # also: remove all +news from inbox (some might not have been removed on the Gmail side)
-notmuch tag -new -inbox +news          -- "($narrow)"' and (tag:news:life OR tag:news:coding OR tag:news:security OR tag:news:world OR tag:news:science OR tag:news:quora OR tag:news:other OR tag:news:design)'
+tag -new -inbox +news          -- "($narrow)"' and (tag:news:life OR tag:news:coding OR tag:news:security OR tag:news:world OR tag:news:science OR tag:news:quora OR tag:news:other OR tag:news:design)'
 
 # finally, tag the remaining RSS with +news:life (as a last step with (not tag:news) to honor manual tagging)
 # also: remove them from inbox, see above
-notmuch tag -new -inbox +news +news:life +rss -- "($narrow)"' and ((not tag:news) from:scripts@michalrus.com to:rss@michalrus.com)'
+tag -new -inbox +news +news:life +rss -- "($narrow)"' and ((not tag:news) from:scripts@michalrus.com to:rss@michalrus.com)'
 
 # --------------------- alter ego ---------------------
 
 # to create another identities, add the +id:* tags at the beginning of this file, see 8c4896872150
 
 # b77363d993b8 don’t remove +new yet, as we want to apply all the following rules; only do -new at the end (in d74863d76a1f)
-notmuch tag +id -- "($narrow)"' and (tag:id:sztompke)'
+tag +id -- "($narrow)"' and (tag:id:sztompke)'
 
 # --------------------- tag:ignored (for individual messages) and tag:killed (propagating on the whole thread) ---------------------
 
 # To-do: xargs -r is a GNU extension…
-notmuch search --output=threads 'tag:killed' | xargs -r notmuch tag +killed
+notmuch search --output=threads 'tag:killed' | xargs -r "$d"/notmuch-retrying tag +killed
 
-notmuch tag +ignored +deal +banking  -- "($narrow)"' and (from:@mbank.pl and (from:mOkazje@mbank.pl or subject:(konkurs* or raty or wygraj or zarabiaj or fundusz* or tani* or kredyt* or zysk* or rabat* or nagrod* or nagród or zakup* or świąteczn* or mszop* or gazet* or urodzin* or przyszłoś* or inwest*) or not (mimetype:text/plain or subject:potwierdze* or subject:dyspozycj* or tag:attachment)))'
-notmuch tag +ignored +deal           -- "($narrow)"' and (from:@sedo.com)'
-notmuch tag +ignored +notification   -- "($narrow)"' and ((from:@facebookmail.com OR to:@facebookmail.com) AND subject:("You have more friends on Facebook than you think" OR "Do you know" OR "Interesting Pages" or ("you have" and ("notification" or "notifications" or "poke" or "pokes" or "message" or "messages" or "invite" or "invites" or "request" or "requests"))))'
-notmuch tag +ignored +education +agh -- "($narrow)"' and ((from:@stosowana.pl OR to:@stosowana.pl) AND subject:("Target is back up." OR "Target is down."))'
-notmuch tag +ignored +deal           -- "($narrow)"' and (from:@massdrop.com OR to:@massdrop.com)'
+tag +ignored +deal +banking  -- "($narrow)"' and (from:@mbank.pl and (from:mOkazje@mbank.pl or subject:(konkurs* or raty or wygraj or zarabiaj or fundusz* or tani* or kredyt* or zysk* or rabat* or nagrod* or nagród or zakup* or świąteczn* or mszop* or gazet* or urodzin* or przyszłoś* or inwest*) or not (mimetype:text/plain or subject:potwierdze* or subject:dyspozycj* or tag:attachment)))'
+tag +ignored +deal           -- "($narrow)"' and (from:@sedo.com)'
+tag +ignored +notification   -- "($narrow)"' and ((from:@facebookmail.com OR to:@facebookmail.com) AND subject:("You have more friends on Facebook than you think" OR "Do you know" OR "Interesting Pages" or ("you have" and ("notification" or "notifications" or "poke" or "pokes" or "message" or "messages" or "invite" or "invites" or "request" or "requests"))))'
+tag +ignored +education +agh -- "($narrow)"' and ((from:@stosowana.pl OR to:@stosowana.pl) AND subject:("Target is back up." OR "Target is down."))'
+tag +ignored +deal           -- "($narrow)"' and (from:@massdrop.com OR to:@massdrop.com)'
 
 # see 4c2b0ab40c18 to see why -inbox is here
-notmuch tag -new -inbox              -- "($narrow)"' and (tag:killed OR tag:ignored)'
+tag -new -inbox              -- "($narrow)"' and (tag:killed OR tag:ignored)'
 
 # --------------------- convenience filters (not visible to Gmail) ---------------------
 #  To-do: remove these from Gmail, as they're not used there at all
 
-notmuch tag +notification -- "($narrow)"' and ((not tag:news:quora) from:@quora.com)'
-notmuch tag +banking      -- "($narrow)"' and (from:@mbank.pl or to:@mbank.pl)'
-notmuch tag -new          -- "($narrow)"' and (from:@mbank.pl and subject:"elektroniczne zestawienie operacji")'
+tag +notification -- "($narrow)"' and ((not tag:news:quora) from:@quora.com)'
+tag +banking      -- "($narrow)"' and (from:@mbank.pl or to:@mbank.pl)'
+tag -new          -- "($narrow)"' and (from:@mbank.pl and subject:"elektroniczne zestawienie operacji")'
 
 
 # --------------------- mark the remaining +new as +inbox ---------------------
 
 # d74863d76a1f finally archive +id (see b77363d993b8)
-notmuch tag -new -- "($narrow)"' and (tag:id)'
+tag -new -- "($narrow)"' and (tag:id)'
 
 #  i.e. anything that the gmail-side filters archived (removed from gmail.inbox) too soon
-notmuch tag -new +inbox -- "($narrow)"' and (tag:new)'
+tag -new +inbox -- "($narrow)"' and (tag:new)'

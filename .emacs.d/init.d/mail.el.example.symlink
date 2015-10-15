@@ -2,6 +2,8 @@
 
 (require 'notmuch)
 
+(setq notmuch-command (expand-file-name ".bin/notmuch/notmuch-retrying"))
+
 (setq notmuch-search-oldest-first nil)
 
 (setq notmuch-saved-searches

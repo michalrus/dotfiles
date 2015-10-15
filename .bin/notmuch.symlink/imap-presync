@@ -7,6 +7,7 @@ set -o errexit
 # physically move messages to appropriate IMAP folders, based on notmuch ±tags
 # (needed to have correct views in the Gmail apps)
 
+d="$(dirname "$(readlink -f "$0")")"
 maildir="$(notmuch config get database.path)"
 
 # See http://cr.yp.to/proto/maildir.html for maildir naming schemes
@@ -58,13 +59,13 @@ to(){
         fi
     done
     
-    notmuch new
+    "$d"/notmuch-retrying new
 }
 
 # order is important!
 
 # refresh database
-notmuch new
+"$d"/notmuch-retrying new
 
 # trash:  move undeleted messages back to gmail.inbox or gmail.all-mail; move spam to gmail.spam
 to inbox    move 'folder:trash and tag:inbox'
@@ -91,5 +92,4 @@ to inbox    copy 'folder:all-mail and tag:inbox and (not folder:inbox)'
 rm "$increment"
 
 # backup spam for future use
-d="$(dirname "$(readlink -f "$0")")"
 "$d"/backup-spam
