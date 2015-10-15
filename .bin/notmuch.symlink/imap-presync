@@ -33,29 +33,33 @@ to(){
 
     notmuch search --output=messages "$query" | while IFS= read -r id ; do
         local files="$(notmuch search --output=files "$id")"
+        if [ -n "$files" ] ; then # to check for some notmuch anomaly :O
+            echo "$query"
+            echo "$id"
 
-        # it is possible, that this exact message already exists in
-        # $dest. If so, don’t put another copy there.
-        dest_file="$(echo "$files" | grep "$dest_regex")" || true
-        if [ '!' '(' -n "$dest_file" -a -e "$dest_file" ')' ] ; then
-            # if it’s not in $dest yet…
-            src="$(echo "$files" | head -n 1)"
-            dest_file="$maildir/$dest/cur/$(new_name "$src")"
-            [ "$mode" = "move" ] && local cmd=mv || local cmd=cp
-            "$cmd" -v "$src" "$dest_file" || true
-        fi
+            # it is possible, that this exact message already exists in
+            # $dest. If so, don’t put another copy there.
+            dest_file="$(echo "$files" | grep "$dest_regex")" || true
+            if [ -z "$dest_file" -o '!' '(' -n "$dest_file" -a -e "$dest_file" ')' ] ; then
+                # if it’s not in $dest yet…
+                echo "###${dest_file}###"
+                echo "###${files}###"
+                src="$(echo "$files" | head -n 1)"
+                dest_file="$maildir/$dest/cur/$(new_name "$src")"
+                [ "$mode" = "move" ] && local cmd=mv || local cmd=cp
+                echo "$cmd" -v "$src" "$dest_file" || true
+                "$cmd" -v "$src" "$dest_file" || true
+            fi
 
-        if [ "$mode" = "move" -a -e "$dest_file" ] ; then
-            # if this is a move, remove the message from other locations; if copy, ignore them
-            echo "$files" | grep -v "$dest_regex" | xargs rm -v || true # some file might already not exist there
+            if [ "$mode" = "move" -a -e "$dest_file" ] ; then
+                # if this is a move, remove the message from other locations; if copy, ignore them
+                echo "$files" | grep -v "$dest_regex" | xargs rm -v || true # some file might already not exist there
+            fi
         fi
     done
     
     notmuch new
 }
-
-# To-do: mv -t $dest works only in GNU mv, not POSIX…
-# To-do: xargs -r works only in GNU mv, not POSIX…
 
 # order is important!
 
