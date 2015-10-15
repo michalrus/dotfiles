@@ -19,7 +19,7 @@ export HISTFILESIZE=$HISTSIZE
 
 . "$HOME/.local/share/git-prompt.sh"
 
-__mshell_set_prompt() {
+__dotfiles_set_prompt() {
   local last_exitcode="$?"
 
   if [ "$EUID" -ne 0 ] ; then
@@ -52,4 +52,4 @@ __mshell_set_prompt() {
   PS2="$D> $reset"
 }
 
-PROMPT_COMMAND='__mshell_set_prompt'
+PROMPT_COMMAND='__dotfiles_set_prompt'
