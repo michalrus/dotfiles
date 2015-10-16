@@ -11,5 +11,5 @@ lockfile="$(readlink -f "$0").lock"
 trap 'e=$? ; rm -f "$lockfile" ; test $e -eq 77 && exit 0 || exit $e' INT TERM EXIT
 
 "$d"/imap-presync
-mbsync -a
+timeout --signal=TERM --kill-after=10s 120s mbsync -a
 "$d"/imap-postsync
