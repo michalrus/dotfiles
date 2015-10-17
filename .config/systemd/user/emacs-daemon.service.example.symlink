@@ -1,0 +1,15 @@
+# IMPORTANT: you have to COPY this file to ~/.config/systemd/user,
+# just symlinking will not work and fail with E_NOENT.
+
+[Unit]
+Description=Emacs: the extensible, self-documenting text editor
+
+[Service]
+Type=forking
+ExecStart=/usr/bin/emacs --daemon
+ExecStop=/usr/bin/emacsclient --eval "(kill-emacs)"
+Environment=SSH_AUTH_SOCK=%h/.gnupg/S.gpg-agent.ssh
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
