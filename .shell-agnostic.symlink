@@ -19,7 +19,7 @@ export WINELOADER="${HOME}/.bin/wine"
 
 # a default editor that is easy to exit ;-)
 export EDITOR='nano'
-export VISUAL='nano'
+export VISUAL="$EDITOR"
 
 export CLICOLOR='1'
 command -v dircolors >/dev/null && eval "$(dircolors "$HOME"/.dircolors)"

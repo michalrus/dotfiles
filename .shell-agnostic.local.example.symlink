@@ -3,8 +3,16 @@
 # file without the `.example' suffix.
 #
 
-export EDITOR='emacs --no-window-system --no-desktop'
+# if $ALTERNATE_EDITOR is empty, a new `emacs --daemon` will be started when `emacsclient` is run
+export ALTERNATE_EDITOR=""
+
+# an Emacs frame in the terminal, connecting to (or starting) `emacs --daemon`
+export EDITOR='emacsclient -t'
 export VISUAL="$EDITOR"
+
+# breaking habits
+alias nano="$EDITOR"
+alias e="$EDITOR"
 
 export DEBFULLNAME="Michal Rus"
 export DEBEMAIL="m@michalrus.com"
