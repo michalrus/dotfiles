@@ -1,0 +1,23 @@
+;; -*- mode: emacs-lisp -*-
+
+(require 'org)
+
+(define-key global-map "\C-cc" 'org-capture)
+(define-key global-map "\C-ca" 'org-agenda)
+
+(setq-default org-log-done t
+              org-support-shift-select t
+              org-catch-invisible-edits 'error
+              org-ctrl-k-protect-subtree 'error)
+
+(setq org-clock-persist 'history)
+(org-clock-persistence-insinuate)
+
+(defun org-archive-done-tasks-in-file ()
+  "Archives all DONE tasks in the current Org file"
+  (interactive)
+  (org-map-entries
+   (lambda ()
+     (org-archive-subtree)
+     (setq org-map-continue-from (outline-previous-heading)))
+   "/DONE" 'file))

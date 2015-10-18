@@ -1,0 +1,5 @@
+;; -*- mode: emacs-lisp -*-
+
+(use-package python-mode
+  :mode "\\.py\\'" :interpreter "python"
+  :ensure t)

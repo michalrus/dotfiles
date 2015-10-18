@@ -34,8 +34,11 @@
 (load-init-part "packages.el")
 (load-init-part "appearance.el")
 (load-init-part "editing.el")
+(load-init-part "org.el")
 (load-init-part "latex.el")
+(load-init-part "python.el")
 
 ;; optionally load parts local to the machine
 (load-init-part-if-exists "personal.el")
 (load-init-part-if-exists "mail.el")
+(load-init-part-if-exists "org-wunderlist.el")
