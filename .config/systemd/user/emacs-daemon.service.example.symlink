@@ -9,7 +9,7 @@ Type=forking
 ExecStart=/usr/bin/emacs --daemon
 ExecStop=/usr/bin/emacsclient --eval "(kill-emacs)"
 Environment=SSH_AUTH_SOCK=%h/.gnupg/S.gpg-agent.ssh
-Restart=on-failure
+Restart=always
 
 [Install]
 WantedBy=default.target
