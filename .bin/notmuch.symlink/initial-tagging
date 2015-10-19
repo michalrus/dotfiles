@@ -111,7 +111,7 @@ tag +news:coding        -- "($narrow)"' and (from:@stackexchange.com and subject
 
 # tag all news (up to this point) with +news -new
 # also: remove all +news from inbox (some might not have been removed on the Gmail side)
-tag -new -inbox +news          -- "($narrow)"' and (tag:news:life OR tag:news:coding OR tag:news:security OR tag:news:world OR tag:news:science OR tag:news:quora OR tag:news:other OR tag:news:design)'
+tag -new -inbox +news          -- "($narrow)"' and (tag:news:life OR tag:news:coding OR tag:news:security OR tag:news:world OR tag:news:science OR tag:news:quora OR tag:news:other OR tag:news:design OR tag:news:health)'
 
 # finally, tag the remaining RSS with +news:life (as a last step with (not tag:news) to honor manual tagging)
 # also: remove them from inbox, see above
