@@ -36,6 +36,7 @@
 (load-init-part "editing.el")
 (load-init-part "org.el")
 (load-init-part "latex.el")
+(load-init-part "shell-scripts.el")
 (load-init-part "python.el")
 
 ;; optionally load parts local to the machine
