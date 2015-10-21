@@ -13,6 +13,10 @@
 (package-initialize)
 (unless package-archive-contents (package-refresh-contents))
 
-;; (use-package)
+;; use-package
 (unless (package-installed-p 'use-package) (package-install 'use-package))
 (require 'use-package)
+
+;; el-get
+(use-package el-get
+  :ensure t)

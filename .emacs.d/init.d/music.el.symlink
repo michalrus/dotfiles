@@ -1,0 +1,6 @@
+;; -*- mode: emacs-lisp -*-
+
+(el-get-bundle gregorio-mode
+  :url "https://raw.githubusercontent.com/cajetanus/gregorio-mode.el/master/gregorio-mode.el"
+  :features gregorio-mode
+  (add-to-list 'auto-mode-alist '("\\.gabc$" . gregorio-mode)))
