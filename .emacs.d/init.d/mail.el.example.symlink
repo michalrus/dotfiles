@@ -57,6 +57,9 @@
       message-auto-save-directory (expand-file-name "drafts/new/" message-directory)
       message-kill-buffer-on-exit t)
 
+;; use `format=flowed', otherwise messages look weird on mobile devices
+(add-hook 'message-setup-hook (lambda () (setq use-hard-newlines t)))
+
 ;; returns Message-Id of the currently edited message
 (defun message-fetch-id ()
   (replace-regexp-in-string "\\(^<\\|>$\\)" "" (save-restriction
