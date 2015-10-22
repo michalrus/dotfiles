@@ -1,5 +1,10 @@
 ;; -*- mode: emacs-lisp -*-
 
+;; LilyPond mode
+(require 'lilypond-mode)
+(add-to-list 'auto-mode-alist '("\\.ly$" . LilyPond-mode))
+
+;; typesetting Gregorian chant
 (el-get-bundle gregorio-mode
   :url "https://raw.githubusercontent.com/cajetanus/gregorio-mode.el/master/gregorio-mode.el"
   :features gregorio-mode
