@@ -52,6 +52,9 @@
 (setq message-forward-before-signature nil
       message-citation-line-format "On %a, %d %b %Y %T %z, %f wrote:\n"
       message-citation-line-function 'message-insert-formatted-citation-line
+      message-cite-function 'message-cite-original-without-signature
+      notmuch-mua-cite-function 'message-cite-original-without-signature
+      message-signature-separator "^-- *$"
       message-signature "Michal Rus"
       message-directory "~/.Maildir/"
       message-auto-save-directory (expand-file-name "drafts/new/" message-directory)

@@ -1,6 +1,7 @@
 ;; -*- mode: emacs-lisp -*-
 
 ;; LilyPond mode
+(setq-default LilyPond-pdf-command "evince")
 (require 'lilypond-mode)
 (add-to-list 'auto-mode-alist '("\\.ly$" . LilyPond-mode))
 
