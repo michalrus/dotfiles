@@ -1,0 +1,32 @@
+#!/bin/sh
+
+set -o errexit
+set -o nounset
+set -o noclobber
+
+# If run with only one argument, a path to a .ly file that is a part
+# of a git repo, set git* variables and preset copyright/tagline
+# info. Else, fall back to the regular /usr/bin/lilypond.
+
+if [ "$#" -ne 1 ] ; then
+    exec /usr/bin/lilypond "$@"
+else
+    file="$(basename "$1")"
+    dir="$(dirname "$1")"
+
+    cd "$dir"
+
+    if git rev-parse --git-dir > /dev/null 2>&1; then
+        {
+            git log -n 1     --pretty=format:'gitCurrentRev = "%h"%ngitCurrentDate = "%aD"%n' -- "$file"
+            git log --follow --pretty=format:'gitInitialRev = "%h"%ngitInitialDate = "%aD"%n' -- "$file" | tail -n 2
+            [ -z "$(git status --porcelain -- "$file")" ] && echo "gitCleanState = ##t" || echo "gitCleanState = ##f"
+            echo 'gitLastChanged = #(string-append "Last changed in " gitCurrentRev ", on " gitCurrentDate (if gitCleanState "" " (WARNING! MODIFIED SINCE)") ".")'
+            echo 'gitFirstCreated = #(string-append "First created in " gitInitialRev ", on " gitInitialDate ".")'
+            echo '\header { copyright = \gitLastChanged tagline = \gitFirstCreated }'
+            echo '\include "'"$file"'"'
+        } | /usr/bin/lilypond -o "$(basename "$file" .ly)" -
+    else
+        exec /usr/bin/lilypond "$@"
+    fi
+fi
