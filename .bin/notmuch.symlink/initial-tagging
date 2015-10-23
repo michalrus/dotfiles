@@ -37,7 +37,9 @@ notmuch search --output=messages "$narrow" | while IFS= read -r id ; do
 	      tag +phone "+$val" "$id"
     fi
 done || true
-tag -new          -- "($narrow)"' and (tag:phone)'
+
+# have an overview of the phone in Emacs inbox (sometimes I’m missing stuff…)
+tag -new +inbox +unread -- "($narrow)"' and (tag:phone)'
 
 # tag all in folder:spam with +spam
 tag -new +spam    -- "($narrow)"' and (folder:spam)'
