@@ -11,21 +11,25 @@ set -o noclobber
 if [ "$#" -ne 1 ] ; then
     exec /usr/bin/lilypond "$@"
 else
-    file="$(basename "$1")"
-    dir="$(dirname "$1")"
+    if [ -f "$1" ] ; then
+        file="$(basename "$1")"
+        dir="$(dirname "$1")"
 
-    cd "$dir"
+        cd "$dir"
 
-    if git rev-parse --git-dir > /dev/null 2>&1; then
-        {
-            git log -n 1     --pretty=format:'gitCurrentRev = "%h"%ngitCurrentDate = "%aD"%n' -- "$file"
-            git log --follow --pretty=format:'gitInitialRev = "%h"%ngitInitialDate = "%aD"%n' -- "$file" | tail -n 2
-            [ -z "$(git status --porcelain -- "$file")" ] && echo "gitCleanState = ##t" || echo "gitCleanState = ##f"
-            echo 'gitLastChanged = #(string-append "Last changed in " gitCurrentRev ", on " gitCurrentDate (if gitCleanState "" " (WARNING! MODIFIED SINCE)") ".")'
-            echo 'gitFirstCreated = #(string-append "First created in " gitInitialRev ", on " gitInitialDate ".")'
-            echo '\header { copyright = \gitLastChanged tagline = \gitFirstCreated }'
-            echo '\include "'"$file"'"'
-        } | /usr/bin/lilypond -o "$(basename "$file" .ly)" -
+        if git rev-parse --git-dir > /dev/null 2>&1; then
+            {
+                git log -n 1     --pretty=format:'gitCurrentRev = "%h"%ngitCurrentDate = "%aD"%n' -- "$file"
+                git log --follow --pretty=format:'gitInitialRev = "%h"%ngitInitialDate = "%aD"%n' -- "$file" | tail -n 2
+                [ -z "$(git status --porcelain -- "$file")" ] && echo "gitCleanState = ##t" || echo "gitCleanState = ##f"
+                echo 'gitLastChanged = #(string-append "Last changed in " gitCurrentRev ", on " gitCurrentDate (if gitCleanState "" " (WARNING! MODIFIED SINCE)") ".")'
+                echo 'gitFirstCreated = #(string-append "First created in " gitInitialRev ", on " gitInitialDate ".")'
+                echo '\header { copyright = \gitLastChanged tagline = \gitFirstCreated }'
+                echo '\include "'"$file"'"'
+            } | /usr/bin/lilypond -o "$(basename "$file" .ly)" -
+        else
+            exec /usr/bin/lilypond "$@"
+        fi
     else
         exec /usr/bin/lilypond "$@"
     fi
