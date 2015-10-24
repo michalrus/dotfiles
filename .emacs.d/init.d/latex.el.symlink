@@ -2,6 +2,10 @@
 
 (use-package tex-site
   :ensure auctex
+  ;; add GNU `make' to supported commands
+  :config (add-hook 'LaTeX-mode-hook (lambda ()
+                                      (add-to-list 'TeX-command-list
+                                                   '("Make" "make" TeX-run-command nil t))))
   :mode ("\\.tex\\'" . latex-mode)
   :commands (latex-mode LaTeX-mode plain-tex-mode plain-TeX-mode)
   :pin gnu)
