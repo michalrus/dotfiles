@@ -1,4 +1,0 @@
-;; -*- mode: emacs-lisp -*-
-
-;; Emacs defaults are a bit too conservative for 21st century.
-(setq max-specpdl-size 2048)

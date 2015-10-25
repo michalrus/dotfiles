@@ -1,0 +1,25 @@
+;; -*- mode: emacs-lisp -*-
+
+;; Emacs defaults are a bit too conservative for the 21st century.
+(setq max-specpdl-size 2048)
+
+;; can find the project top directory
+(defun closest-directory-up-containing (file-name start-directory)
+  "Returns the first directory up in the tree, starting from
+`start-directory', in which the `file-name' exists. Most probably you
+want to use it in search for a \"Makefile\" in `default-directory'."
+  (if (file-exists-p (expand-file-name file-name start-directory)) start-directory
+    (if (equal start-directory (expand-file-name "/")) nil
+      (closest-directory-up-containing file-name (expand-file-name ".." start-directory)))))
+
+;; scroll the compilation output by default
+(setq compilation-scroll-output t)
+
+(defun setup-compilation-with-make ()
+  "Sets current buffer to compile (C-c C-c) using the nearest Makefile up in the directory hierarchy."
+  (interactive)
+  (let ((makefile-directory (closest-directory-up-containing "Makefile" default-directory)))
+    (when makefile-directory
+      (set (make-local-variable 'compile-command) (format "make -C %s" makefile-directory))
+      (set (make-local-variable 'compilation-read-command) nil)
+      (local-set-key (kbd "C-c C-c") 'compile))))
