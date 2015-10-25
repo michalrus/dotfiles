@@ -23,3 +23,6 @@ want to use it in search for a \"Makefile\" in `default-directory'."
       (set (make-local-variable 'compile-command) (format "make -C %s" makefile-directory))
       (set (make-local-variable 'compilation-read-command) nil)
       (local-set-key (kbd "C-c C-c") 'compile))))
+
+;; set Makefile-mode to run `make' on C-c C-c
+(add-hook 'makefile-mode-hook 'setup-compilation-with-make)
