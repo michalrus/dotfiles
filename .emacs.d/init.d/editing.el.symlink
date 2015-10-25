@@ -9,6 +9,9 @@
 (setq-default tab-width 2)
 (setq-default indent-tabs-mode nil)
 
+;; always add \n at the end of a file
+(setq-default require-final-newline t)
+
 ;; always hilight the corresponding parenthesis
 (setq show-paren-delay 0)
 (show-paren-mode 1)
