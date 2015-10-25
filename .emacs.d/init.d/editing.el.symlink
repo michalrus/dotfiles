@@ -9,8 +9,10 @@
 (setq-default tab-width 2)
 (setq-default indent-tabs-mode nil)
 
-;; always add \n at the end of a file
+;; sane whitespace behavior
 (setq-default require-final-newline t)
+(setq-default delete-trailing-lines t)
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ;; always hilight the corresponding parenthesis
 (setq show-paren-delay 0)
