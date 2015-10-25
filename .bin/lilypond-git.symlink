@@ -6,10 +6,10 @@ set -o noclobber
 
 # If run with only one argument, a path to a .ly file that is a part
 # of a git repo, set git* variables and preset copyright/tagline
-# info. Else, fall back to the regular /usr/bin/lilypond.
+# info. Else, fall back to the regular lilypond.
 
 if [ "$#" -ne 1 ] ; then
-    exec /usr/bin/lilypond "$@"
+    exec lilypond "$@"
 else
     if [ -f "$1" ] ; then
         file="$(basename "$1")"
@@ -26,11 +26,11 @@ else
                 echo 'gitFirstCreated = #(string-append "First created in " gitInitialRev ", on " gitInitialDate ".")'
                 echo '\header { copyright = \gitLastChanged tagline = \gitFirstCreated }'
                 echo '\include "'"$file"'"'
-            } | /usr/bin/lilypond -o "$(basename "$file" .ly)" -
+            } | lilypond -o "$(basename "$file" .ly)" -
         else
-            exec /usr/bin/lilypond "$@"
+            exec lilypond "$@"
         fi
     else
-        exec /usr/bin/lilypond "$@"
+        exec lilypond "$@"
     fi
 fi
