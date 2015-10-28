@@ -19,6 +19,7 @@ else
 
         if git rev-parse --git-dir > /dev/null 2>&1; then
             {
+                echo 'gitCurrentRev = "UNTRACKED" gitCurrentDate = "UNTRACKED" gitInitialRev = "UNTRACKED" gitInitialDate = "UNTRACKED"'
                 git log -n 1     --pretty=format:'gitCurrentRev = "%h"%ngitCurrentDate = "%aD"%n' -- "$file"
                 git log --follow --pretty=format:'gitInitialRev = "%h"%ngitInitialDate = "%aD"%n' -- "$file" | tail -n 2
                 [ -z "$(git status --porcelain -- "$file")" ] && echo "gitCleanState = ##t" || echo "gitCleanState = ##f"
