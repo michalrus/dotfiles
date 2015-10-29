@@ -1,0 +1,47 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use utf8;
+use Encode;
+use LWP::Simple qw(get);
+
+binmode(STDOUT, ":utf8");
+binmode(STDERR, ":utf8");
+binmode(STDIN,  ":utf8");
+
+my %urls = ();
+$urls{"pl"}    = "http://en.bab.la/dictionary/polish-english/";
+$urls{"de"}    = "http://en.bab.la/dictionary/german-english/";
+$urls{"de-pl"} = "http://en.bab.la/dictionary/german-polish/";
+
+sub babla {
+  my $doexit = shift;
+  my $text = get(shift . shift);
+  unless ($text =~ m/^.*<h4><i class="icon-chevron-right"><\/i>Summary<\/h4>(.*?)<h4><i class="icon-chevron-right"><\/i>Synonyms<\/h4>.*$/gis) {
+    exit 1 if $doexit;
+    return "-";
+  }
+  $text = $1;
+  $text =~ s/<br>/ — /gis;
+  $text =~ s/<\/p>\s*<p>/\0/gis;
+  $text =~ s/<.*?>/ /gis;
+  $text =~ s/&nbsp;?/ /gis;
+  $text =~ s/^\s+|\s+$//gis;
+  $text =~ s/\s+/ /gis;
+  $text =~ s/\s+full\s+details$//gis;
+  $text =~ s/\s*\0\s*/\n/gis;
+  return $text;
+}
+
+my $lang = shift;
+die "Usage: bab <language-code> [words to translate...]" unless defined $lang;
+
+$lang = $urls{$lang};
+die "bab: unknown language code" unless defined $lang;
+
+if (scalar(@ARGV) > 0) {
+  print babla(1, $lang, join(" ", map { Encode::_utf8_on($_); $_ } @ARGV)) . "\n";
+} else {
+  print babla(0, $lang, $_) . "\n" while (<>);
+}
