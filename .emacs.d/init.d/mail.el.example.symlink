@@ -52,8 +52,6 @@
 (setq message-forward-before-signature nil
       message-citation-line-format "On %a, %d %b %Y %T %z, %f wrote:\n"
       message-citation-line-function 'message-insert-formatted-citation-line
-      message-cite-function 'message-cite-original-without-signature
-      notmuch-mua-cite-function 'message-cite-original-without-signature
       message-signature-separator "^-- *$"
       message-signature "Michal Rus"
       message-directory "~/.Maildir/"
@@ -62,6 +60,24 @@
 
 ;; use `format=flowed', otherwise messages look weird on mobile devices
 (add-hook 'message-setup-hook (lambda () (setq use-hard-newlines t)))
+
+;; fix citation practices of some clients
+(defun message-fix-citation-marks ()
+  (interactive)
+  (let ((saved-point (point)))
+    (goto-char 1)
+    (while (search-forward-regexp "^\\(>[> ]*\\)" nil t)
+      (replace-match (concat (replace-regexp-in-string " " "" (match-string 1)) " ") t nil))
+    (goto-char 1)
+    (while (search-forward-regexp "^\\(>+\\) +$" nil t)
+      (replace-match (match-string 1) t nil))
+    (goto-char saved-point)))
+(defun message-cite-original-without-signature-fixing-marks ()
+  (message-cite-original-without-signature)
+  (message-fix-citation-marks)
+  (undo-boundary))
+(setq message-cite-function 'message-cite-original-without-signature-fixing-marks
+      notmuch-mua-cite-function 'message-cite-original-without-signature-fixing-marks)
 
 ;; returns Message-Id of the currently edited message
 (defun message-fetch-id ()
