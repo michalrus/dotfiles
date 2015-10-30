@@ -15,9 +15,23 @@ $urls{"pl"}    = "http://en.bab.la/dictionary/polish-english/";
 $urls{"de"}    = "http://en.bab.la/dictionary/german-english/";
 $urls{"de-pl"} = "http://en.bab.la/dictionary/german-polish/";
 
+sub find_article {
+  my ($text, $word) = @_;
+  $word =~ s/^\s+|\s+$//gis;
+  if ($text =~ /\Q$word\E\s*(\(\s*(.*?)\s*\)\s*)?\{\s*(.*?)\s*\}/is) {
+    $word .= " (" . $2 . ")" if defined $2;
+    $word .= " {". $3 . "}";
+  }
+  return $word;
+}
+
 sub babla {
   my $doexit = shift;
   my $text = get(shift . shift);
+
+  my $original = $text;
+  my $nohtml = $original; $nohtml =~ s/<.*?>/ /gis;
+
   unless ($text =~ m/^.*<h4><i class="icon-chevron-right"><\/i>Summary<\/h4>(.*?)<h4><i class="icon-chevron-right"><\/i>Synonyms<\/h4>.*$/gis) {
     exit 1 if $doexit;
     return "-";
@@ -27,10 +41,13 @@ sub babla {
   $text =~ s/<\/p>\s*<p>/\0/gis;
   $text =~ s/<.*?>/ /gis;
   $text =~ s/&nbsp;?/ /gis;
+  $text =~ s/{.*?}/ /gis;
   $text =~ s/^\s+|\s+$//gis;
   $text =~ s/\s+/ /gis;
   $text =~ s/\s+full\s+details$//gis;
   $text =~ s/\s*\0\s*/\n/gis;
+  $text =~ s/((\w|\s)+)/" ". find_article($nohtml, $1) . " "/gise;
+  $text =~ s/^\s+|\s+$//gis;
   return $text;
 }
 

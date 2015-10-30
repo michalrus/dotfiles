@@ -14,5 +14,8 @@ export VISUAL="$EDITOR"
 alias nano="$EDITOR"
 alias e="$EDITOR"
 
+alias en="bab pl"
+alias de="bab de-pl"
+
 export DEBFULLNAME="Michal Rus"
 export DEBEMAIL="m@michalrus.com"
