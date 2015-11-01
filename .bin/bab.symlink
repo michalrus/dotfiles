@@ -30,7 +30,11 @@ sub babla {
   my $text = get(shift . shift);
 
   my $original = $text;
-  my $nohtml = $original; $nohtml =~ s/<.*?>/ /gis;
+  $original =~ s/<script\W.*?<\/script>//gis;
+  $original =~ s/<style\W.*?<\/style>//gis;
+
+  my $nohtml = $original;
+  $nohtml =~ s/<.*?>/ /gis;
 
   unless ($text =~ m/^.*<h4><i class="icon-chevron-right"><\/i>Summary<\/h4>(.*?)<h4><i class="icon-chevron-right"><\/i>Synonyms<\/h4>.*$/gis) {
     exit 1 if $doexit;
@@ -46,7 +50,7 @@ sub babla {
   $text =~ s/\s+/ /gis;
   $text =~ s/\s+full\s+details$//gis;
   $text =~ s/\s*\0\s*/\n/gis;
-  $text =~ s/((\w|\s)+)/" ". find_article($nohtml, $1) . " "/gise;
+  $text =~ s/((\w|-|\s)+)/" ". find_article($nohtml, $1) . " "/gise;
   $text =~ s/^\s+|\s+$//gis;
   return $text;
 }
