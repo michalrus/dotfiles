@@ -13,6 +13,9 @@ binmode(STDIN,  ":utf8");
 my %urls = ();
 $urls{"pl"}    = "http://en.bab.la/dictionary/polish-english/";
 $urls{"de"}    = "http://en.bab.la/dictionary/german-english/";
+$urls{"it"}    = "http://en.bab.la/dictionary/italian-english/";
+$urls{"ru"}    = "http://en.bab.la/dictionary/russian-english/";
+$urls{"ru-pl"} = "http://en.bab.la/dictionary/russian-polish/";
 $urls{"de-pl"} = "http://en.bab.la/dictionary/german-polish/";
 
 sub find_article {
@@ -36,7 +39,7 @@ sub babla {
   my $nohtml = $original;
   $nohtml =~ s/<.*?>/ /gis;
 
-  unless ($text =~ m/^.*<h4><i class="icon-chevron-right"><\/i>Summary<\/h4>(.*?)<h4><i class="icon-chevron-right"><\/i>Synonyms<\/h4>.*$/gis) {
+  unless ($text =~ m/^.*<h4><i class="icon-chevron-right"><\/i>Summary<\/h4>(.*?)<div\W.*$/gis) {
     exit 1 if $doexit;
     return "-";
   }
