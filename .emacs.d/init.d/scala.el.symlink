@@ -1,0 +1,9 @@
+;; -*- mode: emacs-lisp -*-
+
+(use-package scala-mode2
+  :mode ("\\.scala$" . scala-mode)
+  :ensure t)
+
+(use-package ensime
+  :config (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+  :ensure t)

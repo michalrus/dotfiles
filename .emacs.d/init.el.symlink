@@ -38,6 +38,7 @@
 (load-init-part "latex.el")
 (load-init-part "music.el")
 (load-init-part "shell-scripts.el")
+(load-init-part "scala.el")
 (load-init-part "python.el")
 
 ;; optionally load parts local to the machine

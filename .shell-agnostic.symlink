@@ -44,6 +44,9 @@ export GIT_PS1_SHOWSTASHSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
 export GIT_PS1_SHOWUPSTREAM='verbose'
 
+# ArchLinux does not use JAVA_HOME, but several tools need it (e.g. ENSIME)
+[ -z "$JAVA_HOME" -a -e "/usr/lib/jvm/default" ] && export JAVA_HOME="/usr/lib/jvm/default"
+
 # export ANDROID_NDK_HOME for pfn/android-sdk-plugin
 [ -n "$ANDROID_NDK" ] && export ANDROID_NDK_HOME="$ANDROID_NDK"
 
