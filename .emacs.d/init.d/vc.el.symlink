@@ -1,0 +1,9 @@
+;; -*- mode: emacs-lisp -*-
+
+(use-package magit
+  :config (global-magit-file-mode)
+  :ensure t)
+
+(use-package diff-hl
+  :config (global-diff-hl-mode)
+  :ensure t)
