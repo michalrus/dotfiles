@@ -21,3 +21,6 @@ alias it="bab it"
 
 export DEBFULLNAME="Michal Rus"
 export DEBEMAIL="m@michalrus.com"
+
+# use GnuPG for SSH authentication
+export SSH_AUTH_SOCK="$HOME/.gnupg/S.gpg-agent.ssh"

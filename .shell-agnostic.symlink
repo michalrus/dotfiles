@@ -50,7 +50,4 @@ export GIT_PS1_SHOWUPSTREAM='verbose'
 # export ANDROID_NDK_HOME for pfn/android-sdk-plugin
 [ -n "$ANDROID_NDK" ] && export ANDROID_NDK_HOME="$ANDROID_NDK"
 
-# export GnuPG SSH agent socket, if exists
-[ -e "$HOME/.gnupg/S.gpg-agent.ssh" ] && export SSH_AUTH_SOCK="$HOME/.gnupg/S.gpg-agent.ssh"
-
 [ -e "$HOME/.shell-agnostic.local" ] && . "$HOME/.shell-agnostic.local"
