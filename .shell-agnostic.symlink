@@ -3,6 +3,10 @@ umask 077
 # turn off the annoying C-s and C-q in terminal
 stty -ixon
 
+# turn off C-z
+stty susp undef
+set +m
+
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US:en
