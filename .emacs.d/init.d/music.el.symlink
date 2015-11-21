@@ -7,8 +7,6 @@
 (add-hook 'LilyPond-mode-hook 'setup-compilation-with-make)
 
 ;; typesetting Gregorian chant
-(el-get-bundle gregorio-mode
-  :url "https://raw.githubusercontent.com/cajetanus/gregorio-mode.el/master/gregorio-mode.el"
-  :features gregorio-mode
-  (add-to-list 'auto-mode-alist '("\\.gabc$" . gregorio-mode))
-  (add-hook 'gregorio-mode-hook 'setup-compilation-with-make))
+(use-package gregorio-mode
+  :mode "\\.gabc\\'"
+  :ensure t)
