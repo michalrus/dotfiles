@@ -4,7 +4,7 @@
 (setq user-mail-address "m@michalrus.com")
 (setq user-full-name "Michal Rus")
 
-;; add ~/.bin/ to PATH (useful when run in --deamon mode by systemd,
-;; because then the ~/.profile is not read)
-(setenv "PATH" (concat (expand-file-name "~/.bin") ":" (getenv "PATH")))
-(add-to-list 'exec-path (expand-file-name "~/.bin"))
+;; irc
+(defun weechat ()
+  (interactive)
+  (weechat-connect "michalrus.com" 9001 (shell-command-to-string "printf %s $(pass show Social/WeeChat-relay)") 'ssl))

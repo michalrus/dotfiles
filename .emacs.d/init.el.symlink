@@ -45,4 +45,5 @@
 ;; optionally load parts local to the machine
 (load-init-part-if-exists "personal.el")
 (load-init-part-if-exists "mail.el")
+(load-init-part-if-exists "irc.el")
 (load-init-part-if-exists "org-wunderlist.el")
