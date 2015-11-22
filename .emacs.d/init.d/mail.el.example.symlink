@@ -1,53 +1,5 @@
 ;; -*- mode: emacs-lisp -*-
 
-(require 'notmuch)
-
-(setq notmuch-command (expand-file-name ".bin/notmuch/notmuch-retrying"))
-
-(setq notmuch-search-oldest-first nil)
-
-(setq notmuch-saved-searches
-      '(
-        ;;(:name "inbox" :key "i" :query "tag:inbox" :sort-order oldest-first)
-        (:key "i"   :name "inbox"          :query "tag:inbox")
-        (:key "l"   :name "reply-later"    :query "tag:reply-later")
-        (:key "f"   :name "flagged"        :query "tag:flagged")
-        (:key "d"   :name "drafts"         :query "tag:draft")
-        (:key "m"   :name "sent"           :query "tag:sent")
-        (:key "t"   :name "trash"          :query "tag:deleted")
-        (:key "s"   :name "spam"           :query "tag:spam")
-        (:key "nc"  :name "news:coding"    :query "tag:unread and tag:news:coding")
-        (:key "nd"  :name "news:design"    :query "tag:unread and tag:news:design")
-        (:key "nh"  :name "news:health"    :query "tag:unread and tag:news:health")
-        (:key "nl"  :name "news:life"      :query "tag:unread and tag:news:life and not (alex barszczewski)")
-        (:key "na"  :name "news:life (AB)" :query "tag:unread and tag:news:life and (alex barszczewski)")
-        (:key "no"  :name "news:other"     :query "tag:unread and tag:news:other")
-        (:key "nq"  :name "news:quora"     :query "tag:unread and tag:news:quora")
-        (:key "nx"  :name "news:science"   :query "tag:unread and tag:news:science")
-        (:key "ns"  :name "news:security"  :query "tag:unread and tag:news:security")
-        (:key "nw"  :name "news:world"     :query "tag:unread and tag:news:world")
-        ))
-
-;; bind reply-to-all to `r'
-(define-key notmuch-show-mode-map "r" 'notmuch-show-reply)
-(define-key notmuch-show-mode-map "R" 'notmuch-show-reply-sender)
-(define-key notmuch-search-mode-map "r" 'notmuch-search-reply-to-thread)
-(define-key notmuch-search-mode-map "R" 'notmuch-search-reply-to-thread-sender)
-
-;; don’t show the logo… it’s silly.
-(setq notmuch-show-logo nil)
-
-;; instantly save messages sent with SMTP to local-sent folder
-(setq notmuch-fcc-dirs "local-sent")
-
-;; update gnome taskbar with message counts
-(add-hook 'notmuch-after-tag-hook (lambda ()
-                                    (start-process "notmuch" nil "~/.bin/notmuch/taskbar")))
-
-;; allow html images in the +rss tag
-; To-do: how to?! notmuch-show-hook happens too late!
-;(add-hook 'notmuch-show--hook (lambda () (setq notmuch-show-text/html-blocked-images (if (member "rss" (notmuch-show-get-tags)) nil nil))))
-
 ;; configure the message-mode
 (setq message-forward-before-signature nil
       message-citation-line-format "On %a, %d %b %Y %T %z, %f wrote:\n"
@@ -59,6 +11,7 @@
       message-kill-buffer-on-exit t)
 
 ;; use `format=flowed', otherwise messages look weird on mobile devices
+;; however this still behaves weirdly o_O I dunno when yet.
 (add-hook 'message-setup-hook (lambda () (setq use-hard-newlines t)))
 
 ;; fix citation practices of some clients
@@ -76,18 +29,13 @@
   (message-cite-original-without-signature)
   (message-fix-citation-marks)
   (undo-boundary))
-(setq message-cite-function 'message-cite-original-without-signature-fixing-marks
-      notmuch-mua-cite-function 'message-cite-original-without-signature-fixing-marks)
+(setq message-cite-function 'message-cite-original-without-signature-fixing-marks)
 
 ;; returns Message-Id of the currently edited message
 (defun message-fetch-id ()
   (replace-regexp-in-string "\\(^<\\|>$\\)" "" (save-restriction
                                                  (message-narrow-to-headers)
                                                  (message-fetch-field "Message-ID"))))
-
-;; run postsync hooks on just-sent messages
-(add-hook 'message-sent-hook
-          (lambda () (start-process "notmuch" nil "~/.bin/notmuch/imap-postsync" (concat "id:" (message-fetch-id)))))
 
 ;; send-mail-function for both MessageMode of Gnus and the default MailMode
 (setq message-send-mail-function 'smtpmail-send-it
@@ -98,6 +46,61 @@
       smtpmail-smtp-server "smtp.gmail.com"
       smtpmail-smtp-service 587)
 (require 'smtpmail)
+
+;; configure notmuch for reading
+(when (require 'notmuch nil 'noerror)
+  (setq notmuch-command (expand-file-name ".bin/notmuch/notmuch-retrying"))
+
+  (setq notmuch-search-oldest-first nil)
+
+  (setq notmuch-saved-searches
+        '(
+          ;;(:name "inbox" :key "i" :query "tag:inbox" :sort-order oldest-first)
+          (:key "i"   :name "inbox"          :query "tag:inbox")
+          (:key "l"   :name "reply-later"    :query "tag:reply-later")
+          (:key "f"   :name "flagged"        :query "tag:flagged")
+          (:key "d"   :name "drafts"         :query "tag:draft")
+          (:key "m"   :name "sent"           :query "tag:sent")
+          (:key "t"   :name "trash"          :query "tag:deleted")
+          (:key "s"   :name "spam"           :query "tag:spam")
+          (:key "nc"  :name "news:coding"    :query "tag:unread and tag:news:coding")
+          (:key "nd"  :name "news:design"    :query "tag:unread and tag:news:design")
+          (:key "nh"  :name "news:health"    :query "tag:unread and tag:news:health")
+          (:key "nl"  :name "news:life"      :query "tag:unread and tag:news:life and not (alex barszczewski)")
+          (:key "na"  :name "news:life (AB)" :query "tag:unread and tag:news:life and (alex barszczewski)")
+          (:key "no"  :name "news:other"     :query "tag:unread and tag:news:other")
+          (:key "nq"  :name "news:quora"     :query "tag:unread and tag:news:quora")
+          (:key "nx"  :name "news:science"   :query "tag:unread and tag:news:science")
+          (:key "ns"  :name "news:security"  :query "tag:unread and tag:news:security")
+          (:key "nw"  :name "news:world"     :query "tag:unread and tag:news:world")
+          ))
+
+  ;; bind reply-to-all to `r'
+  (define-key notmuch-show-mode-map "r" 'notmuch-show-reply)
+  (define-key notmuch-show-mode-map "R" 'notmuch-show-reply-sender)
+  (define-key notmuch-search-mode-map "r" 'notmuch-search-reply-to-thread)
+  (define-key notmuch-search-mode-map "R" 'notmuch-search-reply-to-thread-sender)
+
+  ;; don’t show the logo… it’s silly.
+  (setq notmuch-show-logo nil)
+
+  ;; instantly save messages sent with SMTP to local-sent folder
+  (setq notmuch-fcc-dirs "local-sent")
+
+  ;; update gnome taskbar with message counts
+  (add-hook 'notmuch-after-tag-hook (lambda ()
+                                      (start-process "notmuch" nil "~/.bin/notmuch/taskbar")))
+
+  ;; allow html images in the +rss tag
+  ;; To-do: how to?! notmuch-show-hook happens too late!
+  ;;(add-hook 'notmuch-show--hook (lambda () (setq notmuch-show-text/html-blocked-images (if (member "rss" (notmuch-show-get-tags)) nil nil))))
+
+  (setq notmuch-mua-cite-function 'message-cite-original-without-signature-fixing-marks)
+
+  ;; run postsync hooks on just-sent messages
+  (add-hook 'message-sent-hook
+            (lambda () (start-process "notmuch" nil "~/.bin/notmuch/imap-postsync"
+                                      (concat "id:" (message-fetch-id))))))
 
 ;; bbdb 3 for contacts
 (use-package bbdb :ensure t :pin melpa
