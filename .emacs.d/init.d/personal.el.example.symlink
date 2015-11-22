@@ -7,4 +7,4 @@
 ;; irc
 (defun weechat ()
   (interactive)
-  (weechat-connect "michalrus.com" 9001 (shell-command-to-string "printf %s $(pass show Social/WeeChat-relay)") 'ssl))
+  (weechat-connect "michalrus.com" 9001 nil 'ssl))
