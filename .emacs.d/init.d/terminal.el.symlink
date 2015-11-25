@@ -1,0 +1,6 @@
+;; -*- mode: emacs-lisp -*-
+
+(add-hook 'term-mode-hook
+   (lambda ()
+     ;; C-x is the prefix command, rather than C-c
+     (term-set-escape-char ?\C-x)))

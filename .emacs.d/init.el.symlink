@@ -34,6 +34,7 @@
 (load-init-part "packages.el")
 (load-init-part "appearance.el")
 (load-init-part "editing.el")
+(load-init-part "terminal.el")
 (load-init-part "vc.el")
 (load-init-part "org.el")
 (load-init-part "latex.el")
