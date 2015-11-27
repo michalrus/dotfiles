@@ -15,6 +15,9 @@
 
 (defterm "mtr")
 
+;; TODO: fix this: how to detect it `calc' is in exec-path?
+(when (file-exists-p "/usr/bin/calc") (defterm "calc"))
+
 (add-hook 'term-mode-hook
    (lambda ()
      ;; C-x is the prefix command, rather than C-c

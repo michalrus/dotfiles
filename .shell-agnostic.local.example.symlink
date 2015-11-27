@@ -13,7 +13,6 @@ export VISUAL="$EDITOR"
 # breaking habits
 alias nano="$EDITOR"
 alias e="$EDITOR"
-alias calc="emacsclient --tty --eval '(calc)'"
 
 alias en="bab pl"
 alias de="bab de-pl"
