@@ -13,13 +13,16 @@ baksuffix="$(date +'dotfiles-bak.%Y%m%d-%H%M%S-%N')"
 exclude="$HOME/.dotfiles/setup.exclude"
 [ -e "$exclude" ] || exclude=""
 
+uname | grep -qi darwin && darwin=1 || darwin=
+
 cd "$HOME/.dotfiles/"
 find . -name '*.symlink' | while IFS= read -r src ; do
     nest="$(dirname "$src" | sed -Ee 's/[^\/]//g' | sed -Ee 's/./..\//g')"
     src="$(echo "$src" | sed -Ee 's/^\.\///')"
     dst="$(echo "$src" | sed -Ee 's/\.symlink$//')"
 
-    [ -z "$exclude" ] || echo "$dst" | grep -qvxFf "$exclude" || continue
+    [ $darwin ]       || echo "$dst" | grep -qv    '^Library/' || continue
+    [ -z "$exclude" ] || echo "$dst" | grep -qvxFf "$exclude"  || continue
 
     dst="$HOME/$dst"
     src="${nest}.dotfiles/$src"
