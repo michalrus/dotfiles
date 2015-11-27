@@ -14,9 +14,7 @@
          (ansi-term (expand-file-name (concat "terminal/" ,cmd) user-emacs-directory) ,cmd)))))
 
 (defterm "mtr")
-
-;; TODO: fix this: how to detect it `calc' is in exec-path?
-(when (file-exists-p "/usr/bin/calc") (defterm "calc"))
+(when (executable-find "calc") (defterm "calc"))
 
 (add-hook 'term-mode-hook
    (lambda ()
