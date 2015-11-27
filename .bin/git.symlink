@@ -1,5 +1,8 @@
 #!/bin/sh
 
+git="$(which -a git | grep -v '/.bin/git$' | head -n 1)"
+[ -z "$git" ] && git=/usr/bin/git
+
 if [ "$1" = "pull" ] ; then
   echo 'git: '\''pull'\'' is deliberately disabled.'
   echo
@@ -7,5 +10,5 @@ if [ "$1" = "pull" ] ; then
   echo '	git fetch'
   exit 1
 else
-  exec /usr/bin/git "$@"
+  exec "$git" "$@"
 fi
