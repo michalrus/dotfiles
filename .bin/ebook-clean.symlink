@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 while ($line = <>) {
   $line =~ s/<span class=".*?">([^<]*)<\/span>/\1/g;
