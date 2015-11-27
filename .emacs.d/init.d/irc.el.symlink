@@ -19,4 +19,4 @@
   (require 'weechat-notifications)
   (require 'weechat-image)
   (require 'weechat-tracking)
-  (add-hook 'kill-emacs-hook (lambda () (weechat-disconnect))))
+  (add-hook 'kill-emacs-hook (lambda () (when weechat--connected (weechat-disconnect)))))
