@@ -1,5 +1,20 @@
 ;; -*- mode: emacs-lisp -*-
 
+(use-package sane-term :ensure t)
+
+(global-set-key (kbd "C-x t") 'sane-term)
+(global-set-key (kbd "C-x T") 'sane-term-create)
+
+(defmacro defterm (cmd)
+  `(defun ,(intern cmd) ()
+     (interactive)
+     (let* ((buf (get-buffer (format "*%s*" ,cmd))))
+       (if buf
+         (switch-to-buffer buf)
+         (ansi-term (expand-file-name (concat "terminal/" ,cmd) user-emacs-directory) ,cmd)))))
+
+(defterm "mtr")
+
 (add-hook 'term-mode-hook
    (lambda ()
      ;; C-x is the prefix command, rather than C-c
