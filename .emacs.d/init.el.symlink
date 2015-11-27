@@ -30,8 +30,8 @@
     (when (file-exists-p file-path) (load-file file-path))))
 
 ;; load all parts
-(load-init-part "utils.el")
 (load-init-part "packages.el")
+(load-init-part "utils.el")
 (load-init-part "appearance.el")
 (load-init-part "editing.el")
 (load-init-part "terminal.el")

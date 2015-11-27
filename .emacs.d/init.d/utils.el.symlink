@@ -3,6 +3,9 @@
 ;; Emacs defaults are a bit too conservative for the 21st century.
 (setq max-specpdl-size 2048)
 
+;; set $PATH, $MANPATH and exec-path using values from ~/.profile
+(use-package exec-path-from-shell :ensure t :config (exec-path-from-shell-initialize))
+
 ;; can find the project top directory
 (defun closest-directory-up-containing (file-name start-directory)
   "Returns the first directory up in the tree, starting from
