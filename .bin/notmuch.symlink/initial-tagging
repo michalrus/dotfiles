@@ -14,7 +14,7 @@ tag(){
 narrow="${1:-}"
 [ -z "$narrow" ] && narrow="tag:new"
 
-my_emails="$( { notmuch config get user.primary_email ; notmuch config get user.other_email ; } | xargs echo | sed -re 's/ / or /g')"
+my_emails="$( { notmuch config get user.primary_email ; notmuch config get user.other_email ; } | xargs echo | sed -Ee 's/ / or /g')"
 
 # Tip: to re-run all filters on you collection:
 #   • either remove $Maildir/.notmuch/ directory,
@@ -33,7 +33,7 @@ tag +id:sztompke -- "($narrow)"' and (from:stefan.sztompke@wp.pl OR to:stefan.sz
 notmuch search --output=messages "$narrow" | while IFS= read -r id ; do
     ln="$(notmuch show --format=mbox "$id" | grep -m 1 -B999 '^$' | grep -i '^X-smssync-datatype:')"
     if [ -n "$ln" ] ; then
-        val="$(echo "$ln" | sed -re 's/^[^:]+:\s*//' | tr '[:upper:]' '[:lower:]')"
+        val="$(echo "$ln" | sed -Ee 's/^[^:]+:\s*//' | tr '[:upper:]' '[:lower:]')"
 	      tag +phone "+$val" "$id"
     fi
 done || true

@@ -3,7 +3,7 @@
 group="-group $(id -g)"
 [ "$(ls /tmp/.X11-unix | wc -l)" = "1" ] && group=""
 
-find /tmp/.X11-unix -mindepth 1 -maxdepth 1 -name 'X*' $group -printf '%f\n' | sed -re 's/[^0-9]//g' | while read displ ; do
+find /tmp/.X11-unix -mindepth 1 -maxdepth 1 -name 'X*' $group -printf '%f\n' | sed -Ee 's/[^0-9]//g' | while read displ ; do
   export DISPLAY=":$displ"
   wmctrl -l | cut -d ' ' -f 1 | while read id ; do xprop -id $id -f _GTK_HIDE_TITLEBAR_WHEN_MAXIMIZED 32c -set _GTK_HIDE_TITLEBAR_WHEN_MAXIMIZED 0x1 ; done
 done

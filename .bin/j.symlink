@@ -314,7 +314,7 @@ case $OPMODE in
 		while [ $# -gt 0 ] ; do
 			hlpr_header "${1}"
 
-			BASE=$(echo "${1}" | sed -re 's/\.[^.]+$//')
+			BASE=$(echo "${1}" | sed -Ee 's/\.[^.]+$//')
 
 			echo "-- renaming THM"
 			R=$(jhead -exonly -ft -nf'%Y%m%d-%H%M%S' "${1}")
@@ -362,7 +362,7 @@ case $OPMODE in
 			R=$($ffmpeg -i "${1}" 2>&1 | grep creation_time)
 			test $? -eq 0 || die "error: creation_time not found"
 
-			CTIME=$(echo "${R}" | sed -e 's/[^0-9]//g' | sed -re 's/(........)(......)$/\1-\2/' | head -n 1)
+			CTIME=$(echo "${R}" | sed -e 's/[^0-9]//g' | sed -Ee 's/(........)(......)$/\1-\2/' | head -n 1)
 
 			D=$(dirname "${1}")
 
@@ -385,7 +385,7 @@ case $OPMODE in
 			R=$($ffmpeg -i "${1}" 2>&1 | grep -Po 'Duration: \d\d:\d\d:\d\d')
 			test $? -eq 0 || die "error: Duration not found"
 
-			DUR=$(echo "${R}" | sed -e 's/[^0-9]//g' | sed -re 's/^(..)(..)(..)$/\1 * 3600 + \2 * 60 + \3/' | bc)
+			DUR=$(echo "${R}" | sed -e 's/[^0-9]//g' | sed -Ee 's/^(..)(..)(..)$/\1 * 3600 + \2 * 60 + \3/' | bc)
 
 			echo "-- duration: ${DUR} s"
 
@@ -470,15 +470,15 @@ case $OPMODE in
 		while [ $# -gt 0 ] ; do
 			hlpr_header "${1}"
 
-			FILE=$(echo "${1}" | sed -re 's/\//\\\\/g')
+			FILE=$(echo "${1}" | sed -Ee 's/\//\\\\/g')
 			if [ -n "$(echo "${FILE}" | grep -P '\.mp4$')" ] ; then
-				ORIG=$(echo "${FILE}" | sed -re 's/(\.[^\.]*)$/-original\1/')
+				ORIG=$(echo "${FILE}" | sed -Ee 's/(\.[^\.]*)$/-original\1/')
 				echo "-- renaming input to ${ORIG}"
 				mv -v "${FILE}" "${ORIG}" || die "error: unable to mv"
 			else
 				ORIG="${FILE}"
 			fi
-			BASE=$(echo "${FILE}" | sed -re 's/\.[^\.]*$//')
+			BASE=$(echo "${FILE}" | sed -Ee 's/\.[^\.]*$//')
 
 			echo "-- extracting audio as PCM S16LE WAV"
 			$ffmpeg -threads 4 -i "${ORIG}" -vn -acodec pcm_s16le "${BASE}-audio-preres.wav" || die "error: $ffmpeg"

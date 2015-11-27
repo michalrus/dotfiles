@@ -8,7 +8,7 @@ die () {
 [ $# -eq 5 ] || die "Usage: $0 <url> <name> <surname> <date> <retry-every-n-sec>"
 
 nohtml () {
-  cat | sed 's/<[^>]\+>/ /g' | sed -r 's/\s+/ /g' | sed -r 's/^\s+|\s+$//g' | grep -v '^$'
+  cat | sed 's/<[^>]\+>/ /g' | sed -E 's/\s+/ /g' | sed -E 's/^\s+|\s+$//g' | grep -v '^$'
 }
 
 curl () {

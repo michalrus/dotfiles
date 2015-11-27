@@ -30,7 +30,7 @@ to(){
     local mode="$2"
     local query="$3"
 
-    local dest_regex="^$(echo "$maildir/$dest/" | sed -re 's/\/+/\//g' | sed -re "$grep_escape")"
+    local dest_regex="^$(echo "$maildir/$dest/" | sed -Ee 's/\/+/\//g' | sed -Ee "$grep_escape")"
 
     notmuch search --output=messages "$query" | while IFS= read -r id ; do
         local files="$(notmuch search --output=files "$id")"
@@ -55,7 +55,7 @@ to(){
             fi
         fi
     done
-    
+
     "$d"/notmuch-retrying new
 }
 

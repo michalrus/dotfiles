@@ -16,12 +16,12 @@ git merge --ff-only
 
 # DOUBT: do we really want to delete all merged branches?
 
-git branch --merged=master | grep -Ev '^\*\s|\smaster$' | sed -re 's/^\s+|\s+$//g' | while IFS= read -r local_branch ; do
+git branch --merged=master | grep -Ev '^\*\s|\smaster$' | sed -Ee 's/^\s+|\s+$//g' | while IFS= read -r local_branch ; do
   upstream="$(git for-each-ref --format="%(upstream:short)" "refs/heads/$local_branch")"
 
   if git show-ref --verify --quiet "refs/remotes/$upstream" ; then
-    upstream_remote="$(echo "$upstream" | sed -re 's/^([^\/]+)\/(.*)$/\1/')"
-    upstream_branch="$(echo "$upstream" | sed -re 's/^([^\/]+)\/(.*)$/\2/')"
+    upstream_remote="$(echo "$upstream" | sed -Ee 's/^([^\/]+)\/(.*)$/\1/')"
+    upstream_branch="$(echo "$upstream" | sed -Ee 's/^([^\/]+)\/(.*)$/\2/')"
     git push "$upstream_remote" ":$upstream_branch" || true
   fi
   git branch -d "$local_branch"

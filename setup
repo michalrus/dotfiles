@@ -15,9 +15,9 @@ exclude="$HOME/.dotfiles/setup.exclude"
 
 cd "$HOME/.dotfiles/"
 find . -name '*.symlink' | while IFS= read -r src ; do
-    nest="$(dirname "$src" | sed -re 's/[^\/]//g' | sed -re 's/./..\//g')"
-    src="$(echo "$src" | sed -re 's/^\.\///')"
-    dst="$(echo "$src" | sed -re 's/\.symlink$//')"
+    nest="$(dirname "$src" | sed -Ee 's/[^\/]//g' | sed -Ee 's/./..\//g')"
+    src="$(echo "$src" | sed -Ee 's/^\.\///')"
+    dst="$(echo "$src" | sed -Ee 's/\.symlink$//')"
 
     [ -z "$exclude" ] || echo "$dst" | grep -qvxFf "$exclude" || continue
 
