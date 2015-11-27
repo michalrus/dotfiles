@@ -1,0 +1,18 @@
+#!/bin/sh
+
+set -o errexit
+set -o noclobber
+set -o nounset
+
+owndir="$(cd -P -- "$(dirname "$0")" ; pwd -P)"
+extras="$owndir/sbt-extras"
+url='https://raw.githubusercontent.com/paulp/sbt-extras/master/sbt'
+
+# download a new version if current is older than 7 days
+[ -n "$(find "$extras" -mtime -7 2>/dev/null)" ] || {
+    echo >&2 'Downloading sbt-extras...'
+    curl --silent --show-error --fail --location --connect-timeout 7 "$url" -o "$extras"
+    chmod 0700 "$extras"
+}
+
+exec "$extras" "$@"
