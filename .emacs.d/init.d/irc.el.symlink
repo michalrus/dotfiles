@@ -7,9 +7,9 @@
   :pin melpa-stable :ensure t
   :config
   (setq ;weechat-auto-monitor-buffers t
-        weechat-auto-monitor-new-buffers t
+        ;weechat-auto-monitor-new-buffers t
         weechat-auto-close-buffers t
-        weechat-auto-recenter nil
+        ;weechat-auto-recenter nil
         weechat-auto-reconnect-retries 99999
         weechat-notification-mode t
         weechat-complete-order-nickname nil
