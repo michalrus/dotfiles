@@ -14,7 +14,7 @@
 (setq-default delete-trailing-lines t)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
-;; always hilight the corresponding parenthesis
+;; always highlight the corresponding parenthesis
 (setq show-paren-delay 0)
 (show-paren-mode 1)
 
