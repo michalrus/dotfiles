@@ -1,3 +1,4 @@
 include "%L"
 
-<Multi_key> <equal> <greater> 	: "⇒" U21D2 # RIGHTWARDS DOUBLE ARROW
+<Multi_key> <asciitilde> <asciitilde> : "≈" U2248
+<Multi_key> <equal> <greater>         : "⇒" U21D2 # RIGHTWARDS DOUBLE ARROW
