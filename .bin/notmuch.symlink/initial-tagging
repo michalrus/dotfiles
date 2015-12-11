@@ -91,6 +91,7 @@ tag +news:security +rss -- "($narrow)"' and (from:scripts@michalrus.com to:rss.s
 tag +news:coding +rss   -- "($narrow)"' and (from:scripts@michalrus.com to:rss.coding@michalrus.com)'
 tag +news:science       -- "($narrow)"' and (from:robbpseaton@gmail.com OR from:@rs.io)'
 tag +news:security      -- "($narrow)"' and (from:@donuts.co)'
+tag +news:security      -- "($narrow)"' and (from:community@gitlab.com)'
 tag +news:quora         -- "($narrow)"' and (from:@quora.com from:(digest OR events))'
 tag +news:life          -- "($narrow)"' and (from:linkedin@e.linkedin.com)'
 tag +news:science +rss  -- "($narrow)"' and (from:scripts@michalrus.com to:rss.science@michalrus.com)'
