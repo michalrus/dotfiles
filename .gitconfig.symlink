@@ -13,6 +13,7 @@
 	c = diff -M --cached
 	d = diff -M
 	a = add
+	co = checkout
 	sync = !git-sync
 	pc = !git-pc
 [core]

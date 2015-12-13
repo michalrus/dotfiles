@@ -55,6 +55,9 @@ precmd() {
   PS2="$M%_$D> $reset"
 }
 
+# Git autocomplete for the `g' alias
+compdef _git g=git
+
 autoload -U up-line-or-beginning-search
 autoload -U down-line-or-beginning-search
 zle -N up-line-or-beginning-search

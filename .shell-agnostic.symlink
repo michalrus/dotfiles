@@ -36,6 +36,7 @@ export GTK_IM_MODULE=xim
 export __dotfiles_hostname="$( ( ischroot 2>/dev/null && cat /etc/hostname || hostname ) | tr '_' '.')"
 
 alias s='eval "$(attach-or-create-screen)"'
+alias g='git'
 alias nano='nano -UwT 4'
 alias clear='for i in $(seq 100) ; do echo ; done && clear'
 alias grep='grep --color=auto'
