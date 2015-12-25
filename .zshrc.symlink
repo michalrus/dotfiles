@@ -21,6 +21,8 @@ export SAVEHIST=$HISTSIZE
 
 . "$HOME/.local/share/git-prompt.sh"
 
+unset RPROMPT
+
 precmd() {
   local last_exitcode="$?"
 
