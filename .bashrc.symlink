@@ -55,5 +55,7 @@ __dotfiles_set_prompt() {
 PROMPT_COMMAND='__dotfiles_set_prompt'
 
 # Git autocomplete for the `g' alias
-_completion_loader git || true
-complete -o default -o nospace -F _git g
+type _completion_loader >/dev/null 2>&1 && {
+  _completion_loader git || true
+  complete -o default -o nospace -F _git g
+} || true
