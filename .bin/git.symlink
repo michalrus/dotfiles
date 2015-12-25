@@ -1,7 +1,6 @@
 #!/bin/sh
 
-git="$(which -a git | grep -v '/.bin/git$' | head -n 1)"
-[ -z "$git" ] && git=/usr/bin/git
+command -p git --version >/dev/null || exit $?
 
 if [ "$1" = "pull" ] ; then
   echo 'git: '\''pull'\'' is deliberately disabled.'
@@ -9,6 +8,6 @@ if [ "$1" = "pull" ] ; then
   echo 'Merge/rebase manually after issuing:'
   echo '	git fetch'
   exit 1
-else
-  exec "$git" "$@"
 fi
+
+command -p git "$@"
