@@ -67,7 +67,11 @@
   users.extraUsers.m = {
     isNormalUser = true;
     uid = 1000;
+    description = "Michal Rus";
+    extraGroups = [ "wheel" ];
   };
+
+  security.sudo.extraConfig = "Defaults timestamp_timeout=0";
 
   # The NixOS release to be compatible with for stateful data such as databases.
   system.stateVersion = "15.09";
