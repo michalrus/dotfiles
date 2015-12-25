@@ -38,6 +38,8 @@
     git
   ];
 
+  programs.zsh.enable = true;
+
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
@@ -54,6 +56,8 @@
   # Enable the KDE Desktop Environment.
   # services.xserver.displayManager.kdm.enable = true;
   # services.xserver.desktopManager.kde4.enable = true;
+
+  users.defaultUserShell = "/run/current-system/sw/bin/zsh";
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.extraUsers.m = {
