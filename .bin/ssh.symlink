@@ -26,4 +26,4 @@ cat <<'EOF' > "$conf"
 EOF
 find -L "$conf.d/" -type f -a -not -name '*.example' | sort | xargs cat >> "$conf"
 
-exec /usr/bin/ssh "$@"
+command -p ssh "$@"
