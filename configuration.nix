@@ -43,8 +43,20 @@
   services.xserver.enable = true;
   services.xserver.layout = "us";
   # services.xserver.xkbOptions = "eurosign:e";
+
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome3.enable = true;
+  environment.gnome3.excludePackages = with pkgs.gnome3; [
+    # apps
+    accerciser bijiben evolution gnome-boxes gnome-calendar gnome-clocks
+    gnome-documents gnome-getting-started-docs gnome-maps gnome-music
+    gnome-photos gnome-weather polari vinagre
+    # core
+    empathy epiphany evolution_data_server folks gnome-calculator
+    gnome-contacts gnome-dictionary gnome_online_accounts
+    gnome-online-miners gnome-user-share totem-pl-parser totem
+    tracker vino
+];
 
   users.defaultUserShell = "/run/current-system/sw/bin/zsh";
 
