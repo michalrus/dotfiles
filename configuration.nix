@@ -39,6 +39,7 @@
   ];
 
   programs.zsh.enable = true;
+  programs.bash.enableCompletion = true;
 
   # List services that you want to enable:
 
