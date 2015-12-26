@@ -6,18 +6,26 @@
       ./hardware-configuration.nix
     ];
 
-  boot.loader.grub.enable = true;
-  boot.loader.grub.version = 2;
-  boot.loader.grub.device = "/dev/sda";
-  boot.initrd.luks.devices  =  [ { name = "crypt"; device = "/dev/sda2"; } ];
+  boot = {
+    loader.grub = {
+      enable = true;
+      version = 2;
+      device = "/dev/sda";
+    };
+    initrd.luks.devices = [ { name = "crypt"; device = "/dev/sda2"; } ];
+  };
 
-  networking.hostName = "nixos";
-  networking.nameservers = [ "8.8.8.8" "8.8.4.4" ];
-  networking.firewall.enable = true;
-  networking.firewall.allowPing = true;
-  networking.firewall.allowedTCPPorts = [ ];
-  #networking.wireless.enable = true;       # wireless support via wpa_supplicant
-  networking.networkmanager.enable = true;  # wireless support via NetworkManager
+  networking = {
+    hostName = "nixos";
+    nameservers = [ "8.8.8.8" "8.8.4.4" ];
+    firewall = {
+      enable = true;
+      allowPing = true;
+      allowedTCPPorts = [ ];
+    };
+    #wireless.enable = true;       # wireless support via wpa_supplicant
+    networkmanager.enable = true;  # wireless support via NetworkManager
+  };
 
   i18n = {
     consoleFont = "Lat2-Terminus16";
@@ -36,6 +44,7 @@
     gnupg
     htop
     imagemagick
+    libnotify
     lsof
     man_db
     mkpasswd
@@ -57,17 +66,26 @@
     zip
   ];
 
-  programs.zsh.enable = true;
-  programs.bash.enableCompletion = true;
+  programs = {
+    zsh.enable = true;
+    bash.enableCompletion = true;
+  };
 
-  services.printing.enable = false;
+  services = {
+    printing.enable = false;
 
-  services.xserver.enable = true;
-  services.xserver.layout = "us";
-  services.xserver.synaptics.enable = true;
+    xserver = {
+      enable = true;
+      layout = "us";
+      synaptics = {
+        enable = true;
+      };
 
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome3.enable = true;
+      displayManager.gdm.enable = true;
+      desktopManager.gnome3.enable = true;
+    };
+  };
+
   environment.gnome3.excludePackages = with pkgs.gnome3; [
     # apps
     accerciser bijiben evolution gnome-boxes gnome-calendar gnome-clocks
@@ -80,15 +98,17 @@
     tracker vino
   ];
 
-  users.mutableUsers = false;
-  users.defaultUserShell = "/run/current-system/sw/bin/zsh";
+  users = {
+    mutableUsers = false;
+    defaultUserShell = "/run/current-system/sw/bin/zsh";
 
-  users.extraUsers.m = {
-    hashedPassword = "$6$wO42jkhqerm$kl.qIl5USrzqAZOIkXdicrBLBgVwka2Dz81nc.aNsNJZREXY.02XxPdL1FiTCcuVP2K/DSmXqAQ3aPbri/v.g1";
-    isNormalUser = true;
-    uid = 31337;
-    description = "Michal Rus";
-    extraGroups = [ "wheel" ];
+    extraUsers.m = {
+      hashedPassword = "$6$wO42jkhqerm$kl.qIl5USrzqAZOIkXdicrBLBgVwka2Dz81nc.aNsNJZREXY.02XxPdL1FiTCcuVP2K/DSmXqAQ3aPbri/v.g1";
+      isNormalUser = true;
+      uid = 31337;
+      description = "Michal Rus";
+      extraGroups = [ "wheel" ];
+    };
   };
 
   security.sudo.extraConfig = "Defaults timestamp_timeout=0";
