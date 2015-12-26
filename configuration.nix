@@ -51,6 +51,7 @@
     transmission
     unzip
     wget
+    wmctrl
     zip
   ];
 
