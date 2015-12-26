@@ -30,9 +30,28 @@
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
-    wget
+    emacs
+    file
     git
+    gnupg
+    htop
+    imagemagick
+    lsof
+    man_db
+    mpv
+    mu
+    nmap
+    pass
     pkgs.firefoxWrapper
+    posix_man_pages
+    pthreadmanpages
+    screen
+    stdmanpages
+    stdman
+    transmission
+    unzip
+    wget
+    zip
   ];
 
   programs.zsh.enable = true;
