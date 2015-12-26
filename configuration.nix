@@ -13,6 +13,7 @@
       device = "/dev/sda";
     };
     initrd.luks.devices = [ { name = "crypt"; device = "/dev/sda2"; } ];
+    tmpOnTmpfs = true;
   };
 
   networking = {
@@ -44,13 +45,19 @@
     gnupg
     htop
     imagemagick
+    imgurbash
+    isync
+    faad2   # video in Firefox
     libnotify
+    logkeys
     lsof
     man_db
     mkpasswd
     mpv
+    mtr
     mu
     nmap
+    openjdk7
     pass
     pinentry
     pkgs.firefoxWrapper
@@ -62,6 +69,7 @@
     transmission
     unzip
     wget
+    which
     wmctrl
     zip
   ];
@@ -111,7 +119,10 @@
     };
   };
 
-  security.sudo.extraConfig = "Defaults timestamp_timeout=0";
+  security = {
+    sudo.extraConfig = "Defaults timestamp_timeout=0";
+    setuidPrograms = [ "mtr" ];
+  };
 
   # The NixOS release to be compatible with for stateful data such as databases.
   system.stateVersion = "15.09";
