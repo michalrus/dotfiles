@@ -62,6 +62,7 @@
   services.xserver.enable = true;
   services.xserver.layout = "us";
   # services.xserver.xkbOptions = "eurosign:e";
+  services.xserver.synaptics.enable = true;
 
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome3.enable = true;
@@ -75,7 +76,7 @@
     gnome-contacts gnome-dictionary gnome_online_accounts
     gnome-online-miners gnome-user-share totem-pl-parser totem
     tracker vino
-];
+  ];
 
   users.defaultUserShell = "/run/current-system/sw/bin/zsh";
 
