@@ -7,7 +7,7 @@ function init() {
 let eventId = 0;
 
 function onWindowCreated(display, win) {
-  GLib.spawn_async(null, ['notitlebar'], null, GLib.SpawnFlags.SEARCH_PATH, null);
+  GLib.spawn_async(null, ['sh', '-c', 'exec $HOME/.bin/notitlebar'], null, GLib.SpawnFlags.SEARCH_PATH, null);
 }
 
 function enable() {
