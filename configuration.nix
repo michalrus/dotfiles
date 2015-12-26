@@ -38,10 +38,12 @@
     imagemagick
     lsof
     man_db
+    mkpasswd
     mpv
     mu
     nmap
     pass
+    pinentry
     pkgs.firefoxWrapper
     posix_man_pages
     pthreadmanpages
@@ -62,7 +64,6 @@
 
   services.xserver.enable = true;
   services.xserver.layout = "us";
-  # services.xserver.xkbOptions = "eurosign:e";
   services.xserver.synaptics.enable = true;
 
   services.xserver.displayManager.gdm.enable = true;
@@ -79,11 +80,13 @@
     tracker vino
   ];
 
+  users.mutableUsers = false;
   users.defaultUserShell = "/run/current-system/sw/bin/zsh";
 
   users.extraUsers.m = {
+    hashedPassword = "$6$wO42jkhqerm$kl.qIl5USrzqAZOIkXdicrBLBgVwka2Dz81nc.aNsNJZREXY.02XxPdL1FiTCcuVP2K/DSmXqAQ3aPbri/v.g1";
     isNormalUser = true;
-    uid = 1000;
+    uid = 31337;
     description = "Michal Rus";
     extraGroups = [ "wheel" ];
   };
