@@ -38,10 +38,6 @@
 
   nixpkgs.config = {
     allowBroken = true;
-
-    packageOverrides = pkgs: {
-      gnupg21 = pkgs.gnupg21.override { pinentry = pkgs.pinentry; x11Support = true; };
-    };
   };
 
   # List packages installed in system profile. To search by name, run:
@@ -52,8 +48,8 @@
     git
     gnome3.eog
     gnome3.gnome-font-viewer
-    (gnupg1compat.override { gnupg = pkgs.gnupg21; })
-    gnupg21
+    gnupg1compat
+    gnupg
     htop
     imagemagick
     imgurbash
@@ -71,7 +67,7 @@
     nmap
     oathToolkit
     openjdk7
-    (pass.override { gnupg = pkgs.gnupg21; })
+    pass
     pinentry
     pkgs.firefoxWrapper
     posix_man_pages
