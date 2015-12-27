@@ -36,20 +36,32 @@
 
   time.timeZone = "Europe/Warsaw";
 
+  nixpkgs.config = {
+    allowBroken = true;
+
+    packageOverrides = pkgs: {
+      gnupg21 = pkgs.gnupg21.override { pinentry = pkgs.pinentry; x11Support = true; };
+    };
+  };
+
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
     emacs
     file
     git
-    gnupg
+    gnome3.eog
+    gnome3.gnome-font-viewer
+    (gnupg1compat.override { gnupg = pkgs.gnupg21; })
+    gnupg21
     htop
     imagemagick
     imgurbash
     isync
     faad2   # video in Firefox
+    ffmpegthumbnailer
     libnotify
-    logkeys
+    #logkeys
     lsof
     man_db
     mkpasswd
@@ -57,12 +69,12 @@
     mtr
     mu
     nmap
+    oathToolkit
     openjdk7
-    pass
+    (pass.override { gnupg = pkgs.gnupg21; })
     pinentry
     pkgs.firefoxWrapper
     posix_man_pages
-    pthreadmanpages
     screen
     stdmanpages
     stdman
@@ -71,6 +83,7 @@
     wget
     which
     wmctrl
+    xdotool
     zip
   ];
 
