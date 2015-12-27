@@ -1,4 +1,6 @@
 unalias -m '*'
+unset RPROMPT
+unset -f command_not_found_handler
 
 . "$HOME/.shell-agnostic"
 
@@ -20,8 +22,6 @@ export HISTSIZE=100000
 export SAVEHIST=$HISTSIZE
 
 . "$HOME/.local/share/git-prompt.sh"
-
-unset RPROMPT
 
 precmd() {
   local last_exitcode="$?"
