@@ -40,6 +40,10 @@
     allowBroken = true;
   };
 
+  hardware = {
+    sane.enable = true;
+  };
+
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
@@ -48,9 +52,11 @@
     git
     gnome3.eog
     gnome3.gnome-font-viewer
+    gnucash26
     gnupg1compat
     gnupg
     htop
+    hwinfo
     imagemagick
     imgurbash
     isync
@@ -58,6 +64,7 @@
     ffmpegthumbnailer
     libnotify
     #logkeys
+    lshw
     lsof
     man_db
     mkpasswd
@@ -68,6 +75,7 @@
     oathToolkit
     openjdk7
     pass
+    pciutils
     pinentry
     pkgs.firefoxWrapper
     posix_man_pages
@@ -76,6 +84,7 @@
     stdman
     transmission
     unzip
+    usbutils
     wget
     which
     wmctrl
@@ -124,7 +133,7 @@
       isNormalUser = true;
       uid = 31337;
       description = "Michal Rus";
-      extraGroups = [ "wheel" ];
+      extraGroups = [ "wheel" "scanner" ];
     };
   };
 
