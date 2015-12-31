@@ -133,7 +133,7 @@
       isNormalUser = true;
       uid = 31337;
       description = "Michal Rus";
-      extraGroups = [ "wheel" "scanner" ];
+      extraGroups = [ "wheel" "scanner" "networkmanager" ];
     };
   };
 
