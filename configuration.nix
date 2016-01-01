@@ -49,9 +49,8 @@
   environment.systemPackages = with pkgs; [
     emacs
     file
+    gcc
     git
-    gnome3.eog
-    gnome3.gnome-font-viewer
     gnucash26
     gnupg1compat
     gnupg
@@ -59,9 +58,12 @@
     hwinfo
     imagemagick
     imgurbash
+    indent
     isync
     faad2   # video in Firefox
+    ffmpeg
     ffmpegthumbnailer
+    gnumake
     libnotify
     #logkeys
     lshw
@@ -76,10 +78,12 @@
     openjdk7
     pass
     pciutils
+    perlPackages.LWP
     pinentry
     pkgs.firefoxWrapper
     posix_man_pages
     screen
+    shared_mime_info
     stdmanpages
     stdman
     transmission
@@ -123,6 +127,7 @@
     gnome-online-miners gnome-user-share totem-pl-parser totem
     tracker vino
   ];
+  environment.gnome3.packageSet = pkgs.gnome3_18;
 
   users = {
     mutableUsers = false;
