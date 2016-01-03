@@ -47,6 +47,7 @@
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
+    dos2unix
     emacs
     file
     gcc
@@ -69,10 +70,12 @@
     lshw
     lsof
     man_db
+    manpages
     mkpasswd
     mpv
     mtr
     mu
+    netcat-openbsd
     nmap
     oathToolkit
     openjdk7
@@ -84,6 +87,7 @@
     posix_man_pages
     screen
     shared_mime_info
+    socat
     stdmanpages
     stdman
     transmission
