@@ -98,6 +98,7 @@
     pinentry
     pkgs.firefoxWrapper
     posix_man_pages
+    rxvt_unicode
     screen
     shared_mime_info
     socat
