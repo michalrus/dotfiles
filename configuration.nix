@@ -1,6 +1,22 @@
 { config, pkgs, ... }:
 
 {
+  nix = {
+    useChroot = true; # https://nixos.org/nixos/manual/options.html#opt-nix.useChroot
+
+    trustedBinaryCaches = [
+      http://hydra.nixos.org
+    ];
+
+    binaryCachePublicKeys = [
+      "hydra.nixos.org-1:CNHJZBh9K4tP3EKF6FkkgeVYsS3ohTl+oS0Qa8bezVs="
+    ];
+  };
+
+  nixpkgs.config = {
+    allowBroken = true;
+  };
+
   imports =
     [
       ./hardware-configuration.nix
@@ -36,10 +52,6 @@
 
   time.timeZone = "Europe/Warsaw";
 
-  nixpkgs.config = {
-    allowBroken = true;
-  };
-
   hardware = {
     sane.enable = true;
   };
@@ -47,6 +59,7 @@
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
+    cool-retro-term
     dos2unix
     emacs
     file
