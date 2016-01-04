@@ -98,7 +98,7 @@
     pinentry
     pkgs.firefoxWrapper
     posix_man_pages
-    rxvt_unicode
+    rxvt_unicode-with-plugins
     screen
     shared_mime_info
     socat
@@ -106,6 +106,7 @@
     stdman
     transmission
     unzip
+    urxvt_font_size
     usbutils
     wget
     which
@@ -146,6 +147,20 @@
     tracker vino
   ];
   environment.gnome3.packageSet = pkgs.gnome3_18;
+
+  fonts = {
+    enableFontDir = true;
+    enableGhostscriptFonts = true;
+    fonts = with pkgs; [
+      anonymousPro
+      corefonts
+      hack-font
+      inconsolata
+      terminus_font
+      unifont
+      unifont_upper
+    ];
+  };
 
   users = {
     mutableUsers = false;
