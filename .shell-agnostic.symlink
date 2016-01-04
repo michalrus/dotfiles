@@ -56,3 +56,11 @@ export GIT_PS1_SHOWUPSTREAM='verbose'
 [ -n "$ANDROID_NDK" ] && export ANDROID_NDK_HOME="$ANDROID_NDK"
 
 [ -e "$HOME/.shell-agnostic.local" ] && . "$HOME/.shell-agnostic.local"
+
+# don't set the colormap in the real vconsole
+if case "$TERM" in linux*) false;; *) true;; esac; then
+  # only set it in a interactive shell
+  if case "$-" in *i*) true;; *) false;; esac; then
+    . "$HOME"/.shell-colormap
+  fi
+fi
