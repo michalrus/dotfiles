@@ -13,10 +13,6 @@
     ];
   };
 
-  nixpkgs.config = {
-    allowBroken = true;
-  };
-
   imports =
     [
       ./hardware-configuration.nix
@@ -54,6 +50,13 @@
 
   hardware = {
     sane.enable = true;
+  };
+
+  nixpkgs.config = {
+    allowBroken = true;
+    packageOverrides = pkgs: {
+      youtube-dl = pkgs.callPackage "/etc/nixos/pkgs/youtube-dl-master.nix" {};
+    };
   };
 
   # List packages installed in system profile. To search by name, run:
@@ -106,12 +109,12 @@
     stdman
     transmission
     unzip
-    urxvt_font_size
     usbutils
     wget
     which
     wmctrl
     xdotool
+    youtube-dl
     zip
   ];
 
