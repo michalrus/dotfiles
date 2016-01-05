@@ -1,4 +1,5 @@
-URxvt.termName:         rxvt-256color
+! this is not true, but whatever… works.
+URxvt.termName:         xterm-256color
 
 URxvt.reverseVideo:     False
 URxvt.font:             xft:Monospace:regular:size=11:antialias=true

@@ -1,5 +1,3 @@
-term screen-256color
-
 screen -t 'ssh'      0 $SHELL
 screen -t 'mtr'      1 infinitely env TERM=linux-m mtr 8.8.8.8
 screen -t 'htop'     2 infinitely sh -c 'htop ; exit 0'
