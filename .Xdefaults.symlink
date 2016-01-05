@@ -22,11 +22,22 @@ URxvt.keysym.Home:      \033[1~
 URxvt.keysym.End:       \033[4~
 URxvt.keysym.KP_Home:   \033[1~
 URxvt.keysym.KP_End:    \033[4~
+
 URxvt.keysym.Prior:     \033[5~
 URxvt.keysym.Next:      \033[6~
 URxvt.keysym.KP_Prior:  \033[5~
 URxvt.keysym.KP_Next:   \033[6~
+
 URxvt.keysym.C-Left:    \033[1;5D
 URxvt.keysym.C-Right:   \033[1;5C
 URxvt.keysym.M-Left:    \033[1;3D
 URxvt.keysym.M-Right:   \033[1;3C
+
+URxvt.keysym.M-Prior:    \033[5;3~
+URxvt.keysym.M-KP_Prior: \033[5;3~
+URxvt.keysym.M-Next:     \033[6;3~
+URxvt.keysym.M-KP_Next:  \033[6;3~
+URxvt.keysym.C-Prior:    \033[5;5~
+URxvt.keysym.C-KP_Prior: \033[5;5~
+URxvt.keysym.C-Next:     \033[6;5~
+URxvt.keysym.C-KP_Next:  \033[6;5~
