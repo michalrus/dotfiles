@@ -7,8 +7,10 @@ URxvt.background:       [80]#000000
 URxvt.foreground:       white
 
 URxvt.perl-ext-common:  default,matcher
-URxvt.urlLauncher:      firefox
+
+#include ".Xresources.d/rxvt-unicode-url-launcher"
 URxvt.matcher.button:   1
+
 URxvt.saveLines:        0
 URxvt.iso14755:         False
 
