@@ -9,6 +9,7 @@ URxvt.foreground:       white
 
 URxvt.perl-ext-common:  default,matcher
 
+! I’m using .Xdefaults, because #include doesn’t work in .Xresources in GNOME
 #include ".Xresources.d/rxvt-unicode-url-launcher"
 URxvt.matcher.button:   1
 
