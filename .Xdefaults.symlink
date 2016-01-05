@@ -11,3 +11,18 @@ URxvt.urlLauncher:      firefox
 URxvt.matcher.button:   1
 URxvt.saveLines:        0
 URxvt.iso14755:         False
+
+! why does every terminal emulator send different codes for everything? :/
+
+URxvt.keysym.Home:      \033[1~
+URxvt.keysym.End:       \033[4~
+URxvt.keysym.KP_Home:   \033[1~
+URxvt.keysym.KP_End:    \033[4~
+URxvt.keysym.Prior:     \033[5~
+URxvt.keysym.Next:      \033[6~
+URxvt.keysym.KP_Prior:  \033[5~
+URxvt.keysym.KP_Next:   \033[6~
+URxvt.keysym.C-Left:    \033[1;5D
+URxvt.keysym.C-Right:   \033[1;5C
+URxvt.keysym.M-Left:    \033[1;3D
+URxvt.keysym.M-Right:   \033[1;3C
