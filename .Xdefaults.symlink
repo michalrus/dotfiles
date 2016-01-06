@@ -9,7 +9,7 @@ URxvt.foreground:       white
 URxvt.saveLines:        0
 URxvt.iso14755:         False
 
-URxvt.perl-ext-common:  matcher,font-size,selection
+URxvt.perl-ext-common:  matcher,font-size,selection,clipboard
 
 ! I’m using .Xdefaults, because #include doesn’t work in .Xresources in GNOME
 #include ".Xresources.d/rxvt-unicode-url-launcher"
@@ -18,6 +18,9 @@ URxvt.keysym.C-Delete:  perl:matcher:list
 
 URxvt.keysym.C-0x2d:    perl:font-size:decrease
 URxvt.keysym.C-0x3d:    perl:font-size:increase
+
+URxvt.keysym.C-Insert:  perl:clipboard:copy
+URxvt.keysym.S-Insert:  perl:clipboard:paste
 
 ! why does every terminal emulator send different codes for everything? :/
 
