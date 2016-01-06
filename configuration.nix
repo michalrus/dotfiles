@@ -149,8 +149,8 @@
     # core
     empathy epiphany evolution_data_server folks gnome-calculator
     gnome-contacts gnome-dictionary gnome_online_accounts
-    gnome-online-miners gnome-user-share totem-pl-parser totem
-    tracker vino
+    gnome-online-miners gnome_terminal gnome-user-share
+    totem-pl-parser totem tracker vino
   ];
   environment.gnome3.packageSet = pkgs.gnome3_18;
 
