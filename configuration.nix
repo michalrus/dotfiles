@@ -113,7 +113,9 @@
     wget
     which
     wmctrl
+    xclip
     xdotool
+    xsel
     youtube-dl
     zip
   ];
