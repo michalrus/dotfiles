@@ -73,6 +73,7 @@
     gnupg
     htop
     hwinfo
+    idea.idea-community
     imagemagick
     imgurbash
     indent
