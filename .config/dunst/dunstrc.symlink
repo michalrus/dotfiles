@@ -1,0 +1,46 @@
+[global]
+    geometry = "-1400x4+700+0"
+    transparency = 80
+    monitor = 0
+    follow = keyboard
+
+    font = DejaVu 10
+    line_height = 0
+    alignment = left
+    allow_markup = yes
+    format = "<b>%s</b>\n%b"
+    word_wrap = yes
+    ignore_newline = no
+
+    sort = yes
+    idle_threshold = 120
+    indicate_hidden = yes
+    bounce_freq = 0
+    show_age_threshold = 60
+
+    sticky_history = yes
+
+    separator_height = 1
+    separator_color = frame
+    padding = 15
+    horizontal_padding = 20
+
+    startup_notification = false
+
+    dmenu = dmenu -p dunst:
+    browser = xdg-open
+
+[frame]
+    width = 1
+    color = "#555555"
+
+[shortcuts]
+    close = mod4+m
+    close_all = mod4+shift+m
+    history = mod4+n
+    context = mod4+shift+i
+
+[urgency_normal]
+    background = "#333333"
+    foreground = "#ffffff"
+    timeout = 10

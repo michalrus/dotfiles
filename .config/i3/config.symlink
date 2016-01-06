@@ -73,3 +73,6 @@ bar {
   status_command i3status
   tray_output primary
 }
+
+exec --no-startup-id dunst &
+exec --no-startup-id ~/.bin/remote-notifications &
