@@ -63,7 +63,9 @@
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
     cool-retro-term
+    dmenu
     dos2unix
+    dunst
     emacs
     file
     gcc
@@ -73,6 +75,8 @@
     gnupg
     htop
     hwinfo
+    i3lock
+    i3status
     idea.idea-community
     imagemagick
     imgurbash
@@ -127,32 +131,37 @@
   };
 
   services = {
+    logind.extraConfig = ''
+        HandleLidSwitch=suspend
+        HandlePowerKey=suspend
+      '';
+
     printing.enable = false;
 
     xserver = {
       enable = true;
-      layout = "us";
+      layout = "pl";
+      xkbOptions = "ctrl:nocaps,compose:caps";
       synaptics = {
         enable = true;
+        maxSpeed = "4.0";
+        accelFactor = "0.02";
+        twoFingerScroll = true;
+        tapButtons = true;
+        fingersMap = [1 3 2];
+        additionalOptions = ''
+          Option "VertScrollDelta" "-114"
+          Option "HorizScrollDelta" "-114"
+          '';
       };
 
-      displayManager.gdm.enable = true;
-      desktopManager.gnome3.enable = true;
+      displayManager.lightdm.enable = true;
+      desktopManager.xterm.enable = false;
+      windowManager.i3.enable = true;
+
+      displayManager.xserverArgs = [ "-ardelay" "150" "-arinterval" "8" ];
     };
   };
-
-  environment.gnome3.excludePackages = with pkgs.gnome3; [
-    # apps
-    accerciser bijiben evolution gnome-boxes gnome-calendar gnome-clocks
-    gnome-documents gnome-getting-started-docs gnome-maps gnome-music
-    gnome-photos gnome-weather polari vinagre
-    # core
-    empathy epiphany evolution_data_server folks gnome-calculator
-    gnome-contacts gnome-dictionary gnome_online_accounts
-    gnome-online-miners gnome_terminal gnome-user-share
-    totem-pl-parser totem tracker vino
-  ];
-  environment.gnome3.packageSet = pkgs.gnome3_18;
 
   fonts = {
     enableFontDir = true;
