@@ -82,10 +82,12 @@
     imgurbash
     indent
     isync
+    jmtpfs
     faad2   # video in Firefox
     ffmpeg
     ffmpegthumbnailer
     gnumake
+    libmtp
     libnotify
     #logkeys
     lshw
