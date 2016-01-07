@@ -127,6 +127,7 @@
     usbutils
     wget
     which
+    whois
     wmctrl
     x264
     xclip
