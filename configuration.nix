@@ -62,17 +62,21 @@
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
+    bc
     cool-retro-term
     dmenu
     dos2unix
     dunst
     emacs
+    exiv2
     file
     gcc
     git
     gnucash26
     gnupg1compat
     gnupg
+    gpac
+    graphicsmagick
     htop
     hwinfo
     i3lock
@@ -82,11 +86,13 @@
     imgurbash
     indent
     isync
+    jhead
     jmtpfs
     faad2   # video in Firefox
     ffmpeg
     ffmpegthumbnailer
     gnumake
+    libjpeg
     libmtp
     libnotify
     #logkeys
@@ -100,6 +106,7 @@
     mu
     netcat-openbsd
     nmap
+    normalize
     oathToolkit
     openjdk7
     pass
@@ -112,6 +119,7 @@
     screen
     shared_mime_info
     socat
+    sox
     stdmanpages
     stdman
     transmission
@@ -120,6 +128,7 @@
     wget
     which
     wmctrl
+    x264
     xclip
     xdotool
     xsel
