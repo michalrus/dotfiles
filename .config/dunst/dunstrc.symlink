@@ -1,6 +1,6 @@
 [global]
     geometry = "-1400x4+700+0"
-    transparency = 80
+    transparency = 0
     monitor = 0
     follow = keyboard
 

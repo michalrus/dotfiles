@@ -4,7 +4,7 @@ URxvt.termName:         xterm-256color
 URxvt.reverseVideo:     False
 URxvt.font:             xft:Monospace:regular:size=11:antialias=true
 URxvt.depth:            32
-URxvt.background:       [80]#000000
+URxvt.background:       [75]#000000
 URxvt.foreground:       white
 URxvt.saveLines:        0
 URxvt.iso14755:         False
