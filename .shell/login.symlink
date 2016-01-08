@@ -1,29 +1,34 @@
 # Put your environment variables here
 
-# Personal information
-#export NAME='Bob McBob'
-#export EMAIL='bob@example.com'
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US:en
 
-# Preferred programs
-#export PAGER=less
-#export EDITOR=vim
-#export VISUAL=$EDITOR
+# for A4 paper
+locale -a | grep -qi 'en_GB.utf' && export LC_PAPER='en_GB.UTF-8'
 
-# Language
-#export LANG='en_AU.UTF-8'
-#export LC_ALL=$LANG
-#export LC_COLLATE=$LANG
-#export LC_CTYPE=$LANG
-#export LC_MESSAGES=$LANG
-#export LC_MONETARY=$LANG
-#export LC_NUMERIC=$LANG
-#export LC_TIME=$LANG
+[ -d "/usr/local/bin"     ] && export PATH="/usr/local/bin:${PATH}"
+[ -d "${HOME}/bin"        ] && export PATH="${HOME}/bin:${PATH}"
+[ -d "${HOME}/.cabal/bin" ] && export PATH="${HOME}/.cabal/bin:${PATH}"
 
-# Path settings
-#pathprepend ~/bin PATH
-#pathprepend ~/lib LD_LIBRARY_PATH
-#pathprepend ~/include CPATH
+export PATH="${HOME}/.bin:${PATH}"
+export WINELOADER="${HOME}/.bin/wine"
 
-# The current directory should never be in $PATH
-#pathremove . PATH
-#pathremove "" PATH
+# a default editor that is easy to exit ;-)
+export EDITOR='nano'
+export VISUAL="$EDITOR"
+
+export CHROMIUM_USER_FLAGS='--ssl-version-min=tls1'
+
+# needed for ~/.XCompose in GNOME using en-US.UTF-8 locale
+export GTK_IM_MODULE=xim
+
+# ArchLinux does not use JAVA_HOME, but several tools need it (e.g. ENSIME)
+[ -z "$JAVA_HOME" -a -e "/usr/lib/jvm/default" ] && export JAVA_HOME="/usr/lib/jvm/default"
+
+# export ANDROID_NDK_HOME for pfn/android-sdk-plugin
+[ -n "$ANDROID_NDK" ] && export ANDROID_NDK_HOME="$ANDROID_NDK"
+
+export __dotfiles_hostname="$( ( ischroot 2>/dev/null && cat /etc/hostname || hostname ) | tr '_' '.')"
+
+[ -e "$HOME/.shell/login.local" ] && . "$HOME/.shell/login.local"

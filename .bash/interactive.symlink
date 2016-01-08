@@ -1,11 +1,6 @@
-. ~/.shell/interactive
-
 unalias -a
 
-. "$HOME/.shell-agnostic"
-
-# If not running interactively, don't do anything
-[[ $- != *i* ]] && return
+. "$HOME/.shell/interactive"
 
 shopt -s checkwinsize
 
@@ -16,8 +11,6 @@ export HISTSIZE=100000
 export HISTFILESIZE=$HISTSIZE
 
 [ -r /etc/bash_completion ] && . /etc/bash_completion
-
-[ -r /usr/share/doc/pkgfile/command-not-found.bash ] && . /usr/share/doc/pkgfile/command-not-found.bash
 
 . "$HOME/.local/share/git-prompt.sh"
 

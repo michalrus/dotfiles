@@ -1,0 +1,12 @@
+# put your aliases here
+
+# Remember to copy this file without the `.example' suffix.
+
+# breaking habits
+alias nano="$EDITOR"
+alias e="$EDITOR"
+
+alias en="bab pl"
+alias de="bab de-pl"
+alias ru="bab ru-pl"
+alias it="bab it"

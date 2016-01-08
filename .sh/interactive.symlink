@@ -1,1 +1,1 @@
-. ~/.shell/interactive
+. "$HOME/.shell/interactive"

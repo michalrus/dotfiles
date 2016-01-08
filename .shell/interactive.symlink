@@ -1,11 +1,25 @@
 # put your aliases here
 
-# if in a terminal
-if [ -t 0 ]; then
-    # other users shouldn't be able to message by default
-    mesg n
+export CLICOLOR='1'
+command -v dircolors >/dev/null && eval "$(dircolors "$HOME"/.dircolors)"
 
-    # enable colours
-#    if [ `tput colors` -ge 8 ]; then
-#    fi
+alias s='eval "$(attach-or-create-screen)"'
+alias g='git'
+alias nano='nano -UwT 4'
+alias clear='for i in $(seq 100) ; do echo ; done && clear'
+alias grep='grep --color=auto'
+
+export GIT_PS1_SHOWDIRTYSTATE=1
+export GIT_PS1_SHOWSTASHSTATE=1
+export GIT_PS1_SHOWUNTRACKEDFILES=1
+export GIT_PS1_SHOWUPSTREAM='verbose'
+
+# don't set the colormap in the real vconsole
+if case "$TERM" in linux*) false;; *) true;; esac; then
+  # only set it in a interactive shell
+  if case "$-" in *i*) true;; *) false;; esac; then
+    . "$HOME"/.shell/colormap
+  fi
 fi
+
+[ -e "$HOME/.shell/interactive.local" ] && . "$HOME/.shell/interactive.local"

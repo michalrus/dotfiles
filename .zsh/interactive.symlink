@@ -1,15 +1,8 @@
-. ~/.shell/interactive
-
 unalias -m '*'
 unset RPROMPT
 unset -f command_not_found_handler
 
-. "$HOME/.shell-agnostic"
-
-# If not running interactively, don't do anything
-[[ $- != *i* ]] && return
-
-[ -r /usr/share/doc/pkgfile/command-not-found.zsh ] && . /usr/share/doc/pkgfile/command-not-found.zsh
+. "$HOME/.shell/interactive"
 
 autoload -U compinit && compinit
 zstyle ':completion:*' menu select

@@ -1,6 +1,1 @@
-. ~/.shell/logout
-
-if [ "$SHLVL" = 1 ]; then
-  clear
-  reset
-fi
+. "$HOME/.shell/logout"
