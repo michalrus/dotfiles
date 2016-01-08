@@ -1,5 +1,8 @@
 ;; -*- mode: emacs-lisp -*-
 
+;; restore previously edited files
+(desktop-save-mode 1)
+
 ;; don’t clutter file trees with backups~ and #autosaves#
 (defconst user-emacs-temporary-directory (expand-file-name "./tmp/" user-emacs-directory))
 (setq backup-directory-alist `((".*" . ,user-emacs-temporary-directory)))

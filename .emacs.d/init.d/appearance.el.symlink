@@ -7,7 +7,6 @@
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 (column-number-mode 1)
-(desktop-save-mode 1)
 (set-background-color "black")
 (toggle-frame-maximized)
 (setq inhibit-startup-echo-area-message (user-real-login-name))
