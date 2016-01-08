@@ -131,6 +131,7 @@
     wmctrl
     x264
     xclip
+    xcompmgr
     xdotool
     xsel
     youtube-dl
