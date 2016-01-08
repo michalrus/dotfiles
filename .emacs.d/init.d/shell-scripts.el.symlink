@@ -3,3 +3,7 @@
 (use-package pkgbuild-mode
   :mode "/PKGBUILD\\'"
   :ensure t)
+
+(use-package nix-mode
+  :mode "\\.nix\\'"
+  :ensure t)
