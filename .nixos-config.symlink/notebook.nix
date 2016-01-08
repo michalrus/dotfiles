@@ -142,6 +142,7 @@
   programs = {
     zsh.enable = true;
     bash.enableCompletion = true;
+    ssh.startAgent = false;
   };
 
   services = {
@@ -172,6 +173,7 @@
       displayManager.lightdm.enable = true;
       desktopManager.xterm.enable = false;
       windowManager.i3.enable = true;
+      startGnuPGAgent = true;
 
       displayManager.xserverArgs = [ "-ardelay" "150" "-arinterval" "8" ];
     };
