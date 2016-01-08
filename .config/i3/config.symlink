@@ -5,7 +5,7 @@ new_window pixel 3
 
 floating_modifier $mod
 
-bindsym $mod+l exec i3lock -c 000000
+bindsym $mod+l exec "pkill -u $USER -USR1 dunst ; i3lock -n -c 000000 ; pkill -u $USER -USR2 dunst"
 bindsym $mod+d exec dmenu_run
 bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Shift+q kill
@@ -30,7 +30,7 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 bindsym $mod+a focus parent
-#bindsym $mod+d focus child
+bindsym $mod+z focus child
 bindsym $mod+h split h
 bindsym $mod+v split v
 
