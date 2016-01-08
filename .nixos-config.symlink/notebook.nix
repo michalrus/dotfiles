@@ -133,6 +133,7 @@
     xclip
     xcompmgr
     xdotool
+    xrandr-invert-colors
     xsel
     youtube-dl
     zip
