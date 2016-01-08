@@ -1,6 +1,7 @@
 set $mod Mod4
 
 font pango:DejaVu Sans 10
+new_window pixel 3
 
 floating_modifier $mod
 
@@ -9,6 +10,9 @@ bindsym $mod+d exec dmenu_run
 bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Shift+q kill
 bindsym $mod+k exec pass-autotype
+
+bindsym $mod+x move container to output right
+bindsym $mod+p move container to output VGA1
 
 bindsym $mod+f fullscreen toggle
 bindsym $mod+Shift+space floating toggle
@@ -60,10 +64,10 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 mode "resize" {
-  bindsym Left resize shrink width 10 px or 10 ppt
-  bindsym Down resize grow height 10 px or 10 ppt
-  bindsym Up resize shrink height 10 px or 10 ppt
-  bindsym Right resize grow width 10 px or 10 ppt
+  bindsym Left  resize shrink width  10 px or 5 ppt
+  bindsym Down  resize grow   height 10 px or 5 ppt
+  bindsym Up    resize shrink height 10 px or 5 ppt
+  bindsym Right resize grow   width  10 px or 5 ppt
 
   bindsym Return mode "default"
   bindsym Escape mode "default"
@@ -77,5 +81,5 @@ bar {
 }
 
 exec --no-startup-id dunst
-exec --no-startup-id ~/.bin/remote-notifications
+exec --no-startup-id remote-notifications
 exec --no-startup-id xcompmgr -c -n
