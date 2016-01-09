@@ -118,6 +118,7 @@
     posix_man_pages
     rxvt_unicode-with-plugins
     screen
+    scrot
     shared_mime_info
     socat
     sox
@@ -131,6 +132,7 @@
     whois
     wmctrl
     x264
+    xautolock
     xclip
     xcompmgr
     xdotool
