@@ -193,7 +193,7 @@
     path = with pkgs; [ procps bash i3lock ];
     script = ''
       # I need ${pkgs.sudo}. But this still doesn’t guarantee that
-      # /var/setuid-wrappers/sudo will exists… :-)
+      # /var/setuid-wrappers/sudo will exist… :-)
       pgrep -f xsession | while read p ; do
         printf '%s %s\n' \
           $(cat /proc/$p/environ | tr '\0' '\n' | grep ^DISPLAY | cut -d = -f 2) \
@@ -236,7 +236,10 @@
   };
 
   security = {
-    sudo.extraConfig = "Defaults timestamp_timeout=0";
+    sudo.extraConfig = ''
+      Defaults timestamp_timeout=0
+      %users      ALL=(ALL:ALL) NOPASSWD: ${pkgs.systemd}/bin/systemctl start lock-x11-displays
+    '';
     setuidPrograms = [ "mtr" ];
   };
 
