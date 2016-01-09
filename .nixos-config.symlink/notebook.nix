@@ -102,6 +102,7 @@
     man_db
     manpages
     mkpasswd
+    moreutils
     mpv
     mtr
     mu
