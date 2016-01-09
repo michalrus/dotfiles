@@ -5,12 +5,18 @@ new_window pixel 3
 
 floating_modifier $mod
 
-bindsym $mod+l exec "sudo systemctl start lock-x11-displays"
+bindsym $mod+l exec sudo systemctl start lock-x11-displays
 bindsym $mod+d exec dmenu_run
 bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Shift+q kill
 bindsym $mod+k exec pass-autotype
 bindsym $mod+i exec xrandr-invert-colors
+
+bindsym XF86AudioMute         exec --no-startup-id amixer -q sset Master toggle
+bindsym XF86AudioRaiseVolume  exec --no-startup-id amixer -q sset Master 3%+ unmute
+bindsym XF86AudioLowerVolume  exec --no-startup-id amixer -q sset Master 3%- unmute
+bindsym XF86MonBrightnessUp   exec --no-startup-id xbacklight -inc 10
+bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10
 
 bindsym $mod+x move container to output right
 bindsym $mod+p move container to output VGA1

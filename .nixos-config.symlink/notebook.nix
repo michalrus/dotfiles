@@ -137,6 +137,8 @@
     xclip
     xcompmgr
     xdotool
+    xorg.xbacklight
+    xorg.xev
     xrandr-invert-colors
     xsel
     youtube-dl
