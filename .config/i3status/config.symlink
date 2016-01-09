@@ -4,18 +4,31 @@ general {
   interval = 1
 }
 
+order += "volume master"
+order += "battery 1"
+
+order += "cpu_temperature 0"
+order += "cpu_usage"
+order += "load"
+
 order += "ipv6"
 order += "wireless _first_"
 order += "ethernet _first_"
 order += "run_watch DHCP"
+
 order += "disk /"
 order += "disk /var"
-order += "battery 1"
-order += "cpu_temperature 0"
-order += "cpu_usage"
-order += "load"
+
 order += "tztime utc"
 order += "tztime local"
+
+volume master {
+  format = "♪: %volume"
+  format_muted = "♪: muted (%volume)"
+  device = "default"
+  mixer = "Master"
+  mixer_idx = 0
+}
 
 ipv6 {
   format_up = "IPv6: %ip"
@@ -50,8 +63,9 @@ disk "/var" {
 }
 
 battery 1 {
-  format = "%status %percentage %remaining"
+  format = "%status %percentage (%remaining left)"
   format_down = "No battery"
+  last_full_capacity = true
   hide_seconds = true
   status_chr = "⚇"
   status_bat = "⚡"
