@@ -18,10 +18,13 @@ URxvt.iso14755:         False
 
 URxvt.perl-ext-common:  matcher,font-size,selection,clipboard
 
-! I’m using .Xdefaults, because #include doesn’t work in .Xresources in GNOME
-#include ".Xresources.d/rxvt-unicode-url-launcher"
 URxvt.matcher.button:   1
 URxvt.keysym.C-Delete:  perl:matcher:list
+! Unfortunately, url-launcher needs to be an absolute path, which is
+! unspeakably stupid. Also, we don’t have any ~ or $HOME here. Also,
+! we can’t take any command line arguments. The following hack will
+! only work when urxvt is started in ~/, which is almost always.
+URxvt.url-launcher:     .bin/urxvt-url-launcher
 
 URxvt.keysym.C-0x2d:    perl:font-size:decrease
 URxvt.keysym.C-0x3d:    perl:font-size:increase
