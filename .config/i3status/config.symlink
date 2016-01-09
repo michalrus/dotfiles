@@ -1,0 +1,81 @@
+general {
+  output_format = "i3bar"
+  colors = true
+  interval = 1
+}
+
+order += "ipv6"
+order += "wireless _first_"
+order += "ethernet _first_"
+order += "run_watch DHCP"
+order += "disk /"
+order += "disk /var"
+order += "battery 1"
+order += "cpu_temperature 0"
+order += "cpu_usage"
+order += "load"
+order += "tztime utc"
+order += "tztime local"
+
+ipv6 {
+  format_up = "IPv6: %ip"
+  format_down = ""
+}
+
+wireless _first_ {
+  format_up = "W: “%essid”, %quality, %bitrate @ %frequency, %ip"
+  format_down = "W: down"
+}
+
+ethernet _first_ {
+  # if you use %speed, i3status requires the cap_net_admin capability
+  format_up = "E: %ip (%speed)"
+  format_down = ""
+}
+
+run_watch DHCP {
+  pidfile = "/var/run/dhclient*.pid"
+}
+
+disk "/" {
+  format = "%free"
+  low_threshold = 10
+  threshold_type = percentage_free
+}
+
+disk "/var" {
+  format = "%free"
+  low_threshold = 10
+  threshold_type = percentage_free
+}
+
+battery 1 {
+  format = "%status %percentage %remaining"
+  format_down = "No battery"
+  hide_seconds = true
+  status_chr = "⚇"
+  status_bat = "⚡"
+  status_full = "☻"
+  path = "/sys/class/power_supply/BAT%d/uevent"
+  low_threshold = 10
+  threshold_type = time
+}
+
+cpu_temperature 0 {
+  format = "T: %degrees °C"
+  path = "/sys/devices/platform/coretemp.0/hwmon/hwmon1/temp1_input"
+  max_threshold = 60
+}
+
+load {
+  format = "%1min, %5min, %15min"
+}
+
+tztime utc {
+  timezone = UTC
+  format = "%H:%M (%Z)"
+}
+
+tztime local {
+  format = "%a %d %b %Y %H:%M:%S %z (%Z)"
+}
