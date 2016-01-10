@@ -159,6 +159,8 @@
         HandlePowerKey=suspend
       '';
 
+    virtualboxHost.enable = true;
+
     printing.enable = false;
 
     xserver = {
@@ -244,7 +246,7 @@
       isNormalUser = true;
       uid = 31337;
       description = "Michal Rus";
-      extraGroups = [ "wheel" "scanner" "networkmanager" ];
+      extraGroups = [ "wheel" "scanner" "networkmanager" "vboxusers" ];
     };
   };
 
