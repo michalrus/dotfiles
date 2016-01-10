@@ -55,6 +55,8 @@
   nixpkgs.config = {
     allowBroken = true;
     packageOverrides = pkgs: {
+      # take some of the packages from nixpkgs/master definitions
+      logkeys    = pkgs.callPackage "/etc/nixos/pkgs/logkeys-master/default.nix" {};
       youtube-dl = pkgs.callPackage "/etc/nixos/pkgs/youtube-dl-master.nix" {};
     };
   };
@@ -96,7 +98,7 @@
     libjpeg
     libmtp
     libnotify
-    #logkeys
+    logkeys
     lshw
     lsof
     man_db
@@ -209,6 +211,14 @@
            pkill -u $USER -USR2 dunst'
       done
       '';
+  };
+
+  systemd.services."logkeys" = {
+    description = "Log all keys pressed on all keyboards";
+    serviceConfig.Type = "forking";
+    wantedBy = [ "multi-user.target" ];
+    path = with pkgs; [ logkeys ];
+    script = "logkeys --start --output=/var/log/logkeys.log --keymap=/etc/nixos/pkgs/logkeys-master/pl.map";
   };
 
   fonts = {
