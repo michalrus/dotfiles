@@ -71,6 +71,7 @@
     dos2unix
     dunst
     emacs
+    evince
     exiv2
     file
     gcc
