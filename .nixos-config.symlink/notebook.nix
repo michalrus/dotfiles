@@ -66,6 +66,7 @@
   environment.systemPackages = with pkgs; [
     arandr
     bc
+    cloc
     cool-retro-term
     dmenu
     dos2unix
