@@ -1,5 +1,8 @@
 { config, pkgs, ... }:
 
+let
+  logkeysMapPl = builtins.toFile "logkeys-pl.map" (builtins.readFile ./pkgs/logkeys-master/pl.map);
+in
 {
   nix = {
     useChroot = true; # https://nixos.org/nixos/manual/options.html#opt-nix.useChroot
@@ -56,8 +59,8 @@
     allowBroken = true;
     packageOverrides = pkgs: {
       # take some of the packages from nixpkgs/master definitions
-      logkeys    = pkgs.callPackage "/etc/nixos/pkgs/logkeys-master/default.nix" {};
-      youtube-dl = pkgs.callPackage "/etc/nixos/pkgs/youtube-dl-master.nix" {};
+      logkeys    = pkgs.callPackage ./pkgs/logkeys-master/default.nix {};
+      youtube-dl = pkgs.callPackage ./pkgs/youtube-dl-master.nix {};
     };
   };
 
@@ -225,7 +228,7 @@
     script = ''
       ls /dev/input/by-path | grep kbd | while IFS= read -r inp ; do
         rinp="$(readlink -f "/dev/input/by-path/$inp")"
-        logkeys --start --device="$rinp" --output=/var/log/logkeys-test.log --keymap=/etc/nixos/pkgs/logkeys-master/pl.map
+        logkeys --start --device="$rinp" --output=/var/log/logkeys-test.log --keymap="${logkeysMapPl}"
         # why is the following not configurable?!
         rm /var/run/logkeys.pid
       done
