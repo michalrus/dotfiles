@@ -222,8 +222,19 @@
     serviceConfig.Type = "forking";
     wantedBy = [ "multi-user.target" ];
     path = with pkgs; [ logkeys ];
-    script = "logkeys --start --output=/var/log/logkeys.log --keymap=/etc/nixos/pkgs/logkeys-master/pl.map";
+    script = ''
+      ls /dev/input/by-path | grep kbd | while IFS= read -r inp ; do
+        rinp="$(readlink -f "/dev/input/by-path/$inp")"
+        logkeys --start --device="$rinp" --output=/var/log/logkeys-test.log --keymap=/etc/nixos/pkgs/logkeys-master/pl.map
+        # why is the following not configurable?!
+        rm /var/run/logkeys.pid
+      done
+      '';
   };
+  # reload logkeys when a new USB keyboard is connected
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="input", SUBSYSTEMS=="usb", ATTRS{authorized}=="1", RUN+="${pkgs.systemd}/bin/systemctl restart logkeys.service"
+    '';
 
   fonts = {
     enableFontDir = true;
