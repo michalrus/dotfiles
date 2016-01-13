@@ -15,4 +15,4 @@ num="$(screen -ls | grep -E '^\s+[^\s]' | wc -l)"
 [ "$num" -ne "1" ] && { echo 'echo >&1 "More than one screen session exists." ; return 1' ; exit ; }
 
 # use `exec sh -c`, as it will consume *considerably* less memory than zsh :-)
-echo 'exec sh -c "screen -d -r ; clear ; exit"'
+echo 'exec sh -c "screen -x ; clear ; exit"'
