@@ -148,6 +148,7 @@ in
     xdotool
     xorg.xbacklight
     xorg.xev
+    xorg.xdpyinfo
     xrandr-invert-colors
     xsel
     youtube-dl
