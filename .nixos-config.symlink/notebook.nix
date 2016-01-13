@@ -19,7 +19,8 @@ in
   imports =
     [
       ./hardware-configuration.nix
-    ];
+      # import all files matching ./local/*.nix
+    ] ++ builtins.map (n: ./local + ("/" + n)) (builtins.filter (n: builtins.substring ((builtins.stringLength n) - 4) 4 n == ".nix") (builtins.attrNames (builtins.readDir ./local)));
 
   boot = {
     loader.grub = {
@@ -114,6 +115,7 @@ in
     mtr
     mu
     netcat-openbsd
+    nix-repl
     nmap
     normalize
     oathToolkit
