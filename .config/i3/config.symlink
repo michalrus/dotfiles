@@ -92,3 +92,4 @@ bar {
 exec --no-startup-id dunst
 exec --no-startup-id remote-notifications
 exec --no-startup-id xcompmgr -c -n
+exec --no-startup-id ~/.screenlayout/current
