@@ -18,8 +18,8 @@ bindsym XF86AudioLowerVolume  exec --no-startup-id amixer -q sset Master 3%- unm
 bindsym XF86MonBrightnessUp   exec --no-startup-id xbacklight -inc 10
 bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10
 
-bindsym $mod+x move container to output right
-bindsym $mod+p move container to output VGA1
+bindsym $mod+x move workspace to output right
+bindsym $mod+p move workspace to output VGA1
 
 bindsym $mod+f fullscreen toggle
 bindsym $mod+Shift+space floating toggle
