@@ -1,14 +1,16 @@
 # IMPORTANT: you have to COPY or HARDLINK this file to
 # ~/.config/systemd/user, just symlinking will not work
 # and fail with E_NOENT.
+#
+# Except if you’re on NixOS. ♥
 
 [Unit]
 Description=Emacs: the extensible, self-documenting text editor
 
 [Service]
 Type=forking
-ExecStart=/bin/sh -c '. /etc/profile ; . "%h/.profile" ; rm "%h/.emacs.d/.emacs.desktop.lock" ; exec /usr/bin/emacs --daemon'
-ExecStop=/usr/bin/emacsclient --eval "(kill-emacs)"
+ExecStart=/bin/sh -c '. /etc/profile ; . "%h/.profile" ; rm "%h/.emacs.d/.emacs.desktop.lock" || true ; exec emacs --daemon'
+ExecStop=/bin/sh -c 'emacsclient --eval "(kill-emacs)"'
 Restart=always
 
 [Install]
