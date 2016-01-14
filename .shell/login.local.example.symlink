@@ -6,7 +6,7 @@
 export ALTERNATE_EDITOR=""
 
 # an Emacs frame in the terminal, connecting to (or starting) `emacs --daemon`
-#export EDITOR='emacsclient --tty'
+export EDITOR='emacsclient --tty'
 export VISUAL="$EDITOR"
 
 export DEBFULLNAME="Michal Rus"
