@@ -1,0 +1,14 @@
+[General]
+StartWithLastProfile=0
+
+[Profile0]
+Name=default
+IsRelative=1
+Path=dotfiles.default
+
+[Profile1]
+Name=calendar
+IsRelative=1
+Path=dotfiles.calendar
+Default=1
+
