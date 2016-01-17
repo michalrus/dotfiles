@@ -130,6 +130,7 @@ in
     perlPackages.LWP
     pinentry
     pkgs.firefoxWrapper
+    poppler_utils
     posix_man_pages
     rxvt_unicode-with-plugins
     screen
