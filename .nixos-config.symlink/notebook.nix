@@ -59,6 +59,7 @@ in
   nixpkgs.config = {
     allowBroken = true;
     packageOverrides = pkgs: {
+      awf-gtk    = pkgs.callPackage ./pkgs/awf-gtk.nix {};
       # take some of the packages from nixpkgs/master definitions
       logkeys    = pkgs.callPackage ./pkgs/logkeys-master/default.nix {};
       youtube-dl = pkgs.callPackage ./pkgs/youtube-dl-master.nix {};
@@ -69,6 +70,7 @@ in
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
     arandr
+    awf-gtk
     bc
     cloc
     cool-retro-term
@@ -81,6 +83,9 @@ in
     file
     gcc
     git
+    gnome.gnome_icon_theme
+    gnome3.adwaita-icon-theme
+    gnome3.gnome_themes_standard
     gnucash26
     gnupg1compat
     gnupg
@@ -154,6 +159,10 @@ in
     youtube-dl
     zip
   ];
+
+  environment.shellInit = ''
+    export GTK2_RC_FILES=${pkgs.gnome3.gnome_themes_standard}/share/themes/Adwaita/gtk-2.0/gtkrc
+    '';
 
   programs = {
     zsh.enable = true;
