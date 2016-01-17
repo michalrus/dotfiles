@@ -95,7 +95,6 @@ in
     hwinfo
     i3lock
     i3status
-    idea.idea-community
     imagemagick
     imgurbash
     indent
@@ -120,6 +119,7 @@ in
     mtr
     mu
     netcat-openbsd
+    nix-prefetch-scripts
     nix-repl
     nmap
     normalize
