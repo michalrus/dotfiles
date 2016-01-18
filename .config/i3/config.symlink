@@ -7,7 +7,7 @@ floating_modifier $mod
 
 bindsym $mod+l exec sudo systemctl start lock-x11-displays
 bindsym $mod+d exec sh -c 'PATH="$HOME/.bin/dmenu:$PATH" exec dmenu_run'
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec urxvt -e zsh -i -c s
 bindsym $mod+Shift+q kill
 bindsym $mod+k exec pass-autotype
 bindsym $mod+i exec xrandr-invert-colors
