@@ -100,6 +100,7 @@ in
     indent
     isync
     jhead
+    jmeter
     jmtpfs
     faad2   # video in Firefox
     ffmpeg
@@ -113,6 +114,7 @@ in
     lsof
     man_db
     manpages
+    maven
     mkpasswd
     moreutils
     mpv
