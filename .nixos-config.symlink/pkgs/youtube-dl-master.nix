@@ -2,8 +2,8 @@
 
 let
   nixExpr = fetchurl {
-    url = "https://raw.githubusercontent.com/NixOS/nixpkgs/1e630749d8c17525015ab2f929edeebeaab3a611/pkgs/tools/misc/youtube-dl/default.nix";
-    sha256 = "5b8fd4247d1a9ef53810ba612c8050f995644a3fcc3c0228609aa1ca24dc2601";
+    url = "https://raw.githubusercontent.com/NixOS/nixpkgs/af8c1f33688b6c05822269af44996839f758b08c/pkgs/tools/misc/youtube-dl/default.nix";
+    sha256 = "05158e5fddf9925b52c1da1149b8ede5dbead7a3d889dd88bb2f18e8d45a309f";
   };
 
 in
