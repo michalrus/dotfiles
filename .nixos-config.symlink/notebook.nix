@@ -183,6 +183,8 @@ in
 
     printing.enable = false;
 
+    locate.enable = true;
+
     xserver = {
       enable = true;
       layout = "pl";
