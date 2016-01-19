@@ -126,7 +126,7 @@ in
     nmap
     normalize
     oathToolkit
-    openjdk7
+    openjdk8
     pass
     pciutils
     perlPackages.LWP
