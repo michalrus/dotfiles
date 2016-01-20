@@ -229,6 +229,7 @@ in
           $(cat /proc/$p/environ | tr '\0' '\n' | grep ^DISPLAY | cut -d = -f 2) \
           $(cat /proc/$p/environ | tr '\0' '\n' | grep ^USER    | cut -d = -f 2)
       done | sort | uniq | while read DISPLAY USER ; do
+        [ -z "$(grep "^$USER:" /etc/shadow | cut -d : -f 2)" ] && continue # if password empty
         export DISPLAY
         /var/setuid-wrappers/sudo --background -u $USER bash -c \
           'pkill -u $USER -USR1 dunst
