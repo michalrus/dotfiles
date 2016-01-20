@@ -135,6 +135,7 @@ in
     pkgs.firefoxWrapper
     poppler_utils
     posix_man_pages
+    python34Packages.livestreamer
     rxvt_unicode-with-plugins
     screen
     scrot
