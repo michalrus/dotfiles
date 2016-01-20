@@ -84,6 +84,7 @@ in
     gcc
     git
     gnome.gnome_icon_theme
+    gnome3.dconf   # so that GnuCash prefs can be changed
     gnome3.adwaita-icon-theme
     gnome3.gnome_themes_standard
     gnucash26
