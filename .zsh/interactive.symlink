@@ -1,6 +1,6 @@
 unalias -m '*'
 unset RPROMPT
-unset -f command_not_found_handler
+unset -f command_not_found_handler 2>/dev/null
 
 . "$HOME/.shell/interactive"
 
