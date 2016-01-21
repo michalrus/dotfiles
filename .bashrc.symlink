@@ -8,4 +8,10 @@
 # (also, my google-fu didn't find a way to distinguish them)
 
 . "$HOME/.bash/env"
-. "$HOME/.bash/interactive"
+
+# In case 2., .bashrc is also run for scp, which is non-interactive.
+# Let’s check explicitly here if the shell really is interactive.
+
+case "$-" in
+*i*) . "$HOME/.bash/interactive" ;;
+esac
