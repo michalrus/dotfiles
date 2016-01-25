@@ -144,7 +144,7 @@ in
     sox
     stdmanpages
     stdman
-    transmission
+    transmission_gtk
     unzip
     usbutils
     wget
