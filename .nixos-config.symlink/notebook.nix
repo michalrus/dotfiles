@@ -32,8 +32,9 @@ in
     tmpOnTmpfs = true;
   };
 
-  networking = {
+  networking = rec {
     hostName = "nixos";
+    extraHosts = "127.0.0.1 ${hostName}";
     nameservers = [ "8.8.8.8" "8.8.4.4" ];
     firewall = {
       enable = true;
