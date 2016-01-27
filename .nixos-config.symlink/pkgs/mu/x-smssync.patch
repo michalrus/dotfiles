@@ -1,0 +1,12 @@
+diff --git a/lib/mu-msg-file.c b/lib/mu-msg-file.c
+index 5325986..53e47d3 100644
+--- a/lib/mu-msg-file.c
++++ b/lib/mu-msg-file.c
+@@ -577,6 +577,7 @@ get_tags (MuMsgFile *self)
+ 		const char *header;
+ 		char sepa;
+ 	} tagfields[] = {
++		{ "X-smssync-datatype", ' ' }, // <michalrus> I need this badly.
+ 		{ "X-Label",    ' ' },
+ 		{ "X-Keywords", ',' },
+ 		{ "Keywords",   ' ' }
