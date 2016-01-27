@@ -62,8 +62,8 @@ in
     packageOverrides = pkgs: {
       awf-gtk    = pkgs.callPackage ./pkgs/awf-gtk.nix {};
       # take some of the packages from nixpkgs/master definitions
-      logkeys    = pkgs.callPackage ./pkgs/logkeys-master/default.nix {};
-      youtube-dl = pkgs.callPackage ./pkgs/youtube-dl-master.nix {};
+      #logkeys    = pkgs.callPackage ./pkgs/logkeys-master/default.nix {};
+      #youtube-dl = pkgs.callPackage ./pkgs/youtube-dl-master.nix {};
     };
   };
 
