@@ -9,6 +9,7 @@ IMAPStore gmail-remote
 Account gmail
 
 MaildirStore gmail-local
+AltMap yes
 Path ~/.Maildir/
 Inbox ~/.Maildir/inbox
 
