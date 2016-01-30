@@ -8,6 +8,11 @@ set -o errexit
 # is.
 maildir="$(readlink -f "$(dirname "$0")")"
 
+# Add poor man’s synchronization. :s
+lockfile="$maildir/sync.lock"
+( set -o noclobber ; echo "$$" >"$lockfile" ) 2>/dev/null || { echo >&1 "$lockfile: already exists; another instance of $0 is running" ; exit 1 ; }
+trap 'e=$? ; rm -f "$lockfile" ; test $e -eq 77 && exit 0 || exit $e' INT TERM EXIT
+
 # Sync.
 cat "$maildir/mbsyncrc.auth" >/dev/null # to error when doesn’t exist
 mbsyncrc="$(mktemp)"
