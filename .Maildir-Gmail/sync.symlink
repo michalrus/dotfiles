@@ -1,0 +1,67 @@
+#!/bin/sh
+
+set -o noclobber
+set -o nounset
+set -o errexit
+
+# The order here is correct. I want $maildir to be where the symlink
+# is.
+maildir="$(readlink -f "$(dirname "$0")")"
+
+# Sync.
+cat "$maildir/mbsyncrc.auth" >/dev/null # to error when doesn’t exist
+mbsyncrc="$(mktemp)"
+chmod 0700 "$mbsyncrc" # it might get a password in plain text
+cat <<EOF >>"$mbsyncrc"
+IMAPAccount gmail
+Host imap.gmail.com
+$(cat "$maildir/mbsyncrc.auth")
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore gmail-remote
+Account gmail
+
+MaildirStore gmail-local
+AltMap yes
+Path $maildir/
+Inbox $maildir/inbox
+
+$(cat "$maildir/mbsyncrc.channels")
+EOF
+mbsync --config "$mbsyncrc" -a || { rm "$mbsyncrc" ; exit 1 ; }
+rm "$mbsyncrc"
+
+# Ask 'mu server' run by mu4e to terminate. It will be started again
+# when mu4e needs it.
+mupid="$(pgrep -u "$UID" -f '/mu server')" && {
+  kill -INT "$mupid" ; sleep 1
+  kill -KILL "$mupid" >/dev/null 2>&1 || true
+} || true
+
+# <------- let’s hope mu4e won’t need it in this precise moment ^.~
+
+# Index.
+mu index -m "$maildir"
+
+# Thank you, Google, that we can’t define your-side filters moving
+# stuff directly to spam/. Therefore this hack below.
+
+# Make sure the dirs exist
+mkdir -p "$maildir/spam/cur/" "$maildir/pre-spam/" "$maildir/spam-backup/"
+
+# Move all copies of messages in pre-spam/ (from Gmail filters) to
+# spam/ (real spam mailbox).
+grep -a -h -R --exclude .isyncuidmap.db --exclude .mbsyncstate --exclude .noindex -i -m 1 '^Message-ID: ' "$maildir/pre-spam/" | sed 's/^Message-ID: *<\|>$//gi' | while IFS= read -r msgid ; do
+  mu find --nocolor -f l "msgid:$msgid" || true
+done | while IFS= read -r msgfile ; do
+  mv -v "$msgfile" "$maildir/spam/cur/"
+done
+
+# Move all original messages remaining in pre-spam/ to spam/.
+find "$maildir/pre-spam/" -type f -a -not -name '.noindex' -a -not -name '.isyncuidmap.db' -a -not -name '.mbsyncstate' -exec mv -v '{}' "$maildir/spam/cur/" ';'
+
+# <------- maybe we should mu-index here again?
+
+# Save spam/ messages for future reference.
+rsync -av --exclude .isyncuidmap.db --exclude .mbsyncstate "$maildir/spam/." "$maildir/spam-backup/"
