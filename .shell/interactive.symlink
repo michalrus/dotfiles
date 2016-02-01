@@ -8,6 +8,7 @@ alias g='git'
 alias nano='nano -UwT 4'
 alias clear='for i in $(seq 100) ; do echo ; done && clear'
 alias grep='grep --color=auto'
+alias mts='ts "[%Y-%m-%d %H:%M:%.S]"'
 
 export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWSTASHSTATE=1
