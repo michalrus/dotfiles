@@ -47,7 +47,7 @@ ethernet _first_ {
 }
 
 run_watch DHCP {
-  pidfile = "/var/run/dhclient*.pid"
+  pidfile = "/var/run/dhcpcd.pid"
 }
 
 disk "/" {

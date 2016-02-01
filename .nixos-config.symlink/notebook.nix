@@ -41,8 +41,7 @@ in
       allowPing = true;
       allowedTCPPorts = [ ];
     };
-    #wireless.enable = true;       # wireless support via wpa_supplicant
-    networkmanager.enable = true;  # wireless support via NetworkManager
+    wireless.enable = true;
   };
 
   i18n = {
