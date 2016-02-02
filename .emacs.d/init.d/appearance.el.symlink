@@ -1,8 +1,8 @@
 ;; -*- mode: emacs-lisp -*-
 
 ;; sane default appearance (w/o packages)
-(add-to-list 'default-frame-alist '(alpha 80 80))
-(load-theme 'tango-dark)
+;(add-to-list 'default-frame-alist '(alpha 80 80))
+;(load-theme 'tango-dark)
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
@@ -36,16 +36,16 @@
 (defun disable-all-themes () "disable all active themes"
   (interactive) (dolist (i custom-enabled-themes) (disable-theme i)))
 (setq custom-safe-themes t)
-(use-package monokai-theme
-  :config (disable-all-themes) (load-theme 'monokai) (set-background-color "black")
+(use-package solarized-theme
+  :config (disable-all-themes) (load-theme 'solarized-dark t) ;(set-background-color "black")
   :ensure t
   :pin melpa-stable)
 
 ;; make frames transparent, when run in terminal, and override theme bg with "black" when in GUI
-(defun fix-new-frame-background (frame)
-  (set-face-background 'default (if (display-graphic-p frame) "black" "unspecified-bg") frame))
-(add-hook 'after-make-frame-functions 'fix-new-frame-background)
-(add-hook 'window-setup-hook (lambda () (fix-new-frame-background (selected-frame))))
+;(defun fix-new-frame-background (frame)
+;  (set-face-background 'default (if (display-graphic-p frame) "black" "unspecified-bg") frame))
+;(add-hook 'after-make-frame-functions 'fix-new-frame-background)
+;(add-hook 'window-setup-hook (lambda () (fix-new-frame-background (selected-frame))))
 
 ;; ido-mode
 (ido-mode 1)

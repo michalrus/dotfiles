@@ -15,12 +15,4 @@ export GIT_PS1_SHOWSTASHSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
 export GIT_PS1_SHOWUPSTREAM='verbose'
 
-# don't set the colormap in the real vconsole
-if case "$TERM" in linux*) false;; *) true;; esac; then
-  # only set it in a interactive shell
-  if case "$-" in *i*) true;; *) false;; esac; then
-    . "$HOME"/.shell/colormap
-  fi
-fi
-
 [ -e "$HOME/.shell/interactive.local" ] && . "$HOME/.shell/interactive.local"

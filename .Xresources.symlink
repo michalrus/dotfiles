@@ -1,5 +1,64 @@
-Emacs.background:         #000000
-Emacs.foreground:         #ffffff
+! Solarized
+#define S_base03        #002b36
+#define S_base02        #073642
+#define S_base01        #586e75
+#define S_base00        #657b83
+#define S_base0         #839496
+#define S_base1         #93a1a1
+#define S_base2         #eee8d5
+#define S_base3         #fdf6e3
+#define S_yellow        #b58900
+#define S_orange        #cb4b16
+#define S_red           #dc322f
+#define S_magenta       #d33682
+#define S_violet        #6c71c4
+#define S_blue          #268bd2
+#define S_cyan          #2aa198
+#define S_green         #859900
+
+! Solarized dark
+*background:  S_base03
+*foreground:  S_base1
+*fadeColor:   S_base03
+*cursorColor: S_base1
+*pointerColorBackground: S_base01
+*pointerColorForeground: S_base1
+
+! Black
+*color0:  S_base02
+! Red
+*color1:  S_red
+! Green
+*color2:  S_green
+! Yellow
+*color3:  S_yellow
+! Blue
+*color4:  S_blue
+! Magenta
+*color5:  S_magenta
+! Cyan
+*color6:  S_cyan
+! White
+*color7:  S_base1
+! Bright Black
+*color8:  S_base02
+! Bright Red
+*color9:  S_orange
+! Bright Green
+*color10: S_green
+! Bright Yellow
+*color11: S_yellow
+! Bright Blue
+*color12: S_blue
+! Bright Magenta
+*color13: S_magenta
+! Bright Cyan
+*color14: S_cyan
+! Bright White
+*color15: S_base3
+
+! Emacs.background:         #000000
+! Emacs.foreground:         #ffffff
 Emacs.menuBar:            off
 Emacs.toolBar:            off
 Emacs.verticalScrollBars: off
@@ -11,8 +70,8 @@ URxvt.termName:         xterm-256color
 URxvt.reverseVideo:     False
 URxvt.font:             xft:Monospace:regular:size=11:antialias=true
 URxvt.depth:            32
-URxvt.background:       [75]#000000
-URxvt.foreground:       white
+!URxvt.background:       [75]#000000
+!URxvt.foreground:       white
 URxvt.saveLines:        0
 URxvt.iso14755:         False
 
