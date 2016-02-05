@@ -1,3 +1,4 @@
 # make sure that ~/.shell/login will be read
 # (for some reason doing `. ~/.shell/login` here doesn’t set the PATH)
+feh --bg-scale "$HOME/.wallpaper.png" || true
 $SHELL --login -c 'exec i3 # -V >"$HOME/i3-$(date +'%Y%m%d-%H%M%S').log"'

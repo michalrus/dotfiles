@@ -7,7 +7,6 @@
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 (column-number-mode 1)
-(set-background-color "black")
 (toggle-frame-maximized)
 (setq inhibit-startup-echo-area-message (user-real-login-name))
 (setq inhibit-startup-message t)
@@ -32,12 +31,12 @@
 (global-set-key (kbd "C-+") 'text-scale-increase)
 (global-set-key (kbd "C--") 'text-scale-decrease)
 
-;; disable the default theme and load monokai (if possible) with a black background
+;; disable the default theme and load solarized (if possible)
 (defun disable-all-themes () "disable all active themes"
   (interactive) (dolist (i custom-enabled-themes) (disable-theme i)))
 (setq custom-safe-themes t)
 (use-package solarized-theme
-  :config (disable-all-themes) (load-theme 'solarized-dark t) ;(set-background-color "black")
+  :config (disable-all-themes) (load-theme 'solarized-dark t)
   :ensure t
   :pin melpa-stable)
 

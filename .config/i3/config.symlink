@@ -1,7 +1,7 @@
 set $mod Mod4
 
 font pango:DejaVu Sans 10
-new_window pixel 3
+new_window pixel 2
 
 floating_modifier $mod
 
@@ -84,9 +84,27 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
+# colorclass            border  backgr. text    indicator
+client.focused          #2aa198 #2aa198 #eee8d5 #268bd2
+client.focused_inactive #073642 #073642 #93a1a1 #073642
+client.unfocused        #073642 #073642 #93a1a1 #073642
+client.urgent           #dc322f #dc322f #eee8d5 #cb4b16
+
 bar {
   status_command i3status
   tray_output primary
+  separator_symbol "•"
+  colors {
+    background #002b36
+    statusline #93a1a1
+    separator #586e75
+    # colorclass       border  backgr. text
+    focused_workspace  #002b36 #2aa198 #eee8d5
+    active_workspace   #002b36 #6c71c4 #eee8d5
+    inactive_workspace #002b36 #073642 #586e75
+    urgent_workspace   #002b36 #dc322f #eee8d5
+    binding_mode       #002b36 #dc322f #eee8d5
+  }
 }
 
 exec --no-startup-id dunst
