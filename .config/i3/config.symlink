@@ -12,6 +12,9 @@ bindsym $mod+Return exec urxvt -e zsh -i -c s
 bindsym $mod+Shift+q kill
 bindsym $mod+k exec pass-autotype
 bindsym $mod+i exec xrandr-invert-colors
+bindsym Print exec "mkdir -p ~/Pictures/ && import -window root ~/Pictures/Screenshot-$(date +'%Y%m%d-%H%M%S').png"
+bindsym $mod+Print exec "mkdir -p ~/Pictures/ && import -window $(xdotool getactivewindow) ~/Pictures/Screenshot-$(date +'%Y%m%d-%H%M%S').png"
+# ; mkdir -p ~/Pictures/ && cd ~/Pictures/ && exec scrot -s"
 
 bindsym XF86AudioMute         exec --no-startup-id amixer -q sset Master toggle
 bindsym XF86AudioRaiseVolume  exec --no-startup-id amixer -q sset Master 3%+ unmute

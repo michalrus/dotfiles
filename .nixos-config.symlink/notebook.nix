@@ -142,7 +142,6 @@ in
     python34Packages.livestreamer
     rxvt_unicode-with-plugins
     screen
-    scrot
     shared_mime_info
     socat
     sox
