@@ -27,8 +27,9 @@
 
     startup_notification = false
 
-    dmenu = dmenu -p dunst:
-    browser = xdg-open
+    # not a very good idea, but dunst doesn’t accept arguments with spaces to hack with /bin/sh -c
+    dmenu = ./.bin/dmenu
+    browser = ./.bin/dmenu_run-bin/firefox
 
 [frame]
     width = 1
@@ -38,7 +39,7 @@
     close = mod4+m
     close_all = mod4+shift+m
     history = mod4+n
-    context = mod4+shift+i
+    context = mod4+u
 
 [urgency_normal]
     background = "#073642"
