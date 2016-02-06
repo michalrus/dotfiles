@@ -104,7 +104,7 @@ bar {
     statusline #93a1a1
     separator #586e75
     # colorclass       border  backgr. text
-    focused_workspace  #002b36 #2aa198 #eee8d5
+    focused_workspace  #002b36 #268bd2 #eee8d5
     active_workspace   #002b36 #6c71c4 #eee8d5
     inactive_workspace #002b36 #073642 #586e75
     urgent_workspace   #002b36 #dc322f #eee8d5
