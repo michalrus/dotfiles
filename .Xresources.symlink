@@ -21,6 +21,7 @@
 *foreground:  S_base1
 *fadeColor:   S_base03
 *cursorColor: S_base1
+*pointerColor: S_base1
 *pointerColorBackground: S_base01
 *pointerColorForeground: S_base1
 
