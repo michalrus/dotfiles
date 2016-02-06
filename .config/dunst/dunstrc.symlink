@@ -32,8 +32,8 @@
     browser = ./.bin/dmenu_run-bin/firefox
 
 [frame]
-    width = 1
-    color = "#586e75"
+    width = 0
+    color = "#657b83"
 
 [shortcuts]
     close = mod4+m
@@ -42,11 +42,6 @@
     context = mod4+u
 
 [urgency_normal]
-    background = "#073642"
-    foreground = "#93a1a1"
-    timeout = 10
-
-[urgency_critical]
-    background = "#dc322f"
-    foreground = "#eee8d5"
-    timeout = 0
+    background = "#586e75"
+    foreground = "#fdf6e3"
+    timeout = 13
