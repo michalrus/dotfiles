@@ -1,4 +1,7 @@
 #!/bin/sh
 
-export PATH="$HOME/.bin/dmenu-bin:$PATH"
-command -p dmenu_run -nb '#073642' -nf '#93a1a1' -sb '#268bd2' -sf '#eee8d5' "$@"
+# PATH hacks… I could use command -vp but that doesn’t work everywhere.
+app="$(command -p sh -c 'command -v dmenu_run')"
+
+export PATH="$HOME/.bin/dmenu_run-bin:$PATH"
+"$app" -nb '#073642' -nf '#93a1a1' -sb '#268bd2' -sf '#eee8d5' "$@"
