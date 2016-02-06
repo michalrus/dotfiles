@@ -76,6 +76,7 @@ in
     awf-gtk
     bc
     cloc
+    compton
     cool-retro-term
     dmenu
     dos2unix
@@ -157,7 +158,6 @@ in
     x264
     xautolock
     xclip
-    xcompmgr
     xdotool
     xorg.xbacklight
     xorg.xev
