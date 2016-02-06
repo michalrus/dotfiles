@@ -1,0 +1,4 @@
+#!/bin/sh
+
+export PATH="$HOME/.bin/dmenu-bin:$PATH"
+command -p dmenu_run -nb '#073642' -nf '#93a1a1' -sb '#268bd2' -sf '#eee8d5' "$@"
