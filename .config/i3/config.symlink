@@ -114,5 +114,6 @@ bar {
 
 exec --no-startup-id dunst
 exec --no-startup-id remote-notifications
+exec --no-startup-id space2ctrl
 exec --no-startup-id compton
 exec --no-startup-id ~/.screenlayout/current

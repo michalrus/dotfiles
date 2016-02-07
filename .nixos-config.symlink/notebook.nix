@@ -156,11 +156,13 @@ in
     wmctrl
     x264
     xautolock
+    xcape
     xclip
     xdotool
     xorg.xbacklight
     xorg.xev
     xorg.xdpyinfo
+    xorg.xmodmap
     xrandr-invert-colors
     xsel
     youtube-dl

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Kill instances of xcape that might be running.
-killall -u m xcape
+pkill -u m xcape
 
 # Map an unused modifier’s keysym to the spacebar’s keycode and make it a
 # control modifier. It needs to be an existing key so that emacs won't
