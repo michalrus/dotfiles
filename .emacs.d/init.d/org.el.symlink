@@ -4,15 +4,23 @@
 
 (setq org-directory "~/Org")
 
-(define-key global-map "\C-ca" 'org-agenda)
+;(define-key global-map "\C-ca" 'org-agenda)
 
 (setq org-default-notes-file (expand-file-name "Inbox.org" org-directory))
 (define-key global-map "\C-cc" 'org-capture)
 
-(setq-default org-log-done t
-              org-support-shift-select t
-              org-catch-invisible-edits 'error
-              org-ctrl-k-protect-subtree 'error)
+(setq-default
+   org-todo-keywords '((sequence "TODO(t!)" "IN-PROGRESS(i!)" "WAITING(w@)" "|" "DONE(d!)" "DELEGATED(g@)" "CANCELED(c@)"))
+   org-log-into-drawer t
+   org-startup-indented t
+   org-log-done nil
+   org-support-shift-select t
+   org-catch-invisible-edits 'error
+   org-ctrl-k-protect-subtree 'error)
+
+;; Unbind S-left/right, because I’m logging every state change!
+(dolist (dir '("left" "right"))
+  (define-key org-mode-map (kbd (format "S-<%s>" dir)) nil))
 
 (setq org-clock-persist 'history)
 (org-clock-persistence-insinuate)
