@@ -26,10 +26,23 @@
 (org-clock-persistence-insinuate)
 
 (defun org-archive-done-tasks-in-file ()
-  "Archives all DONE tasks in the current Org file"
+  "Archives all done tasks in the current Org file to their “Archive” siblings"
   (interactive)
   (org-map-entries
    (lambda ()
-     (org-archive-subtree)
-     (setq org-map-continue-from (outline-previous-heading)))
-   "/DONE" 'file))
+     (cond ((string-match-p ":ARCHIVE:" (upcase (or (org-entry-get (point) "ALLTAGS") "")))
+            ;; Sometimes we’re left with (point) at an :ARCHIVE: after
+            ;; (org-archive-to-archive-sibling) returns and this slips
+            ;; through the 'archive filter of (org-map-entries), and
+            ;; results in an infinite recursion, so… yeah. Let’s
+            ;; recheck manually and skip the archived subtree.
+            (setq org-map-continue-from (+ 1 (save-excursion (org-end-of-subtree t)))))
+           ((org-entry-is-done-p)
+            (let ((point-was-at (point)))
+              (org-archive-to-archive-sibling)
+              ;; Continue mapping at where the archived entry was,
+              ;; because the next one (its ex-sibling) might need
+              ;; archiving, too.
+              (setq org-map-continue-from point-was-at)))))
+   t 'file 'archive))
+(define-key org-mode-map "\C-c\C-a" 'org-archive-done-tasks-in-file)
