@@ -86,6 +86,7 @@ in
     exiv2
     file
     gcc
+    ghc
     git
     gnome.gnome_icon_theme
     gnome3.dconf   # so that GnuCash prefs can be changed
