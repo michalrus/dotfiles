@@ -75,6 +75,7 @@ in
     arandr
     awf-gtk
     bc
+    calibre
     cloc
     compton
     cool-retro-term
