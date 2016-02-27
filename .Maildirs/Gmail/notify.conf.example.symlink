@@ -1,0 +1,8 @@
+# Copy this file to ./notify.conf and create a Gmail-API-enabled app
+# in Google Developers Console, and insert its client_id and
+# client_secret here. After you log in (by running ./notify), another
+# [runtime] section with login tokens will be added below.
+
+[google-api]
+client_id=____________________________________________.apps.googleusercontent.com
+client_secret=________________________

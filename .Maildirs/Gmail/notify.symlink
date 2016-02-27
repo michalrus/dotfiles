@@ -1,0 +1,60 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use utf8;
+
+use Config::Tiny;
+use Cwd 'abs_path';
+use Data::Dumper;
+use FindBin qw($Bin $Script);
+use JSON;
+use LWP::UserAgent;
+use URI;
+
+my $maildir = $Bin;
+
+my $config;
+sub config_read  { $config = Config::Tiny->read($Script . '.conf', 'utf8'); }
+sub config_write { $config->write(              $Script . '.conf', 'utf8'); }
+config_read;
+
+my $ua = LWP::UserAgent->new(ssl_opts => { verify_hostname => 1 });
+
+sub access_token {
+    my ($rt) = $$config{runtime};
+    my ($ga) = $$config{'google-api'};
+    if (defined $rt->{expires_on} && time < $rt->{expires_on}) { # access_token still valid
+        return $rt->{access_token};
+    } elsif (defined $rt->{refresh_token}) { # refreshing access_token
+        my $token_req = decode_json($ua->post('https://www.googleapis.com/oauth2/v4/token', {
+            'refresh_token' => $rt->{refresh_token},
+            'client_id' => $ga->{client_id}, 'client_secret' => $ga->{client_secret},
+            'grant_type' => 'refresh_token' })->content);
+        $rt->{access_token} = $token_req->{access_token};
+        $rt->{expires_on} = time + $token_req->{expires_in};
+        config_write;
+        return $rt->{access_token};
+    } else { # full auth
+        my $uri = URI->new('https://accounts.google.com/o/oauth2/v2/auth');
+        $uri->query_form({
+            'response_type' => 'code',
+            'client_id' => $ga->{client_id},
+            'redirect_uri' => 'urn:ietf:wg:oauth:2.0:oob',
+            'scope' => 'https://www.googleapis.com/auth/gmail.readonly'});
+        print('Go to ' . $uri->as_string . " and paste the code here:\n");
+        my $auth_code = <>; chomp $auth_code;
+        my $token_req = decode_json($ua->post('https://www.googleapis.com/oauth2/v4/token', {
+            'code' => $auth_code,
+            'client_id' => $ga->{client_id}, 'client_secret' => $ga->{client_secret},
+            'redirect_uri' => 'urn:ietf:wg:oauth:2.0:oob',
+            'grant_type' => 'authorization_code' })->content);
+        $rt->{access_token} = $token_req->{access_token};
+        $rt->{expires_on} = time + $token_req->{expires_in};
+        $rt->{refresh_token} = $token_req->{refresh_token};
+        config_write;
+        return $rt->{access_token};
+    }
+}
+
+print(access_token);
