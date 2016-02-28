@@ -10,9 +10,13 @@
       message-auto-save-directory (expand-file-name "drafts/new/" message-directory)
       message-kill-buffer-on-exit t)
 
-;; use `format=flowed', otherwise messages look weird on mobile devices
-;; however this still behaves weirdly o_O I dunno when yet.
-(add-hook 'message-setup-hook (lambda () (setq use-hard-newlines t)))
+;; Okay. I’m fed up with message-mode’s format=flowed. Commenting this
+;; out. Sorry, small-display users. What I see *has* to be what I
+;; get. I stay open-minded, though. :-)
+;;
+;; ;; use `format=flowed', otherwise messages look weird on mobile devices
+;; ;; however this still behaves weirdly o_O I dunno when yet.
+;; (add-hook 'message-setup-hook (lambda () (use-hard-newlines t 'guess)))
 
 ;; fix citation practices of some clients
 (defun message-fix-citation-marks ()
