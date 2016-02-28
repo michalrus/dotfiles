@@ -78,7 +78,7 @@ my $thr_monitor_remote = threads->create(sub {
         $rt->{last_sync} = 0;
         config_write;
     }
-    for (;;) {
+    for (;;) { eval { # ignore errors any in each iteration; just print them and reiterate
         print "asking for /history...\n";
         my $new_history = [];
         for (;;) { # slurp all available data
@@ -139,8 +139,7 @@ my $thr_monitor_remote = threads->create(sub {
             }
             $q_inbox->enqueue($notificationsFull);
         }
-        sleep(3);
-    }
+    } or do { print STDERR $@; }; sleep(3); }
 });
 
 my $thr_sync_inbox = threads->create(sub {
