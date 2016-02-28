@@ -10,6 +10,7 @@ use Thread::Queue;
 use Config::Tiny;
 use Cwd 'abs_path';
 use Data::Dumper;
+use File::Temp qw(tempfile);
 use FindBin qw($Bin $Script);
 use IPC::Open3;
 use JSON;
@@ -154,9 +155,56 @@ sub mu_server_pids {
     return @pids;
 }
 
+sub mbsync_config {
+    my ($ga) = $$config{'google-api'};
+    local *channel = sub {
+        my ($loc, $remote) = @_;
+        return qq{
+Channel channel-$loc
+Master :remote:"$remote"
+Slave :local:$loc
+Create Slave
+Expunge Both
+SyncState *
+};
+    };
+    my $contents = qq{
+IMAPAccount gmail
+Host imap.gmail.com
+User $ga->{imap_user}
+Pass $ga->{imap_pass}
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore remote
+Account gmail
+
+MaildirStore local
+AltMap yes
+Path $maildir/
+Inbox $maildir/inbox
+
+${\(channel("inbox", "INBOX"))}
+${\(channel("spam", "[Gmail]/Spam"))}
+${\(channel("trash", "[Gmail]/Trash"))}
+${\(channel("drafts", "[Gmail]/Drafts"))}
+${\(channel("all-mail", "[Gmail]/All Mail"))}
+${\(channel("pre-spam", "Pre-spam"))}
+};
+    my ($fh, $fname) = tempfile();
+    chmod 0600, $fname;
+    print $fh $contents;
+    close($fh);
+    return $fname;
+}
+
 my $thr_sync_inbox = threads->create(sub {
     while (defined (my $msgs = $q_inbox->dequeue())) {
         print(Dumper($msgs));
+        # Synchronize!
+        my $mbsyncrc = mbsync_config;
+        system('mbsync', '-c', $mbsyncrc, 'channel-inbox', 'channel-drafts');
+        unlink $mbsyncrc;
         # Kill mu-server potentially run by mu4e in Emacs and re-index the messages.
         kill 'TERM', mu_server_pids; sleep 1; system('sleep', '0.1'); kill 'KILL', mu_server_pids;
         system('mu', 'index', '--muhome', $muhome, '--maildir', $maildir);
