@@ -203,7 +203,7 @@ my $thr_sync_inbox = threads->create(sub {
         print(Dumper($msgs));
         # Synchronize!
         my $mbsyncrc = mbsync_config;
-        system('mbsync', '-c', $mbsyncrc, 'channel-inbox', 'channel-drafts');
+        system('timeout', '--signal=TERM', '--kill-after=10s', '180s', 'mbsync', '-c', $mbsyncrc, 'channel-inbox', 'channel-drafts');
         unlink $mbsyncrc;
         # Kill mu-server potentially run by mu4e in Emacs and re-index the messages.
         kill 'TERM', mu_server_pids; sleep 1; system('sleep', '0.1'); kill 'KILL', mu_server_pids;
