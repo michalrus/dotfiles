@@ -141,6 +141,9 @@ my $thr_monitor_remote = threads->create(sub {
 my $thr_sync_inbox = threads->create(sub {
     while (defined (my $msgs = $q_inbox->dequeue())) {
         print(Dumper($msgs));
+        foreach my $msg (@$msgs) {
+            system('notify-send', "From:\t" . $msg->{from}, "Subject:\t" . $msg->{subject} . "\n\n" . $msg->{snippet});
+        }
     }
 });
 
