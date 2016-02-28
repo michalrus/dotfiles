@@ -11,11 +11,15 @@ use Config::Tiny;
 use Cwd 'abs_path';
 use Data::Dumper;
 use FindBin qw($Bin $Script);
+use IPC::Open3;
 use JSON;
 use LWP::UserAgent;
 use URI;
 
+binmode(STDOUT, ":utf8"); binmode(STDERR, ":utf8"); binmode(STDIN,  ":utf8");
+
 my $maildir = $Bin;
+my $muhome = $maildir . '/.mu';
 
 my $config;
 sub config_read  { $config = Config::Tiny->read($Script . '.conf', 'utf8'); }
@@ -142,9 +146,21 @@ my $thr_monitor_remote = threads->create(sub {
     } or do { print STDERR $@; }; sleep(3); }
 });
 
+sub mu_server_pids {
+    my @command = ('lsof', '-t', $muhome . '/xapian/flintlock');
+    my $pid = open3(*CIN, *COUT, *CERR, @command);
+    chomp(my @pids = <COUT>);
+    close CIN; close COUT; close CERR;
+    return @pids;
+}
+
 my $thr_sync_inbox = threads->create(sub {
     while (defined (my $msgs = $q_inbox->dequeue())) {
         print(Dumper($msgs));
+        # Kill mu-server potentially run by mu4e in Emacs and re-index the messages.
+        kill 'TERM', mu_server_pids; sleep 1; system('sleep', '0.1'); kill 'KILL', mu_server_pids;
+        system('mu', 'index', '--muhome', $muhome, '--maildir', $maildir);
+        # Notify about the synced messages.
         local *es = sub {
             my ($s) = @_;
             $s =~ s/</&lt;/g;
