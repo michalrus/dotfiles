@@ -121,8 +121,13 @@ my $thr_monitor_remote = threads->create(sub {
             check_touched('messagesDeleted', 1, -1);
         }
         if ($some_touched) {
+            local *uniq = sub {
+                my %seen;
+                grep !$seen{$_}++, @_;
+            };
+            @$notifications = uniq(@$notifications);
             my $notificationsFull = [];
-            foreach my $id (@{ $notifications }) {
+            foreach my $id (@$notifications) {
                 my $fmsg = ask('messages/' . $id, { 'format' => 'metadata' });
                 my $snippet = $fmsg->{snippet};
                 my $from = '?'; my $subject = '?';
