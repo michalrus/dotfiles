@@ -136,7 +136,10 @@ in
     openjdk8
     pass
     pciutils
+    perlPackages.ConfigTiny
+    perlPackages.JSON
     perlPackages.LWP
+    perlPackages.LWPProtocolHttps
     pinentry
     pkgs.firefoxWrapper
     poppler_utils
