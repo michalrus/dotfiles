@@ -4,6 +4,9 @@ use strict;
 use warnings;
 use utf8;
 
+use threads;
+use Thread::Queue;
+
 use Config::Tiny;
 use Cwd 'abs_path';
 use Data::Dumper;
@@ -57,4 +60,89 @@ sub access_token {
     }
 }
 
-print(access_token);
+my $q_inbox = Thread::Queue->new();
+
+my $thr_monitor_remote = threads->create(sub {
+    my ($rt) = $$config{runtime};
+    local *ask = sub {
+        my ($path, $query) = @_;
+        my $uri = URI->new('https://www.googleapis.com/gmail/v1/users/me/' . $path);
+        $uri->query_form($query);
+        return decode_json($ua->get($uri, 'GData-Version' => '3.0', 'Authorization' => 'Bearer ' . access_token)->content);
+    };
+    unless (defined $rt->{history_id}) {
+        $rt->{history_id} = ask('threads', { 'maxResults' => 1, 'includeSpamTrash' => 'true' })->{threads}[0]->{historyId};;
+        config_write;
+    }
+    unless (defined $rt->{last_sync}) {
+        $rt->{last_sync} = 0;
+        config_write;
+    }
+    for (;;) {
+        print "asking for /history...\n";
+        my $new_history = [];
+        for (;;) { # slurp all available data
+            my $resp = ask('history', { 'maxResults' => 100, 'startHistoryId' => $rt->{history_id} });
+            $rt->{history_id} = $resp->{historyId};
+            last unless (defined $resp->{history});
+            push @$new_history, @{ $resp->{history} };
+        }
+        config_write;
+        my $some_touched = 0;
+        my $notifications = [];
+        foreach my $entry (@{ $new_history }) {
+            local *labels_match = sub {
+                my ($ids) = @_;
+                return (defined $ids && grep(/^(INBOX|DRAFT)$/, @{ $ids }));
+            };
+            local *handle_msg = sub {
+                my ($labels, $id, $notify) = @_;
+                if (labels_match($labels)) {
+                    $some_touched = 1;
+                    if ($notify == 1) {
+                        push @$notifications, $id;
+                    } elsif ($notify == -1) {
+                        # don't show notifications for new messages that are already deleted
+                        @$notifications = grep { !($_ eq $id) } @$notifications;
+                    }
+                }
+            };
+            local *check_touched = sub {
+                my ($key, $go_deeper, $notify) = @_;
+                if (defined $entry->{$key}) {
+                    foreach my $msg (@{ $entry->{$key} }) {
+                        $msg = $msg->{message} if $go_deeper;
+                        handle_msg($msg->{labelIds}, $msg->{id}, $notify);
+                    }
+                }
+            };
+            check_touched('messages',        0,  0);
+            check_touched('messagesAdded',   1,  1);
+            check_touched('messagesDeleted', 1, -1);
+        }
+        if ($some_touched) {
+            my $notificationsFull = [];
+            foreach my $id (@{ $notifications }) {
+                my $fmsg = ask('messages/' . $id, { 'format' => 'metadata' });
+                my $snippet = $fmsg->{snippet};
+                my $from = '?'; my $subject = '?';
+                foreach my $h (@{ $fmsg->{payload}->{headers} }) {
+                    $from    = $h->{value} if $h->{name} eq 'From';
+                    $subject = $h->{value} if $h->{name} eq 'Subject';
+                }
+                push @$notificationsFull, { 'from' => $from, 'subject' => $subject, 'snippet' => $snippet };
+            }
+            $q_inbox->enqueue($notificationsFull);
+        }
+        sleep(3);
+    }
+});
+
+my $thr_sync_inbox = threads->create(sub {
+    while (defined (my $msgs = $q_inbox->dequeue())) {
+        print(Dumper($msgs));
+    }
+});
+
+$thr_monitor_remote->join();
+$thr_sync_inbox->join();
