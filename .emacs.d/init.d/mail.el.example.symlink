@@ -111,3 +111,7 @@
   :config
   (bbdb-initialize 'gnus 'message)
   (bbdb-insinuate-message))
+
+(let ((nixos-mu4e-path "/run/current-system/sw/share/emacs/site-lisp/mu4e/"))
+  (when (file-exists-p nixos-mu4e-path) (add-to-list 'load-path nixos-mu4e-path)))
+
