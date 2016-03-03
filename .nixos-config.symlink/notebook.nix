@@ -159,6 +159,7 @@ in
     which
     whois
     wmctrl
+    wrk
     x264
     xautolock
     xcape
