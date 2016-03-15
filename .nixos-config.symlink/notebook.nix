@@ -89,6 +89,7 @@ in
     gcc
     ghc
     git
+    gitstats
     gnome.gnome_icon_theme
     gnome3.dconf   # so that GnuCash prefs can be changed
     gnome3.adwaita-icon-theme
@@ -158,6 +159,7 @@ in
     wget
     which
     whois
+    wireshark
     wmctrl
     wrk
     x264
