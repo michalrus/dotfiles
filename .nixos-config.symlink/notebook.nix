@@ -135,6 +135,7 @@ in
     normalize
     oathToolkit
     openjdk8
+    p7zip
     pass
     pciutils
     perlPackages.ConfigTiny
