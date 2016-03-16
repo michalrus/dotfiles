@@ -1,0 +1,41 @@
+#!/bin/sh
+
+set -o noclobber
+set -o nounset
+set -o errexit
+
+if [ $# -lt 4 ] ; then
+    echo >&2 "Usage: $0 <stats-output-dir> <mailmap> <gitproject1>[ <gitproject2>[ ...]]"
+    exit 1
+fi
+
+original_dir="$(pwd)"
+out="$(mktemp -d)"
+stats="$(readlink -f "$1")" ; shift
+mailmap="$(readlink -f "$1")" ; shift
+
+[ ! -e "$stats" ] || { echo 2>&1 "$stats exists, exiting." ; exit 1 ; }
+
+cd "$out"
+git init
+git commit --allow-empty -m 'Initialize'
+ln -sf "$mailmap" .mailmap
+
+while [ $# -gt 0 ] ; do
+    remote_dir="$(cd "$original_dir" ; readlink -f "$1")" ; shift
+    remote_branch="$(echo "$remote_dir" | cut -s -d: -f2)"
+    remote_dir="$(echo "$remote_dir" | cut -d: -f1)"
+    [ -n "$remote_branch" ] || remote_branch='master'
+    remote="$(head -c 21 /dev/urandom | md5sum - | cut -d' ' -f1)"
+    git remote add "$remote" "$remote_dir"
+    git fetch "$remote"
+    git subtree add --prefix="$remote"/ "$remote" "$remote_branch"
+done
+
+cd "$original_dir"
+gitstats -c 'linear_linestats=0' "$out" "$stats"
+
+cd "$out"
+git log --format='%aN <%aE>' | sort -u
+
+rm -rf "$out"
