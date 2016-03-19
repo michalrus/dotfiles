@@ -164,6 +164,8 @@ in
     wget
     which
     whois
+    wine
+    winetricks
     wireshark
     wmctrl
     wrk
