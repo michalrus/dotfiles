@@ -40,6 +40,10 @@ in
       enable = true;
       allowPing = true;
       allowedTCPPorts = [ ];
+      extraCommands = ''
+        iptables  -A OUTPUT -m owner --gid-owner nonet -j REJECT --reject-with icmp-port-unreachable
+        ip6tables -A OUTPUT -m owner --gid-owner nonet -j REJECT --reject-with icmp6-port-unreachable
+        '';
     };
     wireless.enable = true;
   };
@@ -295,8 +299,10 @@ in
       isNormalUser = true;
       uid = 31337;
       description = "Michal Rus";
-      extraGroups = [ "wheel" "scanner" "networkmanager" "vboxusers" ];
+      extraGroups = [ "wheel" "nonet" "scanner" "networkmanager" "vboxusers" ];
     };
+
+    extraGroups.nonet = {};
   };
 
   security = {
