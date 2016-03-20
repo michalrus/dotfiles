@@ -164,6 +164,7 @@ in
     transmission_gtk
     unzip
     usbutils
+    utox
     wget
     which
     whois
