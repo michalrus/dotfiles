@@ -60,6 +60,7 @@ in
 
   hardware = {
     sane.enable = true;
+    opengl.driSupport32Bit = true; # for Wine
   };
 
   nixpkgs.config = {
