@@ -32,6 +32,8 @@ in
     tmpOnTmpfs = true;
   };
 
+  powerManagement.cpuFreqGovernor = "performance";
+
   networking = rec {
     hostName = "nixos";
     extraHosts = "127.0.0.1 ${hostName}";
