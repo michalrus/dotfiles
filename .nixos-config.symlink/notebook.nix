@@ -32,7 +32,14 @@ in
     tmpOnTmpfs = true;
   };
 
-  powerManagement.cpuFreqGovernor = "performance";
+  powerManagement = {
+    cpuFreqGovernor = "performance";
+    powerDownCommands = ''
+      ${pkgs.procps}/bin/pgrep ssh | while IFS= read -r pid ; do
+        [ "$(readlink "/proc/$pid/exe")" = "${pkgs.openssh}/bin/ssh" ] && kill "$pid"
+      done
+      '';
+  };
 
   networking = rec {
     hostName = "nixos";
