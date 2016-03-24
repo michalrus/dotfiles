@@ -273,7 +273,7 @@ in
     script = ''
       ls /dev/input/by-path | grep kbd | while IFS= read -r inp ; do
         rinp="$(readlink -f "/dev/input/by-path/$inp")"
-        logkeys --start --device="$rinp" --output=/var/log/logkeys-test.log --keymap="${logkeysMapPl}"
+        logkeys --start --device="$rinp" --output=/var/log/logkeys.log --keymap="${logkeysMapPl}"
         # why is the following not configurable?!
         rm /var/run/logkeys.pid
       done
