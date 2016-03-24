@@ -163,6 +163,7 @@ in
     stdman
     transmission_gtk
     unzip
+    urlwatch
     usbutils
     utox
     wget
