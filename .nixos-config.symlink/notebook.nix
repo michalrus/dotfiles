@@ -39,6 +39,9 @@ in
         [ "$(readlink "/proc/$pid/exe")" = "${pkgs.openssh}/bin/ssh" ] && kill "$pid"
       done
       '';
+    powerUpCommands = ''
+      ${pkgs.eject}/bin/eject -i on /dev/sr0 # Why isn’t this working‽ How to block the CD eject button?
+      '';
   };
 
   networking = rec {
