@@ -77,6 +77,15 @@ in
     allowBroken = true;
     packageOverrides = pkgs: {
       awf-gtk    = pkgs.callPackage ./pkgs/awf-gtk.nix {};
+      mtr        = pkgs.stdenv.lib.overrideDerivation pkgs.mtr (oldAttrs : {
+                     src = pkgs.fetchgit {
+                       url = https://github.com/traviscross/mtr.git;
+                       rev = "faa1bd87e4325b604223aaa8ad5517872ccb7336";
+                       sha256 = "1vvnmzbd5jf9n8wk1g58f7gxfq1sh8ki0w6hj7z9lq9cs59413zb";
+                     };
+                     buildInputs = [ pkgs.automake ];
+                     preConfigure = "./bootstrap.sh";
+                   });
       mu         = pkgs.stdenv.lib.overrideDerivation pkgs.mu (oldAttrs : {
                      patches = [ ./pkgs/mu-x-smssync.patch ];
                    });
