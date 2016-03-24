@@ -146,6 +146,7 @@ in
     pass
     pciutils
     perlPackages.ConfigTiny
+    perlPackages.DateCalc
     perlPackages.JSON
     perlPackages.LWP
     perlPackages.LWPProtocolHttps
