@@ -92,6 +92,7 @@ in
       st = pkgs.stdenv.lib.overrideDerivation pkgs.st (oldAttrs : {
         patches = [
           (pkgs.fetchpatch { url = "http://st.suckless.org/patches/st-0.6-hidecursor.diff"; sha256 = "1zac3cqi1jkdy6f6g709xdvws1v2k56j2nx95jaakxm795z7k77m"; })
+          (pkgs.fetchpatch { url = "http://st.suckless.org/patches/st-0.6-externalpipe.diff"; sha256 = "1q4w4c99qaxz60qjw14fwzc5lzkqkj9wqcdfzvpyz4vx5gxjnhyv"; })
           ./pkgs/st-shortcuts.patch
           ./pkgs/st-escape-seqs.patch
           ./pkgs/st-solarized-dark.patch
