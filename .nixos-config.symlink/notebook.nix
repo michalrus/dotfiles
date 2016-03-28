@@ -89,6 +89,17 @@ in
       mu         = pkgs.stdenv.lib.overrideDerivation pkgs.mu (oldAttrs : {
                      patches = [ ./pkgs/mu-x-smssync.patch ];
                    });
+      st = pkgs.stdenv.lib.overrideDerivation pkgs.st (oldAttrs : {
+        patches = [
+          (pkgs.fetchpatch { url = "http://st.suckless.org/patches/st-0.6-hidecursor.diff"; sha256 = "1zac3cqi1jkdy6f6g709xdvws1v2k56j2nx95jaakxm795z7k77m"; })
+          ./pkgs/st-shortcuts.patch
+          ./pkgs/st-escape-seqs.patch
+          ./pkgs/st-solarized-dark.patch
+        ];
+        postPatch = ''
+          substituteInPlace config.def.h --replace "Liberation Mono:pixelsize=12:antialias=false:autohint=false" "Monospace:pixelsize=15:antialias=true:autohint=true"
+          '';
+      });
       # take some of the packages from nixpkgs/master definitions
       #youtube-dl = pkgs.callPackage ./pkgs/youtube-dl-master.nix {};
     };
@@ -173,11 +184,11 @@ in
     poppler_utils
     posix_man_pages
     python34Packages.livestreamer
-    rxvt_unicode-with-plugins
     screen
     shared_mime_info
     socat
     sox
+    st
     stdmanpages
     stdman
     transmission_gtk

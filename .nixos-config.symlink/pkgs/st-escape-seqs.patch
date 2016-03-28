@@ -1,0 +1,32 @@
+diff --git a/config.def.h b/config.def.h
+index 64e75b8..dea5661 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -191,6 +191,7 @@ static Key key[] = {
+ 	{ XK_KP_Right,      XK_ANY_MOD,     "\033[C",        0,   -1,    0},
+ 	{ XK_KP_Right,      XK_ANY_MOD,     "\033OC",        0,   +1,    0},
+ 	{ XK_KP_Prior,      ShiftMask,      "\033[5;2~",     0,    0,    0},
++	{ XK_KP_Prior,      Mod1Mask,       "\033[5;3~",     0,    0,    0},
+ 	{ XK_KP_Prior,      XK_ANY_MOD,     "\033[5~",       0,    0,    0},
+ 	{ XK_KP_Begin,      XK_ANY_MOD,     "\033[E",        0,    0,    0},
+ 	{ XK_KP_End,        ControlMask,    "\033[J",       -1,    0,    0},
+@@ -199,6 +200,7 @@ static Key key[] = {
+ 	{ XK_KP_End,        ShiftMask,      "\033[1;2F",    +1,    0,    0},
+ 	{ XK_KP_End,        XK_ANY_MOD,     "\033[4~",       0,    0,    0},
+ 	{ XK_KP_Next,       ShiftMask,      "\033[6;2~",     0,    0,    0},
++	{ XK_KP_Next,       Mod1Mask,       "\033[6;3~",     0,    0,    0},
+ 	{ XK_KP_Next,       XK_ANY_MOD,     "\033[6~",       0,    0,    0},
+ 	{ XK_KP_Insert,     ShiftMask,      "\033[2;2~",    +1,    0,    0},
+ 	{ XK_KP_Insert,     ShiftMask,      "\033[4l",      -1,    0,    0},
+@@ -279,9 +281,11 @@ static Key key[] = {
+ 	{ XK_End,           XK_ANY_MOD,     "\033[4~",       0,    0,    0},
+ 	{ XK_Prior,         ControlMask,    "\033[5;5~",     0,    0,    0},
+ 	{ XK_Prior,         ShiftMask,      "\033[5;2~",     0,    0,    0},
++	{ XK_Prior,         Mod1Mask,       "\033[5;3~",     0,    0,    0},
+ 	{ XK_Prior,         XK_ANY_MOD,     "\033[5~",       0,    0,    0},
+ 	{ XK_Next,          ControlMask,    "\033[6;5~",     0,    0,    0},
+ 	{ XK_Next,          ShiftMask,      "\033[6;2~",     0,    0,    0},
++	{ XK_Next,          Mod1Mask,       "\033[6;3~",     0,    0,    0},
+ 	{ XK_Next,          XK_ANY_MOD,     "\033[6~",       0,    0,    0},
+ 	{ XK_F1,            XK_NO_MOD,      "\033OP" ,       0,    0,    0},
+ 	{ XK_F1, /* F13 */  ShiftMask,      "\033[1;2P",     0,    0,    0},
