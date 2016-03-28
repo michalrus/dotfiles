@@ -37,6 +37,7 @@
 (load-init-part "terminal.el")
 (load-init-part "vc.el")
 (load-init-part "org.el")
+(load-init-part "eww.el")
 (load-init-part "latex.el")
 (load-init-part "music.el")
 (load-init-part "shell-scripts.el")

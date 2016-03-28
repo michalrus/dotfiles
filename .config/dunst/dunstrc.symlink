@@ -29,7 +29,7 @@
 
     # not a very good idea, but dunst doesn’t accept arguments with spaces to hack with /bin/sh -c
     dmenu = ./.bin/dmenu
-    browser = ./.bin/dmenu_run-bin/firefox
+    browser = xdg-open
 
 [frame]
     width = 0

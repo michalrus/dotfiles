@@ -1,0 +1,4 @@
+;; -*- mode: emacs-lisp -*-
+
+;; When running firefox, use the “default” profile.
+(setq browse-url-firefox-arguments '("-P" "default"))
