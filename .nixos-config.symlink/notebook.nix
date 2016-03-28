@@ -337,10 +337,11 @@ in
       isNormalUser = true;
       uid = 31337;
       description = "Michal Rus";
-      extraGroups = [ "wheel" "nonet" "scanner" "networkmanager" "vboxusers" ];
+      extraGroups = [ "wheel" "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" ];
     };
 
     extraGroups.nonet = {};
+    extraGroups.wireshark = {};
   };
 
   security = {
@@ -349,6 +350,16 @@ in
       %users      ALL=(ALL:ALL) NOPASSWD: ${pkgs.systemd}/bin/systemctl start lock-x11-displays
     '';
     setuidPrograms = [ "mtr" ];
+    setuidOwners = [
+      {
+        program = "dumpcap";
+        owner = "root";
+        group = "wireshark";
+        setuid = true;
+        setgid = false;
+        permissions = "u+rx,g+x";
+      }
+    ];
   };
 
 }
