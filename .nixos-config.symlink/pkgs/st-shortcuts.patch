@@ -27,7 +27,7 @@ index 64e75b8..58b3c92 100644
 +	{ ShiftMask,            XK_Insert,      clippaste,      {.i =  0} },
 +	{ ControlMask,          XK_Insert,      clipcopy,       {.i =  0} },
  	{ MODKEY,               XK_Num_Lock,    numlock,        {.i =  0} },
-+	{ MODKEY,               XK_u,           externalpipe,   { .v = "grep -aPio 'https?://\\S+' | dmenu -l 10 | xargs -r xdg-open" } },
++	{ MODKEY,               XK_u,           externalpipe,   { .v = "grep -aPio 'https?://\\S+' | tac | dmenu -l 10 | xargs -r xdg-open" } },
  };
 
  /*
