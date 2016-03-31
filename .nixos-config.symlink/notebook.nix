@@ -112,6 +112,7 @@ in
     arandr
     awf-gtk
     bc
+    calc
     calibre
     cloc
     compton
