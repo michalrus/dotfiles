@@ -1,0 +1,11 @@
+#!/bin/sh
+
+[ "$#" -ge 2 ] || { echo >&2 "Usage: $0 <env-def-to-kill-by> <program>[ <program-arg1> [ ...]]" ; exit 1 ; }
+
+envdef="$1" ; shift
+
+"$@"
+
+pgrep -u "$UID" | while IFS= read -r pid ; do
+    cat /proc/"$pid"/environ | tr '\0' '\n' | grep -qFx "$envdef" && kill -TERM "$pid"
+done
