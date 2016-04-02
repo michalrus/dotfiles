@@ -4,15 +4,14 @@ set -o noclobber
 set -o errexit
 set -o nounset
 
-command -v screen >/dev/null || { echo 'echo >&1 "screen: command not found" ; return 1' ; exit ; }
+command -v screen >/dev/null || { echo 'echo >&2 "screen: command not found" ; return 1' ; exit ; }
 
-[ -z "${STY:-}" ] || { echo 'echo >&1 "Already inside a screen?" ; return 1' ; exit ; }
+[ -z "${STY:-}" ] || { echo 'echo >&2 "Already inside a screen?" ; return 1' ; exit ; }
 
 num="$(screen -ls | grep -E '^\s+[^\s]' | wc -l)"
 
-[ "$num" -eq "0" ] && { echo 'exec sh -c "screen ; clear ; exit"' ; exit ; }
+[ "$num" -eq "0" ] && { echo 'unset DESKTOP_SESSION DESKTOP_STARTUP_ID DBUS_SESSION_BUS_ADDRESS GDMSESSION WINDOW WINDOWID XDG_SEAT XDG_SEAT_PATH XDG_SESSION_DESKTOP XDG_SESSION_ID XDG_SESSION_PATH XDG_SESSION_TYPE XDG_VTNR XDG_GREETER_DATA_DIR ; exec screen' ; exit ; }
 
-[ "$num" -ne "1" ] && { echo 'echo >&1 "More than one screen session exists." ; return 1' ; exit ; }
+[ "$num" -ne "1" ] && { echo 'echo >&2 "More than one screen session exists." ; return 1' ; exit ; }
 
-# use `exec sh -c`, as it will consume *considerably* less memory than zsh :-)
-echo 'exec sh -c "screen -x ; clear ; exit"'
+echo 'exec screen -x'
