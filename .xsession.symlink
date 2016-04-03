@@ -1,4 +1,7 @@
+gpg-connect-agent /bye
+
+feh --bg-scale "$HOME/.wallpaper.png" || true
+
 # make sure that ~/.shell/login will be read
 # (for some reason doing `. ~/.shell/login` here doesn’t set the PATH)
-feh --bg-scale "$HOME/.wallpaper.png" || true
 exec $SHELL --login -c "exec env-killing-wrapper DBUS_SESSION_BUS_ADDRESS='$DBUS_SESSION_BUS_ADDRESS' i3"
