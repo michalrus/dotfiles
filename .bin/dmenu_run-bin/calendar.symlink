@@ -1,5 +1,0 @@
-#!/bin/sh
-
-# I can’t use exec with command -p, so & has to do…
-
-command -p firefox -P calendar "$@" &
