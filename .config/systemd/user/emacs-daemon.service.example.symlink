@@ -9,7 +9,7 @@ Description=Emacs: the extensible, self-documenting text editor
 
 [Service]
 Type=forking
-ExecStart=/bin/sh -c '. /etc/profile ; . "%h/.profile" ; rm "%h/.emacs.d/.emacs.desktop.lock" || true ; exec emacs --daemon'
+ExecStart=%s --login -c 'rm "%h/.emacs.d/.emacs.desktop.lock" || true ; exec "$(sh -c "command -vp emacs")" --daemon'
 ExecStop=/bin/sh -c 'emacsclient --eval "(kill-emacs)"'
 Restart=always
 
