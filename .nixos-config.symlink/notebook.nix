@@ -111,6 +111,10 @@ in
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
     arandr
+    aspell
+    aspellDicts.en
+    aspellDicts.pl
+    aspellDicts.de
     awf-gtk
     bc
     calc
