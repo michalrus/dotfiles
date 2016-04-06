@@ -157,6 +157,7 @@ in
     ffmpeg
     ffmpegthumbnailer
     gnumake
+    gocr
     libjpeg
     libmtp
     libnotify
@@ -198,6 +199,7 @@ in
     st
     stdmanpages
     stdman
+    tesseract
     transmission_gtk
     unzip
     urlwatch
