@@ -77,6 +77,7 @@ in
     allowBroken = true;
     packageOverrides = pkgs: {
       awf-gtk    = pkgs.callPackage ./pkgs/awf-gtk.nix {};
+      imgurbash2 = pkgs.callPackage ./pkgs/imgurbash2.nix {};
       mtr        = pkgs.stdenv.lib.overrideDerivation pkgs.mtr (oldAttrs : {
                      src = pkgs.fetchgit {
                        url = https://github.com/traviscross/mtr.git;
@@ -147,7 +148,7 @@ in
     i3lock
     i3status
     imagemagick
-    imgurbash
+    imgurbash2
     indent
     isync
     jhead
