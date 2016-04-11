@@ -75,7 +75,7 @@ my $thr_monitor_remote = threads->create(sub {
         $uri->query_form($query);
         return decode_json($ua->get($uri, 'GData-Version' => '3.0', 'Authorization' => 'Bearer ' . access_token)->content);
     };
-    unless (defined $rt->{history_id}) {
+    if (!(defined $rt->{history_id}) || $rt->{history_id} eq '') {
         $rt->{history_id} = ask('threads', { 'maxResults' => 1, 'includeSpamTrash' => 'true' })->{threads}[0]->{historyId};;
         config_write;
     }
@@ -86,7 +86,7 @@ my $thr_monitor_remote = threads->create(sub {
     for (;;) { eval { # ignore errors any in each iteration; just print them and reiterate
         print "asking for /history...\n";
         my $new_history = [];
-        for (;;) { # slurp all available data
+        for (;;) { # slurp all available data (not to show notifications about deleted messages)
             my $resp = ask('history', { 'maxResults' => 100, 'startHistoryId' => $rt->{history_id} });
             $rt->{history_id} = $resp->{historyId};
             last unless (defined $resp->{history});
@@ -116,14 +116,21 @@ my $thr_monitor_remote = threads->create(sub {
                 my ($key, $go_deeper, $notify) = @_;
                 if (defined $entry->{$key}) {
                     foreach my $msg (@{ $entry->{$key} }) {
-                        $msg = $msg->{message} if $go_deeper;
-                        handle_msg($msg->{labelIds}, $msg->{id}, $notify);
+                        my $labels = [];
+                        push @$labels, @{ $msg->{labelIds} } if defined $msg->{labelIds};
+                        if ($go_deeper) {
+                            $msg = $msg->{message};
+                            push @$labels, @{ $msg->{labelIds} } if defined $msg->{labelIds};
+                        }
+                        handle_msg($labels, $msg->{id}, $notify);
                     }
                 }
             };
             check_touched('messages',        0,  0);
             check_touched('messagesAdded',   1,  1);
+            check_touched('labelsAdded',     1,  0); # don’t notify of simply moving something
             check_touched('messagesDeleted', 1, -1);
+            check_touched('labelsRemoved',   1, -1);
         }
         if ($some_touched) {
             local *uniq = sub {
@@ -211,6 +218,7 @@ my $thr_sync_inbox = threads->create(sub {
         # Notify about the synced messages.
         local *es = sub {
             my ($s) = @_;
+            $s =~ s/&/&amp;/g;
             $s =~ s/</&lt;/g;
             $s =~ s/>/&gt;/g;
             return $s;
