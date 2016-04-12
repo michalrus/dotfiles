@@ -1,4 +1,12 @@
 include "%L"
 
-<Multi_key> <asciitilde> <asciitilde> : "≈" U2248
+<Multi_key> <asciitilde> <asciitilde> : "≈" U2248 # ALMOST EQUAL TO
 <Multi_key> <equal> <greater>         : "⇒" U21D2 # RIGHTWARDS DOUBLE ARROW
+
+<Multi_key> <slash> <question>        : "⸮" U2E2E # REVERSED QUESTION MARK
+<Multi_key> <question> <slash>        : "⸮" U2E2E # REVERSED QUESTION MARK
+
+<Multi_key> <p> <i>                   : "π" U03C0 # GREEK SMALL LETTER PI
+<Multi_key> <P> <I>                   : "Π" U03A0 # GREEK CAPITAL LETTER PI
+<Multi_key> <p> <h> <i>               : "φ" U03A6 # GREEK SMALL LETTER PHI
+<Multi_key> <P> <H> <I>               : "Φ" U03C6 # GREEK CAPITAL LETTER PHI
