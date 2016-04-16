@@ -21,6 +21,10 @@
 (setq show-paren-delay 0)
 (show-paren-mode 1)
 
+;; navigation history
+(global-set-key (kbd "M-]") 'next-buffer)
+(global-set-key (kbd "M-[") 'previous-buffer)
+
 ;; never visit symlinks when their targets are under version control
 ;; (visit the target instead)
 (setq vc-follow-symlinks t)
