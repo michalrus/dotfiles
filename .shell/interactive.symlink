@@ -10,8 +10,11 @@ set +m
 export CLICOLOR='1'
 command -v dircolors >/dev/null && eval "$(dircolors "$HOME"/.dircolors)"
 
-alias s='eval "$(attach-or-create-screen)"'
+_git_without_pull() { [ "$1" = "pull" ] && { echo >&2 "fatal: 'pull' is disabled. Use 'fetch'." ; return 128 ; } || git "$@" ; }
+alias git=_git_without_pull
 alias g='git'
+
+alias s='eval "$(attach-or-create-screen)"'
 alias nano='nano -UwT 4'
 alias clear='for i in $(seq 100) ; do echo ; done && clear'
 alias grep='grep --color=auto'
