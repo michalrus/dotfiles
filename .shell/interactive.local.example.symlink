@@ -5,6 +5,7 @@
 # breaking habits
 alias nano="$EDITOR"
 alias e="$EDITOR"
+alias man='echo >&2 "Use WoMan!" ; return 1 ;'
 
 alias en="bab pl"
 alias de="bab de-pl"
