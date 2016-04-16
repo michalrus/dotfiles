@@ -45,6 +45,3 @@
 ;  (set-face-background 'default (if (display-graphic-p frame) "black" "unspecified-bg") frame))
 ;(add-hook 'after-make-frame-functions 'fix-new-frame-background)
 ;(add-hook 'window-setup-hook (lambda () (fix-new-frame-background (selected-frame))))
-
-;; ido-mode
-(ido-mode 1)

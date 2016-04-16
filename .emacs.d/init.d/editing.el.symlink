@@ -40,3 +40,20 @@
 
 ;; visual line mode
 (visual-line-mode 1)
+
+;; Swiper & Ivy
+(use-package swiper
+  :config
+  (ivy-mode 1)
+  (global-set-key (kbd "C-s") 'swiper)
+  (global-set-key (kbd "C-c C-r") 'ivy-resume)
+  :ensure t :pin melpa-stable)
+(use-package counsel
+  :config
+  (counsel-mode 1)
+  (global-set-key (kbd "C-c u") 'counsel-unicode-char)
+  (global-set-key (kbd "C-c g") 'counsel-git-grep)
+  (setq counsel-ag-base-command "ag --hidden --nocolor --nogroup %s -- .")
+  (global-set-key (kbd "C-c h") 'counsel-ag)
+  (global-set-key (kbd "C-c l") 'counsel-locate)
+  :ensure t :pin melpa-stable)

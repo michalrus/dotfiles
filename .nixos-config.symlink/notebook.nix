@@ -195,6 +195,7 @@ in
     python34Packages.livestreamer
     screen
     shared_mime_info
+    silver-searcher
     socat
     sox
     st
