@@ -44,7 +44,7 @@
 ;; recent files
 (when (require 'recentf nil 'noerror)
   (recentf-mode 1)
-  (setq recentf-max-menu-items 200))
+  (setq recentf-max-menu-items 500))
 
 ;; Swiper & Ivy
 (use-package swiper
