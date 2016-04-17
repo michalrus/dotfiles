@@ -7,3 +7,31 @@
 (use-package diff-hl
   :config (global-diff-hl-mode)
   :ensure t)
+
+(use-package projectile
+  :config
+  (projectile-global-mode)
+  :ensure t :pin melpa-stable)
+
+(use-package neotree
+  :config
+  (setq neo-smart-open t
+        neo-window-width 30
+        neo-theme 'arrow
+        neo-show-hidden-files nil
+        neo-hidden-regexp-list '("^\\.#")
+        neo-vc-integration '(char face))
+  (defun neotree-show-better ()
+    (interactive)
+    (let ((current-window (get-buffer-window))
+          (root-dir (cond ((projectile-project-p) (projectile-project-root))
+                         ((buffer-file-name) (file-name-directory (directory-file-name (buffer-file-name)))))))
+      (when root-dir
+        (message root-dir)
+        (neotree-dir root-dir)
+        (select-window current-window)
+        (neotree-find) ; jump to current file in the tree
+        (select-window current-window))))
+  (global-set-key (kbd "M-<f2>") 'neotree-show-better)
+  (global-set-key (kbd "M-<f3>") 'neotree-hide)
+  :ensure t)
