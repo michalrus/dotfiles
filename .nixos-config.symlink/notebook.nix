@@ -193,6 +193,7 @@ in
     poppler_utils
     posix_man_pages
     python34Packages.livestreamer
+    scala
     screen
     shared_mime_info
     silver-searcher
