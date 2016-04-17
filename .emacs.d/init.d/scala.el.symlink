@@ -1,9 +1,28 @@
 ;; -*- mode: emacs-lisp -*-
 
 (use-package scala-mode2
+  :config
+  (add-hook 'scala-mode-hook
+            (lambda ()
+              (setq comment-start "/* "
+                    comment-end " */"
+                    comment-style 'multi-line
+                    comment-empty-lines t)
+              (scala-mode:goto-start-of-code)))
+
+  (defun scala-mode-newline-comments ()
+    "Custom newline appropriate for `scala-mode'."
+    ;; shouldn't this be in a post-insert hook?
+    (interactive)
+    (newline-and-indent)
+    (scala-indent:insert-asterisk-on-multiline-comment))
+  (bind-key "RET" 'scala-mode-newline-comments scala-mode-map)
+
   :mode ("\\.scala$" . scala-mode)
   :ensure t)
 
 (use-package ensime
-  :config (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+  :config
+  (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+  (require 'ensime-expand-region)
   :ensure t)
