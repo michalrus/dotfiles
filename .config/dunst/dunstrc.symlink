@@ -27,9 +27,7 @@
 
     startup_notification = false
 
-    # not a very good idea, but dunst doesn’t accept arguments with spaces to hack with /bin/sh -c
-    dmenu = ./.bin/dmenu
-    browser = xdg-open
+    show_indicators = no
 
 [frame]
     width = 0
@@ -39,7 +37,6 @@
     close = mod4+m
     close_all = mod4+shift+m
     history = mod4+n
-    context = mod4+u
 
 [urgency_normal]
     background = "#586e75"
