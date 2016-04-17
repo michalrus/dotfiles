@@ -28,7 +28,7 @@
 (setq use-dialog-box nil)
 
 ;; increase/decrease text size
-(global-set-key (kbd "C-+") 'text-scale-increase)
+(global-set-key (kbd "C-=") 'text-scale-increase)
 (global-set-key (kbd "C--") 'text-scale-decrease)
 
 ;; disable the default theme and load solarized (if possible)
