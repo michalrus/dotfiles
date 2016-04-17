@@ -46,6 +46,11 @@
   (recentf-mode 1)
   (setq recentf-max-menu-items 500))
 
+(use-package expand-region
+  :commands 'er/expand-region
+  :bind ("C-=" . er/expand-region)
+  :ensure t)
+
 ;; Swiper & Ivy
 (use-package swiper
   :config
