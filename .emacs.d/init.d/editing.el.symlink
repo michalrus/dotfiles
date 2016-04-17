@@ -57,3 +57,16 @@
   (global-set-key (kbd "C-c h") 'counsel-ag)
   (global-set-key (kbd "C-c l") 'counsel-locate)
   :ensure t :pin melpa-stable)
+
+;; periodically kill unused buffers
+(when (require 'midnight nil 'noerror)
+  (setq clean-buffer-list-delay-general (/ 3.0 24) ; 3/24 days = 3 h
+        clean-buffer-list-delay-special (* 0.5 3600) ; ½ h
+        midnight-period clean-buffer-list-delay-special)
+  (add-to-list 'clean-buffer-list-kill-buffer-names
+               '("*Backtrace*"))
+  (add-to-list 'clean-buffer-list-kill-regexps
+               '("\\`\\*magit"
+                 "\\`\\*Customize .*\\*\\'"
+                 "\\`\\*\\(Wo\\)?Man .*\\*\\'"))
+  (midnight-delay-set 'midnight-delay "1:30am"))
