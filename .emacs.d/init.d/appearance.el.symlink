@@ -28,8 +28,11 @@
 (setq use-dialog-box nil)
 
 ;; increase/decrease text size
-(global-set-key (kbd "C-=") 'text-scale-increase)
-(global-set-key (kbd "C--") 'text-scale-decrease)
+(use-package zoom-frm
+  :config
+  (global-set-key (kbd "C-=") 'zoom-frm-in)
+  (global-set-key (kbd "C--") 'zoom-frm-out)
+  :ensure t :pin melpa-stable)
 
 ;; disable the default theme and load solarized (if possible)
 (defun disable-all-themes () "disable all active themes"
