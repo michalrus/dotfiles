@@ -32,7 +32,6 @@ chkdeps()
 	which tr		|| die "no tr"
 	which gm		|| die "no gm"
 	which sox		|| die "no sox"
-	which neroAacEnc	|| die "no neroAacEnc"
 	which x264		|| die "no x264"
 	which MP4Box	|| die "no MP4Box"
 	which cptime	|| die "no cptime"
@@ -467,6 +466,8 @@ case $OPMODE in
 		;;
 
 	x264)
+		which neroAacEnc	|| die "no neroAacEnc"
+
 		while [ $# -gt 0 ] ; do
 			hlpr_header "${1}"
 
