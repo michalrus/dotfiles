@@ -55,7 +55,7 @@
 (use-package swiper
   :config
   (ivy-mode 1)
-  (global-set-key (kbd "C-s") 'swiper)
+  (global-set-key (kbd "C-s") 'counsel-grep-or-swiper)
   (global-set-key (kbd "C-c C-r") 'ivy-resume)
   (setq projectile-completion-system 'ivy)
   (global-set-key (kbd "C-x C-r") 'ivy-recentf)
