@@ -63,10 +63,13 @@
 (use-package counsel
   :config
   (counsel-mode 1)
-  (global-set-key (kbd "C-c u") 'counsel-unicode-char)
-  (global-set-key (kbd "C-c g") 'counsel-git-grep)
   (setq counsel-ag-base-command "ag --hidden --nocolor --nogroup %s -- .")
-  (global-set-key (kbd "C-c h") 'counsel-ag)
+  (defun counsel-git-grep-or-ag ()
+    (interactive)
+    (cond ((projectile-project-p) (counsel-git-grep))
+          (t (counsel-ag))))
+  (global-set-key (kbd "C-S-s") 'counsel-git-grep-or-ag)
+  (global-set-key (kbd "C-c u") 'counsel-unicode-char)
   (global-set-key (kbd "C-c l") 'counsel-locate)
   :ensure t :pin melpa-stable)
 
