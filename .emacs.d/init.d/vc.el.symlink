@@ -3,7 +3,6 @@
 (use-package magit
   :config
   (global-magit-file-mode)
-  (global-set-key (kbd "C-c b") 'magit-blame)
   :ensure t)
 
 (use-package diff-hl
