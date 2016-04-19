@@ -79,6 +79,6 @@
                     '("*Backtrace*"))
   (add-list-to-list 'clean-buffer-list-kill-regexps
                     '("\\`\\*magit"
-                      "\\`\\*Customize .*\\*\\'"
-                      "\\`\\*\\(Wo\\)?Man .*\\*\\'"))
+                      "\\`\\*Customize"
+                      "\\`\\*WoMan"))
   (midnight-delay-set 'midnight-delay "1:30am"))
