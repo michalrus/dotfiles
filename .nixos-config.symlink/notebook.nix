@@ -103,6 +103,7 @@ in
           substituteInPlace config.def.h --replace "Liberation Mono:pixelsize=12:antialias=false:autohint=false" "Monospace:pixelsize=15:antialias=true:autohint=true"
           '';
       });
+      visualvm = pkgs.callPackage ./pkgs/visualvm.nix {};
       # take some of the packages from nixpkgs/master definitions
       #youtube-dl = pkgs.callPackage ./pkgs/youtube-dl-master.nix {};
     };
@@ -208,6 +209,7 @@ in
     urlwatch
     usbutils
     utox
+    visualvm
     wget
     which
     whois
