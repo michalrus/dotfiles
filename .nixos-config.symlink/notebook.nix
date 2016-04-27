@@ -133,6 +133,7 @@ in
     file
     gcc
     ghc
+    gimp
     git
     gitstats
     gnome.gnome_icon_theme
