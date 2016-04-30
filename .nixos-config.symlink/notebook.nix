@@ -71,10 +71,15 @@ in
   hardware = {
     sane.enable = true;
     opengl.driSupport32Bit = true; # for Wine
+    pulseaudio = {
+      enable = true;
+      support32Bit = true; # for Wine
+    };
   };
 
   nixpkgs.config = {
     allowBroken = true;
+    pulseaudio = true;
     packageOverrides = pkgs: {
       awf-gtk    = pkgs.callPackage ./pkgs/awf-gtk.nix {};
       imgurbash2 = pkgs.callPackage ./pkgs/imgurbash2.nix {};
@@ -184,6 +189,7 @@ in
     openjdk8
     p7zip
     pass
+    pavucontrol
     pciutils
     perlPackages.ConfigTiny
     perlPackages.DateCalc
@@ -214,7 +220,7 @@ in
     wget
     which
     whois
-    wine
+    (wine.override { pulseaudioSupport = true; })
     winetricks
     wireshark
     wmctrl
