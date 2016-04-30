@@ -97,8 +97,8 @@ in
                    });
       st = pkgs.stdenv.lib.overrideDerivation pkgs.st (oldAttrs : {
         patches = [
-          (pkgs.fetchpatch { url = "http://st.suckless.org/patches/st-0.6-hidecursor.diff"; sha256 = "1zac3cqi1jkdy6f6g709xdvws1v2k56j2nx95jaakxm795z7k77m"; })
-          (pkgs.fetchpatch { url = "http://st.suckless.org/patches/st-0.6-externalpipe.diff"; sha256 = "1q4w4c99qaxz60qjw14fwzc5lzkqkj9wqcdfzvpyz4vx5gxjnhyv"; })
+          (pkgs.fetchpatch { url = "http://st.suckless.org/patches/st-0.6-hidecursor.diff"; sha256 = "1h9l590in3kmlrlalg4raz0mm3vp997d3c2h41a2zf852ivwh701"; })
+          (pkgs.fetchpatch { url = "http://st.suckless.org/patches/st-0.6-externalpipe.diff"; sha256 = "0g0g6dsify1gd4rdpqfzv35h51nxvksxzz031lff89zhhw4lh65d"; })
           ./pkgs/st-externalpipe-zombies.patch
           ./pkgs/st-shortcuts.patch
           ./pkgs/st-escape-seqs.patch
