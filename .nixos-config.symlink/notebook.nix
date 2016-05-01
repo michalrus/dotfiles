@@ -197,7 +197,8 @@ in
     perlPackages.LWP
     perlPackages.LWPProtocolHttps
     pinentry
-    pkgs.firefoxWrapper
+    #pkgs.firefoxWrapper
+    ((wrapFirefox.override { libpulseaudio = libpulseaudio.out; }) firefox-unwrapped { }) # temporary solution for https://github.com/NixOS/nixpkgs/issues/15126
     poppler_utils
     posix_man_pages
     python34Packages.livestreamer
