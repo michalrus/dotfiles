@@ -258,6 +258,8 @@ in
 
     virtualboxHost.enable = true;
 
+    haveged.enable = true;
+
     printing.enable = false;
 
     locate.enable = true;
