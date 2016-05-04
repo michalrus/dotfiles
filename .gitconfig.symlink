@@ -7,8 +7,8 @@
 [alias]
 	fast-forward = merge --ff-only
 	ff = merge --ff-only
-	lg  = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --abbrev-commit --date-order
-	lga = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --abbrev-commit --date-order --all
+	lg  = log --color --graph --pretty=format:'%Cred%h%Creset %C(bold magenta)%G?%Creset%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --abbrev-commit --date-order
+	lga = log --color --graph --pretty=format:'%Cred%h%Creset %C(bold magenta)%G?%Creset%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --abbrev-commit --date-order --all
 	s = status
 	c = diff -M --cached
 	d = diff -M
