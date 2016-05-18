@@ -30,6 +30,7 @@ config_read;
 my $ua = LWP::UserAgent->new(ssl_opts => { verify_hostname => 1 });
 
 sub access_token {
+    $config->{runtime} = {} unless $config->{runtime};
     my ($rt) = $$config{runtime};
     my ($ga) = $$config{'google-api'};
     if (defined $rt->{expires_on} && time < $rt->{expires_on}) { # access_token still valid
