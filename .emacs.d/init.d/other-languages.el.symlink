@@ -1,5 +1,9 @@
 ;; -*- mode: emacs-lisp -*-
 
+(use-package yaml-mode
+  :mode "\\.yaml\\'"
+  :ensure t)
+
 (use-package python-mode
   :mode "\\.py\\'" :interpreter "python"
   :ensure t)
