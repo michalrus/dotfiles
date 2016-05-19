@@ -214,6 +214,7 @@ in
     poppler_utils
     posix_man_pages
     python34Packages.livestreamer
+    rtmpdump
     scala
     screen
     shared_mime_info
