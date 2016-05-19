@@ -225,6 +225,9 @@ in
     stdmanpages
     stdman
     tesseract
+    (texlive.combine {
+      inherit (texlive) scheme-small latexmk titlesec tocloft todonotes cleveref lipsum biblatex logreq cm-super csquotes pgfplots adjustbox collectbox ccicons;
+    })
     transmission_gtk
     unzip
     urlwatch
