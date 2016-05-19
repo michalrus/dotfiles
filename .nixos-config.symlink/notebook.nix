@@ -83,6 +83,14 @@ in
     packageOverrides = pkgs: {
       awf-gtk    = pkgs.callPackage ./pkgs/awf-gtk.nix {};
       imgurbash2 = pkgs.callPackage ./pkgs/imgurbash2.nix {};
+      conkeror-unwrapped = pkgs.stdenv.lib.overrideDerivation pkgs.conkeror-unwrapped (oldAttrs : {
+                             name = "conkeror-1.0.3";
+                             src = pkgs.fetchgit {
+                               url = git://repo.or.cz/conkeror.git;
+                               rev = "772615e013f72a594720ddeedade327fd7eb40a2";
+                               sha256 = "0vci9nqdaky4l0a2sxa8x359z645vy628zxmc6wviznbmkanxkm2";
+                             };
+                           });
       mtr        = pkgs.stdenv.lib.overrideDerivation pkgs.mtr (oldAttrs : {
                      src = pkgs.fetchgit {
                        url = https://github.com/traviscross/mtr.git;
@@ -128,6 +136,7 @@ in
     calibre
     cloc
     compton
+    conkeror-unwrapped
     cool-retro-term
     dmenu
     dos2unix
