@@ -1,0 +1,42 @@
+conky.config = {
+  out_to_x = false,
+  own_window = false,
+  out_to_console = true,
+  background = false,
+  max_text_width = 0,
+  max_user_text = 16384,
+  text_buffer_size = 1024,
+  update_interval = 1.0,
+  total_run_times = 0,
+  short_units = true,
+  if_up_strictness = 'address',
+  use_spacer = 'none',
+  override_utf8_locale = true,
+  cpu_avg_samples = 2
+}
+
+--  color_good = "#859900"
+--  color_degraded = "#b58900"
+--  color_bad = "#dc322f"
+
+-- { "full_text": "♪: ${exec amixer get Master | grep -o '[0-9]\+%' | head -1}" },
+
+conky.text = [[
+[
+  { "full_text": "♪: ${exec amixer get Master | grep -o '\[''[^]'']*\]' | sort -u | tr -d '[]' | xargs echo}" ${if_empty ${exec amixer get Master | grep -oF off}}${else}, "color": "\#b58900"${endif} },
+  { "full_text": "${battery BAT1}${if_empty ${battery_time BAT1}}${else} (${battery_time BAT1} left)${endif}" },
+  { "full_text": "${acpitemp}°C" ${if_match ${acpitemp}>=60}, "color": "\#dc322f"${endif} },
+  { "full_text": "${cpu cpu0}%"  ${if_match ${cpu cpu0}>=90}, "color": "\#dc322f"${endif} },
+  { "full_text": "${freq_g} GHz" ${if_match ${freq}<1000},    "color": "\#b58900"${endif} },
+  { "full_text": "${loadavg 1}, ${loadavg 2}, ${loadavg 3}" },
+  { "full_text": "${uptime_short}" },
+  { "full_text": "M: ${mem} (${memperc}%)" ${if_match ${memperc}>=90}, "color": "\#b58900"${endif} },
+  ${eval { "full_text": "W: “$${wireless_essid ${gw_iface}}”, $${wireless_link_qual_perc ${gw_iface}}%, $${wireless_bitrate ${gw_iface}}, $${addr ${gw_iface}}", "color": "\\#859900" },
+  { "full_text": "↓ $${totaldown ${gw_iface}} $${downspeed ${gw_iface}}/s" },
+  { "full_text": "↑ $${totalup ${gw_iface}} $${upspeed ${gw_iface}}/s" }, }
+  { "full_text": "/: ${fs_free /}" ${if_match ${fs_free_perc /}<10}, "color": "\#dc322f"${endif} },
+  { "full_text": "/var: ${fs_free /home}" ${if_match ${fs_free_perc /home}<10}, "color": "\#dc322f"${endif} },
+  { "full_text": "${utime %H:%M} (UTC)"},
+  { "full_text": "${time %a %d %b %Y %H:%M:%S %z (%Z)}" }
+],
+]]

@@ -94,7 +94,7 @@ client.unfocused        #073642 #073642 #93a1a1 #073642
 client.urgent           #dc322f #dc322f #eee8d5 #cb4b16
 
 bar {
-  status_command i3status
+  status_command conky-i3bar
   tray_output primary
   separator_symbol "•"
   position top

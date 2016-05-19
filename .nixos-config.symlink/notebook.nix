@@ -91,6 +91,9 @@ in
                                sha256 = "0vci9nqdaky4l0a2sxa8x359z645vy628zxmc6wviznbmkanxkm2";
                              };
                            });
+      conky      = pkgs.stdenv.lib.overrideDerivation pkgs.conky (oldAttrs : {
+                     patches = [ ./pkgs/conky-eval.patch ];
+                   });
       mtr        = pkgs.stdenv.lib.overrideDerivation pkgs.mtr (oldAttrs : {
                      src = pkgs.fetchgit {
                        url = https://github.com/traviscross/mtr.git;
@@ -137,6 +140,7 @@ in
     cloc
     compton
     conkeror-unwrapped
+    conky
     cool-retro-term
     dmenu
     dos2unix
@@ -162,7 +166,6 @@ in
     htop
     hwinfo
     i3lock
-    i3status
     imagemagick
     imgurbash2
     indent
