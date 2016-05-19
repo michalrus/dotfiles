@@ -2,6 +2,8 @@ include "%L"
 
 <Multi_key> <asciitilde> <asciitilde> : "≈" U2248 # ALMOST EQUAL TO
 <Multi_key> <equal> <greater>         : "⇒" U21D2 # RIGHTWARDS DOUBLE ARROW
+<Multi_key> <comma> <period>          : "⟷" U27F7 # LONG LEFT RIGHT ARROW
+<Multi_key> <period> <comma>          : "⟷" U27F7 # LONG LEFT RIGHT ARROW
 
 <Multi_key> <slash> <question>        : "⸮" U2E2E # REVERSED QUESTION MARK
 <Multi_key> <question> <slash>        : "⸮" U2E2E # REVERSED QUESTION MARK
