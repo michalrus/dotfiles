@@ -10,6 +10,6 @@ pkgs.stdenv.mkDerivation {
   src = pkgs.fetchgit {
     url = https://github.com/valr/awf.git;
     rev = "191e4283e29845191d46a5eb38baa7b31bbbe8f7";
-    sha256 = "81e92ccc07c0cac168c849e2ce9fc4cf12c3390c834ee6c3f2664bc80ec36042";
+    sha256 = "0d3hb5gx5ijivzd0d3ldjwzv5sy1cnafvhi534g0wyci62505h0b";
   };
 }

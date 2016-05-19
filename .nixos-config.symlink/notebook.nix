@@ -95,7 +95,7 @@ in
                      src = pkgs.fetchgit {
                        url = https://github.com/traviscross/mtr.git;
                        rev = "faa1bd87e4325b604223aaa8ad5517872ccb7336";
-                       sha256 = "1vvnmzbd5jf9n8wk1g58f7gxfq1sh8ki0w6hj7z9lq9cs59413zb";
+                       sha256 = "13sgv38zljybv3fz5s595wgw3bdcb402alalf7j9xlf14ib0027p";
                      };
                      buildInputs = [ pkgs.automake ];
                      preConfigure = "./bootstrap.sh";
