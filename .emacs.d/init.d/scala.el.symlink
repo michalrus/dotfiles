@@ -25,4 +25,8 @@
   :config
   (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
   (require 'ensime-expand-region)
+  (plist-put ensime-goto-test-config-defaults :test-class-suffixes
+             '("Spec" "Test" "Specification" "Check"))
+  (plist-put ensime-goto-test-config-defaults :test-template-fn
+             'ensime-goto-test--test-template-scalatest-wordspec)
   :ensure t)
