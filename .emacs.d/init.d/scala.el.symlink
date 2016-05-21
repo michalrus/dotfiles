@@ -23,7 +23,10 @@
 
 (use-package ensime
   :config
-  (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+  (add-hook 'scala-mode-hook
+            (lambda ()
+              (ensime-mode)
+              (setq company-backends '(ensime-company (company-keywords company-dabbrev-code company-etags company-yasnippet)))))
   (require 'ensime-expand-region)
   (plist-put ensime-goto-test-config-defaults :test-class-suffixes
              '("Spec" "Test" "Specification" "Check"))
