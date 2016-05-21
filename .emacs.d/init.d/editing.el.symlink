@@ -33,7 +33,7 @@
 (global-auto-revert-mode 1)
 
 ;; automatically pair braces, quotes, etc.
-(use-package autopair :config (autopair-global-mode 1) :ensure t :pin melpa-stable)
+(electric-pair-mode 1)
 
 ;; auto complete
 (use-package auto-complete :config (ac-config-default) :ensure t :pin melpa-stable)
