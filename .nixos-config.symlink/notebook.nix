@@ -195,6 +195,7 @@ in
     netcat-openbsd
     nix-prefetch-scripts
     nix-repl
+    nix-zsh-completions
     nmap
     normalize
     oathToolkit
@@ -386,6 +387,11 @@ in
     sudo.extraConfig = ''
       Defaults timestamp_timeout=0
       %users      ALL=(ALL:ALL) NOPASSWD: ${pkgs.systemd}/bin/systemctl start lock-x11-displays
+      %wheel ALL=(root) NOPASSWD: ${config.system.build.nixos-rebuild}/bin/nixos-rebuild switch
+      %wheel ALL=(root) NOPASSWD: ${config.system.build.nixos-rebuild}/bin/nixos-rebuild switch --upgrade
+      %wheel ALL=(root) NOPASSWD: ${config.system.build.nixos-rebuild}/bin/nixos-rebuild boot
+      %wheel ALL=(root) NOPASSWD: ${config.system.build.nixos-rebuild}/bin/nixos-rebuild boot --upgrade
+      %wheel ALL=(root) NOPASSWD: ${config.nix.package.out}/bin/nix-collect-garbage -d
     '';
     setuidPrograms = [ "mtr" ];
     setuidOwners = [
