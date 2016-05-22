@@ -1,5 +1,3 @@
-{ config, pkgs, ... }:
-
 {
 
   nixpkgs.config.packageOverrides = super: let self = super.pkgs; in {

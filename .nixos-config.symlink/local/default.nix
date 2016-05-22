@@ -1,5 +1,3 @@
-{ config, pkgs, ... }:
-
 {
 
   # Import all files in `~/.nixos-config/local/` matching `*.nix`.
