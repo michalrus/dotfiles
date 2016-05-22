@@ -4,9 +4,6 @@ with lib;
 
 let
   cfg = config.services.logkeys;
-  map = {
-    pl = (builtins.toFile "logkeys-pl.map" (builtins.readFile ./pl.map));
-  };
 in
 
 {
@@ -32,7 +29,7 @@ in
         postInstall = ''
           mkdir -p "$out"/share/logkeys/
           cp -r keymaps/. "$out"/share/logkeys/
-          ln -s "${map.pl}" "$out"/share/logkeys/pl.map
+          cp "${ ./pl.map }" "$out"/share/logkeys/pl.map
           '';
       });
     };
