@@ -80,48 +80,15 @@ in
   nixpkgs.config = {
     allowBroken = true;
     pulseaudio = true;
-    packageOverrides = pkgs: {
-      awf-gtk    = pkgs.callPackage ./pkgs/awf-gtk.nix {};
-      imgurbash2 = pkgs.callPackage ./pkgs/imgurbash2.nix {};
-      conkeror-unwrapped = pkgs.stdenv.lib.overrideDerivation pkgs.conkeror-unwrapped (oldAttrs : {
-                             name = "conkeror-1.0.3";
-                             src = pkgs.fetchgit {
-                               url = git://repo.or.cz/conkeror.git;
-                               rev = "772615e013f72a594720ddeedade327fd7eb40a2";
-                               sha256 = "0vci9nqdaky4l0a2sxa8x359z645vy628zxmc6wviznbmkanxkm2";
-                             };
-                           });
-      conky      = pkgs.stdenv.lib.overrideDerivation pkgs.conky (oldAttrs : {
-                     patches = [ ./pkgs/conky-eval.patch ];
-                   });
-      mtr        = pkgs.stdenv.lib.overrideDerivation pkgs.mtr (oldAttrs : {
-                     src = pkgs.fetchgit {
-                       url = https://github.com/traviscross/mtr.git;
-                       rev = "faa1bd87e4325b604223aaa8ad5517872ccb7336";
-                       sha256 = "13sgv38zljybv3fz5s595wgw3bdcb402alalf7j9xlf14ib0027p";
-                     };
-                     buildInputs = [ pkgs.automake ];
-                     preConfigure = "./bootstrap.sh";
-                   });
-      mu         = pkgs.stdenv.lib.overrideDerivation pkgs.mu (oldAttrs : {
-                     patches = [ ./pkgs/mu-x-smssync.patch ];
-                   });
-      st = pkgs.stdenv.lib.overrideDerivation pkgs.st (oldAttrs : {
-        patches = [
-          (pkgs.fetchpatch { url = "http://st.suckless.org/patches/st-0.6-hidecursor.diff"; sha256 = "1h9l590in3kmlrlalg4raz0mm3vp997d3c2h41a2zf852ivwh701"; })
-          (pkgs.fetchpatch { url = "http://st.suckless.org/patches/st-0.6-externalpipe.diff"; sha256 = "0g0g6dsify1gd4rdpqfzv35h51nxvksxzz031lff89zhhw4lh65d"; })
-          ./pkgs/st-externalpipe-zombies.patch
-          ./pkgs/st-shortcuts.patch
-          ./pkgs/st-escape-seqs.patch
-          ./pkgs/st-solarized-dark.patch
-        ];
-        postPatch = ''
-          substituteInPlace config.def.h --replace "Liberation Mono:pixelsize=12:antialias=false:autohint=false" "Monospace:pixelsize=15:antialias=true:autohint=true"
-          '';
-      });
-      visualvm = pkgs.callPackage ./pkgs/visualvm.nix {};
-      # take some of the packages from nixpkgs/master definitions
-      #youtube-dl = pkgs.callPackage ./pkgs/youtube-dl-master.nix {};
+    packageOverrides = super: let self = super.pkgs; in {
+      awf-gtk            = (import ./pkgs/awf-gtk.nix super self);
+      imgurbash2         = (import ./pkgs/imgurbash2.nix super self);
+      conkeror-unwrapped = (import ./pkgs/conkeror-unwrapped.nix super self);
+      conky              = (import ./pkgs/conky super self);
+      mtr                = (import ./pkgs/mtr.nix super self);
+      mu                 = (import ./pkgs/mu super self);
+      st                 = (import ./pkgs/st super self);
+      visualvm           = (import ./pkgs/visualvm.nix super self);
     };
   };
 
