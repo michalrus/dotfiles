@@ -15,6 +15,7 @@
 
   imports =
     [
+      ./modules/logkeys
       ./hardware-configuration.nix
       # import all files matching ./local/*.nix
     ] ++ builtins.map (n: ./local + ("/" + n)) (builtins.filter (n: builtins.substring ((builtins.stringLength n) - 4) 4 n == ".nix") (builtins.attrNames (builtins.readDir ./local)));
@@ -82,7 +83,6 @@
       imgurbash2         = (import ./pkgs/imgurbash2.nix super self);
       conkeror-unwrapped = (import ./pkgs/conkeror-unwrapped.nix super self);
       conky              = (import ./pkgs/conky super self);
-      logkeys            = (import ./pkgs/logkeys super self);
       mtr                = (import ./pkgs/mtr.nix super self);
       mu                 = (import ./pkgs/mu super self);
       st                 = (import ./pkgs/st super self);
@@ -148,7 +148,6 @@
     libjpeg
     libmtp
     libnotify
-    logkeys
     lshw
     lsof
     man_db
@@ -249,6 +248,11 @@
 
     locate.enable = true;
 
+    logkeys = {
+      enable = true;
+      keymap = "pl";
+    };
+
     xserver = {
       enable = true;
       layout = "pl";
@@ -300,12 +304,6 @@
       done
       '';
   };
-
-  systemd.services."logkeys" = pkgs.lib.filterAttrs (n: v: n != "outPath") pkgs.logkeys.systemdUnit;
-  # reload logkeys when a new USB keyboard is connected
-  services.udev.extraRules = ''
-    ACTION=="add", SUBSYSTEM=="input", SUBSYSTEMS=="usb", ATTRS{authorized}=="1", RUN+="${pkgs.systemd}/bin/systemctl restart logkeys.service"
-    '';
 
   fonts = {
     enableFontDir = true;
