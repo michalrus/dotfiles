@@ -1,22 +1,11 @@
 { config, pkgs, ... }:
 
 {
-  nix = {
-    useChroot = true; # https://nixos.org/nixos/manual/options.html#opt-nix.useChroot
-
-    trustedBinaryCaches = [
-      http://hydra.nixos.org
-    ];
-
-    binaryCachePublicKeys = [
-      "hydra.nixos.org-1:CNHJZBh9K4tP3EKF6FkkgeVYsS3ohTl+oS0Qa8bezVs="
-    ];
-  };
-
   imports = [
     ./modules
     ./pkgs
     ./local
+    ./common.nix
     ./hardware-configuration.nix
   ];
 
@@ -58,12 +47,6 @@
     wireless.enable = true;
   };
 
-  i18n = {
-    consoleFont = "Lat2-Terminus16";
-    consoleKeyMap = "us";
-    defaultLocale = "en_US.UTF-8";
-  };
-
   time.timeZone = "Europe/Warsaw";
 
   hardware = {
@@ -80,125 +63,55 @@
     pulseaudio = true;
   };
 
-  # List packages installed in system profile. To search by name, run:
-  # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
     arandr
-    aspell
-    aspellDicts.en
-    aspellDicts.pl
-    aspellDicts.de
     awf-gtk
-    bc
-    calc
     calibre
-    cloc
     compton
     conkeror-unwrapped
     conky
     cool-retro-term
     dmenu
-    dos2unix
     dunst
     emacs
     evince
-    exiv2
-    file
-    gcc
     gimp
-    git
-    gitstats
     gnome.gnome_icon_theme
     gnome3.dconf   # so that GnuCash prefs can be changed
     gnome3.adwaita-icon-theme
     gnome3.gnome_themes_standard
     gnucash26
-    gnupg1compat
-    gnupg
-    gpac
-    graphicsmagick
     (haskellPackages.ghcWithHoogle (haskellPackages: with haskellPackages; [
       cabal-install ghc-mod happy hasktags hindent hlint parallel stylish-haskell turtle
     ]))
-    htop
-    hwinfo
-    imagemagick
-    imgurbash2
-    indent
     isync
-    jhead
     jmeter
     jmtpfs
-    faad2   # video in Firefox
-    ffmpeg
-    ffmpegthumbnailer
-    gnumake
-    gocr
-    libjpeg
     libmtp
     libnotify
-    lshw
-    lsof
-    man_db
-    manpages
-    maven
-    mkpasswd
-    moreutils
     mpv
-    mtr
     mu
-    netcat-openbsd
-    nix-prefetch-scripts
-    nix-repl
-    nix-zsh-completions
-    nmap
-    normalize
     oathToolkit
     openjdk8
-    p7zip
     pass
     pavucontrol
-    pciutils
-    perlPackages.ConfigTiny
-    perlPackages.DateCalc
-    perlPackages.JSON
-    perlPackages.LWP
-    perlPackages.LWPProtocolHttps
     pinentry
     #pkgs.firefoxWrapper
     ((wrapFirefox.override { libpulseaudio = libpulseaudio.out; }) firefox-unwrapped { }) # temporary solution for https://github.com/NixOS/nixpkgs/issues/15126
-    poppler_utils
-    posix_man_pages
     python34Packages.livestreamer
     rtmpdump
     scala
-    screen
-    shared_mime_info
-    silver-searcher
-    socat
-    sox
     st
-    stdmanpages
-    stdman
-    tesseract
     (texlive.combine {
       inherit (texlive) scheme-small latexmk titlesec tocloft todonotes cleveref lipsum biblatex logreq cm-super csquotes pgfplots adjustbox collectbox ccicons;
     })
     transmission_gtk
-    unzip
-    urlwatch
-    usbutils
     utox
     visualvm
-    wget
-    which
-    whois
     (wine.override { pulseaudioSupport = true; })
     winetricks
     wireshark
     wmctrl
-    wrk
-    x264
     xautolock
     xcape
     xclip
@@ -209,8 +122,6 @@
     xorg.xmodmap
     xrandr-invert-colors
     xsel
-    youtube-dl
-    zip
   ];
 
   environment.shellInit = ''
@@ -218,8 +129,6 @@
     '';
 
   programs = {
-    zsh.enable = true;
-    bash.enableCompletion = true;
     ssh.startAgent = false;
   };
 
@@ -230,12 +139,6 @@
       '';
 
     virtualboxHost.enable = true;
-
-    haveged.enable = true;
-
-    printing.enable = false;
-
-    locate.enable = true;
 
     logkeys = {
       enable = true;
@@ -270,7 +173,6 @@
   };
 
   fonts = {
-    enableFontDir = true;
     enableGhostscriptFonts = true;
     fonts = with pkgs; [
       anonymousPro
@@ -300,15 +202,6 @@
   };
 
   security = {
-    sudo.extraConfig = ''
-      Defaults timestamp_timeout=0
-      %wheel ALL=(root) NOPASSWD: ${config.system.build.nixos-rebuild}/bin/nixos-rebuild switch
-      %wheel ALL=(root) NOPASSWD: ${config.system.build.nixos-rebuild}/bin/nixos-rebuild switch --upgrade
-      %wheel ALL=(root) NOPASSWD: ${config.system.build.nixos-rebuild}/bin/nixos-rebuild boot
-      %wheel ALL=(root) NOPASSWD: ${config.system.build.nixos-rebuild}/bin/nixos-rebuild boot --upgrade
-      %wheel ALL=(root) NOPASSWD: ${config.nix.package.out}/bin/nix-collect-garbage -d
-    '';
-    setuidPrograms = [ "mtr" ];
     setuidOwners = [
       {
         program = "dumpcap";
