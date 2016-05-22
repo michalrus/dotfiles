@@ -1,8 +1,5 @@
 { config, pkgs, ... }:
 
-let
-  logkeysMapPl = builtins.toFile "logkeys-pl.map" (builtins.readFile ./pkgs/logkeys-pl.map);
-in
 {
   nix = {
     useChroot = true; # https://nixos.org/nixos/manual/options.html#opt-nix.useChroot
@@ -85,6 +82,7 @@ in
       imgurbash2         = (import ./pkgs/imgurbash2.nix super self);
       conkeror-unwrapped = (import ./pkgs/conkeror-unwrapped.nix super self);
       conky              = (import ./pkgs/conky super self);
+      logkeys            = (import ./pkgs/logkeys super self);
       mtr                = (import ./pkgs/mtr.nix super self);
       mu                 = (import ./pkgs/mu super self);
       st                 = (import ./pkgs/st super self);
@@ -303,20 +301,7 @@ in
       '';
   };
 
-  systemd.services."logkeys" = {
-    description = "Log all keys pressed on all keyboards";
-    serviceConfig.Type = "forking";
-    wantedBy = [ "multi-user.target" ];
-    path = with pkgs; [ logkeys ];
-    script = ''
-      ls /dev/input/by-path | grep kbd | while IFS= read -r inp ; do
-        rinp="$(readlink -f "/dev/input/by-path/$inp")"
-        logkeys --start --device="$rinp" --output=/var/log/logkeys.log --keymap="${logkeysMapPl}"
-        # why is the following not configurable?!
-        rm /var/run/logkeys.pid
-      done
-      '';
-  };
+  systemd.services."logkeys" = pkgs.lib.filterAttrs (n: v: n != "outPath") pkgs.logkeys.systemdUnit;
   # reload logkeys when a new USB keyboard is connected
   services.udev.extraRules = ''
     ACTION=="add", SUBSYSTEM=="input", SUBSYSTEMS=="usb", ATTRS{authorized}=="1", RUN+="${pkgs.systemd}/bin/systemctl restart logkeys.service"
