@@ -150,7 +150,6 @@ in
     exiv2
     file
     gcc
-    ghc
     gimp
     git
     gitstats
@@ -163,6 +162,9 @@ in
     gnupg
     gpac
     graphicsmagick
+    (haskellPackages.ghcWithHoogle (haskellPackages: with haskellPackages; [
+      cabal-install ghc-mod happy hasktags hindent hlint parallel stylish-haskell turtle
+    ]))
     htop
     hwinfo
     i3lock
