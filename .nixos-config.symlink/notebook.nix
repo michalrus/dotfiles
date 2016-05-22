@@ -122,7 +122,6 @@
     ]))
     htop
     hwinfo
-    i3lock
     imagemagick
     imgurbash2
     indent
@@ -243,6 +242,8 @@
       keymap = "pl";
     };
 
+    lockX11Displays.enable = true;
+
     xserver = {
       enable = true;
       layout = "pl";
@@ -266,33 +267,6 @@
 
       displayManager.xserverArgs = [ "-ardelay" "150" "-arinterval" "8" ];
     };
-  };
-
-  systemd.services."lock-x11-displays" = {
-    description = "Lock all X11 displays using i3lock (not showing notifications)";
-    # This can’t be done in powerManagement.powerDownCommands, because
-    # its systemd unit is of the “oneshot” type; we need “forking”.
-    # Besides, this service can be used in WM config — DRY!
-    serviceConfig.Type = "forking";
-    wantedBy = [ "sleep.target" ];
-    before = [ "sleep.target" ];
-    path = with pkgs; [ procps bash i3lock ];
-    script = ''
-      # I need ${pkgs.sudo}. But this still doesn’t guarantee that
-      # /var/setuid-wrappers/sudo will exist… :-)
-      pgrep -f xsession | while read p ; do
-        printf '%s %s\n' \
-          $(cat /proc/$p/environ | tr '\0' '\n' | grep ^DISPLAY | cut -d = -f 2) \
-          $(cat /proc/$p/environ | tr '\0' '\n' | grep ^USER    | cut -d = -f 2)
-      done | sort | uniq | while read DISPLAY USER ; do
-        [ -z "$(grep "^$USER:" /etc/shadow | cut -d : -f 2)" ] && continue # if password empty
-        export DISPLAY
-        /var/setuid-wrappers/sudo --background -u $USER bash -c \
-          'pkill -u $USER -USR1 dunst
-           i3lock -n -c 000000 || true
-           pkill -u $USER -USR2 dunst'
-      done
-      '';
   };
 
   fonts = {
@@ -328,7 +302,6 @@
   security = {
     sudo.extraConfig = ''
       Defaults timestamp_timeout=0
-      %users      ALL=(ALL:ALL) NOPASSWD: ${pkgs.systemd}/bin/systemctl start lock-x11-displays
       %wheel ALL=(root) NOPASSWD: ${config.system.build.nixos-rebuild}/bin/nixos-rebuild switch
       %wheel ALL=(root) NOPASSWD: ${config.system.build.nixos-rebuild}/bin/nixos-rebuild switch --upgrade
       %wheel ALL=(root) NOPASSWD: ${config.system.build.nixos-rebuild}/bin/nixos-rebuild boot
