@@ -2,3 +2,4 @@
 # (however, you’re free to save them as *.nix.example or *.nix.gpg)
 
 *.nix
+!default.nix

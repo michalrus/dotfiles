@@ -13,12 +13,12 @@
     ];
   };
 
-  imports =
-    [
-      ./modules/logkeys
-      ./hardware-configuration.nix
-      # import all files matching ./local/*.nix
-    ] ++ builtins.map (n: ./local + ("/" + n)) (builtins.filter (n: builtins.substring ((builtins.stringLength n) - 4) 4 n == ".nix") (builtins.attrNames (builtins.readDir ./local)));
+  imports = [
+    ./modules
+    ./pkgs
+    ./local
+    ./hardware-configuration.nix
+  ];
 
   boot = {
     loader.grub = {
@@ -78,16 +78,6 @@
   nixpkgs.config = {
     allowBroken = true;
     pulseaudio = true;
-    packageOverrides = super: let self = super.pkgs; in {
-      awf-gtk            = (import ./pkgs/awf-gtk.nix super self);
-      imgurbash2         = (import ./pkgs/imgurbash2.nix super self);
-      conkeror-unwrapped = (import ./pkgs/conkeror-unwrapped.nix super self);
-      conky              = (import ./pkgs/conky super self);
-      mtr                = (import ./pkgs/mtr.nix super self);
-      mu                 = (import ./pkgs/mu super self);
-      st                 = (import ./pkgs/st super self);
-      visualvm           = (import ./pkgs/visualvm.nix super self);
-    };
   };
 
   # List packages installed in system profile. To search by name, run:
