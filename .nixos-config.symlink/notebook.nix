@@ -39,10 +39,7 @@
       enable = true;
       allowPing = true;
       allowedTCPPorts = [ ];
-      extraCommands = ''
-        iptables  -A OUTPUT -m owner --gid-owner nonet -j REJECT --reject-with icmp-port-unreachable
-        ip6tables -A OUTPUT -m owner --gid-owner nonet -j REJECT --reject-with icmp6-port-unreachable
-        '';
+      nonetGroup.enable = true;
     };
     wireless.enable = true;
   };
@@ -185,8 +182,8 @@
     ];
   };
 
-  users = {
-    extraUsers.m = {
+  users.extraUsers = {
+    m = {
       hashedPassword = "$6$wO42jkhqerm$kl.qIl5USrzqAZOIkXdicrBLBgVwka2Dz81nc.aNsNJZREXY.02XxPdL1FiTCcuVP2K/DSmXqAQ3aPbri/v.g1";
       isNormalUser = true;
       uid = 31337;
@@ -194,8 +191,6 @@
       extraGroups = [ "wheel" "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" ];
     };
 
-
-    extraGroups.nonet = {};
   };
 
 }
