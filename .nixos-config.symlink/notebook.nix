@@ -110,7 +110,6 @@
     visualvm
     (wine.override { pulseaudioSupport = true; })
     winetricks
-    wireshark
     wmctrl
     xautolock
     xcape
@@ -130,6 +129,7 @@
 
   programs = {
     ssh.startAgent = false;
+    wireshark.enable = true;
   };
 
   services = {
@@ -197,21 +197,8 @@
       extraGroups = [ "wheel" "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" ];
     };
 
-    extraGroups.nonet = {};
-    extraGroups.wireshark = {};
-  };
 
-  security = {
-    setuidOwners = [
-      {
-        program = "dumpcap";
-        owner = "root";
-        group = "wireshark";
-        setuid = true;
-        setgid = false;
-        permissions = "u+rx,g+x";
-      }
-    ];
+    extraGroups.nonet = {};
   };
 
 }
