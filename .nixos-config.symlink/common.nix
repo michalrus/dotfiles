@@ -34,6 +34,11 @@
     locate.enable = true;
   };
 
+  users = {
+    mutableUsers = false;
+    defaultUserShell = "/run/current-system/sw/bin/zsh";
+  };
+
   environment.systemPackages = with pkgs; [
     aspell
     aspellDicts.en
