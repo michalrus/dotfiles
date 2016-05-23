@@ -21,7 +21,10 @@
   };
 
   programs = {
-    zsh.enable = true;
+    zsh = {
+      enable = true;
+      enableCompletion = true;
+    };
     bash.enableCompletion = true;
   };
 
@@ -70,7 +73,6 @@
     netcat-openbsd
     nix-prefetch-scripts
     nix-repl
-    nix-zsh-completions
     nmap
     normalize
     p7zip
