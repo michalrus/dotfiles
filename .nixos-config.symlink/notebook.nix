@@ -7,17 +7,8 @@
     ./local
     ./common.nix
     ./hardware-configuration.nix
+    ./boot.nix
   ];
-
-  boot = {
-    loader.grub = {
-      enable = true;
-      version = 2;
-      device = "/dev/sda";
-    };
-    initrd.luks.devices = [ { name = "crypt"; device = "/dev/sda2"; } ];
-    tmpOnTmpfs = true;
-  };
 
   powerManagement = {
     cpuFreqGovernor = "performance";
@@ -190,7 +181,6 @@
       description = "Michal Rus";
       extraGroups = [ "wheel" "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" ];
     };
-
   };
 
 }
