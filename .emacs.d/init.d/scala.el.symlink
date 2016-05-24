@@ -4,6 +4,7 @@
   :config
   (add-hook 'scala-mode-hook
             (lambda ()
+              (company-mode)
               (setq comment-start "/* "
                     comment-end " */"
                     comment-style 'multi-line

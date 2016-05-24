@@ -46,7 +46,6 @@
   :config
   ;; disables TAB in company-mode, freeing it for yasnippet
   (define-key company-active-map [tab] nil)
-  (global-company-mode t)
   :ensure t)
 
 ;;(use-package auto-complete :config (ac-config-default) :ensure t :pin melpa-stable)

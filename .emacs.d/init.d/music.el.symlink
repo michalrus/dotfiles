@@ -4,7 +4,8 @@
 (when (require 'lilypond-mode nil 'noerror)
   (setq-default LilyPond-pdf-command "evince")
   (add-to-list 'auto-mode-alist '("\\.ly$" . LilyPond-mode))
-  (add-hook 'LilyPond-mode-hook 'setup-compilation-with-make))
+  (add-hook 'LilyPond-mode-hook 'setup-compilation-with-make)
+  (add-hook 'LilyPond-mode-hook 'company-mode))
 
 ;; typesetting Gregorian chant
 (use-package gregorio-mode

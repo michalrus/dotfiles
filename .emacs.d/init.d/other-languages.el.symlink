@@ -2,8 +2,15 @@
 
 (use-package yaml-mode
   :mode "\\.yaml\\'"
+  :config
+  (add-hook 'yaml-mode-hook 'company-mode)
   :ensure t)
 
 (use-package python-mode
   :mode "\\.py\\'" :interpreter "python"
+  :config
+  (add-hook 'python-mode-hook 'company-mode)
   :ensure t)
+
+(add-hook 'emacs-lisp-mode-hook 'company-mode)
+(add-hook 'perl-mode-hook 'company-mode)

@@ -2,8 +2,12 @@
 
 (use-package pkgbuild-mode
   :mode "/PKGBUILD\\'"
+  :config
+  (add-hook 'pkgbuild-mode-hook 'company-mode)
   :ensure t)
 
 (use-package nix-mode
   :mode "\\.nix\\'"
+  :config
+  (add-hook 'nix-mode-hook 'company-mode)
   :ensure t)

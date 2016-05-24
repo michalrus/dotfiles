@@ -3,7 +3,9 @@
 (use-package tex-site
   :ensure auctex
   ;; override C-c C-c with GNU `make' if possible
-  :config (add-hook 'LaTeX-mode-hook 'setup-compilation-with-make)
+  :config
+  (add-hook 'LaTeX-mode-hook 'setup-compilation-with-make)
+  (add-hook 'LaTeX-mode-hook 'company-mode)
   :mode ("\\.tex\\'" . latex-mode)
   :commands (latex-mode LaTeX-mode plain-tex-mode plain-TeX-mode)
   :pin gnu)

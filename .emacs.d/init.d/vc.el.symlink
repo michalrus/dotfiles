@@ -5,6 +5,7 @@
   (global-magit-file-mode)
   (setq magit-log-arguments '("--graph" "--color" "--decorate" "--show-signature" "-n256" "++order=date")
         magit-merge-arguments '("--ff-only"))
+  (add-hook 'git-commit-mode-hook 'company-mode)
   :ensure t)
 
 (use-package diff-hl
