@@ -7,6 +7,10 @@
       version = 2;
       device = "/dev/sda";
     };
-    initrd.luks.devices = [ { name = "crypt"; device = "/dev/sda2"; } ];
+    initrd.luks.devices = [{
+      name = "crypt";
+      device = "/dev/sda2";
+      # allowDiscards = true; # for SSD
+    }];
   };
 }
