@@ -33,7 +33,11 @@
   services = {
     haveged.enable = true;
     printing.enable = false;
-    locate.enable = true;
+    locate = {
+      enable = true;
+      includeStore = true;
+      interval = "hourly";
+    };
   };
 
   users = {
