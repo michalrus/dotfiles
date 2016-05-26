@@ -51,7 +51,7 @@ in
 
     services.udev.extraRules = ''
       # reload logkeys when a new USB keyboard is connected
-      ACTION=="add", SUBSYSTEM=="input", SUBSYSTEMS=="usb", ATTRS{authorized}=="1", RUN+="${pkgs.systemd}/bin/systemctl restart logkeys.service"
+      ACTION=="add", SUBSYSTEM=="input", SUBSYSTEMS=="usb", ATTRS{authorized}=="1", RUN+="${config.systemd.package}/bin/systemctl restart logkeys.service"
       '';
 
   };

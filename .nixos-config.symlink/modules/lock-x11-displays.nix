@@ -46,7 +46,7 @@ in
     security.sudo = {
       enable = true;
       extraConfig = ''
-        %users      ALL=(ALL:ALL) NOPASSWD: ${pkgs.systemd}/bin/systemctl start lock-x11-displays
+        %users      ALL=(ALL:ALL) NOPASSWD: ${config.systemd.package}/bin/systemctl start lock-x11-displays
         '';
     };
 
