@@ -42,7 +42,7 @@ in
       script = ''
         ls /dev/input/by-path | grep kbd | while IFS= read -r inp ; do
           rinp="$(readlink -f "/dev/input/by-path/$inp")"
-          logkeys --start --device="$rinp" --output=/var/log/logkeys.log ${if cfg.keymap == "" then "" else "--keymap=\"${pkgs.logkeys}/share/logkeys/${cfg.keymap}.map\""}
+          logkeys --start --device="$rinp" --output=/var/log/logkeys.log ${optionalString (cfg.keymap != "") "--keymap=\"${pkgs.logkeys}/share/logkeys/${cfg.keymap}.map\""}
           # why is the following not configurable?!
           rm /var/run/logkeys.pid
         done
