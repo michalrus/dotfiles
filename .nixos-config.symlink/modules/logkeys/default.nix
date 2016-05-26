@@ -14,9 +14,9 @@ in
         default = false;
       };
       keymap = mkOption {
-        type = types.string;
+        type = types.nullOr types.string;
         example = "pt_BR";
-        default = "";
+        default = null;
         description = "By default will use the built-in en_US keymap.";
       };
     };
@@ -42,7 +42,7 @@ in
       script = ''
         ls /dev/input/by-path | grep kbd | while IFS= read -r inp ; do
           rinp="$(readlink -f "/dev/input/by-path/$inp")"
-          logkeys --start --device="$rinp" --output=/var/log/logkeys.log ${optionalString (cfg.keymap != "") "--keymap=\"${pkgs.logkeys}/share/logkeys/${cfg.keymap}.map\""}
+          logkeys --start --device="$rinp" --output=/var/log/logkeys.log ${optionalString (cfg.keymap != null) "--keymap=\"${pkgs.logkeys}/share/logkeys/${cfg.keymap}.map\""}
           # why is the following not configurable?!
           rm /var/run/logkeys.pid
         done
