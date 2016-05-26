@@ -44,6 +44,7 @@
         company-idle-delay 0
         company-minimum-prefix-length 1)
   :config
+  (add-hook 'prog-mode-hook 'company-mode)
   ;; disables TAB in company-mode, freeing it for yasnippet
   (define-key company-active-map [tab] nil)
   :ensure t)

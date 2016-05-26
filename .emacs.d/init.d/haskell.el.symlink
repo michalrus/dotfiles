@@ -19,7 +19,6 @@
     :config
     (add-to-list 'company-backends 'company-ghc)
     (setq company-ghc-show-info t)
-    (add-hook 'haskell-mode-hook 'company-mode)
     :ensure t))
 
 (use-package hindent
