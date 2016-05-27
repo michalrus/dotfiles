@@ -173,8 +173,14 @@
     ];
   };
 
-  users.extraUsers = {
-    m = {
+  users = {
+    guestAccount = {
+      enable = true;
+      skeleton = "/home/guest.skel";
+      groups = [ "nonet" "scanner" "networkmanager" "vboxusers" ];
+    };
+
+    extraUsers.m = {
       hashedPassword = "$6$wO42jkhqerm$kl.qIl5USrzqAZOIkXdicrBLBgVwka2Dz81nc.aNsNJZREXY.02XxPdL1FiTCcuVP2K/DSmXqAQ3aPbri/v.g1";
       isNormalUser = true;
       uid = 31337;
