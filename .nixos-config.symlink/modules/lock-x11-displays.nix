@@ -35,7 +35,7 @@ in
         done | sort | uniq | while read DISPLAY USER ; do
           [ -z "$(grep "^$USER:" /etc/shadow | cut -d : -f 2)" ] && continue # if password empty
           export DISPLAY
-          ${config.security.wrapperDir}/sudo --background -u $USER bash -c \
+          ${config.security.wrapperDir}/sudo -n --background -u $USER bash -c \
             'pkill -u $USER -USR1 dunst
              i3lock -n -c 000000 || true
              pkill -u $USER -USR2 dunst'
@@ -46,7 +46,7 @@ in
     security.sudo = {
       enable = true;
       extraConfig = ''
-        %users      ALL=(ALL:ALL) NOPASSWD: ${config.systemd.package}/bin/systemctl start lock-x11-displays
+        %users ALL = (root) NOPASSWD: ${config.systemd.package}/bin/systemctl start lock-x11-displays
         '';
     };
 
