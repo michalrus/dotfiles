@@ -4,10 +4,7 @@ with lib;
 
 let
   cfg = config.users.guestAccount;
-  emptyDir = pkgs.stdenv.mkDerivation {
-    name = "empty-directory";
-    builder = builtins.toFile "" "source $stdenv/setup \n mkdir -p $out";
-  };
+  emptyDir = pkgs.runCommand "empty-directory" {} "mkdir -p $out";
 in
 
 {
