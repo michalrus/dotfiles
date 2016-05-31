@@ -1,0 +1,7 @@
+#!/bin/sh
+
+realEmacs="$(command -vp emacs)"
+
+rm "$HOME"/.emacs.d/.emacs.desktop.lock || true
+
+exec "$SHELL" --login -c "exec \"$realEmacs\" --daemon"

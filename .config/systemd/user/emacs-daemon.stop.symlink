@@ -1,0 +1,3 @@
+#!/bin/sh
+
+exec emacsclient --eval "(progn (setq kill-emacs-hook 'nil) (kill-emacs))"
