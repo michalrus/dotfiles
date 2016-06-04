@@ -4,4 +4,4 @@ feh --bg-scale "$HOME/.wallpaper.png" || true
 
 # make sure that ~/.shell/login will be read
 # (for some reason doing `. ~/.shell/login` here doesn’t set the PATH)
-exec $SHELL --login -c "exec env-killing-wrapper DBUS_SESSION_BUS_ADDRESS='$DBUS_SESSION_BUS_ADDRESS' i3"
+exec $SHELL --login -c 'exec i3'
