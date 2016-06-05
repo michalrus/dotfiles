@@ -1,5 +1,10 @@
 set $mod Mod4
 
+exec_always rm ~/.config/i3/config
+bindsym $mod+Shift+c exec "i3-merge-configs && i3-msg reload && rm ~/.config/i3/config"
+bindsym $mod+Shift+r exec "i3-merge-configs && i3-msg restart"
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
 font pango:DejaVu Sans 10
 new_window pixel 1
 new_float normal
@@ -9,7 +14,6 @@ floating_modifier $mod
 bindsym $mod+l exec sudo -n systemctl start lock-x11-displays
 bindsym $mod+d exec dmenu_path | dmenu | xargs -0 i3 exec
 bindsym $mod+Return exec st -e zsh -i -c s
-bindsym $mod+Shift+Return exec emacs
 bindsym $mod+Shift+q kill
 bindsym $mod+k exec pass-autotype
 bindsym $mod+i exec xrandr-invert-colors
@@ -72,10 +76,6 @@ bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
-bindsym $mod+Shift+c reload
-bindsym $mod+Shift+r restart
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
-
 mode "resize" {
   bindsym Left  resize shrink width  10 px or 5 ppt
   bindsym Down  resize grow   height 10 px or 5 ppt
@@ -97,7 +97,7 @@ client.urgent           #dc322f #dc322f #eee8d5 #cb4b16
 bar {
   status_command conky-i3bar
   tray_output primary
-  separator_symbol "•"
+  separator_symbol "|"
   position top
   colors {
     background #002b36
@@ -113,7 +113,5 @@ bar {
 }
 
 exec --no-startup-id dunst
-exec --no-startup-id remote-notifications
-exec --no-startup-id space2ctrl
 exec --no-startup-id compton
 exec --no-startup-id ~/.screenlayout/current

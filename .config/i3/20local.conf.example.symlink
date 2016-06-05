@@ -1,0 +1,3 @@
+bindsym $mod+Shift+Return exec emacs
+exec --no-startup-id remote-notifications
+exec --no-startup-id space2ctrl
