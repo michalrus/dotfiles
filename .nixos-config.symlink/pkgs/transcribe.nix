@@ -9,7 +9,7 @@ let
     xorg.libX11 xorg.libSM libpng12 gstreamer gst_plugins_base zlib
   ]);
 
-  dumpDRM = super.writeScript "transcribe-crack" ''
+  dumpDRM = super.writeScript "transcribe-dump-drm" ''
     rm "$HOME/.yeqwqauh"
     rm "$HOME/.yeqwqauhu75qeA"
     rm "$HOME/.Transcribe!7kjIQ1y"
@@ -19,7 +19,7 @@ let
     logDir="$HOME/.transcribe-strace-logs"
     mkdir -p "$logDir"
     logFile="$logDir/$(date -Ins).log"
-    exec ${super.strace}/bin/strace -e open -o "$logFile" -- ${randomString}/bin/.transcribe.orig "$@"
+    exec ${super.strace}/bin/strace -e open -o "$logFile" -- ${randomString} "$@"
     '';
 
 in
@@ -38,24 +38,22 @@ super.stdenv.mkDerivation {
   dontPatchELF = true;
 
   installPhase = ''
-    mkdir -p $out/bin $out/share/doc
-
-    cp transcribe $out/bin/.transcribe.orig
-
+    mkdir -p $out/bin $out/bin.original $out/share/doc
+    cp transcribe $out/bin.original
     cp xschelp.htb readme_gtk.html $out/share/doc
-    ln -s $out/share/doc/xschelp.htb $out/bin
-
     cp -r gtkicons $out/share/icons
+
+    ln -s $out/share/doc/xschelp.htb $out/bin.original
 
     patchelf \
       --set-interpreter $(cat ${super.stdenv.cc}/nix-support/dynamic-linker) \
-      $out/bin/.transcribe.orig
+      $out/bin.original/transcribe
 
-    wrapProgram $out/bin/.transcribe.orig \
+    wrapProgram $out/bin.original/transcribe \
       --prefix GST_PLUGIN_SYSTEM_PATH : "$GST_PLUGIN_SYSTEM_PATH" \
       --set LD_LIBRARY_PATH ${libpath}
 
     cp ${dumpDRM} $out/bin/transcribe
-    substituteInPlace $out/bin/transcribe --replace ${randomString} $out
+    substituteInPlace $out/bin/transcribe --replace ${randomString} $out/bin.original/transcribe
     '';
 }
