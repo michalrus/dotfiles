@@ -93,6 +93,7 @@
     (texlive.combine {
       inherit (texlive) scheme-small latexmk titlesec tocloft todonotes cleveref lipsum biblatex logreq cm-super csquotes pgfplots adjustbox collectbox ccicons;
     })
+    transcribe
     transmission_gtk
     utox
     visualvm
