@@ -18,6 +18,7 @@
 	pc = !git-pc
 [core]
 	safecrlf = false
+	commentchar = ";"
 [color]
 	ui = true
 [merge]
