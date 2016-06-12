@@ -59,7 +59,7 @@
     gcc
     git
     gitstats
-    gnupg1compat
+    (lowPrio gnupg1compat)
     gnupg
     gpac
     graphicsmagick
@@ -81,7 +81,7 @@
     mkpasswd
     moreutils
     mtr
-    netcat-openbsd
+    (hiPrio netcat-openbsd)
     nix-prefetch-scripts
     nix-repl
     nmap
@@ -100,7 +100,7 @@
     silver-searcher
     socat
     sox
-    stdmanpages
+    (lowPrio stdmanpages)
     stdman
     tesseract
     unzip
