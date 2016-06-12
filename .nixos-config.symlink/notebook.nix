@@ -92,6 +92,7 @@
     st
     (texlive.combine {
       inherit (texlive) scheme-small latexmk titlesec tocloft todonotes cleveref lipsum biblatex logreq cm-super csquotes pgfplots adjustbox collectbox ccicons;
+      gregorio = pkgs.gregorio.forTexlive;
     })
     transcribe
     transmission_gtk

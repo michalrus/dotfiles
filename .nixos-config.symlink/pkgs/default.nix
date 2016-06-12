@@ -5,6 +5,7 @@
     imgurbash2         = (import ./imgurbash2.nix super self);
     conkeror-unwrapped = (import ./conkeror-unwrapped.nix super self);
     conky              = (import ./conky super self);
+    gregorio           = (import ./gregorio.nix super self);
     mtr                = (import ./mtr.nix super self);
     mu                 = (import ./mu super self);
     st                 = (import ./st super self);
