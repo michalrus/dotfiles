@@ -4,8 +4,10 @@ let
 
   version = "4.1.4";
 
+  pname = "gregorio";
+
   pkg = super.stdenv.mkDerivation {
-    name = "gregorio-" + version;
+    name = pname + "-" + version;
     src = super.fetchFromGitHub {
       owner = "gregorio-project";
       repo = "gregorio";
@@ -35,9 +37,9 @@ in
 
 pkg // {
   forTexlive = {
-    pkgs = [ (pkg // {
-      tlType = "bin";
-      pname = "gregorio";
-    }) ];
+    pkgs = [
+      (pkg // { tlType = "run"; pname = pname; })
+      (pkg // { tlType = "bin"; pname = pname; }) # I’ve had enough.
+    ] ++ super.texlive.luatex.pkgs ++ super.texlive.luamplib.pkgs;
   };
 }
