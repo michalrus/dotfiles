@@ -48,7 +48,6 @@
 
   nixpkgs.config = {
     allowBroken = true;
-    pulseaudio = true;
   };
 
   environment.systemPackages = with pkgs; [
@@ -85,8 +84,7 @@
     pass
     pavucontrol
     pinentry
-    #pkgs.firefoxWrapper
-    ((wrapFirefox.override { libpulseaudio = libpulseaudio.out; }) firefox-unwrapped { }) # temporary solution for https://github.com/NixOS/nixpkgs/issues/15126
+    pkgs.firefoxWrapper
     python34Packages.livestreamer
     rtmpdump
     scala
