@@ -62,6 +62,7 @@
     dunst
     emacs
     evince
+    ghostscript
     gimp
     gnome.gnome_icon_theme
     gnome3.dconf   # so that GnuCash prefs can be changed
@@ -91,7 +92,7 @@
     scala
     st
     (texlive.combine {
-      inherit (texlive) scheme-small latexmk titlesec tocloft todonotes cleveref lipsum biblatex logreq cm-super csquotes pgfplots adjustbox collectbox ccicons;
+      inherit (texlive) scheme-small latexmk titlesec tocloft todonotes cleveref lipsum biblatex logreq cm-super csquotes pgfplots adjustbox collectbox ccicons polski placeins xstring pdfpages;
       gregorio = pkgs.gregorio.forTexlive;
     })
     transcribe
