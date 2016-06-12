@@ -103,6 +103,7 @@
     (lowPrio stdmanpages)
     stdman
     tesseract
+    traceroute
     unzip
     urlwatch
     usbutils
