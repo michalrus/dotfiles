@@ -72,6 +72,7 @@
     faad2   # video in Firefox
     ffmpeg
     gnumake
+    gnumake.doc
     gocr
     libjpeg
     lshw
