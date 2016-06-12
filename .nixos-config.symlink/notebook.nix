@@ -77,6 +77,7 @@
     jmtpfs
     libmtp
     libnotify
+    lilypond
     mpv
     mu
     oathToolkit
