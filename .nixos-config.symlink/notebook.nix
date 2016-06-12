@@ -70,7 +70,8 @@
     gnome3.gnome_themes_standard
     gnucash26
     (haskellPackages.ghcWithHoogle (haskellPackages: with haskellPackages; [
-      cabal-install ghc-mod happy hasktags hindent hlint parallel stylish-haskell turtle
+      cabal-install happy hindent hlint parallel stylish-haskell turtle
+      # ghc-mod hasktags
     ]))
     isync
     jmeter
@@ -121,13 +122,13 @@
     wireshark.enable = true;
   };
 
+  virtualisation.virtualbox.host.enable = true;
+
   services = {
     logind.extraConfig = ''
         HandleLidSwitch=suspend
         HandlePowerKey=suspend
       '';
-
-    virtualboxHost.enable = true;
 
     logkeys = {
       enable = true;

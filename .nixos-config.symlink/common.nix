@@ -3,7 +3,7 @@
 {
 
   nix = {
-    useChroot = true; # https://nixos.org/nixos/manual/options.html#opt-nix.useChroot
+    useSandbox = true;
 
     trustedBinaryCaches = [
       http://hydra.nixos.org
