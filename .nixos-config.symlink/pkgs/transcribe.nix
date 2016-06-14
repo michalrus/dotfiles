@@ -51,7 +51,7 @@ super.stdenv.mkDerivation {
 
     wrapProgram $out/bin.original/transcribe \
       --prefix GST_PLUGIN_SYSTEM_PATH : "$GST_PLUGIN_SYSTEM_PATH" \
-      --set LD_LIBRARY_PATH ${libpath}
+      --prefix LD_LIBRARY_PATH : "${libpath}"
 
     cp ${dumpDRM} $out/bin/transcribe
     substituteInPlace $out/bin/transcribe --replace ${randomString} $out/bin.original/transcribe
