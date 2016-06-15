@@ -7,3 +7,7 @@ title_format_fn = function (window) {
 
 // Don’t kill it by accident.
 can_kill_last_buffer = false;
+
+// Key aliases.
+require("global-overlay-keymap");
+define_key_alias("C-context_menu", "M-x");
