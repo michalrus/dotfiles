@@ -23,5 +23,22 @@ user_pref('intl.accept_languages', 'en,pl');
 user_pref('browser.privatebrowsing.autostart', true);
 user_pref('privacy.donottrackheader.enabled', true);
 
+// Pretend to be real Firefox (otherwise, some apps display their
+// versions back from 2000s… looking at you, Google. ಠ_ಠ).
+user_pref('general.useragent.compatMode.firefox', true);
+
 // However, if I turn the history back on…
 url_completion_use_history = true;
+
+// µBlock ‘glue.’ Unfortunately, you seem to have to install and
+// configure the extensions manually.
+interactive(
+    "ublock", "Open uBlock dashboard in a new buffer",
+    function (I) {
+        var ublock_branch;
+        if     ("@ublock0/content-policy;1" in Cc) ublock_branch = "ublock0";
+        else if ("@ublock/content-policy;1" in Cc) ublock_branch = "ublock";
+        else throw interactive_error("uBlock not found");
+        load_url_in_new_buffer("chrome://" + ublock_branch + "/content/dashboard.html");
+    }
+);
