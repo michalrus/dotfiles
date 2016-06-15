@@ -1,0 +1,9 @@
+// -*- mode: javascript -*-
+
+// Keep current profile name and URL in X window name (for pass-autotype).
+title_format_fn = function (window) {
+  return 'conkeror \u2014 ' + get_current_profile() + ' \u2014 ' + window.buffers.current.description;
+};
+
+// Don’t kill it by accident.
+can_kill_last_buffer = false;
