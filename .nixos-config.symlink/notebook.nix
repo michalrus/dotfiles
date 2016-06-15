@@ -167,7 +167,6 @@
     enableGhostscriptFonts = true;
     fonts = with pkgs; [
       anonymousPro
-      corefonts
       hack-font
       inconsolata
       terminus_font
