@@ -10,4 +10,18 @@ can_kill_last_buffer = false;
 
 // Key aliases.
 require("global-overlay-keymap");
-define_key_alias("C-context_menu", "M-x");
+define_key_alias("C-context_menu", "M-x"); // Emacs does this and I grew accustomed…
+
+// Home.
+homepage = "about:blank";
+
+// `,pl` is needed so that Google will NOT display in Polish when
+// accessed from Poland…
+user_pref('intl.accept_languages', 'en,pl');
+
+// Privacy!
+user_pref('browser.privatebrowsing.autostart', true);
+user_pref('privacy.donottrackheader.enabled', true);
+
+// However, if I turn the history back on…
+url_completion_use_history = true;
