@@ -12,3 +12,10 @@ include "%L"
 <Multi_key> <P> <I>                   : "Π" U03A0 # GREEK CAPITAL LETTER PI
 <Multi_key> <p> <h> <i>               : "φ" U03A6 # GREEK SMALL LETTER PHI
 <Multi_key> <P> <H> <I>               : "Φ" U03C6 # GREEK CAPITAL LETTER PHI
+
+<Multi_key> <l> <o> <d>               : "ಠ_ಠ"         # emoji: ‘look of disapproval’
+<Multi_key> <t> <a> <b> <l> <e>       : "(╯°□°)╯︵ ┻━┻" # emoji: ‘flipping table’
+<Multi_key> <s> <h> <r> <u> <g>       : "¯\\_(ツ)_/¯"   # emoji: ‘shrug’
+<Multi_key> <n> <a> <s> <f>           : "¯\\_(⌣̯̀⌣́)_/¯"  # emoji: ‘not a single f××× was given’
+<Multi_key> <l> <o> <v> <e>           : "♥‿♥"          # emoji: ‘love at first sight’
+<Multi_key> <h> <a> <p> <p> <y>       : "(ﾉ^_^)ﾉ"      # emoji: ‘squinty happy arms up’
