@@ -112,7 +112,7 @@ let __original_kill_buffer = kill_buffer;
 
 // Advice `kill-buffer` with saving buffer metadata.
 kill_buffer = function (buffer, force) {
-    if (buffer.display_uri_string) {
+    if (buffer.display_uri_string && buffer.display_uri_string != homepage) {
         let md = {
             url: buffer.display_uri_string,
             title: buffer.title,
