@@ -5,6 +5,8 @@
 export EDITOR='emacs'
 export VISUAL="$EDITOR"
 
+export BROWSER='conkeror'
+
 export DEBFULLNAME="Michal Rus"
 export DEBEMAIL="m@michalrus.com"
 
