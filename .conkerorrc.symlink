@@ -68,7 +68,7 @@ key_kill_mode.test.push(build_url_regexp($domain = "google", $allow_www = true, 
 require("clicks-in-new-buffer.js");
 
 // µBlock ‘glue.’ Unfortunately, you seem to have to install and
-// configure the extensions manually.
+// configure extensions manually.
 interactive(
     "ublock", "Open uBlock dashboard in a new buffer",
     function (I) {
@@ -103,3 +103,50 @@ define_webjump('youtube', 'https://www.youtube.com/results?search_query=%s&page=
 
 define_webjump('debian', 'https://packages.debian.org/search?keywords=%s');
 define_webjump('wolframalpha', 'http://www.wolframalpha.com/input/?i=%s');
+
+// Restoring killed buffers. Based on https://git.io/voaqM .
+let killed_buffers_metadata = [];
+
+// Save the original `kill-buffer`.
+let __original_kill_buffer = kill_buffer;
+
+// Advice `kill-buffer` with saving buffer metadata.
+kill_buffer = function (buffer, force) {
+    if (buffer.display_uri_string) {
+        let md = {
+            url: buffer.display_uri_string,
+            title: buffer.title,
+            history: buffer.web_navigation.sessionHistory
+        };
+        let md_json = JSON.stringify(md);
+        if (killed_buffers_metadata.findIndex(e => JSON.stringify(e) == md_json) < 0)
+            killed_buffers_metadata.push(md);
+    }
+    __original_kill_buffer(buffer, force);
+};
+
+// New command to restore a killed buffer.
+define_key(content_buffer_normal_keymap, "M-q", "restore-killed-buffer");
+interactive(
+    "restore-killed-buffer",
+    "Restores a previously killed buffer (GETs the URL and sets its history back).",
+    function (I) {
+        if (killed_buffers_metadata.length !== 0) {
+            let killed = yield I.minibuffer.read(
+                $prompt = "Restore a killed buffer:",
+                $completer = new all_word_completer($completions = killed_buffers_metadata,
+                                                    $get_string = md => md.url,
+                                                    $get_description = md => md.title),
+                $default_completion = killed_buffers_metadata[killed_buffers_metadata.length - 1],
+                $auto_complete = "url",
+                $auto_complete_initial = true,
+                $auto_complete_delay = 0,
+                $require_match = true
+            );
+            load_url_in_new_buffer(killed.url);
+            let buf = I.window.buffers.current;
+            let nav = buf.web_navigation;
+            nav.sessionHistory = killed.history;
+            nav.gotoIndex(nav.sessionHistory.index);
+        } else I.window.minibuffer.message("No killed buffers.");
+    });
