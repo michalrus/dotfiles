@@ -7,4 +7,5 @@ super.conkeror-unwrapped.overrideDerivation (oldAttrs: {
     rev = "772615e013f72a594720ddeedade327fd7eb40a2";
     sha256 = "0vci9nqdaky4l0a2sxa8x359z645vy628zxmc6wviznbmkanxkm2";
   };
+  patches = [ ./ctrl-click-in-new-buffer.patch ];
 })

@@ -1,6 +1,7 @@
 // -*- mode: javascript -*-
 
-// Keep current profile name and URL in X window name (for pass-autotype).
+// Keep current profile name and URL in X window name (for
+// pass-autotype).
 title_format_fn = function (window) {
   return 'conkeror \u2014 ' + get_current_profile() + ' \u2014 ' + window.buffers.current.description;
 };
@@ -13,7 +14,8 @@ url_remoting_fn = load_url_in_new_buffer;
 
 // Key aliases.
 require("global-overlay-keymap");
-define_key_alias("C-context_menu", "M-x"); // Emacs does this and I grew accustomed…
+define_key_alias("C-context_menu", "M-x"); // Emacs does this and I
+                                           // grew accustomed…
 
 // Home.
 homepage = "about:blank";
@@ -49,6 +51,10 @@ add_hook("mode_line_hook", mode_line_adder(buffer_count_widget), true);
 // Turn off key stealing on some websites.
 require("key-kill");
 key_kill_mode.test.push(build_url_regexp($domain = "google", $allow_www = true, $tlds = ["com", "pl"]));
+
+// Open links in new buffers on middle-button click (and C-click with
+// my patch).
+require("clicks-in-new-buffer.js");
 
 // µBlock ‘glue.’ Unfortunately, you seem to have to install and
 // configure the extensions manually.
