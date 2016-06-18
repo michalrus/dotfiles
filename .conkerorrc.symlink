@@ -6,8 +6,23 @@ title_format_fn = function (window) {
   return 'conkeror \u2014 ' + get_current_profile() + ' \u2014 ' + window.buffers.current.description;
 };
 
-// Don’t kill it by accident.
-can_kill_last_buffer = false;
+// Killing the last buffer will add another `about:blank` one. If the
+// last one *is* `about:blank`, however, do kill the window.
+add_hook("window_before_close_hook",
+         function (window) {
+             let bs = window.buffers;
+             let last = bs.current;
+             if (bs.count == 1 && last.display_uri_string != homepage) {
+                 create_buffer(window,
+                               buffer_creator(content_buffer,
+                                              $opener = last,
+                                              $load = load_spec(homepage)),
+                               OPEN_NEW_BUFFER);
+                 kill_buffer(last, true);
+                 return false;
+             }
+             else return true;
+         });
 
 // Make xdg-open open new URLs in an existing X11 window.
 url_remoting_fn = load_url_in_new_buffer;
