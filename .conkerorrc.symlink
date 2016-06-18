@@ -43,6 +43,9 @@ suggest_save_path_from_file_name = function (filename, buffer) {
     return f.path;
 };
 
+// Add buffer num/count information to mode line.
+add_hook("mode_line_hook", mode_line_adder(buffer_count_widget), true);
+
 // µBlock ‘glue.’ Unfortunately, you seem to have to install and
 // configure the extensions manually.
 interactive(
@@ -55,3 +58,27 @@ interactive(
         load_url_in_new_buffer("chrome://" + ublock_branch + "/content/dashboard.html");
     }
 );
+
+// Webjumps.
+define_webjump('babla', 'http://en.bab.la/dictionary/polish-english/%s');
+define_webjump('diki', 'http://www.diki.pl/slownik-angielskiego/?q=%s&source=opensearch');
+define_webjump('fd', 'http://www.thefreedictionary.com/_/search.aspx?pid=osearch&word=%s');
+define_webjump('mw', 'http://www.merriam-webster.com/dictionary/%s');
+define_webjump('sjp', 'http://sjp.pwn.pl/szukaj/%s.html');
+define_webjump('translate', 'http://translate.google.com/translate_t#auto|en|%s');
+
+define_webjump('allegro', 'http://allegro.pl/listing/listing.php?string=%s&search_scope=');
+define_webjump('facebook', 'https://www.facebook.com/search/more?q=%s');
+define_webjump('filmweb', 'http://www.filmweb.pl/search?q=%s&source=opensearch');
+define_webjump('ilewazy', 'http://ilewazy.pl/produkty/page/1/q/%s');
+define_webjump('images', 'http://www.google.com/search?tbm=isch&q=%s');
+define_webjump('quora', 'http://www.quora.com/opensearch/query?q=%s&pw={startPage?}');
+define_webjump('soundcloud', 'http://soundcloud.com/search?q=%s');
+define_webjump('torrentz-eu', 'https://torrentz.eu/search?q=%s');
+define_webjump('tpb', 'http://thepiratebay.cd/search/%s/0/7/0');
+define_webjump('twitter', 'https://twitter.com/search?q=%s');
+define_webjump('yelp', 'http://www.yelp.com/search?find_desc=%s&src=opensearch');
+define_webjump('youtube', 'https://www.youtube.com/results?search_query=%s&page={startPage?}&utm_source=opensearch');
+
+define_webjump('debian', 'https://packages.debian.org/search?keywords=%s');
+define_webjump('wolframalpha', 'http://www.wolframalpha.com/input/?i=%s');
