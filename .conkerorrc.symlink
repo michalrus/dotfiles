@@ -8,6 +8,9 @@ title_format_fn = function (window) {
 // Don’t kill it by accident.
 can_kill_last_buffer = false;
 
+// Make xdg-open open new URLs in an existing X11 window.
+url_remoting_fn = load_url_in_new_buffer;
+
 // Key aliases.
 require("global-overlay-keymap");
 define_key_alias("C-context_menu", "M-x"); // Emacs does this and I grew accustomed…
