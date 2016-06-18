@@ -36,6 +36,13 @@ user_pref("browser.enable_automatic_image_resizing", true);
 // However, if I turn the history back on…
 url_completion_use_history = true;
 
+// By default, save stuff in ~/Downloads/.
+suggest_save_path_from_file_name = function (filename, buffer) {
+    let f = make_file("~/Downloads/");
+    f.append(filename);
+    return f.path;
+};
+
 // µBlock ‘glue.’ Unfortunately, you seem to have to install and
 // configure the extensions manually.
 interactive(
