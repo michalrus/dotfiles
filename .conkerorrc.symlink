@@ -13,11 +13,7 @@ add_hook("window_before_close_hook",
              let bs = window.buffers;
              let last = bs.current;
              if (bs.count == 1 && last.display_uri_string != homepage) {
-                 create_buffer(window,
-                               buffer_creator(content_buffer,
-                                              $opener = last,
-                                              $load = load_spec(homepage)),
-                               OPEN_NEW_BUFFER);
+                 load_url_in_new_buffer(homepage, window);
                  kill_buffer(last, true);
                  return false;
              }
