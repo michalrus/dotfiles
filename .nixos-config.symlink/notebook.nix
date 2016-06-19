@@ -55,13 +55,14 @@
     awf-gtk
     calibre
     compton
-    conkeror-unwrapped
+    conkeror
     conky
     cool-retro-term
     dmenu
     dunst
     emacs
     evince
+    firefox
     ghostscript
     gimp
     gnome.gnome_icon_theme
@@ -86,7 +87,6 @@
     pass
     pavucontrol
     pinentry
-    pkgs.firefoxWrapper
     python34Packages.livestreamer
     rtmpdump
     scala
