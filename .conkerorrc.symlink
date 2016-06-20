@@ -65,6 +65,9 @@ add_hook("mode_line_hook", mode_line_adder(buffer_count_widget), true);
 // Turn off strict JS checks (these slowed YouTube down by a *lot*).
 session_pref("javascript.options.strict", false);
 
+// Plain text in clipboard! Yesss…
+session_pref("clipboard.plainTextOnly", true);
+
 // Turn off key stealing on some websites.
 require("key-kill");
 key_kill_mode.test.push(build_url_regexp($domain = "google", $allow_www = true, $tlds = ["com", "pl"]));
