@@ -28,6 +28,16 @@ require("global-overlay-keymap");
 define_key_alias("C-context_menu", "M-x"); // Emacs does this and I
                                            // grew accustomed…
 
+// Redefine next/prev to M-] and M-[ (as in Emacs).
+undefine_key(default_global_keymap, "M-n");
+undefine_key(default_global_keymap, "M-p");
+undefine_key(default_global_keymap, "M-N");
+undefine_key(default_global_keymap, "M-P");
+define_key(default_global_keymap, "M-]", "buffer-next");
+define_key(default_global_keymap, "M-[", "buffer-previous");
+define_key(default_global_keymap, "M-}", "buffer-move-forward");
+define_key(default_global_keymap, "M-{", "buffer-move-backward");
+
 // Home.
 homepage = "about:blank";
 
