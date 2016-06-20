@@ -15,8 +15,8 @@ super.conkeror-unwrapped.overrideDerivation (oldAttrs: {
 
   src = super.fetchgit {
     url = git://repo.or.cz/conkeror.git;
-    rev = "772615e013f72a594720ddeedade327fd7eb40a2";
-    sha256 = "0vci9nqdaky4l0a2sxa8x359z645vy628zxmc6wviznbmkanxkm2";
+    rev = "6d4599333c402f1dcdfdb60812068060e30a10d9";
+    sha256 = "1vqyv9ga1ksqq1mkn92r0wbxgpbpd0cq46hfrfknaik0nzca7pq2";
   };
 
   patches = [ ./ctrl-click-in-new-buffer.patch ];
