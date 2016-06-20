@@ -13,7 +13,7 @@ super.stdenv.mkDerivation rec {
     substituteInPlace etc/visualvm.conf \
       --replace "#visualvm_jdkhome=" "visualvm_jdkhome=" \
       --replace "/path/to/jdk" "${super.openjdk8}/lib/openjdk/" \
-      --replace 'visualvm_default_options="' 'visualvm_default_options="--laf com.sun.java.swing.plaf.gtk.GTKLookAndFeel '
+      --replace 'visualvm_default_options="' 'visualvm_default_options="--laf com.sun.java.swing.plaf.gtk.GTKLookAndFeel -J-Dawt.useSystemAAFontSettings=lcd -J-Dswing.aatext=true '
 
     mkdir $out && cp -R . $out/
 
