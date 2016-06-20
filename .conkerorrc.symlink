@@ -38,6 +38,9 @@ user_pref('intl.accept_languages', 'en,pl');
 // Privacy!
 session_pref('browser.privatebrowsing.autostart', true);
 session_pref('privacy.donottrackheader.enabled', true);
+session_pref('datareporting.healthreport.uploadEnabled', false);
+session_pref('datareporting.policy.dataSubmissionEnabled', false);
+session_pref('toolkit.telemetry.enabled', false);
 
 // Pretend to be real Firefox (otherwise, some apps display their
 // versions back from 2000s… looking at you, Google. ಠ_ಠ).
