@@ -70,7 +70,8 @@
     gnome3.adwaita-icon-theme
     gnome3.gnome_themes_standard
     gnucash26
-    (haskellPackages.ghcWithHoogle (haskellPackages: with haskellPackages; [
+    # (haskellPackages.ghcWithHoogle (haskellPackages: with haskellPackages; [
+    (haskellPackages.ghcWithPackages (haskellPackages: with haskellPackages; [
       cabal-install happy hindent hlint parallel stylish-haskell turtle
       # ghc-mod hasktags
     ]))
