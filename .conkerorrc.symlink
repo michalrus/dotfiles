@@ -36,15 +36,15 @@ homepage = "about:blank";
 user_pref('intl.accept_languages', 'en,pl');
 
 // Privacy!
-user_pref('browser.privatebrowsing.autostart', true);
-user_pref('privacy.donottrackheader.enabled', true);
+session_pref('browser.privatebrowsing.autostart', true);
+session_pref('privacy.donottrackheader.enabled', true);
 
 // Pretend to be real Firefox (otherwise, some apps display their
 // versions back from 2000s… looking at you, Google. ಠ_ಠ).
-user_pref('general.useragent.compatMode.firefox', true);
+session_pref('general.useragent.compatMode.firefox', true);
 
 // Fit images to window size.
-user_pref("browser.enable_automatic_image_resizing", true);
+session_pref("browser.enable_automatic_image_resizing", true);
 
 // However, if I turn the history back on…
 url_completion_use_history = true;
@@ -60,7 +60,7 @@ suggest_save_path_from_file_name = function (filename, buffer) {
 add_hook("mode_line_hook", mode_line_adder(buffer_count_widget), true);
 
 // Turn off strict JS checks (these slowed YouTube down by a *lot*).
-user_pref("javascript.options.strict", false);
+session_pref("javascript.options.strict", false);
 
 // Turn off key stealing on some websites.
 require("key-kill");
