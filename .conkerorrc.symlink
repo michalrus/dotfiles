@@ -59,6 +59,9 @@ suggest_save_path_from_file_name = function (filename, buffer) {
 // Add buffer num/count information to mode line.
 add_hook("mode_line_hook", mode_line_adder(buffer_count_widget), true);
 
+// Turn off strict JS checks (these slowed YouTube down by a *lot*).
+user_pref("javascript.options.strict", false);
+
 // Turn off key stealing on some websites.
 require("key-kill");
 key_kill_mode.test.push(build_url_regexp($domain = "google", $allow_www = true, $tlds = ["com", "pl"]));
