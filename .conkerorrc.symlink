@@ -49,6 +49,9 @@ session_pref('general.useragent.compatMode.firefox', true);
 // Fit images to window size.
 session_pref("browser.enable_automatic_image_resizing", true);
 
+// Oh, don’t autoplay the media…
+session_pref("media.autoplay.enabled", false);
+
 // However, if I turn the history back on…
 url_completion_use_history = true;
 
@@ -73,6 +76,7 @@ require("key-kill");
 key_kill_mode.test.push(build_url_regexp($domain = "google", $allow_www = true, $tlds = ["com", "pl"]));
 key_kill_mode.test.push(build_url_regexp($domain = "drive.google"));
 key_kill_mode.test.push(build_url_regexp($domain = "facebook", $allow_www = true));
+key_kill_mode.test.push(build_url_regexp($domain = "youtube", $allow_www = true));
 
 // Open links in new buffers on middle-button click (and C-click with
 // my patch).
