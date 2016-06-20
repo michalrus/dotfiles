@@ -156,3 +156,37 @@ interactive(
             nav.gotoIndex(nav.sessionHistory.index);
         } else I.window.minibuffer.message("No killed buffers.");
     });
+
+// Opening URLs in `mpv`. Based on http://jaderholm.com/paste/mpv.js.html .
+define_key(content_buffer_normal_keymap, "m", "mpv");
+interactive(
+    "mpv",
+    "Play URL in mpv",
+    alternates(mpv, mpv_changing_command),
+    $browser_object = browser_object_links);
+function mpv_changing_command(I) {
+    yield mpv(I, true);
+}
+function mpv (I, change_command) {
+    let cwd = I.local.cwd;
+    let element = yield read_browser_object(I);
+    let spec = load_spec(element);
+    let uri = load_spec_uri_string(spec);
+    var cmd = "mpv";
+    var panel;
+    if (change_command) try {
+        panel = create_info_panel(
+            I.window,
+            "download-panel",
+            [["downloading",
+              element_get_operation_label(element, "Running on", "URI"),
+              load_spec_uri_string(spec)],
+             ["mime-type", "Mime type:", load_spec_mime_type(spec)]]);
+        cmd = yield I.minibuffer.read_shell_command(
+            $cwd = cwd,
+            $initial_value = cmd);
+    } finally {
+        if (panel) panel.destroy();
+    }
+    shell_command_with_argument_blind(cmd + " {}", uri, $cwd = cwd);
+}
