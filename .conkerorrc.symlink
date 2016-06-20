@@ -65,6 +65,8 @@ user_pref("javascript.options.strict", false);
 // Turn off key stealing on some websites.
 require("key-kill");
 key_kill_mode.test.push(build_url_regexp($domain = "google", $allow_www = true, $tlds = ["com", "pl"]));
+key_kill_mode.test.push(build_url_regexp($domain = "drive.google"));
+key_kill_mode.test.push(build_url_regexp($domain = "facebook", $allow_www = true));
 
 // Open links in new buffers on middle-button click (and C-click with
 // my patch).
