@@ -30,7 +30,8 @@
 ;; increase/decrease text size
 (use-package zoom-frm
   :config
-  (global-set-key (kbd "C-=") 'zoom-frm-in)
+  (global-set-key (kbd "C-+") 'zoom-frm-in)
+  (global-set-key (kbd "C-=") 'zoom-frm-unzoom)
   (global-set-key (kbd "C--") 'zoom-frm-out)
   :ensure t :pin melpa-stable)
 
