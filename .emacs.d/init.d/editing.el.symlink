@@ -49,8 +49,6 @@
   (define-key company-active-map [tab] nil)
   :ensure t)
 
-;;(use-package auto-complete :config (ac-config-default) :ensure t :pin melpa-stable)
-
 ;; visual line mode
 (visual-line-mode 1)
 
