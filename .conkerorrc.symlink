@@ -129,6 +129,7 @@ define_webjump('youtube', 'https://www.youtube.com/results?search_query=%s&page=
 
 define_webjump("archive", "https://web.archive.org/web/*/%s");
 define_webjump('debian', 'https://packages.debian.org/search?keywords=%s');
+define_webjump('isup', 'http://www.downforeveryoneorjustme.com/%s');
 define_webjump('nixpkgs', 'https://github.com/NixOS/nixpkgs/search?utf8=%E2%9C%93&q=%s');
 define_webjump('wolframalpha', 'http://www.wolframalpha.com/input/?i=%s');
 
