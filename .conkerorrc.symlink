@@ -55,7 +55,7 @@ session_pref('toolkit.telemetry.enabled', false);
 // NoScript.
 if ('@maone.net/noscript-service;1' in Cc) require("noscript");
 user_pref("capability.policy.maonoscript.sites",
-          " about: about:addons about:blank about:blocked about:certerror about:config about:crashes about:home about:memory about:neterror about:plugins about:pocket-saved about:pocket-signup about:preferences about:privatebrowsing about:sessionrestore about:srcdoc about:support blob: chrome: mediasource: moz-extension: moz-safe-about: resource: " +
+          " about: about:addons about:blank about:blocked about:certerror about:config about:crashes about:home about:memory about:neterror about:plugins about:preferences about:privatebrowsing about:sessionrestore about:srcdoc about:support blob: chrome: mediasource: moz-extension: moz-safe-about: resource: " +
           " ajax.googleapis.com bootstrapcdn.com code.jquery.com " +
           " google.com googlevideo.com gstatic.com maps.googleapis.com yimg.com youtube.com ytimg.com google.pl ");
 
