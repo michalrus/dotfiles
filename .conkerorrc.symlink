@@ -52,6 +52,9 @@ session_pref('datareporting.healthreport.uploadEnabled', false);
 session_pref('datareporting.policy.dataSubmissionEnabled', false);
 session_pref('toolkit.telemetry.enabled', false);
 
+// NoScript.
+if ('@maone.net/noscript-service;1' in Cc) require("noscript");
+
 // Pretend to be real Firefox (otherwise, some apps display their
 // versions back from 2000s… looking at you, Google. ಠ_ಠ).
 session_pref('general.useragent.compatMode.firefox', true);
