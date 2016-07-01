@@ -7,6 +7,11 @@ let
     sha256 = "13av7d9ayps9n0fas672agqpl1fy3ad73nc4kbfxab97s6jqv90q";
   };
 
+  httpsEverywhere =  { extName = "https-everywhere-eff@eff.org"; } // super.fetchurl {
+    url = "https://www.eff.org/files/https-everywhere-5.1.10-eff.xpi";
+    sha256 = "01rzprklbg13rjdgyg4q4y21f08g49ikc92m68j9iwrda5fs3ncq";
+  };
+
   noscript = super.stdenv.mkDerivation {
     name = "noscript";
     extName = "{73a6fe31-595d-460b-a920-fcc0f8843232}"; # <em:id/> from install.rdf
@@ -56,6 +61,7 @@ super.conkeror-unwrapped.overrideDerivation (oldAttrs: {
     ext=$out/libexec/conkeror/extensions
     mkdir -p $ext
     ln -s ${ublock} $ext/'${ublock.extName}.xpi'
+    ln -s ${httpsEverywhere} $ext/'${httpsEverywhere.extName}.xpi'
     ln -s ${noscript} $ext/'${noscript.extName}.xpi'
     '';
 
