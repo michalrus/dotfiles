@@ -114,6 +114,9 @@ interactive(
     }
 );
 
+// DOM Inspector.
+require("dom-inspector.js");
+
 // Webjumps.
 define_webjump('babla', 'http://en.bab.la/dictionary/polish-english/%s');
 define_webjump('diki', 'http://www.diki.pl/slownik-angielskiego/?q=%s&source=opensearch');
