@@ -2,27 +2,13 @@ super: self:
 
 let
 
-  ublock =  { extName = "uBlock0@raymondhill.net"; } // super.fetchurl {
-    url = "https://github.com/gorhill/uBlock/releases/download/1.7.4/uBlock0.firefox.xpi";
-    sha256 = "13av7d9ayps9n0fas672agqpl1fy3ad73nc4kbfxab97s6jqv90q";
-  };
-
-  httpsEverywhere =  { extName = "https-everywhere-eff@eff.org"; } // super.fetchurl {
-    url = "https://www.eff.org/files/https-everywhere-5.1.10-eff.xpi";
-    sha256 = "01rzprklbg13rjdgyg4q4y21f08g49ikc92m68j9iwrda5fs3ncq";
-  };
-
-  noscript = super.stdenv.mkDerivation {
-    name = "noscript";
-    extName = "{73a6fe31-595d-460b-a920-fcc0f8843232}"; # <em:id/> from install.rdf
-    src = super.fetchurl {
-      url = "https://secure.informaction.com/download/releases/noscript-2.9.0.11.xpi";
-      sha256 = "141k4jwc1varp9rsm1a61aqrva1192jsvlx710dnbb48j6k6bngx";
-    };
+  mkExtension = attrs: super.stdenv.mkDerivation (attrs // { # A hack to force rebuilding when attrs change?…
+    name = builtins.baseNameOf attrs.url;
+    src = super.fetchurl { inherit (attrs) url sha256; };
     buildInputs = with super; [ unzip zip ];
     unpackCmd = "unzip -d out $curSrc";
     installPhase = ''
-      rm -r META-INF
+      rm -r META-INF || true
 
       printf "" >install.rdf.new
       sed '/<\/em:targetApplication>/q' install.rdf >>install.rdf.new
@@ -40,8 +26,36 @@ let
       mv install.rdf.new install.rdf
 
       zip -r out.zip . ; mv out.zip $out
-      '';
+    '';
+  });
+
+  ublock = mkExtension {
+    id = "uBlock0@raymondhill.net";
+    url = "https://github.com/gorhill/uBlock/releases/download/1.7.4/uBlock0.firefox.xpi";
+    sha256 = "13av7d9ayps9n0fas672agqpl1fy3ad73nc4kbfxab97s6jqv90q";
   };
+
+  httpsEverywhere = mkExtension {
+    id = "https-everywhere-eff@eff.org";
+    url = "https://www.eff.org/files/https-everywhere-5.1.10-eff.xpi";
+    sha256 = "01rzprklbg13rjdgyg4q4y21f08g49ikc92m68j9iwrda5fs3ncq";
+  };
+
+  domInspector = mkExtension {
+    id = "inspector@mozilla.org";
+    url = "https://addons.mozilla.org/firefox/downloads/file/324966/dom_inspector-2.0.16-sm+fn+tb+fx.xpi";
+    sha256 = "09l1waqm7f3hgbkhb9cznh03ilxkzp8g1a8akxz9aplkbnikslvf";
+  };
+
+  noscript = mkExtension {
+    id = "{73a6fe31-595d-460b-a920-fcc0f8843232}";
+    url = "https://secure.informaction.com/download/releases/noscript-2.9.0.11.xpi";
+    sha256 = "141k4jwc1varp9rsm1a61aqrva1192jsvlx710dnbb48j6k6bngx";
+  };
+
+  allExtensions = [
+    ublock httpsEverywhere domInspector noscript
+  ];
 
 in
 
@@ -60,9 +74,7 @@ super.conkeror-unwrapped.overrideDerivation (oldAttrs: {
   installPhase = oldAttrs.installPhase + ''
     ext=$out/libexec/conkeror/extensions
     mkdir -p $ext
-    ln -s ${ublock} $ext/'${ublock.extName}.xpi'
-    ln -s ${httpsEverywhere} $ext/'${httpsEverywhere.extName}.xpi'
-    ln -s ${noscript} $ext/'${noscript.extName}.xpi'
-    '';
+    ${super.lib.concatMapStrings (ext: "ln -s ${ext} $ext/'${ext.id}'.xpi\n") allExtensions}
+  '';
 
 })
