@@ -6,7 +6,7 @@ let
     name = builtins.baseNameOf attrs.url;
     src = super.fetchurl { inherit (attrs) url sha256; };
     buildInputs = with super; [ unzip zip ];
-    unpackCmd = "unzip -d out $curSrc";
+    unpackCmd = "unzip -d out $curSrc"; # I can’t use `fetchzip`, ’cause it doesn’t know `.xpi`s.
     installPhase = ''
       rm -r META-INF || true
 
