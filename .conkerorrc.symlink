@@ -143,6 +143,9 @@ define_webjump('isup', 'http://www.downforeveryoneorjustme.com/%s');
 define_webjump('nixpkgs', 'https://github.com/NixOS/nixpkgs/search?utf8=%E2%9C%93&q=%s');
 define_webjump('wolframalpha', 'http://www.wolframalpha.com/input/?i=%s');
 
+// XKCD.
+xkcd_add_title = true;
+
 // Restoring killed buffers. Based on https://git.io/voaqM .
 let killed_buffers_metadata = [];
 
