@@ -117,6 +117,11 @@ interactive(
 // DOM Inspector.
 require("dom-inspector.js");
 
+// PDFs. Note: Evince plugin crashes Conkeror. Uninstall the .so
+// completely, or the following will not work.
+content_handlers.set("application/pdf", content_handler_open_default_viewer);
+external_content_handlers.set("application/pdf", "evince");
+
 // Webjumps.
 define_webjump('babla', 'http://en.bab.la/dictionary/polish-english/%s');
 define_webjump('diki', 'http://www.diki.pl/slownik-angielskiego/?q=%s&source=opensearch');
