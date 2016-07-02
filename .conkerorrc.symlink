@@ -53,11 +53,52 @@ session_pref('datareporting.policy.dataSubmissionEnabled', false);
 session_pref('toolkit.telemetry.enabled', false);
 
 // NoScript.
-if ('@maone.net/noscript-service;1' in Cc) require("noscript");
-user_pref("capability.policy.maonoscript.sites",
-          " about: about:addons about:blank about:blocked about:certerror about:config about:crashes about:home about:memory about:neterror about:plugins about:preferences about:privatebrowsing about:sessionrestore about:srcdoc about:support blob: chrome: mediasource: moz-extension: moz-safe-about: resource: " +
-          " ajax.googleapis.com bootstrapcdn.com code.jquery.com " +
-          " google.com googlevideo.com gstatic.com maps.googleapis.com yimg.com youtube.com ytimg.com google.pl ");
+if ('@maone.net/noscript-service;1' in Cc) {
+    require("noscript");
+    var noscript_allowed_sites = [
+        "about:", "about:addons", "about:blank", "about:blocked", "about:certerror",
+        "about:config", "about:crashes", "about:home", "about:memory", "about:neterror",
+        "about:plugins", "about:preferences", "about:privatebrowsing",
+        "about:sessionrestore", "about:srcdoc", "about:support", "blob:", "chrome:",
+        "mediasource:", "moz-extension:", "moz-safe-about:", "resource:",
+
+        "https://ajax.googleapis.com", "https://bootstrapcdn.com", "https://code.jquery.com",
+
+        "https://www.google.com", "googlevideo.com", "gstatic.com", "https://maps.googleapis.com",
+        "https://www.youtube.com", "ytimg.com", "https://www.google.pl",
+
+        "https://github.com", "https://assets-cdn.github.com",
+    ];
+    user_pref("capability.policy.maonoscript.sites", noscript_allowed_sites.join(" "));
+    interactive(
+        "ns-copy-blocked-site-address",
+        "Copy an address of a NoScript-blocked site.",
+        function (I) {
+            let all_sites = noscript_service.getSites(I.buffer.browser);
+            let isBlocked = function (s) { return noscript_allowed_sites.indexOf(s) < 0; };
+            let blocked_sites = all_sites
+                .filter(isBlocked)
+                .map(function(b) { return {url: b, descr: "\u00d7 BLOCKED"}; });
+            let allowed_sites = all_sites
+                .filter(b => !isBlocked(b))
+                .map(function(b) { return {url: b, descr: "\u2713 allowed"}; });
+            all_sites = blocked_sites.concat(allowed_sites);
+            if (all_sites.length !== 0) {
+                let chosen = yield I.minibuffer.read(
+                    $prompt = "Copy a blocked site address:",
+                    $completer = new all_word_completer($completions = all_sites,
+                                                        $get_string = b5 => b5.url,
+                                                        $get_description = b6 => b6.descr),
+                    $default_completion = blocked_sites[0],
+                    $auto_complete = "url",
+                    $auto_complete_initial = true,
+                    $auto_complete_delay = 0,
+                    $require_match = true
+                );
+                writeToClipboard(chosen);
+            } else I.window.minibuffer.message("No blocked sites.");
+        });
+}
 
 // Pretend to be real Firefox (otherwise, some apps display their
 // versions back from 2000s… looking at you, Google. ಠ_ಠ).
