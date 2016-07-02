@@ -73,6 +73,7 @@ session_pref("media.autoplay.enabled", false);
 url_completion_use_history = true;
 
 // By default, save stuff in ~/Downloads/.
+download_buffer_automatic_open_target = OPEN_NEW_BUFFER;
 suggest_save_path_from_file_name = function (filename, buffer) {
     let f = make_file("~/Downloads/");
     f.append(filename);
