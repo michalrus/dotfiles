@@ -99,6 +99,16 @@ if ('@maone.net/noscript-service;1' in Cc) {
         });
 }
 
+// mozrepl
+if ('@hyperstruct.net/mozlab/mozrepl;1' in Cc) {
+    var mozrepl = Cc['@hyperstruct.net/mozlab/mozrepl;1']
+        .getService(Components.interfaces.nsIMozRepl);
+    let mozrepl_init = get_home_directory();
+    mozrepl_init.appendRelativePath(".conkeror-mozrepl.js");
+    session_pref('extensions.mozrepl.initUrl', make_uri(mozrepl_init).spec);
+    //mozrepl.start(/* port = */ 4242, /* loopbackOnly = */ true);
+}
+
 // Pretend to be real Firefox (otherwise, some apps display their
 // versions back from 2000s… looking at you, Google. ಠ_ಠ).
 session_pref('general.useragent.compatMode.firefox', true);

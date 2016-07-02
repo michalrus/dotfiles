@@ -53,8 +53,14 @@ let
     sha256 = "141k4jwc1varp9rsm1a61aqrva1192jsvlx710dnbb48j6k6bngx";
   };
 
+  mozrepl = mkExtension {
+    id = "mozrepl@hyperstruct.net";
+    url = "https://addons.mozilla.org/firefox/downloads/file/205776/mozrepl-1.1.2-fx.xpi";
+    sha256 = "09f8mqdcng0rc0ljhyb4n28j6268y0gxnyir1l7sh1ch5jg27szl";
+  };
+
   allExtensions = [
-    ublock httpsEverywhere domInspector noscript
+    ublock httpsEverywhere domInspector noscript mozrepl
   ];
 
 in
