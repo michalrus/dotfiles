@@ -62,10 +62,10 @@ if ('@maone.net/noscript-service;1' in Cc) {
         "about:sessionrestore", "about:srcdoc", "about:support", "blob:", "chrome:",
         "mediasource:", "moz-extension:", "moz-safe-about:", "resource:",
 
-        "https://ajax.googleapis.com", "https://bootstrapcdn.com", "https://code.jquery.com",
+        "googleapis.com", "bootstrapcdn.com", "code.jquery.com",
 
-        "https://www.google.com", "googlevideo.com", "gstatic.com", "https://maps.googleapis.com",
-        "https://www.youtube.com", "ytimg.com", "https://www.google.pl",
+        "google.com", "gstatic.com", "https://www.google.pl",
+        "https://www.youtube.com", "googlevideo.com", "ytimg.com",
 
         "https://github.com", "https://assets-cdn.github.com",
     ];
@@ -75,7 +75,7 @@ if ('@maone.net/noscript-service;1' in Cc) {
         "Copy an address of a NoScript-blocked site.",
         function (I) {
             let all_sites = noscript_service.getSites(I.buffer.browser);
-            let isBlocked = function (s) { return noscript_allowed_sites.indexOf(s) < 0; };
+            let isBlocked = b => !noscript_allowed_sites.find(a => a === b || b.endsWith("://" + a) || b.endsWith("." + a));
             let blocked_sites = all_sites
                 .filter(isBlocked)
                 .map(function(b) { return {url: b, descr: "\u00d7 BLOCKED"}; });
