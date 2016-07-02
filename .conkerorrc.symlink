@@ -56,10 +56,9 @@ session_pref('toolkit.telemetry.enabled', false);
 if ('@maone.net/noscript-service;1' in Cc) {
     require("noscript");
     var noscript_allowed_sites = [
-        "about:", "about:addons", "about:blank", "about:blocked", "about:certerror",
-        "about:config", "about:crashes", "about:home", "about:memory", "about:neterror",
-        "about:plugins", "about:preferences", "about:privatebrowsing",
-        "about:sessionrestore", "about:srcdoc", "about:support", "blob:", "chrome:",
+        "about:", "about:addons", "about:blank",
+        "about:config", "about:memory", "about:neterror",
+        "about:plugins", "about:support", "blob:", "chrome:",
         "mediasource:", "moz-extension:", "moz-safe-about:", "resource:",
 
         "googleapis.com", "bootstrapcdn.com", "code.jquery.com",
