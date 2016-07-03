@@ -13,7 +13,7 @@ command -v screen >/dev/null || { echo 'echo >&2 "screen: command not found" ; r
 
 num="$(screen -ls | grep -E '^\s+[^\s]' | wc -l)"
 
-[ "$num" -eq "0" ] && { echo "unset DESKTOP_SESSION DESKTOP_STARTUP_ID DBUS_SESSION_BUS_ADDRESS GDMSESSION WINDOW WINDOWID XDG_SEAT XDG_SEAT_PATH XDG_SESSION_DESKTOP XDG_SESSION_ID XDG_SESSION_PATH XDG_SESSION_TYPE XDG_VTNR XDG_GREETER_DATA_DIR ; $with_systemd screen -d -m ; exec screen -x" ; exit ; }
+[ "$num" -eq "0" ] && { echo "unset DESKTOP_SESSION DESKTOP_STARTUP_ID DBUS_SESSION_BUS_ADDRESS GDMSESSION WINDOW WINDOWID XDG_SEAT XDG_SEAT_PATH XDG_SESSION_DESKTOP XDG_SESSION_ID XDG_SESSION_PATH XDG_SESSION_TYPE XDG_VTNR XDG_GREETER_DATA_DIR ; $with_systemd screen -d -m && sleep 0.1 && exec screen -x" ; exit ; }
 
 [ "$num" -ne "1" ] && { echo 'echo >&2 "More than one screen session exists." ; return 1' ; exit ; }
 

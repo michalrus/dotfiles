@@ -3,7 +3,7 @@
 {
 
   nix = {
-    useSandbox = true;
+    #useSandbox = true;   # not yet in stable!
 
     trustedBinaryCaches = [
       http://hydra.nixos.org
@@ -66,13 +66,13 @@
     htop
     hwinfo
     imagemagick
-    imgurbash2
+    #imgurbash2   # not yet in stable!
     indent
     jhead
     faad2   # video in Firefox
     ffmpeg
     gnumake
-    gnumake.doc
+    #gnumake.doc  # not yet in stable!
     gocr
     libjpeg
     lshw

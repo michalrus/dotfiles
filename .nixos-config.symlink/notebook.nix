@@ -10,6 +10,8 @@
     ./boot.nix
   ];
 
+  nix.useSandbox = true;   # move to common.nix when in stable!
+
   powerManagement = {
     cpuFreqGovernor = "performance";
     powerDownCommands = ''
@@ -70,11 +72,13 @@
     gnome3.adwaita-icon-theme
     gnome3.gnome_themes_standard
     gnucash26
+    gnumake.doc  # move to common.nix when in stable!
     # (haskellPackages.ghcWithHoogle (haskellPackages: with haskellPackages; [
     (haskellPackages.ghcWithPackages (haskellPackages: with haskellPackages; [
       cabal-install happy hindent hlint parallel stylish-haskell turtle
       # ghc-mod hasktags
     ]))
+    imgurbash2   # move to common.nix when in stable!
     isync
     jmeter
     jmtpfs
@@ -183,6 +187,8 @@
       groups = [ "nonet" "scanner" "networkmanager" "vboxusers" ];
     };
 
+    # Remember to `sudo loginctl enable-linger m`, or screen sessions won’t last.
+    # https://github.com/NixOS/nixpkgs/issues/3702
     extraUsers.m = {
       hashedPassword = "$6$wO42jkhqerm$kl.qIl5USrzqAZOIkXdicrBLBgVwka2Dz81nc.aNsNJZREXY.02XxPdL1FiTCcuVP2K/DSmXqAQ3aPbri/v.g1";
       isNormalUser = true;
