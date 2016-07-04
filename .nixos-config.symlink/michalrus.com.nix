@@ -22,6 +22,7 @@
   time.timeZone = "UTC";
 
   environment.systemPackages = with pkgs; [
+    weechat
   ];
 
   programs = {
