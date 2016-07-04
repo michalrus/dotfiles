@@ -1,0 +1,12 @@
+#!/bin/sh
+
+[ $# -gt 0 ] || exit 0
+
+fst="$1"
+shift
+
+real_command="$(PATH="$(echo "$PATH" | awk -v RS=: '{if($0!="'"$HOME"'/.bin"){printf(ln++?":":"")$O}}')" command -v "$fst")"
+
+[ -n "$real_command" ] || real_command="$fst"
+
+exec "$real_command" "$@"
