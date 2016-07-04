@@ -63,10 +63,13 @@ if ('@maone.net/noscript-service;1' in Cc) {
 
         "googleapis.com", "bootstrapcdn.com", "code.jquery.com",
 
-        "google.com", "gstatic.com", "https://www.google.pl",
+        "google.com", "gstatic.com", "https://www.google.pl", "ggpht.com",
+        "googleusercontent.com",
         "https://www.youtube.com", "googlevideo.com", "ytimg.com",
 
         "https://github.com", "https://assets-cdn.github.com",
+
+        "https://online.mbank.pl",
     ];
     user_pref("capability.policy.maonoscript.sites", noscript_allowed_sites.join(" "));
     interactive(
@@ -94,7 +97,7 @@ if ('@maone.net/noscript-service;1' in Cc) {
                     $auto_complete_delay = 0,
                     $require_match = true
                 );
-                writeToClipboard(chosen);
+                writeToClipboard(chosen.url);
             } else I.window.minibuffer.message("No blocked sites.");
         });
 }
