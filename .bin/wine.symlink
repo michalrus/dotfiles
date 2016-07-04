@@ -6,4 +6,4 @@ if [ -z "${WINEPREFIX}" ] ; then
   exit 1
 fi
 
-exec nonet "$(command -pv wine)" "$@"
+exec nonet command-not-in-home-bin wine "$@"
