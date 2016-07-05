@@ -1,7 +1,5 @@
 #!/bin/sh
 
-realEmacs="$(command -vp emacs)"
-
 rm "$HOME"/.emacs.d/.emacs.desktop.lock || true
 
-exec "$SHELL" --login -c "exec \"$realEmacs\" --daemon"
+exec "$SHELL" --login -c "exec command-p emacs --daemon"

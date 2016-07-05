@@ -5,7 +5,7 @@
 fst="$1"
 shift
 
-real_command="$(PATH="$(echo "$PATH" | awk -v RS=: '{if($0!="'"$HOME"'/.bin"){printf(ln++?":":"")$O}}')" command -v "$fst")"
+real_command="$(PATH="$(getconf PATH)" command -v "$fst")"
 
 [ -n "$real_command" ] || real_command="$fst"
 
