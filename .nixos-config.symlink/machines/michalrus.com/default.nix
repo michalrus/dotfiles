@@ -2,11 +2,11 @@
 
 {
   imports = [
-    ./modules
-    ./pkgs
-    ./local
-    ./common.nix
-    ./hardware-configuration.nix
+    ../../modules
+    ../../pkgs
+    ../../local
+    ../../common.nix
+    ../../hardware-configuration.nix
   ];
 
   nix.useChroot = true;   # use useSandbox from common.nix when in stable!

@@ -2,12 +2,12 @@
 
 {
   imports = [
-    ./modules
-    ./pkgs
-    ./local
-    ./common.nix
-    ./hardware-configuration.nix
-    ./boot.nix
+    ../../modules
+    ../../pkgs
+    ../../local
+    ../../common.nix
+    ../../hardware-configuration.nix
+    ../../boot.nix
   ];
 
   nix.useSandbox = true;   # move to common.nix when in stable!
