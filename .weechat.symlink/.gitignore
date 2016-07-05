@@ -1,2 +1,15 @@
+/cert.pem
+/guile/
+/javascript/
 /logs/
+/lua/
+/otr/
+/perl/
+/python/
+/ruby/
+/script/
+/sec.conf
+/ssl/
+/tcl/
 /weechat.log
+/xfer/
