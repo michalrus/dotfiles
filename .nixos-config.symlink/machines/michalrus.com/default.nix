@@ -20,6 +20,10 @@
 
   networking.hostName = "michalrus_com";
 
+  networking.firewall.allowedTCPPorts = [
+    113  # identd
+  ];
+
   time.timeZone = "UTC";
 
   environment.systemPackages = with pkgs; [
@@ -30,6 +34,11 @@
     ssh.startAgent = false;
   };
 
+  nixpkgs.config.packageOverrides = super: let self = super.pkgs; in {
+    # this fix is not yet in stable…
+    oidentd = super.oidentd.overrideDerivation(oldAttrs: { CFLAGS = [ "--std=gnu89" ]; });
+  };
+
   services = {
     openssh = {
       enable = true;
@@ -37,6 +46,8 @@
       passwordAuthentication = false;
       challengeResponseAuthentication = false;
     };
+
+    oidentd.enable = true;
   };
 
   users = {
