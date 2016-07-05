@@ -7,6 +7,7 @@
     ../../local
     ../../common.nix
     ../../hardware-configuration.nix
+    ./web
   ];
 
   nix.useChroot = true;   # use useSandbox from common.nix when in stable!

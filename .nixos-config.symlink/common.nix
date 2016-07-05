@@ -87,6 +87,7 @@
     nix-repl
     nmap
     normalize
+    openssl
     p7zip
     pciutils
     perlPackages.ConfigTiny
