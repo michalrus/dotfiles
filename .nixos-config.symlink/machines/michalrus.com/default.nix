@@ -48,6 +48,11 @@
     };
 
     oidentd.enable = true;
+
+    bitlbee = {
+      enable = true;
+      plugins = with pkgs; [ bitlbee-facebook ];
+    };
   };
 
   users = {
