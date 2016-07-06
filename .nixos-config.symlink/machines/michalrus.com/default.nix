@@ -6,17 +6,10 @@
     ../../pkgs
     ../../local
     ../../common.nix
-    ../../hardware-configuration.nix
     ./web
   ];
 
   nix.useChroot = true;   # use useSandbox from common.nix when in stable!
-
-  boot.loader.grub = {
-    enable = true;
-    version = 2;
-    device = "/dev/sda";
-  };
 
   networking.hostName = "michalrus_com";
 
@@ -42,7 +35,7 @@
   services = {
     openssh = {
       enable = true;
-      permitRootLogin = "no";
+      permitRootLogin = pkgs.lib.mkForce "no";
       passwordAuthentication = false;
       challengeResponseAuthentication = false;
     };
