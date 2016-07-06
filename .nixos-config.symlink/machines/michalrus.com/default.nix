@@ -56,13 +56,17 @@
   };
 
   users = {
-    # Remember to `sudo loginctl enable-linger m`, or screen sessions won’t last.
-    # https://github.com/NixOS/nixpkgs/issues/3702
+    # Remember to `sudo loginctl enable-linger m`, or screen sessions won’t last, cf. https://github.com/NixOS/nixpkgs/issues/3702
     extraUsers.m = {
       isNormalUser = true;
-      hashedPassword = "$6$veGcmDHbAC4pOsm$/Me.dvpaWQn3YwQEivKd3iL1uXVLV3fr3NlM4UCMjIXDj3jvexSmPq1zZRW.k.rsXg8kRovUIXTB1iLSRYgM30";
+      openssh.authorizedKeys.keys = [
+        "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCbtBIiVRih4vlbX8ciQELf9wST0tYIygNfPxNjtm1IElpOKVT+j62hPui+d0VELKuxJcyo3tY9nf2zUYUG3PG7IWjyiHi6FyOasUQLzJrXBRj5dNsPr+SYXAyL1jsTbvbfiIUkfPAPuv5Tf/tg/lAdTriTy73V5sN7vtX+MH2k8n4agE6fhj2FAhiSwI4MAZJmIsNB2X+1GZVLZlggpN7tkkfjFWE5nCvlR+/lA6e0wl9ZCzTas112fTTBUk64wd1U7vlv1+nr7YgVAqyAQR/w7VCe0z3hrwIwxCOdW3nN19dW2gCQ7gKrZbDfaU3/OqURTNq9zwdET/mNM7unF4sX michalrus@notebook"
+      ];
       description = "Michal Rus";
       extraGroups = [ "wheel" ];
+
+      # The password is only used for sudo; should probably use custom PAM setup, cf. http://unix.stackexchange.com/a/94646
+      hashedPassword = "$6$.lrNvojxVb.$rebh/ELnYtO69DyvnqL4IWE8Gsg.neIzfGTsM0NbUsl7vhblv.P.SgLQk05mJiLFMXje/9paO8DCB2M8lEfQQ1";
     };
   };
 
