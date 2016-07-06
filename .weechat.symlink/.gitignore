@@ -1,4 +1,3 @@
-/cert.pem
 /guile/
 /javascript/
 /logs/
@@ -9,7 +8,7 @@
 /ruby/
 /script/
 /sec.conf
-/ssl/
+/ssl/**/*.pem
 /tcl/
 /weechat.log
 /xfer/
