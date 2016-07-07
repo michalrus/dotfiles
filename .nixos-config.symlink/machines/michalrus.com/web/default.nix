@@ -14,24 +14,30 @@ in
     mkdir -p "${acmeChallenges}"
   '';
 
-#  security.acme.certs."michalrus.com" = {
-#    webroot = acmeChallenges;
-#    email = "m@michalrus.com";
-#    postRun = "systemctl reload nginx.service";
-#    extraDomains = {
-#      "p.michalrus.com" = null;
-#      "git.michalrus.com" = null;
-#      "www.michalrus.com" = null;
-#      "michalrus.pl" = null; "www.michalrus.pl" = null;
-#      "michalrus.eu" = null; "www.michalrus.eu" = null;
-#    };
-#  };
+  security.acme.certs."michalrus.com" = {
+    webroot = acmeChallenges;
+    email = "m@michalrus.com";
+    postRun = "systemctl reload nginx.service";
+    extraDomains = {
+      "p.michalrus.com" = null;
+      "git.michalrus.com" = null;
+      "www.michalrus.com" = null;
+      "michalrus.pl" = null; "www.michalrus.pl" = null;
+      "michalrus.eu" = null; "www.michalrus.eu" = null;
+    };
+  };
 
   services = {
     nginx = {
       enable = true;
 
       httpConfig = ''
+        charset utf-8;
+
+        types {
+          text/plain      log;
+        }
+
         ssl_protocols TLSv1 TLSv1.1 TLSv1.2; # Dropping SSLv3, ref: POODLE
 
         # SSL ciphers, ref: LOGJAM → https://weakdh.org/sysadmin.html
@@ -72,16 +78,17 @@ in
         }
 
         server {
-          listen 80;
-          listen [::]:80;
-#          listen 443;
-#          listen [::]:443;
+          listen 443;
+          listen [::]:443;
 
-#          ssl on;
-#          ssl_certificate     ${config.security.acme.directory}/michalrus.com/fullchain.pem
-#          ssl_certificate_key ${config.security.acme.directory}/michalrus.com/key.pem
+          ssl on;
+          ssl_certificate     ${config.security.acme.directory}/michalrus.com/fullchain.pem;
+          ssl_certificate_key ${config.security.acme.directory}/michalrus.com/key.pem;
 
           server_name michalrus.com;
+
+          access_log logs/michalrus.com.access;
+          error_log logs/michalrus.com.error;
 
           location / {
             root /var/www/michalrus.com;
