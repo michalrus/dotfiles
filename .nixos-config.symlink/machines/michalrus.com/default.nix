@@ -49,7 +49,6 @@
   };
 
   users = {
-    # Remember to `sudo loginctl enable-linger m`, or screen sessions won’t last, cf. https://github.com/NixOS/nixpkgs/issues/3702
     extraUsers.m = {
       isNormalUser = true;
       openssh.authorizedKeys.keys = [
@@ -62,6 +61,11 @@
       hashedPassword = "$6$.lrNvojxVb.$rebh/ELnYtO69DyvnqL4IWE8Gsg.neIzfGTsM0NbUsl7vhblv.P.SgLQk05mJiLFMXje/9paO8DCB2M8lEfQQ1";
     };
   };
+
+  # A hack to `loginctl enable-linger m` (for multiplexer sessions to last), until this one is open: https://github.com/NixOS/nixpkgs/issues/3702
+  system.activationScripts.loginctl-enable-linger-m = pkgs.lib.stringAfter [ "users" ] ''
+    ${pkgs.systemd}/bin/loginctl enable-linger m
+  '';
 
   # The NixOS release to be compatible with for stateful data such as databases.
   system.stateVersion = "16.03";

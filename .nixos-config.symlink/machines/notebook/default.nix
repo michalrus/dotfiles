@@ -187,8 +187,6 @@
       groups = [ "nonet" "scanner" "networkmanager" "vboxusers" ];
     };
 
-    # Remember to `sudo loginctl enable-linger m`, or screen sessions won’t last.
-    # https://github.com/NixOS/nixpkgs/issues/3702
     extraUsers.m = {
       hashedPassword = "$6$wO42jkhqerm$kl.qIl5USrzqAZOIkXdicrBLBgVwka2Dz81nc.aNsNJZREXY.02XxPdL1FiTCcuVP2K/DSmXqAQ3aPbri/v.g1";
       isNormalUser = true;
@@ -198,4 +196,8 @@
     };
   };
 
+  # A hack to `loginctl enable-linger m` (for multiplexer sessions to last), until this one is open: https://github.com/NixOS/nixpkgs/issues/3702
+  system.activationScripts.loginctl-enable-linger-m = pkgs.lib.stringAfter [ "users" ] ''
+    ${pkgs.systemd}/bin/loginctl enable-linger m
+  '';
 }
