@@ -38,6 +38,11 @@
       includeStore = true;
       interval = "hourly";
     };
+
+    # Because of this insanity… → https://github.com/NixOS/nixpkgs/pull/16021
+    logind.extraConfig = ''
+      KillUserProcesses=yes
+    '';
   };
 
   users = {
