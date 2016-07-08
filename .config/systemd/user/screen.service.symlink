@@ -1,0 +1,16 @@
+# IMPORTANT: you have to COPY or HARDLINK this file to
+# ~/.config/systemd/user, just symlinking will not work
+# and fail with E_NOENT.
+#
+# Except if you’re on NixOS. ♥
+
+[Unit]
+Description=GNU Screen terminal multiplexer session
+
+[Service]
+Type=forking
+ExecStart=/bin/sh -c 'exec $SHELL --login -c "exec screen -d -m"'
+Restart=always
+
+[Install]
+WantedBy=default.target
