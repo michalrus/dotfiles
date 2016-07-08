@@ -34,7 +34,7 @@
       allowedTCPPorts = [ ];
       nonetGroup.enable = true;
     };
-    wireless.enable = true;
+    connman.enable = true;
   };
 
   time.timeZone = "Europe/Warsaw";
