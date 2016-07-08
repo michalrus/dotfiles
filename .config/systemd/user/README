@@ -1,0 +1,5 @@
+IMPORTANT: you have to COPY or HARDLINK the files to
+~/.config/systemd/user, just symlinking will not work
+and fail with E_NOENT.
+
+Except if you’re on NixOS. ♥
