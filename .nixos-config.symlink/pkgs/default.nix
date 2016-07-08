@@ -9,6 +9,7 @@
     mtr                = (import ./mtr.nix super self);
     mu                 = (import ./mu super self);
     st                 = (import ./st super self);
+    tcp-broadcast      = (import ./tcp-broadcast.nix super self);
     transcribe         = (import ./transcribe.nix super self);
     visualvm           = (import ./visualvm.nix super self);
   };

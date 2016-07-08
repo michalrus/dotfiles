@@ -1,0 +1,10 @@
+[Unit]
+Description=tcp-broadcast daemon for WeeChat notifications
+
+[Service]
+Type=simple
+ExecStart=/bin/sh -c '. /etc/profile ; exec tcp-broadcast "%h/.weechat/notify.sock"'
+Restart=no
+
+[Install]
+WantedBy=default.target

@@ -109,6 +109,7 @@
     sox
     (lowPrio stdmanpages)
     stdman
+    tcp-broadcast
     tesseract
     traceroute
     unzip
