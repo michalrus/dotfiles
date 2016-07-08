@@ -94,7 +94,7 @@ client.urgent           #dc322f #dc322f #eee8d5 #cb4b16
 
 bar {
   status_command conky-i3bar
-  tray_output primary
+  tray_output primary # set it with xrandr --output <TAB> --primary
   separator_symbol "|"
   position top
   colors {
