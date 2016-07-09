@@ -7,6 +7,7 @@
     ../../local
     ../../common.nix
     ./web
+    ./jabber
   ];
 
   nix.useChroot = true;   # use useSandbox from common.nix when in stable!
