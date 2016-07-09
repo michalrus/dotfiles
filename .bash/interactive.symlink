@@ -2,6 +2,9 @@
 
 unalias -a
 
+# in Emacs TRAMP sessions, use plain /bin/sh
+[ "$TERM" != "dumb" ] || exec /bin/sh
+
 . "$HOME/.shell/interactive"
 
 shopt -s checkwinsize

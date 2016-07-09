@@ -1,5 +1,8 @@
 # put your aliases here
 
+# in Emacs TRAMP sessions, use plain /bin/sh
+[ "$TERM" != "dumb" ] || return
+
 # turn off the annoying C-s and C-q in terminal
 stty -ixon
 

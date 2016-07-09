@@ -2,6 +2,9 @@ unalias -m '*'
 unset RPROMPT
 unset -f command_not_found_handler 2>/dev/null
 
+# in Emacs TRAMP sessions, use plain /bin/sh
+[ "$TERM" != "dumb" ] || exec /bin/sh
+
 . "$HOME/.shell/interactive"
 
 autoload -U compinit && compinit
