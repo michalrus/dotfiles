@@ -6,8 +6,9 @@
     ../../pkgs
     ../../local
     ../../common.nix
-    ./web
+    ./gitolite
     ./jabber
+    ./web
   ];
 
   nix.useChroot = true;   # use useSandbox from common.nix when in stable!
