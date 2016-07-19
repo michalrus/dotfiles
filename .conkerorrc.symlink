@@ -201,7 +201,7 @@ define_webjump('dotfiles', 'https://github.com/michalrus/dotfiles/search?utf8=%E
 define_webjump('debian', 'https://packages.debian.org/search?keywords=%s');
 define_webjump('down?', 'http://www.downforeveryoneorjustme.com/%s');
 define_webjump('isup?', 'http://www.downforeveryoneorjustme.com/%s');
-define_webjump('nixpkgs', 'https://github.com/NixOS/nixpkgs/search?utf8=%E2%9C%93&q=%s');
+define_webjump('nixpkgs', 'https://github.com/NixOS/nixpkgs/search?utf8=%E2%9C%93&q=%s', $alternative = 'https://github.com/NixOS/nixpkgs');
 define_webjump('wolframalpha', 'http://www.wolframalpha.com/input/?i=%s');
 
 // XKCD.
