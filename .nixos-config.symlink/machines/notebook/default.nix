@@ -107,10 +107,12 @@
     (wine.override { pulseaudioSupport = true; })
     winetricks
     wmctrl
+    xarchiver
     xautolock
     xcape
     xclip
     xdotool
+    xfe
     xorg.xbacklight
     xorg.xev
     xorg.xdpyinfo
