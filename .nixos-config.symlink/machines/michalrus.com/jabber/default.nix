@@ -43,8 +43,12 @@ mkMerge (
         }) certsToBeUsed);
 
         extraConfig = ''
+          -- Require SSL for clients.
           c2s_require_encryption = true
-          s2s_secure_auth = true
+
+          -- But many Jabber servers use self-signed certificates…
+          --s2s_secure_auth = true
+
           ${concatMapStrings (vhost: ''
             Component "conference.${vhost}" "muc"
           '') certsToBeUsed}
