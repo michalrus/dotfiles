@@ -5,7 +5,7 @@
 export EDITOR='emacs'
 export VISUAL="$EDITOR"
 
-export BROWSER='conkeror'
+export BROWSER='i3-msg exec conkeror'
 
 export DEBFULLNAME="Michal Rus"
 export DEBEMAIL="m@michalrus.com"
