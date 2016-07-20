@@ -34,7 +34,14 @@
       allowedTCPPorts = [ ];
       nonetGroup.enable = true;
     };
-    connman.enable = true;
+    connman = {
+      enable = true;
+      # https://wiki.archlinux.org/index.php/Connman#Avoid_changing_the_hostname
+      extraConfig = ''
+        [General]
+        AllowHostnameUpdates=false
+      '';
+    };
   };
 
   time.timeZone = "Europe/Warsaw";
