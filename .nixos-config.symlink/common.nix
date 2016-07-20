@@ -56,6 +56,7 @@
     aspellDicts.pl
     aspellDicts.de
     bc
+    bindfs
     calc
     cloc
     dos2unix

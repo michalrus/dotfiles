@@ -30,8 +30,11 @@
   };
 
   nixpkgs.config.packageOverrides = super: let self = super.pkgs; in {
-    # this fix is not yet in stable…
+    # these fixes are not yet in stable…
     oidentd = super.oidentd.overrideDerivation(oldAttrs: { CFLAGS = [ "--std=gnu89" ]; });
+    bindfs = super.bindfs.overrideDerivation(oldAttrs: { postFixup = ''
+      ln -s $out/bin/bindfs $out/bin/mount.fuse.bindfs
+    ''; });
   };
 
   services = {

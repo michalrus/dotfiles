@@ -14,6 +14,16 @@ in
     mkdir -p "${acmeChallenges}"
   '';
 
+  environment.systemPackages = with pkgs; [
+    bindfs
+  ];
+
+  fileSystems."/var/www/michalrus.com" = {
+    device = "/home/m/public_html";
+    fsType = "fuse.bindfs";
+    options = [ "ro" "force-user=nginx" "force-group=nginx" "perms=640:u+D:g+D" ];
+  };
+
   security.acme.certs."michalrus.com" = {
     webroot = acmeChallenges;
     email = "m@michalrus.com";
