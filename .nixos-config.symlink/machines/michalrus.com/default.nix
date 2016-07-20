@@ -35,6 +35,22 @@
     bindfs = super.bindfs.overrideDerivation(oldAttrs: { postFixup = ''
       ln -s $out/bin/bindfs $out/bin/mount.fuse.bindfs
     ''; });
+    bitlbee = super.bitlbee.overrideDerivation(oldAttrs: rec {
+      name = "bitlbee-3.4.2";
+      patches = [];
+      src = super.fetchurl {
+        url = "mirror://bitlbee/src/${name}.tar.gz";
+        sha256 = "0mza8lnfwibmklz8hdzg4f7p83hblf4h6fbf7d732kzpvra5bj39";
+      };
+    });
+    bitlbee-facebook = super.bitlbee-facebook.overrideDerivation(oldAttrs: {
+      src = super.fetchFromGitHub {
+        rev = "609ca2d52d468863c99ff3539917f2049ea3df44";
+        owner = "jgeboski";
+        repo = "bitlbee-facebook";
+        sha256 = "10wacn2hi1ly22idqcixaidf198ibj1a5h8srcd9gk7vh47c9bvm";
+      };
+    });
   };
 
   services = {
