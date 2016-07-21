@@ -7,6 +7,7 @@
     ../../local
     ../../common.nix
     ./gitolite
+    ./ipsec
     ./jabber
     ./web
   ];

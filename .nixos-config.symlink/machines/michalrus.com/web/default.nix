@@ -1,8 +1,45 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
+
+with lib;
 
 let
 
   acmeChallenges = "/var/www/acme-challenges";
+
+  homeProxy = name: addr: redirectRootTo: ''
+    server {
+      listen 443;
+      listen [::]:443;
+
+      ssl on;
+      ssl_certificate     ${config.security.acme.directory}/home.michalrus.com/fullchain.pem;
+      ssl_certificate_key ${config.security.acme.directory}/home.michalrus.com/key.pem;
+
+      server_name ${name}.home.michalrus.com;
+
+      access_log logs/${name}.home.michalrus.com.access;
+      error_log logs/${name}.home.michalrus.com.error;
+
+      # Generate passwords with `echo "user:$(openssl passwd)" >> .htpasswd`.
+      auth_basic "Speak, friend, and enter.";
+      auth_basic_user_file "${config.services.nginx.stateDir}/auth/home.michalrus.com";
+
+      ${optionalString (redirectRootTo != null) ''
+        location = / {
+          return 301 /${redirectRootTo};
+        }
+      ''}
+
+      location / {
+        proxy_buffering off;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_pass http://${addr}:80;
+        proxy_set_header Authorization "Basic YWRtaW46bWlzaWVrMQ==";
+      }
+    }
+  '';
 
 in
 
@@ -34,6 +71,18 @@ in
       "www.michalrus.com" = null;
       "michalrus.pl" = null; "www.michalrus.pl" = null;
       "michalrus.eu" = null; "www.michalrus.eu" = null;
+    };
+  };
+
+  security.acme.certs."home.michalrus.com" = {
+    webroot = acmeChallenges;
+    email = "m@michalrus.com";
+    postRun = "systemctl reload nginx.service";
+    extraDomains = {
+      "printer.home.michalrus.com" = null;
+      "camera-kuchnia.home.michalrus.com" = null;
+      "camera-salon.home.michalrus.com" = null;
+      "camera-sypialnia.home.michalrus.com" = null;
     };
   };
 
@@ -104,6 +153,11 @@ in
             root /var/www/michalrus.com;
           }
         }
+
+        ${homeProxy "printer"          "10.0.1.5"  null}
+        ${homeProxy "camera-kuchnia"   "10.0.1.11" "index3.htm"}
+        ${homeProxy "camera-salon"     "10.0.1.12" null}
+        ${homeProxy "camera-sypialnia" "10.0.1.13" null}
       '';
     };
   };
