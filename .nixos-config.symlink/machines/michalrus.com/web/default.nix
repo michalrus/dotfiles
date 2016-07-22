@@ -6,7 +6,7 @@ let
 
   acmeChallenges = "/var/www/acme-challenges";
 
-  homeProxy = name: addr: redirectRootTo: ''
+  homeProxy = name: addr: auth: redirectRootTo: ''
     server {
       listen 443;
       listen [::]:443;
@@ -24,11 +24,8 @@ let
       auth_basic "Speak, friend, and enter.";
       auth_basic_user_file "${config.services.nginx.stateDir}/auth/home.michalrus.com";
 
-      ${optionalString (redirectRootTo != null) ''
-        location = / {
-          return 301 /${redirectRootTo};
-        }
-      ''}
+      ${optionalString (redirectRootTo != null)
+        ''location = / { return 301 /${redirectRootTo}; }''}
 
       location / {
         proxy_buffering off;
@@ -36,7 +33,8 @@ let
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_pass http://${addr}:80;
-        proxy_set_header Authorization "Basic YWRtaW46bWlzaWVrMQ==";
+        ${optionalString (auth != null)
+          ''proxy_set_header Authorization "Basic ${auth}";''}
       }
     }
   '';
@@ -154,10 +152,13 @@ in
           }
         }
 
-        ${homeProxy "printer"          "10.0.1.5"  null}
-        ${homeProxy "camera-kuchnia"   "10.0.1.11" "index3.htm"}
-        ${homeProxy "camera-salon"     "10.0.1.12" null}
-        ${homeProxy "camera-sypialnia" "10.0.1.13" null}
+        # The (random!) credentials hardcoded below are only useful in my
+        # home LAN and on this server, so whatever, may as well be public.
+
+        ${homeProxy "printer"          "10.0.1.5"  null null}
+        ${homeProxy "camera-kuchnia"   "10.0.1.11" "cGlranBsZW06aHZicmpsZXk=" "index3.htm"}
+        ${homeProxy "camera-salon"     "10.0.1.12" "eWJ4aGtrb3Y6bGZ3dmNzYXg=" null}
+        ${homeProxy "camera-sypialnia" "10.0.1.13" "aHRicGxoamU6c2Nnc2JyZng=" null}
       '';
     };
   };
