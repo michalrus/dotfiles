@@ -181,6 +181,10 @@ define_webjump('babla', 'http://en.bab.la/dictionary/polish-english/%s');
 define_webjump('diki', 'http://www.diki.pl/slownik-angielskiego/?q=%s&source=opensearch');
 define_webjump('fd', 'http://www.thefreedictionary.com/_/search.aspx?pid=osearch&word=%s');
 define_webjump('mw', 'http://www.merriam-webster.com/dictionary/%s');
+define_webjump('meteo', 'http://www.meteo.pl/um/php/gpp/next.php',
+               $post_data = [['name', '%s']], $alternative = 'http://www.meteo.pl/');
+define_webjump('meteo-84h', 'http://www.meteo.pl/php/gpp/next.php',
+               $post_data = [['name', '%s']], $alternative = 'http://www.meteo.pl/');
 define_webjump('sjp', 'http://sjp.pwn.pl/szukaj/%s.html');
 define_webjump('translate', 'http://translate.google.com/translate_t#auto|en|%s');
 
