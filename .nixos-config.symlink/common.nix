@@ -111,6 +111,7 @@
     (lowPrio stdmanpages)
     stdman
     tcp-broadcast
+    telnet
     tesseract
     traceroute
     unzip
