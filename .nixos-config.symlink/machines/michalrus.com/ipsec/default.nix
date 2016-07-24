@@ -7,6 +7,10 @@ with lib;
     500 4500
   ];
 
+  environment.systemPackages = with pkgs; [
+    strongswan  # for `ipsec status` in PATH etc.
+  ];
+
   services.strongswan = {
     enable = true;
     secrets = [ "/var/lib/strongswan/ipsec.secrets" ];
