@@ -1,10 +1,11 @@
 { config, lib, pkgs, ... }:
 
 with lib;
-with import ./common.nix lib;
+with import ./common.nix { inherit config lib; };
 
 {
   imports = [
+    ./monitor.nix
     ./michalrus.com.nix
     ./home.nix
   ];

@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 with lib;
-with import ./common.nix lib;
+with import ./common.nix { inherit config lib; };
 
 let
 
@@ -24,20 +24,10 @@ mkMerge [
   (mkCert domain (map (m: "${m.name}.${domain}") machines))
 
   {
-    services.nginx.httpConfig = concatMapStrings (m: ''
-      server {
-        listen 443;
-        listen [::]:443;
-
-        ssl on;
-        ssl_certificate     ${config.security.acme.directory}/${domain}/fullchain.pem;
-        ssl_certificate_key ${config.security.acme.directory}/${domain}/key.pem;
-
-        server_name ${m.name}.${domain};
-
-        access_log logs/${m.name}.${domain}.access;
-        error_log  logs/${m.name}.${domain}.error;
-
+    services.nginx.httpConfig = concatMapStrings (m: (sslServer {
+      name = "${m.name}.${domain}";
+      sslCert = domain;
+      body = ''
         # Generate passwords with `echo "user:$(openssl passwd)" >> .htpasswd`.
         auth_basic "Speak, friend, and enter.";
         auth_basic_user_file "${config.services.nginx.stateDir}/auth/${domain}";
@@ -54,8 +44,8 @@ mkMerge [
           ${optionalString (m ? auth)
             ''proxy_set_header Authorization "Basic ${m.auth}";''}
         }
-      }
-    '') machines;
+      '';
+    })) machines;
   }
 
 ]
