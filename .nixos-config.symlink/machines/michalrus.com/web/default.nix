@@ -1,88 +1,19 @@
 { config, lib, pkgs, ... }:
 
 with lib;
-
-let
-
-  acmeChallenges = "/var/www/acme-challenges";
-
-  homeProxy = name: addr: auth: redirectRootTo: ''
-    server {
-      listen 443;
-      listen [::]:443;
-
-      ssl on;
-      ssl_certificate     ${config.security.acme.directory}/home.michalrus.com/fullchain.pem;
-      ssl_certificate_key ${config.security.acme.directory}/home.michalrus.com/key.pem;
-
-      server_name ${name}.home.michalrus.com;
-
-      access_log logs/${name}.home.michalrus.com.access;
-      error_log logs/${name}.home.michalrus.com.error;
-
-      # Generate passwords with `echo "user:$(openssl passwd)" >> .htpasswd`.
-      auth_basic "Speak, friend, and enter.";
-      auth_basic_user_file "${config.services.nginx.stateDir}/auth/home.michalrus.com";
-
-      ${optionalString (redirectRootTo != null)
-        ''location = / { return 301 /${redirectRootTo}; }''}
-
-      location / {
-        proxy_buffering off;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_pass http://${addr}:80;
-        ${optionalString (auth != null)
-          ''proxy_set_header Authorization "Basic ${auth}";''}
-      }
-    }
-  '';
-
-in
+with import ./common.nix lib;
 
 {
+  imports = [
+    ./michalrus.com.nix
+    ./home.nix
+  ];
 
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 
   systemd.services.nginx.preStart = ''
     mkdir -p "${acmeChallenges}"
   '';
-
-  environment.systemPackages = with pkgs; [
-    bindfs
-  ];
-
-  fileSystems."/var/www/michalrus.com" = {
-    device = "/home/m/public_html";
-    fsType = "fuse.bindfs";
-    options = [ "ro" "force-user=nginx" "force-group=nginx" "perms=640:u+D:g+D" ];
-  };
-
-  security.acme.certs."michalrus.com" = {
-    webroot = acmeChallenges;
-    email = "m@michalrus.com";
-    postRun = "systemctl reload nginx.service";
-    extraDomains = {
-      "p.michalrus.com" = null;
-      "git.michalrus.com" = null;
-      "www.michalrus.com" = null;
-      "michalrus.pl" = null; "www.michalrus.pl" = null;
-      "michalrus.eu" = null; "www.michalrus.eu" = null;
-    };
-  };
-
-  security.acme.certs."home.michalrus.com" = {
-    webroot = acmeChallenges;
-    email = "m@michalrus.com";
-    postRun = "systemctl reload nginx.service";
-    extraDomains = {
-      "printer.home.michalrus.com" = null;
-      "camera-kuchnia.home.michalrus.com" = null;
-      "camera-salon.home.michalrus.com" = null;
-      "camera-sypialnia.home.michalrus.com" = null;
-    };
-  };
 
   services = {
     nginx = {
@@ -133,32 +64,6 @@ in
             rewrite ^ https://$host$request_uri permanent;
           }
         }
-
-        server {
-          listen 443;
-          listen [::]:443;
-
-          ssl on;
-          ssl_certificate     ${config.security.acme.directory}/michalrus.com/fullchain.pem;
-          ssl_certificate_key ${config.security.acme.directory}/michalrus.com/key.pem;
-
-          server_name michalrus.com;
-
-          access_log logs/michalrus.com.access;
-          error_log logs/michalrus.com.error;
-
-          location / {
-            root /var/www/michalrus.com;
-          }
-        }
-
-        # The (random!) credentials hardcoded below are only useful in my
-        # home LAN and on this server, so whatever, may as well be public.
-
-        ${homeProxy "printer"          "10.0.1.5"  null null}
-        ${homeProxy "camera-kuchnia"   "10.0.1.11" "cGlranBsZW06aHZicmpsZXk=" "index3.htm"}
-        ${homeProxy "camera-salon"     "10.0.1.12" "eWJ4aGtrb3Y6bGZ3dmNzYXg=" null}
-        ${homeProxy "camera-sypialnia" "10.0.1.13" "aHRicGxoamU6c2Nnc2JyZng=" null}
       '';
     };
   };
