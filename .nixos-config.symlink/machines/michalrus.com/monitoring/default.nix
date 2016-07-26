@@ -2,10 +2,22 @@
 
 with lib;
 
+let
+  influxdbCollecdPort = 25826;
+in
+
 {
-  environment.systemPackages = with pkgs; [
-    rrdtool  # add to PATH, too
-  ];
+
+  services.influxdb = {
+    enable = true;
+    extraConfig = {
+      collectd = {
+        enabled = true;
+        port = influxdbCollecdPort;
+        database = "collectd";
+      };
+    };
+  };
 
   services.collectd = {
     enable = true;
@@ -21,7 +33,11 @@ with lib;
 
       MaxReadInterval 60.0
 
-      LoadPlugin rrdtool
+      # Send data to InfluxDB collectd service.
+      LoadPlugin network
+      <Plugin network>
+        Server "localhost" "${toString influxdbCollecdPort}"
+      </Plugin>
 
       LoadPlugin cpu
       LoadPlugin load
@@ -30,6 +46,9 @@ with lib;
       <Plugin df>
         ValuesPercentage true
       </Plugin>
+
+      LoadPlugin memory
+      Plugin memory
 
       LoadPlugin ping
       <Plugin ping>
@@ -42,6 +61,12 @@ with lib;
         Host "10.0.1.13"
       </Plugin>
 
+      LoadPlugin vmem
+      <Plugin vmem>
+        Verbose false
+      </Plugin>
+
     '';
   };
+
 }

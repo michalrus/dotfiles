@@ -6,7 +6,7 @@
     ../../pkgs
     ../../local
     ../../common.nix
-    ./collectd
+    ./monitoring
     ./gitolite
     ./ipsec
     ./jabber
