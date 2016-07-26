@@ -209,4 +209,7 @@
   system.activationScripts.loginctl-enable-linger-m = pkgs.lib.stringAfter [ "users" ] ''
     ${pkgs.systemd}/bin/loginctl enable-linger m
   '';
+
+  # The NixOS release to be compatible with for stateful data such as databases.
+  system.stateVersion = "16.09";
 }

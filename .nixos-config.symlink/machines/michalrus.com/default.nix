@@ -13,7 +13,7 @@
     ./web
   ];
 
-  nix.useChroot = true;   # use useSandbox from common.nix when in stable!
+  nix.useSandbox = true;   # move to common.nix when in stable
 
   networking.hostName = "michalrus_com";
 
@@ -32,20 +32,9 @@
   };
 
   nixpkgs.config.packageOverrides = super: let self = super.pkgs; in {
-    # these fixes are not yet in stable…
-    oidentd = super.oidentd.overrideDerivation(oldAttrs: { CFLAGS = [ "--std=gnu89" ]; });
-    bindfs = super.bindfs.overrideDerivation(oldAttrs: { postFixup = ''
-      ln -s $out/bin/bindfs $out/bin/mount.fuse.bindfs
-    ''; });
-    bitlbee = super.bitlbee.overrideDerivation(oldAttrs: rec {
-      name = "bitlbee-3.4.2";
-      patches = [];
-      src = super.fetchurl {
-        url = "mirror://bitlbee/src/${name}.tar.gz";
-        sha256 = "0mza8lnfwibmklz8hdzg4f7p83hblf4h6fbf7d732kzpvra5bj39";
-      };
-    });
+    # these is not yet in unstable…
     bitlbee-facebook = super.bitlbee-facebook.overrideDerivation(oldAttrs: {
+      name = "bitlbee-facebook-2016-06-06";
       src = super.fetchFromGitHub {
         rev = "609ca2d52d468863c99ff3539917f2049ea3df44";
         owner = "jgeboski";
@@ -91,5 +80,5 @@
   '';
 
   # The NixOS release to be compatible with for stateful data such as databases.
-  system.stateVersion = "16.03";
+  system.stateVersion = "16.09";
 }
