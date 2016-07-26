@@ -17,9 +17,9 @@ with lib;
     connections = {
 
       "%default" = {
-        ikelifetime = "60m";
-        keylife = "20m";
-        rekeymargin = "3m";
+        ikelifetime = "8h";
+        lifetime = "8h";
+        margintime = "3m";
         keyingtries = "1"; # why so low?
         keyexchange = "ikev1";
         authby = "secret";
