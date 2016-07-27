@@ -28,12 +28,7 @@
     hostName = "nixos";
     extraHosts = "127.0.0.1 ${hostName}";
     nameservers = [ "8.8.8.8" "8.8.4.4" ];
-    firewall = {
-      enable = true;
-      allowPing = true;
-      allowedTCPPorts = [ ];
-      nonetGroup.enable = true;
-    };
+    firewall.nonetGroup.enable = true;
     connman = {
       enable = true;
       # https://wiki.archlinux.org/index.php/Connman#Avoid_changing_the_hostname

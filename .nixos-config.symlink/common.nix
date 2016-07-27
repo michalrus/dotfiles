@@ -22,6 +22,8 @@
     defaultLocale = "en_US.UTF-8";
   };
 
+  networking.firewall.rejectPackets = true;
+
   programs = {
     zsh = {
       enable = true;
