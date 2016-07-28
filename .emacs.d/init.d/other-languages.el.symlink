@@ -7,3 +7,6 @@
 (use-package python-mode
   :mode "\\.py\\'" :interpreter "python"
   :ensure t)
+
+(use-package go-mode
+  :ensure t)
