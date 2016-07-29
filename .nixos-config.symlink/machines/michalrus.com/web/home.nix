@@ -11,6 +11,7 @@ let
   # home LAN and on this server, so whatever, may as well be public.
 
   machines = [
+    { name = "router";           addr = "10.0.1.1"; }
     { name = "printer";          addr = "10.0.1.5"; }
     { name = "camera-kuchnia";   addr = "10.0.1.11"; auth = "cGlranBsZW06aHZicmpsZXk="; redirectRootTo = "index3.htm"; }
     { name = "camera-salon";     addr = "10.0.1.12"; auth = "eWJ4aGtrb3Y6bGZ3dmNzYXg="; }
@@ -24,6 +25,11 @@ mkMerge [
   (mkCert domain (map (m: "${m.name}.${domain}") machines))
 
   {
+    # Add these fall-through rules with comments for collectd metrics.
+    networking.firewall.comments = listToAttrs (map (m: {
+      name = m.addr; value = m.addr;
+    }) machines);
+
     services.nginx.httpConfig = concatMapStrings (m: (sslServer {
       name = "${m.name}.${domain}";
       sslCert = domain;

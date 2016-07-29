@@ -26,11 +26,7 @@ in
     user = "root";
 
     extraConfig = ''
-
-      # Warning: You should set this once and then never touch it
-      # again — because of the RRD format.
       Interval 10.0
-
       MaxReadInterval 60.0
 
       # Send data to InfluxDB collectd service.
@@ -41,14 +37,22 @@ in
 
       LoadPlugin cpu
       LoadPlugin load
-
       LoadPlugin df
-      <Plugin df>
-        ValuesPercentage true
-      </Plugin>
-
+      LoadPlugin disk
+      LoadPlugin entropy
+      LoadPlugin interface
       LoadPlugin memory
-      Plugin memory
+      LoadPlugin processes
+      LoadPlugin swap
+      LoadPlugin uptime
+      LoadPlugin users
+      LoadPlugin vmem
+
+      LoadPlugin iptables
+      <Plugin iptables>
+        Chain "filter" "nixos-fw-comments-in"
+        Chain "filter" "nixos-fw-comments-out"
+      </Plugin>
 
       LoadPlugin ping
       <Plugin ping>
@@ -60,12 +64,6 @@ in
         Host "10.0.1.12"
         Host "10.0.1.13"
       </Plugin>
-
-      LoadPlugin vmem
-      <Plugin vmem>
-        Verbose false
-      </Plugin>
-
     '';
   };
 
