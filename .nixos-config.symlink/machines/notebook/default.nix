@@ -42,10 +42,8 @@
   time.timeZone = "Europe/Warsaw";
 
   hardware = {
-    sane = {
-      enable = true;
-      extraConfig = { "pixma" = "bjnp://10.0.1.5"; };
-    };
+    sane.enable = true;
+    sane.extraConfig.pixma = "bjnp://10.0.1.5";
     opengl.driSupport32Bit = true; # for Wine
     pulseaudio = {
       enable = true;
@@ -123,6 +121,7 @@
     xorg.xdpyinfo
     xorg.xmodmap
     xrandr-invert-colors
+    xsane
     xsel
   ];
 
