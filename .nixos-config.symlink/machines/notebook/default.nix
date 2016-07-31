@@ -42,7 +42,10 @@
   time.timeZone = "Europe/Warsaw";
 
   hardware = {
-    sane.enable = true;
+    sane = {
+      enable = true;
+      extraConfig = { "pixma" = "bjnp://10.0.1.5"; };
+    };
     opengl.driSupport32Bit = true; # for Wine
     pulseaudio = {
       enable = true;
