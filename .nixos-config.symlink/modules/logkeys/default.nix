@@ -44,7 +44,7 @@ in
           rinp="$(readlink -f "/dev/input/by-path/$inp")"
           logkeys --start --device="$rinp" --output=/var/log/logkeys.log ${optionalString (cfg.keymap != null) "--keymap=\"${pkgs.logkeys}/share/logkeys/${cfg.keymap}.map\""}
           # why is the following not configurable?!
-          rm /var/run/logkeys.pid
+          rm /var/run/logkeys.pid || true
         done
         '';
     };

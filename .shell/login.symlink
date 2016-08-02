@@ -1,12 +1,5 @@
 # Put your environment variables here
 
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
-export LANGUAGE=en_US:en
-
-# for A4 paper
-locale -a | grep -qi 'en_GB.utf' && export LC_PAPER='en_GB.UTF-8'
-
 [ -d "/usr/local/bin"     ] && export PATH="/usr/local/bin:${PATH}"
 [ -d "${HOME}/bin"        ] && export PATH="${HOME}/bin:${PATH}"
 [ -d "${HOME}/.cabal/bin" ] && export PATH="${HOME}/.cabal/bin:${PATH}"

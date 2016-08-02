@@ -16,12 +16,6 @@
 
   boot.tmpOnTmpfs = true;
 
-  i18n = {
-    consoleFont = "Lat2-Terminus16";
-    consoleKeyMap = "us";
-    defaultLocale = "en_US.UTF-8";
-  };
-
   networking.firewall.rejectPackets = true;
 
   programs = {
@@ -34,7 +28,7 @@
 
   services = {
     haveged.enable = true;
-    printing.enable = false;
+
     locate = {
       enable = true;
       includeStore = true;
@@ -51,6 +45,8 @@
     mutableUsers = false;
     defaultUserShell = "/run/current-system/sw/bin/zsh";
   };
+
+  environment.variables.PATH = [ "$HOME/.bin" ];
 
   environment.systemPackages = with pkgs; [
     aspell

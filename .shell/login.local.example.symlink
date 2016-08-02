@@ -2,6 +2,13 @@
 
 # Remember to copy this file without the `.example' suffix.
 
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US:en
+
+# for A4 paper
+locale -a | grep -qi 'en_GB.utf' && export LC_PAPER='en_GB.UTF-8'
+
 export EDITOR='emacs'
 export VISUAL="$EDITOR"
 
