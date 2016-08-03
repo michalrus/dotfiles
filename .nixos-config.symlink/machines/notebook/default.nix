@@ -68,6 +68,8 @@
     emacs
     evince
     firefox
+    gettext
+    gettext-emacs
     ghostscript
     gimp
     gnome.gnome_icon_theme

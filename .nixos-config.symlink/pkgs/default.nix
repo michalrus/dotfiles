@@ -5,6 +5,7 @@
     conkeror-unwrapped = (import ./conkeror super self);
     conky              = (import ./conky super self);
     evince             = (import ./evince.nix super self);
+    gettext-emacs      = (import ./gettext-emacs.nix super self);
     gregorio           = (import ./gregorio.nix super self);
     influxdb           = (import ./influxdb super self);
     mtr                = (import ./mtr.nix super self);

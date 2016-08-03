@@ -10,3 +10,6 @@
 
 (use-package go-mode
   :ensure t)
+
+(use-package po-mode
+  :mode "\\.po\\'\\|\\.po\\.")
