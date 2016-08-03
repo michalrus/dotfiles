@@ -76,6 +76,7 @@
     gnome3.gnome_themes_standard
     gnucash26
     gnumake.doc  # move to common.nix when in stable!
+    gparted
     # (haskellPackages.ghcWithHoogle (haskellPackages: with haskellPackages; [
     (haskellPackages.ghcWithPackages (haskellPackages: with haskellPackages; [
       cabal-install happy hindent hlint parallel stylish-haskell turtle
