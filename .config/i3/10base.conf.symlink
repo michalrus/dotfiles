@@ -111,6 +111,5 @@ bar {
 }
 
 exec --no-startup-id dunst
-exec --no-startup-id unclutter -idle 1
 exec --no-startup-id compton
 exec --no-startup-id ~/.screenlayout/current
