@@ -153,6 +153,11 @@
 
     lockX11Displays.enable = true;
 
+    printing = {
+      enable = true;
+      gutenprint = true;
+    };
+
     xserver = {
       enable = true;
       layout = "pl";
