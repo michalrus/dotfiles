@@ -108,6 +108,7 @@
     })
     transcribe
     transmission_gtk
+    unclutter
     utox
     visualvm
     (wine.override { pulseaudioSupport = true; })
