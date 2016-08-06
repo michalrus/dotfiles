@@ -1,3 +1,6 @@
+# screen started from a systemd user unit will not have this set.
+setenv DISPLAY ':0'
+
 screen -t 'ssh'      0 $SHELL
 screen -t 'mtr'      1 infinitely mtr 8.8.8.8
 screen -t 'htop'     2 infinitely htop
