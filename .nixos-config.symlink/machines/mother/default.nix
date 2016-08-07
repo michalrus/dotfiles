@@ -47,23 +47,26 @@
     (runCommand "wrap-slimlock" {} "mkdir -p $out/bin && ln -s ${pkgs.slim}/bin/slimlock $out/bin/slock")
     awf-gtk
     chromium
-    claws-mail
     cool-retro-term
     evince
     galculator
     gimp
     gnome3.aisleriot
+    gnome3.file-roller # for thunar-archive-plugin
     jmtpfs
     libmtp
     libnotify
     libreoffice
     mpv
     networkmanagerapplet
+    openjdk8 # Thunderbird seems to need it for some LibreOffice extension? And I *think* it crashes without it. Could not replicate, though.
     pinentry
     python34Packages.livestreamer
     rtmpdump
     simple-scan
+    thunderbird
     transmission_gtk
+    unclutter
     xarchiver
     xclip
     xdotool
@@ -99,6 +102,8 @@
       xkbOptions = "ctrl:nocaps,compose:caps";
       synaptics = {
         enable = true;
+        maxSpeed = "5.0";
+        accelFactor = "0.025";
         twoFingerScroll = true;
         tapButtons = true;
         fingersMap = [1 3 2];
@@ -107,7 +112,10 @@
       displayManager.auto.enable = true;
       displayManager.auto.user = "elzbieta";
       desktopManager.xterm.enable = false;
-      desktopManager.xfce.enable = true;
+      desktopManager.xfce = {
+        enable = true;
+        thunarPlugins = with pkgs.xfce; [ thunar-archive-plugin ];
+      };
     };
   };
 
@@ -131,6 +139,16 @@
       extraGroups = [ "wheel" "scanner" "networkmanager" ];
     };
   };
+
+  system.autoUpgrade = {
+    enable = true;
+    dates = "1:30";
+  };
+
+  # A hack to `loginctl enable-linger root` (for multiplexer sessions to last), until this one is open: https://github.com/NixOS/nixpkgs/issues/3702
+  system.activationScripts.loginctl-enable-linger-root = pkgs.lib.stringAfter [ "users" ] ''
+    ${pkgs.systemd}/bin/loginctl enable-linger root
+  '';
 
   # The NixOS release to be compatible with for stateful data such as databases.
   system.stateVersion = "16.09";
