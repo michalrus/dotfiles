@@ -204,16 +204,12 @@
     extraUsers.m = {
       hashedPassword = "$6$wO42jkhqerm$kl.qIl5USrzqAZOIkXdicrBLBgVwka2Dz81nc.aNsNJZREXY.02XxPdL1FiTCcuVP2K/DSmXqAQ3aPbri/v.g1";
       isNormalUser = true;
+      linger = true;
       uid = 31337;
       description = "Michal Rus";
       extraGroups = [ "wheel" "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" ];
     };
   };
-
-  # A hack to `loginctl enable-linger m` (for multiplexer sessions to last), until this one is open: https://github.com/NixOS/nixpkgs/issues/3702
-  system.activationScripts.loginctl-enable-linger-m = pkgs.lib.stringAfter [ "users" ] ''
-    ${pkgs.systemd}/bin/loginctl enable-linger m
-  '';
 
   # The NixOS release to be compatible with for stateful data such as databases.
   system.stateVersion = "16.09";
