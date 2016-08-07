@@ -28,7 +28,7 @@ super.stdenv.mkDerivation {
   name = "transcribe-8.40";
 
   src = super.fetchurl {
-    url = "http://www.seventhstring.com/xscribe/downlinux64/xsc64setup.tar.gz";
+    url = "https://www.seventhstring.com/xscribe/downlinux64_old/xsc64setup.tar.gz";
     sha256 = "0fqs0f2p9kbp1skgqm5sgcq9xxf6rccbm22fvka8qmpvxpsxpcbs";
   };
 
