@@ -35,12 +35,6 @@
   (global-set-key (kbd "C--") 'zoom-frm-out)
   :ensure t :pin melpa-stable)
 
-(use-package smooth-scrolling
-  :config
-  (setq smooth-scroll-margin 5)
-  (smooth-scrolling-mode)
-  :ensure t)
-
 ;; disable the default theme and load solarized (if possible)
 (defun disable-all-themes () "disable all active themes"
   (interactive) (dolist (i custom-enabled-themes) (disable-theme i)))
