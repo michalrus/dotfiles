@@ -8,12 +8,15 @@
     ../../common.nix
     ../../hardware-configuration.nix
     ../../boot.nix
+    ./musnix.nix
   ];
 
   nix.useSandbox = true;   # move to common.nix when in stable!
 
   powerManagement = {
-    cpuFreqGovernor = "performance";
+    # Musnix is setting it to “performance” already. And this is a unique option…
+    #cpuFreqGovernor = "performance";
+
     powerDownCommands = ''
       ${pkgs.procps}/bin/pgrep ssh | while IFS= read -r pid ; do
         [ "$(readlink "/proc/$pid/exe")" = "${pkgs.openssh}/bin/ssh" ] && kill "$pid"
