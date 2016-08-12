@@ -81,6 +81,7 @@
     libjpeg
     lshw
     lsof
+    ltrace
     man_db
     manpages
     mkpasswd
@@ -101,6 +102,7 @@
     perlPackages.LWPProtocolHttps
     poppler_utils
     posix_man_pages
+    powertop
     screen
     shared_mime_info
     silver-searcher
@@ -108,6 +110,7 @@
     sox
     (lowPrio stdmanpages)
     stdman
+    strace
     tcp-broadcast
     telnet
     tesseract
