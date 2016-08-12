@@ -2,6 +2,7 @@
 
   nixpkgs.config.packageOverrides = super: let self = super.pkgs; in {
     awf-gtk            = (import ./awf-gtk.nix super self);
+    bitwig-studio      = (import ./bitwig-studio super self);
     conkeror-unwrapped = (import ./conkeror super self);
     evince             = (import ./evince.nix super self);
     gettext-emacs      = (import ./gettext-emacs.nix super self);

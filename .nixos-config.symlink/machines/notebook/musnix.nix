@@ -30,6 +30,10 @@ in
     # rtirq.highList = [ ??? ]; # TODO: Set me.
   };
 
+  environment.systemPackages = with pkgs; [
+    bitwig-studio
+  ];
+
   users.extraUsers.m.extraGroups = [ "audio" ];
 
 }
