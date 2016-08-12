@@ -32,6 +32,7 @@ in
 
   environment.systemPackages = with pkgs; [
     bitwig-studio
+    guitarix
   ];
 
   users.extraUsers.m.extraGroups = [ "audio" ];
