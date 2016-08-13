@@ -26,6 +26,7 @@ in
     # soundcardPciId = ""; # TODO: Set me. // Maybe this should go to `hardware-configuration.nix`?
     kernel.optimize = true;
     kernel.realtime = true;
+    kernel.packages = pkgs.linuxPackages_4_4_rt;
     rtirq.enable = true;
     # rtirq.highList = [ ??? ]; # TODO: Set me.
   };
