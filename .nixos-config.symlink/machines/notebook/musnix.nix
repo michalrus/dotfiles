@@ -34,7 +34,11 @@ in
   environment.systemPackages = with pkgs; [
     bitwig-studio
     guitarix
+    jack2Full
+    qjackctl
   ];
+
+  hardware.pulseaudio.package = pkgs.pulseaudioFull;
 
   users.extraUsers.m.extraGroups = [ "audio" ];
 
