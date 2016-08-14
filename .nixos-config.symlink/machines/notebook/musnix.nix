@@ -32,6 +32,7 @@ in
   };
 
   environment.systemPackages = with pkgs; [
+    ardour
     bitwig-studio
     guitarix
     jack2Full
