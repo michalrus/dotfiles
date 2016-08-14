@@ -7,6 +7,7 @@
     evince             = (import ./evince.nix super self);
     gettext-emacs      = (import ./gettext-emacs.nix super self);
     gregorio           = (import ./gregorio.nix super self);
+    guitarix           = (import ./guitarix.nix super self);
     influxdb           = (import ./influxdb super self);
     mtr                = (import ./mtr.nix super self);
     mu                 = (import ./mu super self);
