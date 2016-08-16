@@ -80,11 +80,28 @@ mode "resize" {
   bindsym Up    resize shrink height 10 px or 5 ppt
   bindsym Right resize grow   width  10 px or 5 ppt
 
+  bindsym $mod+r mode "default"
   bindsym Return mode "default"
   bindsym Escape mode "default"
+
+  bindsym $mod+t floating enable; mode "move"
+}
+
+mode "move" {
+  bindsym Up move up 20px
+  bindsym Left move left 20px
+  bindsym Down move down 20px
+  bindsym Right move right 20px
+
+  bindsym $mod+t mode "default"
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+
+  bindsym $mod+r mode "resize"
 }
 
 bindsym $mod+r mode "resize"
+bindsym $mod+t floating enable; mode "move"
 
 # colorclass            border  backgr. text    indicator
 client.focused          #073642 #073642 #eee8d5 #268bd2

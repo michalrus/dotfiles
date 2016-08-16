@@ -6,3 +6,5 @@ bindsym $mod+k exec pass-autotype
 
 exec --no-startup-id remote-notifications
 exec --no-startup-id space2ctrl
+
+for_window [class="qjackctl"] [title="^JACK Audio Connection Kit"] floating enable
