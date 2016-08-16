@@ -32,11 +32,18 @@ in
   };
 
   environment.systemPackages = with pkgs; [
+    a2jmidid
+    aeolus
     ardour
-    bitwig-studio
+    artyFX
+    calf
+    distrho
+    eq10q
     guitarix
+    helm
     jack2Full
     qjackctl
+    setbfree
   ];
 
   hardware.pulseaudio.package = pkgs.pulseaudioFull;
