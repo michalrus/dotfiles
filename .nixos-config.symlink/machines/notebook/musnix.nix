@@ -31,6 +31,9 @@ in
     # rtirq.highList = [ ??? ]; # TODO: Set me.
   };
 
+  # Ardour4’s GUI eats 90%+ CPU if this one is not set.
+  environment.variables."ARDOUR_IMAGE_SURFACE" = "1";
+
   environment.systemPackages = with pkgs; [
     a2jmidid
     aeolus
