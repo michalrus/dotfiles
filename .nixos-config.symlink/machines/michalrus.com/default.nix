@@ -11,6 +11,7 @@
     ./ipsec
     ./jabber
     ./web
+    ./feeds/annibot.nix
   ];
 
   nix.useSandbox = true;   # move to common.nix when in stable
