@@ -132,9 +132,8 @@
     xsel
   ];
 
-  environment.shellInit = ''
-    export GTK2_RC_FILES=${pkgs.gnome3.gnome_themes_standard}/share/themes/Adwaita/gtk-2.0/gtkrc
-    '';
+  environment.variables."GTK2_RC_FILES" =
+    "${pkgs.gnome3.gnome_themes_standard}/share/themes/Adwaita/gtk-2.0/gtkrc";
 
   programs = {
     ssh.startAgent = false;
