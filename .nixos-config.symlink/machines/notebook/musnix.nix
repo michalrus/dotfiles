@@ -42,8 +42,10 @@ in
     guitarix
     helm
     jack2Full
+    mda_lv2
     qjackctl
     setbfree
+    x42-plugins
   ];
 
   hardware.pulseaudio.package = pkgs.pulseaudioFull;
