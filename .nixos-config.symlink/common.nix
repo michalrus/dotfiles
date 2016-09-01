@@ -135,6 +135,8 @@
   security = {
     setuidPrograms = [ "mtr" ];
 
+    hideProcessInformation = true;
+
     sudo.extraConfig = ''
       Defaults timestamp_timeout=0
       %wheel ALL=(root) NOPASSWD: ${config.system.build.nixos-rebuild}/bin/nixos-rebuild switch
