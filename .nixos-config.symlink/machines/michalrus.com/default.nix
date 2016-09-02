@@ -12,6 +12,7 @@
     ./jabber
     ./web
     ./feeds/annibot.nix
+    ./feeds/stosowana.nix
   ];
 
   nix.useSandbox = true;   # move to common.nix when in stable
