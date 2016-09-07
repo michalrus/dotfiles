@@ -60,6 +60,7 @@
 
   environment.systemPackages = with pkgs; [
     arandr
+    audacity
     awf-gtk
     beets
     calibre
@@ -72,6 +73,7 @@
     emacs
     evince
     firefox
+    flac
     gettext
     gettext-emacs
     ghostscript
@@ -92,6 +94,7 @@
     isync
     jmeter
     jmtpfs
+    lame
     libmtp
     libnotify
     lilypond
