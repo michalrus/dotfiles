@@ -61,6 +61,7 @@
   environment.systemPackages = with pkgs; [
     arandr
     awf-gtk
+    beets
     calibre
     compton
     conkeror
