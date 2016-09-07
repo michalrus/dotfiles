@@ -94,8 +94,10 @@
     libmtp
     libnotify
     lilypond
+    mpc_cli
     mpv
     mu
+    ncmpcpp
     oathToolkit
     openjdk8
     pass
@@ -159,6 +161,8 @@
       enable = true;
       gutenprint = true;
     };
+
+    mpd.enable = true;
 
     xserver = {
       enable = true;
