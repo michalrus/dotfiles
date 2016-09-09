@@ -94,6 +94,7 @@
     isync
     jmeter
     jmtpfs
+    keyfinder-cli
     lame
     libmtp
     libnotify
