@@ -7,8 +7,10 @@
     calibre
     flac
     gimp
+    gpac
     keyfinder-cli
     lame
+    libjpeg
     lilypond
     mpc_cli
     mpv
@@ -17,6 +19,8 @@
     rtmpdump
     scantailor
     transcribe
+    x264
+    youtube-dl
 
     # for mpd.musicDirectory
     bindfs

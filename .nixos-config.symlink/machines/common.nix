@@ -69,7 +69,6 @@
     gitstats
     (lowPrio gnupg1compat)
     gnupg
-    gpac
     graphicsmagick
     htop
     hwinfo
@@ -82,7 +81,6 @@
     gnumake
     #gnumake.doc  # not yet in stable!
     gocr
-    libjpeg
     lshw
     lsof
     ltrace
@@ -127,8 +125,6 @@
     which
     whois
     wrk
-    x264
-    youtube-dl
     zip
   ];
 
