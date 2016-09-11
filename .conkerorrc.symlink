@@ -192,6 +192,8 @@ define_webjump('allegro', 'http://allegro.pl/listing/listing.php?string=%s&searc
 define_webjump('facebook', 'https://www.facebook.com/search/more?q=%s');
 define_webjump('filmweb', 'http://www.filmweb.pl/search?q=%s&source=opensearch');
 define_webjump('ilewazy', 'http://ilewazy.pl/produkty/page/1/q/%s');
+
+define_webjump('musicbrainz', 'https://musicbrainz.org/search?query=%s&type=recording&limit=100&method=advanced');
 define_webjump('quora', 'http://www.quora.com/opensearch/query?q=%s&pw={startPage?}');
 define_webjump('soundcloud', 'http://soundcloud.com/search?q=%s');
 define_webjump('torrentz-eu', 'https://torrentz.eu/search?q=%s');
