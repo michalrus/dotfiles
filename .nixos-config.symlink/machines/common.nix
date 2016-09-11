@@ -97,11 +97,6 @@
     openssl
     p7zip
     pciutils
-    perlPackages.ConfigTiny
-    perlPackages.DateCalc
-    perlPackages.JSON
-    perlPackages.LWP
-    perlPackages.LWPProtocolHttps
     poppler_utils
     posix_man_pages
     powertop
