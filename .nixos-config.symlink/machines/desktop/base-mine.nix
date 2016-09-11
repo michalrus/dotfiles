@@ -11,6 +11,8 @@
 
   nix.useSandbox = true;   # move to common.nix when in stable!
 
+  boot.tmpOnTmpfs = true;
+
   powerManagement = {
     cpuFreqGovernor = lib.mkDefault "performance";
 

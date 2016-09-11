@@ -18,8 +18,6 @@
     '';
   };
 
-  boot.tmpOnTmpfs = true;
-
   networking.firewall.rejectPackets = true;
 
   programs = {
