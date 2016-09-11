@@ -81,8 +81,6 @@
     ]))
     imgurbash2   # move to common.nix when in stable!
     isync
-    jmtpfs
-    libmtp
     libnotify
     mu
     oathToolkit
@@ -143,7 +141,6 @@
       enable = true;
       gutenprint = true;
     };
-
 
     xserver = {
       enable = true;

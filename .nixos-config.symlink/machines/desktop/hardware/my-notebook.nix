@@ -5,6 +5,7 @@
     <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
     ../base-mine.nix
     ../modules/musnix.nix
+    ../modules/android-dev.nix
   ];
 
   nix.maxJobs = 4;
