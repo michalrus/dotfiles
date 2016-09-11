@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
 
@@ -46,7 +46,7 @@
   };
 
   users = {
-    mutableUsers = false;
+    mutableUsers = lib.mkDefault false;
     defaultUserShell = "/run/current-system/sw/bin/zsh";
   };
 
