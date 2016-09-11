@@ -81,7 +81,6 @@
     ]))
     imgurbash2   # move to common.nix when in stable!
     isync
-    jmeter
     jmtpfs
     libmtp
     libnotify
@@ -108,7 +107,6 @@
     xcape
     xclip
     xdotool
-    xfe
     xorg.xbacklight
     xorg.xev
     xorg.xdpyinfo
