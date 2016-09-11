@@ -1,5 +1,0 @@
-# we don’t want to track local configuration changes
-# (however, you’re free to save them as *.nix.example or *.nix.gpg)
-
-*.nix
-!default.nix
