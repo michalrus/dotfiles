@@ -1,18 +1,18 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports = [
     ../../modules
     ../../pkgs
     ../common.nix
+    ./modules/media.nix
     ./my-wifi-passwords.nix
   ];
 
   nix.useSandbox = true;   # move to common.nix when in stable!
 
   powerManagement = {
-    # Musnix is setting it to “performance” already. And this is a unique option…
-    #cpuFreqGovernor = "performance";
+    cpuFreqGovernor = lib.mkDefault "performance";
 
     powerDownCommands = ''
       ${pkgs.procps}/bin/pgrep ssh | while IFS= read -r pid ; do
@@ -54,10 +54,7 @@
 
   environment.systemPackages = with pkgs; [
     arandr
-    audacity
     awf-gtk
-    beets
-    calibre
     compton
     conkeror
     conky
@@ -67,11 +64,9 @@
     emacs
     evince
     firefox
-    flac
     gettext
     gettext-emacs
     ghostscript
-    gimp
     gnome.gnome_icon_theme
     gnome3.dconf   # so that GnuCash prefs can be changed
     gnome3.adwaita-icon-theme
@@ -88,30 +83,20 @@
     isync
     jmeter
     jmtpfs
-    keyfinder-cli
-    lame
     libmtp
     libnotify
-    lilypond
-    mpc_cli
-    mpv
     mu
-    ncmpcpp
     oathToolkit
     openjdk8
     pass
     pavucontrol
     pinentry
-    python34Packages.livestreamer
-    rtmpdump
     scala
-    scantailor
     st
     (texlive.combine {
       inherit (texlive) scheme-small latexmk titlesec tocloft todonotes cleveref lipsum biblatex logreq cm-super csquotes pgfplots adjustbox collectbox ccicons polski placeins xstring pdfpages;
       gregorio = pkgs.gregorio.forTexlive;
     })
-    transcribe
     transmission_gtk
     utox
     visualvm
@@ -161,7 +146,6 @@
       gutenprint = true;
     };
 
-    mpd.enable = true;
 
     xserver = {
       enable = true;

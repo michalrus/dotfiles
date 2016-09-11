@@ -52,14 +52,4 @@
   };
 
   swapDevices = [ { device = "/var/swap"; } ];
-
-  environment.systemPackages = with pkgs; [
-    bindfs
-  ];
-
-  fileSystems."${config.services.mpd.musicDirectory}" = {
-    device = "${config.users.extraUsers.m.home}/Music";
-    fsType = "fuse.bindfs";
-    options = [ "ro" "force-user=root" "force-group=root" "perms=444:u+D:g+D:o+D" ];
-  };
 }
