@@ -1,11 +1,10 @@
-{ config, pkgs, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   imports = [
-    ../../modules
-    ../../pkgs
-    ../common.nix
+    ./base.nix
     ./modules/media.nix
+    ./modules/android.nix
     ./my-wifi-passwords.nix
   ];
 
@@ -14,23 +13,17 @@
   boot.tmpOnTmpfs = true;
 
   powerManagement = {
-    cpuFreqGovernor = lib.mkDefault "performance";
-
     powerDownCommands = ''
       ${pkgs.procps}/bin/pgrep ssh | while IFS= read -r pid ; do
         [ "$(readlink "/proc/$pid/exe")" = "${pkgs.openssh}/bin/ssh" ] && kill "$pid"
       done
-      '';
+    '';
     powerUpCommands = ''
       ${pkgs.eject}/bin/eject -i on /dev/sr0 # Why isn’t this working‽ How to block the CD eject button?
-      '';
+    '';
   };
 
-  networking = rec {
-    hostName = "nixos";
-    extraHosts = "127.0.0.1 ${hostName}";
-    nameservers = [ "8.8.8.8" "8.8.4.4" ];
-    firewall.nonetGroup.enable = true;
+  networking = {
     connman = {
       enable = true;
       # https://wiki.archlinux.org/index.php/Connman#Avoid_changing_the_hostname
@@ -39,19 +32,6 @@
         AllowHostnameUpdates=false
       '';
     };
-  };
-
-  hardware = {
-    sane.enable = true;
-    opengl.driSupport32Bit = true; # for Wine
-    pulseaudio = {
-      enable = true;
-      support32Bit = true; # for Wine
-    };
-  };
-
-  nixpkgs.config = {
-    allowBroken = true;
   };
 
   environment.systemPackages = with pkgs; [
@@ -128,37 +108,20 @@
 
   services = {
     logind.extraConfig = ''
-        HandleLidSwitch=suspend
-        HandlePowerKey=suspend
-      '';
-
-    logkeys = {
-      enable = true;
-      keymap = "pl";
-    };
+      HandleLidSwitch=suspend
+      HandlePowerKey=suspend
+    '';
 
     lockX11Displays.enable = true;
 
-    printing = {
-      enable = true;
-      gutenprint = true;
-    };
-
     xserver = {
-      enable = true;
-      layout = "pl";
-      xkbOptions = "ctrl:nocaps,compose:caps";
       synaptics = {
-        enable = true;
         maxSpeed = "4.0";
         accelFactor = "0.02";
-        twoFingerScroll = true;
-        tapButtons = true;
-        fingersMap = [1 3 2];
         additionalOptions = ''
           Option "VertScrollDelta" "-114"
           Option "HorizScrollDelta" "-114"
-          '';
+        '';
       };
 
       displayManager.lightdm.enable = true;
@@ -169,17 +132,11 @@
     };
   };
 
-  fonts = {
-    enableGhostscriptFonts = true;
-    fonts = with pkgs; [
-      anonymousPro
-      hack-font
-      inconsolata
-      terminus_font
-      unifont
-      unifont_upper
-    ];
-  };
+  fonts.fonts = with pkgs; [
+    anonymousPro
+    hack-font
+    inconsolata
+  ];
 
   users = {
     guestAccount = {
@@ -197,6 +154,8 @@
       extraGroups = [ "wheel" "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" ];
     };
   };
+
+  system.autoUpgrade.enable = false;
 
   # The NixOS release to be compatible with for stateful data such as databases.
   system.stateVersion = "16.09";
