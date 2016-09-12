@@ -17,17 +17,6 @@
 
   boot.kernel.sysctl."vm.swappiness" = 15; # Use swap more reluctantly.
 
-  nixpkgs.config.packageOverrides = super: {
-    stdenv = super.stdenv // {
-      platform = super.stdenv.platform // {
-        kernelExtraConfig = ''
-          DRM_GMA600 y
-          DRM_GMA3600 y
-        '';
-      };
-    };
-  };
-
   boot.loader.grub = {
     enable = true;
     version = 2;
