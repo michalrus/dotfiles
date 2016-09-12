@@ -2,8 +2,6 @@
 
 {
   nix = {
-    useSandbox = true;
-
     trustedBinaryCaches = [
       http://hydra.nixos.org
     ];
@@ -15,7 +13,11 @@
     extraOptions = ''
       gc-keep-outputs = true
     '';
-  };
+  } // (if lib.nixpkgsVersion > "16.09" then {
+    useSandbox = true;
+  } else {
+    useChroot = true;
+  });
 
   networking.firewall.rejectPackets = true;
 
@@ -72,13 +74,11 @@
     htop
     hwinfo
     imagemagick
-    imgurbash2
     indent
     jhead
     faad2   # video in Firefox
     ffmpeg
     gnumake
-    gnumake.doc
     gocr
     lshw
     lsof
@@ -120,12 +120,13 @@
     whois
     wrk
     zip
-  ];
+  ] ++ (if lib.nixpkgsVersion > "16.09" then [
+    gnumake.doc
+    imgurbash2
+  ] else []);
 
   security = {
     setuidPrograms = [ "mtr" ];
-
-    hideProcessInformation = true;
 
     sudo.extraConfig = ''
       Defaults timestamp_timeout=0
@@ -135,5 +136,7 @@
       %wheel ALL=(root) NOPASSWD: ${config.system.build.nixos-rebuild}/bin/nixos-rebuild boot --upgrade
       %wheel ALL=(root) NOPASSWD: ${config.nix.package.out}/bin/nix-collect-garbage -d
     '';
-  };
+  } // (if lib.nixpkgsVersion > "16.09" then {
+    hideProcessInformation = true;
+  } else { });
 }
