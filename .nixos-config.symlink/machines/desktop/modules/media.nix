@@ -8,6 +8,7 @@
     flac
     gimp
     gpac
+    inkscape
     keyfinder-cli
     lame
     libjpeg
