@@ -63,6 +63,8 @@
     file
     gcc
     git
+    gitAndTools.gitAnnex
+    gitAndTools.gitRemoteGcrypt
     gitstats
     (lowPrio gnupg1compat)
     gnupg
