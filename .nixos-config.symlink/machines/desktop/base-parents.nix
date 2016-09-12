@@ -6,8 +6,6 @@
     ./modules/android.nix
   ];
 
-  nix.useChroot = true;   # move to common.nix when in stable!
-
   networking.networkmanager.enable = true;
 
   time.timeZone = "Europe/Warsaw";
@@ -18,6 +16,8 @@
   };
 
   nixpkgs.config = {
+    allowUnfree = true; # M$ fonts, Skype™ and similar nonsense.
+
     packageOverrides = super: let self = super.pkgs; in {
       # By default, gvfs in Xfce has no Samba support. Turn it back on.
       xfce = super.xfce // { gvfs = super.gvfs; };

@@ -15,8 +15,6 @@
     ./feeds/stosowana.nix
   ];
 
-  nix.useSandbox = true;   # move to common.nix when in stable
-
   networking.hostName = "michalrus_com";
 
   networking.firewall.allowedTCPPorts = [

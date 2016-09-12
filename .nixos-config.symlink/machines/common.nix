@@ -1,9 +1,8 @@
 { config, lib, pkgs, ... }:
 
 {
-
   nix = {
-    #useSandbox = true;   # not yet in stable!
+    useSandbox = true;
 
     trustedBinaryCaches = [
       http://hydra.nixos.org
@@ -71,13 +70,13 @@
     htop
     hwinfo
     imagemagick
-    #imgurbash2   # not yet in stable!
+    imgurbash2
     indent
     jhead
     faad2   # video in Firefox
     ffmpeg
     gnumake
-    #gnumake.doc  # not yet in stable!
+    gnumake.doc
     gocr
     lshw
     lsof
@@ -135,5 +134,4 @@
       %wheel ALL=(root) NOPASSWD: ${config.nix.package.out}/bin/nix-collect-garbage -d
     '';
   };
-
 }
