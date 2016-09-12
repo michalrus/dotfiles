@@ -8,7 +8,7 @@
 
   nix.useChroot = true;   # move to common.nix when in stable!
 
-  networking = networkmanager.enable = true;
+  networking.networkmanager.enable = true;
 
   time.timeZone = "Europe/Warsaw";
   i18n.defaultLocale = "pl_PL.UTF-8";
