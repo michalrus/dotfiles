@@ -7,8 +7,8 @@
         magit-merge-arguments '("--ff-only"))
   :ensure t)
 
-(use-package git-gutter
-  :config (add-hook 'prog-mode-hook 'git-gutter-mode)
+(use-package diff-hl
+  :config (add-hook 'prog-mode-hook 'diff-hl-mode)
   :ensure t)
 
 (use-package projectile
