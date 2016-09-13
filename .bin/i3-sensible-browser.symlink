@@ -1,0 +1,6 @@
+#!/bin/sh
+
+url="$1"
+escaped="$(echo "$url" | sed "s/&/\\\\&/g")"
+
+exec i3-msg exec conkeror "$escaped"
