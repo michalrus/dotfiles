@@ -67,14 +67,6 @@ in
 
 super.conkeror-unwrapped.overrideDerivation (oldAttrs: {
 
-  name = "conkeror-1.0.3";
-
-  src = super.fetchgit {
-    url = git://repo.or.cz/conkeror.git;
-    rev = "6d4599333c402f1dcdfdb60812068060e30a10d9";
-    sha256 = "1vqyv9ga1ksqq1mkn92r0wbxgpbpd0cq46hfrfknaik0nzca7pq2";
-  };
-
   patches = [ ./ctrl-click-in-new-buffer.patch ];
 
   installPhase = oldAttrs.installPhase + ''
