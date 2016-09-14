@@ -52,5 +52,5 @@
     options = [ "bind" ];
   };
 
-  swapDevices = [ { device = "/var/swap"; } ];
+  swapDevices = [ { device = "/dev/disk/by-uuid/b03c839e-4f76-4ef5-bcc0-bc26d98fe167"; } ];
 }
