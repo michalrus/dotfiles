@@ -34,7 +34,7 @@
 
   environment.systemPackages = with pkgs; [
     arandr
-    awf-gtk
+    awf
     cdrkit
     compton
     conkeror
