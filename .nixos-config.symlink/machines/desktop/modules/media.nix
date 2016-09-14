@@ -32,6 +32,6 @@
   fileSystems."${config.services.mpd.musicDirectory}" = {
     device = "${config.users.extraUsers.m.home}/Music";
     fsType = "fuse.bindfs";
-    options = [ "force-user=root" "force-group=root" "perms=0000:a+Dr" ];
+    options = [ "chown-ignore" "chgrp-ignore" "force-user=root" "force-group=root" "perms=0000:a+Dr" ];
   };
 }
