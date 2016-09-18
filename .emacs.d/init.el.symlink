@@ -3,14 +3,6 @@
 ;; to keep package.el from adding (package-initialize) at the beginning of init.el
 ;(package-initialize)
 
-;; add ~/.emacs.d/custom-info/ to Info directories
-;;
-;; Important: remember to use `$ install-info files…
-;; …/custom-info/dir` to regenerate the index any time you add some
-;; new *.info file, or otherwise these files won’t be shown in C-h i
-;; top directory.
-(add-to-list 'Info-default-directory-list (expand-file-name "./custom-info/" user-emacs-directory))
-
 ;; to keep Custom from writing directly to init.el
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (when (file-exists-p custom-file) (load-file custom-file))
