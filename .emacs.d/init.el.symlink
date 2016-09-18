@@ -7,32 +7,6 @@
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (when (file-exists-p custom-file) (load-file custom-file))
 
-;; a function to load a file from "./init.d/" in user-emacs-directory
-(defconst user-emacs-init-parts-directory (expand-file-name "./init.d/" user-emacs-directory))
-(defun load-init-part (file)
-  (load-file (expand-file-name file user-emacs-init-parts-directory)))
-(defun load-init-part-if-exists (file)
-  (let ((file-path (expand-file-name file user-emacs-init-parts-directory)))
-    (when (file-exists-p file-path) (load-file file-path))))
-
-;; load all parts
-(load-init-part "packages.el")
-(load-init-part "utils.el")
-(load-init-part "appearance.el")
-(load-init-part "editing.el")
-(load-init-part "terminal.el")
-(load-init-part "vc.el")
-(load-init-part "org.el")
-(load-init-part "eww.el")
-(load-init-part "latex.el")
-(load-init-part "music.el")
-(load-init-part "shell-scripts.el")
-(load-init-part "haskell.el")
-(load-init-part "scala.el")
-(load-init-part "other-languages.el")
-
-;; optionally load parts local to the machine
-(load-init-part-if-exists "personal.el")
-(load-init-part-if-exists "mail.el")
-(load-init-part-if-exists "irc.el")
-(load-init-part-if-exists "org-wunderlist.el")
+;; load *.el files in init.d/ alphabetically
+(dolist (part (directory-files (expand-file-name "init.d" user-emacs-directory) t "\\.el$"))
+  (load-file part))
