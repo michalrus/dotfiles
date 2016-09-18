@@ -55,7 +55,8 @@
 ;; recent files
 (when (require 'recentf nil 'noerror)
   (recentf-mode 1)
-  (setq recentf-max-menu-items 500))
+  (setq recentf-max-menu-items 100
+        recentf-max-saved-items 1000))
 
 ;; (sort-words) ♥
 (defun sort-words (reverse beg end)
