@@ -1,6 +1,8 @@
 #!/bin/sh
 
+# What about `;`?…
+
 url="$1"
-escaped="$(echo "$url" | sed "s/&/\\\\&/g")"
+escaped="$(echo "$url" | sed -r 's/([&`()"'\''\\\\])/\\\\\1/g')"
 
 exec i3-msg exec conkeror "$escaped"
