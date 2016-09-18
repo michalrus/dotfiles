@@ -1,9 +1,7 @@
 ;; -*- mode: emacs-lisp -*-
 
 (use-package pkgbuild-mode
-  :mode "/PKGBUILD\\'"
-  :ensure t)
+  :mode "/PKGBUILD\\'")
 
 (use-package nix-mode
-  :mode "\\.nix\\'"
-  :ensure t)
+  :mode "\\.nix\\'")

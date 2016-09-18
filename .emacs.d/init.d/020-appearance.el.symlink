@@ -32,17 +32,14 @@
   :config
   (global-set-key (kbd "C-+") 'zoom-frm-in)
   (global-set-key (kbd "C-=") 'zoom-frm-unzoom)
-  (global-set-key (kbd "C--") 'zoom-frm-out)
-  :ensure t :pin melpa-stable)
+  (global-set-key (kbd "C--") 'zoom-frm-out))
 
 ;; disable the default theme and load solarized (if possible)
 (defun disable-all-themes () "disable all active themes"
   (interactive) (dolist (i custom-enabled-themes) (disable-theme i)))
 (setq custom-safe-themes t)
 (use-package solarized-theme
-  :config (disable-all-themes) (load-theme 'solarized-dark t)
-  :ensure t
-  :pin melpa-stable)
+  :config (disable-all-themes) (load-theme 'solarized-dark t))
 
 ;; make frames transparent, when run in terminal, and override theme bg with "black" when in GUI
 ;(defun fix-new-frame-background (frame)

@@ -1,10 +1,9 @@
 ;; -*- mode: emacs-lisp -*-
 
 (use-package tex-site
-  :ensure auctex
+  ;:ensure auctex
   ;; override C-c C-c with GNU `make' if possible
   :config
   (add-hook 'LaTeX-mode-hook 'setup-compilation-with-make)
   :mode ("\\.tex\\'" . latex-mode)
-  :commands (latex-mode LaTeX-mode plain-tex-mode plain-TeX-mode)
-  :pin gnu)
+  :commands (latex-mode LaTeX-mode plain-tex-mode plain-TeX-mode))

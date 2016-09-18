@@ -9,7 +9,7 @@
   (dolist (i src) (add-to-list dst i)))
 
 ;; set $PATH, $MANPATH and exec-path using values from ~/.profile
-(use-package exec-path-from-shell :ensure t :config (exec-path-from-shell-initialize))
+(use-package exec-path-from-shell :config (exec-path-from-shell-initialize))
 
 ;; can find the project top directory
 (defun closest-directory-up-containing (file-name start-directory)

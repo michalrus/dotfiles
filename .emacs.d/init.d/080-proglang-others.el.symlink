@@ -1,15 +1,12 @@
 ;; -*- mode: emacs-lisp -*-
 
 (use-package yaml-mode
-  :mode "\\.yaml\\'"
-  :ensure t)
+  :mode "\\.yaml\\'")
 
 (use-package python-mode
-  :mode "\\.py\\'" :interpreter "python"
-  :ensure t)
+  :mode "\\.py\\'" :interpreter "python")
 
-(use-package go-mode
-  :ensure t)
+(use-package go-mode)
 
 (use-package po-mode
   :mode "\\.po\\'\\|\\.po\\.")

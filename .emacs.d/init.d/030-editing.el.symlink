@@ -46,8 +46,7 @@
   :config
   (add-hook 'prog-mode-hook 'company-mode)
   ;; disables TAB in company-mode, freeing it for yasnippet
-  (define-key company-active-map [tab] nil)
-  :ensure t)
+  (define-key company-active-map [tab] nil))
 
 ;; visual line mode
 (visual-line-mode 1)
@@ -72,8 +71,7 @@ See `sort-regexp-fields'."
 
 (use-package expand-region
   :commands 'er/expand-region
-  :bind ("M-=" . er/expand-region)
-  :ensure t)
+  :bind ("M-=" . er/expand-region))
 
 ;; Swiper & Ivy
 (use-package swiper
@@ -82,8 +80,7 @@ See `sort-regexp-fields'."
   (global-set-key (kbd "C-s") 'counsel-grep-or-swiper)
   (global-set-key (kbd "C-c C-r") 'ivy-resume)
   (setq projectile-completion-system 'ivy)
-  (global-set-key (kbd "C-x C-r") 'ivy-recentf)
-  :ensure t :pin melpa-stable)
+  (global-set-key (kbd "C-x C-r") 'ivy-recentf))
 (use-package counsel
   :config
   (counsel-mode 1)
@@ -94,8 +91,7 @@ See `sort-regexp-fields'."
           (t (counsel-ag))))
   (global-set-key (kbd "C-S-s") 'counsel-git-grep-or-ag)
   (global-set-key (kbd "C-c u") 'counsel-unicode-char)
-  (global-set-key (kbd "C-c l") 'counsel-locate)
-  :ensure t :pin melpa-stable)
+  (global-set-key (kbd "C-c l") 'counsel-locate))
 
 ;; periodically kill unused buffers
 (when (require 'midnight nil 'noerror)

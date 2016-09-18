@@ -5,6 +5,7 @@
     ./base.nix
     ./modules/media.nix
     ./modules/android.nix
+    ./modules/emacs.nix
     ./my-wifi-passwords.nix
   ];
 
@@ -42,7 +43,6 @@
     cool-retro-term
     dmenu
     dunst
-    emacs
     evince
     firefox
     gettext

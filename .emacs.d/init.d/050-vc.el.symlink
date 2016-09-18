@@ -4,17 +4,14 @@
   :config
   (global-magit-file-mode)
   (setq magit-log-arguments '("--graph" "--color" "--decorate" "--show-signature" "-n256" "++order=date")
-        magit-merge-arguments '("--ff-only"))
-  :ensure t)
+        magit-merge-arguments '("--ff-only")))
 
 (use-package diff-hl
-  :config (add-hook 'prog-mode-hook 'diff-hl-mode)
-  :ensure t)
+  :config (add-hook 'prog-mode-hook 'diff-hl-mode))
 
 (use-package projectile
   :config
-  (projectile-global-mode)
-  :ensure t :pin melpa-stable)
+  (projectile-global-mode))
 
 (use-package neotree
   :config
@@ -36,5 +33,4 @@
         (neotree-find) ; jump to current file in the tree
         (select-window current-window))))
   (global-set-key (kbd "M-<f2>") 'neotree-show-better)
-  (global-set-key (kbd "M-<f3>") 'neotree-hide)
-  :ensure t)
+  (global-set-key (kbd "M-<f3>") 'neotree-hide))

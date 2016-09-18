@@ -8,5 +8,4 @@
 
 ;; typesetting Gregorian chant
 (use-package gregorio-mode
-  :mode "\\.gabc\\'"
-  :ensure t)
+  :mode "\\.gabc\\'")

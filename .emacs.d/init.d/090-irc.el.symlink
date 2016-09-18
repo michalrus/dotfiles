@@ -4,7 +4,6 @@
 (add-to-list 'gnutls-trustfiles (expand-file-name "weechat.cert" user-emacs-directory))
 
 (use-package weechat
-  :pin melpa-stable :ensure t
   :config
   (setq ;weechat-auto-monitor-buffers t
         ;weechat-auto-monitor-new-buffers t
