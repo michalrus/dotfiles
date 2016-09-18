@@ -3,12 +3,6 @@
 ;; to keep package.el from adding (package-initialize) at the beginning of init.el
 ;(package-initialize)
 
-;; older versions don’t have user-emacs-directory defined
-(unless (boundp 'user-emacs-directory)
-  (defconst user-emacs-directory
-    (cond ((boundp 'user-init-directory) user-init-directory)
-          (t "~/.emacs.d/"))))
-
 ;; add ~/.emacs.d/custom-info/ to Info directories
 ;;
 ;; Important: remember to use `$ install-info files…
