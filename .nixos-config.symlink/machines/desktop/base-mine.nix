@@ -37,6 +37,7 @@
     arandr
     awf
     cdrkit
+    chromium
     compton
     conkeror
     conky

@@ -19,3 +19,5 @@ export DEBEMAIL="m@michalrus.com"
 
 # use GnuPG for SSH authentication
 export SSH_AUTH_SOCK="$HOME/.gnupg/S.gpg-agent.ssh"
+
+export CHROMIUM_USER_FLAGS="$CHROMIUM_USER_FLAGS --incognito"

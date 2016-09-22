@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# NixOS doesn’t respect these…
+exec command-p chromium $CHROMIUM_USER_FLAGS "$@"
