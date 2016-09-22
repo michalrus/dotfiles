@@ -19,6 +19,7 @@ in
   nixpkgs.config.packageOverrides = super: let self = super.pkgs; in {
     # My customizations:
 
+    android-udev-rules = (import ./android-udev-rules super self);
     conkeror-unwrapped = (import ./conkeror super self);
     evince             = (import ./evince.nix super self);
     influxdb           = (import ./influxdb super self);
