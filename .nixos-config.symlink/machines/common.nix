@@ -12,6 +12,9 @@
 
     extraOptions = ''
       gc-keep-outputs = true
+      build-max-silent-time = 1800 # 30 min
+      build-cache-failure = true
+      auto-optimise-store = true
     '';
   } // (if lib.nixpkgsVersion > "16.09" then {
     useSandbox = true;
@@ -130,10 +133,10 @@
 
     sudo.extraConfig = ''
       Defaults timestamp_timeout=0
-      %wheel ALL=(root) NOPASSWD: ${config.system.build.nixos-rebuild}/bin/nixos-rebuild switch
-      %wheel ALL=(root) NOPASSWD: ${config.system.build.nixos-rebuild}/bin/nixos-rebuild switch --upgrade
-      %wheel ALL=(root) NOPASSWD: ${config.system.build.nixos-rebuild}/bin/nixos-rebuild boot
-      %wheel ALL=(root) NOPASSWD: ${config.system.build.nixos-rebuild}/bin/nixos-rebuild boot --upgrade
+      %wheel ALL=(root) NOPASSWD: ${config.system.build.nixos-rebuild}/bin/nixos-rebuild switch -k
+      %wheel ALL=(root) NOPASSWD: ${config.system.build.nixos-rebuild}/bin/nixos-rebuild switch -k --upgrade
+      %wheel ALL=(root) NOPASSWD: ${config.system.build.nixos-rebuild}/bin/nixos-rebuild boot -k
+      %wheel ALL=(root) NOPASSWD: ${config.system.build.nixos-rebuild}/bin/nixos-rebuild boot -k --upgrade
       %wheel ALL=(root) NOPASSWD: ${config.nix.package.out}/bin/nix-collect-garbage -d
     '';
   } // (if lib.nixpkgsVersion > "16.09" then {
