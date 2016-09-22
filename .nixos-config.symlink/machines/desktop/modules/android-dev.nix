@@ -2,7 +2,13 @@
 
 let
 
-  sdk = pkgs.androidsdk;
+  sdk = pkgs.androidenv.androidsdk {
+    platformVersions = [ "21" "23" ];
+    abiVersions = [ "armeabi-v7a" "x86" "x86_64"];
+    useGoogleAPIs = true;
+    useExtraSupportLibs = true;
+  };
+
   ndk = pkgs.androidndk;
 
 in
