@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   imports = [
@@ -70,8 +70,7 @@
         accelFactor = "0.025";
       };
 
-      displayManager.auto.enable = true;
-      displayManager.auto.user = "elzbieta";
+      displayManager.lightdm.enable = lib.mkDefault true;
       desktopManager.xterm.enable = false;
       desktopManager.xfce = {
         enable = true;
@@ -84,13 +83,6 @@
     corefonts
     vistafonts
   ];
-
-  users.extraUsers.elzbieta = {
-    hashedPassword = "$6$W/KppVZSY$.vf1jfCd6H0tOJwRwmUwJeMSkmg/MyDUlNpx3IRHWjmLpyXyg5quW0VRBX4QwGp00MIT6Nw2nODs.JhleHblz1";
-    isNormalUser = true;
-    description = "Elżbieta Rus";
-    extraGroups = [ "wheel" "scanner" "networkmanager" ];
-  };
 
   # The NixOS release to be compatible with for stateful data such as databases.
   system.stateVersion = "16.09";

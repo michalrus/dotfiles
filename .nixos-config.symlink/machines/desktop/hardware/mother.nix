@@ -6,6 +6,19 @@
     ../base-parents.nix
   ];
 
+  users.extraUsers.elzbieta = {
+    hashedPassword = "$6$W/KppVZSY$.vf1jfCd6H0tOJwRwmUwJeMSkmg/MyDUlNpx3IRHWjmLpyXyg5quW0VRBX4QwGp00MIT6Nw2nODs.JhleHblz1";
+    isNormalUser = true;
+    description = "Elżbieta Rus";
+    extraGroups = [ "wheel" "scanner" "networkmanager" ];
+  };
+
+  services.xserver.displayManager = {
+    lightdm.enable = false;
+    auto.enable = true;
+    auto.user = config.users.extraUsers.elzbieta.name;
+  };
+
   nix.maxJobs = 4;
   nix.buildCores = 4;
 
