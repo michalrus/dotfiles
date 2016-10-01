@@ -107,7 +107,7 @@
   services = {
     logind.extraConfig = ''
       HandleLidSwitch=suspend
-      HandlePowerKey=suspend
+      HandlePowerKey=hibernate
     '';
 
     lockX11Displays.enable = true;
