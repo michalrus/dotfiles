@@ -31,8 +31,29 @@ mkMerge [
     services.nginx.httpConfig = sslServer {
       name = domain;
       body = ''
-        location / {
-          root /var/www/${domain};
+        root /var/www/${domain};
+        expires epoch; # Cache creates more trouble (psychologically) than it’s worth in this domain.
+
+        rewrite ^/gpg$ /pgp permanent;
+
+        location /pgp {
+          add_header Content-type "text/plain";
+          add_header Content-Disposition "inline; filename=michalrus.pgp.pub.asc";
+          expires epoch;
+        }
+
+        location /ssh {
+          add_header Content-type "text/plain";
+          add_header Content-Disposition "inline; filename=michalrus.ssh.pub.asc";
+          expires epoch;
+        }
+
+        rewrite ^/cv/$ /cv permanent;
+        rewrite ^/cv$ /cv/en.pdf last;
+        rewrite ^/cv-pl$ /cv/pl.pdf last;
+
+        location ~ ^/cv/(.*)$ {
+          add_header Content-Disposition "inline; filename=Michal_Rus_CV-$1";
         }
       '';
     };
