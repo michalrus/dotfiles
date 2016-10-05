@@ -21,7 +21,7 @@ alias s='eval "$(attach-or-create-screen)"'
 alias nano='nano -UwT 4'
 alias clear='for i in $(seq 100) ; do echo ; done && clear'
 alias grep='grep --color=auto'
-alias mts='ts "[%Y-%m-%d %H:%M:%.S]"'
+alias tss='ts "%Y-%m-%d %H:%M:%.S"$'\''\t'\'''
 
 export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWSTASHSTATE=1
