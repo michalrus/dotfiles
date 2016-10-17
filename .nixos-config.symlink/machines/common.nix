@@ -12,7 +12,6 @@
 
     extraOptions = ''
       gc-keep-outputs = true
-      build-max-silent-time = 1800 # 30 min
       build-cache-failure = true
       auto-optimise-store = true
     '';
