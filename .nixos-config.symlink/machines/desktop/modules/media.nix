@@ -19,6 +19,7 @@
     python34Packages.livestreamer
     rtmpdump
     scantailor
+    shntool
     transcribe
     x264
     youtube-dl
