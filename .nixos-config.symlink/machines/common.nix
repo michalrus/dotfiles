@@ -77,6 +77,7 @@
     hwinfo
     imagemagick
     indent
+    inetutils
     jhead
     faad2   # video in Firefox
     ffmpeg
