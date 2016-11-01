@@ -64,6 +64,8 @@
   ];
 
   services = {
+    udev.packages = [ pkgs.libmtp.bin ]; # For Android in GVFS, see #6304.
+
     xserver = {
       synaptics = {
         maxSpeed = "5.0";
