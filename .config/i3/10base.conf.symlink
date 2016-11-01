@@ -5,7 +5,7 @@ bindsym $mod+Shift+c exec "i3-merge-configs && i3-msg reload && rm ~/.config/i3/
 bindsym $mod+Shift+r exec "i3-merge-configs && i3-msg restart"
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
-font pango:DejaVu Sans 10
+font pango:Monospace 10.5
 new_window pixel 1
 new_float normal
 
@@ -110,9 +110,9 @@ client.unfocused        #073642 #073642 #93a1a1 #073642
 client.urgent           #dc322f #dc322f #eee8d5 #cb4b16
 
 bar {
-  status_command conky-i3bar
+  status_command i3status
   tray_output primary # set it with xrandr --output <TAB> --primary
-  separator_symbol "|"
+  separator_symbol " × "
   position top
   colors {
     background #002b36

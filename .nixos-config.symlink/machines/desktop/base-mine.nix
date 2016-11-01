@@ -40,7 +40,6 @@
     chromium
     compton
     conkeror
-    conky
     cool-retro-term
     dmenu
     dunst
@@ -58,6 +57,7 @@
     (haskellPackages.ghcWithPackages (haskellPackages: with haskellPackages; [
       stack
     ]))
+    i3status
     isync
     libnotify
     mu
