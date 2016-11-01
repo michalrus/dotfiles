@@ -28,18 +28,7 @@
   boot.blacklistedKernelModules = [ "toshiba_wmi" ]; # why is this loaded at all?
   boot.extraModulePackages = [];
 
-  boot.kernel.sysctl."vm.swappiness" = 5; # Use swap more reluctantly.
-
-  nixpkgs.config.packageOverrides = super: {
-    stdenv = super.stdenv // {
-      platform = super.stdenv.platform // {
-        kernelExtraConfig = ''
-          DRM_GMA600 y
-          DRM_GMA3600 y
-        '';
-      };
-    };
-  };
+  boot.kernel.sysctl."vm.swappiness" = 0; # Only avoid OOMs. We’ve got 1.5G here, and HDD is so slooow.
 
   boot.loader.grub = {
     enable = true;
