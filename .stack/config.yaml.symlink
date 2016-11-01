@@ -1,0 +1,7 @@
+# -*- mode: yaml -*-
+
+templates:
+  params:
+    author-email: m@michalrus.com
+    author-name: Michal Rus
+    github-username: michalrus

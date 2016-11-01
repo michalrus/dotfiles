@@ -1,0 +1,7 @@
+;; -*- mode: emacs-lisp -*-
+
+(use-package haskell-mode
+  :config
+  (use-package intero
+    :config
+    (add-hook 'haskell-mode-hook 'intero-mode)))

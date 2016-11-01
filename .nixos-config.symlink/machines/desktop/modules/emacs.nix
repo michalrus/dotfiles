@@ -16,7 +16,6 @@ in
       auctex
       bbdb
       company
-      company-ghc
       counsel
       diff-hl
       ensime
@@ -25,6 +24,7 @@ in
       gregorio-mode
       haskell-mode
       hindent
+      intero
       magit
       neotree
       projectile
