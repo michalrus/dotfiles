@@ -2,7 +2,7 @@
 
 let
 
-  custom = pkgs.emacsPackagesNg.override (super: self: {
+  custom = (pkgs.emacsPackagesNgGen pkgs.emacs25).override (super: self: {
     inherit (self.melpaPackages)
       # Use these from MELPA Unstable:
       ivy swiper counsel;
