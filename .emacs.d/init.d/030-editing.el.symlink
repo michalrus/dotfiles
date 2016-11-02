@@ -4,11 +4,11 @@
 (desktop-save-mode 1)
 
 ;; don’t clutter file trees with backups~ and #autosaves#
-(defconst user-emacs-temporary-directory (expand-file-name "./tmp/" user-emacs-directory))
-(setq backup-directory-alist `((".*" . ,user-emacs-temporary-directory)))
-(setq auto-save-file-name-transforms `((".*" ,user-emacs-temporary-directory t)))
+(let ((tmp (expand-file-name "./tmp/" user-emacs-directory)))
+  (setq backup-directory-alist `((".*" . ,tmp)))
+  (setq auto-save-file-name-transforms `((".*" ,tmp t))))
 
-;; taaabs
+;; tabs
 (setq-default tab-width 2)
 (setq-default indent-tabs-mode nil)
 
@@ -43,8 +43,8 @@
         company-dabbrev-downcase nil
         company-idle-delay 0
         company-minimum-prefix-length 1)
-  :config
   (add-hook 'prog-mode-hook 'company-mode)
+  :config
   ;; disables TAB in company-mode, freeing it for yasnippet
   (define-key company-active-map [tab] nil))
 
@@ -52,10 +52,12 @@
 (visual-line-mode 1)
 
 ;; recent files
-(when (require 'recentf nil 'noerror)
-  (recentf-mode 1)
+(use-package recentf
+  :init
   (setq recentf-max-menu-items 100
-        recentf-max-saved-items 1000))
+        recentf-max-saved-items 1000)
+  :config
+  (recentf-mode 1))
 
 ;; (sort-words) ♥
 (defun sort-words (reverse beg end)
@@ -70,21 +72,23 @@ See `sort-regexp-fields'."
   (sort-regexp-fields reverse "\\w+" "\\&" beg end))
 
 (use-package expand-region
-  :commands 'er/expand-region
   :bind ("M-=" . er/expand-region))
 
 ;; Swiper & Ivy
 (use-package swiper
-  :config
-  (ivy-mode 1)
-  (global-set-key (kbd "C-s") 'counsel-grep-or-swiper)
-  (global-set-key (kbd "C-c C-r") 'ivy-resume)
+  :bind (("C-s" . counsel-grep-or-swiper)
+         ("C-c C-r" . ivy-resume)
+         ("C-x C-r" . ivy-recentf))
+  :init
   (setq projectile-completion-system 'ivy)
-  (global-set-key (kbd "C-x C-r") 'ivy-recentf))
+  :config
+  (ivy-mode 1))
+
 (use-package counsel
+  :init
+  (setq counsel-ag-base-command "ag --hidden --nocolor --nogroup %s -- .")
   :config
   (counsel-mode 1)
-  (setq counsel-ag-base-command "ag --hidden --nocolor --nogroup %s -- .")
   (defun counsel-git-grep-or-ag ()
     (interactive)
     (cond ((projectile-project-p) (counsel-git-grep))
@@ -94,14 +98,16 @@ See `sort-regexp-fields'."
   (global-set-key (kbd "C-c l") 'counsel-locate))
 
 ;; periodically kill unused buffers
-(when (require 'midnight nil 'noerror)
+(use-package midnight
+  :init
   (setq clean-buffer-list-delay-general (/ 3.0 24) ; 3 h
         clean-buffer-list-delay-special (* 15 60) ; 15 min
         midnight-period clean-buffer-list-delay-special)
-  (add-list-to-list 'clean-buffer-list-kill-buffer-names
-                    '("*Backtrace*"))
-  (add-list-to-list 'clean-buffer-list-kill-regexps
-                    '("\\`\\*magit"
-                      "\\`\\*Customize"
-                      "\\`\\*WoMan"))
+  :config
+  (michalrus/add-list-to-list 'clean-buffer-list-kill-buffer-names
+                              '("*Backtrace*"))
+  (michalrus/add-list-to-list 'clean-buffer-list-kill-regexps
+                              '("\\`\\*magit"
+                                "\\`\\*Customize"
+                                "\\`\\*WoMan"))
   (midnight-delay-set 'midnight-delay "1:30am"))

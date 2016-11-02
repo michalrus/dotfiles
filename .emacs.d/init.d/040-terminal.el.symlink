@@ -1,22 +1,27 @@
 ;; -*- mode: emacs-lisp -*-
 
-(use-package sane-term)
+;; set $PATH, $MANPATH and exec-path using values from ~/.profile
+(use-package exec-path-from-shell
+  :config
+  (exec-path-from-shell-initialize))
 
-(global-set-key (kbd "C-x t") 'sane-term)
-(global-set-key (kbd "C-x T") 'sane-term-create)
+(use-package sane-term
+  :bind (("C-x t" . sane-term)
+         ("C-x T" . sane-term-create)))
 
-(defmacro defterm (cmd)
-  `(defun ,(intern cmd) ()
-     (interactive)
-     (let* ((buf (get-buffer (format "*%s*" ,cmd))))
-       (if buf
-         (switch-to-buffer buf)
-         (ansi-term (expand-file-name (concat "terminal/" ,cmd) user-emacs-directory) ,cmd)))))
+(use-package term
+  :config
+  (add-hook 'term-mode-hook
+     (lambda ()
+       ;; C-x is the prefix command, rather than C-c
+       (term-set-escape-char ?\C-x)))
+  (defmacro michalrus/defterm (cmd)
+    `(defun ,(intern cmd) ()
+       (interactive)
+       (let* ((buf (get-buffer (format "*%s*" ,cmd))))
+         (if buf
+           (switch-to-buffer buf)
+           (ansi-term (expand-file-name (concat "terminal/" ,cmd) user-emacs-directory) ,cmd)))))
 
-(defterm "mtr")
-(when (executable-find "calc") (defterm "calc"))
-
-(add-hook 'term-mode-hook
-   (lambda ()
-     ;; C-x is the prefix command, rather than C-c
-     (term-set-escape-char ?\C-x)))
+  (michalrus/defterm "mtr")
+  (when (executable-find "calc") (michalrus/defterm "calc")))

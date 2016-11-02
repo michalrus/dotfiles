@@ -1,10 +1,12 @@
 ;; -*- mode: emacs-lisp -*-
 
 ;; LilyPond mode
-(when (require 'lilypond-mode nil 'noerror)
+(use-package lilypond-mode
+  :mode ("\\.ly$" . LilyPond-mode)
+  :init
   (setq-default LilyPond-pdf-command "evince")
-  (add-to-list 'auto-mode-alist '("\\.ly$" . LilyPond-mode))
-  (add-hook 'LilyPond-mode-hook 'setup-compilation-with-make))
+  :config
+  (add-hook 'LilyPond-mode-hook 'michalrus/setup-compilation-with-make))
 
 ;; typesetting Gregorian chant
 (use-package gregorio-mode

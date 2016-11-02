@@ -1,51 +1,52 @@
 ;; -*- mode: emacs-lisp -*-
 
-(require 'org)
+(use-package org
+  :mode ("\\.org\\'" . org-mode)
 
-(setq org-directory "~/Org")
+  :bind (("C-c a" . org-agenda)
+         ("C-c c" . org-capture)
+         :map org-mode-map
+         ("C-c C-a" . michalrus/org-archive-done-tasks-in-file))
 
-;(define-key global-map "\C-ca" 'org-agenda)
+  :init
+  (setq org-directory "~/Org")
+  (setq-default
+     org-reverse-note-order t
+     org-refile-targets '((nil . (:maxlevel . 4)))
+     org-refile-use-outline-path t
+     org-todo-keywords '((sequence "TODO(t!)" "IN-PROGRESS(i!)" "WAITING(w@)" "|" "DONE(d!)" "DELEGATED(g@)" "CANCELED(c@)"))
+     org-log-into-drawer t
+     org-startup-indented t
+     org-log-done nil
+     org-support-shift-select t
+     org-catch-invisible-edits 'error
+     org-ctrl-k-protect-subtree 'error)
 
-(setq org-default-notes-file (expand-file-name "Inbox.org" org-directory))
-(define-key global-map "\C-cc" 'org-capture)
+  :config
+  (setq org-default-notes-file (expand-file-name "Inbox.org" org-directory))
+  ;; Unbind S-left/right, because I’m logging every state change!
+  (dolist (dir '("left" "right"))
+    (define-key org-mode-map (kbd (format "S-<%s>" dir)) nil))
+  (setq org-clock-persist 'history)
+  (org-clock-persistence-insinuate)
 
-(setq-default
-   org-reverse-note-order t
-   org-refile-targets '((nil . (:maxlevel . 4)))
-   org-refile-use-outline-path t
-   org-todo-keywords '((sequence "TODO(t!)" "IN-PROGRESS(i!)" "WAITING(w@)" "|" "DONE(d!)" "DELEGATED(g@)" "CANCELED(c@)"))
-   org-log-into-drawer t
-   org-startup-indented t
-   org-log-done nil
-   org-support-shift-select t
-   org-catch-invisible-edits 'error
-   org-ctrl-k-protect-subtree 'error)
-
-;; Unbind S-left/right, because I’m logging every state change!
-(dolist (dir '("left" "right"))
-  (define-key org-mode-map (kbd (format "S-<%s>" dir)) nil))
-
-(setq org-clock-persist 'history)
-(org-clock-persistence-insinuate)
-
-(defun org-archive-done-tasks-in-file ()
-  "Archives all done tasks in the current Org file to their “Archive” siblings"
-  (interactive)
-  (org-map-entries
-   (lambda ()
-     (cond ((string-match-p ":ARCHIVE:" (upcase (or (org-entry-get (point) "ALLTAGS") "")))
-            ;; Sometimes we’re left with (point) at an :ARCHIVE: after
-            ;; (org-archive-to-archive-sibling) returns and this slips
-            ;; through the 'archive filter of (org-map-entries), and
-            ;; results in an infinite recursion, so… yeah. Let’s
-            ;; recheck manually and skip the archived subtree.
-            (setq org-map-continue-from (+ 1 (save-excursion (org-end-of-subtree t)))))
-           ((org-entry-is-done-p)
-            (let ((point-was-at (point)))
-              (org-archive-to-archive-sibling)
-              ;; Continue mapping at where the archived entry was,
-              ;; because the next one (its ex-sibling) might need
-              ;; archiving, too.
-              (setq org-map-continue-from point-was-at)))))
-   t 'file 'archive))
-(define-key org-mode-map "\C-c\C-a" 'org-archive-done-tasks-in-file)
+  (defun michalrus/org-archive-done-tasks-in-file ()
+    "Archives all done tasks in the current Org file to their “Archive” siblings"
+    (interactive)
+    (org-map-entries
+     (lambda ()
+       (cond ((string-match-p ":ARCHIVE:" (upcase (or (org-entry-get (point) "ALLTAGS") "")))
+              ;; Sometimes we’re left with (point) at an :ARCHIVE: after
+              ;; (org-archive-to-archive-sibling) returns and this slips
+              ;; through the 'archive filter of (org-map-entries), and
+              ;; results in an infinite recursion, so… yeah. Let’s
+              ;; recheck manually and skip the archived subtree.
+              (setq org-map-continue-from (+ 1 (save-excursion (org-end-of-subtree t)))))
+             ((org-entry-is-done-p)
+              (let ((point-was-at (point)))
+                (org-archive-to-archive-sibling)
+                ;; Continue mapping at where the archived entry was,
+                ;; because the next one (its ex-sibling) might need
+                ;; archiving, too.
+                (setq org-map-continue-from point-was-at)))))
+     t 'file 'archive)))

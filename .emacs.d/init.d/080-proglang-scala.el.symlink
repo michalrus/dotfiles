@@ -1,6 +1,7 @@
 ;; -*- mode: emacs-lisp -*-
 
 (use-package scala-mode
+  :mode ("\\.scala\\'" "\\.sbt\\'")
   :interpreter ("scala" . scala-mode)
   :config
   (add-hook 'scala-mode-hook
@@ -18,16 +19,16 @@
     (interactive)
     (newline-and-indent)
     (scala-indent:insert-asterisk-on-multiline-comment))
-  (bind-key "RET" 'scala-mode-newline-comments scala-mode-map))
+  (bind-key "RET" 'scala-mode-newline-comments scala-mode-map)
 
-(use-package ensime
-  :config
-  (add-hook 'scala-mode-hook
-            (lambda ()
-              (ensime-mode)
-              (setq company-backends '(ensime-company (company-keywords company-dabbrev-code company-etags company-yasnippet)))))
-  (require 'ensime-expand-region)
-  (plist-put ensime-goto-test-config-defaults :test-class-suffixes
-             '("Spec" "Test" "Specification" "Check"))
-  (plist-put ensime-goto-test-config-defaults :test-template-fn
-             'ensime-goto-test--test-template-scalatest-wordspec))
+  (use-package ensime
+    :config
+    (add-hook 'scala-mode-hook
+              (lambda ()
+                (ensime-mode)
+                (setq company-backends '(ensime-company (company-keywords company-dabbrev-code company-etags company-yasnippet)))))
+    (use-package ensime-expand-region)
+    (plist-put ensime-goto-test-config-defaults :test-class-suffixes
+               '("Spec" "Test" "Specification" "Check"))
+    (plist-put ensime-goto-test-config-defaults :test-template-fn
+               'ensime-goto-test--test-template-scalatest-wordspec)))

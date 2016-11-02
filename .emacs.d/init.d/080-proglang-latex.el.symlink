@@ -2,8 +2,6 @@
 
 (use-package tex-site
   ;:ensure auctex
-  ;; override C-c C-c with GNU `make' if possible
+  :mode ("\\.tex\\'" . LaTeX-mode)
   :config
-  (add-hook 'LaTeX-mode-hook 'setup-compilation-with-make)
-  :mode ("\\.tex\\'" . latex-mode)
-  :commands (latex-mode LaTeX-mode plain-tex-mode plain-TeX-mode))
+  (add-hook 'LaTeX-mode-hook 'michalrus/setup-compilation-with-make))

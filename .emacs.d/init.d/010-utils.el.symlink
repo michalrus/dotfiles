@@ -4,33 +4,15 @@
 (setq max-lisp-eval-depth 50000)
 (setq max-specpdl-size 5000)
 
-(defun add-list-to-list (dst src)
+(defun michalrus/add-list-to-list (dst src)
   "Like `add-to-list' but takes a list of elements to add. Beware, O(n·m)!"
   (dolist (i src) (add-to-list dst i)))
 
-;; set $PATH, $MANPATH and exec-path using values from ~/.profile
-(use-package exec-path-from-shell :config (exec-path-from-shell-initialize))
-
 ;; can find the project top directory
-(defun closest-directory-up-containing (file-name start-directory)
+(defun michalrus/closest-directory-up-containing (file-name start-directory)
   "Returns the first directory up in the tree, starting from
 `start-directory', in which the `file-name' exists. Most probably you
 want to use it in search for a \"Makefile\" in `default-directory'."
   (if (file-exists-p (expand-file-name file-name start-directory)) start-directory
     (if (equal start-directory (expand-file-name "/")) nil
-      (closest-directory-up-containing file-name (expand-file-name ".." start-directory)))))
-
-;; scroll the compilation output by default
-(setq compilation-scroll-output t)
-
-(defun setup-compilation-with-make ()
-  "Sets current buffer to compile (C-c C-c) using the nearest Makefile up in the directory hierarchy."
-  (interactive)
-  (let ((makefile-directory (closest-directory-up-containing "Makefile" default-directory)))
-    (when makefile-directory
-      (set (make-local-variable 'compile-command) (format "make -C %s" makefile-directory))
-      (set (make-local-variable 'compilation-read-command) nil)
-      (local-set-key (kbd "C-c C-c") 'compile))))
-
-;; set Makefile-mode to run `make' on C-c C-c
-(add-hook 'makefile-mode-hook 'setup-compilation-with-make)
+      (michalrus/closest-directory-up-containing file-name (expand-file-name ".." start-directory)))))

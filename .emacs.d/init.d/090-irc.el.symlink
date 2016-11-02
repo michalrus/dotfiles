@@ -1,9 +1,7 @@
 ;; -*- mode: emacs-lisp -*-
 
-(require 'gnutls)
-(add-to-list 'gnutls-trustfiles (expand-file-name "weechat.cert" user-emacs-directory))
-
 (use-package weechat
+  :commands weechat-connect
   :config
   (setq ;weechat-auto-monitor-buffers t
         ;weechat-auto-monitor-new-buffers t
@@ -15,6 +13,8 @@
         weechat-buffer-kill-buffers-on-disconnect t
         weechat-relay-ping-idle-seconds 10
         weechat-initial-lines 256)
+  (require 'gnutls)
+  (add-to-list 'gnutls-trustfiles (expand-file-name "weechat.cert" user-emacs-directory))
   (require 'weechat-notifications)
   (require 'weechat-image)
   (require 'weechat-tracking)

@@ -18,9 +18,6 @@
 ;; yes-or-no questions are boring, use y-or-n
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-;; turn off mouse
-; TODO: how?!?!/1/1
-
 ;; show keystrokes almost instantly in the echo area
 (setq echo-keystrokes 0.01)
 
@@ -29,17 +26,16 @@
 
 ;; increase/decrease text size
 (use-package zoom-frm
-  :config
-  (global-set-key (kbd "C-+") 'zoom-frm-in)
-  (global-set-key (kbd "C-=") 'zoom-frm-unzoom)
-  (global-set-key (kbd "C--") 'zoom-frm-out))
+  :bind (("C-+" . zoom-frm-in)
+         ("C-=" . zoom-frm-unzoom)
+         ("C--" . zoom-frm-out)))
 
-;; disable the default theme and load solarized (if possible)
-(defun disable-all-themes () "disable all active themes"
-  (interactive) (dolist (i custom-enabled-themes) (disable-theme i)))
-(setq custom-safe-themes t)
+;; disable the default theme(s) and load solarized
 (use-package solarized-theme
-  :config (disable-all-themes) (load-theme 'solarized-dark t))
+  :config
+  (dolist (i custom-enabled-themes) (disable-theme i))
+  (setq custom-safe-themes t)
+  (load-theme 'solarized-dark t))
 
 ;; make frames transparent, when run in terminal, and override theme bg with "black" when in GUI
 ;(defun fix-new-frame-background (frame)
