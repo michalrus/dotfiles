@@ -6,6 +6,7 @@
     ./modules/media.nix
     ./modules/android.nix
     ./modules/emacs.nix
+    ./modules/malicious-hosts.nix
     ./my-wifi-passwords.nix
   ];
 
