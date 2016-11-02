@@ -139,7 +139,7 @@
     guestAccount = {
       enable = true;
       skeleton = "/home/guest.skel";
-      groups = [ "nonet" "scanner" "networkmanager" "vboxusers" ];
+      groups = [ "audio" "nonet" "scanner" "networkmanager" "vboxusers" ];
     };
 
     extraUsers.m = {
@@ -148,7 +148,7 @@
       linger = true;
       uid = 31337;
       description = "Michal Rus";
-      extraGroups = [ "wheel" "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" ];
+      extraGroups = [ "wheel" "audio" "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" ];
     };
   };
 
