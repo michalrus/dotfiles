@@ -1,7 +1,0 @@
-[Desktop Entry]
-Name=space2ctrl
-Comment=
-Exec=sh -c 'exec "$HOME"/.bin/space2ctrl-gnome'
-Icon=
-Terminal=false
-Type=Application

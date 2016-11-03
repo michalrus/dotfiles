@@ -1,7 +1,0 @@
-[Desktop Entry]
-Name=autocutsel
-Comment=
-Exec=sh -c 'autocutsel -fork ; autocutsel -selection PRIMARY -fork'
-Icon=
-Terminal=false
-Type=Application
