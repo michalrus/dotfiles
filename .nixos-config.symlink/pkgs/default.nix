@@ -9,8 +9,8 @@ let
     allowUnfree = true; # for `transcribe`
   }; }).pkgs;
 
-  nixos-unstable = getCommit "2b0eace6cf021eed7123fb828483a00c95796829"
-    "187fmlkr4d1rbhrmcw8r3xnpxl22rvmisk1iswz3hj99j57ds5r6";
+  nixos-unstable = getCommit "fa4167c0a13cbe0d97b9c88d91b86845a8c4e740"
+    "1cgm0jmradi74rnvk9cy5var69zacb4sax2q9zvd24im3baajmpb";
 
 in
 
@@ -30,15 +30,13 @@ in
 
     # Cherry-pick some packages from nixos-unstable:
 
-    inherit (nixos-unstable) airwave;
+    inherit (nixos-unstable) awf beets squishyball;
 
     transcribe = let super' = super // { inherit (nixos-unstable) transcribe; }; in (import ./transcribe.nix super' self);
 
     # Interesting PRs not yet in nixos-unstable:
 
-    inherit (getCommit "9b4ef5bb54d99b0ca93c9705fb0aee7c2d7b8805" "1fm1p20ka27w38khb0ns4yqpn3q7bp540dh4qr5briqy3zyxy3i4") awf;
-    inherit (getCommit "328180bc2f27d9cec92f15f1726c111d0d5dc4a9" "1h3jb2kjvwvl4wyqgn30k023awgbxpgpb4pfbry9bx4hkvwra673") beets;
-    inherit (getCommit "8a8c1a950162f0451a47912ce124a7a95fd98ada" "1hfb7ghh6amzc5qbd596b7df08ks4z7cy2sl8lmqrjinv79jwiq9") squishyball;
+    inherit (getCommit "ce22a9c7baee91e11fe05e47f0c7d76f6a118d3b" "1zm2ar128a17c9ddabgywcwk2wl0wsra42dwjcsjwq282za4kr2r") airwave;
 
     # Left to contribute:
 
