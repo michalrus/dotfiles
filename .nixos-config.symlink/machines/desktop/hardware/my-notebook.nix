@@ -28,7 +28,7 @@
   boot.initrd.luks.devices = [{
     name = "crypt";
     device = "/dev/disk/by-uuid/f671aaa7-2b5c-44e3-9c83-6997edb4bcc4";
-    # allowDiscards = true; # if SSD
+    # allowDiscards = true; # if SSD — has security implications!
   }];
 
   fileSystems."/" = {
