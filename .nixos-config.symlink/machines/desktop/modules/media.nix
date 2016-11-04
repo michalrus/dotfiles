@@ -20,6 +20,7 @@
     rtmpdump
     scantailor
     shntool
+    timidity
     transcribe
     x264
     youtube-dl
