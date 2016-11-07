@@ -63,6 +63,7 @@
     libnotify
     mu
     oathToolkit
+    octaveFull
     openjdk8
     pass
     pavucontrol

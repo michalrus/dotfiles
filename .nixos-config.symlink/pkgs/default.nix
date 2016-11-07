@@ -38,6 +38,8 @@ in
 
     inherit (getCommit "ce22a9c7baee91e11fe05e47f0c7d76f6a118d3b" "1zm2ar128a17c9ddabgywcwk2wl0wsra42dwjcsjwq282za4kr2r") airwave;
 
+    inherit (getCommit "91d6779b96999b0919448b93715445c4a3a85f16" "1jlyw9jj55sz9ba9j5yqmsqzvg4jkc5sgklcv2d7nyrydr0bac1r") octave octaveFull;
+
     # Left to contribute:
 
     gettext-emacs      = (import ./gettext-emacs.nix super self);
