@@ -104,6 +104,12 @@
 
   virtualisation.virtualbox.host.enable = true;
 
+  hardware.android.automount = let user = config.users.users.m; in {
+    enable = true;
+    user = user.name;
+    point = "${user.home}/Phone";
+  };
+
   services = {
     logind.extraConfig = ''
       HandleLidSwitch=suspend

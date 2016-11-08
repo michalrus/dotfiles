@@ -13,6 +13,12 @@
     extraGroups = [ "wheel" "scanner" "networkmanager" ];
   };
 
+  hardware.android.automount = let user = config.users.users.elzbieta; in {
+    enable = true;
+    user = user.name;
+    point = "${user.home}/Telefon";
+  };
+
   services.xserver.displayManager = {
     lightdm.enable = false;
     auto.enable = true;
