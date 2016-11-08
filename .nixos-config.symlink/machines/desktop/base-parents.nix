@@ -48,6 +48,7 @@
     python34Packages.livestreamer
     rtmpdump
     simple-scan
+    skype
     thunderbird
     transmission_gtk
     unclutter
