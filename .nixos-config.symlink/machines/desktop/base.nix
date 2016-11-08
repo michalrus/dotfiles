@@ -59,6 +59,10 @@
     };
   };
 
+  environment.systemPackages = with pkgs; [
+    rfkill
+  ];
+
   fonts = {
     enableGhostscriptFonts = true;
     fonts = with pkgs; [
