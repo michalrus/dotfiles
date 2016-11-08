@@ -113,6 +113,8 @@
     lockX11Displays.enable = true;
 
     xserver = {
+      xkbOptions = "ctrl:nocaps,compose:caps";
+
       synaptics = {
         maxSpeed = "4.0";
         accelFactor = "0.02";

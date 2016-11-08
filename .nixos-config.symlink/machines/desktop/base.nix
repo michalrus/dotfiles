@@ -49,7 +49,6 @@
     xserver = {
       enable = true;
       layout = lib.mkDefault "pl";
-      xkbOptions = "ctrl:nocaps,compose:caps";
       synaptics = {
         enable = true;
         twoFingerScroll = true;
