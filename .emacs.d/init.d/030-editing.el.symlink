@@ -25,6 +25,9 @@
 (global-set-key (kbd "M-]") 'next-buffer)
 (global-set-key (kbd "M-[") 'previous-buffer)
 
+;; turn-off (overwrite-mode) on <insert>
+(global-unset-key (kbd "<insert>"))
+
 ;; never visit symlinks when their targets are under version control
 ;; (visit the target instead)
 (setq vc-follow-symlinks t)
