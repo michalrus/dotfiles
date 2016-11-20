@@ -9,6 +9,12 @@
   :bind (("C-x t" . sane-term)
          ("C-x T" . sane-term-create)))
 
+(defun insert-random-uuid ()
+  (interactive)
+  (insert
+   (replace-regexp-in-string "\n\\'" ""
+                             (shell-command-to-string "uuidgen"))))
+
 (use-package term
   :config
   (add-hook 'term-mode-hook
