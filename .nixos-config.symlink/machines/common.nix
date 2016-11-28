@@ -101,7 +101,7 @@
     silver-searcher
     socat
     sox
-    sqlite
+    sqlite-interactive
     (lowPrio stdmanpages)
     stdman
     strace
