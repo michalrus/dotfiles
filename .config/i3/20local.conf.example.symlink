@@ -2,6 +2,9 @@
 bindsym $mod+Return exec st -e zsh -i -c s
 bindsym $mod+Shift+Return exec emacs
 
+bindsym F11 exec pkill -USR1 dunst
+bindsym F12 exec pkill -USR2 dunst
+
 bindsym $mod+k exec pass-autotype
 
 exec --no-startup-id remote-notifications
