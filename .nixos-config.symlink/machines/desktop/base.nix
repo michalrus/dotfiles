@@ -50,7 +50,7 @@
       enable = true;
       layout = lib.mkDefault "pl";
       synaptics = {
-        enable = true;
+        enable = lib.mkDefault true;
         twoFingerScroll = true;
         tapButtons = true;
         fingersMap = [1 3 2];
