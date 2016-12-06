@@ -12,6 +12,7 @@
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "sd_mod" "sr_mod" "rtsx_usb_sdmmc" ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
+  boot.blacklistedKernelModules = [ "amdgpu" ]; # With it enabled, resuming from `systemctl suspend` won’t work. Why?
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -33,6 +34,12 @@
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/5482-A477";
     fsType = "vfat";
+  };
+
+  fileSystems."/mnt/Windows" = {
+    device = "/dev/disk/by-uuid/2054F4BE54F497AC";
+    fsType = "ntfs";
+    options = [ "fmask=0111" "dmask=0000" ];
   };
 
   swapDevices = [

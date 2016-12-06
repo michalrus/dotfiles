@@ -17,30 +17,37 @@
 
   nixpkgs.config = {
     allowUnfree = true; # M$ fonts, Skype™ and similar nonsense.
-
-    packageOverrides = super: let self = super.pkgs; in {
-      # Feh is always added to system PATH, see #17450.
-      feh = super.feh.overrideDerivation(oldAttrs: { postInstall = "rm $out/share/applications/feh.desktop"; });
-    };
   };
 
   environment.systemPackages = with pkgs; [
+    arandr
+    ardour4
+    audacity
     awf
+    calibre
     chromium
     cool-retro-term
-    evince
+    frescobaldi
+    gimp
     gnome3.aisleriot
     gnome3.file-roller
     gtk  # Why? Icon cache! See #20874.
     libnotify
     libreoffice
+    lilypond
     mpv
     networkmanagerapplet
+    octave
+    openjdk8
     simple-scan
     skype
+    system-config-printer # For GNOME Printers applet.
+    transcribe
     transmission_gtk
     unclutter
     wine
+    winetricks
+    wmctrl
     xarchiver
     xclip
     xdotool
@@ -51,21 +58,24 @@
     xrandr-invert-colors
     xsane
     xsel
+    youtube-dl
   ];
 
   services = {
     #udev.packages = [ pkgs.libmtp.bin ]; # For Android in GVFS, see #6304.
 
-    xserver = {
-      synaptics.enable = false;
-#      synaptics = {
-#        maxSpeed = "5.0";
-#        accelFactor = "0.025";
-#      };
+    logind.extraConfig = ''
+      HandleLidSwitch=suspend
+      HandlePowerKey=hibernate
+    '';
 
-      displayManager.gdm.enable = lib.mkDefault true;
+    xserver = {
+      synaptics.enable = false; # GNOME uses libinput.
+      displayManager.gdm.enable = true;
       desktopManager.xterm.enable = false;
       desktopManager.gnome3.enable = true;
+
+      displayManager.xserverArgs = [ "-ardelay" "150" "-arinterval" "8" ];
     };
   };
 
@@ -76,11 +86,19 @@
 
   # For profile pictures, see #20872.
 
-  users.extraUsers.mikolaj = {
-    hashedPassword = "$6$W/KppVZSY$.vf1jfCd6H0tOJwRwmUwJeMSkmg/MyDUlNpx3IRHWjmLpyXyg5quW0VRBX4QwGp00MIT6Nw2nODs.JhleHblz1";
-    isNormalUser = true;
-    description = "Mikolaj Rus";
-    extraGroups = [ "wheel" "scanner" "networkmanager" ];
+  users = {
+    guestAccount = {
+      enable = true;
+      skeleton = "/home/guest.skel";
+      groups = [ "audio" "nonet" "scanner" "networkmanager" ];
+    };
+
+    extraUsers.mikolaj = {
+      hashedPassword = "$6$Mhe4HFJEEu5WL$vr09OpHztpUwnZk/PvNqvZI1dQI.zlfmcE/EiYvJvAE0HcDZJ/YvYc6pzqGhitRjrVklyCCIemSUl0EzZmGhL.";
+      isNormalUser = true;
+      description = "Mikolaj Rus";
+      extraGroups = [ "wheel" "audio" "nonet" "scanner" "networkmanager" ];
+    };
   };
 
   # The NixOS release to be compatible with for stateful data such as databases.

@@ -134,6 +134,9 @@
       %wheel ALL=(root) NOPASSWD: ${config.nix.package.out}/bin/nix-collect-garbage -d
     '';
   } // (if lib.nixpkgsVersion > "16.09" then {
-    hideProcessInformation = true;
+    # This is cool, but stops `systemctl reboot` from working when run by a
+    # regular user logged in locally, as the only seat.
+    # See https://github.com/NixOS/nixpkgs/issues/20948 .
+    #hideProcessInformation = true;
   } else { });
 }
