@@ -30,6 +30,7 @@
     frescobaldi
     gimp
     gnome3.aisleriot
+    gnome3.cheese
     gnome3.file-roller
     gtk  # Why? Icon cache! See #20874.
     libnotify
@@ -70,6 +71,8 @@
     '';
 
     xserver = {
+      xkbOptions = "ctrl:nocaps,compose:caps";
+
       synaptics.enable = false; # GNOME uses libinput.
       displayManager.gdm.enable = true;
       desktopManager.xterm.enable = false;
@@ -81,6 +84,9 @@
 
   fonts.fonts = with pkgs; [
     corefonts
+    eb-garamond
+    helvetica-neue-lt-std
+    liberation_ttf
     vistafonts
   ];
 
