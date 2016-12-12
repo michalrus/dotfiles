@@ -9,8 +9,8 @@ let
     allowUnfree = true; # for `transcribe`
   }; }).pkgs;
 
-  nixos-unstable = getCommit "fa4167c0a13cbe0d97b9c88d91b86845a8c4e740"
-    "1cgm0jmradi74rnvk9cy5var69zacb4sax2q9zvd24im3baajmpb";
+  nixos-unstable = getCommit "1c50bdd928cec055d2ca842e2cf567aba2584efc"
+    "1g1504x8wbrvjzhjqmpl2c05wxglljxncqmfh1q38hfvkmmfl17g";
 
 in
 
@@ -30,7 +30,7 @@ in
 
     # Cherry-pick some packages from nixos-unstable:
 
-    inherit (nixos-unstable) awf beets squishyball;
+    inherit (nixos-unstable) awf beets squishyball youtube-dl;
 
     transcribe = let super' = super // { inherit (nixos-unstable) transcribe; }; in (import ./transcribe.nix super' self);
 
