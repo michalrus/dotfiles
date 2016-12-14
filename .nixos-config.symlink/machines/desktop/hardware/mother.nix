@@ -34,7 +34,7 @@
   boot.blacklistedKernelModules = [ "toshiba_wmi" ]; # why is this loaded at all?
   boot.extraModulePackages = [];
 
-  boot.kernel.sysctl."vm.swappiness" = 0; # Only avoid OOMs. We’ve got 1.5G here, and HDD is so slooow.
+  boot.kernel.sysctl."vm.swappiness" = 1; # We’ve got only 1.5G here, and HDD is so slooow.
 
   boot.loader.grub = {
     enable = true;
