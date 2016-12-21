@@ -19,7 +19,7 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  boot.kernel.sysctl."vm.swappiness" = 1; # Let’s try this.
+  boot.kernel.sysctl."vm.swappiness" = lib.mkForce 1; # Let’s try this.
 
   boot.loader.grub = {
     enable = true;
