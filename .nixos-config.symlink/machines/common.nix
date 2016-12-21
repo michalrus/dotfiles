@@ -56,6 +56,7 @@
     bindfs
     calc
     cloc
+    daemonize
     dos2unix
     exiv2
     file
