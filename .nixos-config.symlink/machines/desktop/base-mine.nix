@@ -165,6 +165,15 @@
       description = "Michal Rus";
       extraGroups = [ "wheel" "audio" "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" ];
     };
+
+    extraUsers.mw = {
+      hashedPassword = "$6$EDtlcw2d9XVBOw$Y0SLSpFnAc/tc3z8/Y4cQK/p.Vuqkwz0HHBkYcDAlUI3lHOFJQBj0cscE30qs2YoxsoUwOxIno0g4zhZUsZ7R1";
+      isNormalUser = true;
+      linger = true;
+      uid = 1337;
+      description = "Michal Rus (work)";
+      extraGroups = [ "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" ];
+    };
   };
 
   system.autoUpgrade.enable = false;
