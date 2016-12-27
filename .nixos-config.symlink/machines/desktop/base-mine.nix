@@ -61,6 +61,7 @@
     i3status
     isync
     libnotify
+    libreoffice
     mu
     oathToolkit
     octave
