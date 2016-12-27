@@ -32,6 +32,8 @@ in
 
     inherit (nixos-unstable) awf beets squishyball youtube-dl;
 
+    ansible22 = nixos-unstable.python27Packages.ansible2;
+
     transcribe = let super' = super // { inherit (nixos-unstable) transcribe; }; in (import ./transcribe.nix super' self);
 
     # Interesting PRs not yet in nixos-unstable:
