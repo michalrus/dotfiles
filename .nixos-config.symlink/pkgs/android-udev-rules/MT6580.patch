@@ -1,14 +1,15 @@
 diff --git a/51-android.rules b/51-android.rules
-index 63a9d1f..3d52f14 100644
+index 63a9d1f..ab4bb56 100644
 --- a/51-android.rules
 +++ b/51-android.rules
-@@ -6,6 +6,11 @@
+@@ -6,6 +6,12 @@
  SUBSYSTEM!="usb", GOTO="android_usb_rules_end"
  
  LABEL="android_usb_rules_begin"
 +
 +
 +SUBSYSTEM=="usb", ATTRS{idVendor}=="0e8d", ATTR{idProduct}=="201d", MODE="0666", GROUP="plugdev", GOTO="android_usb_rules_end"
++SUBSYSTEM=="usb", ATTRS{idVendor}=="0bb4", ATTR{idProduct}=="0c02", MODE="0666", GROUP="plugdev", GOTO="android_usb_rules_end"
 +
 +
  # Devices listed here in android_usb_rules_{begin...end} are connected by USB
