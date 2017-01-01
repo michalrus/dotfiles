@@ -1,3 +1,4 @@
 #!/bin/sh
 
+systemctl --user start emacs-daemon.service
 exec emacsclient -c "$@"

@@ -4,17 +4,33 @@ set -o noclobber
 set -o errexit
 set -o nounset
 
-with_systemd='systemd-run --scope --user'
-command -v systemd-run >/dev/null || with_systemd=''
+# The whole deal with echo/eval here is that I want to have the
+# ‘Already inside a screen?’ behavior below.
 
-command -v screen >/dev/null || { echo 'echo >&2 "screen: command not found" ; return 1' ; exit ; }
+command -v screen >/dev/null || { echo 'echo >&2 "screen: command not found" ; false' ; exit ; }
 
-[ -z "${STY:-}" ] || { echo 'echo >&2 "Already inside a screen?" ; return 1' ; exit ; }
+[ -z "${STY:-}" ] || { echo 'echo >&2 "Already inside a screen?" ; false' ; exit ; }
 
+# Try to start the ‘screen’ systemd user service, if it’s defined. I
+# have it on my NixOS machines. If this is not a systemd system, or
+# the service is not defined, or the service is already running, this
+# command will exit instantaneously.
+systemctl --user start screen.service 2>/dev/null || true
+
+# See how many screen sessions are already running for the user.
 num="$(screen -ls | grep -E '^\s+[^\s]' | wc -l)"
 
-[ "$num" -eq "0" ] && { echo "unset DESKTOP_SESSION DESKTOP_STARTUP_ID DBUS_SESSION_BUS_ADDRESS GDMSESSION WINDOW WINDOWID XDG_SEAT XDG_SEAT_PATH XDG_SESSION_DESKTOP XDG_SESSION_ID XDG_SESSION_PATH XDG_SESSION_TYPE XDG_VTNR XDG_GREETER_DATA_DIR ; $with_systemd screen -d -m && sleep 0.1 && exec screen -x" ; exit ; }
+# If none, start one, perhaps, using systemd ad-hoc scopes, to keep it
+# between user sing in/outs.
+[ "$num" -eq "0" ] && {
+  with_systemd='systemd-run --scope --user'
+  command -v systemd-run >/dev/null || with_systemd=''
 
-[ "$num" -ne "1" ] && { echo 'echo >&2 "More than one screen session exists." ; return 1' ; exit ; }
+  echo "unset DESKTOP_SESSION DESKTOP_STARTUP_ID DBUS_SESSION_BUS_ADDRESS GDMSESSION WINDOW WINDOWID XDG_SEAT XDG_SEAT_PATH XDG_SESSION_DESKTOP XDG_SESSION_ID XDG_SESSION_PATH XDG_SESSION_TYPE XDG_VTNR XDG_GREETER_DATA_DIR ; $with_systemd screen -d -m && sleep 0.1 && exec screen -x" ; exit
+}
 
+# If there are more than, make the user choose one manually.
+[ "$num" -ne "1" ] && { echo 'echo >&2 "More than one screen session exists." ; false' ; exit ; }
+
+# Else: simply attach.
 echo 'exec screen -x'

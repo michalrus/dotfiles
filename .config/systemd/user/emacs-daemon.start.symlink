@@ -1,6 +1,0 @@
-#!/bin/sh
-
-# Remove the desktop.lock in case the last exit was unclean.
-rm "$HOME"/.emacs.d/.emacs.desktop.lock 2>/dev/null || true
-
-exec "$SHELL" --login -c "exec command-p emacs --daemon"
