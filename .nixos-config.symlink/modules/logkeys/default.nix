@@ -38,11 +38,16 @@ in
       description = "Log all keys pressed on all keyboards";
       serviceConfig.Type = "forking";
       wantedBy = [ "multi-user.target" ];
-      path = with pkgs; [ logkeys ];
+      path = with pkgs; [ logkeys gawk ];
       script = ''
-        ls /dev/input/by-path | grep kbd | while IFS= read -r inp ; do
-          rinp="$(readlink -f "/dev/input/by-path/$inp")"
-          logkeys --start --device="$rinp" --output=/var/log/logkeys.log ${optionalString (cfg.keymap != null) "--keymap=\"${pkgs.logkeys}/share/logkeys/${cfg.keymap}.map\""}
+        # At boot, udev sometimes seems to run this too soon, short-circuit below.
+        [ -e /dev/input/by-path ] || exit 0
+        # For some reason /dev/input/by-path stopped having symlinks to keyboard. This is better.
+        cat /proc/bus/input/devices | \
+            awk 'tolower($0) ~ /name=.*keyboard/ { while(getline > 0) { if ($0 ~ /Handlers=/) { print; break; }}}' | \
+            grep -o 'event[0-9]*' | \
+            while IFS= read -r inp ; do
+          logkeys --start --device="/dev/input/$inp" --output=/var/log/logkeys.log ${optionalString (cfg.keymap != null) "--keymap=\"${pkgs.logkeys}/share/logkeys/${cfg.keymap}.map\""}
           # why is the following not configurable?!
           rm /var/run/logkeys.pid || true
         done
@@ -51,8 +56,8 @@ in
 
     services.udev.extraRules = ''
       # reload logkeys when a new USB keyboard is connected
-      ACTION=="add", SUBSYSTEM=="input", SUBSYSTEMS=="usb", ATTRS{authorized}=="1", RUN+="${config.systemd.package}/bin/systemctl restart logkeys.service"
-      '';
+      ACTION=="add", SUBSYSTEM=="hid", RUN+="${config.systemd.package}/bin/systemctl restart logkeys.service"
+    '';
 
   };
 }
