@@ -6,7 +6,7 @@ bindsym $mod+Shift+r exec "i3-merge-configs && i3-msg restart"
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 font pango:Monospace 10.5
-new_window pixel 1
+new_window pixel 5
 new_float normal
 
 floating_modifier $mod
@@ -105,7 +105,7 @@ bindsym $mod+r mode "resize"
 bindsym $mod+t floating enable; mode "move"
 
 # colorclass            border  backgr. text    indicator
-client.focused          #073642 #073642 #eee8d5 #268bd2
+client.focused          #0c5f73 #0c5f73 #eee8d5 #1c6497
 client.focused_inactive #073642 #073642 #93a1a1 #073642
 client.unfocused        #073642 #073642 #93a1a1 #073642
 client.urgent           #dc322f #dc322f #eee8d5 #cb4b16
@@ -129,5 +129,4 @@ bar {
 }
 
 exec --no-startup-id dunst
-exec --no-startup-id compton
 exec --no-startup-id ~/.screenlayout/current

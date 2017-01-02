@@ -39,7 +39,6 @@
     awf
     cdrkit
     chromium
-    compton
     conkeror
     cool-retro-term
     dmenu
