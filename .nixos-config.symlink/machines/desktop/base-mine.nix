@@ -137,12 +137,6 @@
 
       displayManager.xserverArgs = [ "-ardelay" "150" "-arinterval" "8" ];
     };
-
-    locate = {
-      enable = true;
-      includeStore = true;
-      interval = "0/4:15"; # every 4 hours at 15th minute
-    };
   };
 
   fonts.fonts = with pkgs; [
