@@ -9,5 +9,7 @@ bindsym $mod+k exec pass-autotype
 
 exec --no-startup-id remote-notifications
 exec --no-startup-id space2ctrl
+exec --no-startup-id systemctl --user start screen.service
+exec --no-startup-id systemctl --user start emacs-daemon.service
 
 for_window [class="qjackctl"] [title="^JACK Audio Connection Kit"] floating enable

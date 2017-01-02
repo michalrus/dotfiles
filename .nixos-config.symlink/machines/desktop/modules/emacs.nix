@@ -2,10 +2,17 @@
 
 let
 
-  custom = (pkgs.emacsPackagesNgGen pkgs.emacs25).override (super: self: {
+  customBuild = pkgs.emacs25.override {
+    # Use ‘lucid’ toolkit. Doesn’t have this bug → https://bugzilla.gnome.org/show_bug.cgi?id=85715
+    withX = true;
+    withGTK2 = false;
+    withGTK3 = false;
+  };
+
+  custom = (pkgs.emacsPackagesNgGen customBuild).override (super: self: {
     inherit (self.melpaPackages)
-      # Use these from MELPA Unstable:
-      intero;
+    # Use these from MELPA Unstable:
+    intero;
   });
 
   customEmacs = custom.emacsWithPackages (epkgs: with epkgs; [
