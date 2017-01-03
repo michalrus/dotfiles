@@ -12,7 +12,10 @@
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "sd_mod" "sr_mod" "rtsx_usb_sdmmc" ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
-  boot.blacklistedKernelModules = [ "amdgpu" ]; # With it enabled, resuming from `systemctl suspend` won’t work. Why?
+  boot.blacklistedKernelModules = [
+    "amdgpu" # With it enabled, resuming from `systemctl suspend` won’t work. Why?
+    "i2c_designware_platform" "i2c_designware_core" # These block systemd-udev-settle.service at boot.
+  ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
