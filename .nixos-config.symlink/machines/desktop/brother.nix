@@ -33,6 +33,8 @@
     gnome3.cheese
     gnome3.file-roller
     gtk  # Why? Icon cache! See #20874.
+    inkscape
+    ioquake3
     libnotify
     libreoffice
     lilypond
@@ -40,11 +42,13 @@
     networkmanagerapplet
     octave
     openjdk8
+    samba
     simple-scan
     skype
     system-config-printer # For GNOME Printers applet.
     transcribe
     transmission_gtk
+    unrar
     unclutter
     wine
     winetricks
