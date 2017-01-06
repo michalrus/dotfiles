@@ -12,4 +12,13 @@ exec --no-startup-id space2ctrl
 exec --no-startup-id systemctl --user start screen.service
 exec --no-startup-id systemctl --user start emacs-daemon.service
 
+for_window [class="Chromium-browser"] move container to workspace 2
+
+for_window [class="jetbrains-idea-ce"] move container to workspace 3
+
+for_window [class="^Ardour"] move container to workspace 3
+
+for_window [class="qjackctl"] move container to workspace 4
 for_window [class="qjackctl"] [title="^JACK Audio Connection Kit"] floating enable
+
+for_window [class="Transmission-gtk"] move container to workspace 10
