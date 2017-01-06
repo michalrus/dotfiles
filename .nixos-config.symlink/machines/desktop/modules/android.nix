@@ -37,6 +37,11 @@ in
       services.udev.extraRules = let
         mount = pkgs.writeScript "android-mount" ''
           #!/bin/sh
+
+          # Check if there’s anything really available and exit cleanly if not.
+          numdev="$( ( ${pkgs.jmtpfs}/bin/jmtpfs -l || true ) | wc -l )"
+          [ "$numdev" -gt 1 ] || exit 0
+
           uid="$(id -u "${cfg.user}")"
           gid="$(id -g "${cfg.user}")"
           mkdir -p "${cfg.point}"
