@@ -35,18 +35,20 @@
     (interactive)
     (org-map-entries
      (lambda ()
-       (cond ((string-match-p ":ARCHIVE:" (upcase (or (org-entry-get (point) "ALLTAGS") "")))
-              ;; Sometimes we’re left with (point) at an :ARCHIVE: after
-              ;; (org-archive-to-archive-sibling) returns and this slips
-              ;; through the 'archive filter of (org-map-entries), and
-              ;; results in an infinite recursion, so… yeah. Let’s
-              ;; recheck manually and skip the archived subtree.
-              (setq org-map-continue-from (+ 1 (save-excursion (org-end-of-subtree t)))))
-             ((org-entry-is-done-p)
-              (let ((point-was-at (point)))
-                (org-archive-to-archive-sibling)
-                ;; Continue mapping at where the archived entry was,
-                ;; because the next one (its ex-sibling) might need
-                ;; archiving, too.
-                (setq org-map-continue-from point-was-at)))))
+       (let ((entry-tags (upcase (or (org-entry-get (point) "ALLTAGS") ""))))
+         (cond ((or (string-match-p ":ARCHIVE:"  entry-tags)
+                    (string-match-p ":SKIP_ARCHIVE:" entry-tags))
+                ;; Sometimes we’re left with (point) at an :ARCHIVE: after
+                ;; (org-archive-to-archive-sibling) returns and this slips
+                ;; through the 'archive filter of (org-map-entries), and
+                ;; results in an infinite recursion, so… yeah. Let’s
+                ;; recheck manually and skip the archived subtree.
+                (setq org-map-continue-from (+ 1 (save-excursion (org-end-of-subtree t)))))
+               ((org-entry-is-done-p)
+                (let ((point-was-at (point)))
+                  (org-archive-to-archive-sibling)
+                  ;; Continue mapping at where the archived entry was,
+                  ;; because the next one (its ex-sibling) might need
+                  ;; archiving, too.
+                  (setq org-map-continue-from point-was-at))))))
      t 'file 'archive)))
