@@ -5,6 +5,7 @@
 
   :bind (("C-c a" . org-agenda)
          ("C-c c" . org-capture)
+         ("C-c l" . org-store-link)
          :map org-mode-map
          ("C-c C-a" . michalrus/org-archive-done-tasks-in-file))
 
@@ -16,6 +17,7 @@
      org-refile-use-outline-path t
      org-todo-keywords '((sequence "TODO(t!)" "IN-PROGRESS(i!)" "WAITING(w@)" "|" "DONE(d!)" "DELEGATED(g@)" "CANCELED(c@)"))
      org-log-into-drawer t
+     org-id-link-to-org-use-id t
      org-startup-indented t
      org-log-done nil
      org-support-shift-select t
