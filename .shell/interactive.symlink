@@ -8,7 +8,7 @@ stty -ixon
 
 # turn off C-z
 stty susp undef
-set +m
+#set +m # — this makes zsh loop when `exec zsh` is run in `zsh` in a new term. Let’s investigate what that was, by turning it off for a while.
 
 export CLICOLOR='1'
 command -v dircolors >/dev/null && eval "$(dircolors "$HOME"/.dircolors)"
