@@ -128,5 +128,8 @@ bar {
   }
 }
 
+# Remember to set the ‘primary’ display in xrandr/arandr.
+exec --no-startup-id nm-applet
+
 exec --no-startup-id dunst
 exec --no-startup-id ~/.screenlayout/current
