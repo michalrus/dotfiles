@@ -14,3 +14,7 @@
 
 ;; set Makefile-mode to run `make' on C-c C-c
 (add-hook 'makefile-mode-hook 'michalrus/setup-compilation-with-make)
+
+;; woman
+(use-package woman
+    :bind (("C-c w" . woman)))
