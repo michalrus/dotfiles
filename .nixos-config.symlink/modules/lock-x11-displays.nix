@@ -43,6 +43,11 @@ in
         '';
     };
 
+    services.udev.extraRules = ''
+      # Lock screen on anything HID, cf. https://youtu.be/5Nk6iDryW0Y?t=1323 .
+      ACTION=="add", SUBSYSTEM=="hid", RUN+="${config.systemd.package}/bin/systemctl restart lock-x11-displays.service"
+    '';
+
     security.sudo = {
       enable = true;
       extraConfig = ''
