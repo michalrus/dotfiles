@@ -7,7 +7,7 @@
     ./modules/android.nix
     ./modules/emacs.nix
     ./modules/malicious-hosts.nix
-    ./my-wifi-passwords.nix
+    ./my-hosts.nix
   ];
 
   boot.tmpOnTmpfs = true;
@@ -23,16 +23,7 @@
     '';
   };
 
-  networking = {
-    connman = {
-      enable = true;
-      # https://wiki.archlinux.org/index.php/Connman#Avoid_changing_the_hostname
-      extraConfig = ''
-        [General]
-        AllowHostnameUpdates=false
-      '';
-    };
-  };
+  networking.networkmanager.enable = true;
 
   environment.systemPackages = with pkgs; [
     arandr
@@ -62,6 +53,7 @@
     libnotify
     libreoffice
     mu
+    networkmanagerapplet
     oathToolkit
     octave
     openjdk8

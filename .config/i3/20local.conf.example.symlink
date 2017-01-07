@@ -7,6 +7,9 @@ bindsym F12 exec pkill -USR1 dunst
 
 bindsym $mod+k exec pass-autotype
 
+# Remember to set the ‘primary’ display in xrandr/arandr.
+exec --no-startup-id nm-applet
+
 exec --no-startup-id remote-notifications
 exec --no-startup-id space2ctrl
 exec --no-startup-id systemctl --user start screen.service
