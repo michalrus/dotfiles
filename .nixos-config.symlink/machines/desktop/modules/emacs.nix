@@ -62,15 +62,4 @@ in
       exec "$SHELL" --login -c "exec ${customEmacs}/bin/emacs --daemon"
     '';
   };
-
-  systemd.user.services.screen = {
-    description = "GNU Screen";
-    serviceConfig = {
-      Type = "forking";
-      Restart = "always";
-    };
-    script = ''
-      exec "$SHELL" --login -c "exec ${pkgs.screen}/bin/screen -d -m"
-    '';
-  };
 }

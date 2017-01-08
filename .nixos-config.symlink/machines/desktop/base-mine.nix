@@ -110,6 +110,8 @@
 
     lockX11Displays.enable = true;
 
+    screen.usersAlways = [];
+
     xserver = {
       xkbOptions = "ctrl:nocaps,compose:caps";
 
