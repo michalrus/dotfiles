@@ -1,6 +1,0 @@
-backend = "glx";
-
-inactive-dim = 0.2;
-
-# Exclude dmenu at the top from focus-based dimming
-focus-exclude = "x = 0 && y = 0 && override_redirect = true";
