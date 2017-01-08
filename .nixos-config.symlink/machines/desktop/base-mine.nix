@@ -32,7 +32,6 @@
     chromium
     conkeror
     cool-retro-term
-    dmenu
     dunst
     evince
     firefox
@@ -60,6 +59,7 @@
     pass
     pavucontrol
     pinentry
+    rofi
     scala
     st
     (texlive.combine {
