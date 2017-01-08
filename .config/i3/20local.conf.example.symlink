@@ -20,6 +20,8 @@ for_window [class="^Ardour"] move container to workspace 3
 
 for_window [class="mpv"] move container to workspace 3
 
+for_window [class="Gnucash"] move container to workspace 3
+
 for_window [class="qjackctl"] move container to workspace 4
 for_window [class="qjackctl"] [title="^JACK Audio Connection Kit"] floating enable
 
