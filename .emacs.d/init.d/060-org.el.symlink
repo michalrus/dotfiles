@@ -17,12 +17,15 @@
      org-refile-use-outline-path t
      org-todo-keywords '((sequence "TODO(t!)" "IN-PROGRESS(i!)" "WAITING(w@)" "|" "DONE(d!)" "DELEGATED(g@)" "CANCELED(c@)"))
      org-log-into-drawer t
-     org-id-link-to-org-use-id t
      org-startup-indented t
      org-log-done nil
      org-support-shift-select t
      org-catch-invisible-edits 'error
      org-ctrl-k-protect-subtree 'error)
+
+  (use-package org-id
+    :init
+    (setq org-id-link-to-org-use-id t))
 
   :config
   (setq org-default-notes-file (expand-file-name "Inbox.org" org-directory))
