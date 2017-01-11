@@ -3,6 +3,9 @@
 (use-package yaml-mode
   :mode "\\.yaml\\'")
 
+(use-package markdown-mode
+  :mode "\\.md\\'")
+
 (use-package python-mode
   :mode "\\.py\\'" :interpreter "python")
 

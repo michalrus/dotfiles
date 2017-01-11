@@ -30,6 +30,7 @@ let
     intero
     ivy
     magit
+    markdown-mode
     neotree
     projectile
     python-mode
