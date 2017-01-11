@@ -21,6 +21,7 @@ for_window [class="Gnucash"] move container to workspace 3
 
 for_window [class="qjackctl"] move container to workspace 4
 for_window [class="qjackctl"] [title="^JACK Audio Connection Kit"] floating enable
+for_window [class="VirtualBox"] move container to workspace 4
 
 for_window [class="nofatty"] move container to workspace 10
 for_window [class="Transmission-gtk"] move container to workspace 10
