@@ -23,6 +23,7 @@ let
     diff-hl
     ensime
     expand-region
+    git-link
     go-mode
     gregorio-mode
     haskell-mode

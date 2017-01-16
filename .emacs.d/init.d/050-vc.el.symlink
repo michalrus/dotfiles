@@ -6,6 +6,12 @@
   (setq magit-log-arguments '("--graph" "--color" "--decorate" "--show-signature" "-n256" "++order=date")
         magit-merge-arguments '("--ff-only")))
 
+(use-package git-link
+  :bind (("C-c g l" . git-link))
+  :config
+  (setq git-link-use-commit t
+        git-link-open-in-browser t))
+
 (use-package diff-hl
   :config
   (add-hook 'prog-mode-hook 'diff-hl-mode))
