@@ -4,8 +4,7 @@
   imports = [
     ../../modules
     ../../pkgs
-    ../../local
-    ../../common.nix
+    ../common.nix
     ./monitoring
     ./gitolite
     ./ipsec
@@ -13,6 +12,7 @@
     ./web
     ./feeds/annibot.nix
     ./feeds/stosowana.nix
+    ./znc
   ];
 
   networking.hostName = "michalrus_com";

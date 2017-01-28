@@ -1,0 +1,119 @@
+diff --git a/modules/log.cpp b/modules/log.cpp
+index 6cf0cea..c47de2b 100644
+--- a/modules/log.cpp
++++ b/modules/log.cpp
+@@ -26,11 +26,12 @@ using std::vector;
+ 
+ class CLogRule {
+ public:
+-	CLogRule(const CString& sRule, bool bEnabled = true) : m_sRule(sRule), m_bEnabled(bEnabled) {}
++	CLogRule(const CString& sRule, bool bEnabled = true, bool bLogJPQ = true) : m_sRule(sRule), m_bEnabled(bEnabled), m_bLogJPQ(bLogJPQ) {}
+ 
+ 	const CString& GetRule() const { return m_sRule; }
+ 	bool IsEnabled() const { return m_bEnabled; }
+ 	void SetEnabled(bool bEnabled) { m_bEnabled = bEnabled; }
++	bool ShouldLogJPQ() const { return m_bLogJPQ; }
+ 
+ 	bool Compare(const CString& sTarget) const {
+ 		return sTarget.WildCmp(m_sRule);
+@@ -41,12 +42,13 @@ public:
+ 	}
+ 
+ 	CString ToString() const {
+-		return (m_bEnabled ? "" : "!") + m_sRule;
++		return (m_bLogJPQ ? "" : "!") + m_sRule; // Smelly? =) Well, I’m not using no-logging at all. Let’s make ‘!’ and indicator of no-QUIT/PART/JOIN in logs instead.
+ 	}
+ 
+ private:
+ 	CString m_sRule;
+ 	bool m_bEnabled;
++	bool m_bLogJPQ;
+ };
+ 
+ class CLogMod: public CModule {
+@@ -69,7 +71,7 @@ public:
+ 	void SetRules(const VCString& vsRules);
+ 	VCString SplitRules(const CString& sRules) const;
+ 	CString JoinRules(const CString& sSeparator) const;
+-	bool TestRules(const CString& sTarget) const;
++	bool TestRules(const CString& sTarget, bool bTestJPQ) const;
+ 
+ 	void PutLog(const CString& sLine, const CString& sWindow = "status");
+ 	void PutLog(const CString& sLine, const CChan& Channel);
+@@ -143,11 +145,13 @@ void CLogMod::ListRulesCmd(const CString& sLine)
+ 	CTable Table;
+ 	Table.AddColumn("Rule");
+ 	Table.AddColumn("Logging enabled");
++	Table.AddColumn("JOIN/PART/QUIT logged");
+ 
+ 	for (const CLogRule& Rule : m_vRules) {
+ 		Table.AddRow();
+ 		Table.SetCell("Rule", Rule.GetRule());
+ 		Table.SetCell("Logging enabled", CString(Rule.IsEnabled()));
++		Table.SetCell("JOIN/PART/QUIT logged", CString(Rule.ShouldLogJPQ()));
+ 	}
+ 
+ 	if (Table.empty()) {
+@@ -162,8 +166,8 @@ void CLogMod::SetRules(const VCString& vsRules)
+ 	m_vRules.clear();
+ 
+ 	for (CString sRule : vsRules) {
+-		bool bEnabled = !sRule.TrimPrefix("!");
+-		m_vRules.push_back(CLogRule(sRule, bEnabled));
++		bool bLogJPQ = !sRule.TrimPrefix("!"); // Smelly? =) Well, I’m not using no-logging at all. Let’s make ‘!’ and indicator of no-QUIT/PART/JOIN in logs instead.
++		m_vRules.push_back(CLogRule(sRule, true, bLogJPQ));
+ 	}
+ }
+ 
+@@ -188,11 +192,14 @@ CString CLogMod::JoinRules(const CString& sSeparator) const
+ 	return sSeparator.Join(vsRules.begin(), vsRules.end());
+ }
+ 
+-bool CLogMod::TestRules(const CString& sTarget) const
++bool CLogMod::TestRules(const CString& sTarget, bool bTestJPQ) const
+ {
+ 	for (const CLogRule& Rule : m_vRules) {
+ 		if (Rule.Compare(sTarget)) {
+-			return Rule.IsEnabled();
++			if (bTestJPQ)
++				return Rule.ShouldLogJPQ();
++			else
++				return Rule.IsEnabled();
+ 		}
+ 	}
+ 
+@@ -201,7 +208,7 @@ bool CLogMod::TestRules(const CString& sTarget) const
+ 
+ void CLogMod::PutLog(const CString& sLine, const CString& sWindow /*= "Status"*/)
+ {
+-	if (!TestRules(sWindow)) {
++	if (!TestRules(sWindow, false)) {
+ 		return;
+ 	}
+ 
+@@ -348,17 +355,24 @@ void CLogMod::OnKick(const CNick& OpNick, const CString& sKickedNick, CChan& Cha
+ 
+ void CLogMod::OnQuit(const CNick& Nick, const CString& sMessage, const vector<CChan*>& vChans)
+ {
+-	for (std::vector<CChan*>::const_iterator pChan = vChans.begin(); pChan != vChans.end(); ++pChan)
++	for (std::vector<CChan*>::const_iterator pChan = vChans.begin(); pChan != vChans.end(); ++pChan) {
++		if (!TestRules((**pChan).GetName(), true))
++			continue;
+ 		PutLog("*** Quits: " + Nick.GetNick() + " (" + Nick.GetIdent() + "@" + Nick.GetHost() + ") (" + sMessage + ")", **pChan);
++	}
+ }
+ 
+ void CLogMod::OnJoin(const CNick& Nick, CChan& Channel)
+ {
++	if (!TestRules(Channel.GetName(), true))
++		return;
+ 	PutLog("*** Joins: " + Nick.GetNick() + " (" + Nick.GetIdent() + "@" + Nick.GetHost() + ")", Channel);
+ }
+ 
+ void CLogMod::OnPart(const CNick& Nick, CChan& Channel, const CString& sMessage)
+ {
++	if (!TestRules(Channel.GetName(), true))
++		return;
+ 	PutLog("*** Parts: " + Nick.GetNick() + " (" + Nick.GetIdent() + "@" + Nick.GetHost() + ") (" + sMessage + ")", Channel);
+ }
+ 

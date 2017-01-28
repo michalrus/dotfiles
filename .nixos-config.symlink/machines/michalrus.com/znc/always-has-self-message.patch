@@ -1,0 +1,13 @@
+diff --git a/include/znc/Client.h b/include/znc/Client.h
+index fc75c60..cda9d15 100644
+--- a/include/znc/Client.h
++++ b/include/znc/Client.h
+@@ -120,7 +120,7 @@ public:
+ 	bool IsAway() const { return m_bAway; }
+ 	bool HasServerTime() const { return m_bServerTime; }
+ 	bool HasBatch() const { return m_bBatch; }
+-	bool HasSelfMessage() const { return m_bSelfMessage; }
++	bool HasSelfMessage() const { return true; }
+ 
+ 	static bool IsValidIdentifier(const CString& sIdentifier);
+ 

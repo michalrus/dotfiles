@@ -1,0 +1,64 @@
+diff --git a/include/znc/IRCNetwork.h b/include/znc/IRCNetwork.h
+index 4dd9ef9..ff32e8d 100644
+--- a/include/znc/IRCNetwork.h
++++ b/include/znc/IRCNetwork.h
+@@ -47,13 +47,17 @@ public:
+ 	enum {
+ 		JOIN_FREQUENCY = 30,
+ 		/** How long must an IRC connection be idle before ZNC sends a ping */
+-		PING_FREQUENCY = 270,
++		PING_FREQUENCY = 15,
+ 		/** Time between checks if PINGs need to be sent */
+-		PING_SLACK = 30,
++		PING_SLACK = 5,
+ 		/** Timeout after which IRC connections are closed. Must
+ 		 *  obviously be greater than PING_FREQUENCY + PING_SLACK.
+ 		 */
+-		NO_TRAFFIC_TIMEOUT = 540
++		NO_TRAFFIC_TIMEOUT = 120,
++
++		// The same values for user (ZNC client) connections:
++		CLIENT_PING_FREQUENCY = 5,
++		CLIENT_NO_TRAFFIC_TIMEOUT = 15
+ 	};
+ 
+ 	void Clone(const CIRCNetwork& Network, bool bCloneName = true);
+diff --git a/src/Client.cpp b/src/Client.cpp
+index e6e741f..cf9adab 100644
+--- a/src/Client.cpp
++++ b/src/Client.cpp
+@@ -698,7 +698,7 @@ void CClient::AcceptLogin(CUser& User) {
+ 
+ 	// Set our proper timeout and set back our proper timeout mode
+ 	// (constructor set a different timeout and mode)
+-	SetTimeout(CIRCNetwork::NO_TRAFFIC_TIMEOUT, TMO_READ);
++	SetTimeout(CIRCNetwork::CLIENT_NO_TRAFFIC_TIMEOUT, TMO_READ);
+ 
+ 	SetSockName("USR::" + m_pUser->GetUserName());
+ 	SetEncoding(m_pUser->GetClientEncoding());
+diff --git a/src/IRCNetwork.cpp b/src/IRCNetwork.cpp
+index 7f6da53..3c7fc04 100644
+--- a/src/IRCNetwork.cpp
++++ b/src/IRCNetwork.cpp
+@@ -49,7 +49,7 @@ protected:
+ 		for (size_t b = 0; b < vClients.size(); b++) {
+ 			CClient* pClient = vClients[b];
+ 
+-			if (pClient->GetTimeSinceLastDataTransaction() >= CIRCNetwork::PING_FREQUENCY) {
++			if (pClient->GetTimeSinceLastDataTransaction() >= CIRCNetwork::CLIENT_PING_FREQUENCY) {
+ 				pClient->PutClient("PING :ZNC");
+ 			}
+ 		}
+diff --git a/src/User.cpp b/src/User.cpp
+index 723e34b..d255b9f 100644
+--- a/src/User.cpp
++++ b/src/User.cpp
+@@ -42,7 +42,7 @@ protected:
+ 		for (size_t c = 0; c < vUserClients.size(); ++c) {
+ 			CClient* pUserClient = vUserClients[c];
+ 
+-			if (pUserClient->GetTimeSinceLastDataTransaction() >= CIRCNetwork::PING_FREQUENCY) {
++			if (pUserClient->GetTimeSinceLastDataTransaction() >= CIRCNetwork::CLIENT_PING_FREQUENCY) {
+ 				pUserClient->PutClient("PING :ZNC");
+ 			}
+ 		}

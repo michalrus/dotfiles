@@ -1,0 +1,61 @@
+diff --git a/clientbuffer.cpp b/clientbuffer.cpp
+index 7a9079a..925ae7c 100644
+--- a/clientbuffer.cpp
++++ b/clientbuffer.cpp
+@@ -29,6 +29,21 @@
+ #error The clientbuffer module requires ZNC version 1.6.0 or later.
+ #endif
+ 
++class CClientBufferCacheJob : public CTimer
++{
++public:
++    CClientBufferCacheJob(CModule* pModule, unsigned int uInterval, unsigned int uCycles, const CString& sLabel, const CString& sDescription)
++        : CTimer(pModule, uInterval, uCycles, sLabel, sDescription) {}
++    virtual ~CClientBufferCacheJob() {}
++
++protected:
++    virtual void RunJob();
++};
++
++void CClientBufferCacheJob::RunJob() {
++    GetModule()->SaveRegistry();
++}
++
+ class CClientBufferMod : public CModule
+ {
+ public:
+@@ -38,6 +53,7 @@ public:
+         AddCommand("AddClient", static_cast<CModCommand::ModCmdFunc>(&CClientBufferMod::OnAddClientCommand), "<identifier>", "Add a client.");
+         AddCommand("DelClient", static_cast<CModCommand::ModCmdFunc>(&CClientBufferMod::OnDelClientCommand), "<identifier>", "Delete a client.");
+         AddCommand("ListClients", static_cast<CModCommand::ModCmdFunc>(&CClientBufferMod::OnListClientsCommand), "", "List known clients.");
++        AddTimer(new CClientBufferCacheJob(this, 60 /* sec */, 0, "ClientBufferCache", "Periodically save ClientBuffer registry to disk"));
+     }
+ 
+     void OnAddClientCommand(const CString& line);
+@@ -211,7 +227,7 @@ CModule::EModRet CClientBufferMod::OnPrivBufferPlayLine2(CClient& client, CStrin
+ // returns true if the new client was successfully written to disk
+ bool CClientBufferMod::AddClient(const CString& identifier)
+ {
+-    return SetNV(identifier, "");
++    return SetNV(identifier, "", false);
+ }
+ 
+ bool CClientBufferMod::DelClient(const CString& identifier)
+@@ -224,7 +240,7 @@ bool CClientBufferMod::DelClient(const CString& identifier)
+     }
+     bool success = true;
+     for (const CString& key : keys)
+-        success &= DelNV(key);
++        success &= DelNV(key, false);
+     return success;
+ }
+ 
+@@ -270,7 +286,7 @@ bool CClientBufferMod::SetTimestamp(const CString& identifier, const CString& ta
+ {
+     char timestamp[32];
+     std::snprintf(timestamp, 32, "%ld.%06ld", tv.tv_sec, tv.tv_usec);
+-    return SetNV(identifier + "/" + target, timestamp);
++    return SetNV(identifier + "/" + target, timestamp, false);
+ }
+ 
+ timeval CClientBufferMod::GetTimestamp(const CString& identifier, const CString& target)

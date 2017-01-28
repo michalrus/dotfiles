@@ -1,0 +1,12 @@
+diff --git a/clientbuffer.cpp b/clientbuffer.cpp
+index 7a9079a..3054af3 100644
+--- a/clientbuffer.cpp
++++ b/clientbuffer.cpp
+@@ -307,6 +307,7 @@ void CClientBufferMod::UpdateTimestamp(const CClient* client, const CString& tar
+         if (HasClient(identifier)) {
+             timeval tv;
+             gettimeofday(&tv, NULL);
++            tv.tv_usec += 2000;
+             SetTimestamp(identifier, target, tv);
+         }
+     }

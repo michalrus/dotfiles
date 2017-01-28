@@ -1,0 +1,18 @@
+diff --git a/autoinvitejoin.cpp b/autoinvitejoin.cpp
+index 90c46f4..5dd9686 100644
+--- a/autoinvitejoin.cpp
++++ b/autoinvitejoin.cpp
+@@ -22,8 +22,12 @@ public:
+ 	virtual EModRet OnInvite(const CNick& Nick, const CString& sChan) override {
+ 		CIRCNetwork *pNetwork = GetNetwork();
+ 		if (pNetwork) {
+-			/* Only autojoin channels in our config */
+ 			CChan *invChan = pNetwork->FindChan(sChan);
++			if (!invChan) {
++				pNetwork->AddChan(sChan, false);
++				invChan = pNetwork->FindChan(sChan);
++				invChan->SetInConfig(true);
++			}
+ 			if (invChan) {
+ 				set<CChan*> sChans;
+ 				sChans.insert(invChan);
