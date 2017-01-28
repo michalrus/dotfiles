@@ -9,8 +9,8 @@ let
     allowUnfree = true; # for `transcribe`
   }; }).pkgs;
 
-  nixos-unstable = getCommit "1c50bdd928cec055d2ca842e2cf567aba2584efc"
-    "1g1504x8wbrvjzhjqmpl2c05wxglljxncqmfh1q38hfvkmmfl17g";
+  nixos-unstable = getCommit "f66d7823ece6fa4bf99e56fa4b4cb0ab16522839"
+    "0b9hns185bjbg1ckxnsmh8vzmvlw3pp14gwi4z412kzjxzmd51w4";
 
 in
 
@@ -30,17 +30,9 @@ in
 
     # Cherry-pick some packages from nixos-unstable:
 
-    inherit (nixos-unstable) awf beets squishyball youtube-dl;
-
+    inherit (nixos-unstable) airwave awf beets octave octaveFull squishyball youtube-dl;
     ansible22 = nixos-unstable.python27Packages.ansible2;
-
     transcribe = let super' = super // { inherit (nixos-unstable) transcribe; }; in (import ./transcribe.nix super' self);
-
-    # Interesting PRs not yet in nixos-unstable:
-
-    inherit (getCommit "ce22a9c7baee91e11fe05e47f0c7d76f6a118d3b" "1zm2ar128a17c9ddabgywcwk2wl0wsra42dwjcsjwq282za4kr2r") airwave;
-
-    inherit (getCommit "f263d9844e14ac95e6ec1fec0717e6738016d2db" "1fxsv9cxcjin49x01qrp2lq050rqzkg7hi4wv87rwpaj54hqkzzr") octave octaveFull;
 
     # Left to contribute:
 
