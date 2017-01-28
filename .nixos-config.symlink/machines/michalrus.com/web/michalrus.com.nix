@@ -52,6 +52,8 @@ mkMerge [
         rewrite ^/cv$ /cv/en.pdf last;
         rewrite ^/cv-pl$ /cv/pl.pdf last;
 
+        rewrite ^/\d\d\d\d-\d\d-\d\d/cv\.pdf$ /cv/en.pdf last;
+
         location ~ ^/cv/(.*)$ {
           add_header Content-Disposition "inline; filename=Michal_Rus_CV-$1";
         }
