@@ -12,6 +12,9 @@
 (setq inhibit-startup-message t)
 (unless indicate-empty-lines (toggle-indicate-empty-lines))
 
+(use-package frames-only-mode
+  :config (frames-only-mode t))
+
 ;; turn off C-z (never used it)
 (global-unset-key "\C-z")
 

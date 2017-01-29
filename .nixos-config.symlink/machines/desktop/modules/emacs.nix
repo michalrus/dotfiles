@@ -11,9 +11,25 @@ let
   };
 
   custom = (pkgs.emacsPackagesNgGen customBuild).override (super: self: {
-    inherit (self.melpaPackages)
     # Use these from MELPA Unstable:
-    intero;
+    inherit (self.melpaPackages) intero;
+
+    # FIXME: use it from nixpkgs when regenerated
+    frames-only-mode = self.melpaBuild {
+      pname = "frames-only-mode";
+      version = "20170129.120";
+      src = pkgs.fetchFromGitHub {
+        owner = "davidshepherd7";
+        repo = "frames-only-mode";
+        rev = "5a2947d797a5d6f74d3a9c97f8c0ab6cff115b28";
+        sha256 = "0y0sdjixaxvywrlp2sw51wnczhk51q1svl5aghbk9rkxpwv9ys9v";
+      };
+      recipeFile = pkgs.fetchurl {
+        url = "https://raw.githubusercontent.com/melpa/melpa/63889df90a8cd4a39871cc43ccc559eff7b8dd5f/recipes/frames-only-mode";
+        sha256 = "17p04l16ghz9kk096xk37yjpi4rmla86gp7c8ysjf6q6nyh0608h";
+        name = "frames-only-mode";
+      };
+    };
   });
 
   customEmacs = custom.emacsWithPackages (epkgs: with epkgs; [
@@ -24,6 +40,7 @@ let
     diff-hl
     ensime
     expand-region
+    frames-only-mode
     git-link
     go-mode
     gregorio-mode
