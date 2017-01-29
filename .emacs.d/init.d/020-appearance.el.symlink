@@ -13,6 +13,8 @@
 (unless indicate-empty-lines (toggle-indicate-empty-lines))
 
 (use-package frames-only-mode
+  :bind (("C-x C-c" . nil)
+         ("C-x o"   . nil))
   :config (frames-only-mode t))
 
 ;; turn off C-z (never used it)
