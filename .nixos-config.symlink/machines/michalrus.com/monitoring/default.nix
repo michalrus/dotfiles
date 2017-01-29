@@ -10,12 +10,14 @@ in
 
   services.influxdb = {
     enable = true;
+    package = pkgs.influxdb10;
     extraConfig = {
-      collectd = {
+      collectd = [{
         enabled = true;
-        port = influxdbCollecdPort;
+        typesdb = "${pkgs.collectd}/share/collectd/types.db";
         database = "collectd";
-      };
+        port = influxdbCollecdPort;
+      }];
     };
   };
 

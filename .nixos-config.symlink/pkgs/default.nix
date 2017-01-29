@@ -22,7 +22,7 @@ in
     android-udev-rules = (import ./android-udev-rules super self);
     conkeror-unwrapped = (import ./conkeror super self);
     evince             = (import ./evince.nix super self);
-    influxdb           = (import ./influxdb super self);
+    influxdb10         = (import ./influxdb super self);
     mtr                = (import ./mtr.nix super self);
     mu                 = (import ./mu super self);
     st                 = (import ./st super self);
