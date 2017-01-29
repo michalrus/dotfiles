@@ -3,7 +3,7 @@
 let
 
   # FIXME: change it to 25! Currently some packages stopped compiling.
-  customBuild = pkgs.emacs24.override {
+  customBuild = pkgs.emacs25.override {
     # Use ‘lucid’ toolkit. Doesn’t have this bug → https://bugzilla.gnome.org/show_bug.cgi?id=85715
     withX = true;
     withGTK2 = false;
