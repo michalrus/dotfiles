@@ -7,7 +7,8 @@
          ("C-c c" . org-capture)
          ("C-c l" . org-store-link)
          :map org-mode-map
-         ("C-c C-a" . michalrus/org-archive-done-tasks-in-file))
+         ("C-c C-a" . michalrus/org-archive-done-tasks-in-file)
+         ("C-c C-v" . org-tasklist-edit-value))
 
   :init
   (setq org-directory "~/Org")
@@ -34,6 +35,46 @@
     (define-key org-mode-map (kbd (format "S-<%s>" dir)) nil))
   (setq org-clock-persist 'history)
   (org-clock-persistence-insinuate)
+
+  (defun org-tasklist-is-1st-level-task-p (pom)
+    "Will return `t' iff the task at `pom' is a TODO/DONE/… at the first level, i.e. not a subtask of another TODO/DONE/…, `nil' otherwise."
+    (interactive (list (point)))
+    (save-excursion
+      (goto-char pom)
+      (and (or (org-entry-is-todo-p)
+               (org-entry-is-done-p))
+           (or (eq (org-current-level) 1)
+               (let* ((check-parent (lambda ()
+                                      (save-excursion
+                                        (let ((point-was-at (point)))
+                                          (condition-case nil
+                                              (outline-up-heading 1 t)
+                                            (error nil))
+                                          (cond ((or (org-entry-is-done-p) (org-entry-is-todo-p)) nil)
+                                                ((eq (point) point-was-at) t)
+                                                (t (funcall check-parent))))))))
+                 (funcall check-parent))))))
+
+  (setq org-agenda-custom-commands
+        '())
+
+  ;; FIXME: move this to org-agenda-custom-commands above!
+  (setq org-agenda-files '("~/Org/Tasklist.org")
+        org-agenda-todo-list-sublevels nil))
+
+  (defun org-tasklist-edit-value (pom)
+    (interactive (list (point)))
+    (unless (org-tasklist-is-1st-level-task-p pom)
+      (error (format "Entry at %d is not a 1st-level task, aborting" pom)))
+    (let* ((read-num (lambda (label unit default)
+                       (let* ((str (read-string (format "%s [%s] (%f): " label unit default)
+                                                nil nil (number-to-string default)))
+                              (num (string-to-number str)))
+                         (if (eq num 0) (error (format "%s [%s] must be a non-zero number, got ‘%s’" label unit str))) num)))
+           (value      (funcall read-num "value" "$" 25.0))
+           (investment (funcall read-num "time"  "hr" 0.5)))
+      (org-entry-put pom "TASKLIST_VALUE" (number-to-string value))
+      (org-entry-put pom "TASKLIST_INVESTMENT" (number-to-string investment))))
 
   (defun michalrus/org-archive-done-tasks-in-file ()
     "Archives all done tasks in the current Org file to their “Archive” siblings"
