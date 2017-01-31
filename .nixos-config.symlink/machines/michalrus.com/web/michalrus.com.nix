@@ -36,6 +36,13 @@ mkMerge [
 
         rewrite ^/gpg$ /pgp permanent;
 
+        location /hidden/accounting {
+          autoindex on;
+          autoindex_exact_size off;
+          auth_basic "Speak, friend, and enter.";
+          auth_basic_user_file "${config.services.nginx.stateDir}/auth/${domain}/accounting";
+        }
+
         location /pgp {
           add_header Content-type "text/plain";
           add_header Content-Disposition "inline; filename=michalrus.pgp.pub.asc";
