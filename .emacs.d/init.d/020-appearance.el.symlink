@@ -13,9 +13,11 @@
 (unless indicate-empty-lines (toggle-indicate-empty-lines))
 
 (use-package frames-only-mode
-  :bind (("C-x C-c" . nil)
-         ("C-x o"   . nil))
-  :config (frames-only-mode t))
+  :config
+  (dolist (k '("C-x C-c"
+               "C-x o"))
+    (global-unset-key (kbd k)))
+  (frames-only-mode t))
 
 ;; turn off C-z (never used it)
 (global-unset-key "\C-z")
