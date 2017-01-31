@@ -55,12 +55,34 @@
                                                 (t (funcall check-parent))))))))
                  (funcall check-parent))))))
 
-  (setq org-agenda-custom-commands
-        '())
+  ;; ——————————————————— org-tasklist sketch (BEGIN) ———————————————————
 
-  ;; FIXME: move this to org-agenda-custom-commands above!
-  (setq org-agenda-files '("~/Org/Tasklist.org")
-        org-agenda-todo-list-sublevels nil))
+  (setq org-agenda-custom-commands
+        '(("t" "Tasklist" alltodo ""
+           ((org-agenda-files '("~/Org/Tasklist.org"))
+            (org-agenda-todo-list-sublevels nil)
+            (org-agenda-prefix-format
+             (let ((cpy (copy-alist org-agenda-prefix-format)))
+               (progn (setcdr (assq 'todo cpy)
+                              "%(org-tasklist--agenda-prefix-format)  %-11:c  ")
+                      cpy)))
+            ;;(org-agenda-overriding-header "Projects waiting for something: ")
+            ))))
+
+  (defun org-tasklist--agenda-prefix-format ()
+    (let ((value      (org-entry-get (point) "TASKLIST_VALUE"))
+           (investment (org-entry-get (point) "TASKLIST_INVESTMENT")))
+      (cond ((and value investment)
+             (let ((nvalue (string-to-number value))
+                   (ninvestment (string-to-number investment))
+                   ;; TODO: read units & labels from :PROPERTIES:
+                   (unit-value "$")
+                   (unit-investment "hr"))
+               (format "%6.02f %s/%s"
+                       (/ nvalue ninvestment)
+                       (substring unit-value 0 1)
+                       (substring unit-investment 0 1))))
+            (t (format "%6s %3s" "——" "")))))
 
   (defun org-tasklist-edit-value (pom)
     (interactive (list (point)))
@@ -71,10 +93,13 @@
                                                 nil nil (number-to-string default)))
                               (num (string-to-number str)))
                          (if (eq num 0) (error (format "%s [%s] must be a non-zero number, got ‘%s’" label unit str))) num)))
+           ;; TODO: read units & labels from :PROPERTIES:
            (value      (funcall read-num "value" "$" 25.0))
            (investment (funcall read-num "time"  "hr" 0.5)))
       (org-entry-put pom "TASKLIST_VALUE" (number-to-string value))
       (org-entry-put pom "TASKLIST_INVESTMENT" (number-to-string investment))))
+
+  ;; ——————————————————— org-tasklist sketch (END) ———————————————————
 
   (defun michalrus/org-archive-done-tasks-in-file ()
     "Archives all done tasks in the current Org file to their “Archive” siblings"
