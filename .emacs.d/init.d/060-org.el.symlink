@@ -10,8 +10,9 @@
          ("C-c C-a" . michalrus/org-archive-done-tasks-in-file)
          ("C-c C-v" . org-tasklist-set-priority))
 
-  :init
+  :config
   (setq org-directory "~/Org")
+
   (setq-default
      org-reverse-note-order t
      org-refile-targets '((nil . (:maxlevel . 4)))
@@ -28,7 +29,10 @@
     :init
     (setq org-id-link-to-org-use-id t))
 
-  :config
+  (use-package org-agenda
+    :bind (:map org-agenda-mode-map
+           ("C-c C-v" . org-tasklist-agenda-set-priority)))
+
   (setq org-default-notes-file (expand-file-name "Inbox.org" org-directory))
   ;; Unbind S-left/right, because I’m logging every state change!
   (dolist (dir '("left" "right"))
@@ -36,7 +40,22 @@
   (setq org-clock-persist 'history)
   (org-clock-persistence-insinuate)
 
-  (defun org-tasklist-is-1st-level-task-p (pom)
+  ;; ——————————————————— org-tasklist sketch (BEGIN) ———————————————————
+
+  (setq org-agenda-custom-commands
+        '(("t" "Tasklist" alltodo ""
+           ((org-agenda-files '("~/Org/Tasklist.org"))
+            (org-agenda-todo-list-sublevels nil)
+            (org-agenda-prefix-format
+             (let ((cpy (copy-alist org-agenda-prefix-format)))
+               (progn (setcdr (assq 'todo cpy)
+                              "%(org-tasklist--agenda-prefix-format)  %-11:c  ")
+                      cpy)))
+            (org-agenda-sorting-strategy '(user-defined-down))
+            (org-agenda-cmp-user-defined 'org-tasklist--agenda-sorting-cmp)
+            ))))
+
+  (defun org-tasklist--is-1st-level-task-p (pom)
     "Will return `t' iff the task at `pom' is a TODO/DONE/… at the first level, i.e. not a subtask of another TODO/DONE/…, `nil' otherwise."
     (interactive (list (point)))
     (save-excursion
@@ -54,21 +73,6 @@
                                                 ((eq (point) point-was-at) t)
                                                 (t (funcall check-parent))))))))
                  (funcall check-parent))))))
-
-  ;; ——————————————————— org-tasklist sketch (BEGIN) ———————————————————
-
-  (setq org-agenda-custom-commands
-        '(("t" "Tasklist" alltodo ""
-           ((org-agenda-files '("~/Org/Tasklist.org"))
-            (org-agenda-todo-list-sublevels nil)
-            (org-agenda-prefix-format
-             (let ((cpy (copy-alist org-agenda-prefix-format)))
-               (progn (setcdr (assq 'todo cpy)
-                              "%(org-tasklist--agenda-prefix-format)  %-11:c  ")
-                      cpy)))
-            (org-agenda-sorting-strategy '(user-defined-down))
-            (org-agenda-cmp-user-defined 'org-tasklist--agenda-sorting-cmp)
-            ))))
 
   (defun org-tasklist--get-priority (pom)
     (let ((value      (org-entry-get (point) "TASKLIST_VALUE"))
@@ -102,8 +106,9 @@
             (t 1))))
 
   (defun org-tasklist-set-priority (pom)
+    "Set tasklist priority for the current headline."
     (interactive (list (point)))
-    (unless (org-tasklist-is-1st-level-task-p pom)
+    (unless (org-tasklist--is-1st-level-task-p pom)
       (error (format "Entry at %d is not a 1st-level task, aborting" pom)))
     (let* ((read-num (lambda (label unit default)
                        (let* ((str (read-string (format "%s [%s] (%f): " label unit default)
@@ -115,6 +120,29 @@
            (investment (funcall read-num "time"  "hr" 0.5)))
       (org-entry-put pom "TASKLIST_VALUE" (number-to-string value))
       (org-entry-put pom "TASKLIST_INVESTMENT" (number-to-string investment))))
+
+  (defun org-tasklist-agenda-set-priority ()
+    "Set tasklist priority for the current headline."
+    (interactive)
+    (org-agenda-check-no-diary)
+    (let* ((hdmarker (or (org-get-at-bol 'org-hd-marker)
+                         (org-agenda-error)))
+           (buffer (marker-buffer hdmarker))
+           (pos (marker-position hdmarker))
+           (inhibit-read-only t)
+           newhead)
+      (org-with-remote-undo buffer
+        (with-current-buffer buffer
+          (widen)
+          (goto-char pos)
+          (save-excursion
+            (org-show-context 'agenda))
+          (save-excursion
+            (and (outline-next-heading)
+                 (org-flag-heading nil)))   ; show the next heading
+          (goto-char pos)
+          (call-interactively 'org-tasklist-set-priority))))
+    (org-agenda-redo t))
 
   ;; ——————————————————— org-tasklist sketch (END) ———————————————————
 
