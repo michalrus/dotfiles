@@ -8,7 +8,7 @@
          ("C-c l" . org-store-link)
          :map org-mode-map
          ("C-c C-a" . michalrus/org-archive-done-tasks-in-file)
-         ("C-c C-v" . org-tasklist-edit-value))
+         ("C-c C-v" . org-tasklist-set-priority))
 
   :init
   (setq org-directory "~/Org")
@@ -66,25 +66,42 @@
                (progn (setcdr (assq 'todo cpy)
                               "%(org-tasklist--agenda-prefix-format)  %-11:c  ")
                       cpy)))
-            ;;(org-agenda-overriding-header "Projects waiting for something: ")
+            (org-agenda-sorting-strategy '(user-defined-down))
+            (org-agenda-cmp-user-defined 'org-tasklist--agenda-sorting-cmp)
             ))))
 
-  (defun org-tasklist--agenda-prefix-format ()
+  (defun org-tasklist--get-priority (pom)
     (let ((value      (org-entry-get (point) "TASKLIST_VALUE"))
-           (investment (org-entry-get (point) "TASKLIST_INVESTMENT")))
+          (investment (org-entry-get (point) "TASKLIST_INVESTMENT")))
       (cond ((and value investment)
-             (let ((nvalue (string-to-number value))
-                   (ninvestment (string-to-number investment))
-                   ;; TODO: read units & labels from :PROPERTIES:
+             (let ((nvalue (float (string-to-number value)))
+                   (ninvestment (float (string-to-number investment))))
+               (/ nvalue ninvestment)))
+            (t nil))))
+
+  (defun org-tasklist--agenda-prefix-format ()
+    (let ((prio (org-tasklist--get-priority (point))))
+      (cond (prio
+             (let (;; TODO: read units & labels from :PROPERTIES:
                    (unit-value "$")
                    (unit-investment "hr"))
                (format "%6.02f %s/%s"
-                       (/ nvalue ninvestment)
+                       prio
                        (substring unit-value 0 1)
                        (substring unit-investment 0 1))))
             (t (format "%6s %3s" "——" "")))))
 
-  (defun org-tasklist-edit-value (pom)
+  (defun org-tasklist--agenda-sorting-cmp (a b)
+    "Sorts agenda entries according to their tasklist priorities. Hacky—relies on entry formatting (priority being the first number) for performance."
+    (let ((pa (string-to-number (or (car (split-string a)) "0")))
+          (pb (string-to-number (or (car (split-string b)) "0"))))
+      (cond ((eq pa pb) nil)
+            ((eq 0 pa) 1)
+            ((eq 0 pb) -1)
+            ((< pa pb) -1)
+            (t 1))))
+
+  (defun org-tasklist-set-priority (pom)
     (interactive (list (point)))
     (unless (org-tasklist-is-1st-level-task-p pom)
       (error (format "Entry at %d is not a 1st-level task, aborting" pom)))
