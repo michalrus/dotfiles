@@ -33,12 +33,9 @@
     :bind (:map org-agenda-mode-map
            ("C-c C-v" . org-tasklist-agenda-set-priority)))
 
-  (setq org-default-notes-file (expand-file-name "Inbox.org" org-directory))
   ;; Unbind S-left/right, because I’m logging every state change!
   (dolist (dir '("left" "right"))
     (define-key org-mode-map (kbd (format "S-<%s>" dir)) nil))
-  (setq org-clock-persist 'history)
-  (org-clock-persistence-insinuate)
 
   ;; ——————————————————— org-tasklist sketch (BEGIN) ———————————————————
 
@@ -55,24 +52,39 @@
             (org-agenda-cmp-user-defined 'org-tasklist--agenda-sorting-cmp)
             ))))
 
+  (setq org-capture-templates
+        '(("l" "Music → Listening" entry (file+olp "~/Org/Tasklist.org" "Music" "Listening")
+           "* TODO %?\n%U\n%x"
+           :tasklist t
+           :kill-buffer t)
+          ))
+
+  (add-hook 'org-capture-prepare-finalize-hook 'org-tasklist--capture-prepare-finalize)
+  (defun org-tasklist--capture-prepare-finalize ()
+    (unless org-note-abort
+      (when (org-capture-get :tasklist t)
+        (call-interactively 'org-tasklist-set-priority))))
+
   (defun org-tasklist--is-1st-level-task-p (pom)
     "Will return `t' iff the task at `pom' is a TODO/DONE/… at the first level, i.e. not a subtask of another TODO/DONE/…, `nil' otherwise."
     (interactive (list (point)))
     (save-excursion
-      (goto-char pom)
-      (and (or (org-entry-is-todo-p)
-               (org-entry-is-done-p))
-           (or (eq (org-current-level) 1)
-               (let* ((check-parent (lambda ()
-                                      (save-excursion
-                                        (let ((point-was-at (point)))
-                                          (condition-case nil
-                                              (outline-up-heading 1 t)
-                                            (error nil))
-                                          (cond ((or (org-entry-is-done-p) (org-entry-is-todo-p)) nil)
-                                                ((eq (point) point-was-at) t)
-                                                (t (funcall check-parent))))))))
-                 (funcall check-parent))))))
+      (save-restriction
+        (widen)
+        (goto-char pom)
+        (and (or (org-entry-is-todo-p)
+                 (org-entry-is-done-p))
+             (or (eq (org-current-level) 1)
+                 (let* ((check-parent (lambda ()
+                                        (save-excursion
+                                          (let ((point-was-at (point)))
+                                            (condition-case nil
+                                                (outline-up-heading 1 t)
+                                              (error nil))
+                                            (cond ((or (org-entry-is-done-p) (org-entry-is-todo-p)) nil)
+                                                  ((eq (point) point-was-at) t)
+                                                  (t (funcall check-parent))))))))
+                   (funcall check-parent)))))))
 
   (defun org-tasklist--get-numeric-property (pom name)
     (let ((value      (org-entry-get (point) name)))
@@ -82,7 +94,7 @@
   (defun org-tasklist--get-priority (pom)
     (let ((value      (org-tasklist--get-numeric-property (point) "TASKLIST_VALUE"))
           (investment (org-tasklist--get-numeric-property (point) "TASKLIST_INVESTMENT")))
-      (cond ((and value investment) (/ nvalue ninvestment))
+      (cond ((and value investment) (/ value investment))
             (t nil))))
 
   (defun org-tasklist--agenda-prefix-format ()
