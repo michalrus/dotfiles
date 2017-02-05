@@ -74,13 +74,15 @@
                                                 (t (funcall check-parent))))))))
                  (funcall check-parent))))))
 
+  (defun org-tasklist--get-numeric-property (pom name)
+    (let ((value      (org-entry-get (point) name)))
+      (cond (value (float (string-to-number value)))
+            (t nil))))
+
   (defun org-tasklist--get-priority (pom)
-    (let ((value      (org-entry-get (point) "TASKLIST_VALUE"))
-          (investment (org-entry-get (point) "TASKLIST_INVESTMENT")))
-      (cond ((and value investment)
-             (let ((nvalue (float (string-to-number value)))
-                   (ninvestment (float (string-to-number investment))))
-               (/ nvalue ninvestment)))
+    (let ((value      (org-tasklist--get-numeric-property (point) "TASKLIST_VALUE"))
+          (investment (org-tasklist--get-numeric-property (point) "TASKLIST_INVESTMENT")))
+      (cond ((and value investment) (/ nvalue ninvestment))
             (t nil))))
 
   (defun org-tasklist--agenda-prefix-format ()
@@ -116,8 +118,10 @@
                               (num (string-to-number str)))
                          (if (eq num 0) (error (format "%s [%s] must be a non-zero number, got ‘%s’" label unit str))) num)))
            ;; TODO: read units & labels from :PROPERTIES:
-           (value      (funcall read-num "value" "$" 25.0))
-           (investment (funcall read-num "time"  "hr" 0.5)))
+           (value-default      (or (org-tasklist--get-numeric-property (point) "TASKLIST_VALUE") 25.0))
+           (investment-default (or (org-tasklist--get-numeric-property (point) "TASKLIST_INVESTMENT") 0.5))
+           (value      (funcall read-num "value" "$" value-default))
+           (investment (funcall read-num "time"  "hr" investment-default)))
       (org-entry-put pom "TASKLIST_VALUE" (number-to-string value))
       (org-entry-put pom "TASKLIST_INVESTMENT" (number-to-string investment))))
 
