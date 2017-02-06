@@ -44,11 +44,13 @@
 (defconst org-tasklist-agenda-options
   '((org-agenda-todo-list-sublevels nil)
     (org-agenda-prefix-format
-     (let ((old (alist-get 'todo org-agenda-prefix-format))
-           (cpy (copy-alist org-agenda-prefix-format)))
-       (progn (setcdr (assq 'todo cpy)
-                      (concat "%(org-tasklist--agenda-prefix-format) " old))
-              cpy)))
+     (let ((cpy (copy-alist org-agenda-prefix-format)))
+       (progn
+         (dolist (key '(todo tags search))
+           (setcdr (assq key cpy)
+                   (concat "%(org-tasklist--agenda-prefix-format) "
+                           (alist-get key org-agenda-prefix-format))))
+         cpy)))
     (org-agenda-sorting-strategy '(user-defined-down))
     (org-agenda-cmp-user-defined 'org-tasklist--agenda-sorting-cmp)))
 
