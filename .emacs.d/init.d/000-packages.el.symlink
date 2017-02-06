@@ -14,6 +14,9 @@
           ("gnu" . "http://elpa.gnu.org/packages/")))
   (setq use-package-always-ensure t)))
 
+;; add local package sketches to load-path
+(add-to-list 'load-path (expand-file-name "package-sketches" user-emacs-directory))
+
 (package-initialize)
 
 (unless (package-installed-p 'use-package)
