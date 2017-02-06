@@ -7,17 +7,18 @@
          ("C-c c" . org-capture)
          ("C-c l" . org-store-link)
          :map org-mode-map
-         ("C-c C-a" . michalrus/org-archive-done-tasks-in-file)
+         ("C-c C-a" . org-tasklist-archive-all-done)
          ("C-c C-v" . org-tasklist-set-priority))
 
   :config
   (setq org-directory "~/Org")
 
   (setq-default
-     org-reverse-note-order t
-     org-refile-targets '((nil . (:maxlevel . 4)))
-     org-refile-use-outline-path t
+     org-refile-targets '((nil :maxlevel . 3))
+     org-refile-use-outline-path nil
      org-todo-keywords '((sequence "TODO(t!)" "IN-PROGRESS(i!)" "WAITING(w@)" "|" "DONE(d!)" "DELEGATED(g@)" "CANCELED(c@)"))
+     org-log-states-order-reversed nil
+     org-reverse-note-order nil
      org-log-into-drawer t
      org-startup-indented t
      org-log-done nil
@@ -39,25 +40,16 @@
 
   ;; ——————————————————— org-tasklist sketch (BEGIN) ———————————————————
 
-  (setq org-agenda-custom-commands
-        '(("t" "Tasklist" alltodo ""
-           ((org-agenda-files '("~/Org/Tasklist.org"))
-            (org-agenda-todo-list-sublevels nil)
-            (org-agenda-prefix-format
-             (let ((cpy (copy-alist org-agenda-prefix-format)))
-               (progn (setcdr (assq 'todo cpy)
-                              "%(org-tasklist--agenda-prefix-format)  %-11:c  ")
-                      cpy)))
-            (org-agenda-sorting-strategy '(user-defined-down))
-            (org-agenda-cmp-user-defined 'org-tasklist--agenda-sorting-cmp)
-            ))))
-
-  (setq org-capture-templates
-        '(("l" "Music → Listening" entry (file+olp "~/Org/Tasklist.org" "Music" "Listening")
-           "* TODO %?\n%U\n%x"
-           :tasklist t
-           :kill-buffer t)
-          ))
+  (defconst org-tasklist-agenda-options
+    '((org-agenda-todo-list-sublevels nil)
+      (org-agenda-prefix-format
+       (let ((old (alist-get 'todo org-agenda-prefix-format))
+             (cpy (copy-alist org-agenda-prefix-format)))
+         (progn (setcdr (assq 'todo cpy)
+                        (concat "%(org-tasklist--agenda-prefix-format) " old))
+                cpy)))
+      (org-agenda-sorting-strategy '(user-defined-down))
+      (org-agenda-cmp-user-defined 'org-tasklist--agenda-sorting-cmp)))
 
   (add-hook 'org-capture-prepare-finalize-hook 'org-tasklist--capture-prepare-finalize)
   (defun org-tasklist--capture-prepare-finalize ()
@@ -67,7 +59,6 @@
 
   (defun org-tasklist--is-1st-level-task-p (pom)
     "Will return `t' iff the task at `pom' is a TODO/DONE/… at the first level, i.e. not a subtask of another TODO/DONE/…, `nil' otherwise."
-    (interactive (list (point)))
     (save-excursion
       (save-restriction
         (widen)
@@ -160,27 +151,37 @@
           (call-interactively 'org-tasklist-set-priority))))
     (org-agenda-redo t))
 
-  ;; ——————————————————— org-tasklist sketch (END) ———————————————————
-
-  (defun michalrus/org-archive-done-tasks-in-file ()
-    "Archives all done tasks in the current Org file to their “Archive” siblings"
+  (defun org-tasklist-archive-all-done ()
+    "Archive all done to-do’s reachable from top level in the current Org buffer."
     (interactive)
     (org-map-entries
      (lambda ()
-       (let ((entry-tags (upcase (or (org-entry-get (point) "ALLTAGS") ""))))
-         (cond ((or (string-match-p ":ARCHIVE:"  entry-tags)
-                    (string-match-p ":SKIP_ARCHIVE:" entry-tags))
-                ;; Sometimes we’re left with (point) at an :ARCHIVE: after
-                ;; (org-archive-to-archive-sibling) returns and this slips
-                ;; through the 'archive filter of (org-map-entries), and
-                ;; results in an infinite recursion, so… yeah. Let’s
-                ;; recheck manually and skip the archived subtree.
-                (setq org-map-continue-from (+ 1 (save-excursion (org-end-of-subtree t)))))
-               ((org-entry-is-done-p)
-                (let ((point-was-at (point)))
-                  (org-archive-to-archive-sibling)
-                  ;; Continue mapping at where the archived entry was,
-                  ;; because the next one (its ex-sibling) might need
-                  ;; archiving, too.
-                  (setq org-map-continue-from point-was-at))))))
-     t 'file 'archive)))
+       (cond ((org-entry-is-todo-p)
+              ;; skip TODO subtree altogether
+              (setq org-map-continue-from
+                    (save-excursion
+                      (outline-end-of-subtree)
+                      (forward-char)
+                      (point))))
+             ((org-entry-is-done-p)
+              (let ((point-was-at (point)))
+                (message "Siema! @ %d" point-was-at)
+                (org-archive-subtree)
+                (setq org-map-continue-from point-was-at)))))
+     t 'file))
+
+  ;; ——————————————————— org-tasklist sketch (END) ———————————————————
+
+  (setq org-agenda-custom-commands
+        `(("t" "Tasklist (all)" alltodo ""
+           ((org-agenda-files '("~/Org/Tasklist.org"))
+            ,@org-tasklist-agenda-options))
+          ))
+
+  (setq org-capture-templates
+        '(("l" "Music → Listening" entry (file+olp "~/Org/Tasklist.org" "Music" "Listening")
+           "* TODO %?\n%U\n%x"
+           :tasklist t :kill-buffer t)
+          ))
+
+  )
