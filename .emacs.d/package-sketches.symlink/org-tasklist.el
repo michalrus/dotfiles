@@ -108,8 +108,8 @@
   (let ((pa (string-to-number (or (car (split-string a)) "0")))
         (pb (string-to-number (or (car (split-string b)) "0"))))
     (cond ((eq pa pb) nil)
-          ((eq 0 pa) 1)
-          ((eq 0 pb) -1)
+          ((eq 0 pa) -1)
+          ((eq 0 pb) 1)
           ((< pa pb) -1)
           (t 1))))
 
