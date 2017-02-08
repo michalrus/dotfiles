@@ -12,9 +12,13 @@
   :config
   (setq org-directory "~/Org")
 
+  (defun michalrus/org-files ()
+    (seq-filter 'file-exists-p
+                (directory-files-recursively org-directory "\\.org\\'")))
+
   (setq-default
-     org-refile-targets '((nil :maxlevel . 3))
-     org-refile-use-outline-path nil
+     org-refile-targets '((michalrus/org-files . (:level . 0)))
+     org-refile-use-outline-path 'file
      org-todo-keywords '((sequence "TODO(t!)" "IN-PROGRESS(i!)" "WAITING(w@)" "|" "DONE(d!)" "DELEGATED(g@)" "CANCELED(c@)"))
      org-log-states-order-reversed nil
      org-reverse-note-order nil
