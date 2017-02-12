@@ -54,10 +54,14 @@
 ;; recent files
 (use-package recentf
   :init
-  (setq recentf-max-menu-items 100
+  (setq recentf-max-menu-items 1000
         recentf-max-saved-items 1000)
   :config
-  (recentf-mode 1))
+  (recentf-mode 1)
+  (add-to-list 'delete-frame-functions
+               (lambda (frm)
+                 (recentf-save-list)))
+  (run-at-time nil (* 1 60) 'recentf-save-list))
 
 ;; (sort-words) ♥
 (defun sort-words (reverse beg end)
