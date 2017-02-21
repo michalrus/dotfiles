@@ -1,0 +1,153 @@
+#!/usr/bin/env bash
+
+# ——————— colors ———————
+
+c_foreground='#93a1a1'
+c_background='#002b36'
+c_background2='#073642'
+c_red='#dc322f'
+c_yellow='#b58900'
+
+declare -A bspwm_icons
+bspwm_icons=([I]='' [II]='' [III]=''
+             [X]='')
+
+# ——————— initial setup ———————
+
+# kill all in process group on a signal
+trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
+
+# fifo dir for more/less async communication
+ipc_fifo=$(mktemp)
+rm $ipc_fifo
+mkfifo $ipc_fifo
+
+# DRY
+forever() {
+  while true ; do $@ ; done | awk -v "key=$1" '{ print key"="$0; fflush(); }' >$ipc_fifo &
+}
+
+color_ranges() {
+  if   [[ $2 > $4 ]] ; then printf "%s" "%{F$c_red}$1%{F-}"
+  elif [[ $2 > $3 ]] ; then printf "%s" "%{F$c_yellow}$1%{F-}"
+  else                      printf "%s" "$1"
+  fi
+}
+
+# ——————— clock ———————
+clock() {
+  # TODO: every 5 minutes get µs part to 0
+  for i in {1..300} ; do
+    printf " %s · %s\n" \
+           "$(date "+%a %d %b %H:%M:%S %Z")" \
+           "$(date --utc "+%H:%M %Z")"
+    sleep 1
+  done
+}
+forever clock
+
+# ——————— bspwm ———————
+bspwm() {
+  bspc subscribe | while IFS= read -r line ; do
+    echo "$line" | tr ':' '\n' | sed '1d' | sed 's/\(.\)/\1 /' | while read -r state name ; do
+      name="${name:-?}"
+      icon="${bspwm_icons[$name]:-$name}"
+      if   [ "$state" = "O" -o "$state" = "F" ] ; then
+        printf '%s ' "%{+u}%{U$c_foreground}%{B$c_background2} $icon %{B-}%{U-}%{-u}"
+      elif [ "$state" = "u" ] ; then
+        printf '%s ' "%{+u}%{U$c_foreground}%{B$c_red} $icon %{B-}%{U-}%{-u}"
+      elif [ "$state" = "o" ] ; then
+        printf '%s ' " $icon "
+      fi
+    done
+    echo
+  done
+}
+forever bspwm
+
+# ——————— xtitle ———————
+_xtitle() {
+  xtitle -s | \
+    awk -v len=72 -v "color=$c_background2" '
+{
+  if (length($0) > 0) {
+    printf("%{B"color"} ");
+    if (length($0) > len)
+      printf("%s", substr($0, 1, len-1) "…");
+    else
+      printf("%s", $0);
+    print(" %{B-}");
+  }
+  else
+    print "";
+  fflush();
+}' #>&2
+}
+forever _xtitle
+
+# ——————— battery ———————
+battery() {
+  percent=$(cat /sys/class/power_supply/BAT*/capacity)
+  status="$(cat /sys/class/power_supply/BAT*/status)"
+  [ $status = "Discharging" ] && icon="" || icon=""
+  if [ $percent -le 7 -a $status = "Discharging" ] ; then
+    echo "%{B$c_red} $icon $percent% %{B-}"
+    sleep 0.6
+    echo " $icon $percent% "
+    sleep 0.6
+  else
+    echo "$icon $percent%"
+    sleep 4.1
+  fi
+}
+forever battery
+
+# ——————— cpu ———————
+cpu() {
+  temp=$(( $(cat /sys/devices/platform/coretemp.0/hwmon/hwmon*/temp1_input) / 1000 ))
+  load="$(cat /proc/loadavg | cut -d ' ' -f1)"
+  printf ' '
+  color_ranges "$temp°C" $temp 59 69
+  printf ' '
+  color_ranges "$load" $load 3 4
+  printf '\n'
+  sleep 5.2
+}
+forever cpu
+
+# ——————— memory ———————
+memory() {
+  printf ' '
+  free -h | sed '1d' | awk '{ print $3 }' | xargs echo
+  sleep 2.3
+}
+forever memory
+
+# ——————— audio ———————
+audio_print() {
+  amixer sget Master | grep -Eo '\[.*\]' | tr -d '[]' | head -1 |\
+    awk '{ if($2=="off") print " 0"; else print " "$1 }'
+}
+
+audio() {
+  audio_print
+  stdbuf -i0 -o0 -e0 alsactl monitor |\
+    stdbuf -i0 -o0 -e0 grep -F 'Master Playback' |\
+    while IFS= read -r line ; do audio_print ; done
+}
+forever audio
+
+# ——————— render ———————
+
+# schedule setting root to be always above lemonbar
+{
+  sleep 0.5
+  xdo above -t $(xdo id -n root) $(xdo id -n lemonbar)
+} &
+
+# compose the whole line from an update and cached previous values
+while IFS='=' read -r field value <$ipc_fifo ; do
+  eval "$field=\$value"
+  echo " $bspwm$_xtitle%{c}$clock%{r}$audio · $memory · $cpu · $battery "
+done | \
+  lemonbar -g x25 -F '#93a1a1' -B '#002b36' -f 'Inconsolata:pixelsize=16' -f 'FontAwesome:pixelsize=16'

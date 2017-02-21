@@ -1,6 +1,6 @@
-rofi.bw: 5
+rofi.bw: 3
 rofi.color-enabled: true
-rofi.color-window: #002b37, #0c5f73, #003642
+rofi.color-window: #002b37, #17aacf, #003642
 rofi.color-normal: #002b37, #819396, #003643, #008ed4, #ffffff
 rofi.color-active: #002b37, #008ed4, #003643, #008ed4, #66c6ff
 rofi.color-urgent: #002b37, #da4281, #003643, #008ed4, #890661

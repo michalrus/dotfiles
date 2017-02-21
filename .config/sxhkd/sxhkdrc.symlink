@@ -1,0 +1,70 @@
+super + l
+  sudo -n systemctl start lock-x11-displays
+
+super + d
+  rofi -combi-modi window,drun,run -show combi -modi combi
+
+super + shift + e
+  bspc quit
+
+super + i
+  xrandr-invert-colors
+
+{_,super +}Print
+  mkdir -p "$HOME"/Pictures/ && import -window {root,"$(xdotool getactivewindow)"} "$HOME"/Pictures/Screenshot-"$(date +'%Y%m%d-%H%M%S')".png
+
+XF86AudioMute
+  amixer -q sset Master 0 && amixer -q sset Master mute
+
+XF86Audio{Lower,Raise}Volume
+  amixer -q sset Master 3%{-,+} unmute
+
+XF86MonBrightness{Down,Up}
+  xbacklight -{dec,inc} 10
+
+# ——————————— personal ———————————
+
+super + Return
+  termite -e 'zsh -i -c s'
+
+super + shift + Return
+  emacs
+
+super + k
+  pass-autotype
+
+F{11,12}
+  pkill -USR{2,1} dunst
+
+# ——————————— node/desktop control ———————————
+
+super + shift + q
+  bspc node --close
+
+super + {Up,Down,Left,Right}
+  bspc node --focus {north,south,west,east}
+
+super + shift + {Up,Down,Left,Right}
+  bspc node --swap {north,south,west,east}
+
+# focus or send to the given desktop
+super + {_,shift + }{1-9,0}
+  bspc {desktop --focus,node --to-desktop} '^{1-9,10}'
+
+super + f
+  bspc node --state '~fullscreen'
+
+super + shift + space
+  bspc node --state '~floating'
+
+super + r
+  bspc node @parent --rotate 90
+
+super + b
+  bspc node --swap biggest
+
+super + ctrl + {1-9}
+  bspc node @parent --ratio 0.{1-9}
+
+super + x
+  bspc desktop --to-monitor next

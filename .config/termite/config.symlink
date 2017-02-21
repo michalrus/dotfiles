@@ -1,0 +1,43 @@
+[options]
+font = Inconsolata 18px
+cursor_blink = off
+dynamic_title = on
+
+[colors]
+foreground      = #93a1a1
+foreground_bold = #93a1a1
+cursor          = #93a1a1
+#background     = #002b36
+background      = rgba(0, 43, 54, 0.95)
+
+# black
+color0  = #073642
+color8  = #073642
+
+# red
+color1  = #dc322f
+color9  = #cb4b16
+
+# green
+color2  = #859900
+color10 = #859900
+
+# yellow
+color3  = #b58900
+color11 = #b58900
+
+# blue
+color4  = #268bd2
+color12 = #268bd2
+
+# magenta
+color5  = #d33682
+color13 = #d33682
+
+# cyan
+color6  = #2aa198
+color14 = #2aa198
+
+# white
+color7  = #93a1a1
+color15 = #fdf6e3

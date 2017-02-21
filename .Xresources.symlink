@@ -63,62 +63,7 @@
 Emacs.menuBar:            off
 Emacs.toolBar:            off
 Emacs.verticalScrollBars: off
-Emacs.font:               Monospace:style=Regular:size=15
-
-! this is not true, but whatever… works.
-URxvt.termName:         xterm-256color
-
-URxvt.reverseVideo:     False
-URxvt.font:             xft:Monospace:regular:size=11:antialias=true
-URxvt.depth:            32
-!URxvt.background:       [75]#000000
-!URxvt.foreground:       white
-URxvt.saveLines:        0
-URxvt.iso14755:         False
-
-URxvt.perl-ext-common:  matcher,font-size,selection,clipboard
-
-URxvt.matcher.button:   1
-URxvt.keysym.C-Delete:  perl:matcher:list
-! Unfortunately, url-launcher needs to be an absolute path, which is
-! unspeakably stupid. Also, we don’t have any ~ or $HOME here. Also,
-! we can’t take any command line arguments. The following hack will
-! only work when urxvt is started in ~/, which is almost always.
-URxvt.url-launcher:     .bin/urxvt-url-launcher
-
-URxvt.keysym.C-0x2d:    perl:font-size:decrease
-URxvt.keysym.C-0x3d:    perl:font-size:increase
-
-URxvt.keysym.C-Insert:  perl:clipboard:copy
-URxvt.keysym.S-Insert:  perl:clipboard:paste
-
-! why does every terminal emulator send different codes for everything? :/
-
-URxvt.keysym.Home:      \033[1~
-URxvt.keysym.End:       \033[4~
-URxvt.keysym.KP_Home:   \033[1~
-URxvt.keysym.KP_End:    \033[4~
-
-URxvt.keysym.Prior:     \033[5~
-URxvt.keysym.Next:      \033[6~
-URxvt.keysym.KP_Prior:  \033[5~
-URxvt.keysym.KP_Next:   \033[6~
-
-URxvt.keysym.C-Left:    \033[1;5D
-URxvt.keysym.C-Right:   \033[1;5C
-URxvt.keysym.M-Left:    \033[1;3D
-URxvt.keysym.M-Right:   \033[1;3C
-
-URxvt.keysym.M-Prior:    \033[5;3~
-URxvt.keysym.M-KP_Prior: \033[5;3~
-URxvt.keysym.M-Next:     \033[6;3~
-URxvt.keysym.M-KP_Next:  \033[6;3~
-URxvt.keysym.C-Prior:    \033[5;5~
-URxvt.keysym.C-KP_Prior: \033[5;5~
-URxvt.keysym.C-Next:     \033[6;5~
-URxvt.keysym.C-KP_Next:  \033[6;5~
-
-URxvt*keysym.F1:         \033OP
-URxvt*keysym.F2:         \033OQ
-URxvt*keysym.F3:         \033OR
-URxvt*keysym.F4:         \033OS
+Emacs.font:               Inconsolata:style=Regular:size=18
+Emacs.font-1:             unifont:fontformat=truetype:size=18:antialias=true
+Emacs.font-2:             FontAwesome:style=Regular:size=18
+Emacs.variable-pitch.attributeFont: FreeSans:size=16

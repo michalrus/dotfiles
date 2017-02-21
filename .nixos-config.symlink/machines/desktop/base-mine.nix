@@ -30,6 +30,7 @@
     awf
     cdrkit
     chromium
+    compton
     conkeror
     cool-retro-term
     dunst
@@ -47,8 +48,8 @@
     (haskellPackages.ghcWithPackages (haskellPackages: with haskellPackages; [
       stack
     ]))
-    i3status
     isync
+    lemonbar-xft
     libnotify
     libreoffice
     mu
@@ -62,10 +63,13 @@
     rofi
     scala
     st
+    stalonetray
+    termite
     (texlive.combine {
       inherit (texlive) scheme-small latexmk titlesec tocloft todonotes cleveref lipsum biblatex logreq cm-super csquotes pgfplots adjustbox collectbox ccicons polski placeins xstring pdfpages unicode-math filehook textpos marvosym progressbar lm-math;
       gregorio = pkgs.gregorio.forTexlive;
     })
+    sxhkd
     transmission_gtk
     utox
     visualvm
@@ -74,8 +78,10 @@
     wmctrl
     xarchiver
     xautolock
+    xbanish
     xcape
     xclip
+    xdo
     xdotool
     xorg.xbacklight
     xorg.xev
@@ -84,6 +90,7 @@
     xrandr-invert-colors
     xsane
     xsel
+    xtitle
   ];
 
   environment.variables."GTK2_RC_FILES" =
@@ -126,7 +133,7 @@
 
       displayManager.lightdm.enable = true;
       desktopManager.xterm.enable = false;
-      windowManager.i3.enable = true;
+      windowManager.bspwm.enable = true;
 
       displayManager.xserverArgs = [ "-ardelay" "150" "-arinterval" "8" ];
     };
@@ -136,6 +143,7 @@
     anonymousPro
     hack-font
     inconsolata
+    font-awesome-ttf
   ];
 
   users = {

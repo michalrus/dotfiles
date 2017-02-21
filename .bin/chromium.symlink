@@ -1,4 +1,7 @@
 #!/bin/sh
 
+daemonize=daemonize
+type $daemonize 1>/dev/null 2>&1 || daemonize=exec
+
 # NixOS doesn’t respect these…
-exec command-p chromium --no-default-browser-check $CHROMIUM_USER_FLAGS "$@"
+$daemonize $HOME/.bin/command-p chromium --no-default-browser-check $CHROMIUM_USER_FLAGS "$@"

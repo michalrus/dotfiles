@@ -1,0 +1,14 @@
+shadow = true;
+clear-shadow = true;
+shadow-radius = 3;
+shadow-offset-x = 0;
+shadow-offset-y = 0;
+shadow-opacity = .67;
+
+shadow-red = 0.0;
+shadow-green = 0.0;
+shadow-blue = 0.0;
+
+respect-prop-shadow = true;
+
+shadow-exclude = [ "name = 'stalonetray'" ];

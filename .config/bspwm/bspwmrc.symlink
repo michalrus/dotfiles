@@ -1,0 +1,48 @@
+#! /bin/sh
+
+sxhkd &
+
+bspc config focus_follows_pointer true
+bspc config pointer_follows_focus true
+
+bspc config normal_border_color  '#073642'
+bspc config active_border_color  '#073642'
+bspc config focused_border_color '#17aacf'
+
+bspc config top_padding         25
+bspc config border_width         3
+bspc config window_gap          25
+bspc config split_ratio          0.5 # How about φ? 0.61803398875
+
+bspc monitor -d I II III IV V VI VII VIII IX X
+
+amixer -q sset Master 0 && amixer -q sset Master mute
+
+compton &
+xbanish &
+nm-applet &
+stalonetray &
+setsid statusbar &
+
+# ——————————— personal ———————————
+
+bspc rule -a 'Chromium-browser' desktop='^2'
+
+bspc rule -a 'jetbrains-idea-ce' desktop='^3'
+bspc rule -a 'mpv' desktop='^3'
+bspc rule -a 'Gnucash' desktop='^3'
+
+# FIXME: with external_rules_command
+# class ~ 'Ardour*' ⇒ desktop='^3'
+# class="qjackctl" title="^JACK Audio Connection Kit" ⇒ floating=true
+
+bspc rule -a 'qjackctl' desktop='^4'
+bspc rule -a 'VirtualBox' desktop='^4'
+
+bspc rule -a 'nofatty' desktop='^10'
+bspc rule -a 'Transmission-gtk' desktop='^10'
+
+remote-notifications &
+space2ctrl &
+systemctl --user start screen.service &
+systemctl --user start emacs-daemon.service &

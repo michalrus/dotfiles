@@ -2,6 +2,9 @@ gpg-connect-agent /bye
 
 feh --bg-scale "$HOME/.wallpaper.png" || true
 
-# make sure that ~/.shell/login will be read
-# (for some reason doing `. ~/.shell/login` here doesn’t set the PATH)
-exec $SHELL --login -c 'i3-merge-configs ; exec i3'
+# For ~/.XCompose to work in Gtk apps
+export XMODIFIERS="@im=none"
+export GTK_IM_MODULE=xim
+
+export _JAVA_AWT_WM_NONREPARENTING=1
+exec bspwm
