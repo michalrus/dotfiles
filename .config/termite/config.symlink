@@ -1,6 +1,7 @@
 [options]
 font = Inconsolata 18px
-cursor_blink = off
+cursor_blink = on
+cursor_shape = ibeam
 dynamic_title = on
 
 [colors]
