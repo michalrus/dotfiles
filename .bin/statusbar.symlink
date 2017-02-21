@@ -87,16 +87,21 @@ forever _xtitle
 
 # ——————— battery ———————
 battery() {
-  percent=$(cat /sys/class/power_supply/BAT*/capacity)
-  status="$(cat /sys/class/power_supply/BAT*/status)"
-  [ $status = "Discharging" ] && icon="" || icon=""
-  if [ $percent -le 7 -a $status = "Discharging" ] ; then
-    echo "%{B$c_red} $icon $percent% %{B-}"
+  eval "$(cat /sys/class/power_supply/BAT*/uevent | sed 's/=/="/;s/$/"/')"
+  [ $POWER_SUPPLY_STATUS = "Discharging" ] && icon="" || icon=""
+  [ $POWER_SUPPLY_CAPACITY -le 10 -a $POWER_SUPPLY_STATUS = "Discharging" ] && warning=1 || warning=
+  time=$(awk -v a=$(( $POWER_SUPPLY_CHARGE_FULL - $POWER_SUPPLY_CHARGE_NOW )) \
+             -v b=$POWER_SUPPLY_CURRENT_NOW \
+             'BEGIN { c = a/b; hrs = int(c); mins = int(60*(c - hrs)); if (hrs > 0 || mins > 0) printf " "; if (hrs > 0) printf hrs"h"; if (hrs > 0 || mins > 0) printf mins"m"; print }')
+  text="$icon $POWER_SUPPLY_CAPACITY%$time"
+
+  if [ $warning ] ; then
+    echo "%{B$c_red} $text %{B-}"
     sleep 0.6
-    echo " $icon $percent% "
+    echo " $text "
     sleep 0.6
   else
-    echo "$icon $percent%"
+    echo "$text"
     sleep 4.1
   fi
 }
