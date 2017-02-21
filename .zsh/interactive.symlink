@@ -12,6 +12,9 @@ zstyle ':completion:*' menu select
 zstyle ':completion:*:hosts' hosts ''
 setopt completealiases
 
+# Prepend command with a space to not save it in history.
+setopt histignorespace
+
 setopt HIST_IGNORE_DUPS
 setopt APPEND_HISTORY
 setopt EXTENDED_HISTORY
