@@ -45,9 +45,7 @@
     gnome3.gnome_themes_standard
     gnucash26
     gparted
-    (haskellPackages.ghcWithPackages (haskellPackages: with haskellPackages; [
-      stack
-    ]))
+    haskellPackages.ghc
     isync
     lemonbar-xft
     libnotify
@@ -63,6 +61,7 @@
     rofi
     scala
     st
+    stack
     stalonetray
     termite
     (texlive.combine {
