@@ -17,49 +17,13 @@
 #define S_green         #859900
 
 ! Solarized dark
-*background:  S_base03
-*foreground:  S_base1
-*fadeColor:   S_base03
-*cursorColor: S_base1
-*pointerColor: S_base1
-*pointerColorBackground: S_base01
-*pointerColorForeground: S_base1
-
-! Black
-*color0:  S_base02
-! Red
-*color1:  S_red
-! Green
-*color2:  S_green
-! Yellow
-*color3:  S_yellow
-! Blue
-*color4:  S_blue
-! Magenta
-*color5:  S_magenta
-! Cyan
-*color6:  S_cyan
-! White
-*color7:  S_base1
-! Bright Black
-*color8:  S_base02
-! Bright Red
-*color9:  S_orange
-! Bright Green
-*color10: S_green
-! Bright Yellow
-*color11: S_yellow
-! Bright Blue
-*color12: S_blue
-! Bright Magenta
-*color13: S_magenta
-! Bright Cyan
-*color14: S_cyan
-! Bright White
-*color15: S_base3
-
-! Emacs.background:         #000000
-! Emacs.foreground:         #ffffff
+Emacs.background:  S_base03
+Emacs.foreground:  S_base1
+Emacs.fadeColor:   S_base03
+Emacs.cursorColor: S_base1
+Emacs.pointerColor: S_base1
+Emacs.pointerColorBackground: S_base01
+Emacs.pointerColorForeground: S_base1
 Emacs.menuBar:            off
 Emacs.toolBar:            off
 Emacs.verticalScrollBars: off
