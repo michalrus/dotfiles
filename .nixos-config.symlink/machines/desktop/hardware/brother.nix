@@ -16,6 +16,9 @@
     "amdgpu" # With it enabled, resuming from `systemctl suspend` won’t work. Why?
     "i2c_designware_platform" "i2c_designware_core" # These block systemd-udev-settle.service at boot.
   ];
+  boot.extraModprobeConfig = ''
+    options snd-hda-intel model=dell-m6-amic
+  '';
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
