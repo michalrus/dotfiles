@@ -31,11 +31,9 @@
     cdrkit
     chromium
     compton
-    conkeror
     cool-retro-term
     dunst
     evince
-    firefox
     gettext
     gettext-emacs
     ghostscript
