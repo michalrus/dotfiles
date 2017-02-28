@@ -158,6 +158,18 @@ disk() {
 }
 forever disk
 
+# ——————— nixpkgs ———————
+nixpkgs() {
+  printf ' '
+  local_sha=$(nixos-version | sed 's/ .*//' | awk -F. '{ print $4 }')
+  local_chn=$(nixos-version | sed 's/ .*//' | awk -F. '{ print "nixos-"$1"."$2 }')
+  curl -sq "https://api.github.com/repos/NixOS/nixpkgs-channels/compare/$local_sha...$local_chn" |\
+    grep '^ *"\(ahead\|behind\)_by": *[0-9]\+, *$' |\
+    sort | sed 's/[^0-9]//g' | xargs echo | awk '{ print "+"$1"-"$2 }'
+  sleep 3600
+}
+forever nixpkgs
+
 # ——————— render ———————
 
 # schedule setting root to be always above lemonbar
@@ -169,6 +181,6 @@ forever disk
 # compose the whole line from an update and cached previous values
 while IFS='=' read -r field value <$ipc_fifo ; do
   eval "$field=\$value"
-  echo " $bspwm$_xtitle%{c}$clock%{r}$audio · $disk · $memory · $cpu · $battery "
+  echo " $bspwm$_xtitle%{c}$clock%{r}$audio · $nixpkgs · $disk · $memory · $cpu · $battery "
 done | \
   lemonbar -g x25 -F '#93a1a1' -B '#002b36' -f 'Inconsolata:pixelsize=16' -f 'FontAwesome:pixelsize=16'
