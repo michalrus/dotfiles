@@ -139,7 +139,7 @@
   fonts.fonts = with pkgs; [
     anonymousPro
     hack-font
-    inconsolata
+    iosevka
     font-awesome-ttf
   ];
 

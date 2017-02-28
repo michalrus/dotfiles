@@ -1,5 +1,5 @@
 [options]
-font = Inconsolata 18px
+font = Iosevka 16px
 cursor_blink = on
 cursor_shape = ibeam
 dynamic_title = on
