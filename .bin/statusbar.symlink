@@ -90,6 +90,7 @@ battery() {
   eval "$(cat /sys/class/power_supply/BAT*/uevent | sed 's/=/="/;s/$/"/')"
   icon=""
   warning=
+  current=$POWER_SUPPLY_CURRENT_NOW
   if [ $POWER_SUPPLY_STATUS = "Discharging" ] ; then
     [ $POWER_SUPPLY_CAPACITY -le 10 ] && warning=1
     icon=""
@@ -98,8 +99,9 @@ battery() {
     charge=$(( $POWER_SUPPLY_CHARGE_FULL - $POWER_SUPPLY_CHARGE_NOW )) ;
   else
     charge=0
+    current=42 # non-zero
   fi
-  time=$(awk -v a=$charge -v b=$POWER_SUPPLY_CURRENT_NOW \
+  time=$(awk -v a=$charge -v b=$current \
              'BEGIN { c = a/b; hrs = int(c); mins = int(60*(c - hrs)); if (hrs > 0 || mins > 0) printf " "; if (hrs > 0) printf hrs"h"; if (hrs > 0 || mins > 0) printf mins"m"; print }')
   text="$icon $POWER_SUPPLY_CAPACITY%$time"
 
