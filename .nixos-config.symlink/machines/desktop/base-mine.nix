@@ -43,7 +43,7 @@
     gnome3.gnome_themes_standard
     gnucash26
     gparted
-    haskellPackages.ghc
+    (haskellPackages.ghcWithHoogle (hs: with hs; []))
     isync
     lemonbar-xft
     libnotify
