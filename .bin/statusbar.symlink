@@ -52,12 +52,13 @@ bspwm() {
     echo "$line" | tr ':' '\n' | sed '1d' | sed 's/\(.\)/\1 /' | while read -r state name ; do
       name="${name:-?}"
       icon="${bspwm_icons[$name]:-$name}"
+      link="%{A:bspc desktop \"$name\" -f:}"
       if   [ "$state" = "O" -o "$state" = "F" ] ; then
         printf '%s ' "%{+u}%{U$c_foreground}%{B$c_background2} $icon %{B-}%{U-}%{-u}"
       elif [ "$state" = "u" ] ; then
-        printf '%s ' "%{+u}%{U$c_foreground}%{B$c_red} $icon %{B-}%{U-}%{-u}"
+        printf '%s ' "$link%{+u}%{U$c_foreground}%{B$c_red} $icon %{B-}%{U-}%{-u}%{A}"
       elif [ "$state" = "o" ] ; then
-        printf '%s ' " $icon "
+        printf '%s ' "$link $icon %{A}"
       fi
     done
     echo
@@ -185,4 +186,7 @@ while IFS='=' read -r field value <$ipc_fifo ; do
   eval "$field=\$value"
   echo " $bspwm$_xtitle%{c}$clock%{r}$audio · $nixpkgs · $disk · $memory · $cpu · $battery "
 done | \
-  lemonbar -g x25 -F '#93a1a1' -B '#002b36' -f 'Iosevka:pixelsize=14' -f 'FontAwesome:pixelsize=18'
+  lemonbar -g x25 -F '#93a1a1' -B '#002b36' -f 'Iosevka:pixelsize=14' -f 'FontAwesome:pixelsize=18' |\
+  while IFS= read -r command ; do
+    eval "$command"
+  done
