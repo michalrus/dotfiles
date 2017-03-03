@@ -8,7 +8,6 @@
     ./nonet-group.nix
     ./sane-extra-config.nix
     ./wireshark.nix
-    ./conmann-services.nix
     ./screen.nix
   ];
 }
