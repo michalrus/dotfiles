@@ -166,9 +166,12 @@ nixpkgs() {
   printf ' '
   local_sha=$(nixos-version | sed 's/ .*//' | awk -F. '{ print $4 }')
   local_chn=$(nixos-version | sed 's/ .*//' | awk -F. '{ print "nixos-"$1"."$2 }')
-  curl -sq "https://api.github.com/repos/NixOS/nixpkgs-channels/compare/$local_sha...$local_chn" |\
+  num=$(curl -sq "https://api.github.com/repos/NixOS/nixpkgs-channels/compare/$local_sha...$local_chn" |\
     grep '^ *"\(ahead\|behind\)_by": *[0-9]\+, *$' |\
-    sort | sed 's/[^0-9]//g' | xargs echo | awk '{ print "+"$1"-"$2 }'
+    sort | sed 's/[^0-9]//g' | xargs echo | awk '{ print "+"$1"-"$2 }')
+  printf "%%{F%s}%s%%{F-}\n" \
+         $( [ "$num" = "+0-0" ] && echo '-' || echo "$c_yellow" ) \
+         "$num"
   sleep 3600
 }
 forever nixpkgs
