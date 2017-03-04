@@ -38,6 +38,7 @@
     galculator
     gimp
     gnome3.aisleriot
+    gnome3.dconf   # so that GnuCash prefs can be changed
     gnome3.file-roller # for thunar-archive-plugin
     libnotify
     libreoffice
@@ -52,6 +53,7 @@
     thunderbird
     transmission_gtk
     unclutter
+    unstable-evolution
     xarchiver
     xclip
     xdotool
@@ -67,6 +69,8 @@
   services = {
     udev.packages = [ pkgs.libmtp.bin ]; # For Android in GVFS, see #6304.
 
+    gnome3.gnome-keyring.enable = true;
+
     xserver = {
       synaptics = {
         maxSpeed = "5.0";
@@ -79,6 +83,10 @@
         enable = true;
         thunarPlugins = with pkgs.xfce; [ thunar-archive-plugin ];
       };
+
+      displayManager.sessionCommands = ''
+        gnome-keyring-daemon || true
+      '';
     };
   };
 
