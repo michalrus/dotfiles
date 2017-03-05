@@ -9,8 +9,8 @@ let
     allowUnfree = true; # for `transcribe`
   }; }).pkgs;
 
-  nixos-unstable = getCommit "f66d7823ece6fa4bf99e56fa4b4cb0ab16522839"
-    "0b9hns185bjbg1ckxnsmh8vzmvlw3pp14gwi4z412kzjxzmd51w4";
+  nixos-unstable = getCommit "6011e3ea93e78e45dc2cb6cdf63afeb516670681"
+    "03r7ra8m1k33aghhfa9b41zgs6clmlj50bzaq9fsy52j6w8w5kwd";
 
 in
 
