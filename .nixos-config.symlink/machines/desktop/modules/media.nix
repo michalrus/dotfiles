@@ -2,9 +2,11 @@
 
 {
   environment.systemPackages = with pkgs; [
+    aegisub
     audacity
     (beets.override { enableCopyArtifacts = true; })
     calibre
+    devede
     flac
     gimp
     gpac
