@@ -36,6 +36,8 @@ in
 
     inherit (getCommit "1d6c8538600abb49f39c54e53e7d2f399b02dfea" "19pxp3mddb776i6z0r1kqh01vq4zji5gxn7h80gwl83d38y22lq8") termite;
 
+    inherit (getCommit "13a9059c5556a1fecc35dd6f2a7242e73b7c5b34" "0f6v57hqsjxmv86a34myahga8ayskwrbp47ybl9275cxvv3gyxmc") devede;
+
     # Left to contribute:
 
     gettext-emacs      = (import ./gettext-emacs.nix super self);
