@@ -155,7 +155,7 @@
       isNormalUser = true;
       uid = 31337;
       description = "Michal Rus";
-      extraGroups = [ "wheel" "audio" "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" ];
+      extraGroups = [ "wheel" "audio" "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" ];
     };
 
     extraUsers.mw = {
@@ -163,7 +163,7 @@
       isNormalUser = true;
       uid = 1337;
       description = "Michal Rus (work)";
-      extraGroups = [ "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" ];
+      extraGroups = [ "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" ];
     };
   };
 
