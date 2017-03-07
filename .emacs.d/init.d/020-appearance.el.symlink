@@ -12,6 +12,8 @@
 (setq inhibit-startup-message t)
 (unless indicate-empty-lines (toggle-indicate-empty-lines))
 
+(set-face-attribute 'variable-pitch nil :family "FreeSans" :height 1.0)
+
 (setq-default cursor-type '(bar . 1))
 (blink-cursor-mode t)
 
@@ -35,10 +37,12 @@
 (setq use-dialog-box nil)
 
 ;; increase/decrease text size
-(use-package zoom-frm
-  :bind (("C-+" . zoom-frm-in)
-         ("C-=" . zoom-frm-unzoom)
-         ("C--" . zoom-frm-out)))
+(defun michalrus/text-scale-reset ()
+  (interactive)
+  (text-scale-increase 0))
+(global-set-key (kbd "C-+") 'text-scale-increase)
+(global-set-key (kbd "C--") 'text-scale-decrease)
+(global-set-key (kbd "C-=") 'michalrus/text-scale-reset)
 
 ;; disable the default theme(s) and load solarized
 (use-package solarized-theme

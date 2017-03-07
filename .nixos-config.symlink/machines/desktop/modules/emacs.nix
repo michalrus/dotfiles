@@ -59,7 +59,6 @@ let
     swiper
     use-package
     yaml-mode
-    zoom-frm
   ]);
 
 in

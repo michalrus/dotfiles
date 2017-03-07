@@ -30,4 +30,3 @@ Emacs.verticalScrollBars: off
 Emacs.font:               Iosevka:style=Regular:size=16
 Emacs.font-1:             unifont:fontformat=truetype:size=16:antialias=true
 Emacs.font-2:             FontAwesome:style=Regular:size=16
-Emacs.variable-pitch.attributeFont: FreeSans:size=16
