@@ -80,6 +80,7 @@
     xclip
     xdo
     xdotool
+    xfe
     xorg.xbacklight
     xorg.xev
     xorg.xdpyinfo
