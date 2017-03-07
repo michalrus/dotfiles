@@ -11,8 +11,8 @@ let
 
   repo = fetchFromGitHub {
     owner = "musnix"; repo = "musnix";
-    rev = "1b64078cb0e1fc40e85ee80c5f2dd7e3c3624ef2";
-    sha256 = "0p32c454id9avmc7qbli9ff479mivpbmcshf2b2i3vwi2aivfaq9";
+    rev = "7207f25dc03c55488cc495f3db5641c3c0ba5f96";
+    sha256 = "135jlcjm1s6lj9alhqllms6d7qsx43x609lyjck5waif8s7a3fz4";
   };
 
 in

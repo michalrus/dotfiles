@@ -4,7 +4,7 @@
   imports = [
     <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
     ../base-mine.nix
-    ../modules/musnix.nix
+    #../modules/musnix.nix
     ../modules/android-dev.nix
     ../modules/foxcommerce.nix
   ];
