@@ -28,6 +28,7 @@
   environment.systemPackages = with pkgs; [
     arandr
     awf
+    cabal2nix
     cdrkit
     chromium
     compton

@@ -8,6 +8,7 @@
     ./monitoring
     ./gitolite
     ./ipsec
+    ./kornel
     ./jabber
     ./web
     ./feeds/annibot.nix
