@@ -47,7 +47,7 @@ in
         --host irc.freenode.com --port 6697 --ssl \
         --nick kornel --nickserv-password-file "${dataDir}"/nickserv.pass \
         --cleverbot-api-key-file "${dataDir}"/cleverbot.key \
-        --channel "#test123456"
+        --channel "#stosowana"
     '';
   };
 
