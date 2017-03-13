@@ -5,8 +5,8 @@ let
   src = pkgs.fetchFromGitHub {
     owner = "michalrus";
     repo = "kornel";
-    rev = "1d45ae8e6e18b35fcb831052cc815f353c0ae116";
-    sha256 = "0bayw713xfc2j69mv0da9d7n7hy5wz4zch2pvqk47wimpw3y7wsr";
+    rev = "60b1c643ba5eb85f9c98e20973f16bcb4eee7505";
+    sha256 = "0xjsfd9rnrjxax5nm3v5jxz0jd5psdg0jcgnwwkvyfvqg52in2vs";
   };
 
   nix-src = pkgs.runCommand "kornel-nix-src" {} ''
@@ -16,7 +16,18 @@ let
     ${pkgs.cabal2nix}/bin/cabal2nix . >kornel.nix
   '';
 
-  kornel = pkgs.unstable-haskell.packages.ghc802.callPackage "${nix-src}/kornel.nix" { };
+  compiler = pkgs.unstable-haskell.packages.ghc802.override {
+    overrides = self: super: {
+      "html-entities" = pkgs.lib.overrideDerivation super.html-entities (oldAttrs: {
+        postPatch = ''
+          substituteInPlace html-entities.cabal \
+            --replace 'directory == 1.2.*' 'directory == 1.3.*'
+        '';
+      });
+    };
+  };
+
+  kornel = compiler.callPackage "${nix-src}/kornel.nix" { };
 
   user = "kornel";
   dataDir = "/var/lib/${user}";
@@ -46,6 +57,7 @@ in
       exec kornel-exe \
         --host irc.freenode.com --port 6697 --ssl \
         --nick kornel --nickserv-password-file "${dataDir}"/nickserv.pass \
+        --http-snippets-fetch-max $((100 * 1024)) \
         --cleverbot-api-key-file "${dataDir}"/cleverbot.key \
         --channel "#stosowana"
     '';
