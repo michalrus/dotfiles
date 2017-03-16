@@ -13,6 +13,7 @@
     ./web
     ./feeds/annibot.nix
     ./feeds/stosowana.nix
+    ./feeds/rss2email.nix
     ./znc
   ];
 
