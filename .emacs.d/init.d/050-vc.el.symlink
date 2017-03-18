@@ -4,7 +4,8 @@
   :config
   (global-magit-file-mode)
   (setq magit-log-arguments '("--graph" "--color" "--decorate" "--show-signature" "-n256" "++order=date")
-        magit-merge-arguments '("--ff-only")))
+        magit-merge-arguments '("--ff-only")
+        magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1))
 
 (use-package git-link
   :bind (("C-c g l" . git-link))
