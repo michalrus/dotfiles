@@ -1,6 +1,8 @@
 ;; -*- mode: emacs-lisp -*-
 
 (use-package magit
+  :bind (("C-x g" . magit-status) ;; mostly for dired buffers
+         )
   :config
   (global-magit-file-mode)
   (setq magit-log-arguments '("--graph" "--color" "--decorate" "--show-signature" "-n256" "++order=date")
