@@ -17,13 +17,6 @@
 (setq-default cursor-type '(bar . 1))
 (blink-cursor-mode t)
 
-(use-package frames-only-mode
-  :config
-  (dolist (k '("C-x C-c"
-               "C-x o"))
-    (global-unset-key (kbd k)))
-  (frames-only-mode t))
-
 ;; turn off C-z (never used it)
 (global-unset-key "\C-z")
 
