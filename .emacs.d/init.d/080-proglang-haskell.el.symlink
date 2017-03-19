@@ -2,6 +2,7 @@
 
 (use-package haskell-mode
   :config
+  (add-hook 'haskell-mode-hook 'michalrus/setup-compilation-with-make)
   (use-package intero
     :config
     (add-hook 'haskell-mode-hook 'intero-mode)))
