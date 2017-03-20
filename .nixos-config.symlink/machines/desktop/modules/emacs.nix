@@ -2,20 +2,24 @@
 
 let
 
-  # FIXME: change it to 25! Currently some packages stopped compiling.
-  customBuild = pkgs.emacs25.override {
-    # Use ‘lucid’ toolkit. Doesn’t have this bug → https://bugzilla.gnome.org/show_bug.cgi?id=85715
+  emacs = pkgs.emacs25.override {
+    # Use ‘lucid’ toolkit—it doesn’t have this bug → https://bugzilla.gnome.org/show_bug.cgi?id=85715
     withX = true;
     withGTK2 = false;
     withGTK3 = false;
   };
 
-  custom = (pkgs.emacsPackagesNgGen customBuild).override (super: self: {
-    # Use these from MELPA Unstable:
-    inherit (self.melpaPackages) intero;
+  unstable = pkgs.unstable-emacsPackagesNgGen emacs;
+
+  packages = (pkgs.emacsPackagesNgGen emacs).override (super: self: {
+    # From MELPA Unstable @ NixOS Stable:
+    #inherit (self.melpaPackages) ???;
+
+    # From MELPA Unstable @ NixOS Unstable (bleeding edge):
+    inherit (unstable.melpaPackages) intero ensime;
   });
 
-  customEmacs = custom.emacsWithPackages (epkgs: with epkgs; [
+  whole = packages.emacsWithPackages (epkgs: with epkgs; [
     auctex
     bbdb
     company
@@ -46,21 +50,21 @@ let
 in
 
 {
-  environment.systemPackages = [ customEmacs pkgs.screen ];
+  environment.systemPackages = [ whole ];
 
   systemd.user.services.emacs-daemon = {
     description = "Emacs: the extensible, self-documenting text editor";
     serviceConfig = {
       Type = "forking";
       Restart = "always";
-      ExecStop = ''${customEmacs}/bin/emacsclient --eval "(progn (setq kill-emacs-hook 'nil) (kill-emacs))"'';
+      ExecStop = ''${whole}/bin/emacsclient --eval "(progn (setq kill-emacs-hook 'nil) (kill-emacs))"'';
     };
     script = ''
       # Remove the desktop.lock in case the last exit was unclean.
       rm "$HOME"/.emacs.d/.emacs.desktop.lock 2>/dev/null || true
 
       # Read login shell variables set in ~/.profile or similar.
-      exec "$SHELL" --login -c "exec ${customEmacs}/bin/emacs --daemon"
+      exec "$SHELL" --login -c "exec ${whole}/bin/emacs --daemon"
     '';
   };
 }

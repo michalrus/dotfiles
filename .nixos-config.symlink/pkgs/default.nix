@@ -9,8 +9,8 @@ let
     allowUnfree = true; # for `transcribe`
   }; }).pkgs;
 
-  nixos-unstable = getCommit "6011e3ea93e78e45dc2cb6cdf63afeb516670681"
-    "03r7ra8m1k33aghhfa9b41zgs6clmlj50bzaq9fsy52j6w8w5kwd";
+  nixos-unstable = getCommit "2839b101f927be5daab7948421de00a6f6c084ae"
+    "0a863cc5462gn1vws87d4qn45zk22m64ri1ip67w0b1a9bmymqdh";
 
 in
 
@@ -34,6 +34,7 @@ in
     transcribe = let super' = super // { inherit (nixos-unstable) transcribe; }; in (import ./transcribe.nix super' self);
     unstable-evolution = nixos-unstable.gnome3.evolution;
     unstable-haskell = nixos-unstable.haskell;
+    unstable-emacsPackagesNgGen = nixos-unstable.emacsPackagesNgGen;
 
     inherit (getCommit "1d6c8538600abb49f39c54e53e7d2f399b02dfea" "19pxp3mddb776i6z0r1kqh01vq4zji5gxn7h80gwl83d38y22lq8") termite;
 
