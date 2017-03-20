@@ -16,8 +16,8 @@ let
   kornel = compiler.callCabal2nix "kornel" (pkgs.fetchFromGitHub {
     owner = "michalrus";
     repo = "kornel";
-    rev = "277fe37e88ef843ca652de69ec7dc75ce4806999";
-    sha256 = "1xwq2kcxgyqisdbaa6kry41kz030dbq1m9qajf8b7v6jy8m3gk2w";
+    rev = "e8e5b948ee46398a95d922ecd75aae204fde267f";
+    sha256 = "0nqi5wgwcs2c85mmxv7nbkid4146a0dx21yzmpw07dh8d5v1nfxd";
   }) {};
 
   user = "kornel";
@@ -52,7 +52,7 @@ in
         --cleverbot-api-key-file "${dataDir}"/cleverbot.key \
         --haskell-bot-nicks "lambdabot" \
         --scala-bot-nicks "multibot_,multibot_1,multibot_2" \
-        --channel "#stosowana"
+        --channels "#stosowana"
     '';
   };
 
