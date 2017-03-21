@@ -115,3 +115,6 @@ See `sort-regexp-fields'."
                                 "\\`\\*Customize"
                                 "\\`\\*WoMan"))
   (midnight-delay-set 'midnight-delay "1:30am"))
+
+(use-package google-translate
+  :bind ("C-c t" . google-translate-smooth-translate))

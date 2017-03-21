@@ -29,6 +29,7 @@ let
     expand-region
     git-link
     go-mode
+    google-translate
     gregorio-mode
     haskell-mode
     hindent
