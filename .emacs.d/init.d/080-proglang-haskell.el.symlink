@@ -5,7 +5,10 @@
   (add-hook 'haskell-mode-hook 'michalrus/setup-compilation-with-make)
   (use-package intero
     :config
-    (add-hook 'haskell-mode-hook 'intero-mode))
+    (add-hook 'haskell-mode-hook
+              (lambda ()
+                (when (michalrus/closest-directory-up-containing "stack.yaml" default-directory)
+                  (intero-mode)))))
   (use-package hayoo
     :bind (:map haskell-mode-map
                 ("C-c h" . hayoo-query))))
