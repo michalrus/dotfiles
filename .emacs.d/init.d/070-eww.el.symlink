@@ -6,3 +6,5 @@
   :config
   (defun browse-url-can-use-xdg-open ()
     (and (getenv "DISPLAY") (executable-find "xdg-open") (executable-find "nohup"))))
+
+(global-set-key (kbd "C-c C-o") 'browse-url-at-point)
