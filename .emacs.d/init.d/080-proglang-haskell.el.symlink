@@ -5,4 +5,7 @@
   (add-hook 'haskell-mode-hook 'michalrus/setup-compilation-with-make)
   (use-package intero
     :config
-    (add-hook 'haskell-mode-hook 'intero-mode)))
+    (add-hook 'haskell-mode-hook 'intero-mode))
+  (use-package hayoo
+    :bind (:map haskell-mode-map
+                ("C-c h" . hayoo-query))))

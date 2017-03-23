@@ -32,6 +32,7 @@ let
     google-translate
     gregorio-mode
     haskell-mode
+    hayoo
     hindent
     intero
     ivy
