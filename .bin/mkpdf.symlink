@@ -3,7 +3,7 @@
 set -o errexit -o nounset -o noclobber -o pipefail
 
 half=
-[ "${1:-}" != "-h" -a "${1:-}" != "--half" ] || { half="-resize 50%" ; shift ; }
+[ "${1:-}" != "-h" -a "${1:-}" != "--half" ] || { half=1 ; shift ; }
 
 [ $# -ge 1 ] || { echo >&2 'fatal: no files provided' ; exit 1 ; }
 
@@ -22,7 +22,12 @@ for f in "$@" ; do
     jpgs="$jpgs $f"
   else
     o="$(mktemp).jpg"
-    convert "$f" -quality 80 $half "$o"
+    halfc=
+    if [ $half ] ; then
+      newxy=$(identify -format '%x %y\n' "$f" | awk '{ print $1/2"x"$2/2 }')
+      halfc="-resize 50% -density $newxy"
+    fi
+    convert "$f" -quality 80 $halfc "$o"
     jpgs="$jpgs $o"
   fi
   echo >&2
