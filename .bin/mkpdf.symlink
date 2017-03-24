@@ -1,0 +1,33 @@
+#!/bin/sh
+
+set -o errexit -o nounset -o noclobber -o pipefail
+
+half=
+[ "${1:-}" != "-h" -a "${1:-}" != "--half" ] || { half="-resize 50%" ; shift ; }
+
+[ $# -ge 1 ] || { echo >&2 'fatal: no files provided' ; exit 1 ; }
+
+oldest_time=$(stat -c%Y "$@" | sort -n | head -1)
+
+output="$(echo "$1" | sed -r 's/\.[^.]+//').pdf"
+
+[ ! -e "$output" ] || { echo >&2 "fatal: “$output” already exists" ; exit 2 ; }
+
+jpgs=""
+for f in "$@" ; do
+  printf >&2 "Resizing $f…"
+
+  if [ -z "$half" ] && case "$f" in *.jpg) ;; *.jpeg) ;; *) false;; esac; then
+    printf >&2 ' SKIP'
+    jpgs="$jpgs $f"
+  else
+    o="$(mktemp).jpg"
+    convert "$f" -quality 80 $half "$o"
+    jpgs="$jpgs $o"
+  fi
+  echo >&2
+done
+
+echo >&2 "Merging $output…"
+convert $jpgs "$output"
+touch -d "@$oldest_time" "$output"
