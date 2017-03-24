@@ -16,20 +16,21 @@ output="$(echo "$1" | sed -r 's/\.[^.]+//').pdf"
 jpgs=""
 for f in "$@" ; do
   printf >&2 "Resizing $f…"
+  o="$(mktemp).jpg"
 
   if [ -z "$half" ] && case "$f" in *.jpg) ;; *.jpeg) ;; *) false;; esac; then
     printf >&2 ' SKIP'
-    jpgs="$jpgs $f"
+    cp "$f" "$o"
   else
-    o="$(mktemp).jpg"
     halfc=
     if [ $half ] ; then
       newxy=$(identify -format '%x %y\n' "$f" | awk '{ print $1/2"x"$2/2 }')
       halfc="-resize 50% -density $newxy"
     fi
     convert "$f" -quality 80 $halfc "$o"
-    jpgs="$jpgs $o"
   fi
+
+  jpgs="$jpgs $o"
   echo >&2
 done
 
