@@ -35,6 +35,11 @@
 ;; automatically pair braces, quotes, etc.
 (electric-pair-mode 1)
 
+;; auto-save file buffers every N seconds
+(run-at-time nil 23 (lambda ()
+                        (let ((inhibit-message t))
+                          (save-some-buffers t))))
+
 ;; auto complete
 (use-package company
   :init
