@@ -5,6 +5,9 @@ set -o errexit -o nounset -o noclobber -o pipefail
 half=
 [ "${1:-}" != "-h" -a "${1:-}" != "--half" ] || { half=1 ; shift ; }
 
+convopt=
+[ "${1:-}" != "-c" -a "${1:-}" != "--convert" ] || { convopt="$2" ; shift ; shift ; }
+
 [ $# -ge 1 ] || { echo >&2 'fatal: no files provided' ; exit 1 ; }
 
 oldest_time=$(stat -c%Y "$@" | sort -n | head -1)
@@ -18,7 +21,7 @@ for f in "$@" ; do
   printf >&2 "Resizing $f…"
   o="$(mktemp).jpg"
 
-  if [ -z "$half" ] && case "$f" in *.jpg) ;; *.jpeg) ;; *) false;; esac; then
+  if [ -z "$half" -a -z "$convopt" ] && case "$f" in *.jpg) ;; *.jpeg) ;; *) false;; esac; then
     printf >&2 ' SKIP'
     cp "$f" "$o"
   else
@@ -27,7 +30,7 @@ for f in "$@" ; do
       newxy=$(identify -format '%x %y\n' "$f" | awk '{ print $1/2"x"$2/2 }')
       halfc="-resize 50% -density $newxy"
     fi
-    convert "$f" -quality 80 $halfc "$o"
+    convert "$f" -quality 80 $halfc $convopt "$o"
   fi
 
   jpgs="$jpgs $o"
