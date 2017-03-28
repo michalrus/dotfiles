@@ -59,6 +59,7 @@
     pinentry
     rofi
     scala
+    shellcheck
     st
     stack
     stalonetray

@@ -27,6 +27,7 @@ let
     diff-hl
     ensime
     expand-region
+    flycheck
     git-link
     go-mode
     google-translate

@@ -17,4 +17,8 @@
 
 ;; woman
 (use-package woman
-    :bind (("C-c w" . woman)))
+  :bind (("C-c w" . woman)))
+
+(use-package flycheck
+  :config
+  (global-flycheck-mode t))
