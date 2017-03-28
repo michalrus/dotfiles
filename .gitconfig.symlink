@@ -30,3 +30,5 @@
 	prune = true
 [pull]
 	ff = true
+[transfer]
+	fsckObjects = true
