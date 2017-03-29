@@ -41,6 +41,8 @@ in
 
     inherit (getCommit "13a9059c5556a1fecc35dd6f2a7242e73b7c5b34" "0f6v57hqsjxmv86a34myahga8ayskwrbp47ybl9275cxvv3gyxmc") devede;
 
+    inherit (getCommit "20772c6d68b8e6d61d87dc6d611cec4579a961f8" "11ri6ncw1j8h7dyxxd2yasls6dgmv3bsikqp39s5yljm3lsjf7w5") bitlbee-facebook;
+
     # Left to contribute:
 
     gettext-emacs      = (import ./gettext-emacs.nix super self);

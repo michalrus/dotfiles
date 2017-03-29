@@ -33,19 +33,6 @@
     ssh.startAgent = false;
   };
 
-  nixpkgs.config.packageOverrides = super: let self = super.pkgs; in {
-    # these is not yet in unstable…
-    bitlbee-facebook = super.bitlbee-facebook.overrideDerivation(oldAttrs: {
-      name = "bitlbee-facebook-2016-06-06";
-      src = super.fetchFromGitHub {
-        rev = "609ca2d52d468863c99ff3539917f2049ea3df44";
-        owner = "jgeboski";
-        repo = "bitlbee-facebook";
-        sha256 = "10wacn2hi1ly22idqcixaidf198ibj1a5h8srcd9gk7vh47c9bvm";
-      };
-    });
-  };
-
   services = {
     openssh = {
       enable = true;
