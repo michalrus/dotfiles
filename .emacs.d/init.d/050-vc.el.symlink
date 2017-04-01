@@ -24,8 +24,12 @@
   (add-hook 'prog-mode-hook 'diff-hl-mode))
 
 (use-package projectile
+  :bind (("C-c p x t" . michalrus/projectile-run-term))
   :config
-  (projectile-global-mode))
+  (projectile-global-mode)
+  (defun michalrus/projectile-run-term ()
+    (interactive)
+    (projectile-run-term (getenv "SHELL"))))
 
 (use-package neotree
   :bind (("M-<f2>" . michalrus/neotree-show)

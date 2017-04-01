@@ -15,11 +15,32 @@
 
 (use-package term
   :demand t
+  :bind (("C-x t" . michalrus/term-dwim))
   :config
   (defun michalrus/term-mode-hook ()
     "C-x is the prefix command, rather than C-c."
-   (term-set-escape-char ?\C-x))
+    (term-set-escape-char ?\C-x))
   (add-hook 'term-mode-hook 'michalrus/term-mode-hook)
+
+  (defadvice term-handle-exit
+      (after michalrus/term-kill-buffer-on-exit activate)
+    (kill-buffer))
+
+  (defun michalrus/term-dwim ()
+    (interactive)
+    (let ((wanted-dir default-directory))
+      (when (derived-mode-p 'term-mode)
+        (bury-buffer))
+      (let ((matching-buf (catch 'loop
+                            (dolist (buf (buffer-list))
+                              (with-current-buffer buf
+                                (when (and (string= default-directory wanted-dir)
+                                           (derived-mode-p 'term-mode))
+                                  (throw 'loop buf)))))))
+        (cond (matching-buf (switch-to-buffer matching-buf))
+              (t (with-temp-buffer
+                   (cd wanted-dir)
+                   (ansi-term (getenv "SHELL"))))))))
 
   (defmacro michalrus/defterm (name cmd &optional send-raw &rest args)
     `(defun ,(intern name) ()
@@ -27,20 +48,17 @@
        (interactive)
        (let* ((buf-name (format "*%s*" ,name))
               (buf (get-buffer buf-name))
-              (exec (executable-find ,cmd)))
+               (exec (executable-find ,cmd)))
          (cond (buf (switch-to-buffer buf))
-               (exec (let ((buf (term-ansi-make-term buf-name exec nil ,@args)))
-                       (set-buffer buf)
-                       (term-mode)
-                       (term-char-mode)
-                       (switch-to-buffer buf)
-                       (when ,send-raw
-                         (term-send-raw-string ,send-raw))))
-               (t (message (format "%s (or %s) not found" ,cmd "screen")))))))
-
-  (defadvice term-handle-exit
-    (after michalrus/term-kill-buffer-on-exit activate)
-      (kill-buffer))
-
+               (exec (with-temp-buffer
+                       (cd "~")
+                       (let ((buf (term-ansi-make-term buf-name exec nil ,@args)))
+                         (set-buffer buf)
+                         (term-mode)
+                         (term-char-mode)
+                         (switch-to-buffer buf)
+                         (when ,send-raw
+                           (term-send-raw-string ,send-raw)))))
+               (t (message (format "%s (or %s) not found." ,cmd "screen")))))))
   (michalrus/defterm "mtr" "mtr" "d" "8.8.8.8")
   (michalrus/defterm "htop" "htop"))
