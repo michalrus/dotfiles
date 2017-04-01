@@ -127,3 +127,6 @@ See `sort-regexp-fields'."
 
 (use-package google-translate
   :bind ("C-c t" . google-translate-smooth-translate))
+
+(use-package dired
+  :bind ("C-x C-j" . dired-jump))
