@@ -1,0 +1,15 @@
+#!/bin/sh
+
+f="$XDG_RUNTIME_DIR"/bspwm-gaps
+
+if [ -e "$f" ] ; then
+  pkill compton
+  rm "$f"
+  for desktop in $(bspc query -D); do bspc config -d $desktop window_gap 0; done
+  compton --shadow-opacity 0 &
+else
+  pkill compton
+  touch "$f"
+  for desktop in $(bspc query -D); do bspc config -d $desktop window_gap 25; done
+  compton &
+fi

@@ -4,6 +4,7 @@ sxhkd &
 
 bspc config focus_follows_pointer true
 bspc config pointer_follows_focus true
+bspc config initial_polarity second_child
 
 bspc config normal_border_color  '#073642'
 bspc config active_border_color  '#073642'
@@ -23,8 +24,6 @@ xbanish &
 nm-applet &
 stalonetray &
 setsid statusbar &
-
-# ——————————— personal ———————————
 
 bspc rule -a 'Chromium-browser' desktop='^2'
 

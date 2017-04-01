@@ -10,6 +10,9 @@ super + shift + e
 super + i
   xrandr-invert-colors
 
+super + g
+  bspwm-toggle-gaps
+
 {_,super +}Print
   mkdir -p "$HOME"/Pictures/ && import -window {root,"$(xdotool getactivewindow)"} "$HOME"/Pictures/Screenshot-"$(date +'%Y%m%d-%H%M%S')".png
 
