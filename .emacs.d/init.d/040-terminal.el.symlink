@@ -13,6 +13,13 @@
   (interactive)
   (insert (random-uuid)))
 
+(use-package eshell
+  :demand t
+  :config
+  (add-hook 'eshell-mode-hook
+            (lambda ()
+              (define-key eshell-mode-map (kbd "<tab>") 'completion-at-point))))
+
 (use-package term
   :demand t
   :bind (("C-x t" . michalrus/term-dwim))
