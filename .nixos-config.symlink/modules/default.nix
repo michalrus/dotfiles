@@ -7,7 +7,6 @@
     ./loginctl-linger.nix
     ./nonet-group.nix
     ./sane-extra-config.nix
-    ./wireshark.nix
     ./screen.nix
   ];
 }

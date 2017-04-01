@@ -123,8 +123,6 @@
   ] else []);
 
   security = {
-    setuidPrograms = [ "mtr" ];
-
     sudo.extraConfig = ''
       Defaults timestamp_timeout=0
       %wheel ALL=(root) NOPASSWD: ${config.system.build.nixos-rebuild}/bin/nixos-rebuild switch -k
@@ -133,10 +131,14 @@
       %wheel ALL=(root) NOPASSWD: ${config.system.build.nixos-rebuild}/bin/nixos-rebuild boot -k --upgrade
       %wheel ALL=(root) NOPASSWD: ${config.nix.package.out}/bin/nix-collect-garbage -d
     '';
-  } // (if lib.nixpkgsVersion > "16.09" then {
-    # This is cool, but stops `systemctl reboot` from working when run by a
-    # regular user logged in locally, as the only seat.
-    # See https://github.com/NixOS/nixpkgs/issues/20948 .
-    #hideProcessInformation = true;
-  } else { });
+  } // (if lib.nixpkgsVersion > "17.03" then {
+    wrappers = {
+      mtr.source = "${pkgs.mtr}/bin/mtr";
+    };
+
+    # Don’t enable earlier than for 17.03, see https://github.com/NixOS/nixpkgs/issues/20948 .
+    hideProcessInformation = true;
+  } else {
+    setuidPrograms = [ "mtr" ];
+  });
 }

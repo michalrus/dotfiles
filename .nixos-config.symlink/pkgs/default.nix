@@ -9,8 +9,11 @@ let
     allowUnfree = true; # for `transcribe`
   }; }).pkgs;
 
-  nixos-unstable = getCommit "2839b101f927be5daab7948421de00a6f6c084ae"
-    "0a863cc5462gn1vws87d4qn45zk22m64ri1ip67w0b1a9bmymqdh";
+  nixos-unstable = getCommit "08c87eed00c7478a03d965570feb50c8f317ce5f"
+    "0z5r3c76md5dlckacsjljip09yavqyiz55w073hjxv244bkl3mky";
+
+  nixos-1609 = getCommit "cbf3d0387a76e2f2c1f6cdbf657a20aeffbf0e69"
+   "1lcadpa4zx98cq4m7lj0di7l0qskyrm0dznrk3bjf6s05mg11dha";
 
 in
 
@@ -42,6 +45,10 @@ in
     inherit (getCommit "13a9059c5556a1fecc35dd6f2a7242e73b7c5b34" "0f6v57hqsjxmv86a34myahga8ayskwrbp47ybl9275cxvv3gyxmc") devede;
 
     inherit (getCommit "20772c6d68b8e6d61d87dc6d611cec4579a961f8" "11ri6ncw1j8h7dyxxd2yasls6dgmv3bsikqp39s5yljm3lsjf7w5") bitlbee-facebook;
+
+    # Keep some from older versions.
+
+    inherit (nixos-1609) gnucash26;
 
     # Left to contribute:
 

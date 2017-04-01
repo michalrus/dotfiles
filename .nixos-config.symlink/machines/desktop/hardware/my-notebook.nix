@@ -19,7 +19,7 @@
   boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usb_storage" ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
-  boot.blacklistedKernelModules = [ "radeon" ]; # I’m getting some errors in journal.
+  boot.blacklistedKernelModules = [ "radeon" "amdgpu" ]; # I’m getting some errors in journal.
 
   boot.kernel.sysctl."vm.swappiness" = lib.mkForce 1; # Let’s try this.
 
