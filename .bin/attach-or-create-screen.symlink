@@ -7,6 +7,8 @@ set -o nounset
 # The whole deal with echo/eval here is that I want to have the
 # ‘Already inside a screen?’ behavior below.
 
+session_name="7260c3b2-2e3d-4b22-8f8b-ab87de790446"
+
 command -v screen >/dev/null || { echo 'echo >&2 "screen: command not found" ; false' ; exit ; }
 
 [ -z "${STY:-}" ] || { echo 'echo >&2 "Already inside a screen?" ; false' ; exit ; }
@@ -17,20 +19,15 @@ command -v screen >/dev/null || { echo 'echo >&2 "screen: command not found" ; f
 # command will exit instantaneously.
 systemctl --user start screen.service 2>/dev/null || true
 
-# See how many screen sessions are already running for the user.
-num="$(screen -ls | grep -E '^\s+[^\s]' | wc -l)"
-
-# If none, start one, perhaps, using systemd ad-hoc scopes, to keep it
-# between user sing in/outs.
-[ "$num" -eq "0" ] && {
+# See if there’s a main session already running for the user.
+if screen -ls "$session_name" >/dev/null 2>&1 ; then
+  # And simply attach.
+  echo "exec screen -x '$session_name'"
+else
+  # If there’s none, start one, perhaps, using systemd ad-hoc scopes,
+  # to keep it between user sing in/outs.
   with_systemd='systemd-run --scope --user'
   command -v systemd-run >/dev/null || with_systemd=''
 
-  echo "unset DESKTOP_SESSION DESKTOP_STARTUP_ID DBUS_SESSION_BUS_ADDRESS GDMSESSION WINDOW WINDOWID XDG_SEAT XDG_SEAT_PATH XDG_SESSION_DESKTOP XDG_SESSION_ID XDG_SESSION_PATH XDG_SESSION_TYPE XDG_VTNR XDG_GREETER_DATA_DIR ; $with_systemd screen -d -m && sleep 0.1 && exec screen -x" ; exit
-}
-
-# If there are more than, make the user choose one manually.
-[ "$num" -ne "1" ] && { echo 'echo >&2 "More than one screen session exists." ; false' ; exit ; }
-
-# Else: simply attach.
-echo 'exec screen -x'
+  echo "unset DESKTOP_SESSION DESKTOP_STARTUP_ID DBUS_SESSION_BUS_ADDRESS GDMSESSION WINDOW WINDOWID XDG_SEAT XDG_SEAT_PATH XDG_SESSION_DESKTOP XDG_SESSION_ID XDG_SESSION_PATH XDG_SESSION_TYPE XDG_VTNR XDG_GREETER_DATA_DIR ; $with_systemd screen -S '$session_name' -d -m && sleep 0.1 && exec screen -x '$session_name'"
+fi

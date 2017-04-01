@@ -5,29 +5,42 @@
   :config
   (exec-path-from-shell-initialize))
 
-(use-package sane-term
-  :bind (("C-x t" . sane-term)
-         ("C-x T" . sane-term-create)))
+(defun random-uuid ()
+  (replace-regexp-in-string "\n\\'" ""
+                            (shell-command-to-string "uuidgen")))
 
 (defun insert-random-uuid ()
   (interactive)
-  (insert
-   (replace-regexp-in-string "\n\\'" ""
-                             (shell-command-to-string "uuidgen"))))
+  (insert (random-uuid)))
 
 (use-package term
+  :demand t
   :config
-  (add-hook 'term-mode-hook
-     (lambda ()
-       ;; C-x is the prefix command, rather than C-c
-       (term-set-escape-char ?\C-x)))
-  (defmacro michalrus/defterm (cmd)
-    `(defun ,(intern cmd) ()
-       (interactive)
-       (let* ((buf (get-buffer (format "*%s*" ,cmd))))
-         (if buf
-           (switch-to-buffer buf)
-           (ansi-term (expand-file-name (concat "terminal/" ,cmd) user-emacs-directory) ,cmd)))))
+  (defun michalrus/term-mode-hook ()
+    "C-x is the prefix command, rather than C-c."
+   (term-set-escape-char ?\C-x))
+  (add-hook 'term-mode-hook 'michalrus/term-mode-hook)
 
-  (michalrus/defterm "mtr")
-  (when (executable-find "calc") (michalrus/defterm "calc")))
+  (defmacro michalrus/defterm (name cmd &optional send-raw &rest args)
+    `(defun ,(intern name) ()
+       ,(concat "Runs `" cmd "' in `ansi-term'. Defined by `michalrus/defterm'.")
+       (interactive)
+       (let* ((buf-name (format "*%s*" ,name))
+              (buf (get-buffer buf-name))
+              (exec (executable-find ,cmd)))
+         (cond (buf (switch-to-buffer buf))
+               (exec (let ((buf (term-ansi-make-term buf-name exec nil ,@args)))
+                       (set-buffer buf)
+                       (term-mode)
+                       (term-char-mode)
+                       (switch-to-buffer buf)
+                       (when ,send-raw
+                         (term-send-raw-string ,send-raw))))
+               (t (message (format "%s (or %s) not found" ,cmd "screen")))))))
+
+  (defadvice term-handle-exit
+    (after michalrus/term-kill-buffer-on-exit activate)
+      (kill-buffer))
+
+  (michalrus/defterm "mtr" "mtr" "d" "8.8.8.8")
+  (michalrus/defterm "htop" "htop"))

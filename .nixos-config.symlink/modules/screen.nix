@@ -6,6 +6,8 @@ let
 
   cfg = config.services.screen;
 
+  session_name = "7260c3b2-2e3d-4b22-8f8b-ab87de790446";
+
   baseDef = isUserService: {
     description = "GNU Screen";
     serviceConfig = {
@@ -26,7 +28,7 @@ let
 
       source ${config.system.build.setEnvironment}
       cd "$HOME"
-      exec "$SHELL" --login -c "exec ${pkgs.screen}/bin/screen -d -m"
+      exec "$SHELL" --login -c "exec ${pkgs.screen}/bin/screen -S ${session_name} -d -m"
     '';
   };
 
