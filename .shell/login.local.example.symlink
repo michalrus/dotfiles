@@ -1,3 +1,5 @@
+# -*- mode: shell-script; sh-shell: sh -*-
+
 # Put your machine-local environment variables here
 
 # Remember to copy this file without the `.example' suffix.

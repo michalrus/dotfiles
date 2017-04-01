@@ -1,3 +1,5 @@
+# -*- mode: shell-script; sh-shell: bash -*-
+
 # We need to do two things here:
 
 # 1. Ensure ~/.bash/env gets run first
@@ -19,4 +21,3 @@ BASH_ENV=
 if [ "$PS1" ]; then
     . "$HOME/.bash/interactive"
 fi
-

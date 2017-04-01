@@ -1,3 +1,5 @@
+# -*- mode: shell-script; sh-shell: bash -*-
+
 [ -e ~/.bash/switch-to-zsh ] && command -v zsh >/dev/null 2>&1 && exec zsh || true
 
 unalias -a

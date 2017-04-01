@@ -1,3 +1,5 @@
+# -*- mode: shell-script; sh-shell: sh -*-
+
 # Tango color map
 
 color00="00/00/00" # black

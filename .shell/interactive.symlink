@@ -1,3 +1,5 @@
+# -*- mode: shell-script; sh-shell: sh -*-
+
 # put your aliases here
 
 # in Emacs TRAMP sessions, use plain /bin/sh
