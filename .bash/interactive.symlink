@@ -52,6 +52,8 @@ __dotfiles_set_prompt() {
 
   PS1+="$D\\$ $reset"
   PS2="$D> $reset"
+
+  __eterm_control
 }
 
 PROMPT_COMMAND='__dotfiles_set_prompt'

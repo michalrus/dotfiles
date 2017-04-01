@@ -30,4 +30,12 @@ export GIT_PS1_SHOWSTASHSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
 export GIT_PS1_SHOWUPSTREAM='verbose'
 
+__eterm_control() {
+  if [ "$TERM" = "eterm-color" ] ; then
+    echo -e "\033AnSiTu" "$LOGNAME" # $LOGNAME is more portable than using whoami.
+    echo -e "\033AnSiTc" "$PWD"
+    echo -e "\033AnSiTh" "$__dotfiles_hostname"
+  fi
+}
+
 [ -e "$HOME/.shell/interactive.local" ] && . "$HOME/.shell/interactive.local"

@@ -58,6 +58,8 @@ precmd() {
   PS1+="$D%# $reset"
 
   PS2="$M%_$D> $reset"
+
+  __eterm_control
 }
 
 # Git autocomplete for the `g' alias
