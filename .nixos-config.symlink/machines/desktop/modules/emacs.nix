@@ -42,7 +42,6 @@ let
     neotree
     projectile
     python-mode
-    sane-term
     scala-mode
     solarized-theme
     swiper
