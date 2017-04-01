@@ -35,6 +35,7 @@ let
     haskell-mode
     hayoo
     hindent
+    hl-todo
     intero
     ivy
     magit

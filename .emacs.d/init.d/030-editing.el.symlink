@@ -130,3 +130,8 @@ See `sort-regexp-fields'."
 
 (use-package dired
   :bind ("C-x C-j" . dired-jump))
+
+(use-package hl-todo
+  :demand t
+  :config
+  (global-hl-todo-mode))
