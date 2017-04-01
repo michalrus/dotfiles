@@ -24,6 +24,8 @@
 ;; yes-or-no questions are boring, use y-or-n
 (defalias 'yes-or-no-p 'y-or-n-p)
 
+(setq help-window-select t)
+
 ;; show keystrokes almost instantly in the echo area
 (setq echo-keystrokes 0.01)
 
