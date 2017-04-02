@@ -28,10 +28,10 @@ XF86MonBrightness{Down,Up}
 # ——————————— personal ———————————
 
 super + Return
-  xterm -e 'zsh -i -c s'
+  emacs
 
 super + shift + Return
-  emacs
+  xterm -e 'zsh -i -c s'
 
 super + k
   pass-autotype
