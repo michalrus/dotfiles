@@ -25,7 +25,8 @@
 
 (use-package projectile
   :demand t
-  :bind (("C-c p x t" . michalrus/projectile-run-term))
+  :bind (:map projectile-mode-map
+         ("C-c p x t" . michalrus/projectile-run-term))
   :config
   (projectile-global-mode)
   (defun michalrus/projectile-run-term ()
