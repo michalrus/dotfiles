@@ -13,6 +13,8 @@
 (setq inhibit-startup-message t)
 (unless indicate-empty-lines (toggle-indicate-empty-lines))
 
+(setq frame-title-format "%b")
+
 (set-face-attribute 'variable-pitch nil :family "FreeSans" :height 1.0)
 
 (setq-default cursor-type '(bar . 1))
