@@ -24,6 +24,7 @@
   (add-hook 'prog-mode-hook 'diff-hl-mode))
 
 (use-package projectile
+  :demand t
   :bind (("C-c p x t" . michalrus/projectile-run-term))
   :config
   (projectile-global-mode)
