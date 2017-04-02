@@ -24,11 +24,6 @@
   :demand t
   :bind (("C-x t" . michalrus/term-dwim))
   :config
-  (defun michalrus/term-mode-hook ()
-    "C-x is the prefix command, rather than C-c."
-    (term-set-escape-char ?\C-x))
-  (add-hook 'term-mode-hook 'michalrus/term-mode-hook)
-
   (defadvice term-handle-exit
       (after michalrus/term-kill-buffer-on-exit activate)
     (kill-buffer))
@@ -49,6 +44,29 @@
                    (cd wanted-dir)
                    (ansi-term (getenv "SHELL"))))))))
 
+  (defun michalrus/term-mode-hook ()
+    "C-x is the prefix command, rather than C-c."
+    (term-set-escape-char ?\C-x)
+    (push '(projectile-mode . nil) minor-mode-overriding-map-alist) ; why do I have to do this? And only for projectile?
+    )
+  (add-hook 'term-mode-hook 'michalrus/term-mode-hook)
+
+  ;; Expose some more global bindings in term-char-mode.
+  (let ((exposed-bindings
+         '("M-:" "M-[" "M-]"
+           "C-s" "M-w" "C-h"
+           )))
+    (dolist (binding exposed-bindings)
+      (let ((internal (kbd binding)))
+        (define-key term-raw-map internal
+          (lookup-key (current-global-map) internal)))))
+
+  (define-key term-raw-map (kbd "C-y") 'term-paste)
+  (define-key term-raw-map (kbd "M-<left>") 'left-char)
+  (define-key term-raw-map (kbd "M-<right>") 'right-char)
+  (define-key term-raw-map (kbd "M-<up>") 'previous-line)
+  (define-key term-raw-map (kbd "M-<down>") 'next-line)
+
   (defmacro michalrus/defterm (name cmd &optional send-raw &rest args)
     `(defun ,(intern name) ()
        ,(concat "Runs `" cmd "' in `ansi-term'. Defined by `michalrus/defterm'.")
@@ -58,7 +76,7 @@
                (exec (executable-find ,cmd)))
          (cond (buf (switch-to-buffer buf))
                (exec (with-temp-buffer
-                       (cd "~")
+                       (cd "/") ; to not interfere with C-x t run in ~
                        (let ((buf (term-ansi-make-term buf-name exec nil ,@args)))
                          (set-buffer buf)
                          (term-mode)
