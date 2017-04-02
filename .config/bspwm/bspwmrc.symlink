@@ -49,5 +49,4 @@ bspc rule -a 'Transmission-gtk' desktop='^10'
 
 remote-notifications &
 space2ctrl &
-systemctl --user start screen.service &
 systemctl --user start emacs-daemon.service &

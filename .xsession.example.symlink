@@ -1,3 +1,5 @@
+# -*- mode: shell-script; sh-shell: sh -*-
+
 gpg-connect-agent /bye
 
 feh --bg-scale "$HOME/.wallpaper.png" || true
