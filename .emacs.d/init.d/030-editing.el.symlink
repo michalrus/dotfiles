@@ -37,8 +37,18 @@
 
 ;; auto-save file buffers every N seconds
 (run-at-time nil 23 (lambda ()
-                        (let ((inhibit-message t))
-                          (save-some-buffers t))))
+                      (let ((inhibit-message t))
+                        (michalrus/autosave-all))))
+
+(defun michalrus/autosave-all ()
+  "Auto-save all modified `prog-mode' and `text-mode' buffers."
+  (interactive)
+  (dolist (buf (buffer-list))
+    (with-current-buffer buf
+      (when (and (derived-mode-p 'text-mode 'prog-mode)
+                 (buffer-modified-p)
+                 (buffer-file-name))
+        (save-buffer)))))
 
 ;; auto complete
 (use-package company
