@@ -187,9 +187,9 @@ forever nixpkgs
 # compose the whole line from an update and cached previous values
 while IFS='=' read -r field value <$ipc_fifo ; do
   eval "$field=\$value"
-  echo " $bspwm$_xtitle%{c}$clock%{r}$audio · $nixpkgs · $disk · $memory · $cpu · $battery "
+  echo " $bspwm$_xtitle%{c}$clock%{r}$audio · $nixpkgs · $disk · $memory · $cpu · $battery    "
 done | \
-  lemonbar -g x25 -F '#93a1a1' -B '#002b36' -f 'Iosevka:pixelsize=14' -f 'FontAwesome:pixelsize=18' |\
+  lemonbar -g x25 -F '#93a1a1' -B '#002b36' -f 'Iosevka:pixelsize=14' -f 'FontAwesome:pixelsize=18' -f 'Sans' |\
   while IFS= read -r command ; do
     eval "$command"
   done
