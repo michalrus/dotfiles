@@ -28,7 +28,7 @@ XF86MonBrightness{Down,Up}
 # ——————————— personal ———————————
 
 super + Return
-  termite -e 'zsh -i -c s'
+  xterm -e 'zsh -i -c s'
 
 super + shift + Return
   emacs

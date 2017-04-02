@@ -63,7 +63,6 @@
     st
     stack
     stalonetray
-    termite
     (texlive.combine {
       inherit (texlive) scheme-small latexmk titlesec tocloft todonotes cleveref lipsum biblatex logreq cm-super csquotes pgfplots adjustbox collectbox ccicons polski placeins xstring pdfpages unicode-math filehook textpos marvosym progressbar lm-math;
       gregorio = pkgs.gregorio.forTexlive;

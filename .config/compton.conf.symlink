@@ -12,3 +12,5 @@ shadow-blue = 0.0;
 respect-prop-shadow = true;
 
 shadow-exclude = [ "name = 'stalonetray'" ];
+
+opacity-rule = [ "95:class_i *= 'xterm'"];
