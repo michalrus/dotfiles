@@ -5,3 +5,6 @@ templates:
     author-email: m@michalrus.com
     author-name: Michal Rus
     github-username: michalrus
+
+nix:
+  enable: true
