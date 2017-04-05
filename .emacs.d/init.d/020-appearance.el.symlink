@@ -28,6 +28,8 @@
 
 (setq help-window-select t)
 
+(global-set-key (kbd "C-x C-b") 'buffer-menu)
+
 ;; show keystrokes almost instantly in the echo area
 (setq echo-keystrokes 0.01)
 
