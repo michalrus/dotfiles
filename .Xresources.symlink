@@ -43,6 +43,10 @@ XTerm*bellIsUrgent: true
 XTerm*fullscreen: never
 XTerm*borderWidth: 0
 
+xterm*VT100.Translations: #override \
+  Shift <Key>Insert:    insert-selection(SELECT) \n\
+  Ctrl <Key>Insert:     copy-selection(SELECT)
+
 XTerm*background:  S_base03
 XTerm*foreground:  S_base1
 XTerm*color0: S_base02
