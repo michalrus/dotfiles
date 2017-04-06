@@ -7,12 +7,3 @@
 (defun michalrus/add-list-to-list (dst src)
   "Like `add-to-list' but takes a list of elements to add. Beware, O(n·m)!"
   (dolist (i src) (add-to-list dst i)))
-
-;; can find the project top directory
-(defun michalrus/closest-directory-up-containing (file-name start-directory)
-  "Returns the first directory up in the tree, starting from
-`start-directory', in which the `file-name' exists. Most probably you
-want to use it in search for a \"Makefile\" in `default-directory'."
-  (if (file-exists-p (expand-file-name file-name start-directory)) start-directory
-    (if (equal start-directory (expand-file-name "/")) nil
-      (michalrus/closest-directory-up-containing file-name (expand-file-name ".." start-directory)))))

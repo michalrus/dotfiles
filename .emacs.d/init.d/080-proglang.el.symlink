@@ -6,7 +6,7 @@
 (defun michalrus/setup-compilation-with-make ()
   "Sets current buffer to compile (C-c C-c) using the nearest Makefile up in the directory hierarchy."
   (interactive)
-  (let ((makefile-directory (michalrus/closest-directory-up-containing "Makefile" default-directory)))
+  (let ((makefile-directory (locate-dominating-file default-directory "Makefile")))
     (when makefile-directory
       (set (make-local-variable 'compile-command) (format "make -C %s" makefile-directory))
       (set (make-local-variable 'compilation-read-command) nil)
