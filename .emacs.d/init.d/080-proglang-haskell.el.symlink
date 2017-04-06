@@ -3,12 +3,17 @@
 (use-package haskell-mode
   :config
   (add-hook 'haskell-mode-hook 'michalrus/setup-compilation-with-make)
+
   (use-package intero
     :config
     (add-hook 'haskell-mode-hook
               (lambda ()
-                (when (michalrus/closest-directory-up-containing "stack.yaml" default-directory)
-                  (intero-mode)))))
+                (let ((wants-intero
+                       (or (locate-dominating-file default-directory "stack.yaml")
+                           (locate-dominating-file default-directory ".intero-shim.sh"))))
+                  (cond (wants-intero (intero-mode t))
+                        (t (add-to-list 'flycheck-disabled-checkers 'intero)))))))
+
   (use-package hayoo
     :bind (:map haskell-mode-map
-                ("C-c h" . hayoo-query))))
+           ("C-c h" . hayoo-query))))

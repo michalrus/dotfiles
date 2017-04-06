@@ -16,7 +16,16 @@ let
     #inherit (self.melpaPackages) ???;
 
     # From MELPA Unstable @ NixOS Unstable (bleeding edge):
-    inherit (unstable.melpaPackages) intero ensime;
+    inherit (unstable.melpaPackages) ensime;
+
+    intero = lib.overrideDerivation unstable.melpaPackages.intero (oldAttrs: {
+      src = pkgs.fetchFromGitHub {
+        owner = "commercialhaskell";
+        repo = "intero";
+        rev = "6ad82c3db5d2b8c0d0e88eeb453ac9db5f7be3f8";
+        sha256 = "0g1rd2fizc9isaybcngvdff3046h65sbvc1m9bh3r2ssn6lfhvjy";
+      };
+    });
   });
 
   whole = packages.emacsWithPackages (epkgs: with epkgs; [
