@@ -39,6 +39,7 @@
     gimp
     gnome3.aisleriot
     gnome3.dconf   # so that GnuCash prefs can be changed
+    gnome3.evolution
     gnome3.file-roller # for thunar-archive-plugin
     libnotify
     libreoffice
@@ -53,7 +54,6 @@
     thunderbird
     transmission_gtk
     unclutter
-    unstable-evolution
     xarchiver
     xclip
     xdotool
