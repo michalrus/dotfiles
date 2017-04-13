@@ -3,7 +3,7 @@
 sxhkd &
 
 bspc config focus_follows_pointer true
-bspc config pointer_follows_focus true
+bspc config pointer_follows_focus false
 bspc config initial_polarity second_child
 
 bspc config normal_border_color  '#073642'
