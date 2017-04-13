@@ -69,6 +69,7 @@
     })
     sxhkd
     transmission_gtk
+    unstable-intero-nix-shim
     utox
     visualvm
     (wine.override { pulseaudioSupport = true; })

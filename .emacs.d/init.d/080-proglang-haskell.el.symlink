@@ -10,7 +10,7 @@
               (lambda ()
                 (let ((wants-intero
                        (or (locate-dominating-file default-directory "stack.yaml")
-                           (locate-dominating-file default-directory ".intero-shim.sh"))))
+                           (locate-dominating-file default-directory "default.nix")))) ;; TODO: think of something better here
                   (cond (wants-intero (intero-mode t))
                         (t (add-to-list 'flycheck-disabled-checkers 'intero)))))))
 

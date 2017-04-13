@@ -22,8 +22,8 @@ let
       src = pkgs.fetchFromGitHub {
         owner = "commercialhaskell";
         repo = "intero";
-        rev = "6ad82c3db5d2b8c0d0e88eeb453ac9db5f7be3f8";
-        sha256 = "0g1rd2fizc9isaybcngvdff3046h65sbvc1m9bh3r2ssn6lfhvjy";
+        rev = "e546ea086d72b5bf8556727e2983930621c3cb3c";
+        sha256 = "1qv7l5ri3nysrpmnzfssw8wvdvz0f6bmymnz1agr66fplazid4pn";
       };
     });
   });
