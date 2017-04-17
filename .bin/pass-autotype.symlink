@@ -27,20 +27,19 @@ choose_vault() {
       sed 's/.autotype:/ /' | cut -c '3-' |\
       awk -v "wt=$window_title" 'index(wt, $2) != 0' | cut -d' ' -f1,3-
     echo "<random> Password"
-  } | dmenu -i -p 'Vault:'
+  } | dmenu -l 4 -i -p 'Vault:'
 }
 
 run_choice() {
   pwname="$1"
   shift
 
-  program="$@"
+  program="$*"
   [ -n "${1:-}" ] || program="Username <TAB> Password <RET>"
 
-  if [ "$pwname" = "<random>" ] ; then
-    contents="$(head -c 30 /dev/urandom | base32 | tr A-Z a-z)"
-  else
-    contents="$(pass show "$pwname")"
+  if [ "$pwname" = "<random>" ]
+  then contents="$(head -c 30 /dev/urandom | base32 | tr '[:upper:]' '[:lower:]')"
+  else contents="$(pass show "$pwname")"
   fi
 
   get_key(){
@@ -53,16 +52,17 @@ run_choice() {
       'Password') x_type  "$full_pw" ;;
       '<TAB>')    x_press "Tab" ;;
       '<RET>')    x_press "Return" ;;
-      '<SLEEP>')  sleep 0.5 ;;
+      '<SLEEP>')  sleep 0.1 ;;
       'OTP')
         key="$(get_key "$cmd")"
-        [ -n "$key" ] && {
-          x_type "$(oathtool --totp -b "$key")"
-        } || x_type "OTP not configured"
+        if [ -n "$key" ]
+        then x_type "$(oathtool --totp -b "$key")"
+        else x_type "OTP not configured"
+        fi
         ;;
       'MaskedPassword')
-        length="$(printf "$full_pw" | wc -c)"
-        selected="$(printf '' | dmenu -i -p "Which characters [1–$length]? Space-separated:")"
+        length="$(printf '%s' "$full_pw" | wc -c)"
+        selected="$(printf '' | dmenu -l 1 -i -p "Which characters [1–$length]? Space-separated:")"
         for num in $selected ; do
           x_type "$(echo "$full_pw" | cut -c "$num")"
         done
