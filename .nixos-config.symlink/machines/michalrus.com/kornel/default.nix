@@ -2,23 +2,12 @@
 
 let
 
-  compiler = pkgs.unstable-haskell.packages.ghc802.override {
-    overrides = self: super: {
-      "html-entities" = pkgs.lib.overrideDerivation super.html-entities (oldAttrs: {
-        postPatch = ''
-          substituteInPlace html-entities.cabal \
-            --replace 'directory == 1.2.*' 'directory == 1.3.*'
-        '';
-      });
-    };
-  };
-
-  kornel = compiler.callCabal2nix "kornel" (pkgs.fetchFromGitHub {
+  kornel = import (pkgs.fetchFromGitHub {
     owner = "michalrus";
     repo = "kornel";
-    rev = "e8e5b948ee46398a95d922ecd75aae204fde267f";
-    sha256 = "0nqi5wgwcs2c85mmxv7nbkid4146a0dx21yzmpw07dh8d5v1nfxd";
-  }) {};
+    rev = "761107ef446ebf28516249e137d688d0f8d348ce";
+    sha256 = "0v4fprb8ljfakni14hv18p86axiv0jbpfxw3ggljw4vh3bqb54dq";
+  });
 
   user = "kornel";
   dataDir = "/var/lib/${user}";

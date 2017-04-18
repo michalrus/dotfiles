@@ -36,7 +36,6 @@ in
     inherit (nixos-unstable) airwave awf beets octave octaveFull squishyball youtube-dl;
     ansible22 = nixos-unstable.python27Packages.ansible2;
     transcribe = let super' = super // { inherit (nixos-unstable) transcribe; }; in (import ./transcribe.nix super' self);
-    unstable-haskell = nixos-unstable.haskell;
     unstable-emacsPackagesNgGen = nixos-unstable.emacsPackagesNgGen;
 
     inherit (getCommit "13a9059c5556a1fecc35dd6f2a7242e73b7c5b34" "0f6v57hqsjxmv86a34myahga8ayskwrbp47ybl9275cxvv3gyxmc") devede;
