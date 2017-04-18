@@ -43,7 +43,15 @@ in
 
     inherit (getCommit "20772c6d68b8e6d61d87dc6d611cec4579a961f8" "11ri6ncw1j8h7dyxxd2yasls6dgmv3bsikqp39s5yljm3lsjf7w5") bitlbee-facebook;
 
-    unstable-intero-nix-shim = (getCommit "7daec8a234da5b097544dd4fb3fa1d2012870d08" "13j482kskh90mcgdj6wjqbyd8yfyikfp5ipwvrissmshpsypi5sx").haskellPackages.intero-nix-shim;
+    intero-nix-shim = import (pkgs.fetchFromGitHub {
+      owner = "michalrus";
+      repo = "intero-nix-shim";
+      rev = "8e0405f6d693dfaef3ae124adc37cd34f46c25c9";
+      sha256 = "08r18lsf0b4bi20fcfranb80pdqjd12wdi9zgh2z2xnicrlpbjk3";
+    }) {
+      nixpkgs = super;
+      inherit (super) haskellPackages;
+    };
 
     # Keep some from older versions.
 

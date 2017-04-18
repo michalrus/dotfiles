@@ -50,6 +50,7 @@
     gnucash26
     gparted
     (haskellPackages.ghcWithHoogle (hs: with hs; []))
+    intero-nix-shim
     isync
     lemonbar-xft
     libnotify
@@ -73,7 +74,6 @@
     })
     sxhkd
     transmission_gtk
-    unstable-intero-nix-shim
     utox
     visualvm
     (wine.override { pulseaudioSupport = true; })
