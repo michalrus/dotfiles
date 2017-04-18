@@ -8,7 +8,7 @@
   (interactive)
   (let ((makefile-directory (locate-dominating-file default-directory "Makefile")))
     (when makefile-directory
-      (set (make-local-variable 'compile-command) (format "make -C %s" makefile-directory))
+      (set (make-local-variable 'compile-command) (format "make -k -C %s" makefile-directory))
       (set (make-local-variable 'compilation-read-command) nil)
       (local-set-key (kbd "C-c C-c") 'compile))))
 
