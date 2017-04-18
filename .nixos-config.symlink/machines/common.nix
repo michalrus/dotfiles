@@ -106,15 +106,12 @@
     stdman
     strace
     tcp-broadcast
-    telnet
     tesseract
-    traceroute
     unzip
     urlwatch
     usbutils
     wget
     which
-    whois
     wrk
     zip
   ] ++ (if lib.nixpkgsVersion > "16.09" then [

@@ -65,7 +65,6 @@
     rofi
     scala
     shellcheck
-    st
     stack
     stalonetray
     (texlive.combine {
