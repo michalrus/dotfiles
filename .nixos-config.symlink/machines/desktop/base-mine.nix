@@ -174,6 +174,12 @@
     };
   };
 
+  fileSystems."/var/home/mw/.shared" = {
+    device = "/var/home/m/.shared";
+    fsType = "fuse.bindfs";
+    options = [ "map=m/mw" ];
+  };
+
   system.autoUpgrade.enable = false;
 
   # The NixOS release to be compatible with for stateful data such as databases.
