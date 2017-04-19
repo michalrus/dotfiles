@@ -49,7 +49,7 @@
     gnome3.gnome_themes_standard
     gnucash26
     gparted
-    (haskellPackages.ghcWithHoogle (hs: with hs; []))
+    (haskellPackages.ghcWithHoogle (hs: with hs; [ hlint ]))
     intero-nix-shim
     isync
     lemonbar-xft
