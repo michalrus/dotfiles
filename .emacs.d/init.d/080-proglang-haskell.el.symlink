@@ -6,6 +6,7 @@
 
   (use-package intero
     :config
+    (flycheck-add-next-checker 'intero '(warning . haskell-hlint))
     (add-hook 'haskell-mode-hook
               (lambda ()
                 (let ((wants-intero
