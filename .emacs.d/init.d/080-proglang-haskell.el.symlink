@@ -16,5 +16,6 @@
                         (t (add-to-list 'flycheck-disabled-checkers 'intero)))))))
 
   (use-package hayoo
+    :demand t
     :bind (:map haskell-mode-map
            ("C-c h" . hayoo-query))))
