@@ -164,7 +164,7 @@ forever disk
 # ——————— nixpkgs ———————
 nixpkgs() {
   printf ' '
-  local_sha=$(nixos-version | sed 's/ .*//' | awk -F. '{ print $4 }')
+  local_sha=$(nixos-version --hash)
   local_chn=$(nixos-version | sed 's/ .*//' | awk -F. '{ print "nixos-"$1"."$2 }')
   num=$(curl -sq "https://api.github.com/repos/NixOS/nixpkgs-channels/compare/$local_sha...$local_chn" |\
     grep '^ *"\(ahead\|behind\)_by": *[0-9]\+, *$' |\
