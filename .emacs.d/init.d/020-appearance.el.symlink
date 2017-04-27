@@ -9,9 +9,16 @@
 (tooltip-mode -1)
 (column-number-mode 1)
 (toggle-frame-maximized)
-(setq inhibit-startup-echo-area-message (user-real-login-name))
-(setq inhibit-startup-message t)
 (unless indicate-empty-lines (toggle-indicate-empty-lines))
+
+(setq inhibit-startup-echo-area-message (user-real-login-name)
+      inhibit-startup-message t
+      initial-scratch-message nil
+      initial-buffer-choice (lambda () (get-buffer "*Messages*")))
+(add-hook 'after-change-major-mode-hook
+          (lambda ()
+            (let ((b (get-buffer "*scratch*")))
+              (when b (kill-buffer b)))))
 
 (setq frame-title-format "%b")
 
