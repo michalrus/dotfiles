@@ -20,6 +20,25 @@
             (lambda ()
               (define-key eshell-mode-map (kbd "<tab>") 'completion-at-point))))
 
+(use-package comint
+  :demand t
+  :config
+  ;; Make processes’ outputs read-only. The prompt is easy.
+  (setq comint-prompt-read-only t)
+  ;; Outputs. Now you cannot delete them, but they still can be interleaved with some other text.
+  (add-hook 'comint-preoutput-filter-functions
+            (lambda (text)
+              (propertize text 'read-only t)))
+  ;; So we need tackle rear-nonsticky:
+  (defadvice comint-output-filter (after michalrus/comint-output-read-only activate)
+    (let ((start-marker comint-last-output-start)
+          (end-marker (- (process-mark (get-buffer-process (current-buffer))) 1)))
+      (let ((inhibit-read-only t))
+        (remove-text-properties start-marker end-marker '(rear-nonsticky))
+        (add-text-properties    end-marker   end-marker '(rear-nonsticky t)))))
+  ;; What’s left is some initial welcome `insert's and process exit messages, but whatever.
+  )
+
 (use-package term
   :demand t
   :bind (("C-x t" . michalrus/term-dwim))
