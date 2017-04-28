@@ -39,6 +39,10 @@
   ;; What’s left is some initial welcome `insert's and process exit messages, but whatever.
   )
 
+(use-package ielm
+  :config
+  (add-hook 'ielm-mode-hook 'company-mode))
+
 (use-package term
   :demand t
   :bind (("C-x t" . michalrus/term-dwim))
