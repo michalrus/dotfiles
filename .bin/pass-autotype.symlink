@@ -25,7 +25,8 @@ choose_vault() {
   {
     find . -name '*.autotype' -print0 | xargs -r0 grep -H '' |\
       sed 's/.autotype:/ /' | cut -c '3-' |\
-      awk -v "wt=$window_title" 'index(wt, $2) != 0' | cut -d' ' -f1,3-
+      awk -v "wt=$window_title" 'index(wt, $2) != 0' | cut -d' ' -f1,3- |\
+      sort --unique
     echo "<random> Password"
   } | dmenu -l 4 -i -p 'Vault:'
 }
