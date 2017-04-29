@@ -21,6 +21,11 @@
     (scala-indent:insert-asterisk-on-multiline-comment))
   (bind-key "RET" 'scala-mode-newline-comments scala-mode-map)
 
+  (use-package sbt-mode
+    :config
+    ;; What a weird decision they made. o_O’
+    (add-hook 'sbt-mode-hook (lambda () (setq comint-scroll-to-bottom-on-output nil)) t))
+
   (use-package ensime
     :config
     (add-hook 'scala-mode-hook
