@@ -31,13 +31,22 @@
               (propertize text 'read-only t)))
   ;; So we need tackle rear-nonsticky:
   (defadvice comint-output-filter (after michalrus/comint-output-read-only activate)
-    (let ((start-marker comint-last-output-start)
-          (end-marker (- (process-mark (get-buffer-process (current-buffer))) 1)))
-      (let ((inhibit-read-only t))
-        (remove-text-properties start-marker end-marker '(rear-nonsticky))
-        (add-text-properties    end-marker   end-marker '(rear-nonsticky t)))))
-  ;; What’s left is some initial welcome `insert's and process exit messages, but whatever.
-  )
+    (let* ((start-marker comint-last-output-start)
+           (proc (get-buffer-process (current-buffer)))
+           (end-marker (if proc (process-mark proc) (point-max-marker))))
+      (when (< start-marker end-marker) ;; Account for some of the IELM’s wilderness.
+        (let ((inhibit-read-only t))
+          ;; Disallow interleaving.
+          (remove-text-properties start-marker (1- end-marker) '(rear-nonsticky))
+          ;; Make sure that at `max-point' you can always append.
+          ;; Important for bad REPLs that keep writing after giving us prompt (e.g. sbt).
+          (add-text-properties (1- end-marker) end-marker '(rear-nonsticky t))
+          ;; Protect fence (newline of input, just before output).
+          (when (eq (char-before start-marker) ?\n)
+            (remove-text-properties (1- start-marker) start-marker '(rear-nonsticky))
+            (add-text-properties    (1- start-marker) start-marker '(read-only t))))))
+    ;; What’s left is some initial welcome `insert's and process exit messages, but whatever.
+    ))
 
 (use-package ielm
   :config
