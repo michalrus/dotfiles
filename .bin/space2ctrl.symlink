@@ -1,23 +1,33 @@
 #!/bin/sh
 
+# Remember to enable Hyper_L in xkbOptions, e.g. use "caps:hyper" to
+# have it in place of CapsLock.
+
 # Kill instances of xcape that might be running.
 pkill -u $UID xcape
 
-# Map an unused modifier’s keysym to the spacebar’s keycode and make it a
-# control modifier. It needs to be an existing key so that emacs won't
-# spazz out when you press it. Hyper_L is a good candidate.
-spare_modifier="Hyper_L"
-xmodmap -e "keycode 65 = $spare_modifier"
-xmodmap -e "remove mod4 = $spare_modifier" # hyper_l is mod4 by default
+# Move Hyper_L to mod3, or else it’ll do the same thing as Super.
+xmodmap -e "remove mod4 = Hyper_L"
+xmodmap -e    "add mod3 = Hyper_L"
+
+# Map an unused modifier’s keysym to the spacebar’s keycode and make
+# it a control modifier. It needs to be an existing key so that emacs
+# won't spazz out when you press it. Hyper_R is a good candidate.
+spare_modifier="Hyper_R"
+xmodmap -e  "keycode 65 = $spare_modifier"
 xmodmap -e "add Control = $spare_modifier"
 
-# Map space to an unused keycode (to keep it around for xcape to
-# use).
+# Map space & Multi_key to some unused keycodes (to keep them around
+# for xcape to use).
 xmodmap -e "keycode any = space"
+xmodmap -e "keycode any = Multi_key"
 
-# Turn off real Controls
+# Turn off / remap real Controls.
 xmodmap -e "keycode 37 ="
 xmodmap -e "keycode 105 = Menu"
 
-# Finally use xcape to cause the space bar to generate a space when tapped.
+# Use xcape to:
+# • cause the space bar to generate a space when pressed and released,
+# • and Hyper_L to generate Multi_key likewise.
 xcape -e "${spare_modifier}=space"
+xcape -e "Hyper_L=Multi_key"

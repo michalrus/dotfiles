@@ -124,7 +124,7 @@
     screen.usersAlways = [];
 
     xserver = {
-      xkbOptions = "ctrl:nocaps,compose:caps";
+      xkbOptions = "caps:hyper,numpad:microsoft";
 
       synaptics = {
         maxSpeed = "4.0";
