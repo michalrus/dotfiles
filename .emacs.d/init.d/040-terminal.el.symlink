@@ -34,7 +34,9 @@
     (let* ((start-marker comint-last-output-start)
            (proc (get-buffer-process (current-buffer)))
            (end-marker (if proc (process-mark proc) (point-max-marker))))
-      (when (< start-marker end-marker) ;; Account for some of the IELM’s wilderness.
+      (when (and start-marker
+                 end-marker
+                 (< start-marker end-marker)) ;; Account for some of the IELM’s wilderness.
         (let ((inhibit-read-only t))
           ;; Disallow interleaving.
           (remove-text-properties start-marker (1- end-marker) '(rear-nonsticky))
