@@ -18,10 +18,6 @@
 (setq show-paren-delay 0)
 (show-paren-mode 1)
 
-;; navigation history
-(global-set-key (kbd "M-]") 'next-buffer)
-(global-set-key (kbd "M-[") 'previous-buffer)
-
 ;; turn-off (overwrite-mode) on <insert>
 (global-unset-key (kbd "<insert>"))
 
@@ -96,8 +92,9 @@ See `sort-regexp-fields'."
 (use-package swiper
   :bind (("C-s" . counsel-grep-or-swiper)
          ("C-c C-r" . ivy-resume)
-         ("C-x C-r" . ivy-recentf))
+         ("H-r" . ivy-recentf))
   :init
+  (global-unset-key (kbd "C-x C-r")) ;; temporarily, to unlearn old binding for ivy-recentf
   (setq projectile-completion-system 'ivy)
   :config
   (ivy-mode 1))
