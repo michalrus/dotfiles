@@ -6,7 +6,7 @@
   (setq auto-save-file-name-transforms `((".*" ,tmp t))))
 
 ;; tabs
-(setq-default tab-width 2)
+(setq-default tab-width 8)
 (setq-default indent-tabs-mode nil)
 
 ;; sane whitespace behavior
@@ -58,10 +58,7 @@
         company-dabbrev-downcase nil
         company-idle-delay 0
         company-minimum-prefix-length 1)
-  (add-hook 'prog-mode-hook 'company-mode)
-  :config
-  ;; disables TAB in company-mode, freeing it for yasnippet
-  (define-key company-active-map [tab] nil))
+  (add-hook 'prog-mode-hook 'company-mode))
 
 ;; visual line mode
 (visual-line-mode 1)
