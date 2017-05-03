@@ -5,6 +5,7 @@
 
 (global-set-key (kbd "H-k") 'kill-this-buffer)  (global-unset-key (kbd "C-x k"))
 (global-set-key (kbd "H-f") 'find-file)         (global-unset-key (kbd "C-x f"))
+(global-set-key (kbd "H-b") 'switch-to-buffer)  (global-unset-key (kbd "C-x b"))
 (global-set-key (kbd "H-s") 'save-buffer)       (global-unset-key (kbd "C-x C-s"))
 (global-set-key (kbd "H-a") 'mark-whole-buffer) (global-unset-key (kbd "C-x h"))
 
