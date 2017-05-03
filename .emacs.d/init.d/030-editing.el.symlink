@@ -112,23 +112,6 @@ See `sort-regexp-fields'."
   (global-set-key (kbd "C-c u") 'counsel-unicode-char)
   (global-set-key (kbd "C-c l") 'counsel-locate))
 
-;; periodically kill unused buffers
-(use-package midnight
-  :init
-  (setq clean-buffer-list-delay-general (/ 1.0 24) ; 1 h
-        clean-buffer-list-delay-special (* 15 60) ; 15 min
-        )
-  :config
-  (michalrus/add-list-to-list 'clean-buffer-list-kill-buffer-names
-                              '("*Backtrace*"))
-  (michalrus/add-list-to-list 'clean-buffer-list-kill-regexps
-                              '("\\`\\*magit"
-                                "\\`\\*Customize"
-                                "\\`\\*WoMan"))
-  (run-at-time nil 647 (lambda ()
-                               (let ((inhibit-message t))
-                                 (clean-buffer-list)))))
-
 (use-package google-translate
   :bind ("C-c t" . google-translate-smooth-translate))
 
