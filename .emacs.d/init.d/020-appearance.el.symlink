@@ -11,6 +11,9 @@
 (toggle-frame-maximized)
 (unless indicate-empty-lines (toggle-indicate-empty-lines))
 
+;; A little more visibily for the active window.
+(set-face-attribute 'mode-line nil :overline "#117E99")
+
 (setq inhibit-startup-echo-area-message (user-real-login-name)
       inhibit-startup-message t
       initial-scratch-message nil
