@@ -1,18 +1,8 @@
 ;; -*- mode: emacs-lisp -*-
 
-;; don’t clutter file trees with backups~ and #autosaves#
-(let ((tmp (expand-file-name "./tmp/" user-emacs-directory)))
-  (setq backup-directory-alist `((".*" . ,tmp)))
-  (setq auto-save-file-name-transforms `((".*" ,tmp t))))
-
 ;; tabs
 (setq-default tab-width 8)
 (setq-default indent-tabs-mode nil)
-
-;; sane whitespace behavior
-(setq-default require-final-newline t)
-(setq-default delete-trailing-lines t)
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ;; always highlight the corresponding parenthesis
 (setq show-paren-delay 0)
@@ -33,21 +23,6 @@
 
 ;; automatically pair braces, quotes, etc.
 (electric-pair-mode 1)
-
-;; auto-save file buffers every N seconds
-(run-at-time nil 23 (lambda ()
-                      (let ((inhibit-message t))
-                        (michalrus/autosave-all))))
-
-(defun michalrus/autosave-all ()
-  "Auto-save all modified `prog-mode' and `text-mode' buffers."
-  (interactive)
-  (dolist (buf (buffer-list))
-    (with-current-buffer buf
-      (when (and (derived-mode-p 'text-mode 'prog-mode)
-                 (buffer-modified-p)
-                 (buffer-file-name))
-        (save-buffer)))))
 
 ;; auto complete
 (use-package company

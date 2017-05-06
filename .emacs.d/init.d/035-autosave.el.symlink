@@ -1,0 +1,48 @@
+;; -*- mode: emacs-lisp -*-
+
+;; don’t clutter file trees with backups~ and #autosaves#
+(let ((tmp (expand-file-name "./tmp/" user-emacs-directory)))
+  (setq backup-directory-alist `((".*" . ,tmp)))
+  (setq auto-save-file-name-transforms `((".*" ,tmp t))))
+
+;; sane whitespace behavior
+(setq-default require-final-newline t)
+(setq-default delete-trailing-lines t)
+
+(defvar michalrus/keep-trailing-whitespace-near-point nil)
+(defvar michalrus/-after-save-hook-whitespace-to-readd "")
+
+(defun michalrus/before-save-hook-delete-trailing-whitespace ()
+  "Delete them just like `delete-trailing-whitespace', but if `michalrus/keep-trailing-whitespace-near-point' is not 'nil', save whitespace right before point that would otherwise be deleted, for `michalrus/after-save-hook-readd-trailing-whitespace' to readd."
+  (setq michalrus/-after-save-hook-whitespace-to-readd
+        (if (and michalrus/keep-trailing-whitespace-near-point
+                 (looking-at-p "\\s-*$") ; if at the EOL (disregarding whitespace after point)
+                 (looking-back "\\s-+" nil t)) ; take all the w/s before point
+            (match-string-no-properties 0)
+          ""))
+  (delete-trailing-whitespace))
+
+(defun michalrus/after-save-hook-readd-trailing-whitespace ()
+  "Readd whitespace saved by `michalrus/before-save-hook-delete-trailing-whitespace'."
+  (insert michalrus/-after-save-hook-whitespace-to-readd))
+
+(add-hook 'before-save-hook 'michalrus/before-save-hook-delete-trailing-whitespace)
+(add-hook 'after-save-hook  'michalrus/after-save-hook-readd-trailing-whitespace)
+
+;; auto-save file buffers N seconds after last edit
+(run-with-idle-timer 5 t 'michalrus/autosave-all)
+
+;; just in case I’m on a typing spree without breaks (not going to happen…)
+(run-at-time nil 30 'michalrus/autosave-all)
+
+(defun michalrus/autosave-all ()
+  "Auto-save all modified `prog-mode' and `text-mode' buffers."
+  (let ((inhibit-message t)
+        (current-buf (current-buffer)))
+    (dolist (buf (buffer-list))
+      (with-current-buffer buf
+        (when (and (derived-mode-p 'text-mode 'prog-mode)
+                   (buffer-modified-p)
+                   (buffer-file-name))
+          (let ((michalrus/keep-trailing-whitespace-near-point (eq buf current-buf)))
+            (save-buffer)))))))
