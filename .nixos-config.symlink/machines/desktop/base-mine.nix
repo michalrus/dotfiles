@@ -50,7 +50,7 @@
     gnucash26
     gparted
     (haskellPackages.ghcWithHoogle (hs: with hs; [ hlint ]))
-    intero-nix-shim
+    haskellPackages.intero-nix-shim
     isync
     lemonbar-xft
     libnotify
