@@ -1,6 +1,6 @@
 #! /bin/sh
 
-sxhkd &
+SXHKD_SHELL=/bin/sh sxhkd &
 
 bspc config focus_follows_pointer true
 bspc config pointer_follows_focus false
