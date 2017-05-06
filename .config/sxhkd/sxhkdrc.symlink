@@ -45,7 +45,7 @@ super + shift + q
   bspc node --close
 
 super + {Up,Down,Left,Right}
-  bspc node --focus {north,south,west,east}
+  bspc-focus-nswe {north,south,west,east}
 
 super + shift + {Up,Down,Left,Right}
   bspc node --swap {north,south,west,east}
