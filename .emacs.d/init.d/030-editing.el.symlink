@@ -21,6 +21,9 @@
 ;; turn-off (overwrite-mode) on <insert>
 (global-unset-key (kbd "<insert>"))
 
+;; overwrite selected text
+(delete-selection-mode t)
+
 ;; never visit symlinks when their targets are under version control
 ;; (visit the target instead)
 (setq vc-follow-symlinks t)
