@@ -16,16 +16,7 @@ let
     #inherit (self.melpaPackages) ???;
 
     # From MELPA Unstable @ NixOS Unstable (bleeding edge):
-    inherit (unstable.melpaPackages) ensime;
-
-    intero = lib.overrideDerivation unstable.melpaPackages.intero (oldAttrs: {
-      src = pkgs.fetchFromGitHub {
-        owner = "commercialhaskell";
-        repo = "intero";
-        rev = "e546ea086d72b5bf8556727e2983930621c3cb3c";
-        sha256 = "1qv7l5ri3nysrpmnzfssw8wvdvz0f6bmymnz1agr66fplazid4pn";
-      };
-    });
+    inherit (unstable.melpaPackages) ensime intero;
   });
 
   whole = packages.emacsWithPackages (epkgs: with epkgs; [
@@ -54,6 +45,7 @@ let
     python-mode
     scala-mode
     solarized-theme
+    sort-words
     swiper
     use-package
     yaml-mode
