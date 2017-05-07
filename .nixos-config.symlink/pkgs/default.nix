@@ -13,7 +13,7 @@ let
     "04d59cksi89q8s9wm4gw769yc488caq2bj7ifxmy7b8hjhchqwym";
 
   nixos-1609 = getCommit "cbf3d0387a76e2f2c1f6cdbf657a20aeffbf0e69"
-   "1lcadpa4zx98cq4m7lj0di7l0qskyrm0dznrk3bjf6s05mg11dha";
+    "1lcadpa4zx98cq4m7lj0di7l0qskyrm0dznrk3bjf6s05mg11dha";
 
 in
 
