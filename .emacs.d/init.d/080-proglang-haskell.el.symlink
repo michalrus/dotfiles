@@ -3,12 +3,14 @@
 (use-package haskell-mode
   :config
   (add-hook 'haskell-mode-hook 'michalrus/setup-compilation-with-make)
+  (add-hook 'haskell-interactive-mode-hook 'company-mode)
 
   (use-package intero
     :config
     (flycheck-add-next-checker 'intero '(warning . haskell-hlint))
     (add-hook 'haskell-mode-hook
               (lambda ()
+                (add-to-list 'flycheck-disabled-checkers 'haskell-stack-ghc)
                 (let ((wants-intero
                        (or (locate-dominating-file default-directory "stack.yaml")
                            (locate-dominating-file default-directory "default.nix")))) ;; TODO: think of something better here
