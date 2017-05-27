@@ -60,6 +60,7 @@
 
   environment.systemPackages = with pkgs; [
     rfkill
+    xorg.xhost
   ];
 
   fonts = {

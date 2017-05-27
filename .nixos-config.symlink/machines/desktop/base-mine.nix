@@ -58,6 +58,7 @@
     libreoffice
     mu
     networkmanagerapplet
+    ntfs3g
     oathToolkit
     octave
     openjdk8
