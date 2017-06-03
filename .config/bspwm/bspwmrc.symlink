@@ -38,6 +38,7 @@ bspc rule -a 'Chromium-browser' desktop='^2'
 bspc rule -a 'jetbrains-idea-ce' desktop='^3'
 bspc rule -a 'mpv' desktop='^3'
 bspc rule -a 'Gnucash' desktop='^3'
+bspc rule -a 'Wine:supermemo.exe' desktop='^3'
 
 # FIXME: with external_rules_command
 # class ~ 'Ardour*' ⇒ desktop='^3'
