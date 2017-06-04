@@ -2,6 +2,8 @@
 
 gpg-connect-agent /bye
 
+git annex assistant --autostart --startdelay=120
+
 feh --bg-scale "$HOME/.wallpaper.png" || true
 
 # For ~/.XCompose to work in Gtk apps

@@ -5,7 +5,7 @@ super + d
   rofi -combi-modi window,drun,run -show combi -modi combi
 
 super + shift + e
-  bspc quit
+  pkill -9 gpg-agent ; bspc quit
 
 super + i
   xrandr-invert-colors
