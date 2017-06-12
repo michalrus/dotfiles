@@ -1,2 +1,2 @@
-softvol=yes
 volume-max=400.0
+osd-fractions=yes
