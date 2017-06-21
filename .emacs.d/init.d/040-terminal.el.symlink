@@ -7,7 +7,7 @@
 
 (defun random-uuid ()
   (replace-regexp-in-string "\n\\'" ""
-                            (shell-command-to-string "uuidgen")))
+                            (shell-command-to-string "uuidgen -r")))
 
 (defun insert-random-uuid ()
   (interactive)
