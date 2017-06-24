@@ -64,6 +64,7 @@
     openjdk8
     pass
     pavucontrol
+    pdfgrep
     pinentry
     rofi
     scala

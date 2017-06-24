@@ -46,6 +46,7 @@
     mpv
     networkmanagerapplet
     openjdk8 # Thunderbird seems to need it for some LibreOffice extension? And I *think* it crashes without it. Could not replicate, though.
+    pdfgrep
     pinentry
     python34Packages.livestreamer
     rtmpdump
