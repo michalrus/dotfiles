@@ -33,6 +33,7 @@
   environment.systemPackages = with pkgs; [
     arandr
     awf
+    bitcoin
     cabal2nix
     cdrkit
     chromium
