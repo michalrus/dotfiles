@@ -23,3 +23,5 @@ include "%L"
 <Multi_key> <l> <o> <v> <e>           : "♥‿♥"          # emoji: ‘love at first sight’
 <Multi_key> <a> <w> <k>               : "^‿^’"         # emoji: ‘awkward’
 <Multi_key> <h> <a> <p> <p> <y>       : "(ﾉ^_^)ﾉ"      # emoji: ‘squinty happy arms up’
+
+<Multi_key> <e> <u> <r>               : "€"   EuroSign # EURO SIGN
