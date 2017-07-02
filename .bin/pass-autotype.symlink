@@ -51,6 +51,7 @@ run_choice() {
     case "$cmd" in
       'Password') x_type  "$full_pw" ;;
       '<TAB>')    x_press "Tab" ;;
+      '<LEFT>')   x_press "Left" ;;
       '<RET>')    x_press "Return" ;;
       '<SLEEP>')  sleep 0.1 ;;
       'OTP')
@@ -65,6 +66,7 @@ run_choice() {
         selected="$(printf '' | dmenu -l 1 -i -p "Which characters [1–$length]? Space-separated:")"
         for num in $selected ; do
           x_type "$(echo "$full_pw" | cut -c "$num")"
+          sleep 0.1
         done
         ;;
       *)
