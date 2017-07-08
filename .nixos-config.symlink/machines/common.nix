@@ -58,6 +58,7 @@
     cloc
     daemonize
     dos2unix
+    duplicity
     exiv2
     file
     gcc
