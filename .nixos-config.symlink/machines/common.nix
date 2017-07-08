@@ -78,6 +78,7 @@
     ffmpeg
     gnumake
     gocr
+    libfaketime
     lshw
     lsof
     ltrace
