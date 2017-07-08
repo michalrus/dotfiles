@@ -32,7 +32,7 @@ in
 
     # Cherry-pick some packages from nixos-unstable:
 
-    inherit (nixos-unstable) airwave awf beets bitlbee-facebook devede octave octaveFull squishyball youtube-dl;
+    inherit (nixos-unstable) airwave awf beets devede octave octaveFull squishyball youtube-dl;
 
     ansible22 = nixos-unstable.python27Packages.ansible2;
     transcribe = let super' = super // { inherit (nixos-unstable) transcribe; }; in (import ./transcribe.nix super' self);
