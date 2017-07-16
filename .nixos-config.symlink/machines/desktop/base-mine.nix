@@ -65,6 +65,7 @@
     openjdk8
     pass
     pavucontrol
+    pcmanfm
     pdfgrep
     pinentry
     rofi
@@ -90,7 +91,6 @@
     xclip
     xdo
     xdotool
-    xfe
     xorg.xbacklight
     xorg.xev
     xorg.xdpyinfo
