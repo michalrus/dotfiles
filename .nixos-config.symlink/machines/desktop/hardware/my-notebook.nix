@@ -6,14 +6,13 @@
     ../base-mine.nix
     #../modules/musnix.nix
     ../modules/android-dev.nix
+    ../modules/chwalecice.nix
   ];
 
   nix.maxJobs = 4;
   nix.buildCores = 4;
 
   time.timeZone = "Europe/Warsaw";
-
-  hardware.sane.extraConfig.pixma = "bjnp://10.0.1.5";
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usb_storage" ];
   boot.kernelModules = [ "kvm-intel" ];

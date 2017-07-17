@@ -3,26 +3,12 @@
 {
   imports = [
     <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
-    ../base-parents.nix
+    ../mother.nix
   ];
 
-  users.extraUsers.elzbieta = {
-    hashedPassword = "$6$W/KppVZSY$.vf1jfCd6H0tOJwRwmUwJeMSkmg/MyDUlNpx3IRHWjmLpyXyg5quW0VRBX4QwGp00MIT6Nw2nODs.JhleHblz1";
-    isNormalUser = true;
-    description = "Elżbieta Rus";
-    extraGroups = [ "wheel" "scanner" "networkmanager" ];
-  };
-
-  hardware.android.automount = let user = config.users.users.elzbieta; in {
-    enable = true;
-    user = user.name;
-    point = "${user.home}/Telefon";
-  };
-
-  services.xserver.displayManager = {
-    lightdm.enable = false;
-    auto.enable = true;
-    auto.user = config.users.extraUsers.elzbieta.name;
+  services.xserver.synaptics = {
+    maxSpeed = "5.0";
+    accelFactor = "0.025";
   };
 
   nix.maxJobs = 4;

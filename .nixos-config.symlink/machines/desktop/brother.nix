@@ -4,16 +4,12 @@
   imports = [
     ./base.nix
     #./modules/android.nix
+    ./modules/chwalecice.nix
+    ./modules/gnome.nix
   ];
-
-  networking.networkmanager.enable = true;
 
   time.timeZone = "Europe/Warsaw";
   i18n.defaultLocale = "en_US.UTF-8";
-
-  hardware = {
-    sane.extraConfig.pixma = "bjnp://10.0.1.5";
-  };
 
   nixpkgs.config = {
     allowUnfree = true; # M$ fonts, Skype™ and similar nonsense.
@@ -30,39 +26,22 @@
     frescobaldi
     gimp
     gnome3.aisleriot
-    gnome3.cheese
-    gnome3.file-roller
-    gtk  # Why? Icon cache! See #20874.
     inkscape
     ioquake3
-    libnotify
     libreoffice
     lilypond
     mpv
-    networkmanagerapplet
     octave
     openjdk8
-    samba
     simple-scan
     skype
-    system-config-printer # For GNOME Printers applet.
     transcribe
     transmission_gtk
     unrar
-    unclutter
     wine
     winetricks
-    wmctrl
     xarchiver
-    xclip
-    xdotool
-    xorg.xbacklight
-    xorg.xev
-    xorg.xdpyinfo
-    xorg.xmodmap
-    xrandr-invert-colors
     xsane
-    xsel
     youtube-dl
   ];
 
@@ -76,12 +55,6 @@
 
     xserver = {
       xkbOptions = "ctrl:nocaps,compose:caps";
-
-      synaptics.enable = false; # GNOME uses libinput.
-      displayManager.gdm.enable = true;
-      desktopManager.xterm.enable = false;
-      desktopManager.gnome3.enable = true;
-
       displayManager.xserverArgs = [ "-ardelay" "150" "-arinterval" "8" ];
     };
   };
@@ -110,7 +83,4 @@
       extraGroups = [ "wheel" "audio" "nonet" "scanner" "networkmanager" ];
     };
   };
-
-  # The NixOS release to be compatible with for stateful data such as databases.
-  system.stateVersion = "16.09";
 }

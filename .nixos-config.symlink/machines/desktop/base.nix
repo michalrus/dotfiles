@@ -59,8 +59,29 @@
   };
 
   environment.systemPackages = with pkgs; [
+    arandr
+    awf
+    libnotify
+    pdfgrep
+    pinentry
     rfkill
+    samba
+    unclutter
+    wmctrl
+    xautolock
+    xbanish
+    xcape
+    xclip
+    xdo
+    xdotool
+    xorg.xbacklight
+    xorg.xdpyinfo
+    xorg.xev
     xorg.xhost
+    xorg.xmodmap
+    xrandr-invert-colors
+    xsel
+    xtitle
   ];
 
   fonts = {

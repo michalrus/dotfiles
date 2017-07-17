@@ -31,8 +31,6 @@
   networking.networkmanager.enable = true;
 
   environment.systemPackages = with pkgs; [
-    arandr
-    awf
     bitcoin
     cabal2nix
     cdrkit
@@ -55,7 +53,6 @@
     haskellPackages.intero-nix-shim
     isync
     lemonbar-xft
-    libnotify
     libreoffice
     mu
     networkmanagerapplet
@@ -66,7 +63,6 @@
     pass
     pavucontrol
     pcmanfm
-    pdfgrep
     pinentry
     rofi
     scala
@@ -83,22 +79,8 @@
     visualvm
     (wine.override { pulseaudioSupport = true; })
     winetricks
-    wmctrl
     xarchiver
-    xautolock
-    xbanish
-    xcape
-    xclip
-    xdo
-    xdotool
-    xorg.xbacklight
-    xorg.xev
-    xorg.xdpyinfo
-    xorg.xmodmap
-    xrandr-invert-colors
     xsane
-    xsel
-    xtitle
   ];
 
   environment.variables."GTK2_RC_FILES" =
