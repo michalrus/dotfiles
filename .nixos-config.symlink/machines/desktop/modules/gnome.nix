@@ -11,7 +11,7 @@
     gnome3.dconf   # so that GnuCash prefs can be changed
     gnome3.adwaita-icon-theme
     gnome3.gnome_themes_standard
-    gtk  # Why? Icon cache! See #20874.
+    gtk2 # Why? Icon cache! See #20874.
     networkmanagerapplet
     system-config-printer # For GNOME Printers applet.
   ];
