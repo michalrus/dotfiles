@@ -6,7 +6,6 @@
     ../base-mine.nix
     #../modules/musnix.nix
     ../modules/android-dev.nix
-    ../modules/foxcommerce.nix
   ];
 
   nix.maxJobs = 4;

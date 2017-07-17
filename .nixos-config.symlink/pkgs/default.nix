@@ -23,10 +23,7 @@ in
     # My customizations:
 
     android-udev-rules = (import ./android-udev-rules super self);
-    evince             = (import ./evince.nix super self);
-    idea               = (import ./idea.nix super self);
     influxdb10         = (import ./influxdb super self);
-    mtr                = (import ./mtr.nix super self);
     mu                 = (import ./mu super self);
     tcp-broadcast      = (import ./tcp-broadcast.nix super self);
 
@@ -34,7 +31,6 @@ in
 
     inherit (nixos-unstable) airwave awf beets devede octave octaveFull squishyball youtube-dl;
 
-    ansible22 = nixos-unstable.python27Packages.ansible2;
     transcribe = let super' = super // { inherit (nixos-unstable) transcribe; }; in (import ./transcribe.nix super' self);
     unstable-emacsPackagesNgGen = nixos-unstable.emacsPackagesNgGen;
 
