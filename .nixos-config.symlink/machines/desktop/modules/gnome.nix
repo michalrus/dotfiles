@@ -25,4 +25,7 @@
     };
   };
 
+  # https://github.com/NixOS/nixpkgs/issues/24172#issuecomment-293714795
+  systemd.targets."multi-user".conflicts = [ "getty@tty1.service" ];
+
 }
