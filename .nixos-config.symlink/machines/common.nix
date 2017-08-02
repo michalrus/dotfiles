@@ -57,6 +57,7 @@
     calc
     cloc
     daemonize
+    ddrescue
     dos2unix
     duplicity
     exiv2

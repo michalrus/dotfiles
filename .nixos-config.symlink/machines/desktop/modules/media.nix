@@ -10,6 +10,7 @@
     flac
     gimp
     gpac
+    handbrake
     inkscape
     keyfinder-cli
     lame
