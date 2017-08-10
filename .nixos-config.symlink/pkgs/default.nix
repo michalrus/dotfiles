@@ -9,11 +9,11 @@ let
     allowUnfree = true; # for `transcribe`
   }; }).pkgs;
 
-  nixos-unstable = getCommit "7369fd0b51f4cfb4e47b19d4bdaf6809f099e747"
-    "04d59cksi89q8s9wm4gw769yc488caq2bj7ifxmy7b8hjhchqwym";
+  nixos-unstable = getCommit "a7c8f5e419ba07711c132bf81baaab0e74862cce"
+    "1y8j32a2ni8ji94bhlmpakikq3f62z040b71966y23jy7nvf8656";
 
-  nixos-1609 = getCommit "cbf3d0387a76e2f2c1f6cdbf657a20aeffbf0e69"
-    "1lcadpa4zx98cq4m7lj0di7l0qskyrm0dznrk3bjf6s05mg11dha";
+  nixos-1609 = getCommit "25f4906da6387e132823417bc54ea86040fb9bd5"
+    "0pa01hfsz1ddma5d3x41i049wrn176sggr290wpbbhw9arx3nx2i";
 
 in
 
@@ -30,6 +30,8 @@ in
     # Cherry-pick some packages from nixos-unstable:
 
     inherit (nixos-unstable) airwave awf beets devede octave octaveFull squishyball youtube-dl;
+
+    inherit (getCommit "a809cf409a772f15ba4f71ec86ac35dc91a13ddb" "1vny01qc0660ah2yaa1rhrpwbf539d6paap1vds0q5hjwrkxbw72") geekbench;
 
     transcribe = let super' = super // { inherit (nixos-unstable) transcribe; }; in (import ./transcribe.nix super' self);
     unstable-emacsPackagesNgGen = nixos-unstable.emacsPackagesNgGen;

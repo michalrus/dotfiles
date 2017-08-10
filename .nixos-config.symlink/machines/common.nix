@@ -63,6 +63,7 @@
     exiv2
     file
     gcc
+    geekbench
     git
     gitAndTools.gitAnnex
     gitAndTools.gitRemoteGcrypt
