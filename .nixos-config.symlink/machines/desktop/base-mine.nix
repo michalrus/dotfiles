@@ -89,6 +89,7 @@
   programs = {
     ssh.startAgent = false;
     wireshark.enable = true;
+    wireshark.package = pkgs.wireshark-gtk;
   };
 
   virtualisation.virtualbox.host.enable = true;
