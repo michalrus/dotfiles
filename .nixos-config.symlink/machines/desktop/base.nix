@@ -25,6 +25,10 @@
     };
   };
 
+  # https://lwn.net/Articles/572911/
+  boot.kernel.sysctl."vm.dirty_background_bytes" = 16 * 1024 * 1024;
+  boot.kernel.sysctl."vm.dirty_bytes" = 16 * 1024 * 1024;
+
   nixpkgs.config = {
     allowBroken = true;
   };
