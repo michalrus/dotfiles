@@ -66,6 +66,7 @@
     arandr
     awf
     libnotify
+    ntfs3g
     pdfgrep
     pinentry
     rfkill
