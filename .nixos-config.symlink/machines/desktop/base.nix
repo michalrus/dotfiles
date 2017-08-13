@@ -31,6 +31,10 @@
 
   nixpkgs.config = {
     allowBroken = true;
+
+    permittedInsecurePackages = [
+      "webkitgtk-2.4.11" # For gnome3.bijiben & gnucash26
+    ];
   };
 
   services = {

@@ -12,9 +12,6 @@ let
   nixos-unstable = getCommit "a7c8f5e419ba07711c132bf81baaab0e74862cce"
     "1y8j32a2ni8ji94bhlmpakikq3f62z040b71966y23jy7nvf8656";
 
-  nixos-1609 = getCommit "25f4906da6387e132823417bc54ea86040fb9bd5"
-    "0pa01hfsz1ddma5d3x41i049wrn176sggr290wpbbhw9arx3nx2i";
-
 in
 
 {
@@ -35,10 +32,6 @@ in
 
     transcribe = let super' = super // { inherit (nixos-unstable) transcribe; }; in (import ./transcribe.nix super' self);
     unstable-emacsPackagesNgGen = nixos-unstable.emacsPackagesNgGen;
-
-    # Keep some from older versions.
-
-    inherit (nixos-1609) gnucash26;
 
     # Left to contribute:
 
