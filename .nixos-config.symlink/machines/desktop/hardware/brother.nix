@@ -24,8 +24,6 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.kernelPackages = pkgs.linuxPackages_4_8;
-
   boot.initrd.luks.devices = [{
     name = "crypt";
     device = "/dev/disk/by-uuid/7595fd97-90d1-42a2-822c-8785d5a4663b";
