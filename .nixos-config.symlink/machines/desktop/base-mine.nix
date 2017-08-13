@@ -77,8 +77,6 @@
     transmission_gtk
     utox
     visualvm
-    (wine.override { pulseaudioSupport = true; })
-    winetricks
     xarchiver
     xsane
   ];

@@ -41,8 +41,6 @@
     transcribe
     transmission_gtk
     unrar
-    wine
-    winetricks
     xarchiver
     xsane
     youtube-dl

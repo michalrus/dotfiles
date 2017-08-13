@@ -71,6 +71,8 @@
     rfkill
     samba
     unclutter
+    (wine.override { pulseaudioSupport = true; })
+    winetricks
     wmctrl
     xautolock
     xbanish
