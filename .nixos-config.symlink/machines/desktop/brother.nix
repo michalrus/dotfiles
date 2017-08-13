@@ -17,7 +17,6 @@
 
   environment.systemPackages = with pkgs; [
     arandr
-    ardour4
     audacity
     awf
     calibre
@@ -26,15 +25,19 @@
     frescobaldi
     gimp
     gnome3.aisleriot
+    gtk2  # Why? Icon cache! See #20874.
     inkscape
     ioquake3
     libreoffice
     lilypond
     mpv
+    mumble
     octave
     openjdk8
+    steam
     simple-scan
     skype
+    teamspeak_client
     transcribe
     transmission_gtk
     unrar

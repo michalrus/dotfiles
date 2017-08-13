@@ -13,7 +13,7 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
   boot.blacklistedKernelModules = [
-    "amdgpu" # With it enabled, resuming from `systemctl suspend` won’t work. Why?
+    "radeon" "amdgpu" # With Radeon enabled, resuming from `systemctl suspend` won’t work. Why?
     "i2c_designware_platform" "i2c_designware_core" # These block systemd-udev-settle.service at boot.
   ];
   boot.extraModprobeConfig = ''
