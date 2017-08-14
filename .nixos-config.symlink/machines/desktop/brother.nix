@@ -25,6 +25,7 @@
     frescobaldi
     gimp
     gnome3.aisleriot
+    gnucash26
     gtk2  # Why? Icon cache! See #20874.
     inkscape
     ioquake3
