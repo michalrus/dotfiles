@@ -19,7 +19,7 @@
   environment.variables."SAL_USE_VCLPLUGIN" = "gtk";
 
   environment.systemPackages = with pkgs; [
-    chromium
+    (chromium.override { enablePepperFlash = true; })
     cool-retro-term
     evince
     gimp

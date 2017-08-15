@@ -20,7 +20,7 @@
     audacity
     awf
     calibre
-    chromium
+    (chromium.override { enablePepperFlash = true; })
     cool-retro-term
     frescobaldi
     gimp
