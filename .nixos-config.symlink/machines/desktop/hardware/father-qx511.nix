@@ -18,7 +18,7 @@
   # Use the GRUB 2 boot loader.
   boot.loader.grub.enable = true;
   boot.loader.grub.version = 2;
-  boot.loader.grub.device = "/dev/sda";
+  boot.loader.grub.device = "/dev/disk/by-id/ata-WDC_WD2500BEVT-75ZCT2_WD-WXB0AA950072";
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/da4295f4-1ccb-4933-b123-a72bf24cc371";
