@@ -142,4 +142,7 @@
   } else {
     setuidPrograms = [ "mtr" ];
   });
+
+  # Stability!
+  system.autoUpgrade.enable = lib.mkDefault false;
 }

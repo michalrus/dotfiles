@@ -164,8 +164,6 @@
     options = [ "map=m/mw" ];
   };
 
-  system.autoUpgrade.enable = false;
-
   # The NixOS release to be compatible with for stateful data such as databases.
   system.stateVersion = "16.09";
 }
