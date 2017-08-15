@@ -10,7 +10,7 @@
     hashedPassword = "$6$W/KppVZSY$.vf1jfCd6H0tOJwRwmUwJeMSkmg/MyDUlNpx3IRHWjmLpyXyg5quW0VRBX4QwGp00MIT6Nw2nODs.JhleHblz1";
     isNormalUser = true;
     description = "Elżbieta Rus";
-    extraGroups = [ "wheel" "scanner" "networkmanager" ];
+    extraGroups = [ "wheel" "scanner" "networkmanager" "cdrom" ];
   };
 
   # Temporarily?
@@ -18,7 +18,7 @@
     hashedPassword = "$6$rcYySsCDE$X/ilZ3Z4/3dUQ0pPXwnStOQQAsGuoCNY26/29oA4vY6gj.9ZpFYnpaiCUXl4w4sEBdtzqze42LePiIFx51cmM1";
     isNormalUser = true;
     description = "Robert Rus";
-    extraGroups = [ "scanner" "networkmanager" ];
+    extraGroups = [ "scanner" "networkmanager" "cdrom" ];
   };
 
   hardware.android.automount = let user = config.users.users.elzbieta; in {
