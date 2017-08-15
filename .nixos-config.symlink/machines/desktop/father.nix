@@ -6,6 +6,8 @@
     ./modules/gnome.nix
   ];
 
+  virtualisation.virtualbox.host.enable = true;
+
   users.extraUsers.robert = {
     hashedPassword = "$6$rcYySsCDE$X/ilZ3Z4/3dUQ0pPXwnStOQQAsGuoCNY26/29oA4vY6gj.9ZpFYnpaiCUXl4w4sEBdtzqze42LePiIFx51cmM1";
     isNormalUser = true;
