@@ -4,6 +4,8 @@
 
   networking.networkmanager.enable = true;
 
+  environment.gnome3.excludePackages = [ pkgs.gnome3.epiphany ];
+
   environment.systemPackages = with pkgs; [
     gnome3.cheese
     gnome3.file-roller
