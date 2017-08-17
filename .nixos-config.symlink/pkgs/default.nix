@@ -26,7 +26,7 @@ in
 
     # Cherry-pick some packages from nixos-unstable:
 
-    inherit (nixos-unstable) airwave awf beets devede octave octaveFull squishyball youtube-dl teamspeak_client;
+    inherit (nixos-unstable) airwave awf beets devede ltris octave octaveFull squishyball youtube-dl teamspeak_client;
 
     inherit (getCommit "a809cf409a772f15ba4f71ec86ac35dc91a13ddb" "1vny01qc0660ah2yaa1rhrpwbf539d6paap1vds0q5hjwrkxbw72") geekbench;
 
