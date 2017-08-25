@@ -43,6 +43,7 @@
     transmission_gtk
     unrar
     xarchiver
+    xmind
     xsane
     youtube-dl
   ];
