@@ -11,6 +11,7 @@
   environment.systemPackages = with pkgs; [
     calibre
     ltris
+    pcmanfm
   ];
 
   users.extraUsers.robert = {
