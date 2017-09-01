@@ -68,6 +68,7 @@
     gitAndTools.gitAnnex
     gitAndTools.gitRemoteGcrypt
     gitstats
+    git-annex-desktop
     (lowPrio gnupg1compat)
     gnupg
     graphicsmagick

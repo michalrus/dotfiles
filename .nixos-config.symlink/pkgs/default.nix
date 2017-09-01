@@ -20,6 +20,7 @@ in
     # My customizations:
 
     android-udev-rules = (import ./android-udev-rules super self);
+    git-annex-desktop  = (import ./git-annex-desktop.nix super self);
     influxdb10         = (import ./influxdb super self);
     mu                 = (import ./mu super self);
     tcp-broadcast      = (import ./tcp-broadcast.nix super self);
