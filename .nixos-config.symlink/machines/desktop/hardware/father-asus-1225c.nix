@@ -6,14 +6,16 @@
     ../father.nix
   ];
 
-  nix.maxJobs = 3;
-  nix.buildCores = 3;
+  nix.maxJobs = 4;
+  nix.buildCores = 4;
 
-  boot.initrd.availableKernelModules = [ "ehci_pci" "ahci" "xhci_pci" "usb_storage" "sd_mod" "sr_mod" ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
+  boot.initrd.availableKernelModules = [ "uhci_hcd" "ehci_pci" "ahci" "sd_mod" ];
+  boot.kernelModules = [ ];
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.blacklistedKernelModules = [ "toshiba_wmi" ]; # why is this loaded at all?
+  boot.extraModulePackages = [];
 
-  boot.kernel.sysctl."vm.swappiness" = 5; # Use swap more reluctantly.
+  boot.kernel.sysctl."vm.swappiness" = 1; # We’ve got only 1.5G here, and HDD is so slooow.
 
   # Use the GRUB 2 boot loader.
   boot.loader.grub.enable = true;
