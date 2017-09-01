@@ -28,7 +28,7 @@ in
 
     inherit (nixos-unstable) airwave awf beets devede ltris octave octaveFull squishyball youtube-dl teamspeak_client;
 
-    inherit (getCommit "a809cf409a772f15ba4f71ec86ac35dc91a13ddb" "1vny01qc0660ah2yaa1rhrpwbf539d6paap1vds0q5hjwrkxbw72") geekbench;
+    inherit (getCommit "0e39979ae0bb6db8d1f8eb833c3d30a67e2c5536" "1yffh7nnh8h2zxxk3w0zbbvqzjk3av6k65ismw1gvdz1iavvsdlc") hubstaff geekbench;
 
     transcribe = let super' = super // { inherit (nixos-unstable) transcribe; }; in (import ./transcribe.nix super' self);
     unstable-emacsPackagesNgGen = nixos-unstable.emacsPackagesNgGen;

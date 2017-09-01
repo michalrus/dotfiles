@@ -51,6 +51,7 @@
     (haskellPackages.ghcWithHoogle (hs: []))
     haskellPackages.hlint
     haskellPackages.intero-nix-shim
+    hubstaff
     isync
     lemonbar-xft
     libreoffice
