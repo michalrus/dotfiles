@@ -28,6 +28,12 @@
     };
   };
 
+  # use Xorg instead of Wayland
+  environment.etc."gdm/custom.conf".text = ''
+    [daemon]
+    WaylandEnable=false
+  '';
+
   # https://github.com/NixOS/nixpkgs/issues/24172#issuecomment-293714795
   systemd.targets."multi-user".conflicts = [ "getty@tty1.service" ];
 
