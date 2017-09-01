@@ -13,6 +13,8 @@
     };
   };
 
+  security.pam.services.slimlock = {};
+
   environment.systemPackages = with pkgs; [
     (runCommand "wrap-slimlock" {} "mkdir -p $out/bin && ln -s ${pkgs.slim}/bin/slimlock $out/bin/slock")
     galculator
