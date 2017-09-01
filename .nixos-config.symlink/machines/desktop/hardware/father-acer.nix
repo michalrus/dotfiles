@@ -17,25 +17,15 @@
 
   boot.kernel.sysctl."vm.swappiness" = 5; # Use swap more reluctantly.
 
-  # Use the gummiboot efi boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  # Use the GRUB 2 boot loader.
+  boot.loader.grub.enable = true;
+  boot.loader.grub.version = 2;
+  boot.loader.grub.device = "/dev/sda";
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/c5a86ac1-f1ab-4fba-90b5-ab97f41b2781";
+    device = "/dev/disk/by-uuid/c3f59fda-d456-40ce-92cb-972ad08d3095";
     fsType = "ext4";
   };
 
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/CC6F-8D32";
-    fsType = "vfat";
-  };
-
-  fileSystems."/mnt/Windows" = {
-    device = "/dev/disk/by-uuid/1E6E71196E70EB43";
-    fsType = "ntfs";
-    options = [ "fmask=0111" "dmask=0000" ];
-  };
-
-  swapDevices = [ { device = "/dev/disk/by-uuid/3683496e-34b3-4bfc-9aa6-eefa5edc3438"; } ];
+  swapDevices = [ { device = "/dev/disk/by-uuid/6738da51-edcc-46be-93a5-6ea6076fb280"; } ];
 }
