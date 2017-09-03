@@ -24,6 +24,7 @@ in
     influxdb10         = (import ./influxdb super self);
     mu                 = (import ./mu super self);
     tcp-broadcast      = (import ./tcp-broadcast.nix super self);
+    leksah             = (import ./leksah.nix super self);
 
     # Cherry-pick some packages from nixos-unstable:
 

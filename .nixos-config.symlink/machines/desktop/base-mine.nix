@@ -53,6 +53,7 @@
     haskellPackages.intero-nix-shim
     hubstaff
     isync
+    leksah
     lemonbar-xft
     libreoffice
     mu
