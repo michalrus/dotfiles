@@ -6,6 +6,7 @@
     audacity
     (beets.override { enableCopyArtifacts = true; })
     calibre
+    cdparanoia
     devede
     flac
     gimp
