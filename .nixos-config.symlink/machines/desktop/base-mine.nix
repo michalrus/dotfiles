@@ -64,6 +64,7 @@
     pass
     pavucontrol
     pcmanfm
+    pgadmin
     pinentry
     rofi
     scala
