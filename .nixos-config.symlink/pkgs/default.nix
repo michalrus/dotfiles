@@ -33,6 +33,12 @@ in
       gregorio           = (import ./gregorio.nix super self);
       lemonbar-xft       = (import ./lemonbar-xft.nix super self);
 
+      intero-nix-shim = import (self.fetchFromGitHub {
+        owner = "michalrus";
+        repo = "intero-nix-shim";
+        rev = "dd852a9f7d830d30875a203df145e9a0b5e40606";
+        sha256 = "0jq1hzhx8ax69l4nq58avh0wjyzfychagckla7vx750pgj4jrgd5";
+      }) {};
     };
 
   };
