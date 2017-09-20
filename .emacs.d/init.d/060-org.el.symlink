@@ -44,23 +44,41 @@
            ("C-c C-v" . org-tasklist-set-priority)
            :map org-agenda-mode-map
            ("C-c C-v" . org-tasklist-agenda-set-priority))
+
     :config
+
+    (defun michalrus/existing-wildcards (&rest ws)
+      (seq-filter 'file-exists-p
+                  (seq-mapcat 'file-expand-wildcards ws)))
+
     (setq org-agenda-custom-commands
-          `(("t" "Tasklist (?)" alltodo ""
-             ((org-agenda-files '("~/Org/Tasklist.org"))
-              ,@org-tasklist-agenda-options))
-            ("p" "Projects" alltodo ""
-             ((org-agenda-files (file-expand-wildcards "~/Org/Projects/*.org"))
-              ,@org-tasklist-agenda-options))
+          `(
+            ("g" "General"  alltodo "" ((org-agenda-files (michalrus/existing-wildcards "~/Org/Tooling/*.org"
+                                                                                        "~/Org/Life/*.org"
+                                                                                        "~/Org/Homes/*.org"   )) ,@org-tasklist-agenda-options))
+            ("p" "Projects" alltodo "" ((org-agenda-files (michalrus/existing-wildcards "~/Org/Projects/*.org")) ,@org-tasklist-agenda-options))
             ))
 
     (setq org-capture-templates
-          '(("l" "Music → Listening" entry (file+olp "~/Org/Tasklist.org" "Music" "Listening")
-             "* TODO %?\n%U\n%x"
-             :tasklist t :kill-buffer t)
-            ("p" "Projects")
-            ("pp" "Pitch" entry (file "~/Org/Projects/Pitch.org")
-             "* TODO %?\n%U\n%a"
-             :tasklist t :kill-buffer t)
-            ))
+          (let* ((subdir (lambda (dir template)
+                           `((,(downcase (substring dir 0 1)) ,dir)
+                             ,@(seq-map (lambda (file)
+                                          (let ((filename (file-name-base file)))
+                                          `(,(concat (downcase (substring dir 0 1))
+                                                     (downcase (substring filename 0 1)))
+                                            ,filename
+                                            entry
+                                            (file ,file)
+                                            ,template
+                                            :tasklist t :killbuffer t)))
+                                        (michalrus/existing-wildcards (concat "~/Org/" dir "/*.org")))))))
+            `(("l" "Music → Listening" entry (file+olp "~/Org/Tasklist.org" "Music" "Listening")
+               "* TODO %?\n%U\n%x"
+               :tasklist t :kill-buffer t)
+
+              ,@(funcall subdir "Tooling"  "* TODO %?\n%U\n%a")
+              ,@(funcall subdir "Life"     "* TODO %?\n%U")
+              ,@(funcall subdir "Homes"    "* TODO %?\n%U")
+              ,@(funcall subdir "Projects" "* TODO %?\n%U\n%a")
+              )))
     ))
