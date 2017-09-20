@@ -37,7 +37,7 @@ in
   environment.systemPackages = with pkgs; [
     a2jmidid
     aeolus
-    airwave
+    nixos-unstable.airwave
     ardour
     artyFX
     calf
@@ -49,7 +49,7 @@ in
     mda_lv2
     qjackctl
     setbfree
-    squishyball
+    nixos-unstable.squishyball
     x42-plugins
   ];
 

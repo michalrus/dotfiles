@@ -10,7 +10,7 @@ in
 
   services.influxdb = {
     enable = true;
-    package = pkgs.influxdb10;
+    package = pkgs.michalrus.influxdb10;
     extraConfig = {
       collectd = [{
         enabled = true;

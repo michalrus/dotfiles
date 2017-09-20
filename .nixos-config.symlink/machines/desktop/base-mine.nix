@@ -40,7 +40,7 @@
     dunst
     evince
     gettext
-    gettext-emacs
+    michalrus.gettext-emacs
     ghostscript
     gnome2.gnome_icon_theme
     gnome3.dconf   # so that GnuCash prefs can be changed
@@ -51,15 +51,13 @@
     (haskellPackages.ghcWithHoogle (hs: []))
     haskellPackages.hlint
     haskellPackages.intero-nix-shim
-    hubstaff
     isync
-    leksah
-    lemonbar-xft
+    michalrus.leksah
+    michalrus.lemonbar-xft
     libreoffice
-    mu
     networkmanagerapplet
     oathToolkit
-    octave
+    nixos-unstable.octave
     openjdk8
     pass
     pavucontrol
@@ -72,8 +70,8 @@
     stack
     stalonetray
     (texlive.combine {
-      inherit (texlive) scheme-small latexmk titlesec tocloft todonotes cleveref lipsum biblatex logreq cm-super csquotes pgfplots adjustbox collectbox ccicons polski placeins xstring pdfpages unicode-math filehook textpos marvosym progressbar lm-math;
-      gregorio = pkgs.gregorio.forTexlive;
+      inherit (texlive) scheme-small latexmk titlesec tocloft todonotes cleveref lipsum biblatex logreq cm-super csquotes pgfplots adjustbox collectbox ccicons polski placeins xstring pdfpages unicode-math filehook textpos marvosym progressbar lm-math ucharcat;
+      #gregorio = pkgs.michalrus.gregorio.forTexlive;
     })
     sxhkd
     transmission_gtk

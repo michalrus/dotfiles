@@ -18,7 +18,6 @@
   environment.systemPackages = with pkgs; [
     arandr
     audacity
-    awf
     calibre
     (chromium.override { enablePepperFlash = true; })
     cool-retro-term
@@ -33,19 +32,19 @@
     lilypond
     mpv
     mumble
-    octave
+    nixos-unstable.octave
     openjdk8
     steam
     simple-scan
     skype
     teamspeak_client
-    transcribe
+    michalrus.transcribe
     transmission_gtk
     unrar
     xarchiver
     xmind
     xsane
-    youtube-dl
+    nixos-unstable.youtube-dl
   ];
 
   services = {

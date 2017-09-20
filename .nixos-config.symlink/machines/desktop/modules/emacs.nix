@@ -9,14 +9,12 @@ let
     withGTK3 = false;
   };
 
-  unstable = pkgs.unstable-emacsPackagesNgGen emacs;
-
   packages = (pkgs.emacsPackagesNgGen emacs).override (super: self: {
     # From MELPA Unstable @ NixOS Stable:
     #inherit (self.melpaPackages) ???;
 
     # From MELPA Unstable @ NixOS Unstable (bleeding edge):
-    inherit (unstable.melpaPackages) ensime intero;
+    inherit ((pkgs.nixos-unstable.emacsPackagesNgGen emacs).melpaPackages) ensime intero;
   });
 
   whole = packages.emacsWithPackages (epkgs: with epkgs; [

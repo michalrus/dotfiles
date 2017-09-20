@@ -10,7 +10,7 @@
 
   environment.systemPackages = with pkgs; [
     calibre
-    ltris
+    nixos-unstable.ltris
     pcmanfm
   ];
 

@@ -68,7 +68,7 @@
 
   environment.systemPackages = with pkgs; [
     arandr
-    awf
+    nixos-unstable.awf
     libnotify
     ntfs3g
     pdfgrep

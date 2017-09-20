@@ -63,12 +63,12 @@
     exiv2
     file
     gcc
-    geekbench
+    nixos-unstable.geekbench
     git
     gitAndTools.gitAnnex
     gitAndTools.gitRemoteGcrypt
     gitstats
-    git-annex-desktop
+    michalrus.git-annex-desktop
     (lowPrio gnupg1compat)
     gnupg
     graphicsmagick
@@ -110,7 +110,7 @@
     (lowPrio stdmanpages)
     stdman
     strace
-    tcp-broadcast
+    michalrus.tcp-broadcast
     tesseract
     unzip
     urlwatch

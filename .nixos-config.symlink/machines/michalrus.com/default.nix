@@ -8,6 +8,7 @@
     ./monitoring
     ./gitolite
     ./ipsec
+    ./bitlbee
     ./kornel
     ./jabber
     ./web
@@ -42,11 +43,6 @@
     };
 
     oidentd.enable = true;
-
-    bitlbee = {
-      enable = true;
-      plugins = with pkgs; [ bitlbee-facebook ];
-    };
   };
 
   users = {

@@ -4,10 +4,10 @@
   environment.systemPackages = with pkgs; [
     aegisub
     audacity
-    (beets.override { enableCopyArtifacts = true; })
+    (nixos-unstable.beets.override { enableCopyArtifacts = true; })
     calibre
     cdparanoia
-    devede
+    nixos-unstable.devede
     flac
     gimp
     gpac
@@ -25,9 +25,9 @@
     scantailor
     shntool
     timidity
-    transcribe
+    michalrus.transcribe
     x264
-    youtube-dl
+    nixos-unstable.youtube-dl
 
     # for mpd.musicDirectory
     bindfs
