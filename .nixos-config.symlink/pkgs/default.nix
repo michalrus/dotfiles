@@ -20,6 +20,9 @@ in
 
     inherit nixos-unstable;
 
+    # These are not configurable, so let’s override globally. :/
+    inherit (nixos-unstable) bitlbee bitlbee-facebook;
+
     michalrus = {
       git-annex-desktop  = (import ./git-annex-desktop.nix super self);
       influxdb10         = (import ./influxdb super self);
