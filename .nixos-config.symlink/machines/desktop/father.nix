@@ -3,7 +3,7 @@
 {
   imports = [
     ./base-parents.nix
-    ./modules/gnome.nix
+    ./modules/kde.nix
   ];
 
   virtualisation.virtualbox.host.enable = true;

@@ -9,7 +9,7 @@
   nix.maxJobs = 2;
   nix.buildCores = 2;
 
-  boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "usb_storage" "usbhid" "sd_mod" "rtsx_pci_sdmmc" ];
+  boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "ehci_pci" "usb_storage" "usbhid" "sd_mod" "rtsx_pci_sdmmc" ];
   boot.kernelModules = [ "kvm-intel" "wl" ];
 
   nixpkgs.config.allowUnfree = true; # For the Broadcom driver below...
