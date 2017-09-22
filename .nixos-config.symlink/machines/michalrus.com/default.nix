@@ -11,6 +11,7 @@
     ./bitlbee
     ./kornel
     ./jabber
+    ./openvpn
     ./web
     ./feeds/annibot.nix
     ./feeds/stosowana.nix

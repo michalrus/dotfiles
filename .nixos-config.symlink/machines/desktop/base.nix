@@ -5,6 +5,7 @@
     ../../modules
     ../../pkgs
     ../common.nix
+    ./modules/openvpn.nix
   ];
 
   powerManagement.cpuFreqGovernor = lib.mkOverride 999 "performance"; # basically lib.mkDefault, but this one is already used in power-management.nix…
@@ -12,9 +13,13 @@
   networking = {
     hostName = lib.mkDefault "nixos";
     extraHosts = "127.0.0.1 ${config.networking.hostName}";
-    nameservers = lib.mkDefault [ "8.8.8.8" "8.8.4.4" ];
     firewall.nonetGroup.enable = lib.mkDefault true;
   };
+
+  environment.etc."resolv.conf.head".text = ''
+    nameserver 8.8.8.8
+    nameserver 8.8.4.4
+  '';
 
   hardware = {
     sane.enable = true;
