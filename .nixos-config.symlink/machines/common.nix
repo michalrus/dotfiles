@@ -60,6 +60,7 @@
     ddrescue
     dos2unix
     duplicity
+    easyrsa
     exiv2
     file
     gcc
