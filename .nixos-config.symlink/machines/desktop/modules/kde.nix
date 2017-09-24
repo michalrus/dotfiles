@@ -6,7 +6,6 @@
 
   environment.systemPackages = with pkgs; [
     gnome3.dconf   # so that GnuCash prefs can be changed
-    gnome3.bijiben
     networkmanagerapplet
     system-config-printer # For GNOME Printers applet.
   ];

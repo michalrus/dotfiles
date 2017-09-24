@@ -42,6 +42,8 @@ in
         rev = "dd852a9f7d830d30875a203df145e9a0b5e40606";
         sha256 = "0jq1hzhx8ax69l4nq58avh0wjyzfychagckla7vx750pgj4jrgd5";
       }) {};
+
+      inherit (getCommit "bf98eb9883abdef9cd88d8c635c873f5a12651fb" "1mksp4lf8c53807qffk36phpbd8ivsn7559yabcyn6z52jykh6v7") xpad;
     };
 
   };
