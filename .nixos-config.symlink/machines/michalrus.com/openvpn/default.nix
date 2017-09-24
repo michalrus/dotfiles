@@ -11,8 +11,13 @@ let
   subnet-chwalecice = "10.7.74";
 
   ccd = {
-    michalrus         = { ip = "10"; };
-    router-chwalecice = { ip = "40"; extra = "iroute ${subnet-chwalecice}.0 255.255.255.0"; };
+    michalrus            = { ip = "10"; };
+    elzbietarus          = { ip = "11"; };
+    robertrus-acer       = { ip = "12"; };
+    robertrus-np300e5a   = { ip = "13"; };
+    mikolajrus           = { ip = "14"; };
+    robertrus-asus-1225c = { ip = "15"; };
+    router-chwalecice    = { ip = "40"; extra = "iroute ${subnet-chwalecice}.0 255.255.255.0"; };
   };
 
   ccdDir = pkgs.runCommand "ccd" {} ''
