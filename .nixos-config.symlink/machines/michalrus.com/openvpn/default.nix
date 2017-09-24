@@ -58,4 +58,6 @@ in
     };
   };
 
+  networking.extraHosts = extraHosts;
+
 }
