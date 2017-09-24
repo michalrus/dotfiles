@@ -33,6 +33,7 @@
     skype
     transmission_gtk
     xarchiver
+    michalrus.xpad
     xsane
   ];
 

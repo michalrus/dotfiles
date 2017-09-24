@@ -10,7 +10,6 @@
 
   environment.systemPackages = with pkgs; [
     calibre
-    michalrus.xpad
     nixos-unstable.ltris
     pcmanfm
   ];
