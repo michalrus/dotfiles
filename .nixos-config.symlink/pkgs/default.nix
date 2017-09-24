@@ -43,7 +43,7 @@ in
         sha256 = "0jq1hzhx8ax69l4nq58avh0wjyzfychagckla7vx750pgj4jrgd5";
       }) {};
 
-      inherit (getCommit "bf98eb9883abdef9cd88d8c635c873f5a12651fb" "1mksp4lf8c53807qffk36phpbd8ivsn7559yabcyn6z52jykh6v7") xpad;
+      inherit (getCommit "9702d2e57c84ea241c4b8a9731cf0a8de4932264" "0hi156c8bqdrbwaqk74whpxa6x26b0md12b3690s6hr1rp9mv9mj") xpad;
     };
 
   };
