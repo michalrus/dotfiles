@@ -13,6 +13,7 @@
 
   nixpkgs.config = {
     allowUnfree = true; # M$ fonts, Skype™ and similar nonsense.
+    wine.build = "wineWow"; # for some 64-bit games
   };
 
   environment.systemPackages = with pkgs; [
