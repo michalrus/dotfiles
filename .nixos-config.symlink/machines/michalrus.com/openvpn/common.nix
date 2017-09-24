@@ -4,9 +4,9 @@ with lib;
 
 rec {
 
-  subnet = "10.7.77";
+  subnet = "10.77.7";
 
-  subnet-chwalecice = "10.7.74";
+  subnet-chwalecice = "10.77.4";
 
   tld = "home";
 
