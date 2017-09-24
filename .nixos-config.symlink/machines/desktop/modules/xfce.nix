@@ -40,6 +40,7 @@
         thunarPlugins = with pkgs.xfce; [ thunar-archive-plugin ];
       };
 
+      # For Evolution password management
       displayManager.sessionCommands = ''
         gnome-keyring-daemon || true
       '';
