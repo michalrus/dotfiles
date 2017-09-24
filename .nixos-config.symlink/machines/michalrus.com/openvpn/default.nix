@@ -10,6 +10,8 @@ let
 
   subnet-chwalecice = "10.7.74";
 
+  tld = "home";
+
   ccd = {
     michalrus            = { ip = "10"; };
     elzbietarus          = { ip = "11"; };
@@ -35,7 +37,7 @@ in
 
 {
 
-  networking.firewall.allowedUDPPorts = [ 1194 ];
+  networking.firewall.allowedUDPPorts = [ 1194 53 ];
 
   services.openvpn.servers = {
     server = {
@@ -61,19 +63,49 @@ in
         keepalive 10 60
         tls-auth ${dataDir}/ta.key 0
         cipher AES-256-CBC
-
         user nobody
         group nogroup
         persist-key
         persist-tun
-
-        status ${dataDir}/openvpn-status.log
         verb 3
         mute 20
-
         explicit-exit-notify 1
       '';
     };
+  };
+
+  services.bind = {
+    enable = true;
+    cacheNetworks = [ "127.0.0.0/8" "${subnet}.0/24" "${subnet-chwalecice}.0/24" ];
+    forwarders = [ "8.8.8.8" "8.8.4.4" ];
+    zones = let
+      ceremony = ''
+        $TTL 1h
+        @      IN  SOA router.${tld}. m.michalrus.com. ( 2017092401 1h 1m 12h 30m )
+               IN  NS  router.${tld}.
+      '';
+    in [
+      {
+        name = "${tld}";
+        file = pkgs.writeText "${tld}.zone" ''
+          ${ceremony}
+          router IN A ${subnet}.1
+          ${concatStringsSep "\n" (mapAttrsToList (common: v: ''
+            ${common} IN A ${subnet}.${v.ip}
+          '') ccd)}
+        '';
+      }
+      {
+        name = "${concatStringsSep "." (reverseList (splitString "." subnet))}.IN-ADDR.ARPA";
+        file = pkgs.writeText "rev-${tld}.zone" ''
+          ${ceremony}
+          1 IN PTR router.${tld}.
+          ${concatStringsSep "\n" (mapAttrsToList (common: v: ''
+            ${v.ip} IN PTR ${common}.${tld}.
+          '') ccd)}
+        '';
+      }
+    ];
   };
 
 }
