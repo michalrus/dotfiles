@@ -12,8 +12,6 @@ in
 
   services.openvpn.servers = {
     michalrus_com = {
-      updateResolvConf = true;
-
       config = ''
         client
         dev tun
@@ -40,5 +38,7 @@ in
       '';
     };
   };
+
+  networking.extraHosts = (import ../../michalrus.com/openvpn/common.nix { inherit lib; }).extraHosts;
 
 }
