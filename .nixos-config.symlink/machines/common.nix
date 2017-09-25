@@ -66,7 +66,7 @@
     gcc
     nixos-unstable.geekbench
     git
-    gitAndTools.gitAnnex
+    michalrus.git-annex
     gitAndTools.gitRemoteGcrypt
     gitstats
     michalrus.git-annex-desktop

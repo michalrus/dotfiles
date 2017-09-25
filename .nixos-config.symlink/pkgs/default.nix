@@ -24,7 +24,8 @@ in
     inherit (nixos-unstable) bitlbee bitlbee-facebook;
 
     michalrus = {
-      git-annex-desktop  = (import ./git-annex-desktop.nix super self);
+      git-annex-desktop  = (import ./git-annex/desktop.nix super self);
+      git-annex          = (import ./git-annex/post-show-ref.nix super self);
       influxdb10         = (import ./influxdb super self);
       tcp-broadcast      = (import ./tcp-broadcast.nix super self);
       leksah             = (import ./leksah.nix super self);
