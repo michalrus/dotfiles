@@ -14,7 +14,10 @@ let
     #inherit (self.melpaPackages) ???;
 
     # From MELPA Unstable @ NixOS Unstable (bleeding edge):
-    inherit ((pkgs.nixos-unstable.emacsPackagesNgGen emacs).melpaPackages) ensime intero;
+    inherit ((pkgs.nixos-unstable.emacsPackagesNgGen emacs).melpaPackages) ensime;
+
+    # Keep all of intero-related stuff in sync.
+    intero = pkgs.michalrus.intero.emacsMode self;
   });
 
   whole = packages.emacsWithPackages (epkgs: with epkgs; [

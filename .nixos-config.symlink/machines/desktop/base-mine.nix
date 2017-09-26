@@ -50,7 +50,7 @@
     gparted
     (haskellPackages.ghcWithHoogle (hs: []))
     haskellPackages.hlint
-    michalrus.intero-nix-shim #haskellPackages.intero-nix-shim
+    michalrus.intero.nix-shim
     isync
     michalrus.leksah
     michalrus.lemonbar-xft
