@@ -55,7 +55,7 @@
     networkmanagerapplet
     nixos-unstable.alacritty
     nixos-unstable.bitcoin
-    nixos-unstable.bitcoinarmory
+    nixos-unstable.electrum
     nixos-unstable.octave
     pgadmin
     rofi
@@ -93,6 +93,11 @@
     lockX11Displays.enable = true;
 
     screen.usersAlways = [];
+
+    tor = {
+      enable = true;
+      client.enable = true;
+    };
 
     xserver = {
       xkbOptions = "caps:hyper,numpad:microsoft";
