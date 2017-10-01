@@ -4,7 +4,7 @@
   environment.systemPackages = with pkgs; [
     aegisub
     audacity
-    (nixos-unstable.beets.override { enableCopyArtifacts = true; })
+    (beets.override { enableCopyArtifacts = true; })
     calibre
     cdparanoia
     nixos-unstable.devede
