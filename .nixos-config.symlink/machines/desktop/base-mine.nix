@@ -3,7 +3,7 @@
 {
   imports = [
     ./base.nix
-    ./modules/media.nix
+    ./modules/mpd.nix
     ./modules/android.nix
     ./modules/emacs.nix
     ./modules/malicious-hosts.nix
@@ -31,55 +31,41 @@
   networking.networkmanager.enable = true;
 
   environment.systemPackages = with pkgs; [
-    nixos-unstable.bitcoin
-    nixos-unstable.bitcoinarmory
-    cabal2nix
-    cdrkit
+    (haskellPackages.ghcWithHoogle (hs: []))
+    aegisub
     chromium
     compton
     cool-retro-term
     dunst
-    evince
     gettext
-    michalrus.gettext-emacs
     ghostscript
     gnome2.gnome_icon_theme
-    gnome3.dconf   # so that GnuCash prefs can be changed
     gnome3.adwaita-icon-theme
+    gnome3.dconf   # so that GnuCash prefs can be changed
     gnome3.gnome_themes_standard
     gnucash26
-    gparted
-    (haskellPackages.ghcWithHoogle (hs: []))
     haskellPackages.hlint
-    michalrus.intero.nix-shim
     isync
+    lilypond
+    michalrus.gettext-emacs
+    michalrus.intero.nix-shim
     michalrus.leksah
     michalrus.lemonbar-xft
-    libreoffice
+    michalrus.transcribe
     networkmanagerapplet
-    oathToolkit
+    nixos-unstable.bitcoin
+    nixos-unstable.bitcoinarmory
     nixos-unstable.octave
-    openjdk8
-    pass
-    pavucontrol
-    pcmanfm
     pgadmin
-    pinentry
     rofi
-    scala
     shellcheck
     stack
     stalonetray
+    sxhkd
     (texlive.combine {
       inherit (texlive) scheme-small latexmk titlesec tocloft todonotes cleveref lipsum biblatex logreq cm-super csquotes pgfplots adjustbox collectbox ccicons polski placeins xstring pdfpages unicode-math filehook textpos marvosym progressbar lm-math ucharcat;
       #gregorio = pkgs.michalrus.gregorio.forTexlive;
     })
-    sxhkd
-    transmission_gtk
-    utox
-    visualvm
-    xarchiver
-    xsane
   ];
 
   environment.variables."GTK2_RC_FILES" =
@@ -87,8 +73,6 @@
 
   programs = {
     ssh.startAgent = false;
-    wireshark.enable = true;
-    wireshark.package = pkgs.wireshark-gtk;
   };
 
   virtualisation.virtualbox.host.enable = true;
@@ -165,7 +149,4 @@
     fsType = "fuse.bindfs";
     options = [ "map=m/mw" ];
   };
-
-  # The NixOS release to be compatible with for stateful data such as databases.
-  system.stateVersion = "16.09";
 }

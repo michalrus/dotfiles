@@ -16,6 +16,11 @@
     firewall.nonetGroup.enable = lib.mkDefault true;
   };
 
+  programs = {
+    wireshark.enable = true;
+    wireshark.package = pkgs.wireshark-gtk;
+  };
+
   environment.etc."resolv.conf.head".text = ''
     nameserver 8.8.8.8
     nameserver 8.8.4.4
@@ -71,20 +76,59 @@
     };
   };
 
+  # Use GTK 2 in LibreOffice. 3 has some menu rendering problems.
+  environment.variables."SAL_USE_VCLPLUGIN" = "gtk";
+
   environment.systemPackages = with pkgs; [
+    (wine.override { pulseaudioSupport = true; })
     arandr
-    nixos-unstable.awf
+    audacity
+    calibre
+    cdparanoia
+    cdrkit
+    cool-retro-term
+    evince
+    flac
+    gimp
+    gnome3.aisleriot
     gnome3.baobab
+    gnome3.cheese
+    gpac
+    gparted
+    gtk2  # Why? Icon cache! See #20874.
+    handbrake
+    inkscape
+    lame
+    libjpeg
     libnotify
+    libreoffice
+    michalrus.xpad
+    mpv
+    nixos-unstable.awf
+    nixos-unstable.devede
+    nixos-unstable.octave
+    nixos-unstable.youtube-dl
     ntfs3g
+    pavucontrol
+    pcmanfm
     pdfgrep
     pinentry
+    pinentry
+    python34Packages.livestreamer
     rfkill
+    rtmpdump
     samba
+    scantailor
+    shntool
+    simple-scan
+    timidity
+    transmission_gtk
     unclutter
-    (wine.override { pulseaudioSupport = true; })
+    utox
     winetricks
     wmctrl
+    x264
+    xarchiver
     xautolock
     xbanish
     xcape
@@ -97,6 +141,7 @@
     xorg.xhost
     xorg.xmodmap
     xrandr-invert-colors
+    xsane
     xsel
     xtitle
   ];

@@ -9,9 +9,7 @@
   virtualisation.virtualbox.host.enable = true;
 
   environment.systemPackages = with pkgs; [
-    calibre
     nixos-unstable.ltris
-    pcmanfm
   ];
 
   users.extraUsers.robert = {

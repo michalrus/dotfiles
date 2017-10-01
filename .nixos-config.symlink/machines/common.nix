@@ -48,10 +48,13 @@
   environment.variables.PATH = [ "$HOME/.bin" ];
 
   environment.systemPackages = with pkgs; [
+    (hiPrio netcat-openbsd)
+    (lowPrio gnupg1compat)
+    (lowPrio stdmanpages)
     aspell
+    aspellDicts.de
     aspellDicts.en
     aspellDicts.pl
-    aspellDicts.de
     bc
     bindfs
     calc
@@ -62,43 +65,46 @@
     duplicity
     easyrsa
     exiv2
+    faad2
+    ffmpeg
     file
     gcc
-    nixos-unstable.geekbench
     git
-    michalrus.git-annex
     gitAndTools.gitRemoteGcrypt
     gitstats
-    michalrus.git-annex-desktop
-    (lowPrio gnupg1compat)
+    gnumake
+    gnumake.doc
     gnupg
+    gocr
     graphicsmagick
     htop
     hwinfo
     imagemagick
+    imgurbash2
     indent
     inetutils
     jhead
-    faad2   # video in Firefox
-    ffmpeg
-    gnumake
-    gocr
     libfaketime
     lshw
     lsof
     ltrace
     man_db
     manpages
+    michalrus.git-annex
+    michalrus.git-annex-desktop
+    michalrus.tcp-broadcast
     mkpasswd
     moreutils
     mtr
-    (hiPrio netcat-openbsd)
     nix-prefetch-scripts
     nix-repl
+    nixos-unstable.geekbench
     nmap
     normalize
+    oathToolkit
     openssl
     p7zip
+    pass
     pciutils
     poppler_utils
     posix_man_pages
@@ -108,10 +114,8 @@
     socat
     sox
     sqlite-interactive
-    (lowPrio stdmanpages)
     stdman
     strace
-    michalrus.tcp-broadcast
     tesseract
     unzip
     urlwatch
@@ -120,10 +124,7 @@
     which
     wrk
     zip
-  ] ++ (if lib.nixpkgsVersion > "16.09" then [
-    gnumake.doc
-    imgurbash2
-  ] else []);
+  ];
 
   security = {
     sudo.extraConfig = ''

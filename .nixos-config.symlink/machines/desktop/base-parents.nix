@@ -15,26 +15,11 @@
     allowUnfree = true; # M$ fonts, Skype™ and similar nonsense.
   };
 
-  # Use GTK 2 in LibreOffice. 3 has some menu rendering problems.
-  environment.variables."SAL_USE_VCLPLUGIN" = "gtk";
-
   environment.systemPackages = with pkgs; [
-    google-chrome
-    cool-retro-term
-    evince
-    gimp
-    gnome3.aisleriot
     gnome3.evolution
-    libreoffice
-    mpv
-    python34Packages.livestreamer
-    rtmpdump
-    simple-scan
+    google-chrome
     skype
-    transmission_gtk
-    xarchiver
-    michalrus.xpad
-    xsane
+    unrar
   ];
 
   services = {

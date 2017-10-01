@@ -7,7 +7,6 @@
   environment.gnome3.excludePackages = [ pkgs.gnome3.epiphany ];
 
   environment.systemPackages = with pkgs; [
-    gnome3.cheese
     gnome3.file-roller
     gnome2.gnome_icon_theme
     gnome3.dconf   # so that GnuCash prefs can be changed

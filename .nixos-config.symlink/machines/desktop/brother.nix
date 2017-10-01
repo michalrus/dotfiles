@@ -17,35 +17,19 @@
   };
 
   environment.systemPackages = with pkgs; [
-    arandr
-    audacity
-    calibre
     (chromium.override { enablePepperFlash = true; })
-    cool-retro-term
     frescobaldi
-    gimp
-    gnome3.aisleriot
     gnucash26
-    gtk2  # Why? Icon cache! See #20874.
-    inkscape
     ioquake3
-    libreoffice
     lilypond
-    mpv
-    mumble
-    nixos-unstable.octave
-    openjdk8
-    steam
-    simple-scan
-    skype
-    teamspeak_client
     michalrus.transcribe
-    transmission_gtk
+    mumble
+    openjdk8
+    skype
+    steam
+    teamspeak_client
     unrar
-    xarchiver
     xmind
-    xsane
-    nixos-unstable.youtube-dl
   ];
 
   services = {

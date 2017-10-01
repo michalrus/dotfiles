@@ -2,32 +2,10 @@
 
 {
   environment.systemPackages = with pkgs; [
-    aegisub
-    audacity
     (beets.override { enableCopyArtifacts = true; })
-    calibre
-    cdparanoia
-    nixos-unstable.devede
-    flac
-    gimp
-    gpac
-    handbrake
-    inkscape
     keyfinder-cli
-    lame
-    libjpeg
-    lilypond
     mpc_cli
-    mpv
     ncmpcpp
-    python34Packages.livestreamer
-    rtmpdump
-    scantailor
-    shntool
-    timidity
-    michalrus.transcribe
-    x264
-    nixos-unstable.youtube-dl
 
     # for mpd.musicDirectory
     bindfs
