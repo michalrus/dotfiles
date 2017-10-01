@@ -53,6 +53,7 @@
     michalrus.lemonbar-xft
     michalrus.transcribe
     networkmanagerapplet
+    nixos-unstable.alacritty
     nixos-unstable.bitcoin
     nixos-unstable.bitcoinarmory
     nixos-unstable.octave
