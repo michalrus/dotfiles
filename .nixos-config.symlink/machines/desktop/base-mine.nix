@@ -31,7 +31,8 @@
   networking.networkmanager.enable = true;
 
   environment.systemPackages = with pkgs; [
-    bitcoin
+    nixos-unstable.bitcoin
+    nixos-unstable.bitcoinarmory
     cabal2nix
     cdrkit
     chromium
