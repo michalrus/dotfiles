@@ -149,6 +149,14 @@
       description = "Michal Rus (work)";
       extraGroups = [ "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" ];
     };
+
+    extraUsers.mfin = {
+      hashedPassword = "$6$YYkKeZ8M56$EZh1jGZbAnPaVKwnQebJ40ojqNShuU3Np2rWiPOOrfA1vXlFPCGbmbVZwOfRyCMU5y83ggkA1/jIG7Zzg6iD10";
+      isNormalUser = true;
+      uid = 1347;
+      description = "Michal Rus (fin)";
+      extraGroups = [ "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" ];
+    };
   };
 
   fileSystems."/var/home/mw/.shared" = {
