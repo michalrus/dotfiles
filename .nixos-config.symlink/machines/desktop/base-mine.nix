@@ -57,6 +57,7 @@
     nixos-unstable.bitcoin
     nixos-unstable.electrum
     nixos-unstable.octave
+    openjdk8   # for nofatty
     pgadmin
     rofi
     shellcheck
