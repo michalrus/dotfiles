@@ -98,6 +98,7 @@
     tor = {
       enable = true;
       client.enable = true;
+      torifiedUsers = [ "mfin" ];
     };
 
     xserver = {
