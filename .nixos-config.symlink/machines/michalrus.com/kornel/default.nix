@@ -5,8 +5,8 @@ let
   kornel = import (pkgs.fetchFromGitHub {
     owner = "michalrus";
     repo = "kornel";
-    rev = "761107ef446ebf28516249e137d688d0f8d348ce";
-    sha256 = "0v4fprb8ljfakni14hv18p86axiv0jbpfxw3ggljw4vh3bqb54dq";
+    rev = "100d20772667e097deed80ab9bc46e5aa06251ed";
+    sha256 = "13va2c4iyr5a3zq19glp8gqm7p4mppqdkp484n7zdadpizqbjaxh";
   });
 
   user = "kornel";
