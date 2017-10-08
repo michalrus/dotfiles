@@ -84,6 +84,7 @@
     indent
     inetutils
     jhead
+    jq
     libfaketime
     lshw
     lsof
