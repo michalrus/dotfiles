@@ -36,33 +36,50 @@ mkMerge [
 
         rewrite ^/gpg$ /pgp permanent;
 
-        location /hidden/accounting {
+        if ($request_uri ~ ^(.*/)index(\.html)?(\?.*)?$ ) {
+          return 301 $scheme://$host$1$3;
+        }
+
+        # TODO: maybe build /cv from source on GH?
+        rewrite ^/cv/$ /cv permanent;
+        rewrite ^/cv$ /cv/en.pdf last;
+        rewrite ^/cv-pl$ /cv/pl.pdf last;
+        rewrite ^/\d\d\d\d-\d\d-\d\d/cv\.pdf$ /cv/en.pdf last;
+        location ~ ^/cv/(.*)$ {
+          add_header Content-Disposition "inline; filename=Michal_Rus_CV-$1";
+        }
+
+        # # TODO: avatar — after the new dotfiles profiles are ready
+        # location /avatar {
+        #   alias { ../../../../dotfiles/.avatar.jpg };
+        #   add_header Content-Disposition "inline; filename=Michal_Rus.jpg";
+        # }
+
+        location / {
+          root ${./michalrus.com};
+
+          try_files $uri.html $uri.txt $uri $uri/ @mutable;
+
+          location ~ /index\.html$ { }
+
+          # Strip extensions only if that file actually exists in the immutable root.
+          location ~ ^(.*)\.(html|txt)$ {
+            if (-f $request_filename) {
+              return 301 $scheme://$host$1$is_args$args;
+            }
+            error_page 404 = @mutable;
+          }
+        }
+
+        location /hidden/accounting/ {
           autoindex on;
           autoindex_exact_size off;
           auth_basic "Speak, friend, and enter.";
           auth_basic_user_file "${config.services.nginx.stateDir}/auth/${domain}/accounting";
+          try_files $uri $uri/ =404;
         }
 
-        location /pgp {
-          add_header Content-type "text/plain";
-          add_header Content-Disposition "inline; filename=michalrus.pgp.pub.asc";
-          expires epoch;
-        }
-
-        location /ssh {
-          add_header Content-type "text/plain";
-          add_header Content-Disposition "inline; filename=michalrus.ssh.pub.asc";
-          expires epoch;
-        }
-
-        rewrite ^/cv/$ /cv permanent;
-        rewrite ^/cv$ /cv/en.pdf last;
-        rewrite ^/cv-pl$ /cv/pl.pdf last;
-
-        rewrite ^/\d\d\d\d-\d\d-\d\d/cv\.pdf$ /cv/en.pdf last;
-
-        location ~ ^/cv/(.*)$ {
-          add_header Content-Disposition "inline; filename=Michal_Rus_CV-$1";
+        location @mutable {
         }
       '';
     };
