@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" ng-app>
   <head>
-    <title>Michal Rus</title>
+    <title>Michal Rus • meteo</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -24,12 +24,14 @@ function MeteoCtrl($scope, $interval) {
   $scope.data = [
     { name: 'Kłodawa',  id: 1768 },
     { name: 'Kraków',   id:  462 },
-    // { name: 'Miłakowo', id: 1563 },
+    { name: 'Legnica',  id:  982 },
+    { name: 'Miłakowo', id: 1563 },
+    { name: 'Wrocław',  id:  983 },
   ];
   $scope.url = '';
 
-  $scope.um     = function(id) { return 'http://new.meteo.pl/um/php/meteorogram_id_um.php?ntype=0u&id=' + id; };
-  $scope.coamps = function(id) { return 'http://new.meteo.pl/php/meteorogram_id_coamps.php?ntype=2n&id=' + id; };
+  $scope.um     = function(id) { return 'https://new.meteo.pl/um/php/meteorogram_id_um.php?ntype=0u&id=' + id; };
+  $scope.coamps = function(id) { return 'https://new.meteo.pl/php/meteorogram_id_coamps.php?ntype=2n&id=' + id; };
 
   $scope.anchor = null;
   $scope.setAnchor = function($event) { $scope.anchor = $event.target; };
