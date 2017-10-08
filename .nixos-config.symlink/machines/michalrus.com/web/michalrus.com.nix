@@ -60,6 +60,8 @@ mkMerge [
 
           try_files $uri.html $uri.txt $uri $uri/ @mutable;
 
+          error_page 404 = @mutable;
+
           location ~ /index\.html$ { }
 
           # Strip extensions only if that file actually exists in the immutable root.
@@ -67,7 +69,6 @@ mkMerge [
             if (-f $request_filename) {
               return 301 $scheme://$host$1$is_args$args;
             }
-            error_page 404 = @mutable;
           }
         }
 
@@ -79,8 +80,7 @@ mkMerge [
           try_files $uri $uri/ =404;
         }
 
-        location @mutable {
-        }
+        location @mutable { }
       '';
     };
   }
