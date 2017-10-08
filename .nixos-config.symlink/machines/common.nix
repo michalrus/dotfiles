@@ -58,7 +58,6 @@
     bc
     bindfs
     calc
-    catdoc
     cloc
     daemonize
     ddrescue
@@ -92,6 +91,7 @@
     ltrace
     man_db
     manpages
+    michalrus.catdocx
     michalrus.git-annex
     michalrus.git-annex-desktop
     michalrus.tcp-broadcast
@@ -104,6 +104,7 @@
     nmap
     normalize
     oathToolkit
+    odt2txt
     openssl
     p7zip
     pass

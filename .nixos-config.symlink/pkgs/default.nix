@@ -37,6 +37,7 @@ in
 
       # Left to contribute:
 
+      catdocx            = (import ./catdocx.nix super self);
       gettext-emacs      = (import ./gettext-emacs.nix super self);
       gregorio           = (import ./gregorio.nix super self);
       lemonbar-xft       = (import ./lemonbar-xft.nix super self);
