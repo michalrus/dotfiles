@@ -16,6 +16,8 @@ in
 
 {
 
+  imports = [ ./aspell-fix.nix ];
+
   nixpkgs.config.packageOverrides = super: let self = super.pkgs; in {
 
     inherit nixos-unstable;
