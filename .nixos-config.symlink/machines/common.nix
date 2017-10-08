@@ -58,6 +58,7 @@
     bc
     bindfs
     calc
+    catdoc
     cloc
     daemonize
     ddrescue
