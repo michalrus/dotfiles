@@ -1,0 +1,4 @@
+#!/bin/sh
+
+export WINEPREFIX=~/.wine-go
+exec wine "$WINEPREFIX"/'drive_c/Program Files/Many Faces of Go 12/mfgo.exe'

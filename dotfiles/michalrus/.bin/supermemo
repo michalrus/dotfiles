@@ -1,0 +1,4 @@
+#!/bin/sh
+
+export WINEPREFIX=~/.wine-supermemo
+exec wine "$WINEPREFIX"/'drive_c/Program Files/SuperMemo UX/supermemo.exe'
