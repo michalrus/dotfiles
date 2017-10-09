@@ -62,7 +62,7 @@ in
     };
 
     services.xserver.displayManager.sessionCommands = ''
-      if [ "$UID" == "${toString cfg.uid}" ] ; then
+      if [ "$UID" = "${toString cfg.uid}" ] ; then
         ${config.security.wrapperDir}/sudo -n ${cleanUp} || exit 1
       fi
       '';

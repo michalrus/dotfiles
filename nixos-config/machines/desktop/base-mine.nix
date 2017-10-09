@@ -128,12 +128,20 @@
     font-awesome-ttf
   ];
 
-  users = {
+  users = let
+
+    immutableDotfiles =  map (p: "${../../../dotfiles}/${p}");
+    mutableDotfiles = u: map (p: "${u.home}/.dotfiles/dotfiles/${p}");
+
+  in {
     guestAccount = {
       enable = true;
       skeleton = "/home/guest.skel";
       groups = [ "audio" "nonet" "scanner" "networkmanager" "vboxusers" ];
     };
+
+    users.guest.dotfiles = immutableDotfiles [ "base" "bspwm" "emacs" ];
+    users.root.dotfiles  = immutableDotfiles [ "base" ];
 
     extraUsers.m = {
       hashedPassword = "$6$wO42jkhqerm$kl.qIl5USrzqAZOIkXdicrBLBgVwka2Dz81nc.aNsNJZREXY.02XxPdL1FiTCcuVP2K/DSmXqAQ3aPbri/v.g1";
@@ -141,9 +149,7 @@
       uid = 31337;
       description = "Michal Rus";
       extraGroups = [ "wheel" "audio" "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" ];
-      dotfiles = let d = ../../../dotfiles; in [
-        "${d}/base" "${d}/michalrus" "${d}/bspwm" "${d}/emacs"
-      ];
+      dotfiles = mutableDotfiles config.users.users.m [ "base" "michalrus" "bspwm" "emacs" ];
     };
 
     extraUsers.mw = {
@@ -152,6 +158,7 @@
       uid = 1337;
       description = "Michal Rus (work)";
       extraGroups = [ "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" ];
+      dotfiles = immutableDotfiles [ "base" "michalrus" "bspwm" "emacs" ];
     };
 
     extraUsers.mfin = {
@@ -160,7 +167,7 @@
       uid = 1347;
       description = "Michal Rus (fin)";
       extraGroups = [ "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" ];
-      dotfiles = [ ../../modules ../../pkgs ];
+      dotfiles = immutableDotfiles [ "base" "bspwm" "emacs" ];
     };
   };
 
