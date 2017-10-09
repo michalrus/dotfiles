@@ -36,9 +36,9 @@ with lib;
 
     symlinkUser = u: ''
       if [ "$USER" = "${u.name}" ] ; then
-        GLOBIGNORE=.:..
-        ${concatMapStringsSep "\n" (src: ''cp --no-preserve=mode --remove-destination --symbolic-link --recursive "${src}/"* "$HOME/"'') u.dotfiles}
-        unset GLOBIGNORE
+        cp --no-preserve=mode --remove-destination --symbolic-link --recursive \
+          ${concatMapStringsSep " " (src: ''"${src}/."'' ) u.dotfiles} \
+          "$HOME/"
       fi
     '';
 
