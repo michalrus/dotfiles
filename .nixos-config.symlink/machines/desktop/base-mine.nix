@@ -157,6 +157,7 @@
       uid = 1347;
       description = "Michal Rus (fin)";
       extraGroups = [ "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" ];
+      dotfiles = [ ../../modules ../../pkgs ];
     };
   };
 
