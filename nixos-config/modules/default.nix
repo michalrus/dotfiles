@@ -1,6 +1,5 @@
 {
   imports = [
-    ./bind-etc-nixos.nix
     ./dotfiles.nix
     ./firewall-comments.nix
     ./guest-account.nix

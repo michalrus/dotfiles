@@ -12,10 +12,10 @@
 
   boot.tmpOnTmpfs = true;
 
-  boot.bindEtcNixos = {
-    enable = true;
-    location = "/home/m/.dotfiles/.nixos-config.symlink";
-  };
+  # boot.bindEtcNixos = {
+  #   enable = true;
+  #   location = "/home/m/.dotfiles/.nixos-config.symlink";
+  # };
 
   powerManagement = {
     powerDownCommands = ''
