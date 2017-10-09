@@ -141,6 +141,9 @@
       uid = 31337;
       description = "Michal Rus";
       extraGroups = [ "wheel" "audio" "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" ];
+      dotfiles = let d = ../../../dotfiles; in [
+        "${d}/base" "${d}/michalrus" "${d}/bspwm" "${d}/emacs"
+      ];
     };
 
     extraUsers.mw = {
