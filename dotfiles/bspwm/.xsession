@@ -11,4 +11,7 @@ export XMODIFIERS="@im=none"
 export GTK_IM_MODULE=xim
 
 export _JAVA_AWT_WM_NONREPARENTING=1
+
+[ -e "$HOME/.xsession.local" ] && . "$HOME/.xsession.local"
+
 exec bspwm

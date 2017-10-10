@@ -21,7 +21,7 @@ with lib;
           one editing user, to their ~/.dotfiles/.
 
           Idea: create the /nix/store locations using
-          ${../../dotfiles/base} or similar, to avoid the need to
+          ''${../../dotfiles/base} or similar, to avoid the need to
           provide r:sha256.
         '';
       };
