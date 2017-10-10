@@ -8,7 +8,7 @@ for ex in xdotool pass oathtool dmenu ; do
   command -v "$ex" >/dev/null || { echo >&1  "$ex: command not found" ; exit 1 ; }
 done
 
-lockfile="$(readlink -f "$0").lock"
+lockfile="$HOME/.pass-autotype.lock"
 ( set -o noclobber ; echo "$$" >"$lockfile" ) 2>/dev/null || { echo >&1 "$lockfile: already exists; another instance of $0 is running" ; exit 1 ; }
 trap 'e=$? ; rm -f "$lockfile" ; test $e -eq 77 && exit 0 || exit $e' INT TERM EXIT
 
