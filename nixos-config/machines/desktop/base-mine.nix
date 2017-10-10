@@ -149,7 +149,7 @@
       uid = 31337;
       description = "Michal Rus";
       extraGroups = [ "wheel" "audio" "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" ];
-      dotfiles = mutableDotfiles config.users.users.m [ "base" "michalrus/base" "bspwm" "emacs" ];
+      dotfiles = mutableDotfiles config.users.users.m [ "base" "michalrus/base" "michalrus/personal" "bspwm" "emacs" ];
     };
 
     extraUsers.mw = {

@@ -1,0 +1,1 @@
+screen -t 'ssh: michalrus.com' 1 $SHELL

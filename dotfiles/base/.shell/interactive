@@ -39,3 +39,9 @@ __eterm_control() {
 }
 
 [ -e "$HOME/.shell/interactive.local" ] && . "$HOME/.shell/interactive.local"
+
+# Use this for a initial command in a later-interactive shell.
+if [ -n "$RUN_COMMAND" ] ; then
+   eval "$RUN_COMMAND"
+   unset RUN_COMMAND
+fi
