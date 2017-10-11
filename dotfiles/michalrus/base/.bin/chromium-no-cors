@@ -1,0 +1,4 @@
+#!/bin/sh
+
+export CHROMIUM_USER_FLAGS="$CHROMIUM_USER_FLAGS --disable-web-security --user-data-dir"
+exec chromium "$@"
