@@ -42,6 +42,8 @@ __eterm_control() {
 
 # Use this for a initial command in a later-interactive shell.
 if [ -n "$RUN_COMMAND" ] ; then
-   eval "$RUN_COMMAND"
-   unset RUN_COMMAND
+  __RUN_COMMAND="$RUN_COMMAND"
+  unset RUN_COMMAND
+  eval "$__RUN_COMMAND"
+  unset __RUN_COMMAND
 fi
