@@ -12,11 +12,6 @@
 
   boot.tmpOnTmpfs = true;
 
-  # boot.bindEtcNixos = {
-  #   enable = true;
-  #   location = "/home/m/.dotfiles/.nixos-config.symlink";
-  # };
-
   powerManagement = {
     powerDownCommands = ''
       ${pkgs.procps}/bin/pgrep ssh | while IFS= read -r pid ; do
