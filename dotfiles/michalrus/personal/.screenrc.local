@@ -1,1 +1,1 @@
-screen -t 'ssh: michalrus.com' 1 $SHELL
+screen -t 'ssh: michalrus.com' 0 $SHELL

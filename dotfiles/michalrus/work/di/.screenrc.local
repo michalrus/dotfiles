@@ -1,4 +1,4 @@
-screen -t 'ssh: michalrus.com' 1 $SHELL
-screen -t 'backend: cabal'     2 sh -c 'cd ~/Development/backend/backend && RUN_COMMAND=nix-shell exec $SHELL'
-screen -t 'backend: VM'        3 sh -c 'cd ~/Development/backend/nixos-config && exec $SHELL'
-screen -t 'backend: ssh'       4 $SHELL
+screen -t 'ssh: michalrus.com' 0 $SHELL
+screen -t 'backend: cabal'     1 sh -c 'cd ~/Development/backend/backend && RUN_COMMAND=nix-shell exec $SHELL'
+screen -t 'backend: VM'        2 sh -c 'cd ~/Development/backend/nixos-config && exec $SHELL'
+screen -t 'backend: ssh'       3 $SHELL
