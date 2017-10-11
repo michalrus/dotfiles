@@ -1,5 +1,13 @@
 # -*- mode: shell-script; sh-shell: sh -*-
 
+if [ -d "$HOME/.Xresources.d" ] ; then
+  __xresources=$(mktemp)
+  cat "$HOME/.Xresources.d"/* > "$__xresources"
+  xrdb "$__xresources"
+  rm "$__xresources"
+  unset __xresources
+fi
+
 gpg-connect-agent /bye
 
 git annex assistant --autostart --startdelay=120
