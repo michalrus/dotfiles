@@ -44,6 +44,7 @@
     };
 
     oidentd.enable = true;
+    smartd.enable = false; # TODO: why won’t it work? `/dev/xvda: Unable to detect device type`
   };
 
   users = let

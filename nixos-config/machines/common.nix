@@ -34,7 +34,7 @@
   services = {
     haveged.enable = true;
 
-    smartd.enable = true;
+    smartd.enable = lib.mkDefault true;
 
     # Because of this insanity… → https://github.com/NixOS/nixpkgs/pull/16021
     logind.extraConfig = ''
