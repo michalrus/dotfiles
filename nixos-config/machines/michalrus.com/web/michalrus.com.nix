@@ -50,7 +50,7 @@ mkMerge [
         }
 
         location /avatar {
-          alias ${../../../../dotfiles/michalrus/base/.avatar.jpg};
+          alias ${../../../../dotfiles/michalrus/base/.config/avatar.jpg};
           add_header Content-Disposition "inline; filename=Michal_Rus.jpg";
         }
 
