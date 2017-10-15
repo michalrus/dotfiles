@@ -46,7 +46,14 @@
     oidentd.enable = true;
   };
 
-  users = {
+  users = let
+
+    immutableDotfiles =  map (p: "${../../../dotfiles}/${p}");
+    mutableDotfiles = u: map (p: "${u.home}/.dotfiles/dotfiles/${p}");
+
+  in {
+    users.root.dotfiles  = immutableDotfiles [ "base" ];
+
     extraUsers.m = {
       isNormalUser = true;
       linger = true;
@@ -58,6 +65,8 @@
 
       # The password is only used for sudo; should probably use custom PAM setup, cf. http://unix.stackexchange.com/a/94646
       hashedPassword = "$6$.lrNvojxVb.$rebh/ELnYtO69DyvnqL4IWE8Gsg.neIzfGTsM0NbUsl7vhblv.P.SgLQk05mJiLFMXje/9paO8DCB2M8lEfQQ1";
+
+      dotfiles = mutableDotfiles config.users.users.m [ "base" "michalrus/base" "michalrus/personal" ];
     };
   };
 
