@@ -5,6 +5,6 @@ with lib;
 {
   services.gitolite = {
     enable = true;
-    adminPubkey = builtins.head config.users.extraUsers.m.openssh.authorizedKeys.keys;
+    adminPubkey = builtins.readFile ../../../../dotfiles/michalrus/base/.ssh/authorized_keys.d/michalrus_notebook.pub;
   };
 }
