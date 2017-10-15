@@ -34,6 +34,8 @@
   services = {
     haveged.enable = true;
 
+    smartd.enable = true;
+
     # Because of this insanity… → https://github.com/NixOS/nixpkgs/pull/16021
     logind.extraConfig = ''
       KillUserProcesses=yes
@@ -114,6 +116,7 @@
     powertop
     shared_mime_info
     silver-searcher
+    smartmontools
     socat
     sox
     sqlite-interactive
