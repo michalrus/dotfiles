@@ -35,7 +35,7 @@ mkMerge [
         expires epoch; # Cache creates more trouble in communication than it’s worth (for this site).
 
         location /protected/ {
-          location ~ ^/protected/([^/]+)\.htpasswd$ {
+          location ~ ^/protected/([^/]+)/\.htpasswd$ {
             return 403;
           }
 
@@ -43,7 +43,7 @@ mkMerge [
             autoindex on;
             autoindex_exact_size off;
             auth_basic "Speak, friend, and enter.";
-            auth_basic_user_file "$document_root/protected/$1.htpasswd";
+            auth_basic_user_file "$document_root/protected/$1/.htpasswd";
           }
         }
 
