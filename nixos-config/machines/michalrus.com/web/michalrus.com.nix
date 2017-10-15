@@ -49,11 +49,16 @@ mkMerge [
           add_header Content-Disposition "inline; filename=Michal_Rus_CV-$1";
         }
 
-        # # TODO: avatar — after the new dotfiles profiles are ready
-        # location /avatar {
-        #   alias { ../../../../dotfiles/.avatar.jpg };
-        #   add_header Content-Disposition "inline; filename=Michal_Rus.jpg";
-        # }
+        location /avatar {
+          alias ${../../../../dotfiles/michalrus/base/.avatar.jpg};
+          add_header Content-Disposition "inline; filename=Michal_Rus.jpg";
+        }
+
+        location /ssh {
+          alias ${../../../../dotfiles/michalrus/base/.ssh/authorized_keys.d/michalrus_notebook.pub};
+          add_header Content-Type "text/plain; charset=utf-8";
+          add_header Content-Disposition "inline; filename=Michal_Rus_ssh.pub";
+        }
 
         location / {
           root ${./michalrus.com};
