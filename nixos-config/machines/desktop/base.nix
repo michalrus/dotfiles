@@ -156,6 +156,7 @@
   };
 
   users.users.root = {
+    dotfiles = [ "${../../../dotfiles}/base" ];
     openssh.authorizedKeys.keyFiles = [ ../../../dotfiles/michalrus/base/.ssh/authorized_keys.d/michalrus_notebook.pub ];
   };
 }

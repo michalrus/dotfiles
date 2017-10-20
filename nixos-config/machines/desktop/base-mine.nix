@@ -136,7 +136,6 @@
     };
 
     users.guest.dotfiles = immutableDotfiles [ "base" "bspwm" "emacs" ];
-    users.root.dotfiles  = immutableDotfiles [ "base" ];
 
     extraUsers.m = {
       hashedPassword = "$6$wO42jkhqerm$kl.qIl5USrzqAZOIkXdicrBLBgVwka2Dz81nc.aNsNJZREXY.02XxPdL1FiTCcuVP2K/DSmXqAQ3aPbri/v.g1";

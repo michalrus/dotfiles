@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=git-annex-assistant
+Exec=git annex assistant --autostart
+StartupNotify=false
+Terminal=false
+Hidden=false
