@@ -35,6 +35,8 @@ in
 
       inherit (getCommit "9702d2e57c84ea241c4b8a9731cf0a8de4932264" "0hi156c8bqdrbwaqk74whpxa6x26b0md12b3690s6hr1rp9mv9mj") xpad;
 
+      inherit (getCommit "0e39979ae0bb6db8d1f8eb833c3d30a67e2c5536" "1yffh7nnh8h2zxxk3w0zbbvqzjk3av6k65ismw1gvdz1iavvsdlc") hubstaff;
+
       # Left to contribute:
 
       catdocx            = (import ./catdocx.nix super self);

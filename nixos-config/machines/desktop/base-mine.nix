@@ -155,6 +155,9 @@
       extraGroups = [ "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" ];
       dotfiles = immutableDotfiles [ "base" "michalrus/base" "michalrus/desktop" "michalrus/work/di" "bspwm" "emacs" ];
       packages = with pkgs; [
+        jetbrains.idea-community
+        michalrus.hubstaff
+        nixos-unstable.discord
         openjdk8   # for nofatty
         pgadmin
       ];
