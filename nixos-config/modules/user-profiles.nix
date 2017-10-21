@@ -9,8 +9,8 @@ with lib;
         type = types.listOf types.path;
         default = [];
         description = ''
-          List of packages to add to user’s `PATH`. A sort of an
-          immutable `nix-env -i`. Quite primitive.
+          List of packages to add to user’s profile. A sort of an
+          immutable `nix-env -i`.
         '';
       };
     }];
