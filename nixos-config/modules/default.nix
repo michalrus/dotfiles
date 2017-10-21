@@ -10,5 +10,6 @@
     ./sane-extra-config.nix
     ./screen.nix
     ./torified-users.nix
+    ./user-profiles.nix
   ];
 }

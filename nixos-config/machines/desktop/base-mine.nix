@@ -27,7 +27,6 @@
 
   environment.systemPackages = with pkgs; [
     (haskellPackages.ghcWithHoogle (hs: []))
-    aegisub
     chromium
     compton
     cool-retro-term
@@ -36,33 +35,19 @@
     ghostscript
     gnome2.gnome_icon_theme
     gnome3.adwaita-icon-theme
-    gnome3.dconf   # so that GnuCash prefs can be changed
     gnome3.gnome_themes_standard
-    gnucash26
     haskellPackages.hlint
-    isync
-    lilypond
     michalrus.gettext-emacs
     michalrus.intero.nix-shim
     michalrus.leksah
     michalrus.lemonbar-xft
-    michalrus.transcribe
     networkmanagerapplet
     nixos-unstable.alacritty
-    nixos-unstable.bitcoin
-    nixos-unstable.electrum
     nixos-unstable.octave
-    openjdk8   # for nofatty
-    pgadmin
     rofi
     shellcheck
-    stack
     stalonetray
     sxhkd
-    (texlive.combine {
-      inherit (texlive) scheme-small latexmk titlesec tocloft todonotes cleveref lipsum biblatex logreq cm-super csquotes pgfplots adjustbox collectbox ccicons polski placeins xstring pdfpages unicode-math filehook textpos marvosym progressbar lm-math ucharcat;
-      #gregorio = pkgs.michalrus.gregorio.forTexlive;
-    })
   ];
 
   environment.variables."GTK2_RC_FILES" =
@@ -144,6 +129,22 @@
       description = "Michal Rus";
       extraGroups = [ "wheel" "audio" "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" ];
       dotfiles = mutableDotfiles config.users.users.m [ "base" "michalrus/base" "michalrus/desktop" "michalrus/personal" "bspwm" "emacs" ];
+      packages = with pkgs; [
+        aegisub
+        gnome3.dconf   # so that GnuCash prefs can be changed
+        gnucash26
+        isync
+        openjdk8   # for nofatty
+        lilypond
+        michalrus.transcribe
+        nixos-unstable.bitcoin
+        nixos-unstable.electrum
+        stack
+        (texlive.combine {
+          inherit (texlive) scheme-small latexmk titlesec tocloft todonotes cleveref lipsum biblatex logreq cm-super csquotes pgfplots adjustbox collectbox ccicons polski placeins xstring pdfpages unicode-math filehook textpos marvosym progressbar lm-math ucharcat;
+          #gregorio = pkgs.michalrus.gregorio.forTexlive;
+        })
+      ];
     };
 
     extraUsers.mw = {
@@ -153,6 +154,10 @@
       description = "Michal Rus (work)";
       extraGroups = [ "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" ];
       dotfiles = immutableDotfiles [ "base" "michalrus/base" "michalrus/desktop" "michalrus/work/di" "bspwm" "emacs" ];
+      packages = with pkgs; [
+        openjdk8   # for nofatty
+        pgadmin
+      ];
     };
 
     extraUsers.mfin = {
