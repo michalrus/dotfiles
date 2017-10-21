@@ -10,6 +10,18 @@
 
   environment.systemPackages = with pkgs; [
     nixos-unstable.ltris
+    pcmanfm
+    albatross
+    gdrivefs
+    truecrypt
+    mimms
+    bomi
+    streamlink
+    aspell
+    aspellDicts.pl
+    pdfmod
+    perlPackages.PDFAPI2
+    fbida
   ];
 
   users.extraUsers.robert = {
@@ -17,6 +29,7 @@
     isNormalUser = true;
     description = "Robert Rus";
     extraGroups = [ "wheel" "scanner" "networkmanager" "vboxusers" "cdrom" ];
+    dotfiles = let d = ../../../dotfiles; in [ "${d}/base" "${d}/xfce" "${d}/git-annex" "${d}/robertrus" ];
   };
 
   hardware.android.automount = let user = config.users.users.robert; in {
