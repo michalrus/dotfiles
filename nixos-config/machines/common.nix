@@ -114,6 +114,7 @@
     poppler_utils
     posix_man_pages
     powertop
+    ripgrep
     shared_mime_info
     silver-searcher
     smartmontools
