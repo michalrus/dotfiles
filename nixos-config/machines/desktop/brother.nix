@@ -18,7 +18,9 @@
 
   environment.systemPackages = with pkgs; [
     (chromium.override { enablePepperFlash = true; })
+    anki
     frescobaldi
+    gnome3.pomodoro
     gnucash26
     ioquake3
     lilypond
@@ -63,11 +65,14 @@
       groups = [ "audio" "nonet" "scanner" "networkmanager" ];
     };
 
+    users.guest.dotfiles = let d = ../../../dotfiles; in [ "${d}/base" ];
+
     extraUsers.mikolaj = {
       hashedPassword = "$6$Mhe4HFJEEu5WL$vr09OpHztpUwnZk/PvNqvZI1dQI.zlfmcE/EiYvJvAE0HcDZJ/YvYc6pzqGhitRjrVklyCCIemSUl0EzZmGhL.";
       isNormalUser = true;
       description = "Mikolaj Rus";
       extraGroups = [ "wheel" "audio" "nonet" "scanner" "networkmanager" ];
+      dotfiles = let d = ../../../dotfiles; in [ "${d}/base" "${d}/gnome" "${d}/git-annex" "${d}/mikolajrus" ];
     };
   };
 }
