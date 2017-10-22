@@ -10,15 +10,15 @@ general {
 order += "volume master"
 order += "battery 1"
 order += "cpu_temperature 0"
-order += "cpu_usage"
+#order += "cpu_usage"
 order += "load"
-order += "wireless wlp8s0"
+#order += "wireless wlp8s0"
 #order += "ethernet enp7s0"
 #order += "ipv6"
-order += "disk /"
-order += "disk /var"
-order += "tztime utc"
+#order += "disk /"
+#order += "disk /var"
 order += "tztime local"
+order += "tztime utc"
 
 volume master {
   format = "♪ %volume"
@@ -82,10 +82,10 @@ disk "/var" {
 }
 
 tztime utc {
-  format = "%H:%M (%Z)"
+  format = "%H:%M %Z"
   timezone = "UTC"
 }
 
 tztime local {
-  format = "%a %d %b %Y %H:%M:%S %z (%Z)"
+  format = "%a %d %b %H:%M:%S %Z"
 }

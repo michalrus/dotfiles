@@ -15,10 +15,10 @@
 (global-set-key (kbd "H-0") 'delete-window)        (global-unset-key (kbd "C-x 0"))
 
 (global-unset-key (kbd "C-x o"))
-(global-set-key (kbd "s-<left>")  'windmove-left)
-(global-set-key (kbd "s-<right>") 'windmove-right)
-(global-set-key (kbd "s-<up>")    'windmove-up)
-(global-set-key (kbd "s-<down>")  'windmove-down)
+(global-set-key (kbd "H-<left>")  'windmove-left)
+(global-set-key (kbd "H-<right>") 'windmove-right)
+(global-set-key (kbd "H-<up>")    'windmove-up)
+(global-set-key (kbd "H-<down>")  'windmove-down)
 
 (global-set-key (kbd "H-s-<left>")  'shrink-window-horizontally)
 (global-set-key (kbd "H-s-<right>") 'enlarge-window-horizontally)
