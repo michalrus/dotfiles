@@ -36,6 +36,7 @@
     gnome2.gnome_icon_theme
     gnome3.adwaita-icon-theme
     gnome3.gnome_themes_standard
+    gnome3.zenity
     haskellPackages.hlint
     michalrus.gettext-emacs
     michalrus.intero.nix-shim
@@ -46,8 +47,10 @@
     nixos-unstable.octave
     rofi
     shellcheck
+    i3status
     stalonetray
     sxhkd
+    termite
   ];
 
   environment.variables."GTK2_RC_FILES" =
@@ -95,7 +98,7 @@
 
       displayManager.lightdm.enable = true;
       desktopManager.xterm.enable = false;
-      windowManager.bspwm.enable = true;
+      windowManager.i3.enable = true;
 
       displayManager.xserverArgs = [ "-ardelay" "150" "-arinterval" "8" ];
     };
@@ -120,7 +123,7 @@
       groups = [ "audio" "nonet" "scanner" "networkmanager" "vboxusers" ];
     };
 
-    users.guest.dotfiles = immutableDotfiles [ "base" "bspwm" "emacs" ];
+    users.guest.dotfiles = immutableDotfiles [ "base" "i3" "emacs" ];
 
     extraUsers.m = {
       hashedPassword = "$6$wO42jkhqerm$kl.qIl5USrzqAZOIkXdicrBLBgVwka2Dz81nc.aNsNJZREXY.02XxPdL1FiTCcuVP2K/DSmXqAQ3aPbri/v.g1";
@@ -128,7 +131,7 @@
       uid = 31337;
       description = "Michal Rus";
       extraGroups = [ "wheel" "audio" "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" ];
-      dotfiles = mutableDotfiles config.users.users.m [ "base" "michalrus/base" "michalrus/desktop" "michalrus/personal" "bspwm" "emacs" ];
+      dotfiles = mutableDotfiles config.users.users.m [ "base" "michalrus/base" "michalrus/desktop" "michalrus/personal" "i3" "emacs" ];
       packages = with pkgs; [
         aegisub
         gnome3.dconf   # so that GnuCash prefs can be changed
@@ -153,7 +156,7 @@
       uid = 1337;
       description = "Michal Rus (work)";
       extraGroups = [ "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" ];
-      dotfiles = immutableDotfiles [ "base" "michalrus/base" "michalrus/desktop" "michalrus/work/di" "bspwm" "emacs" ];
+      dotfiles = immutableDotfiles [ "base" "michalrus/base" "michalrus/desktop" "michalrus/work/di" "i3" "emacs" ];
       packages = with pkgs; [
         jetbrains.idea-community
         michalrus.hubstaff
@@ -169,7 +172,7 @@
       uid = 1347;
       description = "Michal Rus (fin)";
       extraGroups = [ "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" ];
-      dotfiles = immutableDotfiles [ "base" "bspwm" "emacs" ];
+      dotfiles = immutableDotfiles [ "base" "i3" "emacs" ];
     };
   };
 

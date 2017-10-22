@@ -1,0 +1,3 @@
+#!/bin/sh
+
+find "$HOME/.config/i3" -name '*.conf' | sort | xargs cat > "$HOME/.config/i3/config"

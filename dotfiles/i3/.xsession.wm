@@ -1,0 +1,4 @@
+# -*- mode: shell-script; sh-shell: sh -*-
+
+i3-merge-configs
+exec i3
