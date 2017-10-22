@@ -26,7 +26,7 @@ in
       serviceConfig.Type = "forking";
       wantedBy = [ "sleep.target" ];
       before = [ "sleep.target" ];
-      path = with pkgs; [ procps bash i3lock ];
+      path = with pkgs; [ procps bash i3lock xorg.xset ];
       script = ''
         pgrep -f xsession | while read p ; do
           printf '%s %s\n' \
@@ -36,9 +36,15 @@ in
           [ -z "$(grep "^$USER:" /etc/shadow | cut -d : -f 2)" ] && continue # if password empty
           export DISPLAY
           ${config.security.wrapperDir}/sudo -n --background -u $USER bash -c \
-            'pkill -u $USER -USR1 dunst
+            'revert() {
+               pkill -u $USER -USR2 dunst
+               xset dpms 0 0 0
+             }
+             trap revert HUP INT TERM
+             pkill -u $USER -USR1 dunst
+             xset +dpms dpms 3 3 3
              i3lock -n -c 000000 || true
-             pkill -u $USER -USR2 dunst'
+             revert'
         done
         '';
     };
