@@ -33,9 +33,7 @@
     dunst
     gettext
     ghostscript
-    gnome2.gnome_icon_theme
-    gnome3.adwaita-icon-theme
-    gnome3.gnome_themes_standard
+    breeze-qt4 breeze-qt5 breeze-icons pkgs.hicolor_icon_theme kde-gtk-config breeze-gtk
     gnome3.zenity
     haskellPackages.hlint
     michalrus.gettext-emacs
@@ -52,9 +50,6 @@
     sxhkd
     termite
   ];
-
-  environment.variables."GTK2_RC_FILES" =
-    "${pkgs.gnome3.gnome_themes_standard}/share/themes/Adwaita/gtk-2.0/gtkrc";
 
   programs = {
     ssh.startAgent = false;
@@ -96,7 +91,17 @@
         '';
       };
 
-      displayManager.lightdm.enable = true;
+      displayManager.lightdm = {
+        enable = true;
+        background = "${../../../dotfiles/michalrus/trash/.wallpapers/rainbow.png}";
+        greeters.gtk = {
+          theme.package = pkgs.breeze-gtk;
+          theme.name = "Breeze";
+          # No way to choose hicolor as a fallback. :/ ⇒ missing icons
+          #iconTheme.package = pkgs.breeze-icons;
+          #iconTheme.name = "breeze";
+        };
+      };
       desktopManager.xterm.enable = false;
       windowManager.i3.enable = true;
 
