@@ -16,7 +16,7 @@
   };
 
   environment.systemPackages = with pkgs; [
-    gnome3.evolution
+    michalrus.evolution
     google-chrome
     skype
     unrar
