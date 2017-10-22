@@ -97,7 +97,7 @@
         greeters.gtk = {
           theme.package = pkgs.breeze-gtk;
           theme.name = "Breeze";
-          # No way to choose hicolor as a fallback. :/ ⇒ missing icons
+          # No way to choose hicolor as a fallback. ⇒ https://github.com/NixOS/nixpkgs/issues/30694
           #iconTheme.package = pkgs.breeze-icons;
           #iconTheme.name = "breeze";
         };
