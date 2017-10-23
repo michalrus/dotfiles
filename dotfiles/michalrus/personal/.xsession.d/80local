@@ -1,0 +1,14 @@
+# -*- mode: shell-script; sh-shell: sh -*-
+
+xterm -name initial -e 'zsh -i -c s' &
+
+emacs --frame-parameters='(quote (name . "org"))' --eval '(find-file "~/Org/Today.org")' &
+
+chromium &
+
+rm ~/Archive/Personal/Accounting/Personal.gnucash.LCK || true
+gnucash &
+
+xterm -name mtr -e 'mtr 8.8.8.8' &
+
+nofatty &

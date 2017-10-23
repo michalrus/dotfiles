@@ -128,7 +128,7 @@
       groups = [ "audio" "nonet" "scanner" "networkmanager" "vboxusers" ];
     };
 
-    users.guest.dotfiles = immutableDotfiles [ "base" "i3" "emacs" ];
+    users.guest.dotfiles = immutableDotfiles [ "base" "i3" "michalrus/guest" ];
 
     extraUsers.m = {
       hashedPassword = "$6$wO42jkhqerm$kl.qIl5USrzqAZOIkXdicrBLBgVwka2Dz81nc.aNsNJZREXY.02XxPdL1FiTCcuVP2K/DSmXqAQ3aPbri/v.g1";
@@ -136,7 +136,7 @@
       uid = 31337;
       description = "Michal Rus";
       extraGroups = [ "wheel" "audio" "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" ];
-      dotfiles = mutableDotfiles config.users.users.m [ "base" "michalrus/base" "michalrus/desktop" "michalrus/personal" "i3" "emacs" ];
+      dotfiles = mutableDotfiles config.users.users.m [ "base" "michalrus/base" "michalrus/desktop" "git-annex" "michalrus/personal" "i3" "emacs" ];
       packages = with pkgs; [
         aegisub
         gnome3.dconf   # so that GnuCash prefs can be changed
@@ -161,7 +161,7 @@
       uid = 1337;
       description = "Michal Rus (work)";
       extraGroups = [ "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" ];
-      dotfiles = immutableDotfiles [ "base" "michalrus/base" "michalrus/desktop" "michalrus/work/di" "i3" "emacs" ];
+      dotfiles = immutableDotfiles [ "base" "michalrus/base" "michalrus/desktop" "git-annex" "michalrus/work/di" "i3" "emacs" ];
       packages = with pkgs; [
         jetbrains.idea-community
         michalrus.hubstaff

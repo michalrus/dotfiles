@@ -1,0 +1,7 @@
+# -*- mode: shell-script; sh-shell: sh -*-
+
+gpg-connect-agent /bye
+
+systemctl --user start screen.service &
+
+systemctl --user start emacs-daemon.service &
