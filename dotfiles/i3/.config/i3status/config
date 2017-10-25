@@ -17,8 +17,8 @@ order += "load"
 #order += "ipv6"
 #order += "disk /"
 #order += "disk /var"
-order += "tztime local"
 order += "tztime utc"
+order += "tztime local"
 
 volume master {
   format = "♪ %volume"
