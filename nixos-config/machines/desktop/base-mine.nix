@@ -166,6 +166,7 @@
         jetbrains.idea-community
         michalrus.hubstaff
         nixos-unstable.discord
+        nixos-unstable.skype
         openjdk8   # for nofatty
         pgadmin
       ];
