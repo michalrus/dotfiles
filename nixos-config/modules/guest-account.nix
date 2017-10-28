@@ -38,19 +38,7 @@ in
     };
   };
 
-  config = mkIf cfg.enable (let
-
-    cleanUp = pkgs.writeScript "guest-account-cleanup" ''
-      #!${pkgs.stdenv.shell}
-
-      exec ${pkgs.rsync}/bin/rsync \
-        -a -H -A -X --delete --force \
-        --usermap='*':guest --groupmap='*':users \
-        --exclude=/.Xauthority \
-        "${cfg.skeleton}/" "${cfg.home}/"
-    '';
-
-  in {
+  config = mkIf cfg.enable {
 
     users.extraUsers.guest = {
       hashedPassword = "";
@@ -61,18 +49,27 @@ in
       extraGroups = cfg.groups;
     };
 
-    environment.extraInit = ''
-      if [ "$UID" = "${toString cfg.uid}" ] ; then
-        ${config.security.wrapperDir}/sudo -n ${cleanUp} || exit 1
-      fi
-    '';
+    systemd.services."guest-account-cleanup" = let
 
-    security.sudo = {
-      enable = true;
-      extraConfig = ''
-        guest ALL = (root) NOPASSWD: ${cleanUp}
+      cleanup = pkgs.writeScript "guest-account-cleanup" ''
+        #!${pkgs.stdenv.shell}
+
+        exec ${pkgs.rsync}/bin/rsync \
+          -a -H -A -X --delete --force \
+          --usermap='*':guest --groupmap='*':users \
+          --exclude=/.Xauthority \
+          "${cfg.skeleton}/" "${cfg.home}/"
       '';
+
+      slice = [ "user-${toString cfg.uid}.slice" ];
+
+    in {
+      wantedBy = slice;
+      partOf = slice;
+      script = "exec sleep $((2 ** 31))";
+      preStart = "exec ${cleanup}";
+      postStop = "exec ${cleanup}";
     };
 
-  });
+  };
 }
