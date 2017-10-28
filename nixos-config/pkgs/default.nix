@@ -31,6 +31,13 @@ in
       leksah             = (import ./leksah.nix super self);
       transcribe         = (import ./transcribe.nix nixos-unstable self);
 
+      i3 = super.i3.overrideDerivation (oldAttrs: {
+        patches = [ (super.fetchurl {
+          url = "https://patch-diff.githubusercontent.com/raw/i3/i3/pull/2953.diff";
+          sha256 = "05f3xibr9yx6hm1hzryvagfryn0mlh1vrx182frszxmcygc4kl3z";
+        }) ];
+      });
+
       inherit (getCommit "9702d2e57c84ea241c4b8a9731cf0a8de4932264" "0hi156c8bqdrbwaqk74whpxa6x26b0md12b3690s6hr1rp9mv9mj") xpad;
 
       inherit (getCommit "8b0bd11a88c05b7228100ff79542f9a9f0bff9ec" "0pjf83390gnh46l8bdm884w6i1w0fsrm95w43abq21akh2qv6lw4") hubstaff;

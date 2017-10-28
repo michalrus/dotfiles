@@ -104,6 +104,7 @@
       };
       desktopManager.xterm.enable = false;
       windowManager.i3.enable = true;
+      windowManager.i3.package = pkgs.michalrus.i3;
 
       displayManager.xserverArgs = [ "-ardelay" "150" "-arinterval" "8" ];
     };
