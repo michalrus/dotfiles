@@ -65,11 +65,6 @@ precmd() {
 # Git autocomplete for the `g' alias
 compdef _git g=git
 
-autoload -U up-line-or-beginning-search
-autoload -U down-line-or-beginning-search
-zle -N up-line-or-beginning-search
-zle -N down-line-or-beginning-search
-
 typeset -A key
 
 key[Up]=${terminfo[kcuu1]}
@@ -80,16 +75,16 @@ key[Delete]=${terminfo[kdch1]}
 key[PageUp]=${terminfo[kpp]}
 key[PageDown]=${terminfo[knp]}
 
-[[ -n "${key[Up]}"       ]]  && bindkey  "${key[Up]}"       up-line-or-beginning-search
-[[ -n "${key[Down]}"     ]]  && bindkey  "${key[Down]}"     down-line-or-beginning-search
+[[ -n "${key[Up]}"       ]]  && bindkey  "${key[Up]}"       history-beginning-search-backward
+[[ -n "${key[Down]}"     ]]  && bindkey  "${key[Down]}"     history-beginning-search-forward
 [[ -n "${key[Home]}"     ]]  && bindkey  "${key[Home]}"     beginning-of-line
 [[ -n "${key[End]}"      ]]  && bindkey  "${key[End]}"      end-of-line
 [[ -n "${key[Delete]}"   ]]  && bindkey  "${key[Delete]}"   delete-char
 [[ -n "${key[PageUp]}"   ]]  && bindkey  "${key[PageUp]}"   beginning-of-buffer-or-history
 [[ -n "${key[PageDown]}" ]]  && bindkey  "${key[PageDown]}" end-of-buffer-or-history
 
-bindkey "\e[A" up-line-or-beginning-search
-bindkey "\e[B" down-line-or-beginning-search
+bindkey "\e[A" history-beginning-search-backward
+bindkey "\e[B" history-beginning-search-forward
 bindkey "\e[1;5C" forward-word
 bindkey "\e[1;5D" backward-word
 bindkey "\e[1;3C" forward-word
