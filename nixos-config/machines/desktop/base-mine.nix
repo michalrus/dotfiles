@@ -36,12 +36,12 @@
     breeze-qt4 breeze-qt5 breeze-icons pkgs.hicolor_icon_theme kde-gtk-config breeze-gtk
     gnome3.zenity
     haskellPackages.hlint
+    michalrus.alacritty
     michalrus.gettext-emacs
     michalrus.intero.nix-shim
     michalrus.leksah
     michalrus.lemonbar-xft
     networkmanagerapplet
-    nixos-unstable.alacritty
     nixos-unstable.octave
     rofi
     shellcheck

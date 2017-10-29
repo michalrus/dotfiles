@@ -101,12 +101,12 @@
     lame
     libjpeg
     libnotify
-    libreoffice
-    michalrus.xpad
     mpv
     nixos-unstable.awf
     nixos-unstable.devede
+    nixos-unstable.libreoffice
     nixos-unstable.octave
+    nixos-unstable.xpad
     nixos-unstable.youtube-dl
     ntfs3g
     pavucontrol
