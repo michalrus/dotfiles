@@ -119,6 +119,7 @@
     rtmpdump
     samba
     scantailor
+    shellcheck
     shntool
     simple-scan
     timidity

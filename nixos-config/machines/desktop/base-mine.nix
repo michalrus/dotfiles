@@ -44,7 +44,6 @@
     networkmanagerapplet
     nixos-unstable.octave
     rofi
-    shellcheck
     i3status
     stalonetray
     sxhkd
