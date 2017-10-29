@@ -16,7 +16,7 @@
   };
 
   environment.systemPackages = with pkgs; [
-    nixos-unstable.evolution
+    nixos-unstable.gnome3.evolution
     google-chrome
     skype
     unrar
