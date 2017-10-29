@@ -46,7 +46,6 @@
     rofi
     i3status
     stalonetray
-    sxhkd
     termite
   ];
 
