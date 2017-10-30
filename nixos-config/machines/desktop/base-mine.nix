@@ -43,6 +43,7 @@
     michalrus.lemonbar-xft
     networkmanagerapplet
     nixos-unstable.octave
+    pdfpc
     rofi
     i3status
     stalonetray
