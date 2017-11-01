@@ -12,7 +12,7 @@ merge(){
 # Instead, add your configuration to $d/
 #
 EOF
-  find -L "$d" -type f -a -not -name '*.example' -a -not -name '*.pem' | sort | xargs cat >> "$t"
+  find -L "$d" -not -type d -a -not -name '*.example' -a -not -name '*.pem' | sort | xargs cat >> "$t"
   mv "$t" "$f"
 }
 
