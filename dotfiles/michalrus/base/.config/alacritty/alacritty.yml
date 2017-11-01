@@ -84,11 +84,8 @@ background_opacity: 0.95
 # • https://github.com/tomaka/winit/blob/15aafc2908465448b4e7fc596f858d9ee4f4765b/src/platform/linux/x11/events.rs#L76
 
 key_bindings:
-  - { key: V,        mods: Control|Shift,    action: Paste               }
-  - { key: C,        mods: Control|Shift,    action: Copy                }
-  - { key: Q,        mods: Command, action: Quit                         }
-  - { key: W,        mods: Command, action: Quit                         }
-  - { key: Insert,   mods: Shift,   action: PasteSelection               }
+  - { key: Insert,   mods: Control, action: Copy                         }
+  - { key: Insert,   mods: Shift,   action: Paste                        }
   - { key: Home,                    chars: "\x1bOH",   mode: AppCursor   }
   - { key: Home,                    chars: "\x1b[H",   mode: ~AppCursor  }
   - { key: End,                     chars: "\x1bOF",   mode: AppCursor   }
@@ -138,7 +135,6 @@ key_bindings:
   - { key: Delete,                  chars: "\x1b[3~"                     }
 
 mouse_bindings:
-  - { mouse: Middle, action: PasteSelection }
 
 mouse:
   double_click: { threshold: 300 }
@@ -147,6 +143,6 @@ mouse:
 selection:
   semantic_escape_chars: ",│`|:\"' ()[]{}<>"
 
-hide_cursor_when_typing: true
+hide_cursor_when_typing: false
 
 live_config_reload: true
