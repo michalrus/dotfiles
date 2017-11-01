@@ -44,6 +44,8 @@ __eterm_control() {
 if [ -n "$RUN_COMMAND" ] ; then
   __RUN_COMMAND="$RUN_COMMAND"
   unset RUN_COMMAND
-  eval "$__RUN_COMMAND"
+  trap 'echo Interrupted' INT # leave some command here or bash will freeze
+  eval "($__RUN_COMMAND)"
+  trap - INT
   unset __RUN_COMMAND
 fi
