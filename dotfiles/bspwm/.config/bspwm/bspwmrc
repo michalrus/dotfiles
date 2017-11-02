@@ -45,4 +45,6 @@ bspc rule -a 'VirtualBox' desktop='^4'
 bspc rule -a 'nofatty' desktop='^10'
 bspc rule -a 'Transmission-gtk' desktop='^10'
 
+"$HOME"/.config/autostart/dotfiles.sh
+
 [ -e "$HOME/.config/bspwm/bspwmrc.local" ] && . "$HOME/.config/bspwm/bspwmrc.local"

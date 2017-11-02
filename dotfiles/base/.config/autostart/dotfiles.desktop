@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Application
-Name=git-annex-assistant
-Exec=git annex assistant --autostart
+Name=dotfiles-autostart
+Exec=sh -c 'exec ~/.config/autostart/dotfiles.sh'
 StartupNotify=false
 Terminal=false
 Hidden=false
