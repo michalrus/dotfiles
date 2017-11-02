@@ -10,7 +10,7 @@ XTerm*bellIsUrgent: true
 XTerm*fullscreen: never
 XTerm*borderWidth: 0
 
-xterm*VT100.Translations: #override \
+XTerm*translations: #override \
   Shift <Key>Insert:    insert-selection(SELECT) \n\
   Ctrl <Key>Insert:     copy-selection(SELECT)
 
