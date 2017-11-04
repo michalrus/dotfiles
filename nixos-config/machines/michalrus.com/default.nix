@@ -48,7 +48,7 @@
   };
 
   users = {
-    users.root.dotfiles = [ "${../../../dotfiles}/base" ];
+    users.root.dotfiles.profiles = [ "base" ];
 
     extraUsers.m = {
       isNormalUser = true;
@@ -60,7 +60,8 @@
       # The password is only used for sudo; should probably use custom PAM setup, cf. http://unix.stackexchange.com/a/94646
       hashedPassword = "$6$.lrNvojxVb.$rebh/ELnYtO69DyvnqL4IWE8Gsg.neIzfGTsM0NbUsl7vhblv.P.SgLQk05mJiLFMXje/9paO8DCB2M8lEfQQ1";
 
-      dotfiles = let d = "${config.users.users.m.home}/.dotfiles/dotfiles"; in [ "${d}/base" "${d}/michalrus/base" "${d}/michalrus/personal" ];
+      dotfiles.base = config.users.users.m.home + "/.dotfiles/dotfiles";
+      dotfiles.profiles = [ "base" "michalrus/base" "michalrus/personal" ];
     };
   };
 

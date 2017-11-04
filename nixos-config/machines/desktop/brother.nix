@@ -65,14 +65,14 @@
       groups = [ "audio" "nonet" "scanner" "networkmanager" ];
     };
 
-    users.guest.dotfiles = let d = ../../../dotfiles; in [ "${d}/base" ];
+    users.guest.dotfiles.profiles = [ "base" ];
 
     extraUsers.mikolaj = {
       hashedPassword = "$6$Mhe4HFJEEu5WL$vr09OpHztpUwnZk/PvNqvZI1dQI.zlfmcE/EiYvJvAE0HcDZJ/YvYc6pzqGhitRjrVklyCCIemSUl0EzZmGhL.";
       isNormalUser = true;
       description = "Mikolaj Rus";
       extraGroups = [ "wheel" "audio" "nonet" "scanner" "networkmanager" ];
-      dotfiles = let d = ../../../dotfiles; in [ "${d}/base" "${d}/gnome" "${d}/git-annex" "${d}/mikolajrus" ];
+      dotfiles.profiles = [ "base" "gnome" "git-annex" "mikolajrus" ];
     };
   };
 }
