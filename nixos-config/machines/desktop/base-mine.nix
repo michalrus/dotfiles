@@ -133,7 +133,7 @@
       extraGroups = [ "wheel" "audio" "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" ];
       dotfiles.base = "${config.users.users.m.home}/.dotfiles/dotfiles";
       dotfiles.profiles = [ "base" "michalrus/base" "michalrus/desktop" "git-annex" "michalrus/personal" "i3" "emacs" ];
-      packages = with pkgs; [
+      packages' = with pkgs; [
         aegisub
         gnome3.dconf   # so that GnuCash prefs can be changed
         gnucash26
@@ -158,7 +158,7 @@
       description = "Michal Rus (work)";
       extraGroups = [ "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" ];
       dotfiles.profiles = [ "base" "michalrus/base" "michalrus/desktop" "git-annex" "michalrus/work/di" "i3" "emacs" ];
-      packages = with pkgs; [
+      packages' = with pkgs; [
         jetbrains.idea-community
         michalrus.hubstaff
         nixos-unstable.discord

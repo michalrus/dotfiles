@@ -2,55 +2,59 @@
 
 let
 
-  emacs = pkgs.emacs25.override {
+  base = pkgs.emacs25.override {
     # Use ‘lucid’ toolkit—it doesn’t have this bug → https://bugzilla.gnome.org/show_bug.cgi?id=85715
     withX = true;
     withGTK2 = false;
     withGTK3 = false;
   };
 
-  packages = (pkgs.emacsPackagesNgGen emacs).override (super: self: {
-    # From MELPA Unstable @ NixOS Stable:
-    #inherit (self.melpaPackages) ???;
-
-    # From MELPA Unstable @ NixOS Unstable (bleeding edge):
-    inherit ((pkgs.nixos-unstable.emacsPackagesNgGen emacs).melpaPackages) ensime;
-
+  whole = (pkgs.emacsPackagesNgGen base).emacsWithPackages (epkgs:
     # Keep all of intero-related stuff in sync.
-    intero = pkgs.michalrus.intero.emacsMode self;
-  });
+    [ (pkgs.michalrus.intero.emacsMode epkgs) ]
+    ++
 
-  whole = packages.emacsWithPackages (epkgs: with epkgs; [
-    auctex
-    bbdb
-    company
-    counsel
-    diff-hl
-    ensime
-    expand-region
-    flycheck
-    git-link
-    go-mode
-    google-translate
-    gregorio-mode
-    haskell-mode
-    hayoo
-    hindent
-    hl-todo
-    intero
-    ivy
-    magit
-    markdown-mode
-    neotree
-    projectile
-    python-mode
-    scala-mode
-    solarized-theme
-    sort-words
-    swiper
-    use-package
-    yaml-mode
-  ]);
+    # MELPA Unstable @ NixOS Unstable (bleedingest edge)
+    (with (pkgs.nixos-unstable.emacsPackagesNgGen base).melpaPackages; [
+      ensime
+      hayoo
+      sort-words
+    ])
+    ++
+
+    # ELPA Stable @ NixOS Stable
+    (with epkgs.elpaPackages; [
+      auctex
+    ])
+    ++
+
+    # MELPA Stable @ NixOS Stable
+    (with epkgs.melpaStablePackages; [
+      company
+      counsel
+      diff-hl
+      expand-region
+      flycheck
+      git-link
+      go-mode
+      google-translate
+      #gregorio-mode
+      haskell-mode
+      hindent
+      hl-todo
+      ivy
+      magit
+      markdown-mode
+      neotree
+      projectile
+      python-mode
+      scala-mode
+      solarized-theme
+      swiper
+      use-package
+      yaml-mode
+    ])
+  );
 
 in
 

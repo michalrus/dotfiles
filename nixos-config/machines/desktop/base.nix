@@ -48,10 +48,14 @@
   };
 
   services = {
-    printing = {
-      enable = true;
-      gutenprint = true;
-    };
+    printing =
+      {
+        enable = true;
+      } // (if lib.nixpkgsVersion >= "17.09" then {
+        drivers = [ pkgs.gutenprint ];
+      } else {
+        gutenprint = true;
+      });
 
     logkeys = {
       enable = true;

@@ -15,15 +15,14 @@
       build-cache-failure = true
       auto-optimise-store = true
     '';
-  } // (if lib.nixpkgsVersion > "16.09" then {
+
     useSandbox = true;
-  } else {
-    useChroot = true;
-  });
+  };
 
   networking.firewall.rejectPackets = true;
 
   programs = {
+    mtr.enable = true;
     zsh = {
       enable = true;
       enableCompletion = true;
@@ -75,7 +74,6 @@
     gitAndTools.gitRemoteGcrypt
     gitstats
     gnumake
-    gnumake.doc
     gnupg
     gocr
     graphicsmagick
@@ -136,6 +134,8 @@
   security = {
     pam.services.su.requireWheel = true;
 
+    hideProcessInformation = true;
+
     sudo.extraConfig = ''
       Defaults timestamp_timeout=0
       %wheel ALL=(root) NOPASSWD: ${config.system.build.nixos-rebuild}/bin/nixos-rebuild switch -k
@@ -144,16 +144,7 @@
       %wheel ALL=(root) NOPASSWD: ${config.system.build.nixos-rebuild}/bin/nixos-rebuild boot -k --upgrade
       %wheel ALL=(root) NOPASSWD: ${config.nix.package.out}/bin/nix-collect-garbage -d
     '';
-  } // (if lib.nixpkgsVersion > "17.03" then {
-    wrappers = {
-      mtr.source = "${pkgs.mtr}/bin/mtr";
-    };
-
-    # Don’t enable earlier than for 17.03, see https://github.com/NixOS/nixpkgs/issues/20948 .
-    hideProcessInformation = true;
-  } else {
-    setuidPrograms = [ "mtr" ];
-  });
+  };
 
   # Stability!
   system.autoUpgrade.enable = lib.mkDefault false;

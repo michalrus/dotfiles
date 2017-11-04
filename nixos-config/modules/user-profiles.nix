@@ -5,7 +5,8 @@ with lib;
 {
   options.users.users = mkOption {
     options = [{
-      packages = mkOption {
+      # Named `packages'`, because NixOS ≥ 17.09 has this, but w/ problems, cf. https://github.com/NixOS/nixpkgs/issues/31253
+      packages' = mkOption {
         type = types.listOf types.path;
         default = [];
         description = ''
@@ -21,7 +22,7 @@ with lib;
     homeDirName = "$HOME/.nix-immutable-profile";
 
     usersWithPackages = attrValues (flip filterAttrs config.users.extraUsers (n: u:
-      length u.packages != 0
+      length u.packages' != 0
     ));
 
     immutableProfile = paths:
@@ -34,7 +35,7 @@ with lib;
 
     symlinkUser = u: ''
       if [ "$USER" = "${u.name}" ] ; then
-        ln -sfT ${immutableProfile u.packages} "${homeDirName}"
+        ln -sfT ${immutableProfile u.packages'} "${homeDirName}"
       fi
     '';
 
