@@ -14,7 +14,7 @@
     isNormalUser = true;
     description = "Elżbieta Rus";
     extraGroups = [ "wheel" "scanner" "networkmanager" "cdrom" ];
-    dotfiles = [ "base" "xfce" "git-annex" "elzbietarus" ];
+    dotfiles.profiles = [ "base" "xfce" "git-annex" "elzbietarus" ];
   };
 
   hardware.android.automount = let user = config.users.users.elzbieta; in {
