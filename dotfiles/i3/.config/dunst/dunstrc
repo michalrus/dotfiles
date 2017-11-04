@@ -4,7 +4,7 @@
     monitor = 0
     follow = keyboard
 
-    font = DejaVu 10
+    font = Sans 10
     line_height = 0
     alignment = left
     allow_markup = yes
