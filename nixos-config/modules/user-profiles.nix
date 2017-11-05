@@ -19,34 +19,24 @@ with lib;
 
   config = let
 
-    homeDirName = "$HOME/.nix-immutable-profile";
-
-    usersWithPackages = attrValues (flip filterAttrs config.users.extraUsers (n: u:
-      length u.packages' != 0
-    ));
-
-    immutableProfile = paths:
+    immutableProfile = name: paths:
       pkgs.buildEnv {
-        name = "immutable-profile";
+        name = "immutable-profile-${name}";
         inherit paths;
         inherit (config.environment) pathsToLink extraOutputsToInstall;
         inherit (config.system.path) ignoreCollisions postBuild;
       };
 
-    symlinkUser = u: ''
-      if [ "$USER" = "${u.name}" ] ; then
-        ln -sfT ${immutableProfile u.packages'} "${homeDirName}"
-      fi
-    '';
+    usersWithPackages = filterAttrs (n: u: length u.packages' != 0) config.users.users;
+
+    etcSubdirName = "per-user-packages";
 
   in {
-    environment.profiles = [ "${homeDirName}" ];
+    environment.profiles = [ "/etc/${etcSubdirName}/$USER" ];
 
-    environment.extraInit = ''
-      (
-        umask 0077
-        ${concatMapStringsSep "\n" symlinkUser usersWithPackages}
-      )
-    '';
+    environment.etc = mapAttrs' (name: { packages', ... }: {
+      name = "${etcSubdirName}/${name}";
+      value.source = immutableProfile name packages';
+    }) usersWithPackages;
   };
 }
