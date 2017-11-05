@@ -90,6 +90,9 @@
         '';
       };
 
+      autoRepeatDelay = 150;
+      autoRepeatInterval = 8;
+
       displayManager.lightdm = {
         enable = true;
         background = "${../../../dotfiles/michalrus/trash/.wallpapers/rainbow.png}";
@@ -104,8 +107,6 @@
       desktopManager.xterm.enable = false;
       windowManager.i3.enable = true;
       windowManager.i3.package = pkgs.michalrus.i3;
-
-      displayManager.xserverArgs = [ "-ardelay" "150" "-arinterval" "8" ];
     };
   };
 

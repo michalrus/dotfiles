@@ -44,7 +44,6 @@
 
     xserver = {
       xkbOptions = "ctrl:nocaps,compose:caps";
-      displayManager.xserverArgs = [ "-ardelay" "150" "-arinterval" "8" ];
     };
   };
 
