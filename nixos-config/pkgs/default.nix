@@ -41,7 +41,7 @@ in
       # old nixos-unstable
       inherit (getCommit "eb21d193063400a147f533441ab0460c0ab4583f" "1q7zr1d40ai8lh00ya3q2v80cgzf5vbdbnlrszwmwmh1fdd7lfkk") alacritty;
 
-      inherit (getCommit "8b0bd11a88c05b7228100ff79542f9a9f0bff9ec" "0pjf83390gnh46l8bdm884w6i1w0fsrm95w43abq21akh2qv6lw4") hubstaff;
+      inherit (getCommit "07e2460afd4b2de598cebd4c7466e63e0a28d872" "0rzy64fw3qs0i44kaz3iirwv188fgaxhd2jvfiikfpf2dzm03vq4") hubstaff;
 
       # Left to contribute:
 
