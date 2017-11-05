@@ -93,6 +93,7 @@ in {
         if [ -e "/etc/${etcDirName}/$USER" ] ; then
           ${symlinkCmd ["/etc/${etcDirName}/$USER"] "$HOME"}
         else
+          : # no-op in case of no mutable dotfiles
           ${concatMapStringsSep "\n" (u: ''
             if [ "$USER" = "${u.name}" ] ; then
               ${symlinkCmd (srcs u) "$HOME"}
