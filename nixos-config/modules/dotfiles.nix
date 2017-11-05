@@ -4,7 +4,7 @@ with lib;
 
 let
 
-  proxyDirName = ".nix-immutable-dotfiles";
+  etcDirName = "dotfiles/per-user";
 
 in {
   options.users.users = mkOption {
@@ -17,19 +17,19 @@ in {
             The `base` for the selected `profiles`.
 
             If this `isStorePath`, the dotfiles will be linked
-            immutably, via `~/${proxyDirName}` proxy to the Nix store;
-            so that removed dotfiles become broken symlinks in the new
-            system. Without this proxy, they would only become broken
-            after performing GC.
+            immutably, via `/etc/${etcDirName}/$USER` proxy to the Nix
+            store; so that removed dotfiles become broken symlinks in
+            the new system. Without this proxy, they would only become
+            broken after performing GC.
 
             If not a store path (probably your `~/.dotfiles`), they
             will be linked mutably and you can freely change them.
             Since you’re modifying that mutable location, deleted
             dotfiles will correctly become broken symlinks, as well.
 
-            All symlinking in actual user’s home directory happens in
-            `/etc/profile` (when setting up the environment, on each
-            login, session etc.).
+            All symlinking in the actual user’s home directory happens
+            in `/etc/profile` (when setting up the environment, on
+            each login, session etc.).
 
             It is performed using `cp -srf $src $HOME` (more or
             less). This operation will potentially lose data, as the
@@ -53,41 +53,52 @@ in {
 
   config = let
 
-    usersWithDotfiles = attrValues (flip filterAttrs config.users.users (n: u:
+    usersWithMutableDotfiles = filterAttrs  (n: u:
       length u.dotfiles.profiles != 0
-    ));
+      && !isStorePath "${u.dotfiles.base}"
+    ) config.users.users;
+
+    usersWithImmutableDotfiles = filterAttrs (n: u:
+      length u.dotfiles.profiles != 0
+      && isStorePath "${u.dotfiles.base}"
+    ) config.users.users;
 
     symlinkCmd = srcs: target: ''
       cp --no-preserve=mode --remove-destination --symbolic-link --recursive \
-        ${escapeShellArgs (map (src: "${src}/.") srcs)} \
+        ${concatMapStringsSep " " (src: ''"${src}/."'') srcs} \
         "${target}/"
     '';
 
-    mkImmutableProxy = srcs: pkgs.runCommand "immutable-dotfiles" {} ''
-      mkdir -p $out
-      ${symlinkCmd srcs "$out"}
-    '';
-
-    symlinkUser = u: ''
-      if [ "$USER" = "${u.name}" ] ; then
-        ${let srcs = map (profile: "${u.dotfiles.base}/${profile}") u.dotfiles.profiles;
-              homeDirName = "${u.home}/${proxyDirName}";
-              immutableProxy = mkImmutableProxy srcs;
-          in if isStorePath "${u.dotfiles.base}"
-               then ''
-                 ln -sfT ${immutableProxy} "${homeDirName}"
-                 ${symlinkCmd [homeDirName] u.home}
-               ''
-               else symlinkCmd srcs u.home
-          }
-      fi
-    '';
+    srcs = u: map (profile: "${u.dotfiles.base}/${profile}") u.dotfiles.profiles;
 
   in {
+    environment.etc = mapAttrs' (n: u: {
+      name = "${etcDirName}/${n}";
+      value.source =
+        # Both `pkgs.buildEnv` and `pkgs.symlinkJoin` do slightly
+        # wrong things here. The user, within `srcs`, wants to be able
+        # to symlink to files potentially non-symlinked in
+        # `etcDirName`. Therefore we can’t resolve their symlinks
+        # prior to our linking, as both of these commands do. Let’s
+        # just blindly link to what the user supplies in `srcs`.
+        pkgs.runCommand "dotfiles-${n}" {} ''
+          mkdir -p $out
+          ${symlinkCmd (srcs u) "$out"}
+        '';
+    }) usersWithImmutableDotfiles;
+
     environment.extraInit = ''
       (
         umask 0077
-        ${concatMapStringsSep "\n" symlinkUser usersWithDotfiles}
+        if [ -e "/etc/${etcDirName}/$USER" ] ; then
+          ${symlinkCmd ["/etc/${etcDirName}/$USER"] "$HOME"}
+        else
+          ${concatMapStringsSep "\n" (u: ''
+            if [ "$USER" = "${u.name}" ] ; then
+              ${symlinkCmd (srcs u) "$HOME"}
+            fi
+          '') (attrValues usersWithMutableDotfiles)}
+        fi
       )
     '';
   };
