@@ -27,16 +27,15 @@ with lib;
         inherit (config.system.path) ignoreCollisions postBuild;
       };
 
-    usersWithPackages = filterAttrs (n: u: length u.packages' != 0) config.users.users;
-
-    etcSubdirName = "per-user-packages";
+    # Named `profiles-`, because Nixpkgs will use `profiles` in the future, cf. https://github.com/NixOS/nixpkgs/pull/3123
+    etcDirName = "profiles-/per-user";
 
   in {
-    environment.profiles = [ "/etc/${etcSubdirName}/$USER" ];
+    environment.profiles = [ "/etc/${etcDirName}/$USER" ];
 
-    environment.etc = mapAttrs' (name: { packages', ... }: {
-      name = "${etcSubdirName}/${name}";
-      value.source = immutableProfile name packages';
-    }) usersWithPackages;
+    environment.etc = mapAttrs' (n: u: {
+      name = "${etcDirName}/${n}";
+      value.source = immutableProfile n u.packages';
+    }) (filterAttrs (n: u: length u.packages' != 0) config.users.users);
   };
 }
