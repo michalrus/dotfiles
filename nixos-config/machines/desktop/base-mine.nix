@@ -110,12 +110,16 @@
     };
   };
 
-  fonts.fonts = with pkgs; [
-    anonymousPro
-    hack-font
-    iosevka
-    font-awesome-ttf
-  ];
+  fonts = {
+    fontconfig.ultimate.enable = true;
+
+    fonts = with pkgs; [
+      anonymousPro
+      hack-font
+      iosevka
+      font-awesome-ttf
+    ];
+  };
 
   users = {
     guestAccount = {
