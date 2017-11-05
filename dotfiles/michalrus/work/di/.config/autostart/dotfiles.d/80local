@@ -2,19 +2,20 @@
 
 Discord &
 
-xterm -name initial -e 'zsh -i -c s' &
+termite --name initial -e 'zsh -i -c s' &
 emacs --frame-parameters='(quote (name . "org"))' --eval '(find-file "~/Org/DigitalIngot.org")' &
 
 chromium-no-cors &
 
-xterm -name code -e 'zsh -i -c s' &
+termite --name code -e 'zsh -i -c s' &
 emacs --frame-parameters='(quote (name . "code"))' --eval '(find-file "~/Development/backend/backend/src/Backend/Main.hs")' &
 
-xterm -name vm -e 'zsh -i -c s' &
+termite --name vm -e 'zsh -i -c s' &
 
 pgadmin3 &
 
 HubstaffClient &
-xterm -name mtr -e 'mtr 8.8.8.8' &
+termite --name mtr -e 'mtr 8.8.8.8' &
 
-nofatty &
+# Cf. https://github.com/NixOS/nixpkgs/issues/31294
+nofatty -Dawt.useSystemAAFontSettings=lcd -Dswing.aatext=true &

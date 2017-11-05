@@ -31,7 +31,7 @@ super + Return
   emacs
 
 super + shift + Return
-  xterm -e 'zsh -i -c s'
+  termite -e 'zsh -i -c s'
 
 super + k
   pass-autotype
