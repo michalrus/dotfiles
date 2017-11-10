@@ -25,6 +25,8 @@ export HISTFILE="$HOME/.zhistory"
 export HISTSIZE=100000
 export SAVEHIST=$HISTSIZE
 
+unsetopt nopromptsp
+
 . "$HOME/.local/share/git-prompt.sh"
 
 precmd() {
