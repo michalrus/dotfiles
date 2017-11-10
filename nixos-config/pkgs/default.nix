@@ -23,6 +23,17 @@ in
     # These are not configurable, so let’s override globally. :/
     inherit (nixos-unstable) bitlbee bitlbee-facebook;
 
+    # config.programs.mtr uses the global version. :<
+    mtr = super.mtr.overrideDerivation (drv: {
+      # For https://github.com/traviscross/mtr/pull/209
+      src = super.fetchFromGitHub {
+        owner  = "traviscross";
+        repo   = "mtr";
+        rev    = "eec614bad42bc4adf519b5165b52e03b9e9b1b84";
+        sha256 = "1fqxp9hlgmpi34k3p47d3kn1bs3blkhrqiw5gm23awqhw44l47l1";
+      };
+    });
+
     michalrus = {
       git-annex-desktop  = (import ./git-annex/desktop.nix super self);
       git-annex          = (import ./git-annex/post-show-ref.nix super self);

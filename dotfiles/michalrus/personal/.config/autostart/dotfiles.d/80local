@@ -9,7 +9,7 @@ chromium &
 rm ~/Archive/Personal/Accounting/Personal.gnucash.LCK || true
 gnucash &
 
-termite --name mtr -e 'mtr 8.8.8.8' &
+termite --name mtr -e 'mtr --displaymode 1 8.8.8.8' &
 
 # Cf. https://github.com/NixOS/nixpkgs/issues/31294
 nofatty -Dawt.useSystemAAFontSettings=lcd -Dswing.aatext=true &
