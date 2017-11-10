@@ -81,8 +81,6 @@
     xserver = {
       xkbOptions = "caps:hyper,numpad:microsoft";
 
-      useGlamor = true;
-
       synaptics = {
         maxSpeed = "4.0";
         accelFactor = "0.02";

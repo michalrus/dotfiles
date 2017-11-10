@@ -21,6 +21,8 @@
 
   boot.kernel.sysctl."vm.swappiness" = lib.mkForce 1; # Let’s try this.
 
+  services.xserver.useGlamor = true;
+
   boot.loader.grub = {
     enable = true;
     version = 2;
