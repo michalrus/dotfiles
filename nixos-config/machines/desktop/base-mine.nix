@@ -27,15 +27,17 @@
 
   environment.systemPackages = with pkgs; [
     (haskellPackages.ghcWithHoogle (hs: []))
+    autocutsel
+    breeze-qt4 breeze-qt5 breeze-icons pkgs.hicolor_icon_theme kde-gtk-config breeze-gtk
     chromium
     compton
     cool-retro-term
     dunst
     gettext
     ghostscript
-    breeze-qt4 breeze-qt5 breeze-icons pkgs.hicolor_icon_theme kde-gtk-config breeze-gtk
     gnome3.zenity
     haskellPackages.hlint
+    i3status
     michalrus.alacritty
     michalrus.gettext-emacs
     michalrus.intero.nix-shim
@@ -45,7 +47,6 @@
     nixos-unstable.octave
     pdfpc
     rofi
-    i3status
     stalonetray
     termite
   ];
