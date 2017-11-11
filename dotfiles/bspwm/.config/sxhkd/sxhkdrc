@@ -17,7 +17,7 @@ super + g
   mkdir -p "$HOME"/Pictures/ && import -window {root,"$(xdotool getactivewindow)"} "$HOME"/Pictures/Screenshot-"$(date +'%Y%m%d-%H%M%S')".png
 
 XF86AudioMute
-  amixer -q sset Master 0 && amixer -q sset Master mute
+  amixer -q sset Master 0 mute
 
 XF86Audio{Lower,Raise}Volume
   amixer -q sset Master 3%{-,+} unmute

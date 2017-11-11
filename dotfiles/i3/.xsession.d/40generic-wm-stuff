@@ -1,6 +1,6 @@
 # -*- mode: shell-script; sh-shell: sh -*-
 
-amixer -q sset Master 0 && amixer -q sset Master mute
+amixer -q sset Master 0 mute
 
 feh --bg-scale "$HOME/.wallpaper.png" || true
 

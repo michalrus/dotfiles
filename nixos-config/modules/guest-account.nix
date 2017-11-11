@@ -65,7 +65,8 @@ in
 
     in {
       wantedBy = slice;
-      partOf = slice;
+      partOf = slice; # so that it’s killed after user logs out
+      before = slice; # so that this service finishes before /etc/profile setup is run (prevents races)
       script = "exec sleep $((2 ** 31))";
       preStart = "exec ${cleanup}";
       postStop = "exec ${cleanup}";
