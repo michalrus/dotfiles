@@ -34,7 +34,7 @@ battery 1 {
   status_chr = "🔋C"
   status_bat = "🔋D"
   status_full = "🔋F"
-  path = "/sys/class/power_supply/BAT%d/uevent"
+  #path = "/sys/class/power_supply/BAT%d/uevent"
   hide_seconds = true
   last_full_capacity = true
   integer_battery_capacity = true
@@ -43,7 +43,7 @@ battery 1 {
 
 cpu_temperature 0 {
   format = "%degrees°C"
-  path = "/sys/devices/platform/coretemp.0/hwmon/hwmon1/temp1_input"
+  #path = "/sys/devices/platform/coretemp.0/hwmon/hwmon1/temp1_input"
   max_threshold = 60
 }
 
