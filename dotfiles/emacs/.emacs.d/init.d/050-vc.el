@@ -16,6 +16,7 @@
 
 (use-package git-link
   :bind (("C-c g l" . git-link))
+  :demand t ;; for .dir-locals.el
   :config
   (setq git-link-use-commit t
         git-link-open-in-browser t))
