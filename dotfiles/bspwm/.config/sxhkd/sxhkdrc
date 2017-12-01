@@ -14,7 +14,7 @@ super + g
   bspwm-toggle-gaps
 
 {_,super +}Print
-  mkdir -p "$HOME"/Pictures/ && import -window {root,"$(xdotool getactivewindow)"} "$HOME"/Pictures/Screenshot-"$(date +'%Y%m%d-%H%M%S')".png
+  magick-screenshot {,active}
 
 XF86AudioMute
   amixer -q sset Master 0 mute

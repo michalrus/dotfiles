@@ -1,0 +1,12 @@
+#!/bin/sh
+
+d=$(mktemp -d)
+f=Screenshot-$(date +%Y%m%d-%H%M%S)
+
+[ "$1" ] && w=$(xdotool getactivewindow) || w=root
+
+import -window "$w" "$d/$f.bmp"
+mkdir -p ~/Pictures
+convert "$d/$f.bmp" ~/Pictures/"$f.png"
+
+rm -r "$d"
