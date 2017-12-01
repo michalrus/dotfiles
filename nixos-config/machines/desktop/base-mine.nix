@@ -38,12 +38,12 @@
     gnome3.zenity
     haskellPackages.hlint
     i3status
-    michalrus.alacritty
     michalrus.gettext-emacs
     michalrus.intero.nix-shim
     michalrus.leksah
     michalrus.lemonbar-xft
     networkmanagerapplet
+    nixos-unstable.alacritty
     nixos-unstable.octave
     pdfpc
     rofi
@@ -166,8 +166,8 @@
       dotfiles.profiles = [ "base" "michalrus/base" "michalrus/desktop" "git-annex" "michalrus/work/di" "i3" "emacs" ];
       packages' = with pkgs; [
         jetbrains.idea-community
-        michalrus.hubstaff
         nixos-unstable.discord
+        nixos-unstable.hubstaff
         nixos-unstable.minecraft
         nixos-unstable.skype
         openjdk8   # for nofatty

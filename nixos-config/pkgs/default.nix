@@ -9,8 +9,8 @@ let
     allowUnfree = true; # for `transcribe`
   }; }).pkgs;
 
-  nixos-unstable = getCommit "66b63d2f5a442d642ac2b226d71b4f97bafce5c8"
-    "0vss6g2gsirl2ds3zaxwv9sc6q6x3zc68431z1wz3wpbhpw190p5";
+  nixos-unstable = getCommit "015c0fc9af429c5f1b81643f2c9232e020ddb4a7"
+    "1k7iw9kg2kgnixss43k4vmsqdj1h9r7rfz1vnzbcdlzcl2qp1g7h";
 
 in
 
@@ -48,11 +48,6 @@ in
           sha256 = "05f3xibr9yx6hm1hzryvagfryn0mlh1vrx182frszxmcygc4kl3z";
         }) ];
       });
-
-      # old nixos-unstable
-      inherit (getCommit "eb21d193063400a147f533441ab0460c0ab4583f" "1q7zr1d40ai8lh00ya3q2v80cgzf5vbdbnlrszwmwmh1fdd7lfkk") alacritty;
-
-      inherit (getCommit "07e2460afd4b2de598cebd4c7466e63e0a28d872" "0rzy64fw3qs0i44kaz3iirwv188fgaxhd2jvfiikfpf2dzm03vq4") hubstaff;
 
       # Left to contribute:
 
