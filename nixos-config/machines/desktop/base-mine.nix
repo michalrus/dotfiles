@@ -166,7 +166,7 @@
       dotfiles.profiles = [ "base" "michalrus/base" "michalrus/desktop" "git-annex" "michalrus/work/di" "i3" "emacs" ];
       packages' = with pkgs; [
         jetbrains.idea-community
-        nixos-unstable.discord
+        michalrus.discord
         nixos-unstable.hubstaff
         nixos-unstable.minecraft
         nixos-unstable.skype
