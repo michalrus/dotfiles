@@ -26,9 +26,9 @@
     lilypond
     michalrus.transcribe
     mumble
+    nixos-unstable.steam
     openjdk8
     skype
-    steam
     teamspeak_client
     unrar
     xmind
