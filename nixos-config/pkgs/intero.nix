@@ -30,8 +30,8 @@ in rec {
   nix-shim = import (pkgs.fetchFromGitHub {
     owner = "michalrus";
     repo = "intero-nix-shim";
-    rev = "dd852a9f7d830d30875a203df145e9a0b5e40606";
-    sha256 = "0jq1hzhx8ax69l4nq58avh0wjyzfychagckla7vx750pgj4jrgd5";
+    rev = "ee504e490093567c4b1c122dc45358419d451fb5";
+    sha256 = "07vsqr9cf6n2r7zzb5w3dy78adii9ghknz7476lhlgfv4g6nwx74";
   }) {
     nixpkgs = pkgs;
     haskellPackages = iHaskellPackages;
