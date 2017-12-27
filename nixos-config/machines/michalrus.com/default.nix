@@ -4,7 +4,7 @@
   imports = [
     ../../modules
     ../../pkgs
-    ../common.nix
+    ../common-x86.nix
     ./monitoring
     ./gitolite
     ./ipsec

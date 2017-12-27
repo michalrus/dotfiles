@@ -12,7 +12,7 @@ let
 
   machines = [
     { name = "router";           addr = "10.0.1.1"; }
-    { name = "printer";          addr = "10.0.1.5"; }
+    { name = "printer";          addr = "10.77.4.5"; }
     { name = "camera-kuchnia";   addr = "10.0.1.12"; auth = "eWJ4aGtrb3Y6bGZ3dmNzYXg="; }
     { name = "camera-sypialnia"; addr = "10.0.1.13"; auth = "aHRicGxoamU6c2Nnc2JyZng="; }
     { name = "camera-salon";     addr = "10.0.1.14"; auth = "bHAzamtiZ3M6cTJzdHlpbmM="; }

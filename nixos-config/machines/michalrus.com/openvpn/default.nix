@@ -40,8 +40,8 @@ in
         client-config-dir ${ccdDir}
         ifconfig-pool-persist ${ippFile}
 
-              route ${subnet-chwalecice}.0 255.255.255.0 ${subnet}.${ccd.router-chwalecice.ip}
-        push "route ${subnet-chwalecice}.0 255.255.255.0 ${subnet}.${ccd.router-chwalecice.ip}"
+              route ${subnet-chwalecice}.0 255.255.255.0 ${subnet}.${ccd.router-chwalecice.ip} 1200
+        push "route ${subnet-chwalecice}.0 255.255.255.0 ${subnet}.${ccd.router-chwalecice.ip} 1200"
 
         client-to-client
         keepalive 10 60

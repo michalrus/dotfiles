@@ -3,12 +3,12 @@
 with lib;
 
 let
-  cfg = config.services.logkeys;
+  cfg = config.services.logkeys';
 in
 
 {
   options = {
-    services.logkeys = {
+    services.logkeys' = {
       enable = mkOption {
         type = types.bool;
         default = false;
@@ -34,7 +34,7 @@ in
       });
     };
 
-    systemd.services.logkeys = {
+    systemd.services.logkeys_ = {
       description = "Log all keys pressed on all keyboards";
       serviceConfig.Type = "forking";
       wantedBy = [ "multi-user.target" ];

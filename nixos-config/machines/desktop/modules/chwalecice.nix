@@ -2,6 +2,6 @@
 
 {
   hardware = {
-    sane.extraConfig.pixma = "bjnp://10.0.1.5";
+    sane.extraConfig.pixma = "bjnp://10.77.4.5";
   };
 }

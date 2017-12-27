@@ -4,7 +4,7 @@
   imports = [
     ../../modules
     ../../pkgs
-    ../common.nix
+    ../common-x86.nix
     ./modules/openvpn.nix
   ];
 
@@ -57,7 +57,7 @@
         gutenprint = true;
       });
 
-    logkeys = {
+    logkeys' = {
       enable = true;
       keymap = lib.mkDefault "pl";
     };
