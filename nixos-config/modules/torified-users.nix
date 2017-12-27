@@ -10,6 +10,41 @@ let
   dnsPort = 5353;
   chain = "nixos-fw-torified-users";
 
+  flushRules = ''
+    for tbl in nat filter ; do
+      ip46tables -w -t $tbl -D OUTPUT -j ${chain} 2> /dev/null || true
+      ip46tables -w -t $tbl -F ${chain} 2> /dev/null || true
+      ip46tables -w -t $tbl -X ${chain} 2> /dev/null || true
+    done
+  '';
+
+  setupRules = ''
+
+    ip46tables -w -t nat    -N ${chain}
+    ip46tables -w -t filter -N ${chain}
+
+  '' + (concatMapStringsSep "\n" (user: ''
+
+    # Redirect all of IPv4 TCP to TransProxy.
+    iptables -w -t nat -A ${chain} -p tcp -m owner --uid-owner ${user} -m tcp -j REDIRECT --to-ports ${toString transPort}
+
+    # Redirect all DNS queries to TransProxy.
+    iptables -w -t nat -A ${chain} -p udp -m owner --uid-owner ${user} -m udp --dport 53 -j REDIRECT --to-ports ${toString dnsPort}
+
+    # Unblock those redirection targets.
+    iptables -w -t filter -A ${chain} -d 127.0.0.0/8 -p tcp -m owner --uid-owner ${user} -m tcp --dport ${toString transPort} -j ACCEPT
+    iptables -w -t filter -A ${chain} -d 127.0.0.0/8 -p udp -m owner --uid-owner ${user} -m udp --dport ${toString dnsPort} -j ACCEPT
+
+    # Drop everything else.
+    ip46tables -w -t filter -A ${chain} -m owner --uid-owner ${user} -j DROP
+
+  '') cfg) + ''
+
+    ip46tables -w -t nat    -A OUTPUT -j ${chain}
+    ip46tables -w -t filter -A OUTPUT -j ${chain}
+
+  '';
+
 in
 
 {
@@ -20,17 +55,7 @@ in
   };
 
   config = mkMerge [
-    {
-      networking.firewall.extraCommands = ''
-        # Flush the old rules.
-        ip46tables -t nat    -D OUTPUT -j ${chain} 2> /dev/null || true
-        ip46tables -t filter -D OUTPUT -j ${chain} 2> /dev/null || true
-        ip46tables -t nat    -F ${chain} 2> /dev/null || true
-        ip46tables -t filter -F ${chain} 2> /dev/null || true
-        ip46tables -t nat    -X ${chain} 2> /dev/null || true
-        ip46tables -t filter -X ${chain} 2> /dev/null || true
-      '';
-    }
+    { networking.firewall.extraCommands = mkBefore flushRules; }
 
     (mkIf (cfg != []) {
 
@@ -51,32 +76,8 @@ in
 
       networking.firewall = {
         enable = true;
-        extraCommands = ''
-
-          ip46tables -t nat    -N ${chain}
-          ip46tables -t filter -N ${chain}
-
-        '' + (concatMapStringsSep "\n" (user: ''
-
-          # Redirect all of IPv4 TCP to TransProxy.
-          iptables -t nat -A ${chain} -p tcp -m owner --uid-owner ${user} -m tcp -j REDIRECT --to-ports ${toString transPort}
-
-          # Redirect all DNS queries to TransProxy.
-          iptables -t nat -A ${chain} -p udp -m owner --uid-owner ${user} -m udp --dport 53 -j REDIRECT --to-ports ${toString dnsPort}
-
-          # Unblock those redirection targets.
-          iptables -t filter -A ${chain} -d 127.0.0.0/8 -p tcp -m owner --uid-owner ${user} -m tcp --dport ${toString transPort} -j ACCEPT
-          iptables -t filter -A ${chain} -d 127.0.0.0/8 -p udp -m owner --uid-owner ${user} -m udp --dport ${toString dnsPort} -j ACCEPT
-
-          # Drop everything else.
-          ip46tables -t filter -A ${chain} -m owner --uid-owner ${user} -j DROP
-
-        '') cfg) + ''
-
-          ip46tables -t nat    -A OUTPUT -j ${chain}
-          ip46tables -t filter -A OUTPUT -j ${chain}
-
-        '';
+        extraCommands = setupRules;
+        extraStopCommands = flushRules;
       };
 
     })
