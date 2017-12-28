@@ -147,7 +147,6 @@
         openjdk8   # for nofatty
         lilypond
         michalrus.transcribe
-        nixos-unstable.bitcoin
         nixos-unstable.electrum
         stack
         (texlive.combine {

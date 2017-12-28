@@ -4,7 +4,7 @@ let
 
   danPollock = pkgs.fetchurl {
     url = "http://someonewhocares.org/hosts/zero/hosts"; # FIXME: not an immutable URL…
-    sha256 = "068p0asf0d6h20bjrjlnpibz22ja81hkngx87xyq4yhhq3ibw8nw";
+    sha256 = "13q99mz85gzzkl996zn3p9x0z330a4g2a8sp99sfal676cxh8vk8";
   };
 
 in

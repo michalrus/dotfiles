@@ -31,6 +31,10 @@
     logind.extraConfig = ''
       KillUserProcesses=yes
     '';
+
+    journald.extraConfig = ''
+      SystemMaxUse=200M
+    '';
   };
 
   users = {
@@ -65,6 +69,7 @@
     mkpasswd
     moreutils
     mtr
+    ncdu
     nix-repl
     nmap
     openssl
