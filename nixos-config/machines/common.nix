@@ -60,6 +60,7 @@
     htop
     hwinfo
     inetutils
+    inotify-tools
     iw
     jq
     libfaketime

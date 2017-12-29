@@ -42,6 +42,7 @@
     michalrus.intero.nix-shim
     michalrus.leksah
     michalrus.lemonbar-xft
+    michalrus.steeloverseer
     networkmanagerapplet
     nixos-unstable.alacritty
     nixos-unstable.octave
