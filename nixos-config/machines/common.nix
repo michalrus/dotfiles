@@ -9,6 +9,12 @@
     '';
 
     useSandbox = true;
+
+    gc = {
+      automatic = true;
+      dates = "daily";
+      options = "--delete-older-than 30d"; # Is this enough?
+    };
   };
 
   networking.firewall.rejectPackets = true;
