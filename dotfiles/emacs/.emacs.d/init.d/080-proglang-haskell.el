@@ -22,17 +22,14 @@
           (haskell-indentation-newline-and-indent)
           (forward-char (length symb))))))
 
-  (use-package intero
-    :config
-    (flycheck-add-next-checker 'intero '(warning . haskell-hlint))
-    (add-hook 'haskell-mode-hook
-              (lambda ()
-                (add-to-list 'flycheck-disabled-checkers 'haskell-stack-ghc)
-                (let ((wants-intero
-                       (or (locate-dominating-file default-directory "stack.yaml")
-                           (locate-dominating-file default-directory "default.nix")))) ;; TODO: think of something better here
-                  (cond (wants-intero (intero-mode t))
-                        (t (add-to-list 'flycheck-disabled-checkers 'intero)))))))
+  (use-package dante
+    :ensure t
+    :commands 'dante-mode
+    :init
+    (add-hook 'haskell-mode-hook 'dante-mode)
+    (add-hook 'dante-mode-hook
+       '(lambda () (flycheck-add-next-checker 'haskell-dante
+                    '(warning . haskell-hlint)))))
 
   (use-package hayoo
     :demand t

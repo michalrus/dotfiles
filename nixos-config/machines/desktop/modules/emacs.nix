@@ -10,13 +10,10 @@ let
   };
 
   whole = (pkgs.emacsPackagesNgGen base).emacsWithPackages (epkgs:
-    # Keep all of intero-related stuff in sync.
-    [ (pkgs.michalrus.intero.emacsMode epkgs) ]
-    ++
-
     # MELPA Unstable @ NixOS Unstable (bleedingest edge)
     (with (pkgs.nixos-unstable.emacsPackagesNgGen base).melpaPackages; [
       ensime
+      dante
       hayoo
       sort-words
     ])

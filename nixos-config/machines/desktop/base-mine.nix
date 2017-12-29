@@ -39,7 +39,6 @@
     haskellPackages.hlint
     i3status
     michalrus.gettext-emacs
-    michalrus.intero.nix-shim
     michalrus.leksah
     michalrus.lemonbar-xft
     michalrus.steeloverseer

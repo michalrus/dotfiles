@@ -58,11 +58,6 @@ in
       gregorio           = (import ./gregorio.nix super self);
       lemonbar-xft       = (import ./lemonbar-xft.nix super self);
 
-      # FIXME: This is awfully global, but will always be in sync (intero.el vs. intero vs. GHC). What to do?
-      intero = import ./intero.nix {
-        pkgs = getCommit "2f1a818d00f957f3102c0b412864c63b6e3e7447" "1g9yvbkayjv4w9sa99g2zfys4kq9mrp3fznfm6qy0n5h4kqc0ifd";
-      };
-
       # FIXME: remove after https://github.com/schell/steeloverseer/issues/27
       steeloverseer =
         let
