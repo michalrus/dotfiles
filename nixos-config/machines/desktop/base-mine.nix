@@ -39,7 +39,7 @@
     haskellPackages.hlint
     i3status
     michalrus.gettext-emacs
-    michalrus.leksah
+    #michalrus.leksah
     michalrus.lemonbar-xft
     michalrus.steeloverseer
     networkmanagerapplet
@@ -48,6 +48,7 @@
     pdfpc
     rofi
     stalonetray
+    stack # for contributions, I’m not using this on my own
     termite
   ];
 
