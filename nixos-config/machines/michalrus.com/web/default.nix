@@ -20,8 +20,22 @@ with import ./common.nix { inherit config lib; };
     nginx = {
       enable = true;
 
+      package = pkgs.nginxMainline;
+
       httpConfig = ''
         charset utf-8;
+
+        log_format fmt_syslog '$http_host $remote_addr $remote_user $request_time '
+                    '"$request" $status $body_bytes_sent '
+                    '"$http_referer" "$http_user_agent"';
+
+        map $status $log_is_error { "~^5"     1; default 0; }
+        map $status $log_is_warn  { "~^4"     1; default 0; }
+        map $status $log_is_info  { "~^[^54]" 1; default 0; }
+        access_log syslog:server=unix:/dev/log,tag=,facility=local2,severity=error fmt_syslog if=$log_is_error;
+        access_log syslog:server=unix:/dev/log,tag=,facility=local2,severity=warn  fmt_syslog if=$log_is_warn;
+        access_log syslog:server=unix:/dev/log,tag=,facility=local2,severity=info  fmt_syslog if=$log_is_info;
+        error_log  syslog:server=unix:/dev/log,tag=,facility=local2 error;
 
         types {
           text/plain      log;
@@ -53,9 +67,6 @@ with import ./common.nix { inherit config lib; };
           listen 80 default;
           listen [::]:80 default;
           server_name _;
-
-          access_log logs/default-http.access;
-          error_log logs/default-http.error;
 
           location /.well-known/acme-challenge {
             root ${acmeChallenges};

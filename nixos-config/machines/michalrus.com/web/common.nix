@@ -28,9 +28,6 @@ rec {
 
       server_name ${args.name};
 
-      access_log logs/${args.name}.access;
-      error_log  logs/${args.name}.error;
-
       ${args.body}
     }
   '';
