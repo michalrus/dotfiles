@@ -5,17 +5,20 @@ with import ./common.nix { inherit config lib; };
 
 let
 
+  inherit (import ../openvpn/common.nix { inherit lib; }) subnet-chwalecice;
+
   domain = "home.michalrus.com";
 
   # The (random!) credentials hardcoded below are only useful in my
   # home LAN and on this server, so whatever, may as well be public.
 
+  # TODO: reuse this code in dhcpd config in ../../embedded/router-chwalecice--nat.nix
   machines = [
-    { name = "router";           addr = "10.0.1.1"; }
-    { name = "printer";          addr = "10.77.4.5"; }
-    { name = "camera-kuchnia";   addr = "10.0.1.12"; auth = "eWJ4aGtrb3Y6bGZ3dmNzYXg="; }
+    { name = "printer";          addr = "${subnet-chwalecice}.5"; }
+    { name = "camera-kuchnia";   addr = "${subnet-chwalecice}.12"; auth = "eWJ4aGtrb3Y6bGZ3dmNzYXg="; }
+    # TODO:
     { name = "camera-sypialnia"; addr = "10.0.1.13"; auth = "aHRicGxoamU6c2Nnc2JyZng="; }
-    { name = "camera-salon";     addr = "10.0.1.14"; auth = "bHAzamtiZ3M6cTJzdHlpbmM="; }
+    { name = "camera-salon";     addr = "${subnet-chwalecice}.14"; auth = "bHAzamtiZ3M6cTJzdHlpbmM="; }
   ];
 
 in

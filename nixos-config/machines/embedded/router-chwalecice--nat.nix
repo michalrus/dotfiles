@@ -63,7 +63,15 @@ mkMerge [
       enable = true;
       interface = "wlan0";
       ssid = "dome";
-      wpaPassphrase = import ./router-chwalecice--wifi-password.nix;
+
+      wpa = false; # We want to enable WPA2-PSK only, and this does WPA1. :/
+      extraConfig = ''
+        wpa=2
+        wpa_passphrase=${import ./router-chwalecice--wifi-password.nix}
+        wpa_key_mgmt=WPA-PSK
+        # Cipher for WPA2: allow only AES, no TKIP:
+        rsn_pairwise=CCMP
+      '';
     };
 
     services.dhcpd4 = {
@@ -79,10 +87,10 @@ mkMerge [
         }
       '';
       machines = [
-        { hostName = "printer";
-          ethernetAddress = "f4:81:39:86:73:cb";
-          ipAddress = "${subnet-chwalecice}.5";
-        }
+        { hostName = "printer";          ethernetAddress = "f4:81:39:86:73:cb"; ipAddress = "${subnet-chwalecice}.5";  }
+        { hostName = "camera-kuchnia";   ethernetAddress = "48:02:2a:40:d6:99"; ipAddress = "${subnet-chwalecice}.12"; }
+        { hostName = "camera-sypialnia"; ethernetAddress = "0e:f2:b3:dc:52:a8"; ipAddress = "${subnet-chwalecice}.13"; }
+        { hostName = "camera-salon";     ethernetAddress = "e8:ab:fa:87:9a:89"; ipAddress = "${subnet-chwalecice}.14"; }
       ];
     };
   }
