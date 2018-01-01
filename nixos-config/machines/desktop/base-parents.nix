@@ -11,15 +11,11 @@
   time.timeZone = "Europe/Warsaw";
   i18n.defaultLocale = "pl_PL.UTF-8";
 
-  nixpkgs.config = {
-    allowUnfree = true; # M$ fonts, Skype™ and similar nonsense.
-  };
-
   environment.systemPackages = with pkgs; [
     nixos-unstable.gnome3.evolution
-    google-chrome
-    skype
-    unrar
+    unfree.google-chrome
+    unfree.skype
+    unfree.unrar
   ];
 
   services = {
@@ -27,7 +23,7 @@
   };
 
   fonts.fonts = with pkgs; [
-    corefonts
-    vistafonts
+    unfree.corefonts
+    unfree.vistafonts
   ];
 }
