@@ -12,7 +12,6 @@
   i18n.defaultLocale = "en_US.UTF-8";
 
   nixpkgs.config = {
-    allowUnfree = true; # M$ fonts, Skype™ and similar nonsense.
     wine.build = "wineWow"; # for some 64-bit games
   };
 
@@ -24,14 +23,14 @@
     gnucash26
     ioquake3
     lilypond
-    michalrus.transcribe
     mumble
-    nixos-unstable.steam
     openjdk8
-    skype
-    teamspeak_client
-    unrar
-    xmind
+    unfree.michalrus.transcribe
+    unfree.nixos-unstable.steam
+    unfree.skype
+    unfree.teamspeak_client
+    unfree.unrar
+    unfree.xmind
   ];
 
   services = {
@@ -48,11 +47,11 @@
   };
 
   fonts.fonts = with pkgs; [
-    corefonts
     eb-garamond
-    helvetica-neue-lt-std
     liberation_ttf
-    vistafonts
+    unfree.corefonts
+    unfree.helvetica-neue-lt-std
+    unfree.vistafonts
   ];
 
   # For profile pictures, see #20872.
