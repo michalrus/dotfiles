@@ -3,11 +3,12 @@
 {
   imports = [
     ../../modules
-    ../../pkgs
     ../desktop/modules/openvpn.nix
     ../common.nix
     ./router-chwalecice--nat.nix
   ];
+
+  nixpkgs.overlays = [ (import ../../overlays) ];
 
   boot.loader.grub.enable = false;
   boot.loader.generic-extlinux-compatible.enable = true;

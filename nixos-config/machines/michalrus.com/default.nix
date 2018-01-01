@@ -3,7 +3,6 @@
 {
   imports = [
     ../../modules
-    ../../pkgs
     ../common-x86.nix
     ./monitoring
     ./gitolite
@@ -18,6 +17,8 @@
     ./feeds/rss2email.nix
     ./znc
   ];
+
+  nixpkgs.overlays = [ (import ../../overlays) ];
 
   networking.hostName = "michalrus_com";
 

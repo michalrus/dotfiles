@@ -77,7 +77,7 @@ in
   networking.firewall.allowedTCPPorts = [ port ];
 
   # Unfortunately, the znc module doesn’t have the package configurable.
-  nixpkgs.config.packageOverrides = super: let self = super.pkgs; in {
+  nixpkgs.overlays = [ (self: super: {
     znc = super.znc.overrideDerivation (oldAttrs: {
       patches = [
         ./timeouts.patch
@@ -86,7 +86,7 @@ in
         ./log-join-part-quit.patch
       ];
     });
-  };
+  }) ];
 
   services = {
     znc = {

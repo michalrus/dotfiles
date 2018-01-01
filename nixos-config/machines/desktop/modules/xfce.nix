@@ -4,14 +4,12 @@
 
   networking.networkmanager.enable = true;
 
-  nixpkgs.config = {
-    packageOverrides = super: let self = super.pkgs; in {
-      # By default, gvfs in Xfce has no Samba support. Turn it back on.
-      xfce = super.xfce // { gvfs = super.gvfs; };
-      # Feh is always added to system PATH, see #17450.
-      feh = super.feh.overrideDerivation(oldAttrs: { postInstall = "rm $out/share/applications/feh.desktop"; });
-    };
-  };
+  nixpkgs.overlays = [ (self: super: {
+    # By default, gvfs in Xfce has no Samba support. Turn it back on.
+    xfce = super.xfce // { gvfs = self.gvfs; };
+    # Feh is always added to system PATH, see #17450.
+    feh = super.feh.overrideDerivation(oldAttrs: { postInstall = "rm $out/share/applications/feh.desktop"; });
+  }) ];
 
   security.pam.services.slimlock = {};
 

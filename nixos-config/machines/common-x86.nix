@@ -42,7 +42,6 @@
     michalrus.git-annex
     michalrus.git-annex-desktop
     nix-prefetch-scripts
-    nixos-unstable.geekbench
     normalize
     oathToolkit
     odt2txt
@@ -56,6 +55,7 @@
     sox
     stdman
     tesseract
+    unfree.nixos-unstable.geekbench
     wrk
   ];
 }

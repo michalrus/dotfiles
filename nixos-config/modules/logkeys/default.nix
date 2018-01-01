@@ -24,7 +24,7 @@ in
 
   config = mkIf cfg.enable {
 
-    nixpkgs.config.packageOverrides = super: let self = super.pkgs; in {
+    nixpkgs.overlays = [ (self: super: {
       logkeys = super.logkeys.overrideDerivation (oldAttrs: {
         postInstall = ''
           mkdir -p "$out"/share/logkeys/
@@ -32,7 +32,7 @@ in
           cp "${ ./pl.map }" "$out"/share/logkeys/pl.map
           '';
       });
-    };
+    }) ];
 
     systemd.services.logkeys_ = {
       description = "Log all keys pressed on all keyboards";

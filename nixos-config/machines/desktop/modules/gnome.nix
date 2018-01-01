@@ -37,12 +37,12 @@
   systemd.targets."multi-user".conflicts = [ "getty@tty1.service" ];
 
   # TODO: Also, try this: https://github.com/NixOS/nixpkgs/issues/24172#issuecomment-330334844
-  # nixpkgs.config.packageOverrides = pkgs: {
-  #   gnome3 = pkgs.gnome3 // {
-  #     gdm = pkgs.gnome3.gdm.overrideAttrs (oldAttrs: {
+  # nixpkgs.overlays = [ (self: super: {
+  #   gnome3 = super.gnome3 // {
+  #     gdm = super.gnome3.gdm.overrideAttrs (oldAttrs: {
   #       configureFlags = oldAttrs.configureFlags ++ [ "--with-initial-vt=7" ];
   #     });
   #   };
-  # };
+  # }) ];
 
 }

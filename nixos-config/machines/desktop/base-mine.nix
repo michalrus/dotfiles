@@ -147,7 +147,7 @@
         isync
         openjdk8   # for nofatty
         lilypond
-        michalrus.transcribe
+        unfree.michalrus.transcribe
         nixos-unstable.electrum
         stack
         (texlive.combine {
@@ -166,10 +166,10 @@
       dotfiles.profiles = [ "base" "michalrus/base" "michalrus/desktop" "git-annex" "michalrus/work/di" "i3" "emacs" ];
       packages' = with pkgs; [
         jetbrains.idea-community
-        michalrus.discord
-        nixos-unstable.hubstaff
-        nixos-unstable.minecraft
-        nixos-unstable.skype
+        unfree.michalrus.discord
+        unfree.nixos-unstable.hubstaff
+        unfree.nixos-unstable.minecraft
+        unfree.nixos-unstable.skype
         openjdk8   # for nofatty
         pgadmin
       ];
