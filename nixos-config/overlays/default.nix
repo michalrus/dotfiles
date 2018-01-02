@@ -45,6 +45,7 @@ composeOverlays [
       (import ./pkgs/gettext-emacs.nix)
       (import ./pkgs/gregorio.nix)
       (import ./pkgs/lemonbar-xft.nix)
+      (import ./pkgs/pms5003.nix)
 
     ] self.michalrus (super.michalrus or super);
 
