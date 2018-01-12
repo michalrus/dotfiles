@@ -7,8 +7,8 @@ let
   nixos-unstable' = config:
     (lib.const (lib.const {
       nixos-unstable =
-        nixpkgsOf "1bc288591ea4fe3159b7630dcd2b57733d80a2ff"
-          "1d4q92jw42d51s9bn380jayy2rs1v0h1y8kvrbjg3i43f72ck5q5"
+        nixpkgsOf "f607771d0f5e4fa905afff1c772febd9f3103e1a"
+          "1icphqpdcl8akqhfij2pxkfr7wfn86z5sr3jdjh88p9vv1550dx7"
           config;
     }));
 
