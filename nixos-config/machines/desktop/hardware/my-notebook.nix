@@ -16,6 +16,7 @@
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usb_storage" ];
   boot.kernelModules = [ "kvm-intel" ];
+  boot.kernelPackages = pkgs.linuxPackages_4_14;
   boot.extraModulePackages = [ ];
   boot.blacklistedKernelModules = [ "radeon" "amdgpu" ]; # I’m getting some errors in journal.
 
