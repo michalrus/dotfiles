@@ -5,8 +5,8 @@ with (import ../ulib.nix super);
 
 {
 
-  inherit (nixpkgsOf "2de81a55e05a56a8e94d3b5b0876f48c2ff088c5"
-               "1vfn2rpmra11pm884xqkiw3q4ym7m9sqj72v3w4wds9za309dd4q"
+  inherit (nixpkgsOf "8753b10808338c52d59dc5f2f74fb9c089ab134c"
+               "0ln82yxrb0j6vik49q0hwh4m5j18fnmg5p3nlm25cqnd0xlp63r6"
                { allowUnfree = true; })
       discord;
 
