@@ -4,11 +4,14 @@ let
 
   danPollock = pkgs.fetchurl {
     url = "http://someonewhocares.org/hosts/zero/hosts"; # FIXME: not an immutable URL…
-    sha256 = "0a9c0670sg0kfai6k4b8q499id6zgxr1rz0fnz64jwsh36rqfl6h";
+    sha256 = "1dk9514hpsv74dmpvzghh7nrw6z0m0gcsx1f5ki3vc2dyvl8wghd";
   };
 
 in
 
 {
-  networking.extraHosts = builtins.readFile danPollock;
+  networking.extraHosts = ''
+    ### Taken from ${danPollock} :
+    ${builtins.readFile danPollock}
+  '';
 }
