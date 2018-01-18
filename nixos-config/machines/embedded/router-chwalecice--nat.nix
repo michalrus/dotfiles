@@ -59,6 +59,12 @@ mkMerge [
       prefixLength = 24;
     }];
 
+    # https://github.com/NixOS/nixpkgs/issues/34026 o_O
+    networking.localCommands = ''
+      # why doesn’t this work → `ip addr add broadcast ${subnet-chwalecice}.255 dev wlan0` ?
+      ${pkgs.inetutils}/bin/ifconfig wlan0 broadcast ${subnet-chwalecice}.255
+    '';
+
     services.hostapd = {
       enable = true;
       interface = "wlan0";

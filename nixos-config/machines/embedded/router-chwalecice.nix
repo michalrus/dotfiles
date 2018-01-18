@@ -8,6 +8,15 @@
     ./router-chwalecice--nat.nix
   ];
 
+  # Let’s try not adding this high-metric route to 10.77.4.0/24 via tun0.
+  # We already have one without metric (so used always?) via wlan0, obviously.
+  # For some reason *sometimes* packages from other computers in wlan0 cannot get to other computers in wlan0 (only this router responds to pings then).
+  # I dunno why, I dunno how to reproduce.
+  # Let’s then try NOT pulling this `10.77.4.0/24 via tun0 metric 1200` route from openvpn.
+  services.openvpn.servers.michalrus_com.config = ''
+    route-nopull
+  '';
+
   nixpkgs.overlays = [ (import ../../overlays) ];
 
   boot.loader.grub.enable = false;
