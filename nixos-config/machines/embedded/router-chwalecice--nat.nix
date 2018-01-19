@@ -99,6 +99,16 @@ mkMerge [
         { hostName = "camera-salon";     ethernetAddress = "e8:ab:fa:87:9a:89"; ipAddress = "${subnet-chwalecice}.14"; }
       ];
     };
+
+    # The printer falls asleep and stops responding to ARP
+    # requests. Then, it takes quite a few requests for it to wake
+    # up. Let’s try to keep it artificially alive at all times.
+    systemd.services.ping-printer = {
+      after = [ "network.target" ];
+      wantedBy = [ "multi-user.target" ];
+      path = with pkgs; [ iputils ];
+      script = "exec ping -q -i 2.0 -n ${subnet-chwalecice}.5";
+    };
   }
 
 ]
