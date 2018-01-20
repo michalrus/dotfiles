@@ -11,5 +11,6 @@
     ./screen.nix
     ./torified-users.nix
     ./user-profiles.nix
+    ./somagic-easycap.nix
   ];
 }

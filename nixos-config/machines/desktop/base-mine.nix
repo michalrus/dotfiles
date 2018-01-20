@@ -64,6 +64,8 @@
     point = "${user.home}/Phone";
   };
 
+  hardware.enableSomagicEasyCAP = true;
+
   services = {
     logind.extraConfig = ''
       HandleLidSwitch=suspend
