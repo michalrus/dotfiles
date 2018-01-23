@@ -117,6 +117,7 @@
     pavucontrol
     pcmanfm
     pdfgrep
+    pdfshuffler
     pinentry
     pinentry
     python34Packages.livestreamer
