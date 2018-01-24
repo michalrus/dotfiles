@@ -144,14 +144,14 @@
       dotfiles.profiles = [ "base" "michalrus/base" "michalrus/desktop" "git-annex" "michalrus/personal" "i3" "emacs" ];
       packages' = with pkgs; [
         aegisub
+        electrum
         gnome3.dconf   # so that GnuCash prefs can be changed
-        gnucash26
         isync
-        openjdk8   # for nofatty
         lilypond
-        unfree.michalrus.transcribe
-        nixos-unstable.electrum
+        michalrus.gnucash26
+        openjdk8   # for nofatty
         stack
+        unfree.michalrus.transcribe
         (texlive.combine {
           inherit (texlive) scheme-small latexmk titlesec tocloft todonotes cleveref lipsum biblatex logreq cm-super csquotes pgfplots adjustbox collectbox ccicons polski placeins xstring pdfpages unicode-math filehook textpos marvosym progressbar lm-math ucharcat;
           #gregorio = pkgs.michalrus.gregorio.forTexlive;

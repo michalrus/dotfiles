@@ -49,7 +49,7 @@
     poppler_utils
     posix_man_pages
     powertop
-    ripgrep
+    #ripgrep  # TODO: why is it not on Hydra and wants to build rustc?
     shared_mime_info
     silver-searcher
     sox

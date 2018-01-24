@@ -40,14 +40,6 @@
   boot.kernel.sysctl."vm.dirty_background_bytes" = 16 * 1024 * 1024;
   boot.kernel.sysctl."vm.dirty_bytes" = 16 * 1024 * 1024;
 
-  nixpkgs.config = {
-    allowBroken = true;
-
-    permittedInsecurePackages = [
-      "webkitgtk-2.4.11" # For gnucash26
-    ];
-  };
-
   services = {
     printing =
       {

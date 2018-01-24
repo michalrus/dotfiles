@@ -20,9 +20,9 @@
     anki
     frescobaldi
     gnome3.pomodoro
-    gnucash26
     ioquake3
     lilypond
+    michalrus.gnucash26
     mumble
     openjdk8
     unfree.michalrus.transcribe

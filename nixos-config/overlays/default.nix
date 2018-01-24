@@ -39,6 +39,7 @@ composeOverlays [
       (import ./pkgs/leksah.nix)
       (import ./pkgs/steeloverseer.nix)
       (import ./pkgs/tcp-broadcast.nix)
+      (import ./pkgs/gnucash-old.nix) # TODO: move to hledger from this crap
 
       # TODO: contribute these:
       (import ./pkgs/catdocx.nix)
