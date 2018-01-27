@@ -60,6 +60,7 @@ composeOverlays [
         michalrus = composeOverlays [
 
           (import ./pkgs/discord.nix)
+          (import ./pkgs/hubstaff.nix)
           (import ./pkgs/transcribe.nix)
 
         ] self.michalrus (super.michalrus or super);
