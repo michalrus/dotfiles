@@ -26,7 +26,7 @@
     duplicity
     exiv2
     faad2
-    ffmpeg
+    ffmpeg-full
     gitAndTools.gitRemoteGcrypt
     gitstats
     gnupg
