@@ -82,6 +82,7 @@
     openssl
     p7zip
     pciutils
+    pv
     smartmontools
     socat
     sqlite-interactive
