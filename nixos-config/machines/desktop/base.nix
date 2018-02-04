@@ -84,6 +84,7 @@
     cdparanoia
     cdrkit
     cool-retro-term
+    dvdauthor
     evince
     flac
     gimp
