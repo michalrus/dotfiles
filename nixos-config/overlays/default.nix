@@ -42,6 +42,8 @@ composeOverlays [
       (import ./pkgs/gnucash-old.nix) # TODO: move to hledger from this crap
 
       # TODO: contribute these:
+      (import ./pkgs/arping.nix)
+      (import ./pkgs/arpoison.nix)
       (import ./pkgs/catdocx.nix)
       (import ./pkgs/gettext-emacs.nix)
       (import ./pkgs/gregorio.nix)

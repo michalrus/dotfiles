@@ -51,6 +51,7 @@
   environment.variables.PATH = [ "$HOME/.bin" ];
 
   environment.systemPackages = with pkgs; [
+    (hiPrio michalrus.arping)
     (hiPrio netcat-openbsd)
     bc
     bindfs
@@ -73,6 +74,7 @@
     lshw
     lsof
     ltrace
+    michalrus.arpoison
     mkpasswd
     moreutils
     mtr
@@ -87,6 +89,7 @@
     socat
     sqlite-interactive
     strace
+    tcpdump
     unzip
     usbutils
     wget
