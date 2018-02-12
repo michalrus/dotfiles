@@ -73,7 +73,7 @@ mkMerge [
       wpa = false; # We want to enable WPA2-PSK only, and this does WPA1. :/
       extraConfig = ''
         wpa=2
-        wpa_passphrase=${import ./router-chwalecice--wifi-password.nix}
+        wpa_passphrase=${import ./wifi-password.nix}
         wpa_key_mgmt=WPA-PSK
         # Cipher for WPA2: allow only AES, no TKIP:
         rsn_pairwise=CCMP

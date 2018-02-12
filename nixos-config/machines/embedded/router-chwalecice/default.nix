@@ -6,6 +6,7 @@
     ../../desktop/modules/openvpn.nix
     ../../common.nix
     ./nat.nix
+    ./printer-hacks.nix
   ];
 
   # Let’s try not adding this high-metric route to 10.77.4.0/24 via tun0.
@@ -17,7 +18,7 @@
     route-nopull
   '';
 
-  nixpkgs.overlays = [ (import ../../overlays) ];
+  nixpkgs.overlays = [ (import ../../../overlays) ];
 
   boot.loader.grub.enable = false;
   boot.loader.generic-extlinux-compatible.enable = true;
@@ -38,7 +39,7 @@
     users.root = {
       hashedPassword = "$6$o1OW/gg.pZZPr$NKD3sSEg45yLNpT0caXw2bZqWDsHXRvPko4XWGGBcUjyWa0wkw9g6n55bpjwAhkiys3chI6rr6MPVL1rtCJpj/"; # for serial TTY login only
       dotfiles.profiles = [ "base" ];
-      openssh.authorizedKeys.keyFiles = [ ../../../dotfiles/michalrus/base/.ssh/authorized_keys.d/michalrus_notebook.pub ];
+      openssh.authorizedKeys.keyFiles = [ ../../../../dotfiles/michalrus/base/.ssh/authorized_keys.d/michalrus_notebook.pub ];
     };
   };
 

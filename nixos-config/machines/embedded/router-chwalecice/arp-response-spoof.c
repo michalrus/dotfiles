@@ -75,6 +75,8 @@ main(int argc,
     char smac[ETH_ALEN];
     int sd, n;
 
+    setvbuf(stdout, NULL, _IONBF, 0);
+
     if (argc != 4) {
         usage(argv[0]);
         exit(1);

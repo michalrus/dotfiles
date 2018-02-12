@@ -9,7 +9,7 @@ with lib;
 
 let
 
-  inherit (import ../michalrus.com/openvpn/common.nix { inherit lib; })
+  inherit (import ../../michalrus.com/openvpn/common.nix { inherit lib; })
     subnet-chwalecice;
 
   arp-response-spoof = pkgs.callPackage (
