@@ -2,10 +2,10 @@
 
 {
   imports = [
-    ../../modules
-    ../desktop/modules/openvpn.nix
-    ../common.nix
-    ./router-chwalecice--nat.nix
+    ../../../modules
+    ../../desktop/modules/openvpn.nix
+    ../../common.nix
+    ./nat.nix
   ];
 
   # Let’s try not adding this high-metric route to 10.77.4.0/24 via tun0.
