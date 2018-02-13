@@ -64,10 +64,12 @@
     gcc
     git
     gnumake
+    hdparm
     htop
     hwinfo
     inetutils
     inotify-tools
+    iotop
     iw
     jq
     libfaketime
