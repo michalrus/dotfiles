@@ -5,6 +5,7 @@
     ../../modules
     ../common-x86.nix
     ./modules/openvpn.nix
+    ./modules/cups-reenable.nix
   ];
 
   nixpkgs.overlays = [ (import ../../overlays) ];
