@@ -53,6 +53,8 @@
   ];
 
   programs = {
+    wireshark.enable = true;
+    wireshark.package = pkgs.wireshark-gtk;
     ssh.startAgent = false;
   };
 
