@@ -18,6 +18,7 @@
   environment.systemPackages = with pkgs; [
     (chromium.override { enablePepperFlash = true; })
     anki
+    dosbox
     frescobaldi
     gnome3.pomodoro
     ioquake3
