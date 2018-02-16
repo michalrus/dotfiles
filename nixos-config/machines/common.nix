@@ -17,6 +17,8 @@
     };
   };
 
+  nixpkgs.overlays = [ (import ../overlays) ];
+
   networking.firewall.rejectPackets = true;
 
   programs = {
@@ -51,6 +53,7 @@
   environment.variables.PATH = [ "$HOME/.bin" ];
 
   environment.systemPackages = with pkgs; [
+    (nixos-unstable.preventGC)
     (hiPrio michalrus.arping)
     (hiPrio netcat-openbsd)
     bc

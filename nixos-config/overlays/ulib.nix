@@ -8,12 +8,10 @@
   composeOverlays = overlays: self: super:
     lib.foldl' (lib.flip lib.extends) (lib.const super) overlays self;
 
-  nixpkgsOf = rev: sha256: config:
-    (import
-      (fetchFromGitHub {
-        owner = "NixOS"; repo = "nixpkgs";
-        inherit rev sha256;
-      })
-      { inherit config; }).pkgs;
+  nixpkgsOf = rev: sha256:
+    fetchFromGitHub {
+      owner = "NixOS"; repo = "nixpkgs";
+      inherit rev sha256;
+    };
 
 }

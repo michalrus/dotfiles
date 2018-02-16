@@ -5,11 +5,15 @@ with (import ./ulib.nix super);
 let
 
   nixos-unstable' = config:
-    (lib.const (lib.const {
+    (lib.const (lib.const rec {
+
       nixos-unstable =
-        nixpkgsOf "2e4aded366914d625a2f31208e8ac8548cb43a7e"
-          "1zcbvzxk1vyk4ngfdyss8mlb3mqp050ygpnwqny0bxbzlqkrc4bh"
-          config;
+        let src = nixpkgsOf "2e4aded366914d625a2f31208e8ac8548cb43a7e"
+                            "1zcbvzxk1vyk4ngfdyss8mlb3mqp050ygpnwqny0bxbzlqkrc4bh";
+            nixpkgs = (import src { inherit config; });
+        in nixpkgs // {
+          preventGC = nixpkgs.writeTextDir "prevent-ifd-gc" (toString [ src ]);
+        };
     }));
 
 in

@@ -7,7 +7,7 @@ let
   # <clever> michalrus: it needs to fully eval all imports statements,
   # to find every instance of nixpkgs.config, to configure the pkgs
   # argument, which imports depends on
-  fetchFromGitHub = (import <nixpkgs> { config = {}; }).fetchFromGitHub;
+  inherit (import <nixpkgs> { config = {}; }) fetchFromGitHub;
 
   repo = fetchFromGitHub {
     owner = "musnix"; repo = "musnix";
@@ -19,7 +19,7 @@ in
 
 {
 
-  imports = [ repo.outPath ];
+  imports = [ "${repo}" ];
 
   musnix = {
     enable = true;
@@ -35,6 +35,7 @@ in
   environment.variables."ARDOUR_IMAGE_SURFACE" = "1";
 
   environment.systemPackages = with pkgs; [
+    (writeTextDir "prevent-ifd-gc" (toString [ repo ]))
     a2jmidid
     aeolus
     nixos-unstable.airwave

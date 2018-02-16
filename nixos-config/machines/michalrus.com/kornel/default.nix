@@ -2,12 +2,14 @@
 
 let
 
-  kornel = import (pkgs.fetchFromGitHub {
+  src = pkgs.fetchFromGitHub {
     owner = "michalrus";
     repo = "kornel";
     rev = "100d20772667e097deed80ab9bc46e5aa06251ed";
     sha256 = "13va2c4iyr5a3zq19glp8gqm7p4mppqdkp484n7zdadpizqbjaxh";
-  });
+  };
+
+  kornel = import src;
 
   user = "kornel";
   dataDir = "/var/lib/${user}";
@@ -29,6 +31,7 @@ in
     };
     path = with pkgs; [ kornel ];
     preStart = ''
+      # prevent-ifd-gc: ${src}
       mkdir -p "${dataDir}"
       chown -R "${user}:${user}" "${dataDir}"
       chmod 750 "${dataDir}"

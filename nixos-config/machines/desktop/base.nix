@@ -8,8 +8,6 @@
     ./modules/cups-reenable.nix
   ];
 
-  nixpkgs.overlays = [ (import ../../overlays) ];
-
   powerManagement.cpuFreqGovernor = lib.mkOverride 999 "performance"; # basically lib.mkDefault, but this one is already used in power-management.nix…
 
   networking = {

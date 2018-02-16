@@ -18,8 +18,6 @@
     ./znc
   ];
 
-  nixpkgs.overlays = [ (import ../../overlays) ];
-
   networking.hostName = "michalrus_com";
 
   networking.firewall.allowedTCPPorts = [
