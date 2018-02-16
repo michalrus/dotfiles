@@ -6,8 +6,8 @@
     ../father.nix
   ];
 
-  nix.maxJobs = 2;
-  nix.buildCores = 2;
+  nix.maxJobs = 4;
+  nix.buildCores = 4;
 
   boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "ehci_pci" "usb_storage" "usbhid" "sd_mod" "rtsx_pci_sdmmc" ];
   boot.kernelModules = [ "kvm-intel" "wl" ];
@@ -17,15 +17,14 @@
 
   boot.kernel.sysctl."vm.swappiness" = 5; # Use swap more reluctantly.
 
-  # Use the GRUB 2 boot loader.
-  boot.loader.grub.enable = true;
-  boot.loader.grub.version = 2;
-  boot.loader.grub.device = "/dev/sda";
+  # Use the systemd-boot EFI boot loader.
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/c3f59fda-d456-40ce-92cb-972ad08d3095";
     fsType = "ext4";
   };
 
-  swapDevices = [ { device = "/dev/disk/by-uuid/6738da51-edcc-46be-93a5-6ea6076fb280"; } ];
+  swapDevices = [ { device = "/dev/disk/by-uuid/f6ec3e74-2409-48a8-88c1-155f36ef9b84"; } ];
 }
