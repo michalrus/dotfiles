@@ -94,6 +94,7 @@
     socat
     sqlite-interactive
     strace
+    stress-ng
     tcpdump
     unzip
     usbutils
