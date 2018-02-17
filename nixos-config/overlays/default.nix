@@ -4,17 +4,13 @@ with (import ./ulib.nix super);
 
 let
 
-  nixos-unstable' = config:
-    (lib.const (lib.const rec {
-
-      nixos-unstable =
-        let src = nixpkgsOf "2e4aded366914d625a2f31208e8ac8548cb43a7e"
-                            "1zcbvzxk1vyk4ngfdyss8mlb3mqp050ygpnwqny0bxbzlqkrc4bh";
-            nixpkgs = (import src { inherit config; });
-        in nixpkgs // {
-          preventGC = nixpkgs.writeTextDir "prevent-ifd-gc" (toString [ src ]);
-        };
-    }));
+  nixos-unstable = config:
+    let src = nixpkgsOf "2e4aded366914d625a2f31208e8ac8548cb43a7e"
+                        "1zcbvzxk1vyk4ngfdyss8mlb3mqp050ygpnwqny0bxbzlqkrc4bh";
+        nixpkgs = (import src { inherit config; });
+    in nixpkgs // {
+      preventGC = nixpkgs.writeTextDir "prevent-ifd-gc" (toString [ src ]);
+    };
 
 in
 
@@ -31,7 +27,11 @@ composeOverlays [
   # `config.programs.mtr` uses the global definition… 🙄
   (import ./pkgs/mtr.nix)
 
-  (nixos-unstable' {})
+  (self: super: {
+    nixos-unstable = composeOverlays [
+      (import ./pkgs/haskell-ide-engine.nix)
+    ] self.nixos-unstable (super.nixos-unstable or (nixos-unstable {}));
+  })
 
   (self: super: {
 
@@ -59,7 +59,7 @@ composeOverlays [
 
     unfree = composeOverlays [
 
-      (nixos-unstable' { allowUnfree = true; })
+      (_: _: { nixos-unstable = nixos-unstable { allowUnfree = true; }; })
 
       (self: super: {
 
