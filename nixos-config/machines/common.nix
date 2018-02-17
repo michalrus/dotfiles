@@ -76,6 +76,7 @@
     iw
     jq
     libfaketime
+    lm_sensors
     lshw
     lsof
     ltrace
