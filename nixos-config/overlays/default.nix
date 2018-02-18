@@ -49,8 +49,6 @@ composeOverlays [
          { allowBroken = true; permittedInsecurePackages = [ "webkitgtk-2.4.11" ]; })
 
       # TODO: contribute these:
-      (import ./pkgs/arping.nix)
-      (import ./pkgs/arpoison.nix)
       (import ./pkgs/gettext-emacs.nix)
       (import ./pkgs/gregorio.nix)
       (import ./pkgs/lemonbar-xft.nix)
@@ -63,6 +61,12 @@ composeOverlays [
 
       (fromNixpkgs "catdocx" "0552147a3456662908646c9896c5149788a0982c"
          "15vvcw8nv3z1lrqiphrxc7lrk2sb86yk274gy5pl7j8kbjsvbdni" {})
+
+      (fromNixpkgs "arping" "986ab982b5b59137418ca2ae07fc8ac4fbb62134"
+         "1j2zqrvhc7c5j71vxhy3ys596vdc9x9kii6fj9fbrxi100hgzyhn" {})
+
+      (fromNixpkgs "arpoison" "075b01b35513853a57006ecda04ea981158a869e"
+         "05gyim4b309fkv6iqy1dh4lz6v747v0z3p68nc8ns34q8ng5vdgk" {})
 
     ] self.michalrus (super.michalrus or super);
 
