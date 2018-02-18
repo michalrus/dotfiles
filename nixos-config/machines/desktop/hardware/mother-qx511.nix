@@ -23,7 +23,7 @@
   boot.loader.grub = {
     enable = true;
     version = 2;
-    device = "/dev/disk/by-id/ata-ST320LT020-9YG142_W044HZ0X";
+    device = "/dev/disk/by-id/ata-SAMSUNG_HM321HI_S26VJ9AB901679";
   };
 
   fileSystems."/" = {
@@ -31,5 +31,5 @@
     fsType = "ext4";
   };
 
-  swapDevices = [ { device = "/var/swap"; } ];
+  swapDevices = [ { device = "/dev/disk/by-uuid/a5e3ec45-ef4b-4a75-94c5-bdd9476c5484"; } ];
 }
