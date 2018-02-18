@@ -41,11 +41,11 @@
     michalrus.gettext-emacs
     #michalrus.leksah
     michalrus.lemonbar-xft
-    michalrus.steeloverseer
     networkmanagerapplet
     nixos-unstable.alacritty
     nixos-unstable.haskell-ide-engine
     nixos-unstable.octave
+    nixos-unstable.steeloverseer
     pdfpc
     rofi
     stalonetray

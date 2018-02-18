@@ -30,6 +30,7 @@ composeOverlays [
   (self: super: {
     nixos-unstable = composeOverlays [
       (import ./pkgs/haskell-ide-engine.nix)
+      (import ./pkgs/steeloverseer.nix)
     ] self.nixos-unstable (super.nixos-unstable or (nixos-unstable {}));
   })
 
@@ -41,7 +42,6 @@ composeOverlays [
       (import ./pkgs/i3.nix)
       (import ./pkgs/influxdb.nix)
       (import ./pkgs/leksah.nix)
-      (import ./pkgs/steeloverseer.nix)
       (import ./pkgs/tcp-broadcast.nix)
       (import ./pkgs/gnucash-old.nix) # TODO: move to hledger from this crap
 

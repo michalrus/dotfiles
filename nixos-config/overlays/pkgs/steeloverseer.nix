@@ -1,30 +1,20 @@
 self: super:
 
-with (import ../ulib.nix super);
-
 {
 
-  # FIXME: remove after https://github.com/schell/steeloverseer/issues/27
+  # FIXME: remove after https://github.com/schell/steeloverseer/issues/27 lands in haskellPackages
   steeloverseer = let
 
-      nixpkgs = nixpkgsOf "ade98dc442ea78e9783d5e26954e64ec4a1b2c94"
-                  "1ymyzrsv86mpmiik9vbs60c1acyigwnvl1sx5sd282gndzwcjiyr";
-
-      inherit (import nixpkgs {}) pkgs;
-
-      src = pkgs.fetchFromGitHub {
+      src = super.fetchFromGitHub {
         owner = "schell";
         repo = "steeloverseer";
-        rev = "85d40083ac893bebc3696ab48f223da8af928874";
-        sha256 = "0c019kj6iggizbpac0ybdshq66p96zjbdjrn8jvhv7bbbfja84ba";
+        rev = "eada6fe806d9dee91cf1d0b3a5f66005a252c182";
+        sha256 = "1k4684rddx5aqxdgxcwp105i6vqlgcm13kzh1zcrh5y544m64n4x";
       };
 
-      cabal2nix = pkgs.haskellPackages.cabal2nix;
-
-    in (pkgs.haskell.lib.overrideCabal
-          (pkgs.haskellPackages.callCabal2nix "steeloverseer" src {})
-          (drv: { patches = [ ./steeloverseer.patch ]; })).overrideAttrs (oldAttrs: {
-            postInstall = "echo ${nixpkgs} ${src} ${cabal2nix} >$out/prevent-ifd-gc";
+    in (super.haskellPackages.callCabal2nix "steeloverseer" src {})
+          .overrideAttrs (oldAttrs: {
+            postInstall = "echo ${src} ${super.haskellPackages.cabal2nix} >$out/prevent-ifd-gc";
           });
 
 }
