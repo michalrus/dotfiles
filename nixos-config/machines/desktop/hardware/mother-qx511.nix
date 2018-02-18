@@ -11,6 +11,8 @@
     accelFactor = "0.025";
   };
 
+  services.xserver.useGlamor = true;
+
   nix.maxJobs = 3;
   nix.buildCores = 3;
 

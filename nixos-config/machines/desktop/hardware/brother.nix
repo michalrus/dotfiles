@@ -9,6 +9,8 @@
   nix.maxJobs = 4;
   nix.buildCores = 4;
 
+  services.xserver.useGlamor = true;
+
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "sd_mod" "sr_mod" "rtsx_usb_sdmmc" ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
