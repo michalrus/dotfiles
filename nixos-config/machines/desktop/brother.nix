@@ -32,6 +32,7 @@
     unfree.teamspeak_client
     unfree.unrar
     unfree.xmind
+    wxhexeditor
   ];
 
   services = {
