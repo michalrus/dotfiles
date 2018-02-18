@@ -43,18 +43,28 @@ composeOverlays [
       (import ./pkgs/influxdb.nix)
       (import ./pkgs/leksah.nix)
       (import ./pkgs/tcp-broadcast.nix)
-      (import ./pkgs/gnucash-old.nix) # TODO: move to hledger from this crap
+
+      # TODO: move to hledger from this crap
+      (fromNixpkgs "gnucash26" "360089b3521af0c69a5167870c80851dedf19d76" # nixos-17.03 :/
+         "1ag2hfsv29jy0nwlwnrm5w2sby0n1arii7vcc0662hr477f4riaq"
+         { allowBroken = true; permittedInsecurePackages = [ "webkitgtk-2.4.11" ]; })
 
       # TODO: contribute these:
       (import ./pkgs/arping.nix)
       (import ./pkgs/arpoison.nix)
-      (import ./pkgs/catdocx.nix)
       (import ./pkgs/filewatcher.nix)
-      (import ./pkgs/watchexec.nix)
       (import ./pkgs/gettext-emacs.nix)
       (import ./pkgs/gregorio.nix)
       (import ./pkgs/lemonbar-xft.nix)
       (import ./pkgs/pms5003.nix)
+
+      # TODO: contributed:
+
+      (fromNixpkgs "watchexec" "1bccb28904ff1c1ea2fb6278fc950ebd5c8aed1d"
+         "04i20pwq1cfgqs2ds358yzq9c38ip55mkx35w8nhx44xs6y27g9x" {})
+
+      (fromNixpkgs "catdocx" "0552147a3456662908646c9896c5149788a0982c"
+         "15vvcw8nv3z1lrqiphrxc7lrk2sb86yk274gy5pl7j8kbjsvbdni" {})
 
     ] self.michalrus (super.michalrus or super);
 
@@ -67,8 +77,6 @@ composeOverlays [
 
         michalrus = composeOverlays [
 
-          (import ./pkgs/discord.nix)
-          (import ./pkgs/hubstaff.nix)
           (import ./pkgs/transcribe.nix)
 
         ] self.michalrus (super.michalrus or super);

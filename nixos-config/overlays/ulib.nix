@@ -1,6 +1,6 @@
 { lib, fetchFromGitHub, ... }:
 
-{
+rec {
 
   inherit lib;
 
@@ -12,6 +12,13 @@
     fetchFromGitHub {
       owner = "NixOS"; repo = "nixpkgs";
       inherit rev sha256;
+    };
+
+  fromNixpkgs = pname: rev: sha: config: self: super:
+    let nixpkgs = nixpkgsOf rev sha; in {
+      "${pname}" = (import nixpkgs { inherit config; })."${pname}".overrideAttrs (oldAttrs: {
+        postInstall = "echo ${nixpkgs} >$out/prevent-ifd-gc";
+      });
     };
 
 }
