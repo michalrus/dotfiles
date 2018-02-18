@@ -30,7 +30,6 @@ composeOverlays [
   (self: super: {
     nixos-unstable = composeOverlays [
       (import ./pkgs/haskell-ide-engine.nix)
-      (import ./pkgs/steeloverseer.nix)
     ] self.nixos-unstable (super.nixos-unstable or (nixos-unstable {}));
   })
 
@@ -52,7 +51,6 @@ composeOverlays [
       # TODO: contribute these:
       (import ./pkgs/arping.nix)
       (import ./pkgs/arpoison.nix)
-      (import ./pkgs/filewatcher.nix)
       (import ./pkgs/gettext-emacs.nix)
       (import ./pkgs/gregorio.nix)
       (import ./pkgs/lemonbar-xft.nix)
