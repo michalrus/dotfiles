@@ -49,6 +49,7 @@ composeOverlays [
       (import ./pkgs/arping.nix)
       (import ./pkgs/arpoison.nix)
       (import ./pkgs/catdocx.nix)
+      (import ./pkgs/filewatcher.nix)
       (import ./pkgs/gettext-emacs.nix)
       (import ./pkgs/gregorio.nix)
       (import ./pkgs/lemonbar-xft.nix)

@@ -38,6 +38,7 @@
     gnome3.zenity
     haskellPackages.hlint
     i3status
+    michalrus.filewatcher
     michalrus.gettext-emacs
     #michalrus.leksah
     michalrus.lemonbar-xft
