@@ -1,0 +1,11 @@
+#!/bin/sh
+
+export WINEPREFIX="$HOME/.wine"
+
+exe="$HOME/.wine/drive_c/Program Files/IrfanView/i_view32.exe"
+
+[ $# != 0 ] || exec wine "$exe"
+
+for arg in "$@" ; do
+  wine "$exe" "$(winepath -w "$arg")" &
+done
