@@ -1,7 +1,5 @@
 self: super:
 
-with (import ../ulib.nix super);
-
 let
 
   hie-nix = super.fetchFromGitHub {
