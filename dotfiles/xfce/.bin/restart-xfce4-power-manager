@@ -5,6 +5,6 @@
 
 while true ; do
   # remember that pgrep can only grep for up to 15 chars
-  pgrep xfce4-power-man || xfce4-power-manager
+  pgrep xfce4-power-man >/dev/null || xfce4-power-manager
   sleep 5
 done
