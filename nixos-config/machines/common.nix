@@ -63,6 +63,7 @@
     ddrescue
     dos2unix
     easyrsa
+    entr
     file
     gcc
     git
