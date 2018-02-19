@@ -22,14 +22,18 @@
           (haskell-indentation-newline-and-indent)
           (forward-char (length symb))))))
 
-  (use-package dante
-    :ensure t
-    :commands 'dante-mode
-    :init
-    (add-hook 'haskell-mode-hook 'dante-mode)
-    (add-hook 'dante-mode-hook
-       '(lambda () (flycheck-add-next-checker 'haskell-dante
-                    '(warning . haskell-hlint)))))
+  (use-package lsp-haskell
+    :demand t
+    :config
+    (add-hook 'haskell-mode-hook
+              (lambda ()
+                ;; If there’s a 'hie.sh' defined locally by a project
+                ;; (e.g. to run HIE in a nix-shell), use it…
+                (let ((hie-directory (locate-dominating-file default-directory "hie.sh")))
+                  (when hie-directory
+                    (setq-local lsp-haskell-process-path-hie (expand-file-name "hie.sh" hie-directory))))
+                ;; … and only then setup the LSP.
+                (lsp-haskell-enable))))
 
   (use-package hayoo
     :demand t

@@ -2,7 +2,6 @@
 
 let
 
-  # Using unstable temporarily, because otherwise MELPA unstable packages from nixos-unstable fail with `*/nix-support/setup-hook: line 10: addEnvHooks: command not found`.
   base = pkgs.nixos-unstable.emacs25.override {
     # Use ‘lucid’ toolkit—it doesn’t have this bug → https://bugzilla.gnome.org/show_bug.cgi?id=85715
     withX = true;
@@ -10,24 +9,26 @@ let
     withGTK3 = false;
   };
 
-  whole = (pkgs.emacsPackagesNgGen base).emacsWithPackages (epkgs:
-    # MELPA Unstable @ NixOS Unstable (bleedingest edge)
-    #(with (pkgs.nixos-unstable.emacsPackagesNgGen base).melpaPackages; [
+  whole = (pkgs.nixos-unstable.emacsPackagesNgGen base).emacsWithPackages (epkgs:
+    # MELPA Unstable
     (with epkgs.melpaPackages; [
       ensime
-      dante
       hayoo
+      lsp-mode
+      lsp-ui
+      lsp-haskell
       sort-words
+      use-package
     ])
     ++
 
-    # ELPA Stable @ NixOS Stable
+    # ELPA Stable
     (with epkgs.elpaPackages; [
       auctex
     ])
     ++
 
-    # MELPA Stable @ NixOS Stable
+    # MELPA Stable
     (with epkgs.melpaStablePackages; [
       company
       counsel
@@ -50,7 +51,6 @@ let
       scala-mode
       solarized-theme
       swiper
-      use-package
       yaml-mode
     ])
   );

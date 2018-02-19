@@ -22,3 +22,11 @@
 (use-package flycheck
   :config
   (global-flycheck-mode t))
+
+(use-package lsp-mode
+  :commands lsp-mode
+  :config
+  (use-package lsp-flycheck)
+
+  (use-package lsp-ui
+    :hook (lsp-mode-hook . lsp-ui-mode)))
