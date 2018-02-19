@@ -177,6 +177,7 @@
         unfree.nixos-unstable.hubstaff
         unfree.nixos-unstable.minecraft
         unfree.nixos-unstable.skype
+        unfree.nixos-unstable.vscode
       ];
     };
 
