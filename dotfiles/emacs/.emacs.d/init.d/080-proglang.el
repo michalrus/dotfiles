@@ -26,7 +26,11 @@
 (use-package lsp-mode
   :commands lsp-mode
   :config
-  (use-package lsp-flycheck)
+  (use-package lsp-flycheck
+    :demand t)
 
-  (use-package lsp-ui
-    :hook (lsp-mode-hook . lsp-ui-mode)))
+  ;; why does lsp-ui behave so weirdly?
+  ;;(use-package lsp-ui
+  ;;  :demand t
+  ;;  :hook (lsp-mode . lsp-ui-mode))
+  )
