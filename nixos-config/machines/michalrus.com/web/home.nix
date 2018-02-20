@@ -16,8 +16,7 @@ let
   machines = [
     { name = "printer";          addr = "${subnet-chwalecice}.5"; }
     { name = "camera-kuchnia";   addr = "${subnet-chwalecice}.12"; auth = "eWJ4aGtrb3Y6bGZ3dmNzYXg="; }
-    # TODO:
-    { name = "camera-sypialnia"; addr = "10.0.1.13"; auth = "aHRicGxoamU6c2Nnc2JyZng="; }
+    { name = "camera-sypialnia"; addr = "${subnet-chwalecice}.13"; auth = "aHRicGxoamU6c2Nnc2JyZng="; }
     { name = "camera-salon";     addr = "${subnet-chwalecice}.14"; auth = "bHAzamtiZ3M6cTJzdHlpbmM="; }
   ];
 

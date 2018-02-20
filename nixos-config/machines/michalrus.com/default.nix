@@ -6,7 +6,6 @@
     ../common-x86.nix
     ./monitoring
     ./gitolite
-    ./ipsec
     ./bitlbee
     ./kornel
     ./jabber
