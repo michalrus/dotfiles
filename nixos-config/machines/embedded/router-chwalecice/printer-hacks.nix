@@ -37,7 +37,7 @@ in {
     after = [ "network.target" ];
     wantedBy = [ "multi-user.target" ];
     path = [ arp-response-spoof ];
-    script = "exec arp-response-spoof wlan0 ${subnet-chwalecice}.5 f4:81:39:86:73:cb";
+    script = "exec arp-response-spoof br0 ${subnet-chwalecice}.5 f4:81:39:86:73:cb";
   };
 
   # The printer falls asleep and stops responding at all. Then, it

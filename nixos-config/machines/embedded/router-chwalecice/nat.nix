@@ -24,8 +24,8 @@ let
 
     iptables -w -N nixos-fw-forward
     iptables -w -A nixos-fw-forward -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
-    iptables -w -A nixos-fw-forward -i wlan0 -j ACCEPT
-    iptables -w -A nixos-fw-forward -i tun0 -o wlan0 -j ACCEPT
+    iptables -w -A nixos-fw-forward -i br0 -j ACCEPT
+    iptables -w -A nixos-fw-forward -i tun0 -o br0 -j ACCEPT
     iptables -w -A nixos-fw-forward -j REJECT --reject-with icmp-host-unreachable
     iptables -w -A FORWARD -j nixos-fw-forward
     iptables -w -P FORWARD DROP
@@ -54,15 +54,17 @@ mkMerge [
       "net.ipv4.conf.default.forwarding" = mkOverride 99 true;
     };
 
-    networking.interfaces.wlan0.ip4 = [{
+    networking.bridges.br0.interfaces = [ "wlan0" "eth1" ];
+
+    networking.interfaces.br0.ip4 = [{
       address = "${subnet-chwalecice}.1";
       prefixLength = 24;
     }];
 
     # https://github.com/NixOS/nixpkgs/issues/34026 o_O
     networking.localCommands = ''
-      # why doesn’t this work → `ip addr add broadcast ${subnet-chwalecice}.255 dev wlan0` ?
-      ${pkgs.inetutils}/bin/ifconfig wlan0 broadcast ${subnet-chwalecice}.255
+      # why doesn’t this work → `ip addr add broadcast ${subnet-chwalecice}.255 dev br0` ?
+      ${pkgs.inetutils}/bin/ifconfig br0 broadcast ${subnet-chwalecice}.255
     '';
 
     services.hostapd = {
@@ -72,6 +74,7 @@ mkMerge [
 
       wpa = false; # We want to enable WPA2-PSK only, and this does WPA1. :/
       extraConfig = ''
+        bridge=br0
         wpa=2
         wpa_passphrase=${import ./wifi-password.nix}
         wpa_key_mgmt=WPA-PSK
@@ -82,7 +85,7 @@ mkMerge [
 
     services.dhcpd4 = {
       enable = true;
-      interfaces = ["wlan0"];
+      interfaces = ["br0"];
       extraConfig = ''
         option subnet-mask 255.255.255.0;
         option broadcast-address ${subnet-chwalecice}.255;
