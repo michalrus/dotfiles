@@ -17,6 +17,7 @@ rec {
     robertrus-np300e5a   = { ip = "13"; };
     mikolajrus           = { ip = "14"; };
     robertrus-asus-1225c = { ip = "15"; };
+    mikolajrus-rpi       = { ip = "16"; };
     router-chwalecice    = { ip = "40"; extra = "iroute ${subnet-chwalecice}.0 255.255.255.0"; };
   };
 
