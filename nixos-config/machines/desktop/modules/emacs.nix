@@ -17,6 +17,7 @@ let
       lsp-mode
       lsp-ui
       lsp-haskell
+      company-lsp
       sort-words
       use-package
     ])

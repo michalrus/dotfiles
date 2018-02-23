@@ -36,6 +36,8 @@
                 (setq-local lsp-haskell-process-args-hie `("-d" "-l" ,(concat "/tmp/hie-" user-login-name "-" (shell-command-to-string "echo -n $(date --iso-8601=ns)") ".log")))
                 ;; … and account for nix-shell init…
                 (setq-local lsp-response-timeout 30)
+                (setq-local company-lsp-async t)
+                (setq-local company-lsp-cache-candidates nil)
                 ;; … and only then setup the LSP.
                 (lsp-haskell-enable))))
 

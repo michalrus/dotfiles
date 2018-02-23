@@ -28,6 +28,9 @@
   :config
   (use-package lsp-flycheck
     :demand t)
+  (use-package company-lsp
+    :demand t
+    :config (push 'company-lsp company-backends))
 
   ;; why does lsp-ui behave so weirdly?
   ;;(use-package lsp-ui
