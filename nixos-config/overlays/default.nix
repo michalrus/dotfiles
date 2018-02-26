@@ -44,9 +44,9 @@ composeOverlays [
       (import ./pkgs/tcp-broadcast.nix)
 
       # TODO: move to hledger from this crap
-      (fromNixpkgs "gnucash26" "360089b3521af0c69a5167870c80851dedf19d76" # nixos-17.03 :/
-         "1ag2hfsv29jy0nwlwnrm5w2sby0n1arii7vcc0662hr477f4riaq"
-         { allowBroken = true; permittedInsecurePackages = [ "webkitgtk-2.4.11" ]; })
+      (fromNixpkgs "gnucash26" "327a84749ed48a20736fdf20b9dd4f5723b01912" # nixos-unstable
+         "0fgdcy49w073iiy9i65928219n1fy3w61xxsyqn6d8a72dxpcs3n"
+         { permittedInsecurePackages = [ "webkitgtk-2.4.11" ]; })
 
       # TODO: contribute these:
       (import ./pkgs/gettext-emacs.nix)
