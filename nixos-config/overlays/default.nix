@@ -5,8 +5,8 @@ with (import ./ulib.nix super);
 let
 
   nixos-unstable = config:
-    let src = nixpkgsOf "327a84749ed48a20736fdf20b9dd4f5723b01912"
-                        "0fgdcy49w073iiy9i65928219n1fy3w61xxsyqn6d8a72dxpcs3n";
+    let src = nixpkgsOf "831ef4756e372bfff77332713ae319daa3a42742"
+                        "1rbfgfp9y2wqn1k0q00363hrb6dc0jbqm7nmnnmi9az3sw55q0rv";
         nixpkgs = (import src { inherit config; });
     in nixpkgs // {
       preventGC = nixpkgs.writeTextDir "prevent-ifd-gc" (toString [ src ]);
@@ -55,15 +55,6 @@ composeOverlays [
       (import ./pkgs/pms5003.nix)
 
       # TODO: contributed:
-
-      (fromNixpkgs "watchexec" "1bccb28904ff1c1ea2fb6278fc950ebd5c8aed1d"
-         "04i20pwq1cfgqs2ds358yzq9c38ip55mkx35w8nhx44xs6y27g9x" {})
-
-      (fromNixpkgs "catdocx" "0552147a3456662908646c9896c5149788a0982c"
-         "15vvcw8nv3z1lrqiphrxc7lrk2sb86yk274gy5pl7j8kbjsvbdni" {})
-
-      (fromNixpkgs "arping" "986ab982b5b59137418ca2ae07fc8ac4fbb62134"
-         "1j2zqrvhc7c5j71vxhy3ys596vdc9x9kii6fj9fbrxi100hgzyhn" {})
 
       (fromNixpkgs "arpoison" "075b01b35513853a57006ecda04ea981158a869e"
          "05gyim4b309fkv6iqy1dh4lz6v747v0z3p68nc8ns34q8ng5vdgk" {})

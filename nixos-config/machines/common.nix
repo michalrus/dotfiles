@@ -53,9 +53,9 @@
   environment.variables.PATH = [ "$HOME/.bin" ];
 
   environment.systemPackages = with pkgs; [
-    (nixos-unstable.preventGC)
-    (hiPrio michalrus.arping)
     (hiPrio netcat-openbsd)
+    (hiPrio nixos-unstable.arping)
+    (nixos-unstable.preventGC)
     bc
     bindfs
     calc

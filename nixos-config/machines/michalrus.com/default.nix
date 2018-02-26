@@ -17,6 +17,8 @@
     ./znc
   ];
 
+  boot.tmpOnTmpfs = false;
+
   networking.hostName = "michalrus_com";
 
   networking.firewall.allowedTCPPorts = [

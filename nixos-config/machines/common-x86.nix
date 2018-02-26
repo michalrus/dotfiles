@@ -38,10 +38,10 @@
     jhead
     man_db
     manpages
-    michalrus.catdocx
     michalrus.git-annex
     michalrus.git-annex-desktop
     nix-prefetch-scripts
+    nixos-unstable.catdocx
     normalize
     oathToolkit
     odt2txt
