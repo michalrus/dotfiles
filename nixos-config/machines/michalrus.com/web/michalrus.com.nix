@@ -6,16 +6,13 @@ with import ./common.nix { inherit config lib; };
 let
 
   domain = "michalrus.com";
+  alternatives = [ "www.${domain}" "michalrus.pl" "www.michalrus.pl" "michalrus.eu" "www.michalrus.eu" ];
 
 in
 
 mkMerge [
 
-  (mkCert domain [
-    "www.michalrus.com"
-    "p.michalrus.com" "git.michalrus.com"
-    "michalrus.pl" "www.michalrus.pl" "michalrus.eu" "www.michalrus.eu"
-  ])
+  (mkCert domain (alternatives ++ [ "p.${domain}" "git.${domain}" ]))
 
   {
     environment.systemPackages = with pkgs; [
@@ -30,6 +27,7 @@ mkMerge [
 
     services.nginx.httpConfig = sslServer {
       name = domain;
+      alternatives = alternatives ++ [ "*.michalrus.com" "*.michalrus.pl" "*.michalrus.eu" ];
       body = ''
         root /var/www/${domain};
         expires epoch; # Cache creates more trouble in communication than it’s worth (for this site).

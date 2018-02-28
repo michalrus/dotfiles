@@ -7,6 +7,7 @@ with import ./common.nix { inherit config lib; };
   imports = [
     ./monitor.nix
     ./michalrus.com.nix
+    ./grezza.store.nix
     ./home.nix
   ];
 
@@ -73,7 +74,7 @@ with import ./common.nix { inherit config lib; };
           }
 
           location / {
-            rewrite ^ https://$host$request_uri permanent;
+            return 301 https://$host$request_uri;
           }
         }
       '';
