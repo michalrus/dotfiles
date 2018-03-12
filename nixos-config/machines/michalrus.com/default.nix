@@ -35,6 +35,14 @@
     ssh.startAgent = false;
   };
 
+  systemd.extraConfig = ''
+    DefaultCPUAccounting=yes
+    DefaultBlockIOAccounting=yes
+    DefaultMemoryAccounting=yes
+    DefaultTasksAccounting=yes
+    DefaultIPAccounting=yes
+  '';
+
   services = {
     openssh = {
       enable = true;

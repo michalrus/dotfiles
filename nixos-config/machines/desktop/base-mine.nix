@@ -69,6 +69,14 @@
 
   hardware.enableSomagicEasyCAP = true;
 
+  systemd.extraConfig = ''
+    DefaultCPUAccounting=yes
+    DefaultBlockIOAccounting=yes
+    DefaultMemoryAccounting=yes
+    DefaultTasksAccounting=yes
+    DefaultIPAccounting=yes
+  '';
+
   services = {
     logind.extraConfig = ''
       HandleLidSwitch=suspend
