@@ -5,8 +5,8 @@ let
   src = pkgs.fetchFromGitHub {
     owner = "michalrus";
     repo = "kornel";
-    rev = "100d20772667e097deed80ab9bc46e5aa06251ed";
-    sha256 = "13va2c4iyr5a3zq19glp8gqm7p4mppqdkp484n7zdadpizqbjaxh";
+    rev = "55e790f195eee6e9d87d9d6eb7f63c9fa25e15e9";
+    sha256 = "1mhgg5alqfhyljizwrj0hnqd0hsb06dv5i2hipn753ccc9sh4d31";
   };
 
   kornel = import src;
