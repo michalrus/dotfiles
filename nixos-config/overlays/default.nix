@@ -68,6 +68,9 @@ composeOverlays [
 
           (import ./pkgs/transcribe.nix)
 
+          (fromNixpkgs "hubstaff" "b32839211ba7727ed87cb2b8e4ec80f3b1006b84"
+             "0bn8w66y05ik3ffa8ccrnlaqji08kw4kvh3qj44adf4h0dfjzc5q" { allowUnfree = true; })
+
         ] self.michalrus (super.michalrus or super);
 
       })
