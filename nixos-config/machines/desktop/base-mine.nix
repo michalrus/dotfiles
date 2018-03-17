@@ -49,7 +49,6 @@
     pdfpc
     rofi
     stalonetray
-    stack # for contributions, I’m not using this on my own
     termite
   ];
 
@@ -161,7 +160,6 @@
         lilypond
         michalrus.gnucash26
         openjdk8   # for nofatty
-        stack
         unfree.michalrus.transcribe
         (texlive.combine {
           inherit (texlive) scheme-small latexmk titlesec tocloft todonotes cleveref lipsum biblatex logreq cm-super csquotes pgfplots adjustbox collectbox ccicons polski placeins xstring pdfpages unicode-math filehook textpos marvosym progressbar lm-math ucharcat;
