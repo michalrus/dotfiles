@@ -17,13 +17,12 @@ include "%L"
 
 <Multi_key> <a> <l> <l>               : "∀" U2200 # FOR ALL
 <Multi_key> <e> <x>                   : "∃" U2203 # THERE EXISTS
+<Multi_key> <s> <o>                   : "∴" U2234 # THEREFORE
+<Multi_key> <b> <e> <c>               : "∵" U2235 # BECAUSE
+
+<Multi_key> <e> <u> <r>               : "€"   EuroSign # EURO SIGN
 
 <Multi_key> <l> <o> <d>               : "ಠ_ಠ"         # emoji: ‘look of disapproval’
 <Multi_key> <t> <a> <b> <l> <e>       : "(╯°□°)╯︵ ┻━┻" # emoji: ‘flipping table’
 <Multi_key> <s> <h> <r> <u> <g>       : "¯\\_(ツ)_/¯"   # emoji: ‘shrug’
-<Multi_key> <n> <a> <s> <f>           : "¯\\_(⌣̯̀⌣́)_/¯"  # emoji: ‘not a single f××× was given’
-<Multi_key> <l> <o> <v> <e>           : "♥‿♥"          # emoji: ‘love at first sight’
-<Multi_key> <a> <w> <k>               : "^‿^’"         # emoji: ‘awkward’
 <Multi_key> <h> <a> <p> <p> <y>       : "(ﾉ^_^)ﾉ"      # emoji: ‘squinty happy arms up’
-
-<Multi_key> <e> <u> <r>               : "€"   EuroSign # EURO SIGN
