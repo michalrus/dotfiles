@@ -8,6 +8,7 @@ let
   domain = "grezza.store";
   alternatives = [ "www.${domain}" ];
   phpfpmSocket = "/run/phpfpm-globalPool.sock";
+  timerName = "grezza-store-cron";
 
   sources = {
     wordpress = pkgs.fetchzip {
@@ -21,6 +22,7 @@ let
     DB_USER            = DB_NAME;
     DISALLOW_FILE_MODS = false; # Stuff is mounted read-only anyway, but with this @ true, we won’t get update nags.
     WC_LOG_HANDLER     = "WC_Log_Handler_DB"; # By default it wants to log directly to FS, with no pretty display.
+    DISABLE_WP_CRON    = true; # We’ll call /wp-cron.php from a timer below.
   } // (import ./grezza.store.secrets.nix).wpConfig;
 
   officialStuff = stuff: name: version: sha256: {
@@ -36,13 +38,13 @@ let
     // get "affiliates-manager" null "1mpjcgqyixqx85rx6xzzglrj2w7hrhk7y5qi2s2bw4g8qhkig35k"
     // get "affiliates-woocommerce-light" "1.3.3" "022ikalc7xyf3yr4pv00k30dbpwkdg3ckr2xjv1s3c70ma93apvs"
     // get "akismet" "4.0.3" "18vi92cnf3q6pg8c474l90nsmr6b9icbxm6mlh9v8v5z58n106qz"
-    // get "all-in-one-seo-pack" "2.4.5.1" "1d4y3dxdwxhklxdac72qywi0k1c3s34f937f7jqbvqv81cbncx2j" # Has free GoogleAnalytics for WooCommerce.
+    // get "all-in-one-seo-pack" "2.4.6.1" "0i78y1nvj6fbgc079gkfmls69rc29jlamgbpd16c35b7jxkwmblk" # Has free GoogleAnalytics for WooCommerce.
     // get "backwpup" "3.4.4" "13py4qin61j9r93gawlgys3z8bm4sa5j1pj9q9yws0bimprzk4hw"
     // get "broken-link-checker" "1.11.5" "1drbibnf6pyqk9yw4q9mzq1qx3bjr1iz9x7sy9v4nq8ac52l5n2v"
     // get "contact-form-7" "5.0.1" "0h5fyii09h5m19dil92d68wn76vnj2n7ass5lqpb7nrhx96cr8g6"
     // get "contact-widgets" "1.4.1" "0yxvzybiapvirbpjwvjb4iid5jijwb46z4r8rx4nghiahzhm5jjj"
     // get "cookie-notice" "1.2.41" "0g0mmq4idzwqs4q59ijwp4qfv7x1k0waxw5yb2vsyg9sz56qh46r"
-    // get "custom-facebook-feed" "2.4.6" "1jhric6n2dj4yal2h0d9d0llyj7yskinyll4pa0l2a4r8fxdj5x9"
+    // get "custom-facebook-feed" "2.5" "0a4q09gfz0xan0wyjn53hw0rwjifsl2ik7wihabzasdh82yivgmi"
     // get "disqus-comment-system" "3.0.15" "1vjflg0q1jck49qdikmi66sn83djr5v2dzbm7j1bzhm5zq29bz0a"
     // get "flamingo" "1.8"   "12la5wp903px1vflc5lm7xrh58xp4qig4f72braizscw5i2n4wvf"
     // get "geoip-detect" "2.8.2" "1vxib021xk0ji479bmfmxlqld4q1vcmpxnwgh7hkna18xlmy0gh4"
@@ -61,7 +63,7 @@ let
     // get "wp-polls" "2.73.8" "15qr45mmvynaypgcn6nmn2d8f7cb167l76g2xz7g5jx3v1zyn7wm"
     // get "yith-woocommerce-compare" "2.3.0" "0cw43l2jls14jfsjablgwfmyfxbzsghcrwrhwxxid96pjf6c8z4x"
     // get "yith-woocommerce-wishlist" "2.2.1" "13bmxjyi7xaf8j02v0x4w8k60lz954shzj9ma1zhdwi17845kyhi"
-    // get "youtube-embed-plus" "11.8.5" "0r83zpc19qmy5cvdaf01k85bc05dwwnk8b93pb5wf17q5641bn2a"
+    // get "youtube-embed-plus" "11.8.6.1" "1plgi820ll1lkz4929diclkp26mkcfnycqwb6jbbhj8dz4xniqv1"
     ;
 
   themes = let get = officialStuff "theme"; in {}
@@ -72,6 +74,19 @@ let
     // get "boutique" "2.0.13" "1x8ry3dblmw8ra5f22fdal8307v6zrx0i8hyvms4q4qinbihq05f"
     ;
 
+  languages = let get = lang: country: local: remote: sha256: {
+    "${if builtins.isNull local then "${lang}_${country}" else "${local}-${lang}_${country}"}.mo" = pkgs.fetchurl {
+      url = "https://translate.wordpress.org/projects/${remote}/${lang}/default/export-translations?format=mo";
+      inherit sha256;
+    };
+  }; getPL = get "pl" "PL"; in {}
+    // getPL null "wp/dev" "0xwv7xl88pzxrydispihssvq0l46x5qv513lwgb5mm37km7cxdxg"
+    // getPL "continents-cities" "wp/dev/cc" "1lvwg91i4gbx1i4mah5xffkajqkgyv84y0hhf9x85xr1l7a4ml0k"
+    // getPL "admin" "wp/dev/admin" "1b6c5mks52kabc5vmb76dmkn95i9wgbfb5lrcl8vc1lf23a1kjmz"
+    // getPL "admin-network" "wp/dev/admin/network" "17pn5qf3zswzpl48k4rbnvx7k5sgfvkk1rqzdsvbcg81jqhxwmca"
+    // getPL "woocommerce/woocommerce" "wp-plugins/woocommerce/stable" "1ndcyblkkzs5mlg6wcj9mik3acqy3wyp8bd7x5ss5pa5lpnh01kw"
+    ;
+
   wordpress = let
 
     escapePHP = arg:
@@ -79,10 +94,11 @@ let
       else "'${lib.replaceStrings ["\\" "'"] ["\\\\" "\\'"] (toString arg)}'";
 
     addStuff = target: sources: ''
-      rm -r "${target}" && mkdir "${target}"
+      rm -r "${target}" || true ; mkdir -p "${target}"
       cp $out/wp-content/index.php "${target}"/
       ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: dir: ''
-        ln -s "${dir}" "${target}"/"${name}"
+        mkdir -p "$(dirname "${target}/${name}")"
+        ln -s "${dir}" "${target}/${name}"
       '') sources)}
     '';
 
@@ -106,8 +122,9 @@ let
 
     rm $out/readme.html $out/license.txt
 
-    ${addStuff "$out/wp-content/plugins" plugins}
-    ${addStuff "$out/wp-content/themes"  themes}
+    ${addStuff "$out/wp-content/plugins"   plugins}
+    ${addStuff "$out/wp-content/themes"    themes}
+    ${addStuff "$out/wp-content/languages" languages}
   '';
 
 in
@@ -163,14 +180,26 @@ mkMerge [
           user = nobody
           listen.group = ${config.services.nginx.group}
           pm = dynamic
-          pm.max_children = 75
+          pm.max_children = 5
           pm.start_servers = 5
           pm.min_spare_servers = 5
-          pm.max_spare_servers = 20
+          pm.max_spare_servers = 5
           pm.max_requests = 500
         '';
       };
     };
+
+    systemd.timers."${timerName}" = {
+      partOf = [ "${timerName}.service" ];
+      wantedBy = [ "timers.target" ];
+      timerConfig.OnCalendar = "*:0/5"; # every 5 minutes
+    };
+
+    systemd.services."${timerName}" = {
+      path = with pkgs; [ curl ];
+      script = "exec curl -sS 'https://${domain}/wp-cron.php?doing_wp_cron'";
+    };
+
   }
 
 ]
