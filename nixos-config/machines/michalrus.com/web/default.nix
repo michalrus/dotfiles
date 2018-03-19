@@ -40,6 +40,7 @@ with import ./common.nix { inherit config lib; };
 
         types {
           text/plain      log;
+          text/plain      php inc;
         }
 
         ssl_protocols TLSv1 TLSv1.1 TLSv1.2; # Dropping SSLv3, ref: POODLE

@@ -22,7 +22,7 @@ mkMerge [
     fileSystems."/var/www/${domain}" = {
       device = "/home/m/public_html";
       fsType = "fuse.bindfs";
-      options = [ "ro" "force-user=nginx" "force-group=nginx" "perms=640:u+D:g+D" ];
+      options = [ "ro" "force-user=${config.services.nginx.user}" "force-group=${config.services.nginx.group}" "perms=640:u+D:g+D" ];
     };
 
     services.nginx.httpConfig = sslServer {
