@@ -19,6 +19,8 @@ let
       (sort (a: b: a < b) lingeringUsers))); # this sorting is important for `comm` to work correctly
 
   updateLingering = pkgs.writeScript "update-lingering" ''
+    # Stop when the system is not running, e.g. during nixos-install
+    [[ -e /run/booted-system ]] || exit 0
     lingering=$(ls ${dataDir} 2> /dev/null | sort)
     echo "$lingering" | comm -3 -1 ${lingeringUsersFile} - | xargs -r ${pkgs.systemd}/bin/loginctl disable-linger
     echo "$lingering" | comm -3 -2 ${lingeringUsersFile} - | xargs -r ${pkgs.systemd}/bin/loginctl enable-linger
