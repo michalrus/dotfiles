@@ -54,9 +54,11 @@ mkMerge [
       "net.ipv4.conf.default.forwarding" = mkOverride 99 true;
     };
 
+    boot.kernelModules = [ "br_netfilter" ];
+
     networking.bridges.br0.interfaces = [ "wlan0" "eth1" ];
 
-    networking.interfaces.br0.ip4 = [{
+    networking.interfaces.br0.ipv4.addresses = [{
       address = "${subnet-chwalecice}.1";
       prefixLength = 24;
     }];

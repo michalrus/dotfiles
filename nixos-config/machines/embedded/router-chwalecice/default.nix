@@ -18,6 +18,9 @@
     route-nopull
   '';
 
+  # TODO: The build fails?
+  services.nixosManual.enable = false;
+
   boot.loader.grub.enable = false;
   boot.loader.generic-extlinux-compatible.enable = true;
 
