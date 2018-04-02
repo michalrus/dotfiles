@@ -6,6 +6,7 @@
     ../../desktop/modules/openvpn.nix
     ../../common.nix
     ./nat.nix
+    ./daily-reboot.nix
     ./printer-hacks.nix
   ];
 
