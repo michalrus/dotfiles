@@ -43,7 +43,7 @@ in
         --http-snippets-fetch-max "$((100 * 1024))" \
         --cleverbot-api-key-file "${dataDir}"/cleverbot.key \
         --haskell-bot-nicks "lambdabot" \
-        --scala-bot-nicks "multibot,multibot_,multibot_1,multibot_2" \
+        --scala-bot-nicks "multibot,multibot_,multibot1,multibot_1,multibot2,multibot_2" \
         --channels "#stosowana"
     '';
   };
