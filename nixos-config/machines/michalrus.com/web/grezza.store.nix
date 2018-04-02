@@ -25,6 +25,8 @@ let
     };
   };
 
+  secrets = import ./grezza.store.secrets.nix;
+
   wpConfig = rec {
     # WP_DEBUG = true; WP_DEBUG_LOG = true; WP_DEBUG_DISPLAY = false;
     FS_METHOD           = "direct";
@@ -34,7 +36,7 @@ let
     DISALLOW_FILE_MODS  = false; # Stuff is mounted read-only anyway, but with this @ true, we won’t get update nags.
     WC_LOG_HANDLER      = "WC_Log_Handler_DB"; # By default it wants to log directly to FS, with no pretty display.
     DISABLE_WP_CRON     = true; # We’ll call /wp-cron.php from a timer below.
-  } // (import ./grezza.store.secrets.nix).wpConfig;
+  } // secrets.wpConfig;
 
   wordpress = let
 
@@ -73,6 +75,21 @@ let
     rm $out/readme.html $out/license.txt
 
     rm -r $out/wp-content && ln -s ${mutableDir} $out/wp-content
+  '';
+
+  msmtpConfig = pkgs.writeText "msmtprc" ''
+    defaults
+    auth           on
+    tls            on
+    tls_trust_file /etc/ssl/certs/ca-certificates.crt
+    timeout        30
+
+    account        default
+    host           smtp.gmail.com
+    port           587
+    from           stefania.zeromska@gmail.com
+    user           stefania.zeromska@gmail.com
+    password       ${secrets.smtpPassword}
   '';
 
 in
@@ -128,6 +145,9 @@ mkMerge [
     users.extraGroups."${user}" = { };
 
     services.phpfpm = {
+      phpOptions = ''
+        sendmail_path = "${pkgs.michalrus.msmtp-no-security-check}/bin/msmtp -C ${msmtpConfig} -t"
+      '';
       pools."${user}" = {
         listen = phpfpmSocket;
         extraConfig = ''
