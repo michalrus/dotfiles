@@ -68,6 +68,7 @@ let
     add_filter('auto_update_theme',           '__return_true');
     add_filter('auto_update_translation',     '__return_true');
     add_filter('auto_core_update_send_email', '__return_true');
+    add_filter('storefront_credit_link',      '__return_false');
     EOF
 
     mv $out/wp-config-sample.php $out/wp-config.php
