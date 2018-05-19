@@ -179,8 +179,8 @@
         jetbrains.idea-community
         openjdk8   # for nofatty
         pgadmin
+        unfree.michalrus.discord
         unfree.michalrus.hubstaff
-        unfree.nixos-unstable.discord
         unfree.nixos-unstable.minecraft
         unfree.nixos-unstable.skype
         unfree.nixos-unstable.vscode

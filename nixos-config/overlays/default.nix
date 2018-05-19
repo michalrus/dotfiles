@@ -69,6 +69,9 @@ composeOverlays [
 
           (import ./pkgs/transcribe.nix)
 
+          (fromNixpkgs "discord" "d72b8700797105e6dc38a7518786c35b1692bc00"
+             "01pxwg7rkbfpyfrs9qm6fsafd4d8jlw83hfhbv464xc7kzzrb7l0" { allowUnfree = true; })
+
           (fromNixpkgs "hubstaff" "b32839211ba7727ed87cb2b8e4ec80f3b1006b84"
              "0bn8w66y05ik3ffa8ccrnlaqji08kw4kvh3qj44adf4h0dfjzc5q" { allowUnfree = true; })
 
