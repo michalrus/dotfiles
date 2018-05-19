@@ -45,6 +45,9 @@ composeOverlays [
       (import ./pkgs/gnucash.nix) # TODO: move to hledger from this crap
       (import ./pkgs/msmtp-no-security-check.nix)
 
+      (fromNixpkgs "peek" "0e6ee9d2d814ca9dc0b48e6c15fa77dce19038ee"
+         "0y26ar1hqnyvmssnph2z6077m7q252b2hj2vn142j0lss4dkvsjf" {})
+
       # TODO: contribute these:
       (import ./pkgs/gettext-emacs.nix)
       (import ./pkgs/gregorio.nix)

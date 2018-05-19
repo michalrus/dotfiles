@@ -41,6 +41,7 @@
     michalrus.gettext-emacs
     #michalrus.leksah
     michalrus.lemonbar-xft
+    michalrus.peek
     networkmanagerapplet
     nixos-unstable.alacritty
     nixos-unstable.haskell-ide-engine
