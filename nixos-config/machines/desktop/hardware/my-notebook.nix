@@ -24,16 +24,13 @@
 
   services.xserver.useGlamor = true;
 
-  boot.loader.grub = {
-    enable = true;
-    version = 2;
-    device = "/dev/disk/by-id/ata-ST1000LM024_HN-M101MBB_S2WZJA0D350922";
-  };
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
   boot.initrd.luks.devices = [{
     name = "crypt";
     device = "/dev/disk/by-uuid/f671aaa7-2b5c-44e3-9c83-6997edb4bcc4";
-    # allowDiscards = true; # if SSD — has security implications!
+    allowDiscards = true; # if SSD — has security implications!
   }];
 
   fileSystems."/" = {
@@ -47,8 +44,8 @@
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/e8e6dc50-7814-473e-8d52-aebcd83afd87";
-    fsType = "ext4";
+    device = "/dev/disk/by-uuid/DD88-498B";
+    fsType = "vfat";
   };
 
   fileSystems."/home" = {
