@@ -38,7 +38,6 @@ composeOverlays [
     michalrus = composeOverlays [
 
       (import ./pkgs/git-annex-hacks.nix)
-      (import ./pkgs/i3.nix)
       (import ./pkgs/influxdb.nix)
       (import ./pkgs/leksah.nix)
       (import ./pkgs/tcp-broadcast.nix)

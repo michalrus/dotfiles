@@ -4,7 +4,6 @@
   nix = {
     extraOptions = ''
       gc-keep-outputs = true
-      build-cache-failure = true
       auto-optimise-store = true
     '';
 

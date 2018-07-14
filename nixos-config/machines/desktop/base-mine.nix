@@ -28,7 +28,7 @@
   environment.systemPackages = with pkgs; [
     (haskellPackages.ghcWithHoogle (hs: []))
     autocutsel
-    breeze-qt4 breeze-qt5 breeze-icons pkgs.hicolor_icon_theme kde-gtk-config breeze-gtk
+    breeze-qt5 breeze-icons pkgs.hicolor_icon_theme kde-gtk-config breeze-gtk
     chromium
     compton
     cool-retro-term
@@ -121,7 +121,7 @@
       };
       desktopManager.xterm.enable = false;
       windowManager.i3.enable = true;
-      windowManager.i3.package = pkgs.michalrus.i3;
+      windowManager.i3.package = pkgs.i3;
     };
   };
 
@@ -131,7 +131,7 @@
     fonts = with pkgs; [
       anonymousPro
       hack-font
-      iosevka
+      iosevka-bin
       font-awesome-ttf
     ];
   };
