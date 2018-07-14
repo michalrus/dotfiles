@@ -85,7 +85,6 @@
     moreutils
     mtr
     ncdu
-    nix-repl
     nmap
     openssl
     p7zip
