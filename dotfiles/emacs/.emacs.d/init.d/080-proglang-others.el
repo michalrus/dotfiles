@@ -1,5 +1,8 @@
 ;; -*- mode: emacs-lisp -*-
 
+(use-package dhall-mode
+  :mode "\\.dhall\\'")
+
 (use-package yaml-mode
   :mode "\\.yaml\\'")
 

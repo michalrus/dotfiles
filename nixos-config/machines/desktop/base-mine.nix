@@ -33,6 +33,7 @@
     chromium
     compton
     cool-retro-term
+    dhall
     dunst
     feh
     gettext

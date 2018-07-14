@@ -13,6 +13,7 @@ let
     # MELPA Unstable @ NixOS Unstable (bleedingest edge)
     (with (pkgs.nixos-unstable.emacsPackagesNgGen base).melpaPackages; [
       company-lsp
+      dhall-mode
       hayoo
       lsp-haskell
       lsp-mode
@@ -60,7 +61,9 @@ let
 in
 
 {
-  environment.systemPackages = [ whole ];
+  environment.systemPackages = [ whole ] ++ (with pkgs; [
+    dhall
+  ]);
 
   systemd.user.services.emacs-daemon = {
     description = "Emacs: the extensible, self-documenting text editor";
