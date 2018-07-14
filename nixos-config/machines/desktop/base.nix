@@ -73,6 +73,7 @@
   environment.systemPackages = with pkgs; [
     (nixos-unstable.youtube-dl)
     (wine.override { pulseaudioSupport = true; })
+    alsaUtils
     arandr
     audacity
     awf
