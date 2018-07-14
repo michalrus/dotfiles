@@ -33,6 +33,7 @@
     compton
     cool-retro-term
     dunst
+    feh
     gettext
     ghostscript
     gnome3.zenity
@@ -42,6 +43,7 @@
     #michalrus.leksah
     michalrus.lemonbar-xft
     michalrus.peek
+    michalrus.sqlint
     networkmanagerapplet
     nixos-unstable.alacritty
     nixos-unstable.haskell-ide-engine

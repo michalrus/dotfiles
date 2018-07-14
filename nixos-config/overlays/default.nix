@@ -58,6 +58,9 @@ composeOverlays [
       (fromNixpkgs "arpoison" "075b01b35513853a57006ecda04ea981158a869e"
          "05gyim4b309fkv6iqy1dh4lz6v747v0z3p68nc8ns34q8ng5vdgk" {})
 
+      (fromNixpkgs "sqlint" "5fb615d990031cbde5048c62622bb8c65c4d6980"
+         "18jczh5amldjvzv89rfcv1ccnpks8xw63wrgw6z069a9wz7q5sa8" {})
+
     ] self.michalrus (super.michalrus or super);
 
 
