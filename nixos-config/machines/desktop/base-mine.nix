@@ -27,6 +27,7 @@
 
   environment.systemPackages = with pkgs; [
     (haskellPackages.ghcWithHoogle (hs: []))
+    alacritty
     autocutsel
     breeze-qt5 breeze-icons pkgs.hicolor_icon_theme kde-gtk-config breeze-gtk
     chromium
@@ -40,19 +41,15 @@
     haskellPackages.hlint
     i3status
     michalrus.gettext-emacs
-    #michalrus.leksah
-    michalrus.lemonbar-xft
-    michalrus.peek
     michalrus.sqlint
     networkmanagerapplet
-    nixos-unstable.alacritty
-    nixos-unstable.haskell-ide-engine
-    nixos-unstable.octave
-    nixos-unstable.watchexec
+    octave
     pdfpc
+    peek
     rofi
     stalonetray
     termite
+    watchexec
   ];
 
   programs = {

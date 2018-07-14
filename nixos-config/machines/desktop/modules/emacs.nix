@@ -2,25 +2,23 @@
 
 let
 
-  base = pkgs.nixos-unstable.emacs25.override {
+  base = pkgs.emacs25.override {
     # Use ‘lucid’ toolkit—it doesn’t have this bug → https://bugzilla.gnome.org/show_bug.cgi?id=85715
     withX = true;
     withGTK2 = false;
     withGTK3 = false;
   };
 
-  whole = (pkgs.nixos-unstable.emacsPackagesNgGen base).emacsWithPackages (epkgs:
-    # MELPA Unstable
-    (with epkgs.melpaPackages; [
-      ensime
+  whole = (pkgs.emacsPackagesNgGen base).emacsWithPackages (epkgs:
+    # MELPA Unstable @ NixOS Unstable (bleedingest edge)
+    (with (pkgs.nixos-unstable.emacsPackagesNgGen base).melpaPackages; [
+      company-lsp
       hayoo
+      lsp-haskell
       lsp-mode
       lsp-ui
-      lsp-haskell
-      nix-mode
-      company-lsp
+      python-mode
       sort-words
-      use-package
     ])
     ++
 
@@ -32,15 +30,16 @@ let
 
     # MELPA Stable
     (with epkgs.melpaStablePackages; [
+      #gregorio-mode
       company
       counsel
       diff-hl
+      ensime
       expand-region
       flycheck
       git-link
       go-mode
       google-translate
-      #gregorio-mode
       haskell-mode
       hindent
       hl-todo
@@ -48,11 +47,12 @@ let
       magit
       markdown-mode
       neotree
+      nix-mode
       projectile
-      python-mode
       scala-mode
       solarized-theme
       swiper
+      use-package
       yaml-mode
     ])
   );

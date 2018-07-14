@@ -16,12 +16,15 @@
   };
 
   environment.systemPackages = with pkgs; [
+    #ripgrep  # TODO: why is it not on Hydra and wants to build rustc?
     (lowPrio gnupg1compat)
     (lowPrio stdmanpages)
+    (unfree.geekbench)
     aspell
     aspellDicts.de
     aspellDicts.en
     aspellDicts.pl
+    catdocx
     cloc
     duplicity
     exiv2
@@ -41,7 +44,6 @@
     michalrus.git-annex
     michalrus.git-annex-desktop
     nix-prefetch-scripts
-    nixos-unstable.catdocx
     normalize
     oathToolkit
     odt2txt
@@ -49,13 +51,11 @@
     poppler_utils
     posix_man_pages
     powertop
-    #ripgrep  # TODO: why is it not on Hydra and wants to build rustc?
     shared_mime_info
     silver-searcher
     sox
     stdman
     tesseract
-    unfree.nixos-unstable.geekbench
     wrk
   ];
 }

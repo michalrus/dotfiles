@@ -71,13 +71,16 @@
   environment.variables."SAL_USE_VCLPLUGIN" = "gtk";
 
   environment.systemPackages = with pkgs; [
+    (nixos-unstable.youtube-dl)
     (wine.override { pulseaudioSupport = true; })
     arandr
     audacity
+    awf
     calibre
     cdparanoia
     cdrkit
     cool-retro-term
+    devede
     dvdauthor
     evince
     flac
@@ -93,14 +96,10 @@
     lame
     libjpeg
     libnotify
+    libreoffice
     mpv
-    nixos-unstable.awf
-    nixos-unstable.devede
-    nixos-unstable.libreoffice
-    nixos-unstable.octave
-    nixos-unstable.xpad
-    nixos-unstable.youtube-dl
     ntfs3g
+    octave
     pavucontrol
     pcmanfm
     pdfgrep
@@ -134,6 +133,7 @@
     xorg.xev
     xorg.xhost
     xorg.xmodmap
+    xpad
     xrandr-invert-colors
     xsane
     xsel

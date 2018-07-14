@@ -38,7 +38,7 @@ in
     (writeTextDir "prevent-ifd-gc" (toString [ repo ]))
     a2jmidid
     aeolus
-    nixos-unstable.airwave
+    airwave
     ardour
     artyFX
     calf
@@ -50,7 +50,7 @@ in
     mda_lv2
     qjackctl
     setbfree
-    nixos-unstable.squishyball
+    squishyball
     x42-plugins
   ];
 

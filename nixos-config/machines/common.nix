@@ -53,8 +53,9 @@
 
   environment.systemPackages = with pkgs; [
     (hiPrio netcat-openbsd)
-    (hiPrio nixos-unstable.arping)
+    (hiPrio arping)
     (nixos-unstable.preventGC)
+    arpoison
     bc
     bindfs
     calc
@@ -80,7 +81,6 @@
     lshw
     lsof
     ltrace
-    michalrus.arpoison
     mkpasswd
     moreutils
     mtr
