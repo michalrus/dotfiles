@@ -12,8 +12,8 @@ self: super:
       "b32839211ba7727ed87cb2b8e4ec80f3b1006b84"
       "0bn8w66y05ik3ffa8ccrnlaqji08kw4kvh3qj44adf4h0dfjzc5q";
 
-    version = "1.4.0-f3657dd";
-    sha256 = "1mcbkh2lvjm0rfybk9jj6izrp2xnm78zgq9f14y75kxw0v5jk0ml";
+    version = "1.4.1-a45ad97";
+    sha256 = "1kp38zav98vjb8pjrbw83z2hvv9dmc9g2yry3xmngdffjzskracx";
 
   in (import nixpkgsSrc { config.allowUnfree = true; }).hubstaff.overrideAttrs (drv: {
     name = "hubstaff-${version}";
