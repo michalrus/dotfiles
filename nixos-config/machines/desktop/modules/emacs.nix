@@ -39,6 +39,7 @@ let
       counsel
       diff-hl
       ensime
+      erlang
       expand-region
       flycheck
       git-link

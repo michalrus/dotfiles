@@ -12,6 +12,9 @@
 (use-package python-mode
   :mode "\\.py\\'" :interpreter "python")
 
+(use-package erlang
+  :mode ("\\.erl\\'" . erlang-mode))
+
 (use-package go-mode
   :mode "\\.go\\'")
 
