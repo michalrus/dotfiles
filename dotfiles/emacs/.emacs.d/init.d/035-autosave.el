@@ -9,41 +9,19 @@
 (setq-default require-final-newline t)
 (setq-default delete-trailing-lines t)
 
-(defvar michalrus/keep-trailing-whitespace-near-point nil)
-(defvar michalrus/-after-save-hook-whitespace-to-readd "")
+(use-package focus-autosave-mode
+  :config
+  (focus-autosave-mode 1))
 
-(defun michalrus/before-save-hook-delete-trailing-whitespace ()
-  "Delete them just like `delete-trailing-whitespace', but if `michalrus/keep-trailing-whitespace-near-point' is not 'nil', save whitespace right before point that would otherwise be deleted, for `michalrus/after-save-hook-readd-trailing-whitespace' to readd."
-  (setq michalrus/-after-save-hook-whitespace-to-readd
-        (if (and michalrus/keep-trailing-whitespace-near-point
-                 ; How to use '\s-'? `looking-back' matches '\n' leading to weird exponential '\n' duplication.
-                 (looking-at-p "[ \t]*$") ; if at the EOL (disregarding whitespace after point)
-                 (looking-back "[ \t]+" nil t)) ; take all the w/s before point
-            (match-string-no-properties 0)
-          ""))
-  (delete-trailing-whitespace))
+(use-package super-save
+  :config
+  (setq auto-save-default nil
+        super-save-auto-save-when-idle t
+        super-save-idle-duration (* 5 60))
+  (super-save-mode +1))
 
-(defun michalrus/after-save-hook-readd-trailing-whitespace ()
-  "Readd whitespace saved by `michalrus/before-save-hook-delete-trailing-whitespace'."
-  (insert michalrus/-after-save-hook-whitespace-to-readd))
-
-(add-hook 'before-save-hook 'michalrus/before-save-hook-delete-trailing-whitespace)
-(add-hook 'after-save-hook  'michalrus/after-save-hook-readd-trailing-whitespace)
-
-;; auto-save file buffers N seconds after last edit
-(run-with-idle-timer 5 t 'michalrus/autosave-all)
-
-;; just in case I’m on a typing spree without breaks (not going to happen…)
-(run-at-time nil 30 'michalrus/autosave-all)
-
-(defun michalrus/autosave-all ()
-  "Auto-save all modified `prog-mode' and `text-mode' buffers."
-  (let ((inhibit-message t)
-        (current-buf (current-buffer)))
-    (dolist (buf (buffer-list))
-      (with-current-buffer buf
-        (when (and (derived-mode-p 'text-mode 'prog-mode)
-                   (buffer-modified-p)
-                   (buffer-file-name))
-          (let ((michalrus/keep-trailing-whitespace-near-point (eq buf current-buf)))
-            (save-buffer)))))))
+(use-package ws-butler
+  :config
+  (setq ws-butler-global-exempt-modes nil
+        ws-butler-keep-whitespace-before-point t)
+  (ws-butler-global-mode 1))

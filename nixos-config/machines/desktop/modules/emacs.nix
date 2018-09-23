@@ -14,6 +14,7 @@ let
     (with (pkgs.nixos-unstable.emacsPackagesNgGen base).melpaPackages; [
       company-lsp
       dhall-mode
+      focus-autosave-mode
       google-translate
       hayoo
       lsp-haskell
@@ -21,6 +22,7 @@ let
       lsp-ui
       python-mode
       sort-words
+      super-save
     ])
     ++
 
@@ -55,6 +57,7 @@ let
       solarized-theme
       swiper
       use-package
+      ws-butler
       yaml-mode
     ])
   );

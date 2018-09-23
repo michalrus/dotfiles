@@ -8,6 +8,7 @@
   (define-key magit-file-mode-map (kbd "C-x g") nil) ;; changing habits
   (setq magit-log-arguments '("--graph" "--color" "--decorate" "--show-signature" "-n256" "++order=date")
         magit-merge-arguments '("--ff-only")
+        magit-save-repository-buffers 'dontask
         magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1))
 
 (use-package ediff
