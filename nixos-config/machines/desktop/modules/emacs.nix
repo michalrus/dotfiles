@@ -14,6 +14,7 @@ let
     (with (pkgs.nixos-unstable.emacsPackagesNgGen base).melpaPackages; [
       company-lsp
       dhall-mode
+      google-translate
       hayoo
       lsp-haskell
       lsp-mode
@@ -40,7 +41,6 @@ let
       flycheck
       git-link
       go-mode
-      google-translate
       haskell-mode
       hindent
       hl-todo
