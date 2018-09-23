@@ -18,6 +18,6 @@
 (use-package po-mode
   :mode "\\.po\\'\\|\\.po\\.")
 
-(use-package js-mode
+(use-package js
   :config
   (setq js-indent-level 2))
