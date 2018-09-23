@@ -47,6 +47,7 @@ let
       ivy
       magit
       markdown-mode
+      move-text
       neotree
       nix-mode
       projectile

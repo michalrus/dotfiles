@@ -90,3 +90,7 @@
   :demand t
   :config
   (global-hl-todo-mode))
+
+(use-package move-text
+  :config
+  (move-text-default-bindings))
