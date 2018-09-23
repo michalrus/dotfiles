@@ -38,10 +38,12 @@
     feh
     gettext
     ghostscript
+    gnome3.dconf   # so that GnuCash prefs can be changed
     gnome3.zenity
     haskellPackages.hlint
     i3status
     michalrus.gettext-emacs
+    michalrus.gnucash26
     michalrus.sqlint
     networkmanagerapplet
     octave
@@ -156,10 +158,8 @@
       packages' = with pkgs; [
         aegisub
         electrum
-        gnome3.dconf   # so that GnuCash prefs can be changed
         isync
         lilypond
-        michalrus.gnucash26
         openjdk8   # for nofatty
         unfree.michalrus.transcribe
         (texlive.combine {
@@ -200,6 +200,12 @@
 
   fileSystems."/var/home/mw/.shared" = {
     device = "/var/home/m/.shared";
+    fsType = "fuse.bindfs";
+    options = [ "map=m/mw" ];
+  };
+
+  fileSystems."/var/home/mw/.shared-sync" = {
+    device = "/var/home/m/Archive/Personal/Shared-mw";
     fsType = "fuse.bindfs";
     options = [ "map=m/mw" ];
   };

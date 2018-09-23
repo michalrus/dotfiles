@@ -32,7 +32,6 @@ bspc rule -a 'Chromium-browser' desktop='^2'
 
 bspc rule -a 'jetbrains-idea-ce' desktop='^3'
 bspc rule -a 'mpv' desktop='^3'
-bspc rule -a 'Gnucash' desktop='^3'
 bspc rule -a 'Wine:supermemo.exe' desktop='^3'
 
 # FIXME: with external_rules_command
@@ -44,6 +43,7 @@ bspc rule -a 'VirtualBox' desktop='^4'
 
 bspc rule -a 'nofatty' desktop='^10'
 bspc rule -a 'Transmission-gtk' desktop='^10'
+bspc rule -a 'Gnucash' desktop='^10'
 
 "$HOME"/.config/autostart/dotfiles.sh
 
