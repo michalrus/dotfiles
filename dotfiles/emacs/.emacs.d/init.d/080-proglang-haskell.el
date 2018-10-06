@@ -11,17 +11,6 @@
     (interactive)
     (insert "undefined"))
 
-  (defun michalrus/haskell-mode-align-servant-types ()
-    (interactive)
-    (save-excursion
-      (let ((symb ":<|>"))
-        (goto-char 0)
-        ;; repeat
-        (while (search-forward ":<|>" nil t)
-          (goto-char (match-beginning 0))
-          (haskell-indentation-newline-and-indent)
-          (forward-char (length symb))))))
-
   (use-package lsp-haskell
     :demand t
     :config
