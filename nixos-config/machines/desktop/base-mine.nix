@@ -44,8 +44,8 @@
     i3status
     michalrus.gettext-emacs
     michalrus.gnucash26
-    michalrus.sqlint
     networkmanagerapplet
+    nixos-unstable.sqlint
     octave
     pdfpc
     peek
@@ -188,8 +188,9 @@
         jetbrains.idea-community
         openjdk8   # for nofatty
         pgadmin
-        unfree.michalrus.discord
+        unfree.nixos-unstable.discord
         unfree.michalrus.hubstaff
+        unfree.michalrus.transcribe
         unfree.nixos-unstable.minecraft
         unfree.nixos-unstable.skype
         unfree.nixos-unstable.vscode

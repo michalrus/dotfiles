@@ -38,9 +38,6 @@ composeOverlays [
       (import ./pkgs/gnucash.nix) # TODO: move to hledger from this crap
       (import ./pkgs/msmtp-no-security-check.nix)
 
-      (fromNixpkgs "sqlint" "5fb615d990031cbde5048c62622bb8c65c4d6980"
-         "18jczh5amldjvzv89rfcv1ccnpks8xw63wrgw6z069a9wz7q5sa8" {})
-
       # TODO: contribute these:
       (import ./pkgs/gettext-emacs.nix)
       (import ./pkgs/gregorio.nix)
@@ -60,9 +57,6 @@ composeOverlays [
         michalrus = composeOverlays [
 
           (import ./pkgs/transcribe.nix)
-
-          (fromNixpkgs "discord" "d72b8700797105e6dc38a7518786c35b1692bc00"
-             "01pxwg7rkbfpyfrs9qm6fsafd4d8jlw83hfhbv464xc7kzzrb7l0" { allowUnfree = true; })
 
           (import ./pkgs/hubstaff.nix)
 
