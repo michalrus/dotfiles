@@ -5,14 +5,31 @@ let
   src = pkgs.fetchFromGitHub {
     owner = "michalrus";
     repo = "kornel";
-    rev = "55e790f195eee6e9d87d9d6eb7f63c9fa25e15e9";
-    sha256 = "1mhgg5alqfhyljizwrj0hnqd0hsb06dv5i2hipn753ccc9sh4d31";
+    rev = "a0fdcfb2509af8dc9791bd3695bfcca493012896";
+    sha256 = "19n3qfl5044c8cnwwamd1i8nfqln78sbpf8fnav92irvsi9swmw6";
   };
 
   kornel = import src;
 
   user = "kornel";
   dataDir = "/var/lib/${user}";
+
+  configFile = pkgs.writeText "kornel.dhall" ''
+    { serverHost = "irc.freenode.com"
+    , serverPort = 6697
+    , usingSSL = True
+    , nick = "kornel"
+    , saslPassword = [ ${dataDir}/nickserv.pass as Text ] : Optional Text
+    , nickservPassword = [] : Optional Text
+    , httpSnippetsFetchMax = Natural/toInteger (100 * 1024)
+    , cleverBotApiKey = [ ${dataDir}/cleverbot.key as Text ] : Optional Text
+    , smmryApiKey = [ ${dataDir}/smmry.key as Text ] : Optional Text
+    , haskellBotNicks = [ "lambdabot" ]
+    , scalaBotNicks = [ "multibot", "multibot_", "multibot1", "multibot_1", "multibot2", "multibot_2" ]
+    , channels = [ "#kornel-test" ]
+    , logTraffic = True
+    }
+  '';
 
 in
 
@@ -36,16 +53,7 @@ in
       chown -R "${user}:${user}" "${dataDir}"
       chmod 750 "${dataDir}"
     '';
-    script = ''
-      exec kornel-exe \
-        --host "irc.freenode.com" --port "6697" --ssl \
-        --nick "kornel" --nickserv-password-file "${dataDir}"/nickserv.pass \
-        --http-snippets-fetch-max "$((100 * 1024))" \
-        --cleverbot-api-key-file "${dataDir}"/cleverbot.key \
-        --haskell-bot-nicks "lambdabot" \
-        --scala-bot-nicks "multibot,multibot_,multibot1,multibot_1,multibot2,multibot_2" \
-        --channels "#stosowana"
-    '';
+    script = ''exec kornel-exe -c ${configFile}'';
   };
 
 }
