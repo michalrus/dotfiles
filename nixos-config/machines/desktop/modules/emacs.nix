@@ -20,6 +20,7 @@ let
       lsp-haskell
       lsp-mode
       lsp-ui
+      nix-mode
       python-mode
       sort-words
       super-save
@@ -52,7 +53,6 @@ let
       markdown-mode
       move-text
       neotree
-      nix-mode
       projectile
       scala-mode
       solarized-theme

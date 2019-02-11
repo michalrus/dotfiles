@@ -1,7 +1,5 @@
 # -*- mode: shell-script; sh-shell: sh -*-
 
-Discord &
-
 termite --name initial -e 'zsh -i -c s' &
 emacs --frame-parameters='(quote (name . "org"))' --eval '(find-file "~/Org/DigitalIngot.org")' &
 

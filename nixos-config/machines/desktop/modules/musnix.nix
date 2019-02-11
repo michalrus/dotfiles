@@ -54,6 +54,14 @@ in
     x42-plugins
   ];
 
+  environment.profileRelativeEnvVars = {
+    DSSI_PATH   = ["/lib/dssi"];
+    LADSPA_PATH = ["/lib/ladspa"];
+    LV2_PATH    = ["/lib/lv2"];
+    LXVST_PATH  = ["/lib/lxvst"];
+    VST_PATH    = ["/lib/vst"];
+  };
+
   hardware.pulseaudio.package = pkgs.pulseaudioFull;
 
   users.extraUsers.m.extraGroups = [ "audio" ];

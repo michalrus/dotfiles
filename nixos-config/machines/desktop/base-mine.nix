@@ -30,7 +30,6 @@
     alacritty
     autocutsel
     breeze-qt5 breeze-icons pkgs.hicolor_icon_theme kde-gtk-config breeze-gtk
-    chromium
     compton
     cool-retro-term
     dhall
@@ -45,11 +44,11 @@
     michalrus.gettext-emacs
     michalrus.gnucash26
     networkmanagerapplet
-    nixos-unstable.sqlint
     octave
     pdfpc
     peek
     rofi
+    sqlint
     stalonetray
     termite
     watchexec
@@ -153,7 +152,12 @@
       groups = [ "audio" "nonet" "scanner" "networkmanager" "vboxusers" ];
     };
 
-    users.guest.dotfiles.profiles = [ "base" "i3" "michalrus/guest" ];
+    users.guest = {
+      dotfiles.profiles = [ "base" "i3" "michalrus/guest" ];
+      packages = with pkgs; [
+        unfree.google-chrome
+      ];
+    };
 
     extraUsers.m = {
       hashedPassword = "$6$wO42jkhqerm$kl.qIl5USrzqAZOIkXdicrBLBgVwka2Dz81nc.aNsNJZREXY.02XxPdL1FiTCcuVP2K/DSmXqAQ3aPbri/v.g1";
@@ -165,11 +169,12 @@
       dotfiles.profiles = [ "base" "michalrus/base" "michalrus/desktop" "git-annex" "michalrus/personal" "i3" "emacs" ];
       packages' = with pkgs; [
         aegisub
+        chromium
         electrum
         isync
         lilypond
         openjdk8   # for nofatty
-        unfree.michalrus.transcribe
+        #unfree.michalrus.transcribe
         (texlive.combine {
           inherit (texlive) scheme-small latexmk titlesec tocloft todonotes cleveref lipsum biblatex logreq cm-super csquotes pgfplots adjustbox collectbox ccicons polski placeins xstring pdfpages unicode-math filehook textpos marvosym progressbar lm-math ucharcat;
           #gregorio = pkgs.michalrus.gregorio.forTexlive;
@@ -185,15 +190,11 @@
       extraGroups = [ "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" ];
       dotfiles.profiles = [ "base" "michalrus/base" "michalrus/desktop" "git-annex" "michalrus/work/di" "i3" "emacs" ];
       packages' = with pkgs; [
-        jetbrains.idea-community
+        chromium
         openjdk8   # for nofatty
         pgadmin
-        unfree.nixos-unstable.discord
         unfree.michalrus.hubstaff
-        unfree.michalrus.transcribe
-        unfree.nixos-unstable.minecraft
-        unfree.nixos-unstable.skype
-        unfree.nixos-unstable.vscode
+        #unfree.michalrus.transcribe
       ];
     };
 
@@ -204,6 +205,9 @@
       description = "Michal Rus (fin)";
       extraGroups = [ "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" ];
       dotfiles.profiles = [ "base" "michalrus/base" "i3" "emacs" ];
+      packages' = with pkgs; [
+        chromium
+      ];
     };
   };
 

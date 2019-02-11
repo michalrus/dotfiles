@@ -19,7 +19,6 @@
     #ripgrep  # TODO: why is it not on Hydra and wants to build rustc?
     (lowPrio gnupg1compat)
     (lowPrio stdmanpages)
-    (unfree.geekbench)
     aspell
     aspellDicts.de
     aspellDicts.en

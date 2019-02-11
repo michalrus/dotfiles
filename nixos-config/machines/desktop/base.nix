@@ -35,14 +35,10 @@
   boot.kernel.sysctl."vm.dirty_bytes" = 16 * 1024 * 1024;
 
   services = {
-    printing =
-      {
-        enable = true;
-      } // (if lib.nixpkgsVersion >= "17.09" then {
-        drivers = [ pkgs.gutenprint ];
-      } else {
-        gutenprint = true;
-      });
+    printing = {
+      enable = true;
+      drivers = [ pkgs.gutenprint ];
+    };
 
     logkeys' = {
       enable = true;
