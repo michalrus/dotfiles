@@ -156,7 +156,7 @@
     users.guest = {
       dotfiles.profiles = [ "base" "i3" "michalrus/guest" ];
       packages = with pkgs; [
-        unfree.google-chrome
+        (unfree.google-chrome.override { commandLineArgs = "--incognito"; })
       ];
     };
 
