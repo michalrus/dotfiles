@@ -92,7 +92,7 @@
     tor = {
       enable = true;
       client.enable = true;
-      torifiedUsers = [ "mfin" ];
+      torifiedUsers = [ "md" ];
     };
 
     xserver = {
@@ -187,7 +187,7 @@
       hashedPassword = "$6$EDtlcw2d9XVBOw$Y0SLSpFnAc/tc3z8/Y4cQK/p.Vuqkwz0HHBkYcDAlUI3lHOFJQBj0cscE30qs2YoxsoUwOxIno0g4zhZUsZ7R1";
       isNormalUser = true;
       uid = 1337;
-      description = "Michal Rus (work)";
+      description = "Michal Rus (w)";
       extraGroups = [ "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" ];
       dotfiles.profiles = [ "base" "michalrus/base" "michalrus/desktop" "git-annex" "michalrus/work/di" "i3" "emacs" ];
       packages' = with pkgs; [
@@ -199,11 +199,11 @@
       ];
     };
 
-    extraUsers.mfin = {
+    extraUsers.md = {
       hashedPassword = "$6$YYkKeZ8M56$EZh1jGZbAnPaVKwnQebJ40ojqNShuU3Np2rWiPOOrfA1vXlFPCGbmbVZwOfRyCMU5y83ggkA1/jIG7Zzg6iD10";
       isNormalUser = true;
       uid = 1347;
-      description = "Michal Rus (fin)";
+      description = "Michal Rus (d)";
       extraGroups = [ "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" ];
       dotfiles.profiles = [ "base" "michalrus/base" "i3" "emacs" ];
       packages' = with pkgs; [
