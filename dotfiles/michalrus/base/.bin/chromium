@@ -1,4 +1,0 @@
-#!/bin/sh
-
-# NixOS doesn’t respect these…
-exec command-p chromium --no-default-browser-check $CHROMIUM_USER_FLAGS "$@"

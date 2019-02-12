@@ -13,8 +13,6 @@ export WINELOADER="${HOME}/.bin/wine"
 export EDITOR='nano'
 export VISUAL="$EDITOR"
 
-export CHROMIUM_USER_FLAGS='--ssl-version-min=tls1'
-
 # ArchLinux does not use JAVA_HOME, but several tools need it (e.g. ENSIME)
 [ -z "$JAVA_HOME" -a -e "/usr/lib/jvm/default" ] && export JAVA_HOME="/usr/lib/jvm/default"
 

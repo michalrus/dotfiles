@@ -7,6 +7,7 @@
     ./modules/android.nix
     ./modules/emacs.nix
     ./modules/malicious-hosts.nix
+    ./modules/hardened-chromium.nix
     ./my-hosts.nix
   ];
 
