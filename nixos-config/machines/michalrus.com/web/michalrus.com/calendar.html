@@ -12,6 +12,7 @@
 		<!--[if lt IE 9]>
 			<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 		<script src="//cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.6/jstz.min.js"></script>
+                <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<style>
 
 .stretch {
@@ -81,7 +82,49 @@
 
 
 <script type="text/javascript">
-  document.getElementById('calendar').innerHTML = '<iframe src="https://calendar.google.com/calendar/embed?showTitle=0&amp;mode=WEEK&amp;height=600&amp;wkst=2&amp;bgcolor=%23FFFFFF&amp;src=m%40michalrus.com&amp;color=%23000000&amp;src=michalrus.com_kv4h7dnm4msfgf87p5k5lasosg%40group.calendar.google.com&amp;color=%231B887A&amp;src=en.polish%23holiday%40group.v.calendar.google.com&amp;color=%2329527A&amp;src=8pvntgkkc64fcr662k948osm3ceeq2de%40import.calendar.google.com&amp;color=%232F6309&amp;src=7v2c2cq8kfft24pnj0f145dqd3i3l138%40import.calendar.google.com&amp;color=%231B887A&amp;src=michalrus.com_thtdi7mh3070gblmqs77qlqj9g%40group.calendar.google.com&amp;color=%232F6309&amp;src=michalrus.com_q3q9n0dh8miackpeqne4i54g9o%40group.calendar.google.com&amp;color=%23AB8B00&amp;src=michalrus.com_4sf0ml705babpceg16j29chgms%40group.calendar.google.com&amp;color=%232952A3&amp;src=michalrus.com_giam6n4ot7hsq3p1gvd3p0kmec%40group.calendar.google.com&amp;color=%23333333&amp;ctz=' + jstz.determine().name() + '" style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>';
+  (function(){
+
+    settings = {
+      'showTitle': 0,
+      'mode':      'WEEK',
+      'height':    600,
+      'wkst':      2,
+      'bgcolor':   '#FFFFFF',
+      'ctz':       jstz.determine().name(),
+    };
+
+    calendars = {
+      '#000000': 'm@michalrus.com',                                                    // Invites
+      '#1B887A': '7v2c2cq8kfft24pnj0f145dqd3i3l138@import.calendar.google.com',        // Meetup.com
+      '#1B887A': 'michalrus.com_kv4h7dnm4msfgf87p5k5lasosg@group.calendar.google.com', // Education
+      '#29527A': 'en.polish#holiday@group.v.calendar.google.com',                      // Polish holidays
+      '#2952A3': 'michalrus.com_4sf0ml705babpceg16j29chgms@group.calendar.google.com', // Travel
+      '#2F6309': '8pvntgkkc64fcr662k948osm3ceeq2de@import.calendar.google.com',        // Facebook.com events
+      '#2F6309': 'michalrus.com_thtdi7mh3070gblmqs77qlqj9g@group.calendar.google.com', // Social
+      '#333333': 'michalrus.com_giam6n4ot7hsq3p1gvd3p0kmec@group.calendar.google.com', // Work
+      '#AB8B00': 'michalrus.com_q3q9n0dh8miackpeqne4i54g9o@group.calendar.google.com', // To-dos
+      '#B1365F': 'michalrus.com_s196end2re40p44rvajarcisj8@group.calendar.google.com', // Appointments
+      '#2F6309': 'michalrus.com_l9ukoks8cl6n8g2h343qs53uus@group.calendar.google.com', // Słupska, Agata
+      '#711616': 'dirv9v10c32debb8njakrl0mdpp7d8fm@import.calendar.google.com',        // Moon/Astro
+    };
+
+    calendarsMap = $.map(calendars, function(cid, color) {
+      return [ { name: 'src',   value: cid }, { name: 'color', value: color } ];
+    });
+
+    params = $.param(settings)
+      + '&'
+      + $.param($.map(calendars, function(cid, color) {
+          return [ { name: 'src',   value: cid }, { name: 'color', value: color } ];
+        }));
+
+    embedUrl = 'https://calendar.google.com/calendar/embed?' + params;
+    escapedUrl = $('<div/>').text(embedUrl).html();
+
+    document.getElementById('calendar').innerHTML =
+      '<iframe src="' + escapedUrl + '" style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>';
+
+  })();
 </script>
 
 <script type="text/javascript">
