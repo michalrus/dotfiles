@@ -93,32 +93,27 @@
       'ctz':       jstz.determine().name(),
     };
 
-    calendars = {
-      '#000000': 'm@michalrus.com',                                                    // Invites
-      '#1B887A': '7v2c2cq8kfft24pnj0f145dqd3i3l138@import.calendar.google.com',        // Meetup.com
-      '#1B887A': 'michalrus.com_kv4h7dnm4msfgf87p5k5lasosg@group.calendar.google.com', // Education
-      '#29527A': 'en.polish#holiday@group.v.calendar.google.com',                      // Polish holidays
-      '#2952A3': 'michalrus.com_4sf0ml705babpceg16j29chgms@group.calendar.google.com', // Travel
-      '#2F6309': '8pvntgkkc64fcr662k948osm3ceeq2de@import.calendar.google.com',        // Facebook.com events
-      '#2F6309': 'michalrus.com_thtdi7mh3070gblmqs77qlqj9g@group.calendar.google.com', // Social
-      '#333333': 'michalrus.com_giam6n4ot7hsq3p1gvd3p0kmec@group.calendar.google.com', // Work
-      '#AB8B00': 'michalrus.com_q3q9n0dh8miackpeqne4i54g9o@group.calendar.google.com', // To-dos
-      '#B1365F': 'michalrus.com_s196end2re40p44rvajarcisj8@group.calendar.google.com', // Appointments
-      '#2F6309': 'michalrus.com_l9ukoks8cl6n8g2h343qs53uus@group.calendar.google.com', // Słupska, Agata
-      '#711616': 'dirv9v10c32debb8njakrl0mdpp7d8fm@import.calendar.google.com',        // Moon/Astro
-    };
+    calendars = [
+      ['#000000', 'm@michalrus.com'],                                                    // Invites
+      ['#1B887A', '7v2c2cq8kfft24pnj0f145dqd3i3l138@import.calendar.google.com'],        // Meetup.com
+      ['#1B887A', 'michalrus.com_kv4h7dnm4msfgf87p5k5lasosg@group.calendar.google.com'], // Education
+      ['#29527A', 'en.polish#holiday@group.v.calendar.google.com'],                      // Polish holidays
+      ['#2952A3', 'michalrus.com_4sf0ml705babpceg16j29chgms@group.calendar.google.com'], // Travel
+      ['#2F6309', '8pvntgkkc64fcr662k948osm3ceeq2de@import.calendar.google.com'],        // Facebook.com events
+      ['#2F6309', 'michalrus.com_l9ukoks8cl6n8g2h343qs53uus@group.calendar.google.com'], // Słupska, Agata
+      ['#2F6309', 'michalrus.com_thtdi7mh3070gblmqs77qlqj9g@group.calendar.google.com'], // Social
+      ['#333333', 'michalrus.com_giam6n4ot7hsq3p1gvd3p0kmec@group.calendar.google.com'], // Work
+      ['#711616', 'dirv9v10c32debb8njakrl0mdpp7d8fm@import.calendar.google.com'],        // Moon/Astro
+      ['#AB8B00', 'michalrus.com_q3q9n0dh8miackpeqne4i54g9o@group.calendar.google.com'], // To-dos
+      ['#B1365F', 'michalrus.com_s196end2re40p44rvajarcisj8@group.calendar.google.com'], // Appointments
+    ];
 
-    calendarsMap = $.map(calendars, function(cid, color) {
-      return [ { name: 'src',   value: cid }, { name: 'color', value: color } ];
+    calendarsMap = $.map(calendars, function(a) {
+      return [ { name: 'src', value: a[1] }, { name: 'color', value: a[0] } ];
     });
 
-    params = $.param(settings)
-      + '&'
-      + $.param($.map(calendars, function(cid, color) {
-          return [ { name: 'src',   value: cid }, { name: 'color', value: color } ];
-        }));
+    embedUrl = 'https://calendar.google.com/calendar/embed?' + $.param(settings) + '&' + $.param(calendarsMap);
 
-    embedUrl = 'https://calendar.google.com/calendar/embed?' + params;
     escapedUrl = $('<div/>').text(embedUrl).html();
 
     document.getElementById('calendar').innerHTML =
