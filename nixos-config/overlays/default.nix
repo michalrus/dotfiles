@@ -33,6 +33,8 @@ composeOverlays [
 
     michalrus = composeOverlays [
 
+      (import ./pkgs/wasabi-wallet.nix)
+
       (import ./pkgs/git-annex-hacks.nix)
       (import ./pkgs/influxdb.nix)
       (import ./pkgs/gnucash.nix) # TODO: move to hledger from this crap

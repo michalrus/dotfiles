@@ -208,6 +208,7 @@
       dotfiles.profiles = [ "base" "michalrus/base" "i3" "emacs" ];
       packages' = with pkgs; [
         chromium
+        michalrus.wasabi-wallet
       ];
     };
   };
