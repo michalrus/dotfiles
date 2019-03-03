@@ -8,6 +8,8 @@ let
 
   transPort = 9040;
   dnsPort = 5353;
+  # For torified users’ apps, that insist on using SOCKS5…
+  allowedSocksPort = 9050; # TODO: take this from `config.services.tor.client.socksListenAddress`
   chain = "nixos-fw-torified-users";
 
   flushRules = ''
@@ -25,6 +27,8 @@ let
 
   '' + (concatMapStringsSep "\n" (user: ''
 
+    iptables -w -t nat -A ${chain} -d 127.0.0.0/8 -p tcp -m owner --uid-owner ${user} -m tcp --dport ${toString allowedSocksPort} -j ACCEPT
+
     # Redirect all of IPv4 TCP to TransProxy.
     iptables -w -t nat -A ${chain} -p tcp -m owner --uid-owner ${user} -m tcp -j REDIRECT --to-ports ${toString transPort}
 
@@ -32,6 +36,7 @@ let
     iptables -w -t nat -A ${chain} -p udp -m owner --uid-owner ${user} -m udp --dport 53 -j REDIRECT --to-ports ${toString dnsPort}
 
     # Unblock those redirection targets.
+    iptables -w -t filter -A ${chain} -d 127.0.0.0/8 -p tcp -m owner --uid-owner ${user} -m tcp --dport ${toString allowedSocksPort} -j ACCEPT
     iptables -w -t filter -A ${chain} -d 127.0.0.0/8 -p tcp -m owner --uid-owner ${user} -m tcp --dport ${toString transPort} -j ACCEPT
     iptables -w -t filter -A ${chain} -d 127.0.0.0/8 -p udp -m owner --uid-owner ${user} -m udp --dport ${toString dnsPort} -j ACCEPT
 
