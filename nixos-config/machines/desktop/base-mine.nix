@@ -26,6 +26,9 @@
 
   networking.networkmanager.enable = true;
 
+  # For true Firefox smooth scrolling with touchpad.
+  environment.variables.MOZ_USE_XINPUT2 = "1";
+
   environment.systemPackages = with pkgs; [
     (haskellPackages.ghcWithHoogle (hs: []))
     alacritty
@@ -170,10 +173,10 @@
       dotfiles.profiles = [ "base" "michalrus/base" "michalrus/desktop" "git-annex" "michalrus/personal" "i3" "emacs" ];
       packages' = with pkgs; [
         aegisub
-        chromium
         electrum
         isync
         lilypond
+        michalrus.hardened-firefox
         openjdk8   # for nofatty
         #unfree.michalrus.transcribe
         (texlive.combine {
@@ -191,7 +194,7 @@
       extraGroups = [ "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" ];
       dotfiles.profiles = [ "base" "michalrus/base" "michalrus/desktop" "git-annex" "michalrus/work/di" "i3" "emacs" ];
       packages' = with pkgs; [
-        chromium
+        michalrus.hardened-firefox
         openjdk8   # for nofatty
         pgadmin
         unfree.michalrus.hubstaff
@@ -205,9 +208,16 @@
       uid = 1347;
       description = "Michal Rus (d)";
       extraGroups = [ "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" ];
-      dotfiles.profiles = [ "base" "michalrus/base" "i3" "emacs" ];
+      dotfiles.profiles = [ "base" "michalrus/base" "michalrus/desktop" "michalrus/tor" "i3" "emacs" ];
       packages' = with pkgs; [
-        chromium
+        (wrapFirefox (michalrus.hardened-firefox-unwrapped.override {
+          extraPrefs = ''
+            // Override those for more privacy:
+            lockPref("privacy.resistFingerprinting", true);
+            lockPref("dom.enable_performance", false);
+            lockPref("network.cookie.lifetimePolicy", 2); // The cookie expires at the end of the session.
+          '';
+        }) {})
         michalrus.wasabi-wallet
       ];
     };

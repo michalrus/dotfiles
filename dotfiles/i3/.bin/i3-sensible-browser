@@ -4,4 +4,4 @@ url="$1"
 
 escaped="$(echo "$url" | sed -r 's/(["\\])/\\\\\\\1/g' | sed -r 's/([$])/\\\1/g')"
 
-exec i3-msg 'exec "chromium \"'"$escaped"'\""'
+exec i3-msg 'exec "firefox \"'"$escaped"'\""'

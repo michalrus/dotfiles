@@ -3,7 +3,7 @@
 termite --name initial -e 'zsh -i -c s' &
 emacs --frame-parameters='(quote (name . "org"))' --eval '(find-file "~/Org/DigitalIngot.org")' &
 
-chromium &
+firefox &
 
 termite --name code -e 'zsh -i -c s' &
 emacs --frame-parameters='(quote (name . "code"))' --eval '(find-file "~/Development/backend/backend/src/Backend/Main.hs")' &

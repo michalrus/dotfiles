@@ -1,0 +1,5 @@
+# -*- mode: shell-script; sh-shell: sh -*-
+
+export BROWSER=firefox
+
+firefox &

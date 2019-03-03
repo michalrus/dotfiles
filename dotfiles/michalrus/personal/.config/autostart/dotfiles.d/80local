@@ -4,7 +4,7 @@ termite --name initial -e 'zsh -i -c s' &
 
 emacs --frame-parameters='(quote (name . "org"))' --eval '(find-file "~/Org/Today.org")' &
 
-chromium &
+firefox &
 
 termite --name mtr -e 'mtr --displaymode 1 8.8.8.8' &
 
