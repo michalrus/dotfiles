@@ -32,9 +32,8 @@ in {
             each login, session etc.).
 
             It is performed using `cp -srf $src $HOME` (more or
-            less). This operation will potentially lose data, as the
-            new symlinks will overwrite what is currently residing in
-            those locations.
+            less). But prior to that, regular files, that would be
+            overwritten, are backed up.
           '';
         };
 
@@ -64,9 +63,18 @@ in {
     ) config.users.users;
 
     symlinkCmd = srcs: target: ''
+      # Let’s backup non-symlink files.
+      (
+        cd "${target}/"
+        find \
+          $( ${concatMapStringsSep " " (src: ''cd "${src}" ; find -not -type d ; '') srcs} ) \
+          -type f -exec mv -v {} {}.$(date -Ins) \;
+      ) 2>/dev/null || true
+
+      # Display errors, but always return 0, since non-0 in `/profile` is rather problematic… in various ways.
       cp --no-preserve=mode --remove-destination --symbolic-link --recursive \
         ${concatMapStringsSep " " (src: ''"${src}/."'') srcs} \
-        "${target}/"
+        "${target}/" || true
     '';
 
     srcs = u: map (profile: "${u.dotfiles.base}/${profile}") u.dotfiles.profiles;
