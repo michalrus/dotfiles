@@ -2,13 +2,14 @@ self: super:
 
 rec {
 
-  hardened-firefox = self.wrapFirefox hardened-firefox-unwrapped {};
-
   hardened-firefox-unwrapped = self.callPackage (
 
-    { runCommand, writeText, firefox-unwrapped, fetchurl, extraPrefs ? "" }:
+    { runCommand, writeText, writeScript, firefox-unwrapped, fetchurl,
+      localAutocompletePort ? 999999999, extraPrefs ? "" }:
 
     let
+
+      mkLocalAutocomplete = name: "http://127.0.0.1:${toString localAutocompletePort}/${name}?q={searchTerms}";
 
       emptySearchEngineName = "(empty default search engine)";
 
@@ -83,6 +84,7 @@ rec {
           Name = "Google Scholar";
           Alias = "scholar";
           URLTemplate = "https://scholar.google.com/scholar?hl=en&q={searchTerms}";
+          SuggestURLTemplate = mkLocalAutocomplete "scholar";
           IconURL = googleIcon;
         }
         {
@@ -129,6 +131,7 @@ rec {
           Name = "The Free Dictionary";
           Alias = "tfd";
           URLTemplate = "https://www.thefreedictionary.com/{searchTerms}";
+          SuggestURLTemplate = "https://www.thefreedictionary.com/_/search/suggest.ashx?query={searchTerms}";
           IconURL = {
             mimetype = "image/x-icon";
             url = "https://img.tfd.com/favicon.ico";
@@ -139,7 +142,7 @@ rec {
           Name = "Słownik angielsko-polski Diki";
           Alias = "diki";
           URLTemplate = "https://www.diki.pl/slownik-angielskiego?q={searchTerms}";
-          SuggestURLTemplate = "https://www.diki.pl/dictionary/autocomplete?q={searchTerms}&langpair=en::pl";
+          SuggestURLTemplate = mkLocalAutocomplete "diki";
           IconURL = {
             mimetype = "image/x-icon";
             url = "https://www.diki.pl/favicon.ico";
@@ -160,7 +163,7 @@ rec {
           Name = "Allegro.pl";
           Alias = "allegro";
           URLTemplate = "https://allegro.pl/listing?string={searchTerms}";
-          SuggestURLTemplate = "https://allegro.pl/suggestions/?phrase={searchTerms}&country=pl";
+          SuggestURLTemplate = mkLocalAutocomplete "allegro";
           IconURL = {
             mimetype = "image/x-icon";
             url = "https://allegro.pl/favicon.ico";
@@ -171,7 +174,7 @@ rec {
           Name = "Leafly";
           Alias = "leafly";
           URLTemplate = "https://www.leafly.com/search?q={searchTerms}&cat=strain";
-          SuggestURLTemplate = "https://web-home.leafly.com/api/autocomplete-search?q={searchTerms}";
+          SuggestURLTemplate = mkLocalAutocomplete "leafly";
           IconURL = {
             mimetype = "image/x-icon";
             url = "https://www.leafly.com/favicon.ico";
@@ -192,7 +195,7 @@ rec {
           Name = "Słownik języka polskiego PWN";
           Alias = "sjp";
           URLTemplate = "https://sjp.pwn.pl/szukaj/{searchTerms}.html";
-          SuggestURLTemplate = "https://sjp.pwn.pl/complete.php?source=autocomplete-sjp&query={searchTerms}";
+          SuggestURLTemplate = mkLocalAutocomplete "sjp";
           IconURL = {
             mimetype = "image/x-icon";
             url = "https://sjp.pwn.pl/favicon.ico";
@@ -203,7 +206,7 @@ rec {
           Name = "Filmweb";
           Alias = "filmweb";
           URLTemplate = "https://www.filmweb.pl/search?q={searchTerms}";
-          SuggestURLTemplate = "https://www.filmweb.pl/search/live?q={searchTerms}";
+          SuggestURLTemplate = mkLocalAutocomplete "filmweb";
           IconURL = {
             mimetype = "image/x-icon";
             url = "https://www.filmweb.pl/favicon.ico";
@@ -214,6 +217,7 @@ rec {
           Name = "IMDb";
           Alias = "imdb";
           URLTemplate = "https://www.imdb.com/find?q={searchTerms}";
+          SuggestURLTemplate = mkLocalAutocomplete "imdb";
           IconURL = {
             mimetype = "image/x-icon";
             url = "https://www.imdb.com/favicon.ico";
@@ -531,6 +535,15 @@ rec {
           noGC = [dled encoded];
         };
 
+      preStartScript = writeScript "firefox-pre-start" ''
+        mkdir -p $HOME/.mozilla/firefox
+
+        # Always recreate search engines from policy.
+        find $HOME/.mozilla/firefox/ -name search.json.mozlz4 -exec rm {} \;
+
+        systemctl --user start firefox-autocomplete.service &
+      '';
+
     in
 
     runCommand firefox-unwrapped.name {
@@ -542,7 +555,7 @@ rec {
 
       substituteInPlace $out/bin/firefox \
         --replace ${firefox-unwrapped} $out \
-        --replace 'exec ' 'mkdir -p $HOME/.mozilla/firefox ; find $HOME/.mozilla/firefox/ -name search.json.mozlz4 -exec rm {} \; ; exec '
+        --replace 'exec ' '${preStartScript} ; exec '
       ln -sf $out/lib/firefox/firefox $out/bin/.firefox-wrapped
 
       ln -s ${searchEnginesIconsNoGC} $out/searchEnginesIconsNoGC.keep

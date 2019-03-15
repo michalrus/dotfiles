@@ -8,6 +8,7 @@
     ./modules/emacs.nix
     ./modules/malicious-hosts.nix
     ./modules/hardened-chromium.nix
+    ./modules/firefox-autocomplete.nix
     ./my-hosts.nix
   ];
 
@@ -100,6 +101,12 @@
       ];
     };
 
+    firefox-autocomplete.userPorts = {
+      m = 9114;
+      mw = 9115;
+      md = 9116;
+    };
+
     xserver = {
       xkbOptions = "caps:hyper,numpad:microsoft";
 
@@ -178,7 +185,9 @@
         electrum
         isync
         lilypond
-        michalrus.hardened-firefox
+        (wrapFirefox (michalrus.hardened-firefox-unwrapped.override {
+          localAutocompletePort = config.services.firefox-autocomplete.userPorts.m;
+        }) {})
         openjdk8   # for nofatty
         #unfree.michalrus.transcribe
         (texlive.combine {
@@ -196,7 +205,9 @@
       extraGroups = [ "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" ];
       dotfiles.profiles = [ "base" "michalrus/base" "michalrus/desktop" "git-annex" "michalrus/work/di" "i3" "emacs" ];
       packages' = with pkgs; [
-        michalrus.hardened-firefox
+        (wrapFirefox (michalrus.hardened-firefox-unwrapped.override {
+          localAutocompletePort = config.services.firefox-autocomplete.userPorts.mw;
+        }) {})
         openjdk8   # for nofatty
         pgadmin
         unfree.michalrus.hubstaff
@@ -213,6 +224,7 @@
       dotfiles.profiles = [ "base" "michalrus/base" "michalrus/desktop" "michalrus/tor" "i3" "emacs" ];
       packages' = with pkgs; [
         (wrapFirefox (michalrus.hardened-firefox-unwrapped.override {
+          localAutocompletePort = config.services.firefox-autocomplete.userPorts.md;
           extraPrefs = ''
             // Override those for more privacy:
             lockPref("privacy.resistFingerprinting", true);
