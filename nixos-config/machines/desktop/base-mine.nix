@@ -182,7 +182,7 @@
       dotfiles.profiles = [ "base" "michalrus/base" "michalrus/desktop" "git-annex" "michalrus/personal" "i3" "emacs" ];
       packages' = with pkgs; [
         aegisub
-        electrum
+        michalrus.electrum-tor
         isync
         lilypond
         (wrapFirefox (michalrus.hardened-firefox-unwrapped.override {
