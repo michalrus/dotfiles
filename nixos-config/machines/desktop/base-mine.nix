@@ -95,7 +95,9 @@
     tor = {
       enable = true;
       client.enable = true;
-      torifiedUsers = [ "md" ];
+      torifiedUsers = [
+        { username = "md"; allowedLocalPorts = [ config.services.firefox-autocomplete.userPorts.md ]; }
+      ];
     };
 
     xserver = {

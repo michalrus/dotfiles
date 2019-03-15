@@ -9,7 +9,7 @@ let
   transPort = 9040;
   dnsPort = 5353;
   # For torified users’ apps, that insist on using SOCKS5…
-  allowedSocksPort = 9050; # TODO: take this from `config.services.tor.client.socksListenAddress`
+  allowedSocksPort = lib.toInt (lib.last (lib.splitString ":" config.services.tor.client.socksListenAddress));
   chain = "nixos-fw-torified-users";
 
   flushRules = ''
@@ -25,9 +25,11 @@ let
     ip46tables -w -t nat    -N ${chain}
     ip46tables -w -t filter -N ${chain}
 
-  '' + (concatMapStringsSep "\n" (user: ''
+  '' + (concatMapStringsSep "\n" (u: let user = u.username; localPorts = u.allowedLocalPorts ++ [allowedSocksPort]; in ''
 
-    iptables -w -t nat -A ${chain} -d 127.0.0.0/8 -p tcp -m owner --uid-owner ${user} -m tcp --dport ${toString allowedSocksPort} -j ACCEPT
+    ${concatMapStringsSep "\n" (port: ''
+      iptables -w -t nat -A ${chain} -d 127.0.0.0/8 -p tcp -m owner --uid-owner ${user} -m tcp --dport ${toString port} -j ACCEPT
+    '') localPorts}
 
     # Redirect all of IPv4 TCP to TransProxy.
     iptables -w -t nat -A ${chain} -p tcp -m owner --uid-owner ${user} -m tcp -j REDIRECT --to-ports ${toString transPort}
@@ -36,7 +38,10 @@ let
     iptables -w -t nat -A ${chain} -p udp -m owner --uid-owner ${user} -m udp --dport 53 -j REDIRECT --to-ports ${toString dnsPort}
 
     # Unblock those redirection targets.
-    iptables -w -t filter -A ${chain} -d 127.0.0.0/8 -p tcp -m owner --uid-owner ${user} -m tcp --dport ${toString allowedSocksPort} -j ACCEPT
+    ${concatMapStringsSep "\n" (port: ''
+      iptables -w -t filter -A ${chain} -d 127.0.0.0/8 -p tcp -m owner --uid-owner ${user} -m tcp --dport ${toString port} -j ACCEPT
+      iptables -w -t filter -A ${chain} -d 127.0.0.0/8 -p tcp -m owner --uid-owner ${user} -m tcp --sport ${toString port} -j ACCEPT
+    '') localPorts}
     iptables -w -t filter -A ${chain} -d 127.0.0.0/8 -p tcp -m owner --uid-owner ${user} -m tcp --dport ${toString transPort} -j ACCEPT
     iptables -w -t filter -A ${chain} -d 127.0.0.0/8 -p udp -m owner --uid-owner ${user} -m udp --dport ${toString dnsPort} -j ACCEPT
 
@@ -55,7 +60,20 @@ in
 {
 
   options.services.tor.torifiedUsers = mkOption {
-    type = types.listOf types.string;
+    type = types.listOf (types.submodule {
+      options = {
+        username = mkOption { type = types.str; };
+        allowedLocalPorts = mkOption {
+          type = types.listOf types.int;
+          default = [];
+          description = ''
+            List of 127.0.0.1 TCP ports the user is allowed to
+            access. A whitelist is needed, because those local
+            services might process user input in clearnet.
+          '';
+        };
+      };
+    });
     default = [];
   };
 
