@@ -117,6 +117,11 @@
       %wheel ALL=(root) NOPASSWD: ${config.system.build.nixos-rebuild}/bin/nixos-rebuild boot -k --upgrade
       %wheel ALL=(root) NOPASSWD: ${config.nix.package.out}/bin/nix-collect-garbage -d
     '';
+
+    wrappers.fping = {
+      source = "${pkgs.fping}/bin/fping";
+      capabilities = "cap_net_raw+p";
+    };
   };
 
   # Stability!
