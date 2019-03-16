@@ -187,6 +187,8 @@
     "expressvpn.com akamaized.net script allow",
     "facebook.com fbcdn.net script allow",
     "facebook.com fbcdn.net xhr allow",
+    "fast.com netflix.com xhr allow",
+    "fast.com nflxvideo.net xhr allow",
     "filmweb.pl fwcdn.pl script allow",
     "github.com github-production-repository-file-5c1aeb.s3.amazonaws.com xhr allow",
     "github.com github-production-user-asset-6210df.s3.amazonaws.com xhr allow",
