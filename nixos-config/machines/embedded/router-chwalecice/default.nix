@@ -3,7 +3,7 @@
 {
   imports = [
     ../../../modules
-    ../../desktop/modules/openvpn.nix
+    ../../desktop/modules/openvpn-michalrus_com.nix
     ../../common.nix
     ./nat.nix
     ./daily-reboot.nix

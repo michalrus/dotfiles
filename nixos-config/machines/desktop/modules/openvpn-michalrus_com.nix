@@ -4,7 +4,7 @@ with lib;
 
 let
 
-  dataDir = "/var/lib/openvpn";
+  dataDir = "/var/lib/openvpn/michalrus_com";
 
 in
 

@@ -4,7 +4,7 @@
   imports = [
     ../../modules
     ../common-x86.nix
-    ./modules/openvpn.nix
+    ./modules/openvpn-michalrus_com.nix
     ./modules/cups-reenable.nix
   ];
 
