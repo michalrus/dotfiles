@@ -9,6 +9,7 @@
     ./modules/malicious-hosts.nix
     ./modules/hardened-chromium.nix
     ./modules/firefox-autocomplete.nix
+    ./modules/openvpn-expressvpn.nix
     ./my-hosts.nix
   ];
 
