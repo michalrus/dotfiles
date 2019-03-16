@@ -7,8 +7,8 @@ self: super:
     src = self.fetchFromGitHub {
       owner  = "traviscross";
       repo   = "mtr";
-      rev    = "eec614bad42bc4adf519b5165b52e03b9e9b1b84";
-      sha256 = "1fqxp9hlgmpi34k3p47d3kn1bs3blkhrqiw5gm23awqhw44l47l1";
+      rev    = "60e5c5c8c6a55e911f9598441764ae3e7c337dc2";
+      sha256 = "1i1za66z9350bmybppb9qnag98bwbcxfvjr0vs182blcy46rvrmq";
     };
   });
 
