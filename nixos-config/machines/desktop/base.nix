@@ -14,12 +14,13 @@
     hostName = lib.mkDefault "nixos";
     extraHosts = "127.0.0.1 ${config.networking.hostName}";
     firewall.nonetGroup.enable = lib.mkDefault true;
-  };
 
-  environment.etc."resolv.conf.head".text = ''
-    nameserver 8.8.8.8
-    nameserver 8.8.4.4
-  '';
+    networkmanager.dns = "none";
+    nameservers = [
+      "8.8.8.8"
+      "8.8.4.4"
+    ];
+  };
 
   hardware = {
     sane.enable = true;
