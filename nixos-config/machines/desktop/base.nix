@@ -37,7 +37,7 @@
   services = {
     printing = {
       enable = true;
-      drivers = [ pkgs.gutenprint ];
+      drivers = [ pkgs.gutenprint pkgs.hplip ];
     };
 
     logkeys' = {
