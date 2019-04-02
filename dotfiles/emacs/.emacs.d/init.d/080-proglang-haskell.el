@@ -5,30 +5,13 @@
               ("C-c C-u" . michalrus/haskell-mode-insert-undefined))
   :config
   (add-hook 'haskell-mode-hook 'michalrus/setup-compilation-with-make)
+  (add-hook 'haskell-mode-hook (lambda ()
+    (setq-local company-backends '((company-dabbrev-code company-gtags company-etags company-keywords)))))
   (add-hook 'haskell-interactive-mode-hook 'company-mode)
 
   (defun michalrus/haskell-mode-insert-undefined ()
     (interactive)
     (insert "undefined"))
-
-  (use-package lsp-haskell
-    :demand t
-    :config
-    (add-hook 'haskell-mode-hook
-              (lambda ()
-                ;; If there’s a 'hie.sh' defined locally by a project
-                ;; (e.g. to run HIE in a nix-shell), use it…
-                (let ((hie-directory (locate-dominating-file default-directory "hie.sh")))
-                  (when hie-directory
-                    (setq-local lsp-haskell-process-path-hie (expand-file-name "hie.sh" hie-directory))))
-                ;; … and allow it to be used in multiple sessions by different users…
-                (setq-local lsp-haskell-process-args-hie `("-d" "-l" ,(concat "/tmp/hie-" user-login-name "-" (shell-command-to-string "echo -n $(date --iso-8601=ns)") ".log")))
-                ;; … and account for nix-shell init…
-                (setq-local lsp-response-timeout 30)
-                (setq-local company-lsp-async t)
-                (setq-local company-lsp-cache-candidates nil)
-                ;; … and only then setup the LSP.
-                (lsp-haskell-enable))))
 
   (use-package hayoo
     :demand t
