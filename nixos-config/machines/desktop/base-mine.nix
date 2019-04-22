@@ -183,6 +183,7 @@
       dotfiles.profiles = [ "base" "michalrus/base" "michalrus/desktop" "git-annex" "michalrus/personal" "i3" "emacs" ];
       packages' = with pkgs; [
         aegisub
+        chromium
         michalrus.electrum-tor
         isync
         lilypond
@@ -209,6 +210,7 @@
         (wrapFirefox (michalrus.hardened-firefox-unwrapped.override {
           localAutocompletePort = config.services.firefox-autocomplete.userPorts.mw;
         }) {})
+        chromium
         openjdk8   # for nofatty
         pgadmin
         unfree.michalrus.hubstaff
