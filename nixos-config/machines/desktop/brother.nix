@@ -16,18 +16,20 @@
   };
 
   environment.systemPackages = with pkgs; [
-    (chromium.override { enablePepperFlash = true; })
     anki
+    chromium
     dosbox
     frescobaldi
     gnome3.pomodoro
     ioquake3
+    jre8
     lilypond
-    michalrus.gnucash26
     mumble
     openjdk8
-    unfree.michalrus.transcribe
-    unfree.nixos-unstable.steam
+    playonlinux
+    unfree.google-chrome
+    #unfree.michalrus.transcribe
+    unfree.michalrus.steam
     unfree.skype
     unfree.teamspeak_client
     unfree.unrar
