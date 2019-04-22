@@ -15,7 +15,7 @@
     gthumb
     gtk2 # Why? Icon cache! See #20874.
     networkmanagerapplet
-    system-config-printer # For GNOME Printers applet.
+    nixos-unstable.system-config-printer # For GNOME Printers applet.
   ];
 
   services = {

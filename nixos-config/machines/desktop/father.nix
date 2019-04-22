@@ -19,7 +19,7 @@
   services.tor = {
     enable = true;
     client.enable = true;
-    torifiedUsers = [ "robert-tor" ];
+    torifiedUsers = [ { username = "robert-tor"; allowedLocalPorts = []; } ];
   };
 
   environment.systemPackages = with pkgs; [
