@@ -38,7 +38,7 @@
   services = {
     printing = {
       enable = true;
-      drivers = [ pkgs.gutenprint pkgs.hplip ];
+      drivers = [ pkgs.gutenprint pkgs.hplip pkgs.epson-escpr ];
     };
 
     logkeys' = {
