@@ -6,7 +6,15 @@
     ./modules/xfce.nix
   ];
 
-  virtualisation.virtualbox.host.enable = true;
+  virtualisation.virtualbox.host = {
+    enable = true;
+    enableExtensionPack = true;
+  };
+
+  system.autoUpgrade = {
+    enable = true;
+    dates = "15:15";
+  };
 
   services.tor = {
     enable = true;
@@ -15,13 +23,10 @@
   };
 
   environment.systemPackages = with pkgs; [
-    nixos-unstable.ltris
     pcmanfm
     albatross
     gdrivefs
-    truecrypt
     mimms
-    bomi
     streamlink
     aspell
     aspellDicts.pl
@@ -29,13 +34,19 @@
     perlPackages.PDFAPI2
     fbida
     di
-    duc
     libarchive
     firefox
     hunspell
     tor
     qalculate-gtk
     afterstep
+    softether
+    winetricks
+    shotwell
+    rhythmbox
+    gnome3.zenity
+    gnunet
+    filezilla
   ];
 
   users.extraUsers.robert = {
