@@ -13,7 +13,7 @@
 
   system.autoUpgrade = {
     enable = true;
-    dates = "15:15";
+    dates = "15:16";
   };
 
   services.tor = {

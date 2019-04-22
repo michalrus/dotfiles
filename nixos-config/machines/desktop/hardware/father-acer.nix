@@ -28,5 +28,10 @@
     fsType = "ext4";
   };
 
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/5574-BF09";
+    fsType = "vfat";
+  };
+
   swapDevices = [ { device = "/dev/disk/by-uuid/f6ec3e74-2409-48a8-88c1-155f36ef9b84"; } ];
 }
