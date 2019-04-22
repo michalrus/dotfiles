@@ -6,7 +6,14 @@
     ./modules/xfce.nix
   ];
 
+  system.autoUpgrade = {
+    enable = true;
+    dates = "15:15";
+  };
+
   environment.systemPackages = with pkgs; [
+    pdfmod
+    perlPackages.PDFAPI2
   ];
 
   users.extraUsers.elzbieta = {
@@ -24,7 +31,6 @@
   };
 
   services.xserver.displayManager = {
-    lightdm.enable = false;
     auto.enable = true;
     auto.user = config.users.extraUsers.elzbieta.name;
   };
