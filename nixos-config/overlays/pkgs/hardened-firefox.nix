@@ -321,6 +321,9 @@ rec {
         lockPref("media.gmp-widevinecdm.enabled", false);
         lockPref("media.gmp-widevinecdm.visible", false);
 
+        // Mozilla fsck up with extension intermediary signature key expiring.
+        lockPref("xpinstall.signatures.required", false);
+
         // SearchEngines
         lockPref("keyword.enabled", false); // ! Require a keyword before sending URLBar to a search engine.
         lockPref("browser.urlbar.oneOffSearches", false);
