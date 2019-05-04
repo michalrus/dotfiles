@@ -286,6 +286,7 @@ rec {
               "https://addons.mozilla.org/firefox/downloads/latest/decentraleyes/"
               "https://addons.mozilla.org/firefox/downloads/latest/utm-tracking-token-stripper/"
               "https://addons.mozilla.org/firefox/downloads/latest/google-search-link-fix/"
+              "https://addons.mozilla.org/firefox/downloads/latest/i-dont-care-about-cookies/"
             ];
             Locked = [
               "@testpilot-containers"
@@ -297,6 +298,7 @@ rec {
               "jid1-BoFifL9Vbdl2zQ@jetpack" # decentraleyes
               "{9fda17be-849d-4f5b-a326-28d25f0f6d29}" # utm-tracking-token-stripper
               "jid0-XWJxt5VvCXkKzQK99PhZqAn7Xbg@jetpack" # google-search-link-fix
+              "jid1-KKzOGWgsW3Ao4Q@jetpack" # i-dont-care-about-cookies
             ];
           };
 
