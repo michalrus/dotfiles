@@ -9,11 +9,11 @@ self: super:
 
     stdenv.mkDerivation rec {
       name = "wasabi-wallet-${version}";
-      version = "1.1.1";
+      version = "1.1.4";
 
       src = fetchurl {
         url    = "https://github.com/zkSNACKs/WalletWasabi/releases/download/v${version}/Wasabi-${version}.deb";
-        sha256 = "1w95ib1yc5xj38mfdw87zrg9y31gqg7j8aqhfh8mlv422z7v1jzf";
+        sha256 = "1hs25akx58bll7yzb2b19qxkzks5ay239bagv7f431l1y9bdsdmv";
       };
       unpackCmd = "mkdir root ; dpkg-deb -x $curSrc root";
 
