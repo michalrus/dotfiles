@@ -30,6 +30,7 @@ let
     # ELPA Stable
     (with epkgs.elpaPackages; [
       auctex
+      nlinum
     ])
     ++
 
@@ -43,6 +44,7 @@ let
       erlang
       expand-region
       flycheck
+      git-gutter
       git-link
       go-mode
       haskell-mode
@@ -55,6 +57,7 @@ let
       neotree
       projectile
       scala-mode
+      smart-mode-line
       solarized-theme
       swiper
       use-package

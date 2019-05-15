@@ -66,3 +66,9 @@
 ;  (set-face-background 'default (if (display-graphic-p frame) "black" "unspecified-bg") frame))
 ;(add-hook 'after-make-frame-functions 'fix-new-frame-background)
 ;(add-hook 'window-setup-hook (lambda () (fix-new-frame-background (selected-frame))))
+
+(use-package smart-mode-line
+  :config
+  (setq sml/theme 'respectful)
+  (setq rm-blacklist '(" wb" " super-save" " focus-save" " counsel" " ivy"))
+  (sml/setup))

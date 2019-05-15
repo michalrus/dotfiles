@@ -24,7 +24,9 @@
 
 (use-package diff-hl
   :config
-  (add-hook 'prog-mode-hook 'diff-hl-mode))
+  (add-hook 'prog-mode-hook 'diff-hl-mode)
+  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh) ;; <https://github.com/dgutov/diff-hl#magit>
+  )
 
 (use-package projectile
   :demand t

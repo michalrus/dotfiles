@@ -1,7 +1,10 @@
 ;; -*- mode: emacs-lisp -*-
 
 (use-package dhall-mode
-  :mode "\\.dhall\\'")
+  :mode "\\.dhall\\'"
+  :config
+  (setq dhall-command nil
+        dhall-format-at-save nil))
 
 (use-package yaml-mode
   :mode "\\.yaml\\'")
