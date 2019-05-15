@@ -104,7 +104,7 @@
     pdfshuffler
     pinentry
     pinentry
-    python34Packages.livestreamer
+    python3Packages.livestreamer
     rfkill
     rtmpdump
     samba
