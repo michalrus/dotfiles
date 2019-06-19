@@ -9,7 +9,7 @@ let
     NewTabPageLocation = "chrome:newtab";
 
     DefaultCookiesSetting = 1; # Allow all sites to set local data
-    #BlockThirdPartyCookies = true; # uMatrix does it better
+    #BlockThirdPartyCookies = true; # That would break too many sites.
 
     SSLVersionMin = "tls1";
     BuiltInDnsClientEnabled = false;
@@ -84,7 +84,6 @@ let
     ExtensionInstallForcelist  = # doesn’t apply to incognito?
       map (x: x + ";https://clients2.google.com/service/update2/crx")
       [
-        "ogfcmafjalglgifnmanfmnieipoejdcf" # uMatrix
         "cjpalhdlnbpafiamejdnhcphjbkeiagm" # uBlock Origin
         "gcbommkclmclpchllfjekcdonpmejbdp" # HTTPS Everywhere
         "fdpohaocaechififmbbbbbknoalclacl" # Full Page Screen Capture

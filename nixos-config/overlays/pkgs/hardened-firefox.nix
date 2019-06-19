@@ -279,7 +279,6 @@ rec {
             Install = [
               "https://addons.mozilla.org/firefox/downloads/latest/multi-account-containers/"
               "https://addons.mozilla.org/firefox/downloads/latest/temporary-containers/"
-              "https://addons.mozilla.org/firefox/downloads/latest/umatrix/"
               "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/"
               "https://addons.mozilla.org/firefox/downloads/latest/https-everywhere/"
               "https://addons.mozilla.org/firefox/downloads/latest/add-url-to-window-title/"
@@ -291,7 +290,6 @@ rec {
             Locked = [
               "@testpilot-containers"
               "{c607c8df-14a7-4f28-894f-29e8722976af}" # temporary-containers
-              "uMatrix@raymondhill.net"
               "uBlock0@raymondhill.net"
               "https-everywhere@eff.org"
               "autt@ericgoldman.name" # add-url-to-window-title
