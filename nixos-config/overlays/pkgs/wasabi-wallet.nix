@@ -23,7 +23,7 @@ self: super:
       dontBuild = true;
       dontStrip = true;
 
-      libPath = lib.makeLibraryPath [ xorg.libX11 openssl ];
+      libPath = lib.makeLibraryPath [ xorg.libX11 openssl fontconfig ];
 
       installPhase = ''
         mkdir -p $out/libexec $out/bin
