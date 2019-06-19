@@ -185,6 +185,7 @@
         aegisub
         chromium
         michalrus.electrum-tor
+        michalrus.monero-gui-tor
         isync
         lilypond
         (wrapFirefox (michalrus.hardened-firefox-unwrapped.override {
