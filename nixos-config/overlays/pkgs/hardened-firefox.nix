@@ -309,6 +309,14 @@ rec {
         pref("general.config.filename", "firefox.cfg");
       '';
 
+      cfgEnableDRM = ''
+        // Allow unfree DRM on some accounts:
+        lockPref("media.eme.enabled", true);
+        lockPref("browser.eme.ui.enabled", true);
+        lockPref("media.gmp-widevinecdm.enabled", true);
+        lockPref("media.gmp-widevinecdm.visible", true);
+      '';
+
       cfgUX = ''
         // Always recreate search engines from policy.
         clearPref("browser.policies.runOncePerModification.addSearchEngines");
@@ -366,8 +374,8 @@ rec {
 
         // Control
         lockPref("browser.urlbar.trimURLs", false);
-        lockPref("dom.event.clipboardevents.enabled", false);
-        lockPref("dom.event.contextmenu.enabled", false);
+        //lockPref("dom.event.clipboardevents.enabled", false); // breaks Facebook® Messenger™
+        //lockPref("dom.event.contextmenu.enabled", false);
         lockPref("network.IDN_show_punycode", true);
 
         // Clean startup.
@@ -551,7 +559,7 @@ rec {
 
     runCommand firefox-unwrapped.name {
       inherit (firefox-unwrapped) passthru meta;
-      inherit cfgPrivacy cfgTelemetryOff cfgUX policies;
+      inherit cfgPrivacy cfgTelemetryOff cfgUX cfgEnableDRM policies;
     } ''
       cp -a ${firefox-unwrapped} $out
       chmod -R u+rwX $out

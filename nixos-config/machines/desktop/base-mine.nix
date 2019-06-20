@@ -190,6 +190,7 @@
         lilypond
         (wrapFirefox (michalrus.hardened-firefox-unwrapped.override {
           localAutocompletePort = config.services.firefox-autocomplete.userPorts.m;
+          extraPrefs = michalrus.hardened-firefox-unwrapped.cfgEnableDRM;
         }) {})
         openjdk8   # for nofatty
         #unfree.michalrus.transcribe
@@ -210,6 +211,7 @@
       packages' = with pkgs; [
         (wrapFirefox (michalrus.hardened-firefox-unwrapped.override {
           localAutocompletePort = config.services.firefox-autocomplete.userPorts.mw;
+          extraPrefs = michalrus.hardened-firefox-unwrapped.cfgEnableDRM;
         }) {})
         chromium
         openjdk8   # for nofatty
