@@ -4,8 +4,8 @@ self: super:
 
   hubstaff = let
 
-    version = "1.4.6-4aba8ab5";
-    sha256 = "14js4d7wazn5r5p9n3iic9kwqrinm079jj1k7r00v684jrgq62fc";
+    version = "1.4.9-86828309";
+    sha256 = "0p9b7s2damzxmbrm8m97bj06g0faslbjw51dmxq8icz6ldbqsspx";
 
   in super.nixos-unstable.hubstaff.overrideAttrs (drv: {
     name = "hubstaff-${version}";
