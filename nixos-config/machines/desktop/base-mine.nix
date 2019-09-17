@@ -184,7 +184,7 @@
       packages' = with pkgs; [
         aegisub
         chromium
-        michalrus.electrum-tor
+        electrum
         michalrus.monero-gui-tor
         isync
         lilypond
