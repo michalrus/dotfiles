@@ -30,13 +30,9 @@
 
 (use-package projectile
   :demand t
-  :bind (:map projectile-mode-map
-         ("C-c p x t" . michalrus/projectile-run-term))
   :config
   (projectile-global-mode)
-  (defun michalrus/projectile-run-term ()
-    (interactive)
-    (projectile-run-term (getenv "SHELL"))))
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 
 (use-package neotree
   :bind (("M-<f2>" . michalrus/neotree-show)
