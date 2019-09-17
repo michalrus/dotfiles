@@ -43,6 +43,7 @@ composeOverlays [
 
       (import ./pkgs/git-annex-hacks.nix)
       (import ./pkgs/influxdb.nix)
+      (import ./pkgs/pdfshuffler.nix)
       (import ./pkgs/gnucash.nix) # TODO: move to hledger from this crap
       (import ./pkgs/msmtp-no-security-check.nix)
 

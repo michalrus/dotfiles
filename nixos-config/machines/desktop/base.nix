@@ -95,16 +95,16 @@
     libjpeg
     libnotify
     libreoffice
+    michalrus.pdfshuffler
     mpv
     ntfs3g
     octave
     pavucontrol
     pcmanfm
     pdfgrep
-    pdfshuffler
     pinentry
     pinentry
-    python3Packages.livestreamer
+    pythonPackages.livestreamer
     rfkill
     rtmpdump
     samba
