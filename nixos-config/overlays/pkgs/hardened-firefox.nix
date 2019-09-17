@@ -459,6 +459,9 @@ rec {
         lockPref("privacy.resistFingerprinting", false);
         lockPref("dom.enable_performance", true);
 
+        // Performance.
+        lockPref("layers.acceleration.force-enabled", true);
+
         // Privacy.
         lockPref("privacy.firstparty.isolate", true);
         lockPref("privacy.trackingprotection.enabled", true);
