@@ -511,7 +511,8 @@ rec {
         lockPref("geo.wifi.uri", "");
         lockPref("geo.wifi.logging.enabled", false);
         lockPref("network.dns.disablePrefetch", true);
-        lockPref("network.http.sendRefererHeader", 0);
+        lockPref("network.http.sendRefererHeader", 2); // Send on all requests...
+        lockPref("network.http.referer.XOriginPolicy", 2); // ... but only for same-origin, since not sending it at all breaks some CSRF defenses (e.g. Last.fm).
         lockPref("network.manage-offline-status", false);
         lockPref("network.predictor.enabled", false);
         lockPref("network.prefetch-next", false);
