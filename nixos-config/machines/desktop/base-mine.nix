@@ -35,6 +35,7 @@
     (haskellPackages.ghcWithHoogle (hs: []))
     alacritty
     autocutsel
+    blueman
     breeze-qt5 breeze-icons pkgs.hicolor_icon_theme kde-gtk-config breeze-gtk
     compton
     cool-retro-term
@@ -75,6 +76,8 @@
   };
 
   hardware.enableSomagicEasyCAP = true;
+
+  hardware.bluetooth.enable = true;
 
   systemd.extraConfig = ''
     DefaultCPUAccounting=yes
