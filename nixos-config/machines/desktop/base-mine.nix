@@ -47,6 +47,7 @@
     gnome3.dconf   # so that GnuCash prefs can be changed
     gnome3.zenity
     haskellPackages.hlint
+    hugo
     i3status
     michalrus.gettext-emacs
     michalrus.gnucash26
