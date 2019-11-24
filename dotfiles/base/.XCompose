@@ -22,6 +22,8 @@ include "%L"
 
 <Multi_key> <e> <u> <r>               : "€"   EuroSign # EURO SIGN
 
+<Multi_key> <o> <h> <m>               : "Ω" U2126 # OHM SIGN
+
 <Multi_key> <l> <o> <d>               : "ಠ_ಠ"         # emoji: ‘look of disapproval’
 <Multi_key> <t> <a> <b> <l> <e>       : "(╯°□°)╯︵ ┻━┻" # emoji: ‘flipping table’
 <Multi_key> <s> <h> <r> <u> <g>       : "¯\\_(ツ)_/¯"   # emoji: ‘shrug’
