@@ -14,6 +14,9 @@ locale -a | grep -qi 'en_GB.utf' && export LC_PAPER='en_GB.UTF-8'
 export EDITOR='emacs'
 export VISUAL="$EDITOR"
 
+# for `i3-sensible-terminal` and `mtr8.desktop`
+export TERMINAL='termite'
+
 export DEBFULLNAME="Michal Rus"
 export DEBEMAIL="m@michalrus.com"
 
