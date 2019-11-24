@@ -14,7 +14,7 @@ in
         default = false;
       };
       keymap = mkOption {
-        type = types.nullOr types.string;
+        type = types.nullOr types.str;
         example = "pt_BR";
         default = null;
         description = "By default will use the built-in en_US keymap.";

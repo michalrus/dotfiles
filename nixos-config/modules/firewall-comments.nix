@@ -42,7 +42,7 @@ in
 {
   options = {
     networking.firewall.comments = mkOption {
-      type = types.attrsOf types.string;
+      type = types.attrsOf types.str;
       default = {};
       example = {
         "192.168.1.1" = "machine A";

@@ -13,17 +13,11 @@ let
     # MELPA Unstable @ NixOS Unstable (bleedingest edge)
     (with (pkgs.nixos-unstable.emacsPackagesNgGen base).melpaPackages; [
       company-lsp
-      dhall-mode
-      focus-autosave-mode
-      google-translate
-      hayoo
-      lsp-haskell
       lsp-mode
+      lsp-treemacs
       lsp-ui
-      nix-mode
-      python-mode
       sort-words
-      super-save
+      treemacs
     ])
     ++
 
@@ -36,18 +30,22 @@ let
 
     # MELPA Stable
     (with epkgs.melpaStablePackages; [
+      #ensime
       #gregorio-mode
       company
       counsel
+      dhall-mode
       diff-hl
-      ensime
       erlang
       expand-region
       flycheck
+      focus-autosave-mode
       git-gutter
       git-link
       go-mode
+      google-translate
       haskell-mode
+      hayoo
       hindent
       hl-todo
       ivy
@@ -55,10 +53,13 @@ let
       markdown-mode
       move-text
       neotree
+      nix-mode
       projectile
+      python-mode
       scala-mode
       smart-mode-line
       solarized-theme
+      super-save
       swiper
       use-package
       ws-butler

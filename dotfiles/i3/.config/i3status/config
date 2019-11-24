@@ -31,9 +31,9 @@ volume master {
 battery 1 {
   format = "%status %percentage %remaining"
   format_down = "No battery"
-  status_chr = "🔋C"
-  status_bat = "🔋D"
-  status_full = "🔋F"
+  status_chr = "C"
+  status_bat = "D"
+  status_full = "F"
   #path = "/sys/class/power_supply/BAT%d/uevent"
   hide_seconds = true
   last_full_capacity = true

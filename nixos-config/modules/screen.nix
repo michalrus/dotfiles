@@ -38,7 +38,7 @@ in
   options = {
     services.screen = {
       usersAlways = mkOption {
-        type = types.listOf types.string;
+        type = types.listOf types.str;
         default = [ "root" ];
         description = ''
           List of usernames that have a system service with GNU Screen

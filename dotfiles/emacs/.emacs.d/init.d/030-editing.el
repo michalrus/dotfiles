@@ -60,7 +60,7 @@
 (use-package swiper
   :bind (("C-s" . counsel-grep-or-swiper)
          ("C-c C-r" . ivy-resume)
-         ("H-r" . ivy-recentf))
+         ("H-r" . counsel-recentf))
   :init
   (global-unset-key (kbd "C-x C-r")) ;; temporarily, to unlearn old binding for ivy-recentf
   (setq projectile-completion-system 'ivy)

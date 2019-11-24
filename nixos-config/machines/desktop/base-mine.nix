@@ -63,7 +63,7 @@
 
   programs = {
     wireshark.enable = true;
-    wireshark.package = pkgs.wireshark-gtk;
+    wireshark.package = pkgs.wireshark-qt;
     ssh.startAgent = false;
   };
 
@@ -114,14 +114,23 @@
     xserver = {
       xkbOptions = "caps:hyper,numpad:microsoft";
 
-      synaptics = {
-        maxSpeed = "4.0";
-        accelFactor = "0.02";
-        additionalOptions = ''
-          Option "VertScrollDelta" "-114"
-          Option "HorizScrollDelta" "-114"
-        '';
+      synaptics.enable = lib.mkForce false;
+
+      libinput = {
+        enable = true;
+        accelSpeed = "0.1";
+        naturalScrolling = true;
       };
+
+      config = ''
+        Section "InputClass"
+          Identifier "libinput pointer catchall"
+          MatchIsPointer "on"
+          MatchDevicePath "/dev/input/event*"
+          Option "NaturalScrolling" "on"
+          Driver "libinput"
+        EndSection
+      '';
 
       autoRepeatDelay = 150;
       autoRepeatInterval = 8;

@@ -11,7 +11,7 @@ in
     hardware.android.automount = {
       enable = mkEnableOption "automounting MTP devices with jmtpfs";
       user = mkOption {
-        type = types.string;
+        type = types.str;
         default = "root";
         description = "Which user to mount as.";
       };
