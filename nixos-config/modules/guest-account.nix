@@ -61,12 +61,16 @@ in
           "${cfg.skeleton}/" "${cfg.home}/"
       '';
 
-      slice = [ "user-${toString cfg.uid}.slice" ];
+      #dep = [ "user-${toString cfg.uid}.slice" ];
+      # After systemd-243 the user-.slice is not stopped after logout, so let’s depend on the user@.service.
+      #   freenode/#systemd:
+      #   11:34 <boucman> I'm not sure about the internal systemd logic, but it's possible the slice was kept alive because of the dependency
+      dep = [ "user@${toString cfg.uid}.service" ];
 
     in {
-      wantedBy = slice;
-      partOf = slice; # so that it’s killed after user logs out
-      before = slice; # so that this service finishes before /etc/profile setup is run (prevents races)
+      wantedBy = dep;
+      partOf = dep; # so that it’s killed after user logs out
+      before = dep; # so that this service finishes startup before /etc/profile setup is run (prevents races)
       script = "exec sleep $((2 ** 31))";
       preStart = "exec ${cleanup}";
       postStop = "exec ${cleanup}";
