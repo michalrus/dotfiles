@@ -71,9 +71,12 @@ in
       wantedBy = dep;
       partOf = dep; # so that it’s killed after user logs out
       before = dep; # so that this service finishes startup before /etc/profile setup is run (prevents races)
-      script = "exec sleep $((2 ** 31))";
-      preStart = "exec ${cleanup}";
-      postStop = "exec ${cleanup}";
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+        ExecStart = "${cleanup}";
+        ExecStop = "${cleanup}";
+      };
     };
 
   };
