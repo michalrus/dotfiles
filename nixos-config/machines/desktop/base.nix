@@ -79,6 +79,7 @@
     cdrkit
     cool-retro-term
     devede
+    diff-pdf
     dvdauthor
     evince
     flac
