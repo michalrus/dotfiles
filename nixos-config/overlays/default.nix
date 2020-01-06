@@ -27,6 +27,9 @@ composeOverlays [
   # `config.programs.mtr` uses the global definition… 🙄
   (import ./pkgs/mtr.nix)
 
+  # `services.transmission` uses the global definition… 🙄
+  (import ./pkgs/transmission.nix)
+
   (_: _: { nixos-unstable = nixos-unstable {}; })
 
   # `services.tor` uses global `pkgs.tor`

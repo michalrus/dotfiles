@@ -113,7 +113,6 @@
     shntool
     simple-scan
     timidity
-    transmission_gtk
     unclutter
     utox
     winetricks

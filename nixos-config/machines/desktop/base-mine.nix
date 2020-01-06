@@ -10,6 +10,7 @@
     ./modules/hardened-chromium.nix
     ./modules/firefox-autocomplete.nix
     ./modules/openvpn-expressvpn.nix
+    ./modules/transmission.nix
     ./my-hosts.nix
   ];
 

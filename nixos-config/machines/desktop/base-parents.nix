@@ -13,6 +13,7 @@
 
   environment.systemPackages = with pkgs; [
     nixos-unstable.gnome3.evolution
+    transmission_gtk
     unfree.google-chrome
     unfree.skype
     unfree.unrar

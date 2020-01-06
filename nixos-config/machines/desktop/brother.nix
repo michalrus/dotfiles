@@ -27,6 +27,7 @@
     mumble
     openjdk8
     playonlinux
+    transmission_gtk
     unfree.google-chrome
     #unfree.michalrus.transcribe
     unfree.michalrus.steam
