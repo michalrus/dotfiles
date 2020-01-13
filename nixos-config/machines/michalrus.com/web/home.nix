@@ -14,10 +14,12 @@ let
 
   # TODO: reuse this code in dhcpd config in ../../embedded/router-chwalecice--nat.nix
   machines = [
-    { name = "printer";          addr = "${subnet-chwalecice}.5"; }
+    { name = "printer-canon";    addr = "${subnet-chwalecice}.5"; }
+    { name = "printer";          addr = "${subnet-chwalecice}.6"; }
     { name = "camera-kuchnia";   addr = "${subnet-chwalecice}.12"; auth = "eWJ4aGtrb3Y6bGZ3dmNzYXg="; }
-    { name = "camera-sypialnia"; addr = "${subnet-chwalecice}.13"; auth = "aHRicGxoamU6c2Nnc2JyZng="; }
+    { name = "camera-michal";    addr = "${subnet-chwalecice}.13"; auth = "aHRicGxoamU6c2Nnc2JyZng="; }
     { name = "camera-salon";     addr = "${subnet-chwalecice}.14"; auth = "bHAzamtiZ3M6cTJzdHlpbmM="; }
+    { name = "camera-sypialnia"; addr = "${subnet-chwalecice}.15"; auth = "YWRtaW46eTR5ZHZ6bXpnZ20="; }
   ];
 
 in
