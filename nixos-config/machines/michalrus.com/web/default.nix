@@ -7,7 +7,6 @@ with import ./common.nix { inherit config lib; };
   imports = [
     ./monitor.nix
     ./michalrus.com.nix
-    ./grezza.store.nix
     ./home.nix
   ];
 
