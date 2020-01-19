@@ -184,6 +184,7 @@
       dotfiles.profiles = [ "base" "i3" "michalrus/guest" ];
       packages = with pkgs; [
         unfree.google-chrome
+        unfree.zoom-us
       ];
     };
 
