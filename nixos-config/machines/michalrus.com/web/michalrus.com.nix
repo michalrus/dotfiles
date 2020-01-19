@@ -55,7 +55,7 @@ mkMerge [
         rewrite ^/cv-pl$ /cv/pl.pdf last;
         rewrite ^/\d\d\d\d-\d\d-\d\d/cv\.pdf$ /cv/en.pdf last; # tracking ^.~
         location /cv/ {
-          location ~ ^/cv/(.*)$ {
+          location ~ ^/cv/([^\r\n]*)$ {
             add_header Content-Disposition "inline; filename=Michal_Rus_CV-$1";
           }
         }
@@ -82,7 +82,7 @@ mkMerge [
           location = /index.html { }
 
           # Strip extensions only if that file actually exists in the immutable root.
-          location ~ ^(.*)\.(html|txt)$ {
+          location ~ ^([^\r\n]*)\.(html|txt)$ {
             if (-f $request_filename) {
               return 301 $scheme://$host$1$is_args$args;
             }

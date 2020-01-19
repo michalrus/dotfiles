@@ -5,7 +5,6 @@ with import ./common.nix { inherit config lib; };
 
 {
   imports = [
-    ./monitor.nix
     ./michalrus.com.nix
     ./home.nix
   ];

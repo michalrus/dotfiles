@@ -26,8 +26,8 @@ rec {
       listen [::]:443;
 
       ssl on;
-      ssl_certificate     ${config.security.acme.directory}/${sslCert}/fullchain.pem;
-      ssl_certificate_key ${config.security.acme.directory}/${sslCert}/key.pem;
+      ssl_certificate     ${config.security.acme.certs."${sslCert}".directory}/fullchain.pem;
+      ssl_certificate_key ${config.security.acme.certs."${sslCert}".directory}/key.pem;
 
       server_name ${name};
 
@@ -55,8 +55,8 @@ rec {
         listen [::]:443;
 
         ssl on;
-        ssl_certificate     ${config.security.acme.directory}/${sslCert}/fullchain.pem;
-        ssl_certificate_key ${config.security.acme.directory}/${sslCert}/key.pem;
+        ssl_certificate     ${config.security.acme.certs."${sslCert}".directory}/fullchain.pem;
+        ssl_certificate_key ${config.security.acme.certs."${sslCert}".directory}/key.pem;
 
         server_name ${toString alternatives};
 

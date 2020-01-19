@@ -1,20 +1,17 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports = [
     ../../modules
     ../common-x86.nix
-    ./monitoring
     ./gitolite
     ./bitlbee
     ./kornel
-    ./jabber
     ./openvpn
     ./web
     ./feeds/annibot.nix
     ./feeds/stosowana.nix
     ./feeds/rss2email.nix
-    ./znc
   ];
 
   boot.tmpOnTmpfs = false;
@@ -46,7 +43,7 @@
   services = {
     openssh = {
       enable = true;
-      permitRootLogin = pkgs.lib.mkForce "no";
+      permitRootLogin = lib.mkForce "yes"; # for remote `nixos-rebuild`
       passwordAuthentication = false;
       challengeResponseAuthentication = false;
     };
@@ -56,7 +53,10 @@
   };
 
   users = {
-    users.root.dotfiles.profiles = [ "base" ];
+    users.root = {
+      dotfiles.profiles = [ "base" ];
+      openssh.authorizedKeys.keyFiles = [ ../../../dotfiles/michalrus/base/.ssh/authorized_keys.d/michalrus_notebook.pub ];
+    };
 
     extraUsers.m = {
       isNormalUser = true;
