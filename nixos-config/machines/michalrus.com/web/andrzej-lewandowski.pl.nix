@@ -51,6 +51,8 @@ in
         auth_basic_user_file "${pkgs.writeText "htpasswd" ''
           michalrus:$apr1$Q67KvdAC$tUSCO.hwI5nCOtmsbkjyX/
           Krzyś:$apr1$.UBqHkMw$iqeyhOiJ2Q2YHKeoVTMQu.
+          mikolaj:$apr1$tVowKZpr$Nul4ytYxnMYvNESnBwb2L1
+          slupska:$apr1$Kg/RRn6V$IV.hUtFMXsi48wAtHh4CL.
         ''}";
         root /var/www/${domain}/master/public;
         expires epoch;
