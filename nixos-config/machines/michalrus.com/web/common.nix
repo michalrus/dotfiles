@@ -19,15 +19,17 @@ rec {
               , alternatives ? []
               , body
               , sslCert ? name
+              , forcedCertDir ? null
               }:
+              let certDir = (if isNull forcedCertDir then "${config.security.acme.certs."${sslCert}".directory}" else forcedCertDir); in
   ''
     server {
       listen 443;
       listen [::]:443;
 
       ssl on;
-      ssl_certificate     ${config.security.acme.certs."${sslCert}".directory}/fullchain.pem;
-      ssl_certificate_key ${config.security.acme.certs."${sslCert}".directory}/key.pem;
+      ssl_certificate     ${certDir}/fullchain.pem;
+      ssl_certificate_key ${certDir}/key.pem;
 
       server_name ${name};
 
@@ -55,8 +57,8 @@ rec {
         listen [::]:443;
 
         ssl on;
-        ssl_certificate     ${config.security.acme.certs."${sslCert}".directory}/fullchain.pem;
-        ssl_certificate_key ${config.security.acme.certs."${sslCert}".directory}/key.pem;
+        ssl_certificate     ${certDir}/fullchain.pem;
+        ssl_certificate_key ${certDir}/key.pem;
 
         server_name ${toString alternatives};
 

@@ -7,6 +7,7 @@ with import ./common.nix { inherit config lib; };
   imports = [
     ./michalrus.com.nix
     ./home.nix
+    ./andrzej-lewandowski.pl.nix
   ];
 
   networking.firewall.allowedTCPPorts = [ 80 443 ];
