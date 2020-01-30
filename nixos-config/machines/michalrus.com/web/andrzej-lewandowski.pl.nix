@@ -11,13 +11,6 @@ let
   user = lib.replaceStrings ["." "-"] ["_" "_"] domain;
   homeDir = "/var/www/${domain}";
 
-  themeName = "hugo-theme-learn";
-  theme = pkgs.fetchFromGitHub {
-    owner = "matcornic"; repo = themeName;
-    rev = "8cf7531a22972f6ff8898604e87ab6f5ee8c927e";
-    sha256 = "1lwl6cwqi2p8zns0ajpfq9qpfyd8ipif3qbgnr8fsrg3dvj1nqrw";
-  };
-
 in
 
 {
@@ -98,7 +91,7 @@ in
   systemd.tmpfiles.rules = [ "d '${homeDir}' 0755 ${user} ${user}" ];
 
   systemd.services."rebuild-${user}" = {
-    path = with pkgs; [ git openssh hugo ];
+    path = with pkgs; [ git openssh hugo nix ];
     serviceConfig = {
       Type = "oneshot";
       User = user;
@@ -133,10 +126,15 @@ in
             git worktree add $dst origin/$branch
           fi
 
-          ln -sfn ${theme} $dst/themes/${themeName}
-
           cd $dst
           git checkout origin/$branch
+
+          if [ -e $dst/themes/default.nix ] ; then
+            cd $dst/themes
+            nix-build -I nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos default.nix -o nix-theme
+          fi
+
+          cd $dst
           hugo --baseURL "''${baseURL[$branch]}" --cacheDir $dst.cache
         done
       ''; in "${exec}/bin/rebuild";
