@@ -46,6 +46,7 @@ in
           Krzyś:$apr1$.UBqHkMw$iqeyhOiJ2Q2YHKeoVTMQu.
           mikolaj:$apr1$tVowKZpr$Nul4ytYxnMYvNESnBwb2L1
           slupska:$apr1$Kg/RRn6V$IV.hUtFMXsi48wAtHh4CL.
+          Rndl:$apr1$3lFkYcib$rL3F9IhikosYLZM8gqjry1
         ''}";
         root /var/www/${domain}/master/public;
         expires epoch;
