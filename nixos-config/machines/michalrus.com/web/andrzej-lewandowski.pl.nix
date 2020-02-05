@@ -1,11 +1,12 @@
 { config, lib, pkgs, ... }:
 
 with lib;
-with import ./common.nix { inherit config lib; };
+with import ./common.nix { inherit config pkgs; };
 
 let
 
-  domain = "andrzej-lewandowski.pl";
+  domain = "andrzej-lewandowski.com";
+  altDomain = "andrzej-lewandowski.pl";
 
   webhookPort = 9974;
   user = lib.replaceStrings ["." "-"] ["_" "_"] domain;
@@ -23,6 +24,7 @@ in
       forcedCertDir = "/var/lib/cloudflare/${domain}";
       # generate httpd password hashes with `openssl passwd -apr1`
       body = ''
+        ${setRealIPFromCloudflare}
         root /var/www/${domain}/release/public;
         error_page 404 /404.html;
 
@@ -41,6 +43,7 @@ in
       name = "dev.${domain}";
       forcedCertDir = "/var/lib/cloudflare/${domain}";
       body = ''
+        ${setRealIPFromCloudflare}
         auth_basic "Speak, friend, and enter.";
         auth_basic_user_file "${pkgs.writeText "htpasswd" ''
           michalrus:$apr1$Q67KvdAC$tUSCO.hwI5nCOtmsbkjyX/
@@ -52,6 +55,24 @@ in
         root /var/www/${domain}/master/public;
         error_page 404 /404.html;
         expires epoch;
+      '';
+    })
+
+    (sslServer {
+      name = "${altDomain}";
+      forcedCertDir = "/var/lib/cloudflare/${altDomain}";
+      body = ''
+        ${setRealIPFromCloudflare}
+        return 301 $scheme://${domain}$request_uri;
+      '';
+    })
+
+    (sslServer {
+      name = "dev.${altDomain}";
+      forcedCertDir = "/var/lib/cloudflare/${altDomain}";
+      body = ''
+        ${setRealIPFromCloudflare}
+        return 301 $scheme://dev.${domain}$request_uri;
       '';
     })
 

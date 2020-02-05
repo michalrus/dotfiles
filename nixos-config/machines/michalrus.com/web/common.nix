@@ -1,6 +1,6 @@
-{ config, lib }:
+{ config, pkgs }:
 
-with lib;
+with pkgs.lib;
 
 rec {
 
@@ -24,10 +24,9 @@ rec {
               let certDir = (if isNull forcedCertDir then "${config.security.acme.certs."${sslCert}".directory}" else forcedCertDir); in
   ''
     server {
-      listen 443;
-      listen [::]:443;
+      listen 443 ssl;
+      listen [::]:443 ssl;
 
-      ssl on;
       ssl_certificate     ${certDir}/fullchain.pem;
       ssl_certificate_key ${certDir}/key.pem;
 
@@ -51,12 +50,11 @@ rec {
       }
     }
 
-    ${lib.optionalString (alternatives != []) ''
+    ${optionalString (alternatives != []) ''
       server {
-        listen 443;
-        listen [::]:443;
+        listen 443 ssl;
+        listen [::]:443 ssl;
 
-        ssl on;
         ssl_certificate     ${certDir}/fullchain.pem;
         ssl_certificate_key ${certDir}/key.pem;
 
@@ -68,5 +66,30 @@ rec {
       }
     ''}
   '';
+
+  # garbage-collected on purpose
+  cloudflare-ips-v4 = pkgs.fetchurl {
+    url = "https://www.cloudflare.com/ips-v4";
+    sha256 = "0xfd3xhnly2822sljynk56dphg6ybbc4dw8nd0bgzdv7hifrkn0p";
+  };
+
+  # garbage-collected on purpose
+  cloudflare-ips-v6 = pkgs.fetchurl {
+    url = "https://www.cloudflare.com/ips-v6";
+    sha256 = "18dwrf6iw35vwpgz3mscmpmhpjf2ifyzpdgpigrd3b6gwjm18i17";
+  };
+
+  setRealIPFromCloudflare =
+    let
+      readF = file:
+        concatMapStrings (ip: "set_real_ip_from " + ip + ";\n")
+        (filter (s: stringLength s > 0)
+        (splitString "\n"
+        (builtins.readFile file)));
+    in ''
+      ${readF cloudflare-ips-v4}
+      ${readF cloudflare-ips-v6}
+      real_ip_header CF-Connecting-IP;
+    '';
 
 }
