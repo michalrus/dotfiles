@@ -26,7 +26,8 @@ in
       body = ''
         ${setRealIPFromCloudflare}
         root /var/www/${domain}/release/public;
-        error_page 404 /404.html;
+        error_page 404 /pl/404.html;
+        location = / { return 301 https://${domain}/pl/; }
 
         location = /webhook {
           auth_basic "Speak, friend, and enter.";
@@ -53,7 +54,8 @@ in
           Rndl:$apr1$3lFkYcib$rL3F9IhikosYLZM8gqjry1
         ''}";
         root /var/www/${domain}/master/public;
-        error_page 404 /404.html;
+        error_page 404 /pl/404.html;
+        location = / { return 301 https://dev.${domain}/pl/; }
         expires epoch;
       '';
     })
@@ -63,7 +65,7 @@ in
       forcedCertDir = "/var/lib/cloudflare/${altDomain}";
       body = ''
         ${setRealIPFromCloudflare}
-        return 301 $scheme://${domain}$request_uri;
+        return 301 https://${domain}$request_uri;
       '';
     })
 
@@ -72,7 +74,7 @@ in
       forcedCertDir = "/var/lib/cloudflare/${altDomain}";
       body = ''
         ${setRealIPFromCloudflare}
-        return 301 $scheme://dev.${domain}$request_uri;
+        return 301 https://dev.${domain}$request_uri;
       '';
     })
 
@@ -129,7 +131,7 @@ in
 
         src=${homeDir}/src
         if [ ! -e $src ] ; then
-          git clone --bare git@github.com:michalrus/andrzej-lewandowski.pl.git src
+          git clone --bare git@github.com:michalrus/andrzej-lewandowski.com.git src
           cd $src
           git config --local --add remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
         fi
@@ -138,8 +140,8 @@ in
         git fetch --all
 
         declare -A baseURL
-        baseURL[master]='https://dev.andrzej-lewandowski.pl/'
-        baseURL[release]='https://andrzej-lewandowski.pl/'
+        baseURL[master]='https://dev.${domain}/'
+        baseURL[release]='https://${domain}/'
 
         for branch in master release ; do
           echo "--- Building: $branch ---"
