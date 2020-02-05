@@ -24,6 +24,7 @@ in
       # generate httpd password hashes with `openssl passwd -apr1`
       body = ''
         root /var/www/${domain}/release/public;
+        error_page 404 /404.html;
 
         location = /webhook {
           auth_basic "Speak, friend, and enter.";
@@ -49,6 +50,7 @@ in
           Rndl:$apr1$3lFkYcib$rL3F9IhikosYLZM8gqjry1
         ''}";
         root /var/www/${domain}/master/public;
+        error_page 404 /404.html;
         expires epoch;
       '';
     })
