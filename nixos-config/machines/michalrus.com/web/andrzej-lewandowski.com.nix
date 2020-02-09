@@ -56,6 +56,8 @@ in
         root /var/www/${domain}/master/public;
         error_page 404 /pl/404.html;
         location = / { return 301 https://dev.${domain}/pl/; }
+        if_modified_since off;
+        add_header Last-Modified "";
         expires epoch;
       '';
     })
