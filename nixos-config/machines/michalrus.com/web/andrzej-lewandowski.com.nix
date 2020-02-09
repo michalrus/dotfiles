@@ -117,7 +117,9 @@ in
   systemd.tmpfiles.rules = [ "d '${homeDir}' 0755 ${user} ${user}" ];
 
   systemd.services."rebuild-${user}" = {
-    path = with pkgs; [ git openssh hugo nix ];
+    path = with pkgs; [ # <https://github.com/NixOS/nixpkgs/blob/89e9f68549f312d7b500f9cfe14c3f1d95ae2299/nixos/modules/tasks/auto-upgrade.nix#L91>
+                        coreutils gnutar xz.bin gzip gitMinimal config.nix.package.out
+                        openssh ];
     serviceConfig = {
       Type = "oneshot";
       User = user;
@@ -155,13 +157,7 @@ in
           cd $dst
           git checkout origin/$branch
 
-          if [ -e $dst/themes/default.nix ] ; then
-            cd $dst/themes
-            nix-build -I nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos default.nix -o nix-theme
-          fi
-
-          cd $dst
-          hugo --baseURL "''${baseURL[$branch]}" --cacheDir $dst.cache
+          nix-build -o public --arg baseURL "''${baseURL[$branch]}"
         done
       ''; in "${exec}/bin/rebuild";
     };
