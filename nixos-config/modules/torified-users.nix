@@ -84,6 +84,7 @@ in
 
       services.tor = {
         enable = true;
+        client.enable = true;
         extraConfig = ''
           VirtualAddrNetworkIPv4 10.192.0.0/10
           AutomapHostsOnResolve 1
