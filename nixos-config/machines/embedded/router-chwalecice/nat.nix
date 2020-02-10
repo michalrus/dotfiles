@@ -92,7 +92,7 @@ mkMerge [
         option subnet-mask 255.255.255.0;
         option broadcast-address ${subnet-chwalecice}.255;
         option routers ${subnet-chwalecice}.1;
-        option domain-name-servers 8.8.8.8, 8.8.4.4;
+        option domain-name-servers 1.1.1.1, 1.0.0.1;
         subnet ${subnet-chwalecice}.0 netmask 255.255.255.0 {
           range ${subnet-chwalecice}.100 ${subnet-chwalecice}.250;
         }
