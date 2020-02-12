@@ -56,9 +56,6 @@ in
         root /var/www/${domain}/master/public;
         error_page 404 /pl/404.html;
         location = / { return 301 https://dev.${domain}/pl/; }
-        if_modified_since off;
-        add_header Last-Modified "";
-        expires epoch;
       '';
     })
 
@@ -121,7 +118,7 @@ in
   systemd.services."rebuild-${user}" = {
     path = with pkgs; [ # <https://github.com/NixOS/nixpkgs/blob/89e9f68549f312d7b500f9cfe14c3f1d95ae2299/nixos/modules/tasks/auto-upgrade.nix#L91>
                         coreutils gnutar xz.bin gzip gitMinimal config.nix.package.out
-                        openssh ];
+                        openssh bash ];
     serviceConfig = {
       Type = "oneshot";
       User = user;
@@ -159,7 +156,7 @@ in
           cd $dst
           git checkout origin/$branch
 
-          nix-build -o public --arg baseURL "''${baseURL[$branch]}"
+          nix-shell --run "hugo --cacheDir $dst/cache --baseURL ''${baseURL[$branch]}"
         done
       ''; in "${exec}/bin/rebuild";
     };
