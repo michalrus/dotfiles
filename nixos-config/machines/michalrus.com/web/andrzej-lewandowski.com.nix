@@ -52,6 +52,7 @@ in
           mikolaj:$apr1$tVowKZpr$Nul4ytYxnMYvNESnBwb2L1
           slupska:$apr1$Kg/RRn6V$IV.hUtFMXsi48wAtHh4CL.
           Rndl:$apr1$3lFkYcib$rL3F9IhikosYLZM8gqjry1
+          kuba:$apr1$nO2liTmW$rPiuo2hZo6MxSoxyDuG4.0
         ''}";
         root /var/www/${domain}/master/public;
         error_page 404 /pl/404.html;
@@ -156,7 +157,15 @@ in
           cd $dst
           git checkout origin/$branch
 
-          nix-shell --run "hugo --cacheDir $dst/cache --baseURL ''${baseURL[$branch]}"
+          mkdir -p config/production
+          cat <<EOF >config/production/config.yaml
+
+        baseURL: "''${baseURL[$branch]}"
+        cacheDir: "$dst/cache"
+
+        EOF
+
+          nix-shell --run "make"
         done
       ''; in "${exec}/bin/rebuild";
     };
