@@ -34,6 +34,7 @@
 
   environment.systemPackages = with pkgs; [
     (haskellPackages.ghcWithHoogle (hs: []))
+    aegisub
     alacritty
     autocutsel
     blueman
@@ -196,7 +197,6 @@
       dotfiles.base = "${config.users.users.m.home}/.dotfiles/dotfiles";
       dotfiles.profiles = [ "base" "michalrus/base" "michalrus/desktop" "git-annex" "michalrus/personal" "i3" "emacs" ];
       packages' = with pkgs; [
-        aegisub
         chromium
         electrum
         michalrus.monero-gui-tor
