@@ -53,6 +53,7 @@
     shared_mime_info
     silver-searcher
     sox
+    speedtest-cli
     stdman
     tesseract
     wrk
