@@ -43,6 +43,7 @@
     cool-retro-term
     dhall
     dunst
+    dvdbackup
     feh
     gettext
     ghostscript
@@ -50,6 +51,7 @@
     gnome3.zenity
     haskellPackages.hlint
     i3status
+    k3b
     michalrus.gettext-emacs
     michalrus.gnucash26
     networkmanagerapplet
