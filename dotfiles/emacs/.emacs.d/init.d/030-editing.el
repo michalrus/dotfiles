@@ -84,7 +84,9 @@
   :bind ("C-c t" . google-translate-smooth-translate))
 
 (use-package dired
-  :bind ("C-x C-j" . dired-jump))
+  :bind ("C-x C-j" . dired-jump)
+  :init
+  (setq dired-listing-switches "-alh"))
 
 (use-package hl-todo
   :demand t
