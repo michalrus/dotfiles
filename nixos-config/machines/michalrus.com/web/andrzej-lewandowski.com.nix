@@ -22,7 +22,6 @@ in
       name = domain;
       alternatives = [ "www.${domain}" "*.${domain}" ];
       forcedCertDir = "/var/lib/cloudflare/${domain}";
-      # generate httpd password hashes with `openssl passwd -apr1`
       body = ''
         ${setRealIPFromCloudflare}
         root /var/www/${domain}/release/public;
@@ -43,6 +42,7 @@ in
     (sslServer {
       name = "dev.${domain}";
       forcedCertDir = "/var/lib/cloudflare/${domain}";
+      # generate httpd password hashes with `openssl passwd -apr1`
       body = ''
         ${setRealIPFromCloudflare}
         auth_basic "Speak, friend, and enter.";
@@ -53,6 +53,7 @@ in
           slupska:$apr1$Kg/RRn6V$IV.hUtFMXsi48wAtHh4CL.
           Rndl:$apr1$3lFkYcib$rL3F9IhikosYLZM8gqjry1
           kuba:$apr1$nO2liTmW$rPiuo2hZo6MxSoxyDuG4.0
+          pacioraaa:$apr1$h5Vhypph$xYXbICM3MnvpjvwFUWo6p0
         ''}";
         root /var/www/${domain}/master/public;
         error_page 404 /pl/404.html;

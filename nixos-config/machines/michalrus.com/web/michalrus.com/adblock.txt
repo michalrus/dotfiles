@@ -65,3 +65,5 @@ ilewazy.pl/js/*$script
 diki.pl##IMG[src^="/images/bannery-partnerzy/"]
 
 kulturawkrakowie.pl/wp-content/plugins/jcwp-copy-paste-blocker/jcorgcpbjs.js*$script
+
+www.dmt-nexus.me###widget
