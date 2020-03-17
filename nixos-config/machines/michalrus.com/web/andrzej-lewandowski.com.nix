@@ -54,6 +54,9 @@ in
           Rndl:$apr1$3lFkYcib$rL3F9IhikosYLZM8gqjry1
           kuba:$apr1$nO2liTmW$rPiuo2hZo6MxSoxyDuG4.0
           pacioraaa:$apr1$h5Vhypph$xYXbICM3MnvpjvwFUWo6p0
+          jupblb:$apr1$oJM3RdYJ$MiN9l6hBSZiNMgP14QSEB0
+          ania:$apr1$TJ9gf2ce$8ic6USdd8CUoD93D5Y/b41
+          kjanosz:$apr1$AczmhGaa$YPD6fhFJ1DNBqQ3UOvQ400
         ''}";
         root /var/www/${domain}/master/public;
         error_page 404 /pl/404.html;
