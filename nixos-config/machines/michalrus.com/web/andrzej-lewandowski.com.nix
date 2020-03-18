@@ -57,6 +57,7 @@ in
           jupblb:$apr1$oJM3RdYJ$MiN9l6hBSZiNMgP14QSEB0
           ania:$apr1$TJ9gf2ce$8ic6USdd8CUoD93D5Y/b41
           kjanosz:$apr1$AczmhGaa$YPD6fhFJ1DNBqQ3UOvQ400
+          madziarar:$apr1$7dlOk0fF$d5sev/iD7FBWjgrodrzEK0
         ''}";
         root /var/www/${domain}/master/public;
         error_page 404 /pl/404.html;
