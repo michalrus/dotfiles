@@ -58,6 +58,7 @@ in
           ania:$apr1$TJ9gf2ce$8ic6USdd8CUoD93D5Y/b41
           kjanosz:$apr1$AczmhGaa$YPD6fhFJ1DNBqQ3UOvQ400
           madziarar:$apr1$7dlOk0fF$d5sev/iD7FBWjgrodrzEK0
+          psychiatra:$apr1$8/GLVfKU$0ueLvh60LQrst8pn/1s4r1
         ''}";
         root /var/www/${domain}/master/public;
         error_page 404 /pl/404.html;
