@@ -59,6 +59,8 @@ in
           kjanosz:$apr1$AczmhGaa$YPD6fhFJ1DNBqQ3UOvQ400
           madziarar:$apr1$7dlOk0fF$d5sev/iD7FBWjgrodrzEK0
           psychiatra:$apr1$8/GLVfKU$0ueLvh60LQrst8pn/1s4r1
+          Mateusz:$apr1$AzfYzV6k$wpSTsetgS60QE3ygglrLI0
+          bartosz:$apr1$9QyXojiD$rtD/HEgD757hmhN0Schy.1
         ''}";
         root /var/www/${domain}/master/public;
         error_page 404 /pl/404.html;
