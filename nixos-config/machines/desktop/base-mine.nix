@@ -34,6 +34,7 @@
 
   environment.systemPackages = with pkgs; [
     (haskellPackages.ghcWithHoogle (hs: []))
+    (nixos-unstable.wine.override { pulseaudioSupport = true; })
     aegisub
     alacritty
     autocutsel

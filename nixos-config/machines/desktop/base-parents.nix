@@ -12,6 +12,7 @@
   i18n.defaultLocale = "pl_PL.UTF-8";
 
   environment.systemPackages = with pkgs; [
+    (nixos-unstable.wine.override { pulseaudioSupport = true; })
     nixos-unstable.gnome3.evolution
     transmission_gtk
     unfree.google-chrome

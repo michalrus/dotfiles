@@ -7,16 +7,26 @@
     ./modules/chwalecice.nix
     ./modules/gnome.nix
   ];
-
+  hardware.pulseaudio = {
+    enable = true;
+    # NixOS allows either a lightweight build (default) or full build of PulseAudio to be installed.
+    # Only the full build has Bluetooth support, so it must be selected here.
+    package = pkgs.pulseaudioFull;
+  };
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.package = pkgs.bluezFull;
+  hardware.bluetooth.extraConfig = ''
+   [Audio]
+   Disable=socket
+  '';
+  boot.extraModprobeConfig = ''options snd_hda_intel model=generic'';
   time.timeZone = "Europe/Warsaw";
   i18n.defaultLocale = "en_US.UTF-8";
 
-  nixpkgs.config = {
-    wine.build = "wineWow"; # for some 64-bit games
-  };
-
   environment.systemPackages = with pkgs; [
+    (nixos-unstable.wine.override { pulseaudioSupport = true; wineBuild = "wineWow"; })
     anki
+    blueman
     chromium
     dosbox
     frescobaldi
@@ -24,10 +34,12 @@
     ioquake3
     jre8
     lilypond
+    moltengamepad
     mumble
     openjdk8
     playonlinux
     transmission_gtk
+    qjoypad
     unfree.google-chrome
     #unfree.michalrus.transcribe
     unfree.michalrus.steam
@@ -36,6 +48,7 @@
     unfree.unrar
     unfree.xmind
     wxhexeditor
+    xboxdrv
   ];
 
   services = {
