@@ -208,6 +208,7 @@
         electrum
         michalrus.monero-gui-tor
         isync
+        jetbrains.idea-community
         lilypond
         (wrapFirefox (michalrus.hardened-firefox-unwrapped.override {
           localAutocompletePort = config.services.firefox-autocomplete.userPorts.m;
@@ -222,6 +223,8 @@
             ;
           #gregorio = pkgs.michalrus.gregorio.forTexlive;
         })
+        unfree.skypeforlinux
+        unfree.zoom-us
       ];
     };
 
@@ -238,10 +241,12 @@
           extraPrefs = michalrus.hardened-firefox-unwrapped.cfgEnableDRM;
         }) {})
         chromium
+        jetbrains.idea-community
         openjdk8   # for nofatty
         pgadmin
         unfree.michalrus.hubstaff
         #unfree.michalrus.transcribe
+        unfree.skypeforlinux
       ];
     };
 
