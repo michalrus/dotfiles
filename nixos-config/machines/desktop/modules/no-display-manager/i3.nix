@@ -35,8 +35,10 @@ let
 
       # These packages will be visible from within `i3` session only.
       dbus
-      i3 i3lock i3status
+      i3 i3lock i3status dmenu
       termite
+
+      firefox
 
       xorg.xorgserver xorg.xinit xorg.xauth xkeyboard_config
       xterm xorg.xeyes xorg.xclock
