@@ -80,6 +80,8 @@
     point = "${user.home}/Phone";
   };
 
+  hardware.brightnessctl.enable = true;
+
   hardware.enableSomagicEasyCAP = true;
 
   hardware.bluetooth.enable = true;
@@ -196,7 +198,7 @@
       isNormalUser = true;
       uid = 31337;
       description = "Michal Rus";
-      extraGroups = [ "wheel" "audio" "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" ];
+      extraGroups = [ "wheel" "audio" "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" "video" "input" ];
       dotfiles.base = "${config.users.users.m.home}/.dotfiles/dotfiles";
       dotfiles.profiles = [ "base" "michalrus/base" "michalrus/desktop" "git-annex" "michalrus/personal" "i3" "emacs" ];
       packages' = with pkgs; [
