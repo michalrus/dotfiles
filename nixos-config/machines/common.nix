@@ -37,6 +37,7 @@
     # Because of this insanity… → https://github.com/NixOS/nixpkgs/pull/16021
     logind.extraConfig = ''
       KillUserProcesses=yes
+      UserStopDelaySec=0
     '';
 
     journald.extraConfig = ''
