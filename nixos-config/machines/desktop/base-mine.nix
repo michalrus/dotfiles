@@ -176,6 +176,7 @@
       hack-font
       iosevka-bin
       font-awesome-ttf
+      font-awesome
     ];
   };
 
@@ -215,7 +216,7 @@
         openjdk8   # for nofatty
         #unfree.michalrus.transcribe
         (texlive.combine {
-          inherit (texlive) scheme-small latexmk titlesec tocloft todonotes cleveref lipsum biblatex logreq cm-super csquotes pgfplots adjustbox collectbox ccicons polski placeins xstring pdfpages unicode-math filehook textpos marvosym progressbar lm-math ucharcat
+          inherit (texlive) scheme-small latexmk titlesec tocloft todonotes cleveref lipsum biblatex logreq cm-super csquotes pgfplots adjustbox collectbox ccicons polski placeins xstring pdfpages unicode-math filehook textpos marvosym fontawesome progressbar lm-math ucharcat
             # for Org-mode export to PDF
             wrapfig wasysym
             ;
