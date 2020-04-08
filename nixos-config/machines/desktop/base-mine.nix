@@ -57,6 +57,7 @@
     michalrus.gnucash26
     networkmanagerapplet
     octave
+    pandoc
     pdfpc
     peek
     rofi
