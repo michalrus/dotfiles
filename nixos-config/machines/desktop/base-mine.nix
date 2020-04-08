@@ -64,6 +64,7 @@
     stalonetray
     termite
     watchexec
+    speedread
   ];
 
   programs = {
