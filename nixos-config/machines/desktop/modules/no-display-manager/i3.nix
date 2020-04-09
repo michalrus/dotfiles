@@ -28,7 +28,7 @@ let
     exec i3 $configOpt
   '';
 
-  startI3 = pkgs.writeScript "start-i3" ''
+  start-i3 = pkgs.writeScript "start-i3" ''
     #! ${pkgs.stdenv.shell}
 
     ${ulib.exportProfileWithPkgs "i3" (with pkgs; [
@@ -40,15 +40,15 @@ let
 
       firefox
 
-      xorg.xorgserver xorg.xinit xorg.xauth xkeyboard_config
+      xorg.xorgserver xorg.xauth xkeyboard_config
       xterm xorg.xeyes xorg.xclock
       xorg.xdpyinfo xorg.xrandr xorg.xrdb
 
     ])}
 
-    # Note that startx absolutely requires an absolute path to a launcher (here: i3MergedConfigs):
+    # Note that startx absolutely requires an *absolute* path to a launcher (here: i3MergedConfigs):
 
-    exec dbus-launch --exit-with-session systemd-cat -t i3 startx ${i3MergedConfigs} -- \
+    exec dbus-launch --exit-with-session systemd-cat -t i3 ${ulib.better-startx} ${i3MergedConfigs} -- \
       -config ${ulib.xorgConf} -xkbdir ${pkgs.xkeyboard_config}/etc/X11/xkb -logfile /dev/null -logverbose 3
   '';
 
@@ -65,7 +65,7 @@ in
   # after agetty login. After exiting i3, you will be logged out
   # cleanly.
   environment.extraInit = ulib.ifTTY ''
-    alias i3='clear && exec ${startI3}'
+    alias i3='clear && exec ${start-i3}'
 
     # Optionally:
     alias startx=i3

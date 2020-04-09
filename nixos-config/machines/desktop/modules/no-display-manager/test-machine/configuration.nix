@@ -10,7 +10,7 @@ let pwHash = "$6$gSxL/AmTWQc$QmX/k706GJcC97C3pOH21QeN1Zz8xK89Xw8Ec4HIePP5d8yTzjf
   ];
 
   virtualisation.memorySize = 1024;
-  virtualisation.qemu.options = [ "-vga virtio" "-soundhw hda" ];
+  virtualisation.qemu.options = [ "-vga virtio" ];
 
   services.logind.extraConfig  =  ''
     KillUserProcesses=yes

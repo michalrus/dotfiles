@@ -21,7 +21,7 @@ let
     ];
   });
 
-  startSway = pkgs.writeScript "start-sway" ''
+  start-sway = pkgs.writeScript "start-sway" ''
     #! ${pkgs.stdenv.shell}
 
     ${ulib.exportProfileWithPkgs "sway" (with pkgs; [
@@ -61,10 +61,10 @@ in
   programs.dconf.enable    = lib.mkDefault true;
 
   # Set up aliases *only* in a pure TTY virtual terminal, to run right
-  # after agetty login. After exiting i3, you will be logged out
+  # after agetty login. After exiting sway, you will be logged out
   # cleanly.
   environment.extraInit = ulib.ifTTY ''
-    alias sway='clear && exec ${startSway}'
+    alias sway='clear && exec ${start-sway}'
 
     # Optionally:
     alias startw=sway

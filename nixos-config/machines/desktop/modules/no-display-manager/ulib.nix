@@ -35,6 +35,19 @@ rec {
   '';
 
   #
+  # It won’t leave a hanging /bin/sh, instead becoming `xinit`. Also,
+  # we won’t add either `startx` or `xinit` to session’s PATH
+  # unnecessarily.  Also, `serverauth.PID` will be kept in
+  # /run/user/UID.
+  #
+  better-startx = pkgs.runCommand "startx" { preferLocalBuild = true; } ''
+    cp ${pkgs.xorg.xinit}/bin/startx $out
+    chmod 755 $out
+    sed 's#^xinit #exec ${pkgs.xorg.xinit}/bin/xinit #g'    -i $out
+    sed 's#HOME/.serverauth#XDG_RUNTIME_DIR/.Xserverauth#g' -i $out
+  '';
+
+  #
   # We need a non-global `xorg.conf`, similar to the one generated
   # globally by NixOS modules. This seems to a be a reasonable minimal
   # one.
