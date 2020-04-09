@@ -52,6 +52,8 @@ rec {
   # globally by NixOS modules. This seems to a be a reasonable minimal
   # one.
   #
+  # Remember to tweak your keyboard settings (`XkbOptions`) below!
+  #
   # Adapted from <https://github.com/NixOS/nixpkgs/blob/07bc7b971dc34b97a27ca9675a19f525a7d3616e/nixos/modules/services/x11/xserver.nix#L115-L142>.
   #
   xorgConf = let
@@ -64,7 +66,7 @@ rec {
       xf86inputevdev
       xf86inputlibinput
     ];
-    fontsForXServer = config.fonts.fonts ++ [ pkgs.xorg.fontadobe100dpi pkgs.xorg.fontadobe75dpi ];
+    fontsForXServer = config.fonts.fonts ++ (with pkgs.xorg; [ fontadobe100dpi fontadobe75dpi ]);
     sectionFiles = pkgs.runCommand "xserver.conf" { preferLocalBuild = true; } ''
       echo 'Section "Files"' >> $out
       for i in ${toString fontsForXServer}; do
