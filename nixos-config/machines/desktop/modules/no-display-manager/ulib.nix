@@ -25,14 +25,18 @@ rec {
   exportDynamicProfiles = dynProfiles: with pkgs.lib; let
     cfg = config.environment;
     suffixedVariables = flip mapAttrs cfg.profileRelativeEnvVars (envVar: listSuffixes: concatMap (
-      profile: map (suffix: "${profile}${suffix}") listSuffixes) (cfg.profiles ++ dynProfiles)
+      profile: map (suffix: "${profile}${suffix}") listSuffixes) dynProfiles
     );
-    allVariables = zipAttrsWith (n: concatLists) [ suffixedVariables ];
-    exportVariables = mapAttrsToList (n: v: ''export ${n}="${concatStringsSep ":" v}"'') allVariables;
+    exportVariables = mapAttrsToList (n: v: "export ${n}=\"\$${n}:${concatStringsSep ":" v}\"") suffixedVariables;
   in
   concatStringsSep "\n" exportVariables + "\n" + ''
-    export NIX_PROFILES="${concatStringsSep " " (reverseList (cfg.profiles ++ dynProfiles))}"
+    export NIX_PROFILES="${concatStringsSep " " (reverseList dynProfiles)} $NIX_PROFILES"
   '';
+
+  do-startx = wm:
+    assert (pkgs.lib.assertMsg (pkgs.lib.hasPrefix "/" wm) "window manager path needs to be absolute.");
+    " ${better-startx} ${wm} -- -config ${xorgConf} -xkbdir ${pkgs.xkeyboard_config}/etc/X11/xkb "
+    + " -logfile /dev/null -logverbose 3 -nolisten tcp -novtswitch ";
 
   #
   # It won’t leave a hanging /bin/sh, instead becoming `xinit`. Also,

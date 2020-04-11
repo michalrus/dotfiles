@@ -46,10 +46,7 @@ let
 
     ])}
 
-    # Note that startx absolutely requires an *absolute* path to a launcher (here: i3MergedConfigs):
-
-    exec dbus-launch --exit-with-session systemd-cat -t i3 ${ulib.better-startx} ${i3MergedConfigs} -- \
-      -config ${ulib.xorgConf} -xkbdir ${pkgs.xkeyboard_config}/etc/X11/xkb -logfile /dev/null -logverbose 3
+    exec dbus-launch --exit-with-session systemd-cat -t i3 ${ulib.do-startx i3MergedConfigs}
   '';
 
 in
