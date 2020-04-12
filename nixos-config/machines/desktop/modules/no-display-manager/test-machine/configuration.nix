@@ -7,6 +7,7 @@ let pwHash = "$6$gSxL/AmTWQc$QmX/k706GJcC97C3pOH21QeN1Zz8xK89Xw8Ec4HIePP5d8yTzjf
     <nixpkgs/nixos/modules/virtualisation/qemu-vm.nix>
     ../sway.nix
     ../i3.nix
+    ../lock-vts.nix
   ];
 
   virtualisation.memorySize = 1024;

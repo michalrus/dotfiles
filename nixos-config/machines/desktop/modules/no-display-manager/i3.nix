@@ -42,7 +42,7 @@ let
 
       xorg.xorgserver xorg.xauth xkeyboard_config
       xterm xorg.xeyes xorg.xclock
-      xorg.xdpyinfo xorg.xrandr xorg.xrdb
+      xorg.xdpyinfo xorg.xrandr xorg.xrdb xorg.xset
 
     ])}
 
