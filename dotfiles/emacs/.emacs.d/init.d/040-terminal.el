@@ -1,10 +1,5 @@
 ;; -*- mode: emacs-lisp -*-
 
-;; set $PATH, $MANPATH and exec-path using values from ~/.profile
-(use-package exec-path-from-shell
-  :config
-  (exec-path-from-shell-initialize))
-
 (defun random-uuid ()
   (replace-regexp-in-string "\n\\'" ""
                             (shell-command-to-string "uuidgen -r")))

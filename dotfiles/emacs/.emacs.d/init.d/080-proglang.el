@@ -19,21 +19,15 @@
 (use-package woman
   :bind (("C-c w" . woman)))
 
+(use-package yasnippet)
+
 (use-package flycheck
   :config
   (global-flycheck-mode t))
 
-(use-package lsp-mode
-  :commands lsp-mode
-  :config
-  (use-package lsp-flycheck
-    :demand t)
-  (use-package company-lsp
-    :demand t
-    :config (push 'company-lsp company-backends))
-
-  ;; why does lsp-ui behave so weirdly?
-  ;;(use-package lsp-ui
-  ;;  :demand t
-  ;;  :hook (lsp-mode . lsp-ui-mode))
-  )
+(use-package lsp-mode     :commands lsp)
+(use-package lsp-ui       :commands lsp-ui-mode)
+(use-package company-lsp  :commands company-lsp)
+(use-package lsp-treemacs :commands lsp-treemacs-errors-list)
+(use-package dap-mode)
+;; (use-package dap-LANGUAGE) to load the dap adapter for your language

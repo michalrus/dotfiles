@@ -26,13 +26,14 @@
 
 ;; auto complete
 (use-package company
+  :hook (prog-mode . company-mode)
   :init
   (setq company-dabbrev-ignore-case nil
         company-dabbrev-code-ignore-case nil
         company-dabbrev-downcase nil
         company-idle-delay 0
-        company-minimum-prefix-length 1)
-  (add-hook 'prog-mode-hook 'company-mode))
+        company-minimum-prefix-length 1
+        company-tooltip-align-annotations t))
 
 ;; visual line mode
 (visual-line-mode 1)

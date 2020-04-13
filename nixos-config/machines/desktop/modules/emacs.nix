@@ -12,7 +12,10 @@ let
   whole = (pkgs.emacsPackagesNgGen base).emacsWithPackages (epkgs:
     # MELPA Unstable @ NixOS Unstable (bleedingest edge)
     (with (pkgs.nixos-unstable.emacsPackagesNgGen base).melpaPackages; [
+      company
       company-lsp
+      dap-mode
+      focus-autosave-mode
       lsp-mode
       lsp-treemacs
       lsp-ui
@@ -32,21 +35,18 @@ let
     (with epkgs.melpaStablePackages; [
       #ensime
       #gregorio-mode
-      company
       counsel
       dhall-mode
       diff-hl
       erlang
       expand-region
       flycheck
-      focus-autosave-mode
       git-gutter
       git-link
       go-mode
       google-translate
       haskell-mode
       hayoo
-      hindent
       hl-todo
       ivy
       magit
@@ -56,6 +56,7 @@ let
       nix-mode
       projectile
       python-mode
+      rust-mode
       scala-mode
       smart-mode-line
       solarized-theme
@@ -64,6 +65,7 @@ let
       use-package
       ws-butler
       yaml-mode
+      yasnippet
     ])
   );
 

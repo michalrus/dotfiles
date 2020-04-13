@@ -62,6 +62,7 @@
     pdfpc
     peek
     rofi
+    rustup
     sqlint
     stalonetray
     termite
