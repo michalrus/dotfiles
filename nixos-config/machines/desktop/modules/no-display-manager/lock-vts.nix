@@ -34,18 +34,18 @@ let
 
     ### text-mode VT
 
-    ###########################
-    #
-    # • locking textual VTs… hmm
-    #   • it seems the only option is to… kill their `login` process…
-    #
-    ###########################
+    # ?
+  '';
+
+  exitOnEmptyPassword = ''
+    LC_ALL=c passwd 0</dev/null 2>&1 | grep '^New password:' >/dev/null && exit || true
   '';
 
   # <https://github.com/swaywm/swaylock/issues/49#issuecomment-462143402>
   lock-sway = pkgs.writeScript "lock-sway" ''
     #! ${pkgs.stdenv.shell}
     export PATH=${lib.makeBinPath (with pkgs; [ sway ])}:$PATH
+    ${exitOnEmptyPassword}
     swayidle \
       timeout 3 'swaymsg "output * dpms off"' \
       resume 'swaymsg "output * dpms on"' &
@@ -60,6 +60,7 @@ let
   lock-i3 = pkgs.writeScript "lock-i3" ''
     #! ${pkgs.stdenv.shell}
     export PATH=${lib.makeBinPath (with pkgs; [ procps xorg.xset i3 i3lock ])}:$PATH
+    ${exitOnEmptyPassword}
     revert() {
       pkill -u $USER -USR2 dunst
       xset dpms 0 0 0
@@ -75,7 +76,6 @@ in
 {
 
   systemd.services."lock-vts" = {
-    description = "Lock all VTs";
     serviceConfig = {
       Type = "oneshot";
       ExecStart = "${lockVTs}/bin/lock-vts";
@@ -85,7 +85,6 @@ in
   };
 
   systemd.services."on-vt-switch-lock" = {
-    description = "Lock all VTs on each VT switch";
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
       Type = "simple";
@@ -97,6 +96,18 @@ in
       in "${on-vt-switch}/bin/on-vt-switch ${handleEvent}";
     };
   };
+
+  ### TODO: trigger lock on logind idle
+
+  ### TODO: add Super+L to global keyboard bindings
+
+  ### TODO: remap keys globally in udev
+
+  ### TODO: hibernate on low battery
+
+  ### TODO: locking textual VTs… hmm — it seems the only option is to… kill their `login` process…
+
+  ### TODO: run my desktop in qemu
 
   ### TODO: uncomment this on bare-metal:
 

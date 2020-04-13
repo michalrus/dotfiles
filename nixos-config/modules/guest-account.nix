@@ -4,7 +4,7 @@ with lib;
 
 let
   cfg = config.users.guestAccount;
-  emptyDir = pkgs.runCommand "empty-directory" {} "mkdir -p $out";
+  emptyDir = pkgs.runCommand "empty-directory" { preferLocalBuild = true; } "mkdir -p $out";
 in
 
 {
@@ -54,11 +54,13 @@ in
       cleanup = pkgs.writeScript "guest-account-cleanup" ''
         #!${pkgs.stdenv.shell}
 
-        exec ${pkgs.rsync}/bin/rsync \
+        ${pkgs.rsync}/bin/rsync \
           -a -H -A -X --delete --force \
           --usermap='*':guest --groupmap='*':users \
           --exclude=/.Xauthority \
           "${cfg.skeleton}/" "${cfg.home}/"
+
+        chmod 700 "${cfg.home}/"
       '';
 
       #dep = [ "user-${toString cfg.uid}.slice" ];

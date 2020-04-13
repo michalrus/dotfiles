@@ -8,6 +8,7 @@ let pwHash = "$6$gSxL/AmTWQc$QmX/k706GJcC97C3pOH21QeN1Zz8xK89Xw8Ec4HIePP5d8yTzjf
     ../sway.nix
     ../i3.nix
     ../lock-vts.nix
+    ../../../../../modules/guest-account.nix
   ];
 
   virtualisation.memorySize = 1024;
@@ -54,6 +55,7 @@ let pwHash = "$6$gSxL/AmTWQc$QmX/k706GJcC97C3pOH21QeN1Zz8xK89Xw8Ec4HIePP5d8yTzjf
   users = {
     mutableUsers = false;
     defaultUserShell = "/run/current-system/sw/bin/zsh";
+    guestAccount.enable = true;
     users = {
       root.hashedPassword = pwHash;
       m = {
