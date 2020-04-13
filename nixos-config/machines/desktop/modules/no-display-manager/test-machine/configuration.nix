@@ -8,6 +8,7 @@ let pwHash = "$6$gSxL/AmTWQc$QmX/k706GJcC97C3pOH21QeN1Zz8xK89Xw8Ec4HIePP5d8yTzjf
     ../sway.nix
     ../i3.nix
     ../lock-vts.nix
+    ../udev-remap-keyboard.nix
     ../../../../../modules/guest-account.nix
   ];
 
@@ -38,6 +39,7 @@ let pwHash = "$6$gSxL/AmTWQc$QmX/k706GJcC97C3pOH21QeN1Zz8xK89Xw8Ec4HIePP5d8yTzjf
 
   environment.systemPackages = with pkgs; [
     wget git htop screen aegisub anki firefox file pstree
+    evemu evtest
     # pavucontrol
   ];
 

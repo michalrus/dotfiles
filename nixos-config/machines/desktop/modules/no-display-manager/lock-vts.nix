@@ -107,10 +107,6 @@ in
     ];
   };
 
-  ### TODO: trigger lock on logind idle
-
-  ### TODO: remap keys globally in udev
-
   ### TODO: hibernate on low battery
 
   ### TODO: notifications (dunst / mako + check on lockscreens)

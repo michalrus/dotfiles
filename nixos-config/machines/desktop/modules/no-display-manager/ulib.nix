@@ -114,7 +114,7 @@ rec {
       MatchIsKeyboard "on"
       Option "XkbModel" "pc104"
       Option "XkbLayout" "pl"
-      Option "XkbOptions" "caps:hyper,numpad:microsoft"
+      Option "XkbOptions" "compose:caps,numpad:microsoft"
       Option "XkbVariant" ""
     EndSection
 
