@@ -2,6 +2,8 @@
 
 let
 
+  on-vt-switch = import ./on-vt-switch { inherit pkgs; };
+
   lockVTs = pkgs.writeScriptBin "lock-vts" ''
     #! ${pkgs.stdenv.shell}
 
@@ -15,10 +17,7 @@ let
 
     for sock in $active_sockets ; do
       if [ -z "$active_lock_envs" ] || ! grep -F $sock $active_lock_envs >/dev/null ; then
-        echo >&2 "Locking: $sock…"
-        SWAYSOCK=$sock ${pkgs.sway}/bin/swaymsg exec ${lock-sway}
-      else
-        echo >&2 "Already locked: $sock"
+        SWAYSOCK=$sock ${pkgs.sway}/bin/swaymsg -q exec ${lock-sway}
       fi
     done
 
@@ -29,10 +28,7 @@ let
 
     for sock in $active_sockets ; do
       if [ -z "$active_lock_envs" ] || ! grep -F $sock $active_lock_envs >/dev/null ; then
-        echo >&2 "Locking: $sock…"
         I3SOCK=$sock ${pkgs.i3}/bin/i3-msg -q exec ${lock-i3}
-      else
-        echo >&2 "Already locked: $sock"
       fi
     done
 
@@ -86,6 +82,20 @@ in
     };
     wantedBy = [ "sleep.target" ];
     before = [ "sleep.target" ];
+  };
+
+  systemd.services."on-vt-switch-lock" = {
+    description = "Lock all VTs on each VT switch";
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "simple";
+      ExecStart = let
+        handleEvent = pkgs.writeScript "handle-event" ''
+          #! ${pkgs.stdenv.shell}
+          exec ${config.systemd.package}/bin/systemctl --wait start lock-vts
+        '';
+      in "${on-vt-switch}/bin/on-vt-switch ${handleEvent}";
+    };
   };
 
   ### TODO: uncomment this on bare-metal:
