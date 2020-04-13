@@ -37,7 +37,7 @@ let pwHash = "$6$gSxL/AmTWQc$QmX/k706GJcC97C3pOH21QeN1Zz8xK89Xw8Ec4HIePP5d8yTzjf
   time.timeZone = "Europe/Warsaw";
 
   environment.systemPackages = with pkgs; [
-    wget git htop screen aegisub anki firefox file
+    wget git htop screen aegisub anki firefox file pstree
     # pavucontrol
   ];
 

@@ -34,17 +34,17 @@ let
     ${ulib.exportProfileWithPkgs "i3" (with pkgs; [
 
       # These packages will be visible from within `i3` session only.
-      dbus
       i3 i3lock i3status dmenu
-      termite
+      termite firefox
 
-      firefox
+    ] ++ (with pkgs.xorg; [
 
-      xorg.xorgserver xorg.xauth xkeyboard_config
-      xterm xorg.xeyes xorg.xclock
-      xorg.xdpyinfo xorg.xrandr xorg.xrdb xorg.xset
+      xkeyboard_config
+      xorgserver xauth xkeyboard_config
+      xev xdpyinfo xrandr xrdb xset xinput
+      xterm xeyes xclock
 
-    ])}
+    ]))}
 
     exec dbus-launch --exit-with-session systemd-cat -t i3 ${ulib.do-startx i3MergedConfigs}
   '';

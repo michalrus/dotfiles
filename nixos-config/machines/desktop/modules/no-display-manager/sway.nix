@@ -27,11 +27,8 @@ let
     ${ulib.exportProfileWithPkgs "sway" (with pkgs; [
 
       # These packages will be visible from within `sway` session only.
-      dbus
       sway swayidle swaylock xwayland wofiUnstable
-      termite
-
-      firefox-wayland
+      termite firefox-wayland
 
       # For Xwayland’s DPI setting:
       xorg.xeyes xorg.xdpyinfo xorg.xrandr xorg.xrdb

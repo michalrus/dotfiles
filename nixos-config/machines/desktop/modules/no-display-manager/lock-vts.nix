@@ -97,17 +97,29 @@ in
     };
   };
 
-  ### TODO: trigger lock on logind idle
+  # Add Super+L to global key bindings
+  services.actkbd = {
+    enable = true;
+    bindings = [
+      # keycode 125 = Super_L
+      # keycode  38 = l
+      { keys = [ 125 38 ]; events = [ "key" ]; command = "${config.systemd.package}/bin/systemctl start lock-vts"; }
+    ];
+  };
 
-  ### TODO: add Super+L to global keyboard bindings
+  ### TODO: trigger lock on logind idle
 
   ### TODO: remap keys globally in udev
 
   ### TODO: hibernate on low battery
 
+  ### TODO: notifications (dunst / mako + check on lockscreens)
+
   ### TODO: locking textual VTs… hmm — it seems the only option is to… kill their `login` process…
 
-  ### TODO: run my desktop in qemu
+  ### TODO: run my full desktop in qemu
+
+  ### TODO: configure sway like i3
 
   ### TODO: uncomment this on bare-metal:
 
