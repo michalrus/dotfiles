@@ -65,6 +65,8 @@
     dos2unix
     easyrsa
     entr
+    evemu
+    evtest
     file
     gcc
     git

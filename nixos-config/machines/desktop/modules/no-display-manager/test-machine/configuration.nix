@@ -10,6 +10,7 @@ let pwHash = "$6$gSxL/AmTWQc$QmX/k706GJcC97C3pOH21QeN1Zz8xK89Xw8Ec4HIePP5d8yTzjf
     ../lock-vts.nix
     ../udev-remap-keyboard.nix
     ../../../../../modules/guest-account.nix
+    ../../../modules/hibernate-on-low-battery.nix
   ];
 
   virtualisation.memorySize = 1024;

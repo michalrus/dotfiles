@@ -117,6 +117,8 @@ in
 
   ### TODO: configure sway like i3
 
+  ### TODO: audio
+
   ### TODO: uncomment this on bare-metal:
 
   # Lock screen on anything HID, cf. https://youtu.be/5Nk6iDryW0Y?t=1323 .

@@ -11,6 +11,7 @@
     ./modules/firefox-autocomplete.nix
     ./modules/openvpn-expressvpn.nix
     ./modules/transmission.nix
+    ./modules/hibernate-on-low-battery.nix
     ./my-hosts.nix
   ];
 
