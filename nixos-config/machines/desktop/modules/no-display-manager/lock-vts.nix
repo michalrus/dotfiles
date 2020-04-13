@@ -107,8 +107,6 @@ in
     ];
   };
 
-  ### TODO: hibernate on low battery
-
   ### TODO: notifications (dunst / mako + check on lockscreens)
 
   ### TODO: locking textual VTs… hmm — it seems the only option is to… kill their `login` process…
@@ -116,6 +114,9 @@ in
   ### TODO: run my full desktop in qemu
 
   ### TODO: configure sway like i3
+
+
+
 
   ### TODO: audio
 

@@ -26,7 +26,7 @@ in
         echo "$line" | {
           read -r status capacity
           if [ "$status" = Discharging -a "$capacity" -le ${toString criticalPercent} ]; then
-            logger "Critical battery level: $capacity% ≤ ${toString criticalPercent}%, hibernating."
+            echo >&2 "Critical battery level: $capacity% ≤ ${toString criticalPercent}%, hibernating."
             systemctl hibernate
           fi
         }
