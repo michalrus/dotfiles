@@ -1,7 +1,0 @@
-# -*- mode: shell-script; sh-shell: sh -*-
-
-# for `i3-sensible-terminal` and `mtr8.desktop`
-export TERMINAL='termite'
-
-i3-merge-configs
-exec i3

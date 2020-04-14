@@ -13,6 +13,11 @@
     ./modules/transmission.nix
     ./modules/hibernate-on-low-battery.nix
     ./my-hosts.nix
+
+    ./modules/no-display-manager/i3.nix
+    ./modules/no-display-manager/sway.nix
+    ./modules/no-display-manager/lock-vts.nix
+    ./modules/no-display-manager/udev-remap-keyboard.nix
   ];
 
   boot.tmpOnTmpfs = true;
@@ -29,9 +34,6 @@
   };
 
   networking.networkmanager.enable = true;
-
-  # For true Firefox smooth scrolling with touchpad.
-  environment.variables.MOZ_USE_XINPUT2 = "1";
 
   environment.systemPackages = with pkgs; [
     (haskellPackages.ghcWithHoogle (hs: []))
@@ -68,6 +70,7 @@
     termite
     watchexec
     speedread
+    xdg_utils
   ];
 
   programs = {
@@ -104,8 +107,6 @@
       HandlePowerKey=suspend
     '';
 
-    lockX11Displays.enable = true;
-
     screen.usersAlways = [];
 
     tor = {
@@ -122,45 +123,8 @@
       md = 9116;
     };
 
-    xserver = {
-      xkbOptions = "caps:hyper,numpad:microsoft";
-
-      synaptics.enable = lib.mkForce false;
-
-      libinput = {
-        enable = true;
-        accelSpeed = "0.1";
-        naturalScrolling = true;
-      };
-
-      config = ''
-        Section "InputClass"
-          Identifier "libinput pointer catchall"
-          MatchIsPointer "on"
-          MatchDevicePath "/dev/input/event*"
-          Option "NaturalScrolling" "on"
-          Driver "libinput"
-        EndSection
-      '';
-
-      autoRepeatDelay = 150;
-      autoRepeatInterval = 8;
-
-      displayManager.lightdm = {
-        enable = true;
-        background = "${../../../dotfiles/michalrus/trash/.wallpapers/rainbow.png}";
-        greeters.gtk = {
-          theme.package = pkgs.breeze-gtk;
-          theme.name = "Breeze";
-          # No way to choose hicolor as a fallback. ⇒ https://github.com/NixOS/nixpkgs/issues/30694
-          #iconTheme.package = pkgs.breeze-icons;
-          #iconTheme.name = "breeze";
-        };
-      };
-      desktopManager.xterm.enable = false;
-      windowManager.i3.enable = true;
-      windowManager.i3.package = pkgs.i3;
-    };
+    # No global X11! See <./modules/no-display-manager/i3.nix>
+    xserver.enable = lib.mkForce false;
 
     sqlite-dump = [{
       source = "/home/m/.shared/nofatty/data.db";

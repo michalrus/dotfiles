@@ -1,7 +1,7 @@
 ;; -*- mode: emacs-lisp -*-
 
 (use-package magit
-  :bind (("H-g" . magit-status) ;; mostly for dired buffers
+  :bind (("C-x g" . magit-status) ;; mostly for dired buffers
          )
   :config
   (global-magit-file-mode)
@@ -32,7 +32,9 @@
   :demand t
   :config
   (projectile-global-mode)
-  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+  (define-key projectile-mode-map (kbd "C-c p s") nil)
+  )
 
 (use-package neotree
   :bind (("M-<f2>" . michalrus/neotree-show)

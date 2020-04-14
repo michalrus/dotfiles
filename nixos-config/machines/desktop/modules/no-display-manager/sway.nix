@@ -45,7 +45,14 @@ let
     export MOZ_ENABLE_WAYLAND=1
     export SAL_USE_VCLPLUGIN=gtk3
 
-    exec dbus-launch --exit-with-session systemd-cat -t sway sway
+    export DESKTOP_SESSION=sway
+
+    exec dbus-launch --exit-with-session systemd-cat -t sway ${pkgs.writeScript "sway" ''
+      #! ${pkgs.stdenv.shell} -l
+
+      # Starting it via login shell, to allow user to set their own environment variables in ~/.profile:
+      exec $SHELL -l -c "exec sway"
+    ''}
   '';
 
 in

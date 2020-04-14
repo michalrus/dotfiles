@@ -1,4 +1,0 @@
-# -*- mode: shell-script; sh-shell: sh -*-
-
-# TODO: why is that useful?
-export _JAVA_AWT_WM_NONREPARENTING=1

@@ -107,25 +107,21 @@ in
     ];
   };
 
-  ### TODO: notifications (dunst / mako + check on lockscreens)
+  ### feh bg on guest
 
-  ### TODO: locking textual VTs… hmm — it seems the only option is to… kill their `login` process…
-
-  ### TODO: run my full desktop in qemu
+  ### TODO: audio between sessions… so far only one session can play
+  ###   • http://billauer.co.il/blog/2014/01/pa-multiple-users/
 
   ### TODO: configure sway like i3
 
+  ### TODO: notifications: sway (mako + check on lockscreens)
 
-
-
-  ### TODO: audio
-
-  ### TODO: uncomment this on bare-metal:
+  ### TODO: locking textual VTs… hmm — it seems the only option is to… kill their `login` process…
 
   # Lock screen on anything HID, cf. https://youtu.be/5Nk6iDryW0Y?t=1323 .
-  # services.udev.extraRules = ''
-  #   ACTION=="add", SUBSYSTEM=="hid", RUN+="${config.systemd.package}/bin/systemctl restart lock-vts.service"
-  # '';
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="hid", RUN+="${config.systemd.package}/bin/systemctl restart lock-vts.service"
+  '';
 
   security.sudo = {
     enable = true;

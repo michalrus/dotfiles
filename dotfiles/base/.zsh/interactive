@@ -1,6 +1,6 @@
 # -*- mode: shell-script; sh-shell: zsh -*-
 
-unalias -m '*'
+#unalias -m '*'
 unset RPROMPT
 unset RPS1
 unset -f command_not_found_handler 2>/dev/null

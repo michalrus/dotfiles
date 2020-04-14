@@ -1,7 +1,0 @@
-background "#002b36"
-icon_size 22
-icon_gravity SE
-grow_gravity E
-geometry 1x1-1+1
-max_geometry 1x1
-window_strut none

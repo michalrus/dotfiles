@@ -61,7 +61,7 @@
 (use-package swiper
   :bind (("C-s" . counsel-grep-or-swiper)
          ("C-c C-r" . ivy-resume)
-         ("H-r" . counsel-recentf))
+         ("C-r" . counsel-recentf))
   :init
   (global-unset-key (kbd "C-x C-r")) ;; temporarily, to unlearn old binding for ivy-recentf
   (setq projectile-completion-system 'ivy)
@@ -77,7 +77,7 @@
     (interactive)
     (cond ((projectile-project-p) (counsel-git-grep))
           (t (counsel-ag))))
-  (global-set-key (kbd "C-S-s") 'counsel-git-grep-or-ag)
+  (global-set-key (kbd "C-c p s") 'counsel-git-grep-or-ag)
   (global-set-key (kbd "C-c u") 'counsel-unicode-char)
   (global-set-key (kbd "C-c l") 'counsel-locate))
 

@@ -2,7 +2,7 @@
 
 [ -e ~/.bash/switch-to-zsh ] && command -v zsh >/dev/null 2>&1 && exec zsh || true
 
-unalias -a
+#unalias -a
 
 # in Emacs TRAMP sessions, use plain /bin/sh
 [ "$TERM" != "dumb" ] || exec /bin/sh

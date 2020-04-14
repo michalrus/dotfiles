@@ -25,7 +25,8 @@ let
       configOpt=" -c $cnf "
     fi
 
-    exec i3 $configOpt
+    # Starting it via login shell, to allow user to set their own environment variables in ~/.profile:
+    exec $SHELL -l -c "exec i3 $configOpt"
   '';
 
   start-i3 = pkgs.writeScript "start-i3" ''
@@ -34,7 +35,7 @@ let
     ${ulib.exportProfileWithPkgs "i3" (with pkgs; [
 
       # These packages will be visible from within `i3` session only.
-      i3 i3lock i3status dmenu
+      i3 i3lock i3status dunst dmenu
       termite firefox
 
     ] ++ (with pkgs.xorg; [
@@ -45,6 +46,14 @@ let
       xterm xeyes xclock
 
     ]))}
+
+    export TERMINAL=termite
+    export _JAVA_AWT_WM_NONREPARENTING=1
+    export XMODIFIERS="@im=none"  # For ~/.XCompose to…
+    export GTK_IM_MODULE=xim      #        … work in Gtk apps
+    export MOZ_USE_XINPUT2=1      # For true Firefox smooth scrolling with touchpad.
+
+    export DESKTOP_SESSION=i3
 
     exec dbus-launch --exit-with-session systemd-cat -t i3 ${ulib.do-startx i3MergedConfigs}
   '';
