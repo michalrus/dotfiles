@@ -40,8 +40,7 @@ int main (int argc, char **argv) {
     ev.event = VT_EVENT_SWITCH;
 
     // Ignore EINTR after resuming from sleep.
-    while ((rv = ioctl(fd, VT_WAITEVENT, &ev)) < 0 && errno == EINTR)
-      continue;
+    while ((rv = ioctl(fd, VT_WAITEVENT, &ev)) < 0 && errno == EINTR);
 
     if (rv < 0) {
       perror("ioctl(VT_WAITEVENT, VT_EVENT_SWITCH)");
