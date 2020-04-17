@@ -25,7 +25,9 @@
   powerManagement = {
     powerDownCommands = ''
       ${pkgs.procps}/bin/pgrep ssh | while IFS= read -r pid ; do
-        [ "$(readlink "/proc/$pid/exe")" = "${pkgs.openssh}/bin/ssh" ] && kill "$pid"
+        if [ "$(readlink "/proc/$pid/exe")" = "${pkgs.openssh}/bin/ssh" ] ; then
+          kill "$pid"
+        fi
       done
     '';
     powerUpCommands = ''
