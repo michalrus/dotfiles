@@ -86,8 +86,11 @@ in
 
   systemd.services."on-vt-switch-lock" = {
     wantedBy = [ "multi-user.target" ];
+    after = [ "getty.target" ];
     serviceConfig = {
       Type = "simple";
+      Restart = "always";
+      RestartSec = 1;
       ExecStart = let
         handleEvent = pkgs.writeScript "handle-event" ''
           #! ${pkgs.stdenv.shell}

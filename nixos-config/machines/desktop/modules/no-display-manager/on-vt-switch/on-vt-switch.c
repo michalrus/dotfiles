@@ -35,9 +35,15 @@ int main (int argc, char **argv) {
 
   for (;;) {
     struct vt_event ev;
+    int rv;
     memset(&ev, 0, sizeof(ev));
     ev.event = VT_EVENT_SWITCH;
-    if (ioctl(fd, VT_WAITEVENT, &ev) < 0) {
+
+    // Ignore EINTR after resuming from sleep.
+    while ((rv = ioctl(fd, VT_WAITEVENT, &ev)) < 0 && errno == EINTR)
+      continue;
+
+    if (rv < 0) {
       perror("ioctl(VT_WAITEVENT, VT_EVENT_SWITCH)");
       return -3;
     }
