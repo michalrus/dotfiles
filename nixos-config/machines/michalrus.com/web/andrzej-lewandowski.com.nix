@@ -61,6 +61,7 @@ in
           psychiatra:$apr1$8/GLVfKU$0ueLvh60LQrst8pn/1s4r1
           Mateusz:$apr1$AzfYzV6k$wpSTsetgS60QE3ygglrLI0
           bartosz:$apr1$9QyXojiD$rtD/HEgD757hmhN0Schy.1
+          kevin:$apr1$AMhND1PY$UCfXf2gnf8ZMXaA3YEDBJ0
         ''}";
         root /var/www/${domain}/master/public;
         error_page 404 /pl/404.html;
