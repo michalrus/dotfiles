@@ -54,6 +54,7 @@
     gnome3.zenity
     haskellPackages.hlint
     k3b
+    libxml2
     michalrus.gettext-emacs
     michalrus.gnucash26
     networkmanagerapplet
