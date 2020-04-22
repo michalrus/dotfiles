@@ -9,3 +9,5 @@ termite --name code -e 'zsh -i -c s' &
 emacs --frame-parameters='(quote (name . "code"))' &
 
 idea-community &
+
+zoom-us &
