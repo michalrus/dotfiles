@@ -1,0 +1,6 @@
+[user]
+	name = Michal Rus
+	email = michal.rus@igeolise.com
+	signingkey = m@michalrus.com
+[commit]
+	gpgsign = true

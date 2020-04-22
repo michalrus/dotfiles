@@ -1,0 +1,11 @@
+# -*- mode: shell-script; sh-shell: sh -*-
+
+termite --name initial -e 'zsh -i -c s' &
+emacs --frame-parameters='(quote (name . "org"))' --eval '(find-file "~/Org/iGeolise.org")' &
+
+chromium &
+
+termite --name code -e 'zsh -i -c s' &
+emacs --frame-parameters='(quote (name . "code"))' &
+
+idea-community &

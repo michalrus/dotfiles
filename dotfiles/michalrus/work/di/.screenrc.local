@@ -1,3 +1,0 @@
-screen -t 'ssh: michalrus.com'   0 $SHELL
-screen -t 'nix-shell: local-dev' 1 sh -c 'cd ~/Development/backend/backend && RUN_COMMAND="./nix-shell-persistent" exec $SHELL'
-screen -t 'ssh: local-dev'       2 sh -c 'cd ~/Development/backend/nixos-config && RUN_COMMAND="make run-local-dev" exec $SHELL'

@@ -203,7 +203,7 @@
       uid = 1337;
       description = "Michal Rus (w)";
       extraGroups = [ "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" ];
-      dotfiles.profiles = [ "base" "michalrus/base" "michalrus/desktop" "git-annex" "michalrus/work/di" "i3" "emacs" ];
+      dotfiles.profiles = [ "base" "michalrus/base" "michalrus/desktop" "git-annex" "michalrus/work/ig" "i3" "emacs" ];
       packages' = with pkgs; [
         (wrapFirefox (michalrus.hardened-firefox-unwrapped.override {
           localAutocompletePort = config.services.firefox-autocomplete.userPorts.mw;
@@ -211,11 +211,12 @@
         }) {})
         chromium
         jetbrains.idea-community
-        openjdk8   # for nofatty
+        openjdk8
         pgadmin
-        unfree.michalrus.hubstaff
-        #unfree.michalrus.transcribe
+        protobuf
+        sbt-extras
         unfree.skypeforlinux
+        unfree.zoom-us
       ];
     };
 
@@ -243,12 +244,6 @@
 
   fileSystems."/var/home/mw/.shared" = {
     device = "/var/home/m/.shared";
-    fsType = "fuse.bindfs";
-    options = [ "map=m/mw" ];
-  };
-
-  fileSystems."/var/home/mw/.shared-sync" = {
-    device = "/var/home/m/Archive/Personal/Shared-mw";
     fsType = "fuse.bindfs";
     options = [ "map=m/mw" ];
   };
