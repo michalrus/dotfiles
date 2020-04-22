@@ -95,6 +95,13 @@
 
   hardware.bluetooth.enable = true;
 
+  hardware.pulseaudio = {
+    enable = true;
+    systemWide = true; # Running multiple concurrent user sessions on different TTYs, I want their audio mixed.
+    support32Bit = true;
+    package = pkgs.pulseaudioFull;
+  };
+
   systemd.extraConfig = ''
     DefaultCPUAccounting=yes
     DefaultBlockIOAccounting=yes
@@ -202,7 +209,7 @@
       isNormalUser = true;
       uid = 1337;
       description = "Michal Rus (w)";
-      extraGroups = [ "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" ];
+      extraGroups = [ "audio" "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" ];
       dotfiles.profiles = [ "base" "michalrus/base" "michalrus/desktop" "git-annex" "michalrus/work/ig" "i3" "emacs" ];
       packages' = with pkgs; [
         (wrapFirefox (michalrus.hardened-firefox-unwrapped.override {
@@ -225,7 +232,7 @@
       isNormalUser = true;
       uid = 1347;
       description = "Michal Rus (d)";
-      extraGroups = [ "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" ];
+      extraGroups = [ "audio" "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" ];
       dotfiles.profiles = [ "base" "michalrus/base" "michalrus/desktop" "michalrus/tor" "i3" "emacs" ];
       packages' = with pkgs; [
         (wrapFirefox (michalrus.hardened-firefox-unwrapped.override {
