@@ -18,6 +18,16 @@
     unfree.google-chrome
     unfree.skype
     unfree.unrar
+
+    arandr
+    wmctrl xtitle
+    xrandr-invert-colors
+    unclutter xbanish
+    xautolock
+
+    xcape xdo xdotool
+    xclip xsel
+    xpad
   ];
 
   services = {

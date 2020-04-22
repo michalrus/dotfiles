@@ -70,7 +70,6 @@
   environment.systemPackages = with pkgs; [
     (nixos-unstable.youtube-dl)
     alsaUtils
-    arandr
     audacity
     awf
     calibre
@@ -103,7 +102,6 @@
     pcmanfm
     pdfgrep
     pinentry
-    pinentry
     pythonPackages.livestreamer
     rfkill
     rtmpdump
@@ -113,28 +111,11 @@
     shntool
     simple-scan
     timidity
-    unclutter
     utox
     winetricks
-    wmctrl
     x264
     xarchiver
-    xautolock
-    xbanish
-    xcape
-    xclip
-    xdo
-    xdotool
-    xorg.xbacklight
-    xorg.xdpyinfo
-    xorg.xev
-    xorg.xhost
-    xorg.xmodmap
-    xpad
-    xrandr-invert-colors
     xsane
-    xsel
-    xtitle
   ];
 
   fonts = {

@@ -49,6 +49,16 @@
     unfree.xmind
     wxhexeditor
     xboxdrv
+
+    arandr
+    wmctrl xtitle
+    xrandr-invert-colors
+    unclutter xbanish
+    xautolock
+
+    xcape xdo xdotool
+    xclip xsel
+    xpad
   ];
 
   services = {

@@ -42,13 +42,10 @@
     (nixos-unstable.wine.override { pulseaudioSupport = true; })
     aegisub
     alacritty
-    autocutsel
     blueman
     breeze-qt5 breeze-icons pkgs.hicolor_icon_theme kde-gtk-config breeze-gtk
-    compton
     cool-retro-term
     dhall
-    dunst
     dvdbackup
     feh
     gettext
@@ -56,7 +53,6 @@
     gnome3.dconf   # so that GnuCash prefs can be changed
     gnome3.zenity
     haskellPackages.hlint
-    i3status
     k3b
     michalrus.gettext-emacs
     michalrus.gnucash26
@@ -64,11 +60,8 @@
     octave
     pandoc
     pdfpc
-    peek
-    rofi
     rustup
     sqlint
-    stalonetray
     termite
     watchexec
     speedread

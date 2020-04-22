@@ -35,15 +35,31 @@ let
     ${ulib.exportProfileWithPkgs "i3" (with pkgs; [
 
       # These packages will be visible from within `i3` session only.
-      i3 i3lock i3status dunst dmenu
+      i3 i3lock i3status
+      rofi michalrus.dmenu-rofi
+      compton
+      autocutsel
+      peek
+
       termite firefox
+
+      arandr
+      wmctrl xtitle
+      xrandr-invert-colors
+      unclutter xbanish
+      xautolock
+
+      xcape xdo xdotool
+      xclip xsel
+      xpad
 
     ] ++ (with pkgs.xorg; [
 
       xkeyboard_config
       xorgserver xauth xkeyboard_config
-      xev xdpyinfo xrandr xrdb xset xinput
+      xev xdpyinfo xrandr xrdb xset xinput xprop
       xterm xeyes xclock
+      xbacklight xhost xmodmap
 
     ]))}
 
