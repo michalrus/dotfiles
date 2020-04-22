@@ -40,7 +40,6 @@ composeOverlays [
     michalrus = composeOverlays [
 
       (import ./pkgs/hardened-firefox.nix)
-      (import ./pkgs/monero-gui-tor.nix)
       (import ./pkgs/wasabi-wallet.nix)
 
       (import ./pkgs/git-annex-hacks.nix)
@@ -71,8 +70,6 @@ composeOverlays [
           (import ./pkgs/steam.nix)
 
           (import ./pkgs/transcribe.nix)
-
-          (import ./pkgs/hubstaff.nix)
 
         ] self.michalrus (super.michalrus or super);
 

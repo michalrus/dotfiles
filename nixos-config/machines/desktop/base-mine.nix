@@ -176,10 +176,10 @@
       packages' = with pkgs; [
         chromium
         electrum
-        michalrus.monero-gui-tor
         isync
         jetbrains.idea-community
         lilypond
+        monero-gui
         (wrapFirefox (michalrus.hardened-firefox-unwrapped.override {
           localAutocompletePort = config.services.firefox-autocomplete.userPorts.m;
           extraPrefs = michalrus.hardened-firefox-unwrapped.cfgEnableDRM;
