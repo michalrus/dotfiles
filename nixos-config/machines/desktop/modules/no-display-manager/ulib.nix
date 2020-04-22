@@ -118,6 +118,15 @@ rec {
       Option "XkbVariant" ""
     EndSection
 
+    # Natural scrolling on all pointer devices.
+    Section "InputClass"
+      Identifier "libinput pointer catchall"
+      MatchIsPointer "on"
+      MatchDevicePath "/dev/input/event*"
+      Option "NaturalScrolling" "on"
+      Driver "libinput"
+    EndSection
+
     ${builtins.readFile "${pkgs.xorg.xf86inputlibinput}/share/X11/xorg.conf.d/40-libinput.conf"}
   '';
 
