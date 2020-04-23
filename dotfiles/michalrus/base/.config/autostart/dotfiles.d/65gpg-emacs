@@ -2,6 +2,4 @@
 
 gpg-connect-agent /bye
 
-systemctl --user start screen.service &
-
 systemctl --user start emacs-daemon.service &
