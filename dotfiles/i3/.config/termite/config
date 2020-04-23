@@ -3,6 +3,7 @@ font = Iosevka Term 16px
 cursor_blink = on
 cursor_shape = ibeam
 dynamic_title = on
+scrollback_lines = -1   # <0 == ∞
 
 [colors]
 foreground      = #93a1a1
