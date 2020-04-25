@@ -2,37 +2,6 @@
 
 rec {
 
-  #
-  # We need to be able to add (export) stuff to the user env before
-  # running a particular graphical environment. This includes not only
-  # trivial PATH, but also things like TERMINFO_DIRS, QT_PLUGIN_PATH,
-  # INFOPATH etc. Let’s use `buildEnv` which does precisely that.
-  #
-  exportProfileWithPkgs = name: paths: exportDynamicProfiles [(
-    pkgs.buildEnv {
-      name = "dynamic-profile-${name}";
-      inherit paths;
-      inherit (config.environment) pathsToLink extraOutputsToInstall;
-      inherit (config.system.path) ignoreCollisions postBuild;
-    }
-  )];
-
-  #
-  # Actual environment setup.
-  #
-  # Adapted from <https://github.com/NixOS/nixpkgs/blob/0c3a28f08f207a0b074d5ecbbed21b5b045f690f/nixos/modules/config/shells-environment.nix#L12-L28>.
-  #
-  exportDynamicProfiles = dynProfiles: with pkgs.lib; let
-    cfg = config.environment;
-    suffixedVariables = flip mapAttrs cfg.profileRelativeEnvVars (envVar: listSuffixes: concatMap (
-      profile: map (suffix: "${profile}${suffix}") listSuffixes) dynProfiles
-    );
-    exportVariables = mapAttrsToList (n: v: "export ${n}=\"\$${n}:${concatStringsSep ":" v}\"") suffixedVariables;
-  in
-  concatStringsSep "\n" exportVariables + "\n" + ''
-    export NIX_PROFILES="${concatStringsSep " " (reverseList dynProfiles)} $NIX_PROFILES"
-  '';
-
   do-startx = wm:
     assert (pkgs.lib.assertMsg (pkgs.lib.hasPrefix "/" wm) "window manager path needs to be absolute.");
     " ${better-startx} ${wm} -- -config ${xorgConf} -xkbdir ${pkgs.xkeyboard_config}/etc/X11/xkb "

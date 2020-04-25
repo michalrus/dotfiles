@@ -32,7 +32,17 @@ let
   start-i3 = pkgs.writeScript "start-i3" ''
     #! ${pkgs.stdenv.shell}
 
-    ${ulib.exportProfileWithPkgs "i3" (with pkgs; [
+    . ${config.environment.dynamic-profiles.i3.loadFile}
+
+    exec dbus-launch --exit-with-session systemd-cat -t i3 ${ulib.do-startx i3MergedConfigs}
+  '';
+
+in
+
+{
+
+  environment.dynamic-profiles.i3 = {
+    packages = with pkgs; [
 
       # These packages will be visible from within `i3` session only.
       i3 i3lock i3status
@@ -61,22 +71,18 @@ let
       xterm xeyes xclock
       xbacklight xhost xmodmap
 
-    ]))}
+    ]);
 
-    export TERMINAL=termite
-    export _JAVA_AWT_WM_NONREPARENTING=1
-    export XMODIFIERS="@im=none"  # For ~/.XCompose to…
-    export GTK_IM_MODULE=xim      #        … work in Gtk apps
-    export MOZ_USE_XINPUT2=1      # For true Firefox smooth scrolling with touchpad.
+    extraSetup = ''
+      export TERMINAL=termite
+      export _JAVA_AWT_WM_NONREPARENTING=1
+      export XMODIFIERS="@im=none"  # For ~/.XCompose to…
+      export GTK_IM_MODULE=xim      #        … work in Gtk apps
+      export MOZ_USE_XINPUT2=1      # For true Firefox smooth scrolling with touchpad.
 
-    export DESKTOP_SESSION=i3
-
-    exec dbus-launch --exit-with-session systemd-cat -t i3 ${ulib.do-startx i3MergedConfigs}
-  '';
-
-in
-
-{
+      export DESKTOP_SESSION=i3
+    '';
+  };
 
   security.pam.services.i3lock = {};
   hardware.opengl.enable   = lib.mkDefault true;

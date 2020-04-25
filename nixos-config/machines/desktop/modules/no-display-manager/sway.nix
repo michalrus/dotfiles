@@ -24,28 +24,7 @@ let
   start-sway = pkgs.writeScript "start-sway" ''
     #! ${pkgs.stdenv.shell}
 
-    ${ulib.exportProfileWithPkgs "sway" (with pkgs; [
-
-      # These packages will be visible from within `sway` session only.
-      sway swayidle swaylock xwayland wofiUnstable
-      termite firefox-wayland
-
-      # For Xwayland’s DPI setting:
-      xorg.xeyes xorg.xdpyinfo xorg.xrandr xorg.xrdb
-
-    ])}
-
-    export QT_QPA_PLATFORM=wayland-egl
-    export QT_WAYLAND_FORCE_DPI=physical
-    export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
-    export ECORE_EVAS_ENGINE=wayland_egl
-    export ELM_ENGINE=wayland_egl
-    export SDL_VIDEODRIVER=wayland
-    export _JAVA_AWT_WM_NONREPARENTING=1
-    export MOZ_ENABLE_WAYLAND=1
-    export SAL_USE_VCLPLUGIN=gtk3
-
-    export DESKTOP_SESSION=sway
+    . ${config.environment.dynamic-profiles.sway.loadFile}
 
     exec dbus-launch --exit-with-session systemd-cat -t sway ${pkgs.writeScript "sway" ''
       #! ${pkgs.stdenv.shell} -l
@@ -58,6 +37,33 @@ let
 in
 
 {
+
+  environment.dynamic-profiles.sway = {
+    packages = with pkgs; [
+
+      # These packages will be visible from within `sway` session only.
+      sway swayidle swaylock xwayland wofiUnstable
+      termite firefox-wayland
+
+      # For Xwayland’s DPI setting:
+      xorg.xeyes xorg.xdpyinfo xorg.xrandr xorg.xrdb
+
+    ];
+
+    extraSetup = ''
+      export QT_QPA_PLATFORM=wayland-egl
+      export QT_WAYLAND_FORCE_DPI=physical
+      export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+      export ECORE_EVAS_ENGINE=wayland_egl
+      export ELM_ENGINE=wayland_egl
+      export SDL_VIDEODRIVER=wayland
+      export _JAVA_AWT_WM_NONREPARENTING=1
+      export MOZ_ENABLE_WAYLAND=1
+      export SAL_USE_VCLPLUGIN=gtk3
+
+      export DESKTOP_SESSION=sway
+    '';
+  };
 
   security.pam.services.swaylock = {};
   hardware.opengl.enable   = lib.mkDefault true;
