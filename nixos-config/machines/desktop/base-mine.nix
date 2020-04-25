@@ -154,7 +154,7 @@
     guestAccount = {
       enable = true;
       skeleton = "/home/guest.skel";
-      groups = [ "audio" "nonet" "scanner" "networkmanager" "vboxusers" ];
+      groups = [ "audio" "nonet" "scanner" "networkmanager" "vboxusers" "video" ];
     };
 
     users.guest = {
@@ -170,7 +170,7 @@
       isNormalUser = true;
       uid = 31337;
       description = "Michal Rus";
-      extraGroups = [ "wheel" "audio" "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" "video" "input" ];
+      extraGroups = [ "wheel" "audio" "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" "video" ];
       dotfiles.base = "${config.users.users.m.home}/.dotfiles/dotfiles";
       dotfiles.profiles = [ "base" "michalrus/base" "michalrus/desktop" "git-annex" "michalrus/personal" "i3" "emacs" ];
       packages' = with pkgs; [
@@ -203,7 +203,7 @@
       isNormalUser = true;
       uid = 1337;
       description = "Michal Rus (w)";
-      extraGroups = [ "audio" "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" ];
+      extraGroups = [ "audio" "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" "video" ];
       dotfiles.profiles = [ "base" "michalrus/base" "michalrus/desktop" "git-annex" "michalrus/work/ig" "i3" "emacs" ];
       packages' = with pkgs; [
         (wrapFirefox (michalrus.hardened-firefox-unwrapped.override {
@@ -226,7 +226,7 @@
       isNormalUser = true;
       uid = 1347;
       description = "Michal Rus (d)";
-      extraGroups = [ "audio" "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" ];
+      extraGroups = [ "audio" "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" "video" ];
       dotfiles.profiles = [ "base" "michalrus/base" "michalrus/desktop" "michalrus/tor" "i3" "emacs" ];
       packages' = with pkgs; [
         (wrapFirefox (michalrus.hardened-firefox-unwrapped.override {
