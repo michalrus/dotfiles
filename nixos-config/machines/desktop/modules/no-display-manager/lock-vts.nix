@@ -130,11 +130,4 @@ in
     ACTION=="add", SUBSYSTEM=="hid", RUN+="${config.systemd.package}/bin/systemctl restart lock-vts.service"
   '';
 
-  security.sudo = {
-    enable = true;
-    extraConfig = ''
-      %users ALL = (root) NOPASSWD: ${config.systemd.package}/bin/systemctl start lock-vts
-      '';
-  };
-
 }
