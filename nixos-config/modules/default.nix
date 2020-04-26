@@ -12,7 +12,6 @@
     ./somagic-easycap.nix
     ./sqlite-dump.nix
     ./torified-users.nix
-    ./user-profiles.nix
     ./dynamic-profiles.nix
   ];
 }

@@ -173,7 +173,7 @@
       extraGroups = [ "wheel" "audio" "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" "video" ];
       dotfiles.base = "${config.users.users.m.home}/.dotfiles/dotfiles";
       dotfiles.profiles = [ "base" "michalrus/base" "michalrus/desktop" "git-annex" "michalrus/personal" "i3" "emacs" ];
-      packages' = with pkgs; [
+      packages = with pkgs; [
         chromium
         electrum
         isync
@@ -205,7 +205,7 @@
       description = "Michal Rus (w)";
       extraGroups = [ "audio" "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" "video" ];
       dotfiles.profiles = [ "base" "michalrus/base" "michalrus/desktop" "git-annex" "michalrus/work/ig" "i3" "emacs" ];
-      packages' = with pkgs; [
+      packages = with pkgs; [
         (wrapFirefox (michalrus.hardened-firefox-unwrapped.override {
           localAutocompletePort = config.services.firefox-autocomplete.userPorts.mw;
           extraPrefs = michalrus.hardened-firefox-unwrapped.cfgEnableDRM;
@@ -228,7 +228,7 @@
       description = "Michal Rus (d)";
       extraGroups = [ "audio" "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" "video" ];
       dotfiles.profiles = [ "base" "michalrus/base" "michalrus/desktop" "michalrus/tor" "i3" "emacs" ];
-      packages' = with pkgs; [
+      packages = with pkgs; [
         (wrapFirefox (michalrus.hardened-firefox-unwrapped.override {
           localAutocompletePort = config.services.firefox-autocomplete.userPorts.md;
           extraPrefs = ''
