@@ -46,7 +46,7 @@ in
 
       # These packages will be visible from within `i3` session only.
       i3 i3lock i3status
-      rofi michalrus.dmenu-rofi
+      rofi michalrus.dmenu-rofi dunst
       compton
       autocutsel
       peek
