@@ -50,6 +50,7 @@
     feh
     gettext
     ghostscript
+    gist
     gnome3.dconf   # so that GnuCash prefs can be changed
     gnome3.zenity
     haskellPackages.hlint
@@ -61,6 +62,7 @@
     octave
     pandoc
     pdfpc
+    (python3.withPackages (p: with p; [ scipy matplotlib tkinter ]))
     rustup
     sqlint
     termite
