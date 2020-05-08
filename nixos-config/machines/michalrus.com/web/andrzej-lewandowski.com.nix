@@ -62,6 +62,8 @@ in
           Mateusz:$apr1$AzfYzV6k$wpSTsetgS60QE3ygglrLI0
           bartosz:$apr1$9QyXojiD$rtD/HEgD757hmhN0Schy.1
           kevin:$apr1$AMhND1PY$UCfXf2gnf8ZMXaA3YEDBJ0
+          pkarolczak:$apr1$stgl8558$W9QATO6UR6aql6nJ2/7Vu1
+          Erni:$apr1$Ic80R/Xi$i2KQsPlTZOqMiGDVwZBlA/
         ''}";
         root /var/www/${domain}/master/public;
         error_page 404 /pl/404.html;
