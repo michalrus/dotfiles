@@ -213,7 +213,7 @@
         openjdk8
         pgadmin
         protobuf
-        sbt-extras
+        sbt
         unfree.skypeforlinux
         unfree.zoom-us
       ];
