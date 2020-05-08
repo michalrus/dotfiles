@@ -58,6 +58,7 @@
     libxml2
     michalrus.gettext-emacs
     michalrus.gnucash26
+    michalrus.noise
     networkmanagerapplet
     octave
     pandoc
