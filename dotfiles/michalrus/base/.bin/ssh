@@ -20,4 +20,10 @@ merge "authorized_keys"
 merge "config"
 merge "known_hosts"
 
+case "$TERM" in
+  xterm-*)
+    export TERM=xterm-256color
+    ;;
+esac
+
 exec command-p ssh "$@"
