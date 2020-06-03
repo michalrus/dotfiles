@@ -15,7 +15,9 @@ let
       company
       company-lsp
       dap-mode
+      dhall-mode
       focus-autosave-mode
+      hayoo
       lsp-mode
       lsp-treemacs
       lsp-ui
@@ -36,7 +38,6 @@ let
       #ensime
       #gregorio-mode
       counsel
-      dhall-mode
       diff-hl
       erlang
       expand-region
@@ -46,7 +47,6 @@ let
       go-mode
       google-translate
       haskell-mode
-      hayoo
       hl-todo
       ivy
       magit

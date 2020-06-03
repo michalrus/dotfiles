@@ -2,20 +2,8 @@
 
 # Put your machine-local environment variables here
 
-# Remember to copy this file without the `.example' suffix.
-
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
-export LANGUAGE=en_US:en
-
-# for A4 paper
-locale -a | grep -qi 'en_GB.utf' && export LC_PAPER='en_GB.UTF-8'
-
 export EDITOR='emacs'
 export VISUAL="$EDITOR"
-
-export DEBFULLNAME="Michal Rus"
-export DEBEMAIL="m@michalrus.com"
 
 # use GnuPG for SSH authentication
 export SSH_AUTH_SOCK="$HOME/.gnupg/S.gpg-agent.ssh"

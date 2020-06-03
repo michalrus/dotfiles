@@ -101,7 +101,7 @@
     pavucontrol
     pcmanfm
     pdfgrep
-    pinentry
+    pinentry-gtk2
     pythonPackages.livestreamer
     rfkill
     rtmpdump

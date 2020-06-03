@@ -86,7 +86,6 @@
     ltrace
     mkpasswd
     moreutils
-    mtr
     ncdu
     nmap
     openssl

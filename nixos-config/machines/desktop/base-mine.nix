@@ -22,6 +22,14 @@
 
   boot.tmpOnTmpfs = true;
 
+  i18n = {
+    defaultLocale = "en_US.UTF-8";
+    extraLocaleSettings = {
+      LC_TIME  = "en_DK.UTF-8"; # for 24 h
+      LC_PAPER = "en_DK.UTF-8"; # for ISO A4 instead of Letter
+    };
+  };
+
   powerManagement = {
     powerDownCommands = ''
       ${pkgs.procps}/bin/pgrep ssh | while IFS= read -r pid ; do
@@ -35,7 +43,14 @@
     '';
   };
 
-  networking.networkmanager.enable = true;
+  networking.networkmanager = {
+    enable = true;
+    dhcp = "dhclient"; # <https://forum.salixos.org/viewtopic.php?f=30&t=7284>
+  };
+
+  networking.firewall.allowedTCPPorts = [
+    12345 # python -m SimpleHTTPServer 12345
+  ];
 
   environment.systemPackages = with pkgs; [
     (haskellPackages.ghcWithHoogle (hs: []))
@@ -44,6 +59,7 @@
     alacritty
     blueman
     breeze-qt5 breeze-icons pkgs.hicolor_icon_theme kde-gtk-config breeze-gtk
+    brightnessctl
     cool-retro-term
     dhall
     dvdbackup
@@ -85,8 +101,6 @@
     user = user.name;
     point = "${user.home}/Phone";
   };
-
-  hardware.brightnessctl.enable = true;
 
   hardware.enableSomagicEasyCAP = true;
 
@@ -178,7 +192,7 @@
         isync
         jetbrains.idea-community
         lilypond
-        monero-gui
+        monero
         (wrapFirefox (michalrus.hardened-firefox-unwrapped.override {
           localAutocompletePort = config.services.firefox-autocomplete.userPorts.m;
           extraPrefs = michalrus.hardened-firefox-unwrapped.cfgEnableDRM;
@@ -212,7 +226,6 @@
         chromium
         jetbrains.idea-community
         openjdk8
-        pgadmin
         protobuf
         sbt
         unfree.skypeforlinux

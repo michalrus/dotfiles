@@ -21,16 +21,15 @@
 
   boot.kernel.sysctl."vm.swappiness" = lib.mkForce 1; # Let’s try this.
 
-  services.xserver.useGlamor = true;
+  boot.kernelPackages = pkgs.linuxPackages_5_6;
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.initrd.luks.devices = [{
-    name = "crypt";
+  boot.initrd.luks.devices.crypt = {
     device = "/dev/disk/by-uuid/f671aaa7-2b5c-44e3-9c83-6997edb4bcc4";
     allowDiscards = true; # if SSD — has security implications!
-  }];
+  };
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/99f04383-1326-4321-af74-995070736843";
