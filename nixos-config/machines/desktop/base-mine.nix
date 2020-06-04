@@ -178,6 +178,7 @@
       dotfiles.profiles = [ "base" "i3" "michalrus/guest" ];
       packages = with pkgs; [
         unfree.google-chrome
+        unfree.skypeforlinux
         unfree.zoom-us
       ];
     };
@@ -202,7 +203,6 @@
           extraPrefs = michalrus.hardened-firefox-unwrapped.cfgEnableDRM;
         }) {})
         openjdk8   # for nofatty
-        #unfree.michalrus.transcribe
         (texlive.combine {
           inherit (texlive) scheme-small latexmk titlesec tocloft todonotes cleveref lipsum biblatex logreq cm-super csquotes pgfplots adjustbox collectbox ccicons polski placeins xstring pdfpages unicode-math filehook textpos marvosym fontawesome progressbar lm-math ucharcat
             # for Org-mode export to PDF
@@ -210,8 +210,6 @@
             ;
           #gregorio = pkgs.michalrus.gregorio.forTexlive;
         })
-        unfree.skypeforlinux
-        unfree.zoom-us
       ];
     };
 
