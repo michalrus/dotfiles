@@ -80,6 +80,7 @@
     pandoc
     pdfpc
     (python3.withPackages (p: with p; [ scipy matplotlib tkinter ]))
+    python3Packages.livereload
     rustup
     sqlint
     termite
@@ -225,9 +226,12 @@
         }) {})
         chromium
         jetbrains.idea-community
+        ansible
         openjdk8
         protobuf
         sbt
+        qgis
+        josm
         unfree.skypeforlinux
         unfree.nixos-unstable.zoom-us
       ];
