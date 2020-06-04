@@ -12,6 +12,7 @@
     ./modules/openvpn-expressvpn.nix
     ./modules/transmission.nix
     ./modules/hibernate-on-low-battery.nix
+    ./modules/proaudio.nix
     ./my-hosts.nix
 
     ./modules/no-display-manager/i3.nix
@@ -64,6 +65,8 @@
     dhall
     dvdbackup
     feh
+    gdb
+    binutils
     gettext
     ghostscript
     gist
