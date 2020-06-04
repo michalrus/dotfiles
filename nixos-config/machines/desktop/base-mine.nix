@@ -229,7 +229,7 @@
         protobuf
         sbt
         unfree.skypeforlinux
-        unfree.zoom-us
+        unfree.nixos-unstable.zoom-us
       ];
     };
 
