@@ -99,4 +99,9 @@ in
     alias startx=i3
   '';
 
+  ###
+  ### FIXME: instead, link `start-i3` in /etc/profiles/dynamic/i3/start-i3
+  ###
+  environment.systemPackages = [ (pkgs.writeTextDir "prevent-gc" (toString [ start-i3 ])) ];
+
 }

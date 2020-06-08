@@ -80,4 +80,9 @@ in
     alias startw=sway
   '';
 
+  ###
+  ### FIXME: instead, link `start-sway` in /etc/profiles/dynamic/sway/start-sway
+  ###
+  environment.systemPackages = [ (pkgs.writeTextDir "prevent-gc" (toString [ start-sway ])) ];
+
 }
