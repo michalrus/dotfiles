@@ -12,6 +12,8 @@ rec {
       email = "m@michalrus.com";
       postRun = "systemctl reload nginx.service";
       extraDomains = builtins.listToAttrs (map (secondary: nameValuePair secondary null) secondaries);
+      allowKeysForGroup = true;
+      group = "nginx";
     };
   };
 

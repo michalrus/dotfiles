@@ -6,7 +6,7 @@ with import ./common.nix { inherit config pkgs; };
 let
 
   domain = "andrzej-lewandowski.com";
-  altDomain = "andrzej-lewandowski.pl";
+  altDomains = [ "andrzejlewandowski.com" "andrzej-lewandowski.pl" "andrzejlewandowski.pl" ];
 
   webhookPort = 9974;
   user = lib.replaceStrings ["." "-"] ["_" "_"] domain;
@@ -16,7 +16,7 @@ in
 
 {
 
-  services.nginx.httpConfig = lib.concatStringsSep "\n" [
+  services.nginx.httpConfig = lib.concatStringsSep "\n" ([
 
     (sslServer {
       name = domain;
@@ -71,6 +71,8 @@ in
       '';
     })
 
+  ] ++ (lib.concatMap (altDomain: [
+
     (sslServer {
       name = "${altDomain}";
       forcedCertDir = "/var/lib/cloudflare/${altDomain}";
@@ -89,7 +91,7 @@ in
       '';
     })
 
-  ];
+  ]) altDomains));
 
   #
   # Rebuild GitHub webhook:

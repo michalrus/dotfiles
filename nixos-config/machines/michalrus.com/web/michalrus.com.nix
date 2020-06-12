@@ -19,6 +19,8 @@ mkMerge [
       bindfs
     ];
 
+    security.acme.acceptTerms = true;
+
     fileSystems."/var/www/${domain}" = {
       device = "/home/m/public_html";
       fsType = "fuse.bindfs";

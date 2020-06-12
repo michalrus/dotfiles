@@ -36,8 +36,8 @@ in
 
 {
 
-  users.extraUsers  = [ { name = user; group = user; home = dataDir; } ];
-  users.extraGroups = [ { name = user; } ];
+  users.extraUsers."${user}" = { group = user; home = dataDir; };
+  users.extraGroups."${user}" = { };
 
   systemd.services.kornel = {
     after = [ "network.target" ];

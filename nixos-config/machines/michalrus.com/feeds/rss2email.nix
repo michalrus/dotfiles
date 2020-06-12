@@ -33,25 +33,24 @@ let
     };
     buildInputs = [ pkgs.makeWrapper ];
     propagatedBuildInputs = [ python.feedparser old-html2text python.beautifulsoup4 ];
-    postInstall = ''
-      wrapProgram $out/bin/r2e \
-        --set "XDG_DATA_HOME" "\$HOME" \
-        --set "XDG_CONFIG_HOME" "\$HOME"
-    '';
   };
 
 in
 
 {
 
-  users.extraUsers  = [ { name = user; group = user; home = dataDir; } ];
-  users.extraGroups = [ { name = user; } ];
+  users.extraUsers."${user}" = { group = user; home = dataDir; };
+  users.extraGroups."${user}" = { };
 
   systemd.services.rss2email = {
     serviceConfig = {
       User = user;
       Group = user;
       PermissionsStartOnly = true;
+    };
+    environment = {
+      XDG_DATA_HOME   = config.users.extraUsers."${user}".home;
+      XDG_CONFIG_HOME = config.users.extraUsers."${user}".home;
     };
     path = with pkgs; [ rss2email ];
     preStart = ''
