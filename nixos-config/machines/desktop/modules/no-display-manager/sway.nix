@@ -63,6 +63,10 @@ in
 
       export DESKTOP_SESSION=sway
     '';
+
+    extraPostBuild = ''
+      ln -s ${start-sway} $out/start-sway
+    '';
   };
 
   security.pam.services.swaylock = {};
@@ -74,7 +78,7 @@ in
   # after agetty login. After exiting sway, you will be logged out
   # cleanly.
   environment.extraInit = ulib.ifTTY ''
-    alias sway='clear && exec ${start-sway}'
+    alias sway='clear && exec ${builtins.dirOf config.environment.dynamic-profiles.sway.loadFile}/start-sway'
 
     # Optionally:
     alias startw=sway

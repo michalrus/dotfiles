@@ -82,6 +82,10 @@ in
 
       export DESKTOP_SESSION=i3
     '';
+
+    extraPostBuild = ''
+      ln -s ${start-i3} $out/start-i3
+    '';
   };
 
   security.pam.services.i3lock = {};
@@ -93,7 +97,7 @@ in
   # after agetty login. After exiting i3, you will be logged out
   # cleanly.
   environment.extraInit = ulib.ifTTY ''
-    alias i3='clear && exec ${start-i3}'
+    alias i3='clear && exec ${builtins.dirOf config.environment.dynamic-profiles.i3.loadFile}/start-i3'
 
     # Optionally:
     alias startx=i3

@@ -21,6 +21,7 @@ let
     inherit (config.system.path) ignoreCollisions;
     postBuild = config.system.path.postBuild + ''
       ln -s ${doLoad} $out/${loadFile}
+      ${profileConfig.extraPostBuild}
     '';
   };
 
@@ -63,6 +64,11 @@ in
           type = types.lines;
           default = "";
           example = "export ABC=def";
+        };
+        extraPostBuild = mkOption {
+          type = types.lines;
+          default = "";
+          example = "ln -s some-file $out/some-dir/";
         };
         loadFile = mkOption {
           type = types.lines;
