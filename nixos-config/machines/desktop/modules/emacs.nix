@@ -39,6 +39,7 @@ let
       #gregorio-mode
       counsel
       diff-hl
+      dockerfile-mode
       erlang
       expand-region
       flycheck

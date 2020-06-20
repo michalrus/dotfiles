@@ -31,3 +31,6 @@
 (use-package lsp-treemacs :commands lsp-treemacs-errors-list)
 (use-package dap-mode)
 ;; (use-package dap-LANGUAGE) to load the dap adapter for your language
+
+(use-package dockerfile-mode
+  :mode ("Containerfile\\'" "Dockerfile\\'"))

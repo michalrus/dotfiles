@@ -15,6 +15,9 @@
     ./modules/proaudio.nix
     ./my-hosts.nix
 
+    # TODO: use `virtualisation.podman.enable = true;` on >20.03
+    ../../modules/podman.nix
+
     ./modules/no-display-manager/i3.nix
     ./modules/no-display-manager/sway.nix
     ./modules/no-display-manager/lock-vts.nix
@@ -187,6 +190,11 @@
       hashedPassword = "$6$wO42jkhqerm$kl.qIl5USrzqAZOIkXdicrBLBgVwka2Dz81nc.aNsNJZREXY.02XxPdL1FiTCcuVP2K/DSmXqAQ3aPbri/v.g1";
       isNormalUser = true;
       uid = 31337;
+
+      # TODO: (for Podman) use `virtualisation.containers.users = [ "m" ];` on >20.03
+      subUidRanges = [{ startUid = 100000; count = 65536; }];
+      subGidRanges = [{ startGid = 100000; count = 65536; }];
+
       description = "Michal Rus";
       extraGroups = [ "wheel" "audio" "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" "video" ];
       dotfiles.base = "${config.users.users.m.home}/.dotfiles/dotfiles";
@@ -217,6 +225,11 @@
       hashedPassword = "$6$EDtlcw2d9XVBOw$Y0SLSpFnAc/tc3z8/Y4cQK/p.Vuqkwz0HHBkYcDAlUI3lHOFJQBj0cscE30qs2YoxsoUwOxIno0g4zhZUsZ7R1";
       isNormalUser = true;
       uid = 1337;
+
+      # TODO: (for Podman) use `virtualisation.containers.users = [ "m" ];` on >20.03
+      subUidRanges = [{ startUid = 200000; count = 65536; }];
+      subGidRanges = [{ startGid = 200000; count = 65536; }];
+
       description = "Michal Rus (w)";
       extraGroups = [ "audio" "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" "video" ];
       dotfiles.profiles = [ "base" "michalrus/base" "michalrus/desktop" "git-annex" "michalrus/work/ig" "i3" "emacs" ];
