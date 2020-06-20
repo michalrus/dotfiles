@@ -64,6 +64,7 @@ in
           kevin:$apr1$AMhND1PY$UCfXf2gnf8ZMXaA3YEDBJ0
           pkarolczak:$apr1$stgl8558$W9QATO6UR6aql6nJ2/7Vu1
           Erni:$apr1$Ic80R/Xi$i2KQsPlTZOqMiGDVwZBlA/
+          wodzu:$apr1$cHVvxRHB$cTc4gg3nMtcLkaEqc8NG7.
         ''}";
         root /var/www/${domain}/master/public;
         error_page 404 /pl/404.html;
