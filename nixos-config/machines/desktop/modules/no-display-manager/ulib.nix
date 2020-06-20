@@ -58,6 +58,7 @@ rec {
     '';
 
   in pkgs.writeText "xorg.conf" ''
+    # From ${sectionFiles} (prevent GC):
     ${builtins.readFile sectionFiles}
 
     # Automatically enable the libinput driver for all touchpads.
