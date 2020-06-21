@@ -121,8 +121,6 @@ in
   ###   • so list all sessions `loginctl list-sessions`…
   ###   • … and `systemctl stop session-XXX.scope` for sessions without i3lock / swaylock
 
-  ### TODO: wofiUnstable from pkgs.nixos-unstable
-
   ### TODO: kitty
 
   # Lock screen on anything HID, cf. https://youtu.be/5Nk6iDryW0Y?t=1323 .

@@ -4,23 +4,6 @@ let
 
   ulib = import ./ulib.nix { inherit config pkgs; };
 
-  #
-  # There’s no `wofi` in nixos-19.09 yet, let’s use `nixos-unstable`
-  # for that (plus some patch).
-  #
-  wofiUnstable = (import (pkgs.fetchFromGitHub  {
-    owner = "NixOS"; repo = "nixpkgs";
-    rev = "ae6bdcc53584aaf20211ce1814bea97ece08a248";
-    sha256 = "0hjhznns1cxgl3hww2d5si6vhy36pnm53hms9h338v6r633dcy77";
-  }) {}).wofi.overrideAttrs (oldAttrs: {
-    patches = [
-      (pkgs.fetchpatch {
-        url = "https://paste.sr.ht/blob/1cbddafac3806afb203940c029e78ce8390d8f49";
-        sha256 = "1n4jpmh66p7asjhj0z2s94ny91lmaq4hhh2356nj406vlqr15vbb";
-      })
-    ];
-  });
-
   start-sway = pkgs.writeScript "start-sway" ''
     #! ${pkgs.stdenv.shell}
 
@@ -42,7 +25,7 @@ in
     packages = with pkgs; [
 
       # These packages will be visible from within `sway` session only.
-      sway swayidle swaylock xwayland wofiUnstable
+      sway swayidle swaylock xwayland nixos-unstable.wofi
       termite firefox-wayland
 
       # For Xwayland’s DPI setting:
