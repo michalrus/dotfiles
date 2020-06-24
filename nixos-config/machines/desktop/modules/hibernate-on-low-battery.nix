@@ -27,6 +27,7 @@ in
           read -r status capacity
           if [ "$status" = Discharging -a "$capacity" -le ${toString criticalPercent} ]; then
             echo >&2 "Critical battery level: $capacity% ≤ ${toString criticalPercent}%, hibernating."
+            ${pkgs.utillinux}/bin/swapon -a
             systemctl hibernate
           fi
         }
