@@ -2,7 +2,7 @@
 
 termite --name initial &
 
-emacs --frame-parameters='(quote (name . "org"))' --eval '(find-file "~/Org/Today.org")' &
+emacs --frame-parameters='(quote (name . "org"))' --eval '(find-file "~/Org/ZTD.org")' &
 
 firefox &
 
