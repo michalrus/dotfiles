@@ -65,6 +65,8 @@ in
           pkarolczak:$apr1$stgl8558$W9QATO6UR6aql6nJ2/7Vu1
           Erni:$apr1$Ic80R/Xi$i2KQsPlTZOqMiGDVwZBlA/
           wodzu:$apr1$cHVvxRHB$cTc4gg3nMtcLkaEqc8NG7.
+          dominikanie:$apr1$TMM4XhfV$BUjLTqfIQIo2xR6/7qyXD0
+          doodleman:$apr1$pIj./Cyw$SbUMfQhmzbOOIysbbr431/
         ''}";
         root /var/www/${domain}/master/public;
         error_page 404 /pl/404.html;
