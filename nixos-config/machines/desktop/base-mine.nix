@@ -205,7 +205,7 @@
         isync
         jetbrains.idea-community
         lilypond
-        monero
+        monero-gui
         (wrapFirefox (michalrus.hardened-firefox-unwrapped.override {
           localAutocompletePort = config.services.firefox-autocomplete.userPorts.m;
           extraPrefs = michalrus.hardened-firefox-unwrapped.cfgEnableDRM;
