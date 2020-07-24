@@ -1,7 +1,7 @@
 # -*- mode: shell-script; sh-shell: sh -*-
 
 termite --name initial &
-emacs --frame-parameters='(quote (name . "org"))' --eval '(find-file "~/Org/iGeolise.org")' &
+emacs --frame-parameters='(quote (name . "org"))' --eval '(find-file "~/Org/ZTD.org")' &
 
 chromium &
 
