@@ -182,7 +182,7 @@
       packages = with pkgs; [
         unfree.google-chrome
         unfree.skypeforlinux
-        unfree.zoom-us
+        unfree.michalrus.zoom-us # recording patch
       ];
     };
 
@@ -247,7 +247,7 @@
         qgis
         josm
         unfree.skypeforlinux
-        unfree.nixos-unstable.zoom-us
+        unfree.michalrus.zoom-us # recording patch
       ];
     };
 

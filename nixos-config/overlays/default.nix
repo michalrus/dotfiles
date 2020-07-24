@@ -74,6 +74,8 @@ composeOverlays [
 
           (import ./pkgs/transcribe.nix)
 
+          (import ./pkgs/zoom-us.nix)
+
         ] self.michalrus (super.michalrus or super);
 
       })
