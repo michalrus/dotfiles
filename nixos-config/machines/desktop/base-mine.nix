@@ -59,6 +59,7 @@
   environment.systemPackages = with pkgs; [
     (haskellPackages.ghcWithHoogle (hs: []))
     (nixos-unstable.wine.override { pulseaudioSupport = true; })
+    acpitool
     aegisub
     alacritty
     blueman
@@ -129,8 +130,8 @@
   '';
 
   services = {
+    logind.lidSwitch = "ignore";
     logind.extraConfig = ''
-      HandleLidSwitch=suspend
       HandlePowerKey=suspend
     '';
 
