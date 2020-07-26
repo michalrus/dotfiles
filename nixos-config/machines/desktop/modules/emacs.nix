@@ -16,13 +16,16 @@ let
       company-lsp
       dap-mode
       dhall-mode
+      flycheck
       focus-autosave-mode
       hayoo
       lsp-mode
       lsp-treemacs
       lsp-ui
+      rust-mode
       sort-words
       treemacs
+      yasnippet
     ])
     ++
 
@@ -42,7 +45,6 @@ let
       dockerfile-mode
       erlang
       expand-region
-      flycheck
       git-gutter
       git-link
       go-mode
@@ -57,7 +59,6 @@ let
       nix-mode
       projectile
       python-mode
-      rust-mode
       scala-mode
       smart-mode-line
       solarized-theme
@@ -66,7 +67,6 @@ let
       use-package
       ws-butler
       yaml-mode
-      yasnippet
     ])
   );
 

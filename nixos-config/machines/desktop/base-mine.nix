@@ -89,6 +89,7 @@
     (python3.withPackages (p: with p; [ scipy matplotlib tkinter ]))
     python3Packages.livereload
     rustup
+    nixos-unstable.rust-analyzer
     sqlint
     termite
     watchexec

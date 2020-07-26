@@ -19,7 +19,8 @@
 (use-package woman
   :bind (("C-c w" . woman)))
 
-(use-package yasnippet)
+(use-package yasnippet
+  :config (yas-reload-all))
 
 (use-package flycheck
   :config
