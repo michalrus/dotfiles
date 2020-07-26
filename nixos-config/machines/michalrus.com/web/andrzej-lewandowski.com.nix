@@ -51,22 +51,26 @@ in
           Krzyś:$apr1$.UBqHkMw$iqeyhOiJ2Q2YHKeoVTMQu.
           mikolaj:$apr1$tVowKZpr$Nul4ytYxnMYvNESnBwb2L1
           slupska:$apr1$Kg/RRn6V$IV.hUtFMXsi48wAtHh4CL.
-          Rndl:$apr1$3lFkYcib$rL3F9IhikosYLZM8gqjry1
+          #Rndl:$apr1$3lFkYcib$rL3F9IhikosYLZM8gqjry1
           kuba:$apr1$nO2liTmW$rPiuo2hZo6MxSoxyDuG4.0
-          pacioraaa:$apr1$h5Vhypph$xYXbICM3MnvpjvwFUWo6p0
+          #pacioraaa:$apr1$h5Vhypph$xYXbICM3MnvpjvwFUWo6p0
           jupblb:$apr1$oJM3RdYJ$MiN9l6hBSZiNMgP14QSEB0
           ania:$apr1$TJ9gf2ce$8ic6USdd8CUoD93D5Y/b41
           kjanosz:$apr1$AczmhGaa$YPD6fhFJ1DNBqQ3UOvQ400
           madziarar:$apr1$7dlOk0fF$d5sev/iD7FBWjgrodrzEK0
           psychiatra:$apr1$8/GLVfKU$0ueLvh60LQrst8pn/1s4r1
           Mateusz:$apr1$AzfYzV6k$wpSTsetgS60QE3ygglrLI0
+          # Ha.:
           bartosz:$apr1$9QyXojiD$rtD/HEgD757hmhN0Schy.1
-          kevin:$apr1$AMhND1PY$UCfXf2gnf8ZMXaA3YEDBJ0
+          #kevin:$apr1$AMhND1PY$UCfXf2gnf8ZMXaA3YEDBJ0
           pkarolczak:$apr1$stgl8558$W9QATO6UR6aql6nJ2/7Vu1
           Erni:$apr1$Ic80R/Xi$i2KQsPlTZOqMiGDVwZBlA/
           wodzu:$apr1$cHVvxRHB$cTc4gg3nMtcLkaEqc8NG7.
-          dominikanie:$apr1$TMM4XhfV$BUjLTqfIQIo2xR6/7qyXD0
-          doodleman:$apr1$pIj./Cyw$SbUMfQhmzbOOIysbbr431/
+          # Kowi:
+          doodleman:$apr1$pIj./Cyw$SbUMfQhmzbOOIysbbr431/:Kowi
+          # Cannes:
+          piotr:$apr1$YcnorKBI$IvmwtjMGXBTNaFere/ppT1
+          alicja:$apr1$YcnorKBI$IvmwtjMGXBTNaFere/ppT1
         ''}";
         root /var/www/${domain}/master/public;
         error_page 404 /pl/404.html;
