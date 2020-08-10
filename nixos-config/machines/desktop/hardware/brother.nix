@@ -26,11 +26,10 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.initrd.luks.devices = [{
-    name = "crypt";
+  boot.initrd.luks.devices.crypt = {
     device = "/dev/disk/by-uuid/7595fd97-90d1-42a2-822c-8785d5a4663b";
     # allowDiscards = true; # if SSD — has security implications!
-  }];
+  };
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/07846ad2-f6a5-4398-8f2e-c7b2ac5d1c74";

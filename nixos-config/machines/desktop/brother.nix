@@ -15,10 +15,10 @@
   };
   hardware.bluetooth.enable = true;
   hardware.bluetooth.package = pkgs.bluezFull;
-  hardware.bluetooth.extraConfig = ''
-   [Audio]
-   Disable=socket
-  '';
+  hardware.bluetooth.config.Audio.Disable = "socket";
+  hardware.opengl.driSupport32Bit = true;
+  hardware.opengl.extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
+  hardware.pulseaudio.support32Bit = true;
   boot.extraModprobeConfig = ''options snd_hda_intel model=generic'';
   time.timeZone = "Europe/Warsaw";
   i18n.defaultLocale = "en_US.UTF-8";
@@ -44,6 +44,7 @@
     #unfree.michalrus.transcribe
     unfree.michalrus.steam
     unfree.skype
+    unfree.teams
     unfree.teamspeak_client
     unfree.unrar
     unfree.xmind
