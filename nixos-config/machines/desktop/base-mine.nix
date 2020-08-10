@@ -86,7 +86,7 @@
     octave
     pandoc
     pdfpc
-    (python3.withPackages (p: with p; [ scipy matplotlib tkinter ]))
+    (python3.withPackages (p: with p; [ scipy matplotlib tkinter beautifulsoup4 ]))
     python3Packages.livereload
     rustup
     nixos-unstable.rust-analyzer
