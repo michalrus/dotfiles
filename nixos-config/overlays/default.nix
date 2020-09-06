@@ -70,8 +70,6 @@ composeOverlays [
 
         michalrus = composeOverlays [
 
-          (import ./pkgs/steam.nix)
-
           (import ./pkgs/transcribe.nix)
 
           (import ./pkgs/zoom-us.nix)

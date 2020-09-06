@@ -13,8 +13,9 @@
 
   security.pam.services.slimlock = {};
 
+  programs.slock.enable = true;
+
   environment.systemPackages = with pkgs; [
-    (runCommand "wrap-slimlock" {} "mkdir -p $out/bin && ln -s ${pkgs.slim}/bin/slimlock $out/bin/slock")
     galculator
     gnome2.gnome_icon_theme
     gnome3.adwaita-icon-theme
@@ -37,6 +38,8 @@
         enable = true;
         thunarPlugins = with pkgs.xfce; [ thunar-archive-plugin ];
       };
+
+      synaptics.enable = false; # Xfce uses libinput now.
 
       # For Evolution password management
       displayManager.sessionCommands = ''

@@ -6,6 +6,9 @@
 
   environment.gnome3.excludePackages = [ pkgs.gnome3.epiphany ];
 
+  services.dbus.packages = with pkgs; [ gnome2.GConf ];
+  services.spice-vdagentd.enable = true;
+
   environment.systemPackages = with pkgs; [
     gnome3.file-roller
     gnome2.gnome_icon_theme
@@ -26,23 +29,5 @@
       desktopManager.gnome3.enable = true;
     };
   };
-
-  # use Xorg instead of Wayland
-  environment.etc."gdm/custom.conf".text = ''
-    [daemon]
-    WaylandEnable=false
-  '';
-
-  # https://github.com/NixOS/nixpkgs/issues/24172#issuecomment-293714795
-  systemd.targets."multi-user".conflicts = [ "getty@tty1.service" ];
-
-  # TODO: Also, try this: https://github.com/NixOS/nixpkgs/issues/24172#issuecomment-330334844
-  # nixpkgs.overlays = [ (self: super: {
-  #   gnome3 = super.gnome3 // {
-  #     gdm = super.gnome3.gdm.overrideAttrs (oldAttrs: {
-  #       configureFlags = oldAttrs.configureFlags ++ [ "--with-initial-vt=7" ];
-  #     });
-  #   };
-  # }) ];
 
 }

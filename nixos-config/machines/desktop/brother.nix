@@ -5,7 +5,7 @@
     ./base.nix
     #./modules/android.nix
     ./modules/chwalecice.nix
-    ./modules/gnome.nix
+    ./modules/xfce.nix
   ];
   hardware.pulseaudio = {
     enable = true;
@@ -42,7 +42,7 @@
     qjoypad
     unfree.google-chrome
     #unfree.michalrus.transcribe
-    unfree.michalrus.steam
+    unfree.steam
     unfree.skype
     unfree.teams
     unfree.teamspeak_client
@@ -79,7 +79,7 @@
     eb-garamond
     liberation_ttf
     unfree.corefonts
-    unfree.helvetica-neue-lt-std
+    #unfree.helvetica-neue-lt-std
     unfree.vistafonts
   ];
 
