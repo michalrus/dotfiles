@@ -18,7 +18,7 @@ x_type()  { xdotool type --window "$window" "$1" ; }
 x_press() { xdotool key  --window "$window" "$1" ; }
 
 choose_vault() {
-  window_title="$(xdotool getwindowname "$window")"
+  window_title="$(xdotool getwindowname "$window") - $(xprop -id "$window" WM_CLASS | cut -d= -f2-)"
   cd "$pwstore"
   {
     find . -name '*.autotype' -print0 | xargs -r0 grep -H '' |\
