@@ -31,7 +31,7 @@ let
 
     # ELPA Stable
     (with epkgs.elpaPackages; [
-      auctex
+      #auctex # auxtex is gone from Emacs?
       nlinum
     ])
     ++
