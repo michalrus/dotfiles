@@ -5,8 +5,8 @@ with (import ./ulib.nix super);
 let
 
   nixos-unstable = config:
-    let src = nixpkgsOf "135073a87b7e2c631739f4ffa016e1859b1a425e"
-                        "0s5kgyi7764r4zm51zy4isyc4zgn4fajwqwnrgm7s1xbs6zickv5";
+    let src = nixpkgsOf "5265d49a36bb5a18c85e6817b338b456acc3b8cc"
+                        "0cab38mj3f5ip0hld6wqwxsg4lj6d285kw71d2c8mnk2nk5bk4q6";
         nixpkgs = (import src { inherit config; });
     in nixpkgs // {
       preventGC = nixpkgs.writeTextDir "prevent-ifd-gc" (toString [ src ]);
