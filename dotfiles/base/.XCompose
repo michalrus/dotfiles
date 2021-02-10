@@ -12,6 +12,8 @@ include "%L"
 <Multi_key> <P> <I>                   : "Π" U03A0 # GREEK CAPITAL LETTER PI
 <Multi_key> <p> <h> <i>               : "φ" U03A6 # GREEK SMALL LETTER PHI
 <Multi_key> <P> <H> <I>               : "Φ" U03C6 # GREEK CAPITAL LETTER PHI
+<Multi_key> <p> <s> <i>               : "ψ" U03C8 # GREEK SMALL LETTER PSI
+<Multi_key> <P> <S> <I>               : "Ψ" U03A8 # GREEK CAPITAL LETTER PSI
 <Multi_key> <s> <i> <g>               : "σ" U03C3 # GREEK SMALL LETTER SIGMA
 <Multi_key> <S> <I> <G>               : "Σ" U03A3 # GREEK CAPITAL LETTER SIGMA
 
