@@ -70,7 +70,11 @@ in
           doodleman:$apr1$pIj./Cyw$SbUMfQhmzbOOIysbbr431/:Kowi
           # Cannes:
           piotr:$apr1$YcnorKBI$IvmwtjMGXBTNaFere/ppT1
+          # Cannes:
           alicja:$apr1$YcnorKBI$IvmwtjMGXBTNaFere/ppT1
+          ruta:$apr1$aXI4o.5Y$5geFlfnJGbHu3yetK5gJT/
+          # Staw
+          Lukasz:$apr1$lTjGHPfl$DsPFl.7ibKKk.CzozPT.J.
         ''}";
         root /var/www/${domain}/master/public;
         error_page 404 /pl/404.html;
