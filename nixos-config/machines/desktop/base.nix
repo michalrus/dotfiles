@@ -128,7 +128,7 @@
   };
 
   users.users.root = {
-    dotfiles.profiles = [ "base" ];
+    dotfiles-old.profiles = [ "base" ];
     openssh.authorizedKeys.keyFiles = [ ../../../dotfiles/michalrus/base/.ssh/authorized_keys.d/michalrus_notebook.pub ];
   };
 }

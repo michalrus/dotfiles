@@ -186,7 +186,7 @@
     };
 
     users.guest = {
-      dotfiles.profiles = [ "base" "i3" "michalrus/guest" ];
+      dotfiles-old.profiles = [ "base" "i3" "michalrus/guest" ];
       packages = with pkgs; [
         unfree.google-chrome
         unfree.skypeforlinux
@@ -205,8 +205,8 @@
 
       description = "Michal Rus";
       extraGroups = [ "wheel" "audio" "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" "video" ];
-      dotfiles.base = "${config.users.users.m.home}/.dotfiles/dotfiles";
-      dotfiles.profiles = [ "base" "michalrus/base" "michalrus/desktop" "git-annex" "michalrus/personal" "i3" "emacs" ];
+      dotfiles-old.base = "${config.users.users.m.home}/.dotfiles/dotfiles";
+      dotfiles-old.profiles = [ "base" "michalrus/base" "michalrus/desktop" "git-annex" "michalrus/personal" "i3" "emacs" ];
       packages = with pkgs; [
         chromium
         electrum
@@ -241,7 +241,7 @@
 
       description = "Michal Rus (w)";
       extraGroups = [ "audio" "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" "video" ];
-      dotfiles.profiles = [ "base" "michalrus/base" "michalrus/desktop" "git-annex" "michalrus/work/ig" "i3" "emacs" ];
+      dotfiles-old.profiles = [ "base" "michalrus/base" "michalrus/desktop" "git-annex" "michalrus/work/ig" "i3" "emacs" ];
       packages = with pkgs; [
         (wrapFirefox (michalrus.hardened-firefox-unwrapped.override {
           localAutocompletePort = config.services.firefox-autocomplete.userPorts.mw;
@@ -266,7 +266,7 @@
       uid = 1347;
       description = "Michal Rus (d)";
       extraGroups = [ "audio" "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" "video" ];
-      dotfiles.profiles = [ "base" "michalrus/base" "michalrus/desktop" "michalrus/tor" "i3" "emacs" ];
+      dotfiles-old.profiles = [ "base" "michalrus/base" "michalrus/desktop" "michalrus/tor" "i3" "emacs" ];
       packages = with pkgs; [
         (wrapFirefox (michalrus.hardened-firefox-unwrapped.override {
           localAutocompletePort = config.services.firefox-autocomplete.userPorts.md;

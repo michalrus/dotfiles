@@ -54,7 +54,7 @@
 
   users = {
     users.root = {
-      dotfiles.profiles = [ "base" ];
+      dotfiles-old.profiles = [ "base" ];
       openssh.authorizedKeys.keyFiles = [ ../../../dotfiles/michalrus/base/.ssh/authorized_keys.d/michalrus_notebook.pub ];
     };
 
@@ -68,8 +68,8 @@
       # The password is only used for sudo; should probably use custom PAM setup, cf. http://unix.stackexchange.com/a/94646
       hashedPassword = "$6$.lrNvojxVb.$rebh/ELnYtO69DyvnqL4IWE8Gsg.neIzfGTsM0NbUsl7vhblv.P.SgLQk05mJiLFMXje/9paO8DCB2M8lEfQQ1";
 
-      dotfiles.base = config.users.users.m.home + "/.dotfiles/dotfiles";
-      dotfiles.profiles = [ "base" "michalrus/base" "michalrus/personal" ];
+      dotfiles-old.base = config.users.users.m.home + "/.dotfiles/dotfiles";
+      dotfiles-old.profiles = [ "base" "michalrus/base" "michalrus/personal" ];
     };
   };
 

@@ -1,6 +1,6 @@
 {
   imports = [
-    ./dotfiles.nix
+    ./dotfiles-old.nix
     ./firewall-comments.nix
     ./guest-account.nix
     ./lock-x11-displays.nix

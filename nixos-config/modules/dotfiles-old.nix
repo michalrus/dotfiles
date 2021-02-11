@@ -4,12 +4,12 @@ with lib;
 
 let
 
-  etcDirName = "dotfiles/per-user";
+  etcDirName = "dotfiles-old/per-user";
 
 in {
   options.users.users = mkOption {
     options = [{
-      dotfiles = {
+      dotfiles-old = {
         base = mkOption {
           type = types.path;
           default = ../../dotfiles;
@@ -53,13 +53,13 @@ in {
   config = let
 
     usersWithMutableDotfiles = filterAttrs  (n: u:
-      length u.dotfiles.profiles != 0
-      && !isStorePath "${u.dotfiles.base}"
+      length u.dotfiles-old.profiles != 0
+      && !isStorePath "${u.dotfiles-old.base}"
     ) config.users.users;
 
     usersWithImmutableDotfiles = filterAttrs (n: u:
-      length u.dotfiles.profiles != 0
-      && isStorePath "${u.dotfiles.base}"
+      length u.dotfiles-old.profiles != 0
+      && isStorePath "${u.dotfiles-old.base}"
     ) config.users.users;
 
     symlinkCmd = srcs: target: ''
@@ -77,7 +77,7 @@ in {
         "${target}/" || true
     '';
 
-    srcs = u: map (profile: "${u.dotfiles.base}/${profile}") u.dotfiles.profiles;
+    srcs = u: map (profile: "${u.dotfiles-old.base}/${profile}") u.dotfiles-old.profiles;
 
   in {
     environment.etc = mapAttrs' (n: u: {
@@ -89,7 +89,7 @@ in {
         # `etcDirName`. Therefore we can’t resolve their symlinks
         # prior to our linking, as both of these commands do. Let’s
         # just blindly link to what the user supplies in `srcs`.
-        pkgs.runCommand "dotfiles-${n}" {} ''
+        pkgs.runCommand "dotfiles-old-${n}" {} ''
           mkdir -p $out
           ${symlinkCmd (srcs u) "$out"}
         '';
