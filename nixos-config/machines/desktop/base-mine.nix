@@ -3,7 +3,6 @@
 {
   imports = [
     ./base.nix
-    ./modules/mpd.nix
     ./modules/android.nix
     ./modules/emacs.nix
     ./modules/malicious-hosts.nix
