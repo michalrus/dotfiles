@@ -136,7 +136,7 @@
   '';
 
   services = {
-    logind.lidSwitch = "ignore";
+    logind.lidSwitch = "suspend";
     logind.extraConfig = ''
       HandlePowerKey=suspend
     '';
