@@ -26,6 +26,9 @@
 
   boot.tmpOnTmpfs = true;
 
+  # For building RPi3 system on an x86 laptop:
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
   i18n = {
     defaultLocale = "en_US.UTF-8";
     extraLocaleSettings = {
