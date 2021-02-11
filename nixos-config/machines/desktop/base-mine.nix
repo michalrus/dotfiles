@@ -64,6 +64,7 @@
     acpitool
     aegisub
     alacritty
+    binutils
     blueman
     breeze-qt5 breeze-icons pkgs.hicolor_icon_theme kde-gtk-config breeze-gtk
     brightnessctl
@@ -72,13 +73,15 @@
     dvdbackup
     feh
     gdb
-    binutils
+    ipcalc
     gettext
     ghostscript
     gist
+    gnome3.adwaita-icon-theme # for resizable cursors
     gnome3.dconf   # so that GnuCash prefs can be changed
     gnome3.zenity
     haskellPackages.hlint
+    httrack
     k3b
     libxml2
     michalrus.gettext-emacs
@@ -90,10 +93,10 @@
     pdfpc
     (python3.withPackages (p: with p; [ scipy matplotlib tkinter beautifulsoup4 ]))
     python3Packages.livereload
-    rustup
-    nixos-unstable.rust-analyzer
+    nixos-unstable.rustup
     sqlint
     termite
+    vscodium
     watchexec
     speedread
     xdg_utils
@@ -172,6 +175,7 @@
     iosevka-bin
     font-awesome-ttf
     font-awesome
+    google-fonts
   ];
 
   users = {
@@ -186,7 +190,7 @@
       packages = with pkgs; [
         unfree.google-chrome
         unfree.skypeforlinux
-        unfree.michalrus.zoom-us # recording patch
+        unfree.zoom-us
       ];
     };
 
@@ -208,8 +212,9 @@
         electrum
         isync
         jetbrains.idea-community
+        unfree.skypeforlinux
         lilypond
-        monero-gui
+        nixos-unstable.monero-gui
         (wrapFirefox (michalrus.hardened-firefox-unwrapped.override {
           localAutocompletePort = config.services.firefox-autocomplete.userPorts.m;
           extraPrefs = michalrus.hardened-firefox-unwrapped.cfgEnableDRM;
@@ -251,7 +256,7 @@
         qgis
         josm
         unfree.skypeforlinux
-        unfree.michalrus.zoom-us # recording patch
+        unfree.zoom-us
       ];
     };
 
