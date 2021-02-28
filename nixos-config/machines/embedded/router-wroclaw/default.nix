@@ -103,7 +103,6 @@
 
       m = {
         hashedPassword = "$6$d3RxCdquTXL7.J7x$zRCbpql.Al1e1QAF0TO0ZkBpz6yQWjOh2HNbs0mwtrVm/BVvHEc31sUkZQk5d7dyc7yfZyyI61lXC1lXnqblL1";
-        dotfiles-old.base = "${config.users.users.m.home}/.dotfiles/dotfiles";
         dotfiles-old.profiles = [ "base" "michalrus/base" ];
         openssh.authorizedKeys.keyFiles = [ ../../../../dotfiles/michalrus/base/.ssh/authorized_keys.d/michalrus_notebook.pub ];
         uid = 31337;
