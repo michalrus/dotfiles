@@ -277,7 +277,6 @@
             lockPref("network.cookie.lifetimePolicy", 2); // The cookie expires at the end of the session.
           '';
         }) {})
-        michalrus.wasabi-wallet
       ];
     };
   };

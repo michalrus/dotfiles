@@ -37,7 +37,6 @@ composeOverlays [
     michalrus = composeOverlays [
 
       (import ./pkgs/hardened-firefox.nix)
-      (import ./pkgs/wasabi-wallet.nix)
 
       (import ./pkgs/git-annex-hacks.nix)
       (import ./pkgs/influxdb.nix)
