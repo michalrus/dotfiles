@@ -83,7 +83,6 @@
     lm_sensors
     lshw
     lsof
-    ltrace
     mkpasswd
     moreutils
     ncdu

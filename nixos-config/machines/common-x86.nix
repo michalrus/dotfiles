@@ -38,6 +38,7 @@
     imgurbash2
     indent
     jhead
+    ltrace
     man_db
     manpages
     michalrus.git-annex
