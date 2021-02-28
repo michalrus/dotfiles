@@ -73,6 +73,7 @@
     gnumake
     hdparm
     htop
+    httperf
     hwinfo
     inetutils
     inotify-tools
