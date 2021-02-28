@@ -124,6 +124,11 @@
       source = "${pkgs.fping}/bin/fping";
       capabilities = "cap_net_raw+p";
     };
+
+    wrappers.traceroute = {
+      source = "${pkgs.traceroute}/bin/traceroute";
+      capabilities = "cap_net_raw+p";
+    };
   };
 
   # Stability!
