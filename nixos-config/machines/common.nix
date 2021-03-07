@@ -60,6 +60,7 @@
     bc
     bindfs
     calc
+    conntrack-tools
     daemonize
     ddrescue
     dos2unix
