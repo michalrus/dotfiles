@@ -61,6 +61,9 @@
             # Extra arguments to pass to xserver, e.g. `[ "-dpi" "192" ]`.
             extraXserverArgs ? [],
 
+            # Whether to load `~/.Xresources` into Xserver.
+            loadXresources ? true,
+
             # If true, keep `.Xauthority` in `/run/user/`. If false, in `~/.Xauthority`.
             # Note that e.g. Emacs daemon has problems with that, when trying
             # to use a single one in 2 concurrent X sessions of the same
@@ -71,7 +74,10 @@
             assert (lib.assertMsg (lib.hasPrefix "/" windowManager) "window manager path needs to be absolute.");
             pkgs.writeShellScript "run-startx" ''
               exec ${pureStartx { inherit pureXauthority; }} \
-                ${lib.escapeShellArg windowManager} \
+                ${if loadXresources then pkgs.writeShellScript "load-xresources" ''
+                  xrdb $HOME/.Xresources || true
+                  exec ${lib.escapeShellArg windowManager}
+                '' else lib.escapeShellArg windowManager} \
                 -- \
                 -config ${lib.escapeShellArg xorgConf} \
                 -xkbdir ${pkgs.xkeyboard_config}/etc/X11/xkb \

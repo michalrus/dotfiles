@@ -62,6 +62,7 @@ in {
       launcherScript = xlib.xorg.runStartx {
         pureXauthority = false; # for `emacs --daemon`
         extraXserverArgs = [ "-dpi" "192" ];
+        loadXresources = false;
         xorgConf = xlib.xorg.mkXorgConf {
           hiDPIPointer = true;
           naturalScrollingTouchpad = true;
