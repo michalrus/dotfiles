@@ -5,7 +5,7 @@ let
   xlib = config.services.noDisplayManager.lib;
   inherit (lib) types;
 
-  launcherOptions = { name, ... }: {
+  wmOptions = { name, ... }: {
     options = {
 
       launcherScript = lib.mkOption {
@@ -46,7 +46,7 @@ in
   options = {
 
     services.noDisplayManager.windowManager = lib.mkOption {
-      type = types.attrsOf (types.submodule launcherOptions);
+      type = types.attrsOf (types.submodule wmOptions);
       description = "Window manager launchers to define for all users. Accessible as TTY aliases.";
       default = {};
       example = {};
@@ -55,7 +55,7 @@ in
     users.users = lib.mkOption {
       options = [{
         noDisplayManager.windowManager = lib.mkOption {
-          type = types.attrsOf (types.submodule launcherOptions);
+          type = types.attrsOf (types.submodule wmOptions);
           description = "Window manager launchers to define for this user. Accessible as TTY aliases.";
           default = {};
           example = {};
@@ -67,20 +67,20 @@ in
 
   config = let
 
-    usersWithLaunchers = lib.attrValues (lib.filterAttrs (n: u: u.noDisplayManager.windowManager != {}) config.users.users);
+    usersWithWMs = lib.attrValues (lib.filterAttrs (n: u: u.noDisplayManager.windowManager != {}) config.users.users);
 
-    dynamicProfileName = user: launcherName:
-      "nodm-${if user == null then "global" else "user-${user}"}-${launcherName}";
+    dynamicProfileName = user: wmName:
+      "nodm-${if user == null then "global" else "user-${user}"}-${wmName}";
 
-    mkDynamicProfile = user: launcherName: launcher:
+    mkDynamicProfile = user: wmName: wm:
       let
-        dpName = dynamicProfileName user launcherName;
+        dpName = dynamicProfileName user wmName;
         loadProfileAndExec = pkgs.writeShellScript "start-wm" ''
           . ${config.environment.dynamic-profiles."${dpName}".loadFile}
-          exec ${launcher.launcherScript}
+          exec ${wm.launcherScript}
         '';
       in lib.nameValuePair dpName {
-        inherit (launcher) packages environment;
+        inherit (wm) packages environment;
         extraPostBuild = "ln -s ${loadProfileAndExec} $out/start-wm";
       };
 
@@ -92,15 +92,15 @@ in
     //
     (lib.foldl' (a: b: a // b) {} (map (u: lib.mapAttrs' (
       mkDynamicProfile u.name
-    ) u.noDisplayManager.windowManager) usersWithLaunchers));
+    ) u.noDisplayManager.windowManager) usersWithWMs));
 
     environment.extraInit = let
 
-      mkAlias = user: launcherName: launcher: ''
-        alias ${launcherName}='clear && exec ${builtins.dirOf config.environment.dynamic-profiles."${dynamicProfileName user launcherName}".loadFile}/start-wm'
+      mkAlias = user: wmName: wm: ''
+        alias ${wmName}='clear && exec ${builtins.dirOf config.environment.dynamic-profiles."${dynamicProfileName user wmName}".loadFile}/start-wm'
       '';
 
-    in ''
+    in lib.mkIf ((lib.length usersWithWMs > 0) || config.services.noDisplayManager.windowManager != {}) ''
       # Only set noDisplayManager aliases in real console:
       if [ -n "$PS1" ]; then
         case "$(tty)" in /dev/tty[0-9]*)
@@ -115,7 +115,7 @@ in
                 mkAlias user.name
               ) user.noDisplayManager.windowManager)}
             fi
-          '') usersWithLaunchers}
+          '') usersWithWMs}
           ;;
         esac
       fi
