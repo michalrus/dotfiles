@@ -6,9 +6,9 @@ let
 
 in {
 
-  services.noDisplayManager.launchers.xterm = {
+  services.noDisplayManager.windowManager.xterm = {
     launcherScript = xlib.withDbus {
-      command = xlib.xorg.runStartx {
+      launcherScript = xlib.xorg.runStartx {
         extraXserverArgs = [ "-dpi" "192" ];
         #windowManager = "${pkgs.xterm}/bin/xterm";
         windowManager = pkgs.writeShellScript "xterm-xrdb" ''
@@ -27,10 +27,10 @@ in {
 
   security.pam.services.swaylock = {};
 
-  services.noDisplayManager.launchers.sway = {
+  services.noDisplayManager.windowManager.sway = {
     launcherScript = xlib.withDbus {
       journaldIdentifier = "sway";
-      command = pkgs.writeShellScript "sway" ''
+      launcherScript = pkgs.writeShellScript "sway" ''
         exec sway
       '';
     };
@@ -56,10 +56,10 @@ in {
 
   security.pam.services.i3lock = {};
 
-  services.noDisplayManager.launchers.i3 = {
+  services.noDisplayManager.windowManager.i3 = {
     launcherScript = xlib.withDbus {
       journaldIdentifier = "i3";
-      command = xlib.xorg.runStartx {
+      launcherScript = xlib.xorg.runStartx {
         pureXauthority = false; # for `emacs --daemon`
         extraXserverArgs = [ "-dpi" "192" ];
         xorgConf = xlib.xorg.mkXorgConf {

@@ -22,17 +22,17 @@
       default = {
 
         ##
-        #  Run the `command` in a DBus session, logging its stderr/stdout to
+        #  Run the `launcherScript` in a DBus session, logging its stderr/stdout to
         #  journald under `journaldIdentifier`.
         #
         withDbus = {
           journaldIdentifier ? "window-manager",
-          command
+          launcherScript
         }:
           pkgs.writeShellScript "with-dbus" ''
             exec ${pkgs.dbus}/bin/dbus-launch --exit-with-session \
               ${config.systemd.package}/bin/systemd-cat -t ${lib.escapeShellArg journaldIdentifier} \
-              ${lib.escapeShellArg command}
+              ${lib.escapeShellArg launcherScript}
             '';
 
         ##
