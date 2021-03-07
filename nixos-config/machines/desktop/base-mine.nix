@@ -12,15 +12,14 @@
     ./modules/transmission.nix
     ./modules/hibernate-on-low-battery.nix
     ./modules/proaudio.nix
+    ./modules/udev-remap-keyboard.nix
     ./my-hosts.nix
 
     # TODO: use `virtualisation.podman.enable = true;` on >20.03
     ../../modules/podman.nix
 
-    ./modules/no-display-manager/i3.nix
-    ./modules/no-display-manager/sway.nix
-    ./modules/no-display-manager/lock-vts.nix
-    ./modules/no-display-manager/udev-remap-keyboard.nix
+    # TODO: rethink
+    ./modules/lock-vts.nix
   ];
 
   boot.tmpOnTmpfs = true;

@@ -12,6 +12,10 @@ let
     doLoad = pkgs.writeText "load-${pname}" (
       exportDynamicProfiles [ "/etc/${etcDirName}/${name}" ]
       + "\n" +
+      (concatStringsSep "\n" (mapAttrsToList (name: val:
+        if val == null then "" else "export ${name}=${escapeShellArg val}"
+      ) profileConfig.environment))
+      + "\n" +
       profileConfig.extraSetup
     );
   in pkgs.buildEnv {
@@ -60,10 +64,15 @@ in
           type = types.listOf types.path;
           default = [];
         };
+        environment = mkOption {
+          type = with types; attrsOf (nullOr (oneOf [ str path package ]));
+          description = "Environment variables to set in this profile.";
+          default = {};
+          example = { ABC = "def"; };
+        };
         extraSetup = mkOption {
           type = types.lines;
           default = "";
-          example = "export ABC=def";
         };
         extraPostBuild = mkOption {
           type = types.lines;
