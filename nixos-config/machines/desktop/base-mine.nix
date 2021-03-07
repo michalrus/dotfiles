@@ -20,6 +20,8 @@
 
     # TODO: rethink
     ./modules/lock-vts.nix
+
+    ./modules/window-managers.nix
   ];
 
   boot.tmpOnTmpfs = true;

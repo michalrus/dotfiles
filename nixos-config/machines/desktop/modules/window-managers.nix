@@ -12,7 +12,7 @@ in {
         extraXserverArgs = [ "-dpi" "192" ];
         #windowManager = "${pkgs.xterm}/bin/xterm";
         windowManager = pkgs.writeShellScript "xterm-xrdb" ''
-          ${ builtins.readFile ../../../dotfiles/i3/.config/autostart/dotfiles.d/15xresources-merge }
+          ${ builtins.readFile ../../../../dotfiles/i3/.config/autostart/dotfiles.d/15xresources-merge }
           exec xterm
         '';
       };

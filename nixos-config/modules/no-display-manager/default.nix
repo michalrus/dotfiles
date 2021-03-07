@@ -41,12 +41,6 @@ in
   imports = [
     ./lib.nix
     ../dynamic-profiles.nix
-
-
-    # TODO: remove this:
-    ./i3-new.nix
-
-
   ];
 
   options = {
