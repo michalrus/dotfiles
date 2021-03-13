@@ -71,13 +71,14 @@
             # not just the graphical client…
             pureXauthority ? true
           }:
-            assert (lib.assertMsg (lib.hasPrefix "/" windowManager) "window manager path needs to be absolute.");
             pkgs.writeShellScript "run-startx" ''
               exec ${pureStartx { inherit pureXauthority; }} \
-                ${if loadXresources then pkgs.writeShellScript "load-xresources" ''
-                  xrdb $HOME/.Xresources || true
-                  exec ${lib.escapeShellArg windowManager}
-                '' else lib.escapeShellArg windowManager} \
+                ${pkgs.writeShellScript "window-manager" ''
+                  ${if loadXresources then ''
+                    ${pkgs.xorg.xrdb}/bin/xrdb $HOME/.Xresources || true
+                  '' else ""}
+                  exec ${windowManager}
+                ''} \
                 -- \
                 -config ${lib.escapeShellArg xorgConf} \
                 -xkbdir ${pkgs.xkeyboard_config}/etc/X11/xkb \
