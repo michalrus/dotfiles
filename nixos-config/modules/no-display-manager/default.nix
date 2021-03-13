@@ -27,6 +27,13 @@ let
         example = { MOZ_USE_XINPUT2 = "1"; };
       };
 
+      defaultArguments = lib.mkOption {
+        type = with types; attrsOf (listOf (oneOf [ str path package ]));
+        description = "Programs on PATH will have this arguments bby default.";
+        default = {};
+        example = { "i3" = [ "-c" "/some/config/file.conf" ]; };
+      };
+
     };
 
     config = {
@@ -81,7 +88,19 @@ in
         '';
       in lib.nameValuePair dpName {
         inherit (wm) packages environment;
-        extraPostBuild = "ln -s ${loadProfileAndExec} $out/start-wm";
+        extraPostBuild = ''
+          ln -s ${loadProfileAndExec} $out/start-wm
+
+          ${lib.concatStringsSep "\n" (lib.mapAttrsToList (bin: args: ''
+            [ -e $out/bin/${bin} ] || { echo "defaultArguments: ${bin}: not found" ; exit 1 ; }
+            target=$(readlink $out/bin/${bin})
+            rm $out/bin/${bin}
+            touch $out/bin/${bin}
+            chmod a+x $out/bin/${bin}
+            echo '#!/bin/sh' >> $out/bin/${bin}
+            echo "exec $target" ${lib.escapeShellArg (lib.escapeShellArgs args)} '"$@"' >> $out/bin/${bin}
+          '') wm.defaultArguments)}
+        '';
       };
 
   in {
