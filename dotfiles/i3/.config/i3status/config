@@ -36,7 +36,7 @@ battery 1 {
   status_full = "F"
   #path = "/sys/class/power_supply/BAT%d/uevent"
   hide_seconds = true
-  last_full_capacity = true
+  last_full_capacity = false
   integer_battery_capacity = true
   low_threshold = 5
 }
