@@ -1,5 +1,5 @@
 [options]
-font = Iosevka Term 16px
+font = Iosevka Term 12
 cursor_blink = on
 cursor_shape = ibeam
 dynamic_title = on
