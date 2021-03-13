@@ -8,6 +8,4 @@ chromium &
 termite --name code &
 emacs --frame-parameters='(quote (name . "code"))' &
 
-idea-community &
-
 zoom-us &
