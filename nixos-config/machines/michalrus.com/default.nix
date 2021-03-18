@@ -60,7 +60,6 @@
 
     extraUsers.m = {
       isNormalUser = true;
-      linger = true;
       openssh.authorizedKeys.keyFiles = [ ../../../dotfiles/michalrus/base/.ssh/authorized_keys.d/michalrus_notebook.pub ];
       description = "Michal Rus";
       extraGroups = [ "wheel" ];

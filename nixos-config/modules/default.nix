@@ -4,7 +4,6 @@
     ./firewall-comments.nix
     ./guest-account.nix
     ./lock-x11-displays.nix
-    ./loginctl-linger.nix
     ./logkeys
     ./no-display-manager
     ./nonet-group.nix
