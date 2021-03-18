@@ -103,7 +103,6 @@
     pdfgrep
     pinentry-gtk2
     pythonPackages.livestreamer
-    rfkill
     rtmpdump
     samba
     scantailor
