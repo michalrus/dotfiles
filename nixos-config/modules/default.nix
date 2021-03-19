@@ -7,6 +7,7 @@
     ./logkeys
     ./no-display-manager
     ./nonet-group.nix
+    ./podman.nix
     ./sane-extra-config.nix
     ./screen.nix
     ./somagic-easycap.nix
