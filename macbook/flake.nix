@@ -17,11 +17,20 @@
     darwinConfigurations = rec {
       macbook = inputs.nix-darwin.lib.darwinSystem {
         system = "aarch64-darwin";
-        modules = [ 
-          ({ config, pkgs, ... }: { _module.args.pkgsUnstable = import inputs.nixpkgsUnstable { inherit (pkgs) system; inherit (config.nixpkgs) config; }; })
+        modules = [
+          ({
+            config,
+            pkgs,
+            ...
+          }: {
+            _module.args.pkgsUnstable = import inputs.nixpkgsUnstable {
+              inherit (pkgs) system;
+              inherit (config.nixpkgs) config;
+            };
+          })
           ./configuration.nix
           inputs.home-manager.darwinModules.home-manager
-          ({ pkgsUnstable, ... }: {
+          ({pkgsUnstable, ...}: {
             nixpkgs.config.allowUnfree = true;
             home-manager.extraSpecialArgs.pkgsUnstable = pkgsUnstable;
             home-manager.extraSpecialArgs.nix-doom-emacs = inputs.nix-doom-emacs;
@@ -45,5 +54,5 @@
         ];
       };
     };
- };
+  };
 }

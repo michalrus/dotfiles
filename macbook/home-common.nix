@@ -1,6 +1,11 @@
-{ config, pkgs, pkgsUnstable, lib, nix-doom-emacs, ... }:
-
 {
+  config,
+  pkgs,
+  pkgsUnstable,
+  lib,
+  nix-doom-emacs,
+  ...
+}: {
   home.stateVersion = "22.05";
 
   #programs.direnv.enable = true;
@@ -107,9 +112,14 @@
     prompt.pwdLength = "long";
     editor.promptContext = true;
     pmodules = [
-      "environment" "terminal" "editor"
-      "syntax-highlighting" "history-substring-search" "autosuggestions"
-      "completion" "prompt"
+      "environment"
+      "terminal"
+      "editor"
+      "syntax-highlighting"
+      "history-substring-search"
+      "autosuggestions"
+      "completion"
+      "prompt"
     ];
     extraConfig = ''
       zstyle ':prezto:module:git:alias' skip 'yes'
@@ -124,13 +134,13 @@
     ll = l;
     g = "git";
     d = "dirs -v";
-    youtube-dl = "yt-dlp";  # for --argv completion
+    youtube-dl = "yt-dlp"; # for --argv completion
     spell-password = ''bash -c 'read -s -p "Password: " pw ; echo ; fold -w1 <<<"$pw" | cat -n' '';
   };
 
   home.packages = with pkgs; [
     # Has to be managed by home-manager, to trigger installation on Darwin:
-    (nerdfonts.override { fonts = [ "Iosevka" ]; })
+    (nerdfonts.override {fonts = ["Iosevka"];})
 
     oath-toolkit
     anki-bin
@@ -152,24 +162,27 @@
 
   programs.doom-emacs = {
     enable = true;
-    doomPrivateDir = builtins.path { path = nix-doom-emacs + "/test/doom.d"; };
+    doomPrivateDir = builtins.path {path = nix-doom-emacs + "/test/doom.d";};
 
-    emacsPackage = (pkgs.emacs.overrideAttrs (drv: {
-      postInstall = (drv.postInstall or "") + (let
-        doWrap = exe: let unwrapped = dirOf exe + "/." + baseNameOf exe + "-no-env"; in ''
-          mv $out/${exe} $out/${unwrapped}
-          cat >$out/${exe} <<EOF
-          #!/bin/sh
-          # Wrap execution to happen inside a login Bash shell, to set all our custom Nix env.:
-          exec ${pkgs.stdenv.shell} -l -c 'exec $out/${unwrapped} "\$@"' -- "\$@"
-          EOF
-          chmod +x $out/${exe}
-        '';
-      in ''
-        ${doWrap "bin/emacs-28.1"}
-        ${doWrap "Applications/Emacs.app/Contents/MacOS/Emacs"}
-      '');
-    }));
+    emacsPackage = pkgs.emacs.overrideAttrs (drv: {
+      postInstall =
+        (drv.postInstall or "")
+        + (let
+          doWrap = exe: let
+            unwrapped = dirOf exe + "/." + baseNameOf exe + "-no-env";
+          in ''
+            mv $out/${exe} $out/${unwrapped}
+            cat >$out/${exe} <<EOF
+            #!/bin/sh
+            # Wrap execution to happen inside a login Bash shell, to set all our custom Nix env.:
+            exec ${pkgs.stdenv.shell} -l -c 'exec $out/${unwrapped} "\$@"' -- "\$@"
+            EOF
+            chmod +x $out/${exe}
+          '';
+        in ''
+          ${doWrap "bin/emacs-28.1"}
+          ${doWrap "Applications/Emacs.app/Contents/MacOS/Emacs"}
+        '');
+    });
   };
-
 }

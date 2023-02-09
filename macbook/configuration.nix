@@ -1,5 +1,10 @@
-{ pkgs, pkgsUnstable, lib, config, ... }:
 {
+  pkgs,
+  pkgsUnstable,
+  lib,
+  config,
+  ...
+}: {
   # Nix configuration ------------------------------------------------------------------------------
 
   imports = [
@@ -15,7 +20,7 @@
   nix.settings.auto-optimise-store = true;
 
   # Additional IOG (Cardano) binary cache:
-  nix.settings.substituters = lib.mkForce [ "https://cache.nixos.org" "https://cache.iog.io" "https://cache-1.zw3rk.com" ];
+  nix.settings.substituters = lib.mkForce ["https://cache.nixos.org" "https://cache.iog.io" "https://cache-1.zw3rk.com"];
   nix.settings.trusted-public-keys = lib.mkForce [
     "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
     "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
@@ -24,22 +29,24 @@
     "loony-tools:pr9m4BkM/5/eSTZlkQyRt57Jz7OMBxNSUiMC4FkcNfk="
   ];
 
-  nix.settings.trusted-users = lib.mkForce [ "root" ];
+  nix.settings.trusted-users = lib.mkForce ["root"];
 
   nix.nixPath = lib.mkForce [
-    { darwin-config = "${config.environment.darwinConfig}"; }
-    { nixpkgs = pkgs.path; }   #  "/nix/var/nix/profiles/per-user/root/channels"
+    {darwin-config = "${config.environment.darwinConfig}";}
+    {nixpkgs = pkgs.path;} #  "/nix/var/nix/profiles/per-user/root/channels"
   ];
 
   nix.package = pkgs.nixUnstable; # 2.9.1 for Nix debugger
 
-  nix.extraOptions = ''
-    experimental-features = nix-command flakes
-    keep-outputs = true
-    keep-derivations = true
-  '' + lib.optionalString (pkgs.system == "aarch64-darwin") ''
-    extra-platforms = x86_64-darwin aarch64-darwin
-  '';
+  nix.extraOptions =
+    ''
+      experimental-features = nix-command flakes
+      keep-outputs = true
+      keep-derivations = true
+    ''
+    + lib.optionalString (pkgs.system == "aarch64-darwin") ''
+      extra-platforms = x86_64-darwin aarch64-darwin
+    '';
 
   networking.hostName = "macbook";
   # On the local network:
@@ -83,16 +90,18 @@
     bat
 
     mpv
-    (pkgsUnstable.yt-dlp.override { withAlias = true; })
+    (pkgsUnstable.yt-dlp.override {withAlias = true;})
 
     # FIXME: for some reason it's no longer visible in Launchpad – and the custom path can be set via defaults as well
     #
     # Substitute IINA’s built-in `youtube-dl` with the freshest from `pkgsUnstable`:
     (iina.overrideAttrs (drv: {
-      installPhase = (drv.installPhase or "") + ''
-        rm $out/Applications/IINA.app/Contents/MacOS/youtube-dl
-        ln -s ${pkgsUnstable.yt-dlp}/bin/yt-dlp $out/Applications/IINA.app/Contents/MacOS/youtube-dl
-      '';
+      installPhase =
+        (drv.installPhase or "")
+        + ''
+          rm $out/Applications/IINA.app/Contents/MacOS/youtube-dl
+          ln -s ${pkgsUnstable.yt-dlp}/bin/yt-dlp $out/Applications/IINA.app/Contents/MacOS/youtube-dl
+        '';
     }))
 
     python3
@@ -115,5 +124,4 @@
 
   # Add ability to used TouchID for sudo authentication
   #security.pam.enableSudoTouchIdAuth = true;
-
 }
