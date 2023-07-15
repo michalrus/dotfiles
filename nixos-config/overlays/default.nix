@@ -59,7 +59,6 @@ composeOverlays [
 
       # TODO: contribute these:
       (import ./pkgs/gettext-emacs.nix)
-      (import ./pkgs/pms5003.nix)
       (import ./pkgs/talentedhack.nix)
       #(import ./pkgs/surge.nix)
       (import ./pkgs/vocproc.nix)

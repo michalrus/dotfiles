@@ -26,6 +26,7 @@
       autotalent = pkgs.callPackage ./packages/autotalent {};
       cp2104-gpio = pkgs.callPackage ./packages/cp2104-gpio {};
       gregorio = pkgs.callPackage ./packages/gregorio {};
+      pms5003 = pkgs.callPackage ./packages/pms5003 {};
     });
 
   };
