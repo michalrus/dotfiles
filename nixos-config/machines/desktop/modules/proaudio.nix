@@ -24,7 +24,8 @@
     x42-gmsynth
     self.packages.${pkgs.system}.autotalent
     self.packages.${pkgs.system}.talentedhack
-    michalrus.surge
+    surge
+    surge-XT
     michalrus.vocproc
     michalrus.tap-plugins
     rubberband
