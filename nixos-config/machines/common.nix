@@ -56,6 +56,7 @@
     (hiPrio netcat-openbsd)
     (hiPrio arping)
     (nixos-unstable.preventGC)
+    (nixos-oldstable.preventGC)
     arpoison
     bc
     bindfs

@@ -2,7 +2,7 @@ self: super:
 
 rec {
 
-  hardened-firefox-unwrapped = self.callPackage (
+  hardened-firefox-unwrapped = self.nixos-oldstable.callPackage (
 
     { runCommand, writeText, writeScript, firefox-unwrapped, fetchurl,
       localAutocompletePort ? 999999999, extraPrefs ? "" }:
@@ -42,7 +42,7 @@ rec {
           IconURL = {
             mimetype = "image/x-icon";
             url = "https://duckduckgo.com/favicon.ico";
-            sha256 = "03ycbl1s4qayczyjxdq0bihbpj5zf03nfydnzm3nsax3ikpkjb4h";
+            sha256 = "08x9bcgvdzpf5b2l360llg3cylxalp47wakavbkb3w8dpm29miiy";
           };
         }
         {
@@ -104,7 +104,7 @@ rec {
           IconURL = {
             mimetype = "image/png";
             url = "https://www.haskell.org/hoogle/res/favicon.png";
-            sha256 = "01qnnp9bqqkj2483w1xa0kkdl08mwhl2m0r4sgnpp3apq24g1dbq";
+            sha256 = "11yshd103fqg1ppwic528cnkjab8wd35hsrinr9njrnphqw75lw8";
           };
         }
         {
@@ -114,7 +114,7 @@ rec {
           IconURL = {
             mimetype = "image/png";
             url = "https://en.oxforddictionaries.com/favicon-32x32.png";
-            sha256 = "1gvfl5xjyb7v4vymib2c1iv8nls7ycijv0s2j83pv00lc0s0fsx1";
+            sha256 = "1src7jmyzia18gkqy5dd38bi2859d4qxj4vdwswfm5hiz0wnkmy4";
           };
         }
         {
@@ -124,7 +124,7 @@ rec {
           IconURL = {
             mimetype = "image/png";
             url = "https://www.merriam-webster.com/favicon.png";
-            sha256 = "1m77ab3dwj77w6970z59phv5fk4g01fc467ny446ddpqvm3kf9nm";
+            sha256 = "19wv9fjym36104wx9q0hilx7xq5i2d0jsz5xzb7rcyx8z7bbpgnh";
           };
         }
         {
@@ -156,7 +156,7 @@ rec {
           IconURL = {
             mimetype = "image/x-icon";
             url = "https://www.blockchain.com/favicon.ico";
-            sha256 = "13qqg0b02zhrylk4hfdkpcq2xb86j88vfb81kfm5h1y5hbg1r0bi";
+            sha256 = "0n4iwsvyh9n4yh6hjhqjhs2d3hi4arjm24gg1l0h6lbmxkplm7kf";
           };
         }
         {
@@ -167,7 +167,7 @@ rec {
           IconURL = {
             mimetype = "image/x-icon";
             url = "https://allegro.pl/favicon.ico";
-            sha256 = "1b6hh7g1h989brm4csfxv2r88ryjz7vbcqyh7cwzjxdp07n7q9wg";
+            sha256 = "1y1xv9sl8sangs6hfzyhaj25alqlslj3yp2p88hyd0y4f3rnwx0l";
           };
         }
         {
@@ -178,7 +178,7 @@ rec {
           IconURL = {
             mimetype = "image/x-icon";
             url = "https://www.leafly.com/favicon.ico";
-            sha256 = "032gffc70s818zaa64q1330n7x1j9rga6l3h98dzibaqc37j8c0l";
+            sha256 = "1vn1kjc8s6rjw6825fsrqv72d6ffk4rsmvlzhih7jqclim04l9cy";
           };
         }
         {
@@ -221,7 +221,7 @@ rec {
           IconURL = {
             mimetype = "image/x-icon";
             url = "https://www.imdb.com/favicon.ico";
-            sha256 = "1x0a6vwp6vvbq0ak6cxhc3fbvqykkr85snlj1fdclng9w3rm8vg8";
+            sha256 = "0vvfll9srd21cdrlrkspqfyzv4sadsdral4j3rvdiqqzcw6g053p";
           };
         }
       ];
@@ -252,7 +252,7 @@ rec {
           FlashPlugin = { Default = false; Locked = true; };
           OverrideFirstRunPage = "";
           OverridePostUpdatePage = "";
-          Proxy = { Mode = "none"; Locked = true; };
+          #Proxy = { Mode = "none"; Locked = true; };
           RequestedLocales = ["en-US.UTF-8"];
 
           SearchEngines = {
@@ -275,10 +275,14 @@ rec {
             Notifications = { BlockNewRequests = true; Locked = true; };
           };
 
+
+# https://addons.mozilla.org/en-US/firefox/addon/container-outgoing-links/
+
+
           Extensions = {
             Install = [
               "https://addons.mozilla.org/firefox/downloads/latest/multi-account-containers/"
-              "https://addons.mozilla.org/firefox/downloads/latest/temporary-containers/"
+#              "https://addons.mozilla.org/firefox/downloads/latest/temporary-containers/"
               "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/"
               "https://addons.mozilla.org/firefox/downloads/latest/https-everywhere/"
               "https://addons.mozilla.org/firefox/downloads/latest/add-url-to-window-title/"
@@ -289,7 +293,7 @@ rec {
             ];
             Locked = [
               "@testpilot-containers"
-              "{c607c8df-14a7-4f28-894f-29e8722976af}" # temporary-containers
+#              "{c607c8df-14a7-4f28-894f-29e8722976af}" # temporary-containers
               "uBlock0@raymondhill.net"
               "https-everywhere@eff.org"
               "autt@ericgoldman.name" # add-url-to-window-title
@@ -371,6 +375,7 @@ rec {
         lockPref("mousewheel.with_meta.action", 1);
         lockPref("mousewheel.with_shift.action", 1);
         lockPref("mousewheel.with_win.action", 1);
+        pref("general.autoScroll", true);
 
         // Control
         lockPref("browser.urlbar.trimURLs", false);
@@ -579,7 +584,12 @@ rec {
       ln -s ${policies} $out/lib/firefox/distribution/policies.json
 
       mkdir -p $out/lib/firefox/defaults/pref
-      ln -s ${autoconfig} $out/lib/firefox/defaults/pref/autoconfig.js
+      chmod 755 $out/lib/firefox/defaults/pref
+      echo ----------------------------------------------------------
+      ls -alh $out/lib/firefox/defaults/pref
+
+      echo ----------------------------------------------------------
+      ln -s ${autoconfig} $out/lib/firefox/defaults/pref/autoconfig.js'~'
 
       ln -s ${firefox-cfg} $out/lib/firefox/firefox.cfg
     ''

@@ -5,9 +5,18 @@ with (import ./ulib.nix super);
 let
 
   nixos-unstable = config:
-    let src = nixpkgsOf "5265d49a36bb5a18c85e6817b338b456acc3b8cc"
-                        "0cab38mj3f5ip0hld6wqwxsg4lj6d285kw71d2c8mnk2nk5bk4q6";
-        nixpkgs = (import src { inherit config; });
+    let src = nixpkgsOf "e62dbca3771f42c81dec4e704c09ef110ef3a3f8"
+                        "0g3v0vj1gh76p794ipfpxarx6d05kvxgcif9kdg59vm8q2mwygcf";
+        nixpkgs = (import src { inherit config; inherit (super) system; });
+    in nixpkgs // {
+      preventGC = nixpkgs.writeTextDir "prevent-ifd-gc" (toString [ src ]);
+    };
+
+  # just for my personal (m@) Firefox: 20.09.3505.12d9950bf47 (Nightingale)
+  nixos-oldstable = config:
+    let src = nixpkgsOf "12d9950bf47e0ac20d4d04e189448ee075242117"
+                        "09wy33zbzxj33296ddrrb79630kxpj1c3kiv38zs4wrw24206c2v";
+        nixpkgs = (import src { inherit config; inherit (super) system; });
     in nixpkgs // {
       preventGC = nixpkgs.writeTextDir "prevent-ifd-gc" (toString [ src ]);
     };
@@ -31,6 +40,8 @@ composeOverlays [
   (import ./pkgs/libvirt.nix)
 
   (_: _: { nixos-unstable = nixos-unstable {}; })
+
+  (_: _: { nixos-oldstable = nixos-oldstable {}; })
 
   # `services.tor` uses global `pkgs.tor`
   (self: super: { tor = super.nixos-unstable.tor; })
