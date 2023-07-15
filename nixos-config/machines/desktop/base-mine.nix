@@ -8,7 +8,7 @@
     ./modules/malicious-hosts.nix
     ./modules/hardened-chromium.nix
     ./modules/firefox-autocomplete.nix
-    ./modules/openvpn-expressvpn.nix
+    ./modules/openvpn-nordvpn.nix
     ./modules/transmission.nix
     ./modules/hibernate-on-low-battery.nix
     ./modules/proaudio.nix
