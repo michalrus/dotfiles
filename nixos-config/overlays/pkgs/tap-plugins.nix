@@ -4,7 +4,7 @@ self: super:
 
   tap-plugins = self.callPackage (
 
-    { stdenv, fetchFromGitHub, perl }:
+    { stdenv, lib, fetchFromGitHub, perl }:
 
     stdenv.mkDerivation rec {
       pname = "tap-plugins";
@@ -33,7 +33,7 @@ self: super:
         "INSTALL_LRDF_DIR=$(out)/lib/ladspa/rdf"
       ];
 
-      meta = with stdenv.lib; {
+      meta = with lib; {
         homepage = "http://tap-plugins.sourceforge.net/";
         description = "Tom's Audio Processing plugins for audio engineering on the Linux platform";
         license = licenses.gpl2;

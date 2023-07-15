@@ -4,7 +4,7 @@ self: super:
 
   talentedhack = self.callPackage (
 
-    { stdenv, fetchFromGitHub, lv2, fftwFloat, pkgconfig }:
+    { stdenv, lib, fetchFromGitHub, lv2, fftwFloat, pkgconfig }:
 
     stdenv.mkDerivation rec {
       pname = "talentedhack";
@@ -32,7 +32,7 @@ self: super:
         cp *.so *.ttl $d
       '';
 
-      meta = with stdenv.lib; {
+      meta = with lib; {
         homepage = "https://github.com/jeremysalwen/TalentedHack";
         description = "LV2 port of Autotalent pitch correction plugin";
         license = licenses.gpl3;

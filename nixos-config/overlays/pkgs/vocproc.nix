@@ -4,7 +4,7 @@ let
 
   lv2-cpp-tools = self.callPackage (
 
-    { stdenv, fetchzip, pkgconfig, lv2, gtkmm2, boost }:
+    { stdenv, lib, fetchzip, pkgconfig, lv2, gtkmm2, boost }:
 
     stdenv.mkDerivation rec {
       pname = "lv2-cpp-tools";
@@ -24,7 +24,7 @@ let
 
       buildInputs = [ lv2 gtkmm2 boost ];
 
-      meta = with stdenv.lib; {
+      meta = with lib; {
         homepage = "http://ll-plugins.nongnu.org/hacking.html";
         description = "Tools and libraries that may come in handy when writing LV2 plugins in C++";
         license = licenses.gpl3;
@@ -41,7 +41,7 @@ in
 
   vocproc = self.callPackage (
 
-    { stdenv, fetchzip, pkgconfig, lvtk, lv2, fftw, gtkmm2 }:
+    { stdenv, lib, fetchzip, pkgconfig, lvtk, lv2, fftw, gtkmm2 }:
 
     stdenv.mkDerivation rec {
       pname = "vocproc";
@@ -60,7 +60,7 @@ in
         "INSTALL_DIR=$(out)/lib/lv2"
       ];
 
-      meta = with stdenv.lib; {
+      meta = with lib; {
         homepage = "https://hyperglitch.com/dev/VocProc";
         description = "An LV2 plugin for pitch shifting (with or without formant correction), vocoding, automatic pitch correction and harmonizing of singing voice (harmonizer)";
         license = licenses.gpl2;

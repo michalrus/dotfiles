@@ -33,7 +33,7 @@ in
 
 composeOverlays [
 
-  # `services.transmission` uses the global definition… 🙄
+  ## `services.transmission` uses the global definition… :rolling_eyes:
   (import ./pkgs/transmission.nix)
 
   ## Allow unsafe internal UEFI snapshots in libvirt globally:
