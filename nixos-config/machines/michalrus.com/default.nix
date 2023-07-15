@@ -16,7 +16,7 @@
 
   boot.tmpOnTmpfs = false;
 
-  networking.hostName = "michalrus_com";
+  networking.hostName = lib.mkOverride 101 "michalrus_com";
 
   networking.firewall.allowedTCPPorts = [
     113  # identd
