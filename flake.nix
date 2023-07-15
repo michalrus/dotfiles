@@ -13,7 +13,7 @@
 
     nixosConfigurations = {
       # deploy: nixos-rebuild switch --flake .#aneta --build-host localhost --target-host root@10.77.2.1
-      aneta = import ./machines/aneta.nix { inherit inputs; };
+      aneta = import ./machines/aneta { inherit inputs; };
     };
 
   };

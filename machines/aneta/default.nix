@@ -5,15 +5,15 @@
 let
   nixpkgs = inputs.nixpkgs-aneta;
   system = "aarch64-linux";
+  pkgs = import nixpkgs { inherit system; overlays = [ (import ../../nixos-config/overlays) ]; };
 in import "${nixpkgs}/nixos/lib/eval-config.nix" {
-  inherit system;
-  pkgs = import nixpkgs { inherit system; overlays = [ (import ../nixos-config/overlays) ]; };
+  inherit system pkgs;
   modules = [
     {
-      system.nixos.versionSuffix = ".${nixpkgs.lastModifiedDate}.${nixpkgs.shortRev}";
+      system.nixos.versionSuffix = ".${pkgs.lib.substring 0 8 nixpkgs.lastModifiedDate}.${nixpkgs.shortRev}";
       system.nixos.revision = nixpkgs.rev;
       _module.args = { inherit (inputs) self; };
     }
-    ../nixos-config/machines/embedded/router-wroclaw/default.nix
+    ../../nixos-config/machines/embedded/router-wroclaw/default.nix
   ];
 }
