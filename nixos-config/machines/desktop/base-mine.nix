@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ self, config, lib, pkgs, ... }:
 
 {
   imports = [
@@ -302,7 +302,7 @@
             # for Org-mode export to PDF
             wrapfig wasysym
             ;
-          #gregorio = pkgs.michalrus.gregorio.forTexlive;
+          gregorio = self.packages.${pkgs.system}.gregorio.forTexlive;
         })
       ];
     };
