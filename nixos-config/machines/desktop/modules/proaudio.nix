@@ -26,7 +26,7 @@
     self.packages.${pkgs.system}.talentedhack
     surge
     surge-XT
-    michalrus.vocproc
+    self.packages.${pkgs.system}.vocproc
     self.packages.${pkgs.system}.tap-plugins
     rubberband
 

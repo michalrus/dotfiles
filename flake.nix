@@ -22,14 +22,16 @@
 
     packages = inputs.nixpkgs.lib.genAttrs ["x86_64-linux" "aarch64-linux"] (system: let
       inherit (inputs.nixpkgs-lenovo-x1.legacyPackages.${system}) callPackage;
-    in {
+    in rec {
       autotalent = callPackage ./packages/autotalent {};
       cp2104-gpio = callPackage ./packages/cp2104-gpio {};
       gregorio = callPackage ./packages/gregorio {};
+      lv2-cpp-tools = callPackage ./packages/lv2-cpp-tools {};
       noise = callPackage ./packages/noise {};
       pms5003 = callPackage ./packages/pms5003 {};
       talentedhack = callPackage ./packages/talentedhack {};
       tap-plugins = callPackage ./packages/tap-plugins {};
+      vocproc = callPackage ./packages/vocproc { inherit lv2-cpp-tools; };
     });
 
   };
