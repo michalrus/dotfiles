@@ -6,7 +6,8 @@ rofi.color-normal: #002b37, #819396, #003643, #008ed4, #ffffff
 rofi.color-active: #002b37, #008ed4, #003643, #008ed4, #66c6ff
 rofi.color-urgent: #002b37, #da4281, #003643, #008ed4, #890661
 
-rofi.font:                           Iosevka 12
+# TODO: how to have 24 for HiDPI and 12 for normal DPI?
+rofi.font:                           Iosevka 24
 
 rofi.cycle:                          false
 
