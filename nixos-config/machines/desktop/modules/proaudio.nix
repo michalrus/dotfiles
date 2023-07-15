@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ self, config, lib, pkgs, ... }:
 
 {
 
@@ -22,7 +22,7 @@
     x42-plugins
     x42-avldrums
     x42-gmsynth
-    michalrus.autotalent
+    self.packages.${pkgs.system}.autotalent
     michalrus.talentedhack
     michalrus.surge
     michalrus.vocproc

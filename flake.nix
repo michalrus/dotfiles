@@ -20,6 +20,12 @@
       lenovo-x1 = import ./machines/lenovo-x1 { inherit inputs; };
     };
 
+    packages = inputs.nixpkgs.lib.genAttrs ["x86_64-linux" "aarch64-linux"] (system: let
+      pkgs = inputs.nixpkgs-lenovo-x1.legacyPackages.${system};
+    in {
+      autotalent = pkgs.callPackage ./packages/autotalent {};
+    });
+
   };
 
 }
