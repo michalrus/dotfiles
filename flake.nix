@@ -21,12 +21,13 @@
     };
 
     packages = inputs.nixpkgs.lib.genAttrs ["x86_64-linux" "aarch64-linux"] (system: let
-      pkgs = inputs.nixpkgs-lenovo-x1.legacyPackages.${system};
+      inherit (inputs.nixpkgs-lenovo-x1.legacyPackages.${system}) callPackage;
     in {
-      autotalent = pkgs.callPackage ./packages/autotalent {};
-      cp2104-gpio = pkgs.callPackage ./packages/cp2104-gpio {};
-      gregorio = pkgs.callPackage ./packages/gregorio {};
-      pms5003 = pkgs.callPackage ./packages/pms5003 {};
+      autotalent = callPackage ./packages/autotalent {};
+      cp2104-gpio = callPackage ./packages/cp2104-gpio {};
+      gregorio = callPackage ./packages/gregorio {};
+      pms5003 = callPackage ./packages/pms5003 {};
+      talentedhack = callPackage ./packages/talentedhack {};
     });
 
   };

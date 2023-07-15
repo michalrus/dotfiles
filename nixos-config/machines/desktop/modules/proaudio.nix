@@ -23,7 +23,7 @@
     x42-avldrums
     x42-gmsynth
     self.packages.${pkgs.system}.autotalent
-    michalrus.talentedhack
+    self.packages.${pkgs.system}.talentedhack
     michalrus.surge
     michalrus.vocproc
     michalrus.tap-plugins
