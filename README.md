@@ -1,3 +1,5 @@
 # dotfiles
 
-I’m installing them using a quite clever and *very* simple `dotfiles.nix` module (in this repo), which basically does `cp -srf dotfiles/profile/. $HOME/`.
+My dotfiles, machine configurations, etc.
+
+See [`flake.nix`](flake.nix) as a starting point.
