@@ -1,0 +1,24 @@
+diff --git a/src/qemu/qemu_snapshot.c b/src/qemu/qemu_snapshot.c
+index d105eead27..f733980569 100644
+--- a/src/qemu/qemu_snapshot.c
++++ b/src/qemu/qemu_snapshot.c
+@@ -826,6 +826,11 @@ qemuSnapshotPrepare(virDomainObj *vm,
+      *
+      * Avoid the issues by forbidding internal snapshot with pflash completely.
+      */
++
++    /*
++     * -- I'm deliberately allowing this to have macOS snapshots
++     *    (which I desperately need) at my own risk.
++     *
+     if (found_internal &&
+         virDomainDefHasOldStyleUEFI(vm->def)) {
+         virReportError(VIR_ERR_OPERATION_UNSUPPORTED, "%s",
+@@ -833,6 +838,7 @@ qemuSnapshotPrepare(virDomainObj *vm,
+                          "firmware are not supported"));
+         return -1;
+     }
++     */
+ 
+     /* Alter flags to let later users know what we learned.  */
+     if (external && !active)

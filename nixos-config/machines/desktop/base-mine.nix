@@ -54,6 +54,8 @@
 
   networking.firewall.allowedTCPPorts = [
     12345 # python -m SimpleHTTPServer 12345
+
+    2049 # NFS v4 server
   ];
 
   environment.systemPackages = with pkgs; [
@@ -100,6 +102,7 @@
     termite
     tigervnc
     tunctl
+    virt-manager # Gtk3 for QEMU/KVM
     vscodium
     watchexec
     speedread
@@ -124,8 +127,18 @@
 
   ];
 
-  virtualisation.virtualbox.host.enable = true;
   virtualisation.podman.enable = true;
+
+  virtualisation.libvirtd.enable = true; # QEMU/KVM
+  virtualisation.spiceUSBRedirection.enable = true;
+
+  programs.dconf.enable = true; # for virt-manager
+  # <https://github.com/kholia/OSX-KVM/blob/master/kvm.conf>
+  boot.extraModprobeConfig = ''
+    options kvm_intel nested=1
+    options kvm_intel emulate_invalid_guest_state=0
+    options kvm ignore_msrs=1 report_ignored_msrs=0
+  '';
 
   hardware.android.automount = let user = config.users.users.m; in {
     enable = true;
@@ -153,6 +166,12 @@
   '';
 
   services = {
+
+    nfs.server.enable = true;
+    nfs.server.exports = ''
+      /home/mw/VMs/Shared     127.0.0.1/8(insecure,rw,sync,no_subtree_check,all_squash,anonuid=1337,anongid=100)
+    '';
+
     logind.lidSwitch = "suspend";
     logind.extraConfig = ''
       HandlePowerKey=suspend
@@ -199,7 +218,7 @@
     guestAccount = {
       enable = true;
       skeleton = "/home/guest.skel";
-      groups = [ "audio" "nonet" "scanner" "networkmanager" "vboxusers" "video" ];
+      groups = [ "audio" "nonet" "scanner" "networkmanager" "video" ];
     };
 
     users.guest = {
@@ -218,7 +237,7 @@
       uid = 31337;
 
       description = "Michal Rus";
-      extraGroups = [ "wheel" "audio" "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" "video" ];
+      extraGroups = [ "wheel" "audio" "nonet" "scanner" "networkmanager" "libvirtd" "wireshark" "cdrom" "video" ];
       dotfiles-old.base = "${config.users.users.m.home}/.dotfiles/dotfiles";
       dotfiles-old.profiles = [ "base" "michalrus/base" "michalrus/desktop" "git-annex" "michalrus/personal" "i3" "emacs" ];
       packages = with pkgs; [
@@ -251,7 +270,7 @@
       uid = 1337;
 
       description = "Michal Rus (w)";
-      extraGroups = [ "audio" "nonet" "scanner" "networkmanager" "libvirtd" "vboxusers" "wireshark" "cdrom" "video" ];
+      extraGroups = [ "audio" "nonet" "scanner" "networkmanager" "libvirtd" "wireshark" "cdrom" "video" ];
       dotfiles-old.profiles = [ "base" "michalrus/base" "michalrus/desktop" "git-annex" "michalrus/work/iohk" "i3" "emacs" ];
       packages = with pkgs; [
         (nixos-oldstable.wrapFirefox (michalrus.hardened-firefox-unwrapped.override {
@@ -279,7 +298,7 @@
       isNormalUser = true;
       uid = 1347;
       description = "Michal Rus (d)";
-      extraGroups = [ "audio" "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" "video" ];
+      extraGroups = [ "audio" "nonet" "scanner" "networkmanager" "wireshark" "cdrom" "video" ];
       dotfiles-old.profiles = [ "base" "michalrus/base" "michalrus/desktop" "michalrus/tor" "i3" "emacs" ];
       packages = with pkgs; [
         electrum
@@ -300,5 +319,57 @@
     device = "/var/home/m/.shared";
     fsType = "fuse.bindfs";
     options = [ "map=m/mw" ];
+  };
+
+  fileSystems."/var/home/mw/VM-Shared/win10" = {
+    device = "//192.168.122.239/Shared";
+    fsType = "cifs";
+    options = [
+      "rw"
+      "username=unused" "password=" "vers=2.0"
+      "uid=mw" "forceuid" "gid=users" "forcegid"
+      "file_mode=0644" "dir_mode=0755"
+      "nofail" "_netdev" "x-systemd.automount"
+      "x-systemd.mount-timeout=5s" "x-systemd.device-timeout=5s" "x-systemd.idle-timeout=2min"
+    ];
+  };
+
+  fileSystems."/var/home/mw/VM-Shared/ubuntu" = {
+    device = "//192.168.122.114/Shared";
+    fsType = "cifs";
+    options = [
+      "rw"
+      "username=unused" "password=" "vers=2.0"
+      "uid=mw" "forceuid" "gid=users" "forcegid"
+      "file_mode=0644" "dir_mode=0755"
+      "nofail" "_netdev" "x-systemd.automount"
+      "x-systemd.mount-timeout=5s" "x-systemd.device-timeout=5s" "x-systemd.idle-timeout=2min"
+    ];
+  };
+
+  fileSystems."/var/home/mw/VM-Shared/macos11" = {
+    device = "//192.168.122.75/Shared";
+    fsType = "cifs";
+    options = [
+      "rw"
+      "username=mw" "password=dupa.8" "vers=2.0"
+      "uid=mw" "forceuid" "gid=users" "forcegid"
+      "file_mode=0644" "dir_mode=0755"
+      "nofail" "_netdev" "x-systemd.automount"
+      "x-systemd.mount-timeout=5s" "x-systemd.device-timeout=5s" "x-systemd.idle-timeout=2min"
+    ];
+  };
+
+  fileSystems."/var/home/mw/VM-Shared/macos11-dev" = {
+    device = "//192.168.122.77/Shared";
+    fsType = "cifs";
+    options = [
+      "rw"
+      "username=mw" "password=dupa.8" "vers=2.0"
+      "uid=mw" "forceuid" "gid=users" "forcegid"
+      "file_mode=0644" "dir_mode=0755"
+      "nofail" "_netdev" "x-systemd.automount"
+      "x-systemd.mount-timeout=5s" "x-systemd.device-timeout=5s" "x-systemd.idle-timeout=2min"
+    ];
   };
 }

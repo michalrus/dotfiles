@@ -27,6 +27,9 @@ composeOverlays [
   # `services.transmission` uses the global definition… 🙄
   (import ./pkgs/transmission.nix)
 
+  ## Allow unsafe internal UEFI snapshots in libvirt globally:
+  (import ./pkgs/libvirt.nix)
+
   (_: _: { nixos-unstable = nixos-unstable {}; })
 
   # `services.tor` uses global `pkgs.tor`
