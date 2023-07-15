@@ -23,27 +23,4 @@ self: super:
 
   ) {};
 
-  cp2104-gpio = self.callPackage (
-
-    { python, runCommand }:
-
-    with python.pkgs;
-
-    buildPythonApplication {
-      name = "cp2104-gpio";
-      src = runCommand "src" {} ''
-        mkdir $out
-
-        cp ${./cp2104-gpio.py} $out/cp2104-gpio
-
-        cat << EOF > $out/setup.py
-        from distutils.core import setup
-        setup(scripts=['cp2104-gpio'], install_requires=['pyusb'])
-        EOF
-      '';
-      propagatedBuildInputs = [ pyusb ];
-    }
-
-  ) {};
-
 }
