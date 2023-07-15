@@ -1,22 +1,21 @@
 diff --git a/libtransmission/torrent.c b/libtransmission/torrent.c
-index 04dd922e1..47e075577 100644
+index 7ecaf3f51..6f6a07a3e 100644
 --- a/libtransmission/torrent.c
 +++ b/libtransmission/torrent.c
-@@ -2946,6 +2946,9 @@ deleteLocalData (tr_torrent * tor, tr_fileFunc func)
-   PtrArrayCompareFunc vstrcmp = (PtrArrayCompareFunc)strcmp;
-   const char * const top = tor->currentDir;
+@@ -3063,6 +3063,8 @@ static void deleteLocalData(tr_torrent* tor, tr_fileFunc func)
+     PtrArrayCompareFunc vstrcmp = (PtrArrayCompareFunc)strcmp;
+     char const* const top = tor->currentDir;
  
-+  // let's not remove anything (esp. via RPC) unless a privileged user does a manual `rm` -- @michalrus
-+  return;
++    return;
 +
-   /* don't try to delete local data if the directory's gone missing */
-   if (!tr_sys_path_exists (top, NULL))
-     return;
+     /* don't try to delete local data if the directory's gone missing */
+     if (!tr_sys_path_exists(top, NULL))
+     {
 diff --git a/web/index.html b/web/index.html
-index 06a5c81c0..1635eead5 100755
+index 6c9518a29..7b4c11f56 100755
 --- a/web/index.html
 +++ b/web/index.html
-@@ -419,7 +419,6 @@
+@@ -507,7 +507,6 @@
  			<li data-command="move_bottom">Move to Bottom</li>
  			<li>---</li>
  			<li data-command="remove">Remove From List…</li>
