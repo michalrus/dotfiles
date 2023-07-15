@@ -75,7 +75,7 @@
               exec ${pureStartx { inherit pureXauthority; }} \
                 ${pkgs.writeShellScript "window-manager" ''
                   ${if loadXresources then ''
-                    ${pkgs.xorg.xrdb}/bin/xrdb $HOME/.Xresources || true
+                    ${pkgs.xorg.xrdb}/bin/xrdb < $HOME/.Xresources || true
                   '' else ""}
                   exec ${windowManager}
                 ''} \
