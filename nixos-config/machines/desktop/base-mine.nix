@@ -83,6 +83,7 @@
     aegisub
     alacritty
     anki
+    bat
     binutils
     breeze-qt5 breeze-icons pkgs.hicolor_icon_theme kde-gtk-config breeze-gtk
     brightnessctl
