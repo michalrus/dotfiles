@@ -55,7 +55,6 @@ composeOverlays [
       (import ./pkgs/gnucash.nix) # TODO: move to hledger from this crap
       (import ./pkgs/msmtp-no-security-check.nix)
       (import ./pkgs/dmenu-rofi.nix)
-      (import ./pkgs/noise.nix)
 
       # TODO: contribute these:
       (import ./pkgs/gettext-emacs.nix)

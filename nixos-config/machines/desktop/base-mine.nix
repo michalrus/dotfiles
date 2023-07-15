@@ -104,7 +104,7 @@
     libguestfs
     libxml2
     michalrus.gettext-emacs
-    michalrus.noise
+    self.packages.${pkgs.system}.noise
     networkmanagerapplet
     octave
     pandoc

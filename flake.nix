@@ -26,6 +26,7 @@
       autotalent = callPackage ./packages/autotalent {};
       cp2104-gpio = callPackage ./packages/cp2104-gpio {};
       gregorio = callPackage ./packages/gregorio {};
+      noise = callPackage ./packages/noise {};
       pms5003 = callPackage ./packages/pms5003 {};
       talentedhack = callPackage ./packages/talentedhack {};
       tap-plugins = callPackage ./packages/tap-plugins {};
