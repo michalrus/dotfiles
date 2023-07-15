@@ -41,11 +41,6 @@
       drivers = [ pkgs.gutenprint pkgs.hplip pkgs.epson-escpr ];
     };
 
-    logkeys' = {
-      enable = true;
-      keymap = lib.mkDefault "pl";
-    };
-
     openssh = {
       enable = true;
       passwordAuthentication = false;

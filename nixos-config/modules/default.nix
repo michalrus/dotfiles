@@ -4,7 +4,7 @@
     ./firewall-comments.nix
     ./guest-account.nix
     ./lock-x11-displays.nix
-    ./logkeys
+    #./logkeys
     ./no-display-manager
     ./nonet-group.nix
     ./podman.nix
