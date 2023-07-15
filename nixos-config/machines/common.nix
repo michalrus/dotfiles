@@ -112,7 +112,9 @@
   security = {
     pam.services.su.requireWheel = true;
 
-    hideProcessInformation = true;
+    # TODO: re-enable after <https://github.com/containers/libpod/pull/5550>
+    #       <https://github.com/containers/crun/commit/a171c3bb7316c29b0e2d207327e0e39b8243b538>
+    #hideProcessInformation = true;
 
     sudo.extraConfig = ''
       Defaults timestamp_timeout=0
