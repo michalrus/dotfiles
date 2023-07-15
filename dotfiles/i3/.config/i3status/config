@@ -8,7 +8,7 @@ general {
 }
 
 order += "volume master"
-order += "battery 1"
+order += "battery 0"
 order += "cpu_temperature 0"
 #order += "cpu_usage"
 order += "load"
@@ -28,7 +28,7 @@ volume master {
   mixer_idx = 0
 }
 
-battery 1 {
+battery 0 {
   format = "%status %percentage %remaining"
   format_down = "No battery"
   status_chr = "C"
@@ -43,7 +43,7 @@ battery 1 {
 
 cpu_temperature 0 {
   format = "%degrees°C"
-  #path = "/sys/devices/platform/coretemp.0/hwmon/hwmon1/temp1_input"
+  path = "/sys/devices/platform/coretemp.0/hwmon/*/temp1_input"
   max_threshold = 60
 }
 
