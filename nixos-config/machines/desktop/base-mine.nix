@@ -104,6 +104,11 @@
     watchexec
     speedread
     xdg_utils
+    yubikey-manager
+    yubikey-manager-qt
+    yubikey-personalization
+    yubikey-personalization-gui
+    yubioath-desktop
   ];
 
   programs = {
@@ -111,6 +116,13 @@
     wireshark.package = pkgs.wireshark-qt;
     ssh.startAgent = false;
   };
+
+  services.udev.packages = [
+
+    # YubiKey
+    pkgs.yubikey-personalization
+
+  ];
 
   virtualisation.virtualbox.host.enable = true;
   virtualisation.podman.enable = true;
