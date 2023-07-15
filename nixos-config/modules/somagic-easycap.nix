@@ -76,6 +76,7 @@ in
       setuid = false;
       setgid = true ;
       group = "somagic";
+      owner = "nobody";
     }; }) ["somagic-capture" "somagic-audio-capture" "somagic-both"]);
 
   };
