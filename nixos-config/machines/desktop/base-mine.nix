@@ -231,8 +231,8 @@
       uid = 1337;
 
       description = "Michal Rus (w)";
-      extraGroups = [ "audio" "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" "video" ];
-      dotfiles-old.profiles = [ "base" "michalrus/base" "michalrus/desktop" "git-annex" "michalrus/work/ig" "i3" "emacs" ];
+      extraGroups = [ "audio" "nonet" "scanner" "networkmanager" "libvirtd" "vboxusers" "wireshark" "cdrom" "video" ];
+      dotfiles-old.profiles = [ "base" "michalrus/base" "michalrus/desktop" "git-annex" "michalrus/work/iohk" "i3" "emacs" ];
       packages = with pkgs; [
         (wrapFirefox (michalrus.hardened-firefox-unwrapped.override {
           localAutocompletePort = config.services.firefox-autocomplete.userPorts.mw;

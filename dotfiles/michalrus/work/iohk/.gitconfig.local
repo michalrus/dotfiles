@@ -1,0 +1,6 @@
+[user]
+	name = Michal Rus
+	email = michal.rus@iohk.io
+	signingkey = michal.rus@iohk.io
+[commit]
+	gpgsign = true

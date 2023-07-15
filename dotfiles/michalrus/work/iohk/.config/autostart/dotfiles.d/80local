@@ -1,0 +1,8 @@
+# -*- mode: shell-script; sh-shell: sh -*-
+
+emacs --frame-parameters='(quote (name . "org"))' --eval '(find-file "~/Org/ZTD.org")' &
+
+chromium &
+
+termite --name code &
+emacs --frame-parameters='(quote (name . "code"))' &
