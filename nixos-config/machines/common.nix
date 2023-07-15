@@ -68,6 +68,7 @@
     entr
     evemu
     evtest
+    ext4magic
     file
     gcc
     git

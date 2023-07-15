@@ -68,7 +68,6 @@
   environment.variables."SAL_USE_VCLPLUGIN" = "gtk";
 
   environment.systemPackages = with pkgs; [
-    (nixos-unstable.youtube-dl)
     alsaUtils
     audacity
     awf
@@ -102,7 +101,7 @@
     pcmanfm
     pdfgrep
     pinentry-gtk2
-    pythonPackages.livestreamer
+    python3Packages.livestreamer
     rtmpdump
     samba
     scantailor
@@ -115,6 +114,7 @@
     x264
     xarchiver
     xsane
+    youtube-dl
   ];
 
   fonts = {

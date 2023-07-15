@@ -25,7 +25,7 @@ self: super:
 
     ) {};
 
-  in super.nixos-unstable.transcribe.overrideAttrs (oldAttrs: {
+  in super.transcribe.overrideAttrs (oldAttrs: {
 
     fixupPhase = ''
       rm $out/bin/transcribe

@@ -33,6 +33,7 @@
     gitstats
     gnupg
     gocr
+    gpgme.dev
     graphicsmagick
     imagemagick
     imgurbash2

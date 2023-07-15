@@ -58,12 +58,12 @@
 
   environment.systemPackages = with pkgs; [
     (haskellPackages.ghcWithHoogle (hs: []))
-    (nixos-unstable.wine.override { pulseaudioSupport = true; })
+    (wine.override { pulseaudioSupport = true; })
     acpitool
     aegisub
     alacritty
+    anki
     binutils
-    blueman
     breeze-qt5 breeze-icons pkgs.hicolor_icon_theme kde-gtk-config breeze-gtk
     brightnessctl
     cool-retro-term
@@ -81,19 +81,25 @@
     haskellPackages.hlint
     httrack
     k3b
+    libguestfs
     libxml2
     michalrus.gettext-emacs
-    michalrus.gnucash26
     michalrus.noise
     networkmanagerapplet
     octave
     pandoc
     pdfpc
-    (python3.withPackages (p: with p; [ scipy matplotlib tkinter beautifulsoup4 ]))
+    (python3.withPackages (p: with p; [ scipy geopy python-lsp-server requests pylint matplotlib tkinter beautifulsoup4 aiohttp humanize protobuf ]))
     python3Packages.livereload
-    nixos-unstable.rustup
+    qjoypad
+    nixos-unstable.retroarchFull
+    rpcs3
+    rustup
+    rust-analyzer
     sqlint
     termite
+    tigervnc
+    tunctl
     vscodium
     watchexec
     speedread
@@ -190,6 +196,7 @@
         unfree.google-chrome
         unfree.skypeforlinux
         unfree.zoom-us
+        unfree.unrar
       ];
     };
 
@@ -205,18 +212,19 @@
       packages = with pkgs; [
         chromium
         electrum
+        michalrus.gnucash
         isync
         jetbrains.idea-community
         unfree.skypeforlinux
         lilypond
-        nixos-unstable.monero-gui
-        (wrapFirefox (michalrus.hardened-firefox-unwrapped.override {
+        monero-gui
+        (nixos-oldstable.wrapFirefox (michalrus.hardened-firefox-unwrapped.override {
           localAutocompletePort = config.services.firefox-autocomplete.userPorts.m;
           extraPrefs = michalrus.hardened-firefox-unwrapped.cfgEnableDRM;
         }) {})
         openjdk8   # for nofatty
         (texlive.combine {
-          inherit (texlive) scheme-small latexmk titlesec tocloft todonotes cleveref lipsum biblatex logreq cm-super csquotes pgfplots adjustbox collectbox ccicons polski placeins xstring pdfpages unicode-math filehook textpos marvosym fontawesome progressbar lm-math ucharcat
+          inherit (texlive) scheme-small latexmk titlesec tocloft todonotes cleveref lipsum biblatex logreq cm-super csquotes pgfplots adjustbox collectbox ccicons polski placeins xstring pdfpages unicode-math filehook textpos marvosym fontawesome progressbar lm-math ucharcat pdfjam
             # for Org-mode export to PDF
             wrapfig wasysym
             ;
@@ -234,13 +242,16 @@
       extraGroups = [ "audio" "nonet" "scanner" "networkmanager" "libvirtd" "vboxusers" "wireshark" "cdrom" "video" ];
       dotfiles-old.profiles = [ "base" "michalrus/base" "michalrus/desktop" "git-annex" "michalrus/work/iohk" "i3" "emacs" ];
       packages = with pkgs; [
-        (wrapFirefox (michalrus.hardened-firefox-unwrapped.override {
+        (nixos-oldstable.wrapFirefox (michalrus.hardened-firefox-unwrapped.override {
           localAutocompletePort = config.services.firefox-autocomplete.userPorts.mw;
           extraPrefs = michalrus.hardened-firefox-unwrapped.cfgEnableDRM;
         }) {})
         chromium
-        jetbrains.idea-community
-        ansible
+        #jetbrains.idea-community
+        unfree.jetbrains.webstorm
+        yarn
+        nodejs
+        #ansible_2_8
         openjdk8
         protobuf
         sbt
@@ -259,7 +270,8 @@
       extraGroups = [ "audio" "nonet" "scanner" "networkmanager" "vboxusers" "wireshark" "cdrom" "video" ];
       dotfiles-old.profiles = [ "base" "michalrus/base" "michalrus/desktop" "michalrus/tor" "i3" "emacs" ];
       packages = with pkgs; [
-        (wrapFirefox (michalrus.hardened-firefox-unwrapped.override {
+        electrum
+        (nixos-oldstable.wrapFirefox (michalrus.hardened-firefox-unwrapped.override {
           localAutocompletePort = config.services.firefox-autocomplete.userPorts.md;
           extraPrefs = ''
             // Override those for more privacy:

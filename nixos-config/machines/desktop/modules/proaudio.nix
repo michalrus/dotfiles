@@ -20,8 +20,8 @@
     distrho
     calf
     x42-plugins
-    nixos-unstable.x42-avldrums
-    nixos-unstable.x42-gmsynth
+    x42-avldrums
+    x42-gmsynth
     michalrus.autotalent
     michalrus.talentedhack
     michalrus.surge

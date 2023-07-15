@@ -7,7 +7,7 @@
   environment.systemPackages = with pkgs; [
     gnome3.dconf   # so that GnuCash prefs can be changed
     networkmanagerapplet
-    nixos-unstable.system-config-printer # For GNOME Printers applet.
+    system-config-printer # For GNOME Printers applet.
   ];
 
   services = {
