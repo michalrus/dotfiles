@@ -21,10 +21,29 @@
     ./modules/window-managers.nix
   ];
 
+  nix = {
+    package = pkgs.nixos-unstable.nixUnstable; # 2.11.1
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+
+    binaryCaches = [
+      "https://cache.iog.io"
+    ];
+
+    binaryCachePublicKeys = [
+      "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
+    ];
+  };
+
   boot.tmpOnTmpfs = true;
 
   # For building RPi3 system on an x86 laptop:
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
+  boot.kernel.sysctl = {
+    "fs.inotify.max_user_watches" = "1048576";
+  };
 
   i18n = {
     defaultLocale = "en_US.UTF-8";

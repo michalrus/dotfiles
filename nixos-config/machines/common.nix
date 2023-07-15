@@ -10,7 +10,7 @@
     useSandbox = true;
 
     gc = {
-      automatic = true;
+      automatic = lib.mkForce false;
       dates = "daily";
       options = "--delete-older-than 30d"; # Is this enough?
     };
