@@ -23,11 +23,8 @@ in
       speed-limit-up = 20;
       speed-limit-up-enabled = true;
     };
-  };
 
-  systemd.services.transmission.postStart = ''
-    chmod 701 ${home}
-    chmod 755 ${shared} ${downloads} ${incomplete}
-  '';
+    downloadDirPermissions = "775";
+  };
 
 }
