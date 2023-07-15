@@ -2,18 +2,16 @@
 
 let
 
-  base = pkgs.emacs25.override {
+  base = pkgs.emacs.override {
     # Use ‘lucid’ toolkit—it doesn’t have this bug → https://bugzilla.gnome.org/show_bug.cgi?id=85715
     withX = true;
-    withGTK2 = false;
-    withGTK3 = false;
   };
 
   whole = (pkgs.emacsPackagesNgGen base).emacsWithPackages (epkgs:
-    # MELPA Unstable @ NixOS Unstable (bleedingest edge)
-    (with (pkgs.nixos-unstable.emacsPackagesNgGen base).melpaPackages; [
+    # MELPA Unstable
+    (with epkgs.melpaPackages; [
       company
-      company-lsp
+      #company-lsp
       dap-mode
       dhall-mode
       flycheck
@@ -22,6 +20,7 @@ let
       lsp-mode
       lsp-treemacs
       lsp-ui
+      python-mode
       rust-mode
       sort-words
       treemacs
@@ -58,7 +57,6 @@ let
       neotree
       nix-mode
       projectile
-      python-mode
       scala-mode
       smart-mode-line
       solarized-theme
