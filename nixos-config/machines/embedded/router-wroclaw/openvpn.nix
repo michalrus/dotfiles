@@ -4,7 +4,7 @@ with lib;
 
 let
 
-  name = "expressvpn";
+  name = "nordvpn";
 
   dataDir = "/var/lib/openvpn/${name}";
 
@@ -32,27 +32,6 @@ let
 in
 
 {
-
-  environment.systemPackages = [
-    (pkgs.writeScriptBin "netflix-whitelist" ''
-      #! ${pkgs.stdenv.shell}
-      echo '#'
-      echo '# OpenVPN config to bypass VPN when routing to Netflix servers.'
-      echo '#'
-      echo "# Generated at $(date -Ins)."
-      echo '#'
-      echo '# Re-generate contents of this file by running `netflix-whitelist`.'
-      echo '#'
-      echo
-      ${pkgs.curl}/bin/curl https://ipinfo.io/AS2906 | \
-        ${pkgs.gnugrep}/bin/grep -Po '\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/\d{1,3}' | \
-        sort -u | \
-        while IFS= read -r range ; do
-          addr_mask=$(${pkgs.ipcalc}/bin/ipcalc -nb "$range" | ${pkgs.gnugrep}/bin/grep -P '^(Netmask|Address):' | ${pkgs.gawk}/bin/awk '{ print $2 }' | tr '\n' ' ')
-          echo "route $addr_mask net_gateway"
-        done
-    '')
-  ];
 
   networking = {
 
@@ -97,46 +76,8 @@ in
     '';
 
     config = ''
-      dev tun
-      fast-io
-      persist-key
-      persist-tun
-      nobind
-
-      pull
-      pull-filter ignore ping-restart
-      ping-exit 60
-      ping 10
-      connect-retry 5 5
-      connect-retry-max 1
-
-      config ${dataDir}/remote
-      config ${dataDir}/netflix-whitelist.conf
-
-      remote-random
-      comp-lzo no
-      tls-client
-      verify-x509-name Server name-prefix
-      ns-cert-type server
-      key-direction 1
-      route-method exe
-      route-delay 2
-      tun-mtu 1500
-      fragment 1300
-      mssfix 1200
-      verb 3
-      cipher AES-256-CBC
-      keysize 256
-      auth SHA512
-      sndbuf 524288
-      rcvbuf 524288
-
+      config ${dataDir}/config
       auth-user-pass ${dataDir}/auth-user-pass
-
-      cert     ${dataDir}/client.crt
-      key      ${dataDir}/client.key
-      tls-auth ${dataDir}/ta.key
-      ca       ${dataDir}/ca2.crt
     '';
   };
 

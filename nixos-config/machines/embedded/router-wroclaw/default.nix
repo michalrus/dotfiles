@@ -7,6 +7,7 @@
     ./nat.nix
     ./dns.nix
     ./openvpn.nix
+    #./proxy.nix
   ];
 
   boot.loader.grub.enable = false;
@@ -14,7 +15,8 @@
 
   # TODO: Why doesn’t `pkgs.linuxPackages_rpi3` work? Are we missing something?
   #boot.kernelPackages = pkgs.linuxPackages_rpi3;
-  boot.kernelPackages = pkgs.linuxPackages_latest_ipMultipleTables;
+  #boot.kernelPackages = pkgs.linuxPackages_latest_ipMultipleTables; # FIXME: this overlays below don’t work with flakes
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelParams = [ "cma=32M" "console=ttyS1,115200n8" ];
 
   boot.kernelModules = [ "gre" "ip_gre" "ip_tunnel" "ip_nat_pptp" ];

@@ -83,6 +83,11 @@ in
           allow-query  { cachenetworks; };
           blackhole    { badnetworks;   };
 
+          # FIXME: re-enable after updating BIND
+          dnssec-enable no;
+          dnssec-lookaside no;
+          dnssec-validation no;
+
           directory "/run/named";
           pid-file  "/run/named/named.pid";
 

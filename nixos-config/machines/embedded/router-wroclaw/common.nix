@@ -11,6 +11,7 @@
     dhcpRangeHigh = "${p}.250";
 
     rpiKrzysiek   = "${p}.51";
+    printer       = "${p}.5";
   };
 
 }
