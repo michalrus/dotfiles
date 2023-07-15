@@ -60,7 +60,6 @@ composeOverlays [
       # TODO: contribute these:
       (import ./pkgs/gettext-emacs.nix)
       (import ./pkgs/vocproc.nix)
-      (import ./pkgs/tap-plugins.nix)
 
       # TODO: contributed:
 

@@ -28,6 +28,7 @@
       gregorio = callPackage ./packages/gregorio {};
       pms5003 = callPackage ./packages/pms5003 {};
       talentedhack = callPackage ./packages/talentedhack {};
+      tap-plugins = callPackage ./packages/tap-plugins {};
     });
 
   };

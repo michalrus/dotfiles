@@ -27,7 +27,7 @@
     surge
     surge-XT
     michalrus.vocproc
-    michalrus.tap-plugins
+    self.packages.${pkgs.system}.tap-plugins
     rubberband
 
   ];
