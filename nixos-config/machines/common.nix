@@ -126,11 +126,15 @@
     wrappers.fping = {
       source = "${pkgs.fping}/bin/fping";
       capabilities = "cap_net_raw+p";
+      owner = "root";
+      group = "root";
     };
 
     wrappers.traceroute = {
       source = "${pkgs.traceroute}/bin/traceroute";
       capabilities = "cap_net_raw+p";
+      owner = "root";
+      group = "root";
     };
   };
 
