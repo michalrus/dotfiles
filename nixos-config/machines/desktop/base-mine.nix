@@ -13,7 +13,6 @@
     ./modules/hibernate-on-low-battery.nix
     ./modules/proaudio.nix
     ./modules/udev-remap-keyboard.nix
-    ./my-hosts.nix
 
     # TODO: rethink
     ./modules/lock-vts.nix

@@ -1,4 +1,4 @@
-{ lib, fetchFromGitHub, ... }:
+{ lib, fetchFromGitHub, system, ... }:
 
 rec {
 
@@ -16,7 +16,7 @@ rec {
 
   fromNixpkgs = pname: rev: sha: config: self: super:
     let nixpkgs = nixpkgsOf rev sha; in {
-      "${pname}" = (import nixpkgs { inherit config; })."${pname}".overrideAttrs (oldAttrs: {
+      "${pname}" = (import nixpkgs { inherit config system; })."${pname}".overrideAttrs (oldAttrs: {
         postInstall = (oldAttrs.postInstall or "") + ''
           echo ${nixpkgs} >$out/prevent-ifd-gc
         '';

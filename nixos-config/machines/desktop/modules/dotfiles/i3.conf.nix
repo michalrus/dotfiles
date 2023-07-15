@@ -1,4 +1,4 @@
-{ pkgs, i3ExtraConf }: ''
+{ pkgs, extraConf }: pkgs.writeText "i3.conf" ''
 
 set $mod Mod4
 
@@ -134,7 +134,7 @@ bindsym $mod+Return exec termite
 bindsym $mod+Shift+Return exec emacs
 bindsym $mod+k exec pass-autotype
 
-${i3ExtraConf}
+${extraConf}
 
 exec ~/.config/autostart/dotfiles.sh
 ''

@@ -63,7 +63,7 @@ composeOverlays [
       (import ./pkgs/pms5003.nix)
       (import ./pkgs/autotalent.nix)
       (import ./pkgs/talentedhack.nix)
-      (import ./pkgs/surge.nix)
+      #(import ./pkgs/surge.nix)
       (import ./pkgs/vocproc.nix)
       (import ./pkgs/tap-plugins.nix)
 
@@ -88,7 +88,7 @@ composeOverlays [
 
       })
 
-    ] self.unfree (super.unfree or (import <nixpkgs> { config.allowUnfree = true; }));
+    ] self.unfree (super.unfree or (import super.path { config.allowUnfree = true; inherit (super) system; }));
 
   })
 
