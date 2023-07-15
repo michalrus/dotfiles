@@ -9,7 +9,7 @@ let
   transPort = 9040;
   dnsPort = 5353;
   # For torified users’ apps, that insist on using SOCKS5…
-  allowedSocksPort = lib.toInt (lib.last (lib.splitString ":" config.services.tor.client.socksListenAddress));
+  allowedSocksPort = config.services.tor.client.socksListenAddress.port;
   chain = "nixos-fw-torified-users";
 
   flushRules = ''
@@ -85,18 +85,25 @@ in
       services.tor = {
         enable = true;
         client.enable = true;
-        extraConfig = ''
-          VirtualAddrNetworkIPv4 10.192.0.0/10
-          AutomapHostsOnResolve 1
-          TransPort ${toString transPort}
-          DNSPort ${toString dnsPort}
-        '';
+        settings = {
+          VirtualAddrNetworkIPv4 = "10.192.0.0/10";
+          AutomapHostsOnResolve = true;
+          TransPort = transPort;
+          DNSPort = dnsPort;
+        };
+        # extraConfig = ''
+        #   VirtualAddrNetworkIPv4 10.192.0.0/10
+        #   AutomapHostsOnResolve 1
+        #   TransPort ${toString transPort}
+        #   DNSPort ${toString dnsPort}
+        # '';
       };
 
       # It’s important that the users issue NS queries themselves. In
       # other cases, this will leak deanonymizing DNS packets.
       services.resolved.enable = false;
       services.nscd.enable = false;
+      system.nssModules = lib.mkForce [];
 
       networking.firewall = {
         enable = true;

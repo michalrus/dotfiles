@@ -43,9 +43,6 @@ composeOverlays [
 
   (_: _: { nixos-oldstable = nixos-oldstable {}; })
 
-  # `services.tor` uses global `pkgs.tor`
-  (self: super: { tor = super.nixos-unstable.tor; })
-
   (self: super: {
 
     michalrus = composeOverlays [
