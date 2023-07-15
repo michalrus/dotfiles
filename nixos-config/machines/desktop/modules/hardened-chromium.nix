@@ -80,7 +80,7 @@ let
     #DefaultSearchProviderSearchURL = "https://encrypted.google.com/search?q={searchTerms}&{google:RLZ}{google:originalQueryForSuggestion}{google:assistedQueryStats}{google:searchFieldtrialParameter}{google:searchClient}{google:sourceId}{google:instantExtendedEnabledParameter}ie={inputEncoding}";
     #DefaultSearchProviderSuggestURL = "https://encrypted.google.com/complete/search?output=chrome&q={searchTerms}";
 
-    ExtensionInstallBlacklist = ["*"];
+    #ExtensionInstallBlacklist = ["*"];
     ExtensionInstallForcelist  = # doesn’t apply to incognito?
       map (x: x + ";https://clients2.google.com/service/update2/crx")
       [
