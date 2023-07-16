@@ -14,6 +14,17 @@ in import "${nixpkgs}/nixos/lib/eval-config.nix" {
       system.nixos.revision = nixpkgs.rev;
       _module.args = { inherit inputs; };
     }
-    ../../nixos-config/machines/embedded/router-wroclaw/default.nix
+    ./hardware.nix
+    { networking.hostName = "aneta"; }
+
+    ./features/dns.nix
+    ./features/nat.nix
+    ./features/openvpn.nix
+    #./features/proxy.nix  # TODO: needs more work
+    ./features/users.nix
+
+    # FIXME: drop:
+    ../../nixos-config/modules
+    ../../nixos-config/machines/common.nix
   ];
 }
