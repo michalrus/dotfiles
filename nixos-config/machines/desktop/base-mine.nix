@@ -293,7 +293,7 @@ in
       packages = with pkgs; [
         pkgs-23_05.chromium
         electrum
-        michalrus.gnucash
+        pkgs-23_05.gnucash
         isync
         jetbrains.idea-community
         unfree-23_05.skypeforlinux

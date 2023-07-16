@@ -47,7 +47,6 @@ composeOverlays [
       (import ./pkgs/hardened-firefox.nix)
 
       (import ./pkgs/git-annex-hacks.nix)
-      (import ./pkgs/gnucash.nix) # TODO: move to hledger from this crap
       (import ./pkgs/dmenu-rofi.nix)
 
     ] self.michalrus (super.michalrus or super);
