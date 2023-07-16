@@ -8,8 +8,9 @@ nixpkgs.lib.nixosSystem {
     { _module.args = { inherit inputs; }; }
     nixpkgs.nixosModules.notDetected
 
-    inputs.self.nixosModules.somagic-easycap
     inputs.self.nixosModules.lock-vts
+    inputs.self.nixosModules.malicious-hosts
+    inputs.self.nixosModules.somagic-easycap
 
     inputs.self.nixosModules.torified-users
     ./tor.nix

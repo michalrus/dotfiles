@@ -10,7 +10,6 @@ in
     ./base.nix
     ./modules/android.nix
     ./modules/emacs.nix
-    ./modules/malicious-hosts.nix
     ./modules/hardened-chromium.nix
     ./modules/hardened-firefox.nix
     ./modules/firefox-autocomplete.nix

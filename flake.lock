@@ -1,5 +1,17 @@
 {
   "nodes": {
+    "danPollock": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-yL9SHgLQA9OmZ12nnA1FL2vRTkpcpX202jXEEazf7Sk=",
+        "type": "file",
+        "url": "http://someonewhocares.org/hosts/zero/hosts"
+      },
+      "original": {
+        "type": "file",
+        "url": "http://someonewhocares.org/hosts/zero/hosts"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1689137672,
@@ -51,6 +63,7 @@
     },
     "root": {
       "inputs": {
+        "danPollock": "danPollock",
         "nixpkgs": "nixpkgs",
         "nixpkgs-aneta": "nixpkgs-aneta",
         "nixpkgs-lenovo-x1": "nixpkgs-lenovo-x1",

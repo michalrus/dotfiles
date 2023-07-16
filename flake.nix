@@ -8,6 +8,7 @@
       flake = false; # FIXME: too old
     };
     yt-dlp = { url = "github:yt-dlp/yt-dlp"; flake = false; };
+    danPollock = { url = "http://someonewhocares.org/hosts/zero/hosts"; flake = false; };
   };
 
   outputs = inputs: {
@@ -22,6 +23,7 @@
 
     nixosModules = {
       lock-vts = import ./modules/lock-vts;
+      malicious-hosts = import ./modules/malicious-hosts { inherit (inputs) danPollock; };
       somagic-easycap = import ./modules/somagic-easycap;
       torified-users = import ./modules/torified-users;
     };
