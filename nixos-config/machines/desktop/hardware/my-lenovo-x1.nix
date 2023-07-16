@@ -5,8 +5,6 @@
     [
     ../base-mine.nix
     #../modules/musnix.nix
-    #../modules/android-dev.nix
-    #../modules/chwalecice.nix
     ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "sdhci_pci" ];
