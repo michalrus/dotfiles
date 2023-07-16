@@ -18,6 +18,7 @@ nixpkgs.lib.nixosSystem {
     ./tor.nix
 
     ./android.nix
+    ./libvirt.nix
     ./podman.nix
 
     ../../nixos-config/machines/desktop/hardware/my-lenovo-x1.nix

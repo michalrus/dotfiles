@@ -16,7 +16,6 @@ in
     ./modules/transmission.nix
     ./modules/proaudio.nix
     ./modules/udev-remap-keyboard.nix
-    ./modules/libvirt.nix
 
     ./modules/window-managers.nix
   ];
@@ -123,7 +122,6 @@ in
     tigervnc
     inputs.self.packages.${pkgs.system}.transcribe
     tunctl
-    virt-manager # Gtk3 for QEMU/KVM
     vscodium
     watchexec
     speedread
@@ -154,16 +152,6 @@ in
     '')
 
   ];
-
-  virtualisation.podman.enable = true;
-
-  programs.dconf.enable = true; # for virt-manager
-  # <https://github.com/kholia/OSX-KVM/blob/master/kvm.conf>
-  boot.extraModprobeConfig = ''
-    options kvm_intel nested=1
-    options kvm_intel emulate_invalid_guest_state=0
-    options kvm ignore_msrs=1 report_ignored_msrs=0
-  '';
 
   hardware.bluetooth.enable = true;
 
@@ -263,7 +251,7 @@ in
       uid = 31337;
 
       description = "Michal Rus";
-      extraGroups = [ "wheel" "audio" "nonet" "scanner" "networkmanager" "libvirtd" "wireshark" "cdrom" "video" ];
+      extraGroups = [ "wheel" "audio" "nonet" "scanner" "networkmanager" "wireshark" "cdrom" "video" ];
       dotfiles-old.base = "${config.users.users.m.home}/.dotfiles/dotfiles";
       dotfiles-old.profiles = [ "base" "michalrus/base" "michalrus/desktop" "git-annex" "michalrus/personal" "i3" "emacs" ];
       packages = with pkgs; [
@@ -296,7 +284,7 @@ in
       uid = 1337;
 
       description = "Michal Rus (w)";
-      extraGroups = [ "audio" "nonet" "scanner" "networkmanager" "libvirtd" "wireshark" "cdrom" "video" ];
+      extraGroups = [ "audio" "nonet" "scanner" "networkmanager" "wireshark" "cdrom" "video" ];
       dotfiles-old.profiles = [ "base" "michalrus/base" "michalrus/desktop" "git-annex" "michalrus/work/iohk" "i3" "emacs" ];
       packages = with pkgs; [
         (hardened-firefox.makeWrapped {

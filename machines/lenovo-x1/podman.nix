@@ -1,7 +1,8 @@
 { config, lib, pkgs, ... }:
 
-lib.mkIf config.virtualisation.podman.enable {
+{
 
+  virtualisation.podman.enable = true;
   virtualisation.podman.dockerCompat = true;
 
   environment.systemPackages = with pkgs; [
