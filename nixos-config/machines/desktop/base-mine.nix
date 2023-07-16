@@ -1,5 +1,10 @@
 { inputs, config, lib, pkgs, ... }:
 
+let
+  unfree = import pkgs.path { inherit (pkgs) system; config.allowUnfree = true; };
+  unfree-23_05 = import inputs.nixpkgs { inherit (pkgs) system; config.allowUnfree = true; };
+in
+
 {
   imports = [
     ./base.nix
@@ -271,7 +276,7 @@
       packages = with pkgs; [
         unfree.google-chrome
         unfree.skypeforlinux
-        unfree.zoom-us
+        unfree-23_05.zoom-us
         unfree.unrar
       ];
     };
@@ -334,7 +339,7 @@
         qgis
         josm
         unfree.skypeforlinux
-        unfree.zoom-us
+        unfree-23_05.zoom-us
       ];
     };
 
