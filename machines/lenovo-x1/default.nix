@@ -8,6 +8,7 @@ nixpkgs.lib.nixosSystem {
     { _module.args = { inherit inputs; }; }
     nixpkgs.nixosModules.notDetected
 
+    #inputs.self.nixosModules.cups-reenable  # disabled for battery life
     inputs.self.nixosModules.hibernate-on-low-battery
     inputs.self.nixosModules.lock-vts
     inputs.self.nixosModules.malicious-hosts
