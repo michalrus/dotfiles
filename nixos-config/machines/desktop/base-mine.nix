@@ -6,19 +6,7 @@ let
 in
 
 {
-  imports = [
-    ./base.nix
-    ./modules/emacs.nix
-    ./modules/hardened-chromium.nix
-    ./modules/hardened-firefox.nix
-    ./modules/firefox-autocomplete.nix
-    ./modules/openvpn-nordvpn.nix
-    ./modules/transmission.nix
-    ./modules/proaudio.nix
-    ./modules/udev-remap-keyboard.nix
-
-    ./modules/window-managers.nix
-  ];
+  imports = [ ./base.nix ];
 
   nix = {
     package = pkgs-23_05.nixUnstable; # 2.15.1
@@ -201,11 +189,6 @@ in
     screen.usersAlways = [];
 
     blueman.enable = true;
-
-    firefox-autocomplete.userPorts = {
-      m = 9114;
-      mw = 9115;
-    };
 
     # No global X11! See <./modules/no-display-manager/i3.nix>
     xserver.enable = lib.mkForce false;

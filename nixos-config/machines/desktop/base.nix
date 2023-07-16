@@ -4,7 +4,6 @@
   imports = [
     ../../modules
     ../common-x86.nix
-    ./modules/openvpn-michalrus_com.nix
   ];
 
   powerManagement.cpuFreqGovernor = lib.mkOverride 999 "performance"; # basically lib.mkDefault, but this one is already used in power-management.nix…

@@ -19,10 +19,23 @@ nixpkgs.lib.nixosSystem {
     torified-users
     ./features/tor.nix
 
+    ./features/firefox-autocomplete.nix
+    { services.firefox-autocomplete.userPorts.m = 9114; }
+    { services.firefox-autocomplete.userPorts.mw = 9115; }
+
     ./features/android.nix
+    ./features/emacs.nix
+    ./features/hardened-chromium.nix
+    ./features/hardened-firefox.nix
     ./features/libvirt.nix
     #./features/musnix.nix
+    ./features/openvpn-michalrus_com.nix
+    ./features/openvpn-nordvpn.nix
     ./features/podman.nix
+    ./features/proaudio.nix
+    ./features/transmission.nix
+    ./features/udev-remap-keyboard.nix
+    ./features/window-managers.nix
 
   ]);
 }
