@@ -22,6 +22,7 @@
 
     nixosModules = {
       somagic-easycap = import ./modules/somagic-easycap;
+      torified-users = import ./modules/torified-users;
     };
 
     packages = inputs.nixpkgs.lib.genAttrs ["x86_64-linux" "aarch64-linux"] (system: let

@@ -11,7 +11,6 @@
     ./sane-extra-config.nix
     ./screen.nix
     ./sqlite-dump.nix
-    ./torified-users.nix
     ./dynamic-profiles.nix
   ];
 }

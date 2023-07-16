@@ -10,6 +10,9 @@ nixpkgs.lib.nixosSystem {
 
     inputs.self.nixosModules.somagic-easycap
 
+    inputs.self.nixosModules.torified-users
+    ./tor.nix
+
     ../../nixos-config/machines/desktop/hardware/my-lenovo-x1.nix
   ];
 }
