@@ -13,6 +13,8 @@ nixpkgs.lib.nixosSystem {
     inputs.self.nixosModules.torified-users
     ./tor.nix
 
+    ./podman.nix
+
     ../../nixos-config/machines/desktop/hardware/my-lenovo-x1.nix
   ];
 }
