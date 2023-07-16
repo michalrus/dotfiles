@@ -3,7 +3,7 @@
 {
   imports =
     [
-    ../base-mine.nix
+    ../../nixos-config/machines/desktop/base-mine.nix
     #../modules/musnix.nix
     ];
 

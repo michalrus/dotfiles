@@ -7,20 +7,21 @@ nixpkgs.lib.nixosSystem {
   modules = [
     { _module.args = { inherit inputs; }; }
     nixpkgs.nixosModules.notDetected
+    ./hardware.nix
+  ] ++ (with inputs.self.nixosModules; [
 
-    #inputs.self.nixosModules.cups-reenable  # disabled for battery life
-    inputs.self.nixosModules.hibernate-on-low-battery
-    inputs.self.nixosModules.lock-vts
-    inputs.self.nixosModules.malicious-hosts
-    inputs.self.nixosModules.somagic-easycap
+    #cups-reenable  # disabled for battery life
+    hibernate-on-low-battery
+    lock-vts
+    malicious-hosts
+    somagic-easycap
 
-    inputs.self.nixosModules.torified-users
-    ./tor.nix
+    torified-users
+    ./features/tor.nix
 
-    ./android.nix
-    ./libvirt.nix
-    ./podman.nix
+    ./features/android.nix
+    ./features/libvirt.nix
+    ./features/podman.nix
 
-    ../../nixos-config/machines/desktop/hardware/my-lenovo-x1.nix
-  ];
+  ]);
 }
