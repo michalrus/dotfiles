@@ -33,9 +33,6 @@ in
 
 composeOverlays [
 
-  ## Allow unsafe internal UEFI snapshots in libvirt globally:
-  (import ./pkgs/libvirt.nix)
-
   (_: _: { nixos-unstable = nixos-unstable {}; })
 
   (_: _: { nixos-oldstable = nixos-oldstable {}; })

@@ -18,6 +18,7 @@ in
     ./modules/hibernate-on-low-battery.nix
     ./modules/proaudio.nix
     ./modules/udev-remap-keyboard.nix
+    ./modules/libvirt.nix
 
     # TODO: rethink
     ./modules/lock-vts.nix
@@ -160,9 +161,6 @@ in
   ];
 
   virtualisation.podman.enable = true;
-
-  virtualisation.libvirtd.enable = true; # QEMU/KVM
-  virtualisation.spiceUSBRedirection.enable = true;
 
   programs.dconf.enable = true; # for virt-manager
   # <https://github.com/kholia/OSX-KVM/blob/master/kvm.conf>
