@@ -11,6 +11,15 @@ in
 
 {
 
+  ## `services.transmission` uses the global definition… :rolling_eyes:
+  nixpkgs.overlays = [
+    (_: super: {
+      transmission = super.transmission.overrideAttrs (drv: {
+        patches = (drv.patches or []) ++ [ ./transmission--no-deleteLocalData.patch ];
+      });
+    })
+  ];
+
   services.transmission = {
     enable = true;
 
