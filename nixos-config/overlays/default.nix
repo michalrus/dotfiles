@@ -46,8 +46,6 @@ composeOverlays [
 
       (import ./pkgs/hardened-firefox.nix)
 
-      (import ./pkgs/git-annex-hacks.nix)
-
     ] self.michalrus (super.michalrus or super);
 
   })

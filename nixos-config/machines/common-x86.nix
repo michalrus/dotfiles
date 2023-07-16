@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ inputs, config, lib, pkgs, ... }:
 
 {
   imports = [
@@ -42,8 +42,7 @@
     ltrace
     man_db
     manpages
-    michalrus.git-annex
-    michalrus.git-annex-desktop
+    inputs.self.packages.${pkgs.system}.git-annex-hacks
     nix-prefetch-scripts
     normalize
     oathToolkit

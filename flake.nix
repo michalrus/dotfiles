@@ -26,6 +26,7 @@
       autotalent = callPackage ./packages/autotalent {};
       cp2104-gpio = callPackage ./packages/cp2104-gpio {};
       dmenu-is-rofi = callPackage ./packages/dmenu-is-rofi {};
+      git-annex-hacks = callPackage ./packages/git-annex-hacks {};
       gettext-emacs = callPackage ./packages/gettext-emacs {};
       gregorio = callPackage ./packages/gregorio {};
       lv2-cpp-tools = callPackage ./packages/lv2-cpp-tools {};
