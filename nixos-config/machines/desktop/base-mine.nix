@@ -12,6 +12,7 @@ in
     ./modules/emacs.nix
     ./modules/malicious-hosts.nix
     ./modules/hardened-chromium.nix
+    ./modules/hardened-firefox.nix
     ./modules/firefox-autocomplete.nix
     ./modules/openvpn-nordvpn.nix
     ./modules/transmission.nix
@@ -297,10 +298,10 @@ in
         unfree-23_05.skypeforlinux
         lilypond
         monero-gui
-        (nixos-oldstable.wrapFirefox (michalrus.hardened-firefox-unwrapped.override {
+        (hardened-firefox.makeWrapped {
           localAutocompletePort = config.services.firefox-autocomplete.userPorts.m;
-          extraPrefs = michalrus.hardened-firefox-unwrapped.cfgEnableDRM;
-        }) {})
+          extraPrefs = hardened-firefox.unwrapped.cfgEnableDRM;
+        })
         openjdk8   # for nofatty
         (texlive.combine {
           inherit (texlive) scheme-small latexmk titlesec tocloft todonotes cleveref lipsum biblatex logreq cm-super csquotes pgfplots adjustbox collectbox ccicons polski placeins xstring pdfpages unicode-math filehook textpos marvosym fontawesome progressbar lm-math ucharcat pdfjam
@@ -321,10 +322,10 @@ in
       extraGroups = [ "audio" "nonet" "scanner" "networkmanager" "libvirtd" "wireshark" "cdrom" "video" ];
       dotfiles-old.profiles = [ "base" "michalrus/base" "michalrus/desktop" "git-annex" "michalrus/work/iohk" "i3" "emacs" ];
       packages = with pkgs; [
-        (nixos-oldstable.wrapFirefox (michalrus.hardened-firefox-unwrapped.override {
+        (hardened-firefox.makeWrapped {
           localAutocompletePort = config.services.firefox-autocomplete.userPorts.mw;
-          extraPrefs = michalrus.hardened-firefox-unwrapped.cfgEnableDRM;
-        }) {})
+          extraPrefs = hardened-firefox.unwrapped.cfgEnableDRM;
+        })
         pkgs-23_05.chromium
         #jetbrains.idea-community
         unfree-23_05.jetbrains.webstorm
@@ -350,7 +351,7 @@ in
       dotfiles-old.profiles = [ "base" "michalrus/base" "michalrus/desktop" "michalrus/tor" "i3" "emacs" ];
       packages = with pkgs; [
         electrum
-        (nixos-oldstable.wrapFirefox (michalrus.hardened-firefox-unwrapped.override {
+        (hardened-firefox.makeWrapped {
           localAutocompletePort = config.services.firefox-autocomplete.userPorts.md;
           extraPrefs = ''
             // Override those for more privacy:
@@ -358,7 +359,7 @@ in
             lockPref("dom.enable_performance", false);
             lockPref("network.cookie.lifetimePolicy", 2); // The cookie expires at the end of the session.
           '';
-        }) {})
+        })
       ];
     };
   };

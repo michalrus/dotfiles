@@ -12,15 +12,6 @@ let
       preventGC = nixpkgs.writeTextDir "prevent-ifd-gc" (toString [ src ]);
     };
 
-  # just for my personal (m@) Firefox: 20.09.3505.12d9950bf47 (Nightingale)
-  nixos-oldstable = config:
-    let src = nixpkgsOf "12d9950bf47e0ac20d4d04e189448ee075242117"
-                        "09wy33zbzxj33296ddrrb79630kxpj1c3kiv38zs4wrw24206c2v";
-        nixpkgs = (import src { inherit config; inherit (super) system; });
-    in nixpkgs // {
-      preventGC = nixpkgs.writeTextDir "prevent-ifd-gc" (toString [ src ]);
-    };
-
 in
 
 #
@@ -34,17 +25,5 @@ in
 composeOverlays [
 
   (_: _: { nixos-unstable = nixos-unstable {}; })
-
-  (_: _: { nixos-oldstable = nixos-oldstable {}; })
-
-  (self: super: {
-
-    michalrus = composeOverlays [
-
-      (import ./pkgs/hardened-firefox.nix)
-
-    ] self.michalrus (super.michalrus or super);
-
-  })
 
 ] self super

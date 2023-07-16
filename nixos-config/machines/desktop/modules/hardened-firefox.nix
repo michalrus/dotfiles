@@ -1,8 +1,20 @@
-self: super:
+{ pkgs, ... }:
 
-rec {
+let
 
-  hardened-firefox-unwrapped = self.nixos-oldstable.callPackage (
+  pkgs-oldstable = import (
+    pkgs.fetchFromGitHub {
+      owner = "NixOS"; repo = "nixpkgs";
+      rev = "12d9950bf47e0ac20d4d04e189448ee075242117";
+      sha256 = "09wy33zbzxj33296ddrrb79630kxpj1c3kiv38zs4wrw24206c2v";
+    }
+  ) { inherit (pkgs) system; };
+
+  makeWrapped =
+    args@{ localAutocompletePort, extraPrefs }:
+    pkgs-oldstable.wrapFirefox (unwrapped.override args) {};
+
+  unwrapped = pkgs-oldstable.callPackage (
 
     { runCommand, writeText, writeScript, firefox-unwrapped, fetchurl,
       localAutocompletePort ? 999999999, extraPrefs ? "" }:
@@ -595,5 +607,15 @@ rec {
     ''
 
   ) {};
+
+in  {
+
+  nixpkgs.overlays = [
+    (_: _: {
+      hardened-firefox = {
+        inherit makeWrapped unwrapped;
+      };
+    })
+  ];
 
 }
