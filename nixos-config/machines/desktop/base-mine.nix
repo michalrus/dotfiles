@@ -28,7 +28,7 @@ in
   ];
 
   nix = {
-    package = pkgs.nixos-unstable.nixUnstable; # 2.11.1
+    package = pkgs-23_05.nixUnstable; # 2.15.1
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
@@ -120,7 +120,7 @@ in
     (python3.withPackages (p: with p; [ scipy geopy python-lsp-server requests pylint matplotlib tkinter beautifulsoup4 aiohttp humanize protobuf ]))
     python3Packages.livereload
     qjoypad
-    nixos-unstable.retroarchFull
+    pkgs-23_05.retroarchFull
     rpcs3
     rustup
     rust-analyzer

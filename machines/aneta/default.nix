@@ -5,7 +5,7 @@
 let
   nixpkgs = inputs.nixpkgs-aneta;
   system = "aarch64-linux";
-  pkgs = import nixpkgs { inherit system; overlays = [ (import ../../nixos-config/overlays) ]; };
+  pkgs = import nixpkgs { inherit system; };
 in import "${nixpkgs}/nixos/lib/eval-config.nix" {
   inherit system pkgs;
   modules = [

@@ -16,8 +16,6 @@
     };
   };
 
-  nixpkgs.overlays = [ (import ../overlays) ];
-
   networking.firewall.rejectPackets = true;
 
   programs = {
@@ -55,7 +53,6 @@
   environment.systemPackages = with pkgs; [
     (hiPrio netcat-openbsd)
     (hiPrio arping)
-    (nixos-unstable.preventGC)
     arpoison
     bc
     bindfs
