@@ -55,7 +55,7 @@ let
 in
 
 {
-  options.hardware.enableSomagicEasyCAP = mkEnableOption "Somagic EasyCAP";
+  options.hardware.enableSomagicEasyCAP = mkEnableOption "Somagic EasyCAP" // { default = true; };
 
   config = mkIf config.hardware.enableSomagicEasyCAP {
 

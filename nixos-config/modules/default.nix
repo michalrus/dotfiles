@@ -10,7 +10,6 @@
     ./podman.nix
     ./sane-extra-config.nix
     ./screen.nix
-    ./somagic-easycap.nix
     ./sqlite-dump.nix
     ./torified-users.nix
     ./dynamic-profiles.nix

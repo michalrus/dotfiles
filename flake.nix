@@ -20,6 +20,10 @@
       lenovo-x1 = import ./machines/lenovo-x1 { inherit inputs; };
     };
 
+    nixosModules = {
+      somagic-easycap = import ./modules/somagic-easycap;
+    };
+
     packages = inputs.nixpkgs.lib.genAttrs ["x86_64-linux" "aarch64-linux"] (system: let
       inherit (inputs.nixpkgs-lenovo-x1.legacyPackages.${system}) callPackage;
     in rec {

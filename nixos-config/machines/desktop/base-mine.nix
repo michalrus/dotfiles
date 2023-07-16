@@ -177,8 +177,6 @@ in
     point = "${user.home}/Phone";
   };
 
-  hardware.enableSomagicEasyCAP = true;
-
   hardware.bluetooth.enable = true;
 
   hardware.pulseaudio = {
