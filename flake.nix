@@ -31,6 +31,7 @@
       pms5003 = callPackage ./packages/pms5003 {};
       talentedhack = callPackage ./packages/talentedhack {};
       tap-plugins = callPackage ./packages/tap-plugins {};
+      transcribe = callPackage ./packages/transcribe {};
       vocproc = callPackage ./packages/vocproc { inherit lv2-cpp-tools; };
       yt-dlp = import ./packages/yt-dlp { inherit inputs system; };
     });

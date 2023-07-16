@@ -120,6 +120,7 @@
     sqlint
     termite
     tigervnc
+    inputs.self.packages.${pkgs.system}.transcribe
     tunctl
     virt-manager # Gtk3 for QEMU/KVM
     vscodium
