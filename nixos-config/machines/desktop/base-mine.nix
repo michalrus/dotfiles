@@ -8,7 +8,6 @@ in
 {
   imports = [
     ./base.nix
-    ./modules/android.nix
     ./modules/emacs.nix
     ./modules/hardened-chromium.nix
     ./modules/hardened-firefox.nix
@@ -165,12 +164,6 @@ in
     options kvm_intel emulate_invalid_guest_state=0
     options kvm ignore_msrs=1 report_ignored_msrs=0
   '';
-
-  hardware.android.automount = let user = config.users.users.m; in {
-    enable = true;
-    user = user.name;
-    point = "${user.home}/Phone";
-  };
 
   hardware.bluetooth.enable = true;
 
