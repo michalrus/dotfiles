@@ -62,21 +62,6 @@ composeOverlays [
 
     ] self.michalrus (super.michalrus or super);
 
-
-    unfree = composeOverlays [
-
-      (_: _: { nixos-unstable = nixos-unstable { allowUnfree = true; }; })
-
-      (self: super: {
-
-        michalrus = composeOverlays [
-
-        ] self.michalrus (super.michalrus or super);
-
-      })
-
-    ] self.unfree (super.unfree or (import super.path { config.allowUnfree = true; inherit (super) system; }));
-
   })
 
 ] self super

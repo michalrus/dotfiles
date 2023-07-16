@@ -1,7 +1,7 @@
 { inputs, config, lib, pkgs, ... }:
 
 let
-  unfree = import pkgs.path { inherit (pkgs) system; config.allowUnfree = true; };
+  pkgs-23_05 = inputs.nixpkgs.legacyPackages.${pkgs.system};
   unfree-23_05 = import inputs.nixpkgs { inherit (pkgs) system; config.allowUnfree = true; };
 in
 
@@ -274,10 +274,10 @@ in
     users.guest = {
       dotfiles-old.profiles = [ "base" "i3" "michalrus/guest" ];
       packages = with pkgs; [
-        unfree.google-chrome
-        unfree.skypeforlinux
+        unfree-23_05.google-chrome
+        unfree-23_05.skypeforlinux
         unfree-23_05.zoom-us
-        unfree.unrar
+        unfree-23_05.unrar
       ];
     };
 
@@ -291,12 +291,12 @@ in
       dotfiles-old.base = "${config.users.users.m.home}/.dotfiles/dotfiles";
       dotfiles-old.profiles = [ "base" "michalrus/base" "michalrus/desktop" "git-annex" "michalrus/personal" "i3" "emacs" ];
       packages = with pkgs; [
-        chromium
+        pkgs-23_05.chromium
         electrum
         michalrus.gnucash
         isync
         jetbrains.idea-community
-        unfree.skypeforlinux
+        unfree-23_05.skypeforlinux
         lilypond
         monero-gui
         (nixos-oldstable.wrapFirefox (michalrus.hardened-firefox-unwrapped.override {
@@ -327,9 +327,9 @@ in
           localAutocompletePort = config.services.firefox-autocomplete.userPorts.mw;
           extraPrefs = michalrus.hardened-firefox-unwrapped.cfgEnableDRM;
         }) {})
-        chromium
+        pkgs-23_05.chromium
         #jetbrains.idea-community
-        unfree.jetbrains.webstorm
+        unfree-23_05.jetbrains.webstorm
         yarn
         nodejs
         #ansible_2_8
@@ -338,7 +338,7 @@ in
         sbt
         qgis
         josm
-        unfree.skypeforlinux
+        unfree-23_05.skypeforlinux
         unfree-23_05.zoom-us
       ];
     };
