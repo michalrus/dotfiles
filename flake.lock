@@ -53,7 +53,24 @@
       "inputs": {
         "nixpkgs": "nixpkgs",
         "nixpkgs-aneta": "nixpkgs-aneta",
-        "nixpkgs-lenovo-x1": "nixpkgs-lenovo-x1"
+        "nixpkgs-lenovo-x1": "nixpkgs-lenovo-x1",
+        "yt-dlp": "yt-dlp"
+      }
+    },
+    "yt-dlp": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1689455412,
+        "narHash": "sha256-h52eeB/AMPoVmQdDNk1Jze7XWEl2x5DXuGf6skGJXxQ=",
+        "owner": "yt-dlp",
+        "repo": "yt-dlp",
+        "rev": "613dbce177d34ffc31053e8e01acf4bb107bcd1e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "yt-dlp",
+        "repo": "yt-dlp",
+        "type": "github"
       }
     }
   },

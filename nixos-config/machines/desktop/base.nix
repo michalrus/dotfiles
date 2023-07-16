@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ self, config, lib, pkgs, ... }:
 
 {
   imports = [
@@ -109,7 +109,7 @@
     x264
     xarchiver
     xsane
-    youtube-dl
+    self.packages.${pkgs.system}.yt-dlp
   ];
 
   fonts = {
