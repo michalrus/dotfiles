@@ -4,13 +4,17 @@ with lib;
 
 let
   influxdbCollecdPort = 25826;
+  influxdb10 =
+    (pkgs.influxdb.overrideAttrs (oldAttrs: {
+      patches = [ ./influxdb-add_increase.patch ];
+    })).bin // { outputs = [ "bin" ]; };
 in
 
 {
 
   services.influxdb = {
     enable = true;
-    package = pkgs.michalrus.influxdb10;
+    package = influxdb10;
     extraConfig = {
       collectd = [{
         enabled = true;
