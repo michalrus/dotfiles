@@ -9,6 +9,7 @@ nixpkgs.lib.nixosSystem {
     nixpkgs.nixosModules.notDetected
 
     inputs.self.nixosModules.somagic-easycap
+    inputs.self.nixosModules.lock-vts
 
     inputs.self.nixosModules.torified-users
     ./tor.nix

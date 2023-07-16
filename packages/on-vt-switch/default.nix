@@ -1,8 +1,8 @@
-{ pkgs ? (import <nixpkgs> {}) }:
+{ stdenv }:
 
 let name = "on-vt-switch"; in
 
-pkgs.stdenv.mkDerivation {
+stdenv.mkDerivation {
   inherit name;
 
   src = builtins.filterSource (

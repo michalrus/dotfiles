@@ -2,7 +2,7 @@
 
 let
 
-  on-vt-switch = import ./on-vt-switch { inherit pkgs; };
+  on-vt-switch = pkgs.callPackage ../../packages/on-vt-switch {};
 
   lockVTs = pkgs.writeScriptBin "lock-vts" ''
     #! ${pkgs.stdenv.shell}
@@ -109,6 +109,8 @@ in
       { keys = [ 125 38 ]; events = [ "key" ]; command = "${config.systemd.package}/bin/systemctl start lock-vts"; }
     ];
   };
+
+  ### TODO: rethink
 
   ### TODO: Spacemacs
 

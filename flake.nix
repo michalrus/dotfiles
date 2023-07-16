@@ -21,6 +21,7 @@
     };
 
     nixosModules = {
+      lock-vts = import ./modules/lock-vts;
       somagic-easycap = import ./modules/somagic-easycap;
       torified-users = import ./modules/torified-users;
     };
@@ -35,6 +36,7 @@
       gettext-emacs = callPackage ./packages/gettext-emacs {};
       gregorio = callPackage ./packages/gregorio {};
       lv2-cpp-tools = callPackage ./packages/lv2-cpp-tools {};
+      on-vt-switch = callPackage ./packages/on-vt-switch {};
       noise = callPackage ./packages/noise {};
       pms5003 = callPackage ./packages/pms5003 {};
       talentedhack = callPackage ./packages/talentedhack {};

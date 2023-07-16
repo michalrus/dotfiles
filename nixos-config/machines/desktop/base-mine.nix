@@ -21,9 +21,6 @@ in
     ./modules/udev-remap-keyboard.nix
     ./modules/libvirt.nix
 
-    # TODO: rethink
-    ./modules/lock-vts.nix
-
     ./modules/window-managers.nix
   ];
 
