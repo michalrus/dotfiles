@@ -109,7 +109,7 @@ in
     k3b
     libguestfs
     libxml2
-    michalrus.gettext-emacs
+    inputs.self.packages.${pkgs.system}.gettext-emacs
     inputs.self.packages.${pkgs.system}.noise
     networkmanagerapplet
     octave

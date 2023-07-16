@@ -55,11 +55,6 @@ composeOverlays [
       (import ./pkgs/msmtp-no-security-check.nix)
       (import ./pkgs/dmenu-rofi.nix)
 
-      # TODO: contribute these:
-      (import ./pkgs/gettext-emacs.nix)
-
-      # TODO: contributed:
-
     ] self.michalrus (super.michalrus or super);
 
   })
