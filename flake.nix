@@ -13,10 +13,10 @@
   outputs = inputs: {
 
     nixosConfigurations = {
-      # deploy: nixos-rebuild switch --flake .#aneta --build-host localhost --target-host root@10.77.2.1
+      # nixos-rebuild switch -L --flake .#aneta --build-host localhost --target-host root@10.77.2.1
       aneta = import ./machines/aneta { inherit inputs; };
 
-      # deploy: sudo nixos-rebuild switch --flake .#lenovo-x1
+      # sudo nixos-rebuild switch -L --flake .#lenovo-x1
       lenovo-x1 = import ./machines/lenovo-x1 { inherit inputs; };
     };
 

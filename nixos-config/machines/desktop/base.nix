@@ -88,7 +88,7 @@
     libjpeg
     libnotify
     libreoffice
-    michalrus.pdfshuffler
+    pdfarranger
     mpv
     ntfs3g
     octave
