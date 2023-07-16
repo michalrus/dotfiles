@@ -24,9 +24,11 @@
     nixosModules = {
       cups-reenable = import ./modules/cups-reenable;
       dotfiles-old = import ./modules/dotfiles-old;
+      dynamic-profiles = import ./modules/dynamic-profiles;
       hibernate-on-low-battery = import ./modules/hibernate-on-low-battery;
       lock-vts = import ./modules/lock-vts { on-vt-switch-src = ./packages/on-vt-switch; };
       malicious-hosts = import ./modules/malicious-hosts { inherit (inputs) danPollock; };
+      no-display-manager = import ./modules/no-display-manager;  # requires ‘dynamic-profiles’
       somagic-easycap = import ./modules/somagic-easycap;
       torified-users = import ./modules/torified-users;
     };

@@ -45,19 +45,22 @@ in
 
 {
 
-  imports = [
-    ./lib.nix
-    ../dynamic-profiles.nix
-  ];
+  imports = [ ./lib.nix ];
 
   options = {
 
-    services.noDisplayManager.windowManager = lib.mkOption {
-      type = types.attrsOf (types.submodule wmOptions);
-      description = "Window manager launchers to define for all users. Accessible as TTY aliases.";
-      default = {};
-      example = {};
-    };
+    services.noDisplayManager.windowManager =
+
+      if !(__hasAttr "dynamic-profiles" config.environment)
+      then throw "‘no-display-manager’ depends on ‘dynamic-profiles’, please include it as well in your imports"
+      else
+
+      lib.mkOption {
+        type = types.attrsOf (types.submodule wmOptions);
+        description = "Window manager launchers to define for all users. Accessible as TTY aliases.";
+        default = {};
+        example = {};
+      };
 
     users.users = lib.mkOption {
       options = [{

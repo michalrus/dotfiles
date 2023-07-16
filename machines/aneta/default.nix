@@ -17,6 +17,8 @@ in import "${nixpkgs}/nixos/lib/eval-config.nix" {
     ./hardware.nix
     { networking.hostName = "aneta"; }
 
+    inputs.self.nixosModules.dotfiles-old
+
     ./features/dns.nix
     ./features/nat.nix
     ./features/openvpn.nix

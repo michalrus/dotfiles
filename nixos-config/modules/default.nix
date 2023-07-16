@@ -4,11 +4,9 @@
     ./guest-account.nix
     ./lock-x11-displays.nix
     #./logkeys
-    ./no-display-manager
     ./nonet-group.nix
     ./sane-extra-config.nix
     ./screen.nix
     ./sqlite-dump.nix
-    ./dynamic-profiles.nix
   ];
 }

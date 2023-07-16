@@ -12,9 +12,11 @@ nixpkgs.lib.nixosSystem {
 
     #cups-reenable  # disabled for battery life
     dotfiles-old
+    dynamic-profiles
     hibernate-on-low-battery
     lock-vts
     malicious-hosts
+    no-display-manager
     somagic-easycap
 
     torified-users
