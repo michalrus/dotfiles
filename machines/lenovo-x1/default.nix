@@ -11,6 +11,7 @@ nixpkgs.lib.nixosSystem {
   ] ++ (with inputs.self.nixosModules; [
 
     #cups-reenable  # disabled for battery life
+    dotfiles-old
     hibernate-on-low-battery
     lock-vts
     malicious-hosts
