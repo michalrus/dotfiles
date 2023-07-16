@@ -15,7 +15,6 @@ in
     ./modules/firefox-autocomplete.nix
     ./modules/openvpn-nordvpn.nix
     ./modules/transmission.nix
-    ./modules/hibernate-on-low-battery.nix
     ./modules/proaudio.nix
     ./modules/udev-remap-keyboard.nix
     ./modules/libvirt.nix

@@ -22,6 +22,7 @@
     };
 
     nixosModules = {
+      hibernate-on-low-battery = import ./modules/hibernate-on-low-battery;
       lock-vts = import ./modules/lock-vts;
       malicious-hosts = import ./modules/malicious-hosts { inherit (inputs) danPollock; };
       somagic-easycap = import ./modules/somagic-easycap;
