@@ -2,14 +2,8 @@
 
 let
 
-  # Break the circular dependency.
-  #
-  # <clever> michalrus: it needs to fully eval all imports statements,
-  # to find every instance of nixpkgs.config, to configure the pkgs
-  # argument, which imports depends on
-  inherit (import <nixpkgs> { config = {}; }) fetchFromGitHub;
-
-  repo = fetchFromGitHub {
+  # TODO: move to flake inputs
+  repo = pkgs.fetchFromGitHub {
     owner = "musnix"; repo = "musnix";
     rev = "7207f25dc03c55488cc495f3db5641c3c0ba5f96";
     sha256 = "135jlcjm1s6lj9alhqllms6d7qsx43x609lyjck5waif8s7a3fz4";

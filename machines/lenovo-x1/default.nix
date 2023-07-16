@@ -21,6 +21,7 @@ nixpkgs.lib.nixosSystem {
 
     ./features/android.nix
     ./features/libvirt.nix
+    #./features/musnix.nix
     ./features/podman.nix
 
   ]);

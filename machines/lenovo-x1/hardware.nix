@@ -4,7 +4,6 @@
   imports =
     [
     ../../nixos-config/machines/desktop/base-mine.nix
-    #../modules/musnix.nix
     ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "sdhci_pci" ];
