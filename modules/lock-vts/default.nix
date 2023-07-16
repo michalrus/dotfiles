@@ -1,8 +1,10 @@
+{ on-vt-switch-src }:
+
 { config, pkgs, lib, ... }:
 
 let
 
-  on-vt-switch = pkgs.callPackage ../../packages/on-vt-switch {};
+  on-vt-switch = pkgs.callPackage on-vt-switch-src {};
 
   lockVTs = pkgs.writeScriptBin "lock-vts" ''
     #! ${pkgs.stdenv.shell}

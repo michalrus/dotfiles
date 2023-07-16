@@ -24,7 +24,7 @@
     nixosModules = {
       cups-reenable = import ./modules/cups-reenable;
       hibernate-on-low-battery = import ./modules/hibernate-on-low-battery;
-      lock-vts = import ./modules/lock-vts;
+      lock-vts = import ./modules/lock-vts { on-vt-switch-src = ./packages/on-vt-switch; };
       malicious-hosts = import ./modules/malicious-hosts { inherit (inputs) danPollock; };
       somagic-easycap = import ./modules/somagic-easycap;
       torified-users = import ./modules/torified-users;
