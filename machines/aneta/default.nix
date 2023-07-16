@@ -12,7 +12,7 @@ in import "${nixpkgs}/nixos/lib/eval-config.nix" {
     {
       system.nixos.versionSuffix = ".${pkgs.lib.substring 0 8 nixpkgs.lastModifiedDate}.${nixpkgs.shortRev}";
       system.nixos.revision = nixpkgs.rev;
-      _module.args = { inherit (inputs) self; };
+      _module.args = { inherit inputs; };
     }
     ../../nixos-config/machines/embedded/router-wroclaw/default.nix
   ];

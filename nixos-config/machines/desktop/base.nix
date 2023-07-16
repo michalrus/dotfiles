@@ -1,4 +1,4 @@
-{ self, config, lib, pkgs, ... }:
+{ inputs, config, lib, pkgs, ... }:
 
 {
   imports = [
@@ -109,7 +109,7 @@
     x264
     xarchiver
     xsane
-    self.packages.${pkgs.system}.yt-dlp
+    inputs.self.packages.${pkgs.system}.yt-dlp
   ];
 
   fonts = {

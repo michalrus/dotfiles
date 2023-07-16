@@ -1,4 +1,4 @@
-{ self, config, lib, pkgs, ... }:
+{ inputs, config, lib, pkgs, ... }:
 
 {
   imports = [
@@ -105,7 +105,7 @@
     libguestfs
     libxml2
     michalrus.gettext-emacs
-    self.packages.${pkgs.system}.noise
+    inputs.self.packages.${pkgs.system}.noise
     networkmanagerapplet
     octave
     pandoc
@@ -303,7 +303,7 @@
             # for Org-mode export to PDF
             wrapfig wasysym
             ;
-          gregorio = self.packages.${pkgs.system}.gregorio.forTexlive;
+          gregorio = inputs.self.packages.${pkgs.system}.gregorio.forTexlive;
         })
       ];
     };
