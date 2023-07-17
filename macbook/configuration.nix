@@ -92,14 +92,14 @@
     # FIXME: for some reason it's no longer visible in Launchpad – and the custom path can be set via defaults as well
     #
     # Substitute IINA’s built-in `youtube-dl` with the freshest from `pkgsUnstable`:
-    (iina.overrideAttrs (drv: {
-      installPhase =
-        (drv.installPhase or "")
-        + ''
-          rm $out/Applications/IINA.app/Contents/MacOS/youtube-dl
-          ln -s ${pkgsUnstable.yt-dlp}/bin/yt-dlp $out/Applications/IINA.app/Contents/MacOS/youtube-dl
-        '';
-    }))
+    #(iina.overrideAttrs (drv: {
+    #  installPhase =
+    #    (drv.installPhase or "")
+    #    + ''
+    #      rm $out/Applications/IINA.app/Contents/MacOS/youtube-dl
+    #      ln -s ${pkgsUnstable.yt-dlp}/bin/yt-dlp $out/Applications/IINA.app/Contents/MacOS/youtube-dl
+    #    '';
+    #}))
 
     python3
   ];
