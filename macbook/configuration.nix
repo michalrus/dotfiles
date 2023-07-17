@@ -20,13 +20,10 @@
   nix.settings.auto-optimise-store = true;
 
   # Additional IOG (Cardano) binary cache:
-  nix.settings.substituters = lib.mkForce ["https://cache.nixos.org" "https://cache.iog.io" "https://cache-1.zw3rk.com"];
+  nix.settings.substituters = lib.mkForce ["https://cache.nixos.org" "https://cache.iog.io" ];
   nix.settings.trusted-public-keys = lib.mkForce [
     "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
     "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
-
-    # FIXME: remove after IOG gets official `aarch64-darwin` builders:
-    "loony-tools:pr9m4BkM/5/eSTZlkQyRt57Jz7OMBxNSUiMC4FkcNfk="
   ];
 
   nix.settings.trusted-users = lib.mkForce ["root"];
@@ -36,7 +33,7 @@
     {nixpkgs = pkgs.path;} #  "/nix/var/nix/profiles/per-user/root/channels"
   ];
 
-  nix.package = pkgs.nixUnstable; # 2.9.1 for Nix debugger
+  nix.package = pkgsUnstable.nixUnstable; # go back to pkgsStable once they have >2.10
 
   nix.extraOptions =
     ''
