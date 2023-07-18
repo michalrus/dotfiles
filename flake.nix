@@ -49,6 +49,7 @@
       lock-x11-displays = import ./modules/lock-x11-displays;
       malicious-hosts = import ./modules/malicious-hosts { inherit (inputs) danPollock; };
       no-display-manager = import ./modules/no-display-manager;  # requires ‘dynamic-profiles’
+      nonet-group = import ./modules/nonet-group;
       sane-extra-config = import ./modules/sane-extra-config;
       somagic-easycap = import ./modules/somagic-easycap;
       torified-users = import ./modules/torified-users;

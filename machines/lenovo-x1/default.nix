@@ -19,6 +19,7 @@ nixpkgs.lib.nixosSystem {
     lock-x11-displays
     malicious-hosts
     no-display-manager
+    nonet-group
     #sane-extra-config
     somagic-easycap
 
