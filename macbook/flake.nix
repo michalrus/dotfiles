@@ -1,16 +1,16 @@
 {
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-22.05-darwin";
-    nixpkgsUnstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgsDarwin.url = "github:nixos/nixpkgs/nixpkgs-22.05-darwin";
+    nixpkgsDarwinUnstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
     nix-darwin.url = "github:lnl7/nix-darwin/master";
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgsDarwin";
 
     home-manager.url = "github:nix-community/home-manager/release-22.05";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager.inputs.nixpkgs.follows = "nixpkgsDarwin";
 
     nix-doom-emacs.url = "github:nix-community/nix-doom-emacs";
-    nix-doom-emacs.inputs.nixpkgs.follows = "nixpkgs"; # TODO: or should it say "nixpkgsUnstable"?
+    nix-doom-emacs.inputs.nixpkgs.follows = "nixpkgsDarwin"; # TODO: or should it say "nixpkgsDarwinUnstable"?
   };
 
   outputs = inputs: {
@@ -23,7 +23,7 @@
             pkgs,
             ...
           }: {
-            _module.args.pkgsUnstable = import inputs.nixpkgsUnstable {
+            _module.args.pkgsUnstable = import inputs.nixpkgsDarwinUnstable {
               inherit (pkgs) system;
               inherit (config.nixpkgs) config;
             };

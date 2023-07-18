@@ -196,7 +196,7 @@
     "home-manager": {
       "inputs": {
         "nixpkgs": [
-          "nixpkgs"
+          "nixpkgsDarwin"
         ]
       },
       "locked": {
@@ -217,7 +217,7 @@
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
-          "nixpkgs"
+          "nixpkgsDarwin"
         ]
       },
       "locked": {
@@ -251,7 +251,7 @@
         "format-all": "format-all",
         "nix-straight": "nix-straight",
         "nixpkgs": [
-          "nixpkgs"
+          "nixpkgsDarwin"
         ],
         "nose": "nose",
         "ob-racket": "ob-racket",
@@ -295,7 +295,7 @@
         "type": "github"
       }
     },
-    "nixpkgs": {
+    "nixpkgsDarwin": {
       "locked": {
         "lastModified": 1667814838,
         "narHash": "sha256-6nrpljA5Ps3xiC8tfw+TRg2xcORS/HENFNmBAwHezzo=",
@@ -311,7 +311,7 @@
         "type": "github"
       }
     },
-    "nixpkgsUnstable": {
+    "nixpkgsDarwinUnstable": {
       "locked": {
         "lastModified": 1668415355,
         "narHash": "sha256-F52qWYvLFJV1jibZiuNzeca8+UgZ7NZrr44J2ednmpE=",
@@ -444,8 +444,8 @@
         "home-manager": "home-manager",
         "nix-darwin": "nix-darwin",
         "nix-doom-emacs": "nix-doom-emacs",
-        "nixpkgs": "nixpkgs",
-        "nixpkgsUnstable": "nixpkgsUnstable"
+        "nixpkgsDarwin": "nixpkgsDarwin",
+        "nixpkgsDarwinUnstable": "nixpkgsDarwinUnstable"
       }
     },
     "rotate-text": {
