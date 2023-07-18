@@ -25,10 +25,13 @@
       cups-reenable = import ./modules/cups-reenable;
       dotfiles-old = import ./modules/dotfiles-old;
       dynamic-profiles = import ./modules/dynamic-profiles;
+      guest-account = import ./modules/guest-account;
       hibernate-on-low-battery = import ./modules/hibernate-on-low-battery;
       lock-vts = import ./modules/lock-vts { on-vt-switch-src = ./packages/on-vt-switch; };
+      lock-x11-displays = import ./modules/lock-x11-displays;
       malicious-hosts = import ./modules/malicious-hosts { inherit (inputs) danPollock; };
       no-display-manager = import ./modules/no-display-manager;  # requires ‘dynamic-profiles’
+      sane-extra-config = import ./modules/sane-extra-config;
       somagic-easycap = import ./modules/somagic-easycap;
       torified-users = import ./modules/torified-users;
     };
