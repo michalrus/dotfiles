@@ -34,7 +34,7 @@
     };
 
     darwinConfigurations = rec {
-      # darwin-rebuild switch -L ………………………
+      # darwin-rebuild switch -L --flake .#macbook
       macbook = import ./machines/macbook { inherit inputs; };
     };
 
@@ -42,6 +42,7 @@
       cups-reenable = import ./modules/cups-reenable;
       dotfiles-old = import ./modules/dotfiles-old;
       dynamic-profiles = import ./modules/dynamic-profiles;
+      firewall-comments = import ./modules/firewall-comments;
       guest-account = import ./modules/guest-account;
       hibernate-on-low-battery = import ./modules/hibernate-on-low-battery;
       lock-vts = import ./modules/lock-vts { on-vt-switch-src = ./packages/on-vt-switch; };
