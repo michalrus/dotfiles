@@ -3,7 +3,7 @@
     "danPollock": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-yL9SHgLQA9OmZ12nnA1FL2vRTkpcpX202jXEEazf7Sk=",
+        "narHash": "sha256-u8ffOxcuJzJuU1nu0b+2VdORO1IGqnmeMccmcUCaVi4=",
         "type": "file",
         "url": "http://someonewhocares.org/hosts/zero/hosts"
       },
