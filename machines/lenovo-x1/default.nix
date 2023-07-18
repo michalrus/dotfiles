@@ -34,6 +34,7 @@ nixpkgs.lib.nixosSystem {
     ./features/hardened-chromium.nix
     ./features/hardened-firefox.nix
     ./features/libvirt.nix
+    #./features/mpd.nix
     #./features/musnix.nix
     ./features/openvpn-michalrus_com.nix
     ./features/openvpn-nordvpn.nix
