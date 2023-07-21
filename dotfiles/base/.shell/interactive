@@ -19,7 +19,7 @@ _git_without_pull() { [ "$1" = "pull" ] && { echo >&2 "fatal: 'pull' is disabled
 alias git=_git_without_pull
 alias g='git'
 
-alias s='eval "$(attach-or-create-screen)"'
+alias s='exec screen -x "7260c3b2-2e3d-4b22-8f8b-ab87de790446"'
 alias nano='nano -UwT 4'
 alias clear='for i in $(seq 100) ; do echo ; done && clear'
 alias grep='grep --color=auto'

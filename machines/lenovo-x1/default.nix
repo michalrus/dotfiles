@@ -13,6 +13,7 @@ nixpkgs.lib.nixosSystem {
     #cups-reenable  # disabled for battery life
     dotfiles-old
     dynamic-profiles
+    #gnu-screen  # unused
     guest-account
     hibernate-on-low-battery
     lock-vts

@@ -18,6 +18,7 @@ in import "${nixpkgs}/nixos/lib/eval-config.nix" {
     { networking.hostName = "aneta"; }
 
     inputs.self.nixosModules.dotfiles-old
+    inputs.self.nixosModules.gnu-screen
 
     ./features/dns.nix
     ./features/nat.nix

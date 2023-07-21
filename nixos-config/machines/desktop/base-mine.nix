@@ -186,8 +186,6 @@ in
       HandlePowerKey=suspend
     '';
 
-    screen.usersAlways = [];
-
     blueman.enable = true;
 
     # No global X11! See <./modules/no-display-manager/i3.nix>
