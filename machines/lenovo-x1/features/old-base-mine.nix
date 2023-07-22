@@ -7,7 +7,10 @@ in
 
 {
   nix = {
-    package = pkgs-23_05.nixUnstable; # 2.15.1
+    package = let
+      pkg = pkgs-23_05.nixUnstable;
+    in assert lib.versionAtLeast pkg.version "2.15.1"; pkg;
+
     extraOptions = ''
       experimental-features = nix-command flakes
     '';

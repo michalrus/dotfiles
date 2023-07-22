@@ -1,6 +1,6 @@
 {
   pkgs,
-  pkgsUnstable,
+  inputs,
   lib,
   config,
   ...
@@ -33,7 +33,9 @@
     {nixpkgs = pkgs.path;} #  "/nix/var/nix/profiles/per-user/root/channels"
   ];
 
-  nix.package = pkgsUnstable.nixUnstable; # go back to pkgsStable once they have >2.10
+  nix.package = let
+    pkg = inputs.nixpkgs.legacyPackages.${pkgs.system}.nixUnstable;
+  in assert lib.versionAtLeast pkg.version "2.15.1"; pkg;
 
   nix.extraOptions =
     ''
@@ -83,21 +85,23 @@
     calc
     nano
     git
-    #pkgsUnstable.gitstatus  # for powerlevel10k Zsh prompt (or else, it will download&install its own binary blobs in ~/.cache)
+    #gitstatus  # for powerlevel10k Zsh prompt (or else, it will download&install its own binary blobs in ~/.cache)
     bat
 
     mpv
-    (pkgsUnstable.yt-dlp.override {withAlias = true;})
+    inputs.self.packages.${pkgs.system}.yt-dlp
+
+    inputs.self.packages.${pkgs.system}.noise
 
     # FIXME: for some reason it's no longer visible in Launchpad – and the custom path can be set via defaults as well
     #
-    # Substitute IINA’s built-in `youtube-dl` with the freshest from `pkgsUnstable`:
+    # Substitute IINA’s built-in `youtube-dl` with the freshest one:
     #(iina.overrideAttrs (drv: {
     #  installPhase =
     #    (drv.installPhase or "")
     #    + ''
     #      rm $out/Applications/IINA.app/Contents/MacOS/youtube-dl
-    #      ln -s ${pkgsUnstable.yt-dlp}/bin/yt-dlp $out/Applications/IINA.app/Contents/MacOS/youtube-dl
+    #      ln -s ${inputs.self.packages.${pkgs.system}.yt-dlp}/bin/yt-dlp $out/Applications/IINA.app/Contents/MacOS/youtube-dl
     #    '';
     #}))
 

@@ -1,9 +1,8 @@
 {
   config,
   pkgs,
-  pkgsUnstable,
+  inputs,
   lib,
-  nix-doom-emacs,
   ...
 }: {
   home.stateVersion = "22.05";
@@ -162,7 +161,7 @@
 
   programs.doom-emacs = {
     enable = true;
-    doomPrivateDir = builtins.path {path = nix-doom-emacs + "/test/doom.d";};
+    doomPrivateDir = builtins.path {path = inputs.nix-doom-emacs + "/test/doom.d";};
 
     emacsPackage = pkgs.emacs.overrideAttrs (drv: {
       postInstall =

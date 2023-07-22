@@ -10,17 +10,16 @@
     yt-dlp = { url = "github:yt-dlp/yt-dlp"; flake = false; };
     danPollock = { url = "http://someonewhocares.org/hosts/zero/hosts"; flake = false; };
 
-    nixpkgsDarwin.url = "github:nixos/nixpkgs/nixpkgs-22.05-darwin";
-    nixpkgsDarwinUnstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs-macbook.url = "github:nixos/nixpkgs/nixpkgs-22.05-darwin";
 
     nix-darwin.url = "github:lnl7/nix-darwin/master";
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgsDarwin";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs-macbook";
 
     home-manager.url = "github:nix-community/home-manager/release-22.05";
-    home-manager.inputs.nixpkgs.follows = "nixpkgsDarwin";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs-macbook";
 
     nix-doom-emacs.url = "github:nix-community/nix-doom-emacs";
-    nix-doom-emacs.inputs.nixpkgs.follows = "nixpkgsDarwin"; # TODO: or should it say "nixpkgsDarwinUnstable"?
+    nix-doom-emacs.inputs.nixpkgs.follows = "nixpkgs-macbook";
   };
 
   outputs = inputs: {

@@ -208,7 +208,7 @@
     "home-manager": {
       "inputs": {
         "nixpkgs": [
-          "nixpkgsDarwin"
+          "nixpkgs-macbook"
         ]
       },
       "locked": {
@@ -229,7 +229,7 @@
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
-          "nixpkgsDarwin"
+          "nixpkgs-macbook"
         ]
       },
       "locked": {
@@ -263,7 +263,7 @@
         "format-all": "format-all",
         "nix-straight": "nix-straight",
         "nixpkgs": [
-          "nixpkgsDarwin"
+          "nixpkgs-macbook"
         ],
         "nose": "nose",
         "ob-racket": "ob-racket",
@@ -356,7 +356,7 @@
         "type": "github"
       }
     },
-    "nixpkgsDarwin": {
+    "nixpkgs-macbook": {
       "locked": {
         "lastModified": 1667814838,
         "narHash": "sha256-6nrpljA5Ps3xiC8tfw+TRg2xcORS/HENFNmBAwHezzo=",
@@ -368,22 +368,6 @@
       "original": {
         "owner": "nixos",
         "ref": "nixpkgs-22.05-darwin",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgsDarwinUnstable": {
-      "locked": {
-        "lastModified": 1668415355,
-        "narHash": "sha256-F52qWYvLFJV1jibZiuNzeca8+UgZ7NZrr44J2ednmpE=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "69f8e94c46904a3194afcc8b232402287c7f91c9",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixpkgs-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -509,8 +493,7 @@
         "nixpkgs": "nixpkgs",
         "nixpkgs-aneta": "nixpkgs-aneta",
         "nixpkgs-lenovo-x1": "nixpkgs-lenovo-x1",
-        "nixpkgsDarwin": "nixpkgsDarwin",
-        "nixpkgsDarwinUnstable": "nixpkgsDarwinUnstable",
+        "nixpkgs-macbook": "nixpkgs-macbook",
         "yt-dlp": "yt-dlp"
       }
     },
