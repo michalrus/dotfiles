@@ -22,6 +22,10 @@ inputs.nix-darwin.lib.darwinSystem {
       home-manager.users.mw = import ./home-mw.nix;
       home-manager.users.friends = import ./home-friends.nix;
     }
+
+    ../common-features/nix.conf.nix
+    ../common-features/nix.conf-work-substituters.nix
+
     {
       # home directories for home-manager to pick up; they get messed up b/c of flakes
       users.users.m.home = "/Users/m";

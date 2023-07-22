@@ -6,24 +6,6 @@ let
 in
 
 {
-  nix = {
-    package = let
-      pkg = pkgs-23_05.nixUnstable;
-    in assert lib.versionAtLeast pkg.version "2.15.1"; pkg;
-
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
-
-    binaryCaches = [
-      "https://cache.iog.io"
-    ];
-
-    binaryCachePublicKeys = [
-      "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
-    ];
-  };
-
   boot.tmpOnTmpfs = true;
 
   # For building RPi3 system on an x86 laptop:

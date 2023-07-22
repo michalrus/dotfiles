@@ -5,16 +5,6 @@
     ./common.nix
   ];
 
-  nix = {
-    trustedBinaryCaches = [
-      http://hydra.nixos.org
-    ];
-
-    binaryCachePublicKeys = [
-      "hydra.nixos.org-1:CNHJZBh9K4tP3EKF6FkkgeVYsS3ohTl+oS0Qa8bezVs="
-    ];
-  };
-
   environment.systemPackages = with pkgs; [
     #ripgrep  # TODO: why is it not on Hydra and wants to build rustc?
     (lowPrio gnupg1compat)

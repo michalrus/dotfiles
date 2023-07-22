@@ -49,6 +49,9 @@ nixpkgs.lib.nixosSystem {
     { services.firefox-autocomplete.userPorts.m = 9114; }
     { services.firefox-autocomplete.userPorts.mw = 9115; }
 
+    ../common-features/nix.conf.nix
+    ../common-features/nix.conf-work-substituters.nix
+
     ./features/android.nix
     ./features/emacs.nix
     ./features/hardened-chromium.nix

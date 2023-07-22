@@ -17,35 +17,6 @@
 
   nix.configureBuildUsers = true;
   nix.nrBuildUsers = 32;
-  nix.settings.auto-optimise-store = true;
-
-  # Additional IOG (Cardano) binary cache:
-  nix.settings.substituters = lib.mkForce ["https://cache.nixos.org" "https://cache.iog.io" ];
-  nix.settings.trusted-public-keys = lib.mkForce [
-    "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-    "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
-  ];
-
-  nix.settings.trusted-users = lib.mkForce ["root"];
-
-  nix.nixPath = lib.mkForce [
-    {darwin-config = "${config.environment.darwinConfig}";}
-    {nixpkgs = pkgs.path;} #  "/nix/var/nix/profiles/per-user/root/channels"
-  ];
-
-  nix.package = let
-    pkg = flake.inputs.nixpkgs.legacyPackages.${pkgs.system}.nixUnstable;
-  in assert lib.versionAtLeast pkg.version "2.15.1"; pkg;
-
-  nix.extraOptions =
-    ''
-      experimental-features = nix-command flakes
-      keep-outputs = true
-      keep-derivations = true
-    ''
-    + lib.optionalString (pkgs.system == "aarch64-darwin") ''
-      extra-platforms = x86_64-darwin aarch64-darwin
-    '';
 
   networking.hostName = "macbook";
   # On the local network:

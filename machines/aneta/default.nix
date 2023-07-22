@@ -21,6 +21,8 @@ in import "${nixpkgs}/nixos/lib/eval-config.nix" {
     flake.nixosModules.dotfiles-old
     flake.nixosModules.gnu-screen
 
+    ../common-features/nix.conf.nix
+
     ./features/dns.nix
     ./features/nat.nix
     ./features/openvpn.nix
