@@ -57,7 +57,12 @@
       torified-users = import ./modules/torified-users;
     };
 
-    packages = inputs.nixpkgs.lib.genAttrs ["x86_64-linux" "aarch64-linux"] (system: let
+    packages = inputs.nixpkgs.lib.genAttrs [
+      "x86_64-linux"
+      "aarch64-linux"
+      "x86_64-darwin"
+      "aarch64-darwin"
+    ] (system: let
       inherit (inputs.nixpkgs-lenovo-x1.legacyPackages.${system}) callPackage;
     in rec {
       autotalent = callPackage ./packages/autotalent {};
