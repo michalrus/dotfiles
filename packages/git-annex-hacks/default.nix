@@ -1,4 +1,4 @@
-{ stdenv, git, gitAndTools, writeScriptBin, symlinkJoin, fetchurl, writeScript, writeText}:
+{ stdenv, lib, git, gitAndTools, writeScriptBin, symlinkJoin, fetchurl, writeScript, writeText}:
 
 let
 
@@ -89,4 +89,4 @@ let
     '';
   };
 
-in git-annex
+in git-annex // { meta.platforms = lib.platforms.linux; }

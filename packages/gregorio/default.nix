@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, autoreconfHook, flex, bison, fontforge, texlive }:
+{ stdenv, lib, fetchFromGitHub, autoreconfHook, flex, bison, fontforge, texlive }:
 
 let
 
@@ -32,6 +32,7 @@ let
       ./install-gtex.sh dir:$out/
       '';
     dontFixup = true;
+    meta.platforms = lib.platforms.linux ++ lib.platforms.darwin;
   };
 
 in

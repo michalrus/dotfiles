@@ -1,4 +1,4 @@
-{ stdenv }:
+{ stdenv, lib }:
 
 let name = "on-vt-switch"; in
 
@@ -13,4 +13,6 @@ stdenv.mkDerivation {
     mkdir -p $out/bin
     cp ${name} $out/bin
   '';
+
+  meta.platforms = lib.platforms.linux;
 }

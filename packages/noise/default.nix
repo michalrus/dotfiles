@@ -1,4 +1,4 @@
-{ stdenv, fetchzip, sox }:
+{ stdenv, lib, fetchzip, sox }:
 
 stdenv.mkDerivation {
   name = "noise";
@@ -10,8 +10,12 @@ stdenv.mkDerivation {
   };
   installPhase = ''
     sed -r 's,^play ,exec ${sox}/bin/play ,' -i noise.sh
+    ${lib.optionalString stdenv.isDarwin ''
+      sed -r 's,^([^#].*)-t alsa,\1,' -i noise.sh
+    ''}
     chmod +x noise.sh
     mkdir -p $out/bin
     cp noise.sh $out/bin/noise
   '';
+  meta.platforms = lib.platforms.linux ++ lib.platforms.darwin;
 }
