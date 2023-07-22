@@ -12,85 +12,6 @@
         "url": "http://someonewhocares.org/hosts/zero/hosts"
       }
     },
-    "nixpkgs": {
-      "locked": {
-        "lastModified": 1689137672,
-        "narHash": "sha256-QZoHxr0a73x6rQcAo5CiwYpysHbSnk7lAR8/16um7mM=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "98da3dd0de6660d4abed7bb74e748694bd803413",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-23.05",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs-aneta": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1588979025,
-        "narHash": "sha256-UbV0qz1IfQzORVZwerJuNTYartqHAal+S537W6FOdQM=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "d6c1b566b770cf4cf0c6d4a693da6bdf28c2c3b0",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "d6c1b566b770cf4cf0c6d4a693da6bdf28c2c3b0",
-        "type": "github"
-      }
-    },
-    "nixpkgs-lenovo-x1": {
-      "locked": {
-        "lastModified": 1643148353,
-        "narHash": "sha256-VMX2quZAFjCoAFzQX23ALsLNA7Y6d6qSNIvz1ySj2iY=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "b3d86c56c786ad9530f1400adbd4dfac3c42877b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "b3d86c56c786ad9530f1400adbd4dfac3c42877b",
-        "type": "github"
-      }
-    },
-    "root": {
-      "inputs": {
-        "danPollock": "danPollock",
-        "nixpkgs": "nixpkgs",
-        "nixpkgs-aneta": "nixpkgs-aneta",
-        "nixpkgs-lenovo-x1": "nixpkgs-lenovo-x1",
-        "yt-dlp": "yt-dlp",
-        "home-manager": "home-manager",
-        "nix-darwin": "nix-darwin",
-        "nix-doom-emacs": "nix-doom-emacs",
-        "nixpkgsDarwin": "nixpkgsDarwin",
-        "nixpkgsDarwinUnstable": "nixpkgsDarwinUnstable"
-      }
-    },
-    "yt-dlp": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1689455412,
-        "narHash": "sha256-h52eeB/AMPoVmQdDNk1Jze7XWEl2x5DXuGf6skGJXxQ=",
-        "owner": "yt-dlp",
-        "repo": "yt-dlp",
-        "rev": "613dbce177d34ffc31053e8e01acf4bb107bcd1e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "yt-dlp",
-        "repo": "yt-dlp",
-        "type": "github"
-      }
-    },
     "doom-emacs": {
       "flake": false,
       "locked": {
@@ -386,6 +307,55 @@
         "type": "github"
       }
     },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1689137672,
+        "narHash": "sha256-QZoHxr0a73x6rQcAo5CiwYpysHbSnk7lAR8/16um7mM=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "98da3dd0de6660d4abed7bb74e748694bd803413",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-23.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs-aneta": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1588979025,
+        "narHash": "sha256-UbV0qz1IfQzORVZwerJuNTYartqHAal+S537W6FOdQM=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "d6c1b566b770cf4cf0c6d4a693da6bdf28c2c3b0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "d6c1b566b770cf4cf0c6d4a693da6bdf28c2c3b0",
+        "type": "github"
+      }
+    },
+    "nixpkgs-lenovo-x1": {
+      "locked": {
+        "lastModified": 1643148353,
+        "narHash": "sha256-VMX2quZAFjCoAFzQX23ALsLNA7Y6d6qSNIvz1ySj2iY=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "b3d86c56c786ad9530f1400adbd4dfac3c42877b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "b3d86c56c786ad9530f1400adbd4dfac3c42877b",
+        "type": "github"
+      }
+    },
     "nixpkgsDarwin": {
       "locked": {
         "lastModified": 1667814838,
@@ -530,6 +500,20 @@
         "type": "github"
       }
     },
+    "root": {
+      "inputs": {
+        "danPollock": "danPollock",
+        "home-manager": "home-manager",
+        "nix-darwin": "nix-darwin",
+        "nix-doom-emacs": "nix-doom-emacs",
+        "nixpkgs": "nixpkgs",
+        "nixpkgs-aneta": "nixpkgs-aneta",
+        "nixpkgs-lenovo-x1": "nixpkgs-lenovo-x1",
+        "nixpkgsDarwin": "nixpkgsDarwin",
+        "nixpkgsDarwinUnstable": "nixpkgsDarwinUnstable",
+        "yt-dlp": "yt-dlp"
+      }
+    },
     "rotate-text": {
       "flake": false,
       "locked": {
@@ -591,6 +575,22 @@
       "original": {
         "owner": "hlissner",
         "repo": "ws-butler",
+        "type": "github"
+      }
+    },
+    "yt-dlp": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1689455412,
+        "narHash": "sha256-h52eeB/AMPoVmQdDNk1Jze7XWEl2x5DXuGf6skGJXxQ=",
+        "owner": "yt-dlp",
+        "repo": "yt-dlp",
+        "rev": "613dbce177d34ffc31053e8e01acf4bb107bcd1e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "yt-dlp",
+        "repo": "yt-dlp",
         "type": "github"
       }
     }
