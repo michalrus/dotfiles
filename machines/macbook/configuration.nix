@@ -1,6 +1,6 @@
 {
   pkgs,
-  inputs,
+  flake,
   lib,
   config,
   ...
@@ -34,7 +34,7 @@
   ];
 
   nix.package = let
-    pkg = inputs.nixpkgs.legacyPackages.${pkgs.system}.nixUnstable;
+    pkg = flake.inputs.nixpkgs.legacyPackages.${pkgs.system}.nixUnstable;
   in assert lib.versionAtLeast pkg.version "2.15.1"; pkg;
 
   nix.extraOptions =
@@ -89,9 +89,9 @@
     bat
 
     mpv
-    inputs.self.packages.${pkgs.system}.yt-dlp
+    flake.packages.${pkgs.system}.yt-dlp
 
-    inputs.self.packages.${pkgs.system}.noise
+    flake.packages.${pkgs.system}.noise
 
     # FIXME: for some reason it's no longer visible in Launchpad – and the custom path can be set via defaults as well
     #
@@ -101,7 +101,7 @@
     #    (drv.installPhase or "")
     #    + ''
     #      rm $out/Applications/IINA.app/Contents/MacOS/youtube-dl
-    #      ln -s ${inputs.self.packages.${pkgs.system}.yt-dlp}/bin/yt-dlp $out/Applications/IINA.app/Contents/MacOS/youtube-dl
+    #      ln -s ${flake.packages.${pkgs.system}.yt-dlp}/bin/yt-dlp $out/Applications/IINA.app/Contents/MacOS/youtube-dl
     #    '';
     #}))
 

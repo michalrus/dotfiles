@@ -1,4 +1,4 @@
-{ inputs, config, lib, pkgs, ... }:
+{ flake, config, lib, pkgs, ... }:
 
 {
   imports = [
@@ -105,7 +105,7 @@
     x264
     xarchiver
     xsane
-    inputs.self.packages.${pkgs.system}.yt-dlp
+    flake.packages.${pkgs.system}.yt-dlp
   ];
 
   fonts = {

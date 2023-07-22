@@ -3,6 +3,7 @@
 # FIXME: use: lib.nixosSystem, but the current nixpkgs-aneta are too old for that:
 
 let
+  flake = inputs.self;
   nixpkgs = inputs.nixpkgs-aneta;
   system = "aarch64-linux";
   pkgs = import nixpkgs { inherit system; };
@@ -12,13 +13,13 @@ in import "${nixpkgs}/nixos/lib/eval-config.nix" {
     {
       system.nixos.versionSuffix = ".${pkgs.lib.substring 0 8 nixpkgs.lastModifiedDate}.${nixpkgs.shortRev}";
       system.nixos.revision = nixpkgs.rev;
-      _module.args = { inherit inputs; };
+      _module.args = { inherit flake; };
     }
     ./hardware.nix
     { networking.hostName = "aneta"; }
 
-    inputs.self.nixosModules.dotfiles-old
-    inputs.self.nixosModules.gnu-screen
+    flake.nixosModules.dotfiles-old
+    flake.nixosModules.gnu-screen
 
     ./features/dns.nix
     ./features/nat.nix
@@ -27,7 +28,6 @@ in import "${nixpkgs}/nixos/lib/eval-config.nix" {
     ./features/users.nix
 
     # FIXME: drop:
-    ../../nixos-config/modules
     ../../nixos-config/machines/common.nix
   ];
 }

@@ -1,18 +1,21 @@
 { inputs }:
 
-let nixpkgs = inputs.nixpkgs-lenovo-x1; in
+let
+  flake = inputs.self;
+  nixpkgs = inputs.nixpkgs-lenovo-x1;
+in
 
 nixpkgs.lib.nixosSystem {
   system = "x86_64-linux";
   modules = [
-    { _module.args = { inherit inputs; }; }
+    { _module.args = { inherit flake; }; }
     nixpkgs.nixosModules.notDetected
     ./hardware.nix
 
     { networking.hostName = "lenovo-x1"; }
     { time.timeZone = "Europe/Warsaw"; }
 
-  ] ++ (with inputs.self.nixosModules; [
+  ] ++ (with flake.nixosModules; [
 
     #cups-reenable  # disabled for battery life
     dotfiles-old

@@ -1,7 +1,7 @@
 {
   config,
   pkgs,
-  inputs,
+  flake,
   lib,
   ...
 }: {
@@ -161,7 +161,7 @@
 
   programs.doom-emacs = {
     enable = true;
-    doomPrivateDir = builtins.path {path = inputs.nix-doom-emacs + "/test/doom.d";};
+    doomPrivateDir = builtins.path {path = flake.inputs.nix-doom-emacs + "/test/doom.d";};
 
     emacsPackage = pkgs.emacs.overrideAttrs (drv: {
       postInstall =

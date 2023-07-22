@@ -1,4 +1,4 @@
-{ inputs, config, pkgs, lib, ... }:
+{ flake, config, pkgs, lib, ... }:
 
 let
 
@@ -47,7 +47,7 @@ let
 
       # These packages will be visible from within `i3` session only.
       i3 i3lock i3status
-      rofi inputs.self.packages.${pkgs.system}.dmenu-is-rofi dunst
+      rofi flake.packages.${pkgs.system}.dmenu-is-rofi dunst
       compton
       autocutsel
       peek

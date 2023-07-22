@@ -1,8 +1,8 @@
-{ inputs, config, lib, pkgs, ... }:
+{ flake, config, lib, pkgs, ... }:
 
 let
-  pkgs-23_05 = inputs.nixpkgs.legacyPackages.${pkgs.system};
-  unfree-23_05 = import inputs.nixpkgs { inherit (pkgs) system; config.allowUnfree = true; };
+  pkgs-23_05 = flake.inputs.nixpkgs.legacyPackages.${pkgs.system};
+  unfree-23_05 = import flake.inputs.nixpkgs { inherit (pkgs) system; config.allowUnfree = true; };
 in
 
 {
@@ -93,8 +93,8 @@ in
     k3b
     libguestfs
     libxml2
-    inputs.self.packages.${pkgs.system}.gettext-emacs
-    inputs.self.packages.${pkgs.system}.noise
+    flake.packages.${pkgs.system}.gettext-emacs
+    flake.packages.${pkgs.system}.noise
     networkmanagerapplet
     octave
     pandoc
@@ -109,7 +109,7 @@ in
     sqlint
     termite
     tigervnc
-    inputs.self.packages.${pkgs.system}.transcribe
+    flake.packages.${pkgs.system}.transcribe
     tunctl
     vscodium
     watchexec
@@ -247,7 +247,7 @@ in
             # for Org-mode export to PDF
             wrapfig wasysym
             ;
-          gregorio = inputs.self.packages.${pkgs.system}.gregorio.forTexlive;
+          gregorio = flake.packages.${pkgs.system}.gregorio.forTexlive;
         })
       ];
     };

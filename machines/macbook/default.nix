@@ -1,16 +1,18 @@
 { inputs }:
 
+let flake = inputs.self; in
+
 inputs.nix-darwin.lib.darwinSystem {
   system = "aarch64-darwin";
   modules = [
-    { _module.args = { inherit inputs; }; }
+    { _module.args = { inherit flake; }; }
     ./configuration.nix
-    inputs.home-manager.darwinModules.home-manager
+    flake.inputs.home-manager.darwinModules.home-manager
     {
       nixpkgs.config.allowUnfree = true;
-      home-manager.extraSpecialArgs.inputs = inputs;
+      home-manager.extraSpecialArgs.flake = flake;
       home-manager.sharedModules = [
-        inputs.nix-doom-emacs.hmModule
+        flake.inputs.nix-doom-emacs.hmModule
         (import ./home-common.nix)
         (import ./home-link-darwin-apps.nix)
       ];

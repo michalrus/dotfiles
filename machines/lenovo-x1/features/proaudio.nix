@@ -1,4 +1,4 @@
-{ inputs, config, lib, pkgs, ... }:
+{ flake, config, lib, pkgs, ... }:
 
 {
 
@@ -22,12 +22,12 @@
     x42-plugins
     x42-avldrums
     x42-gmsynth
-    inputs.self.packages.${pkgs.system}.autotalent
-    inputs.self.packages.${pkgs.system}.talentedhack
+    flake.packages.${pkgs.system}.autotalent
+    flake.packages.${pkgs.system}.talentedhack
     surge
     surge-XT
-    inputs.self.packages.${pkgs.system}.vocproc
-    inputs.self.packages.${pkgs.system}.tap-plugins
+    flake.packages.${pkgs.system}.vocproc
+    flake.packages.${pkgs.system}.tap-plugins
     rubberband
 
   ];

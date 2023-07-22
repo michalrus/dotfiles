@@ -1,4 +1,4 @@
-{ inputs, config, lib, pkgs, ... }:
+{ flake, config, lib, pkgs, ... }:
 
 {
   imports = [
@@ -42,7 +42,7 @@
     ltrace
     man_db
     manpages
-    inputs.self.packages.${pkgs.system}.git-annex-hacks
+    flake.packages.${pkgs.system}.git-annex-hacks
     nix-prefetch-scripts
     normalize
     oathToolkit
