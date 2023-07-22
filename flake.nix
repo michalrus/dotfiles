@@ -53,6 +53,7 @@
       nonet-group = import ./modules/nonet-group;
       sane-extra-config = import ./modules/sane-extra-config;
       somagic-easycap = import ./modules/somagic-easycap;
+      sqlite-dump = import ./modules/sqlite-dump;
       torified-users = import ./modules/torified-users;
     };
 

@@ -190,14 +190,6 @@ in
 
     # No global X11! See <./modules/no-display-manager/i3.nix>
     xserver.enable = lib.mkForce false;
-
-    sqlite-dump = [{
-      source = "/home/m/.shared/nofatty/data.db";
-      destination = "/home/m/Archive/Personal/Backup/nofatty.sql";
-      runAt = "*:0/15"; # every 15 mins
-      user = "m";
-      group = "users";
-    }];
   };
 
   fonts.fonts = with pkgs; [

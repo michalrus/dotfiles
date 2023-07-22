@@ -1,5 +1,0 @@
-{
-  imports = [
-    ./sqlite-dump.nix
-  ];
-}

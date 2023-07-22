@@ -2,7 +2,6 @@
 
 {
   imports = [
-    ../../modules
     ../common-x86.nix
     ./gitolite
     ./bitlbee

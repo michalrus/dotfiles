@@ -24,6 +24,17 @@ nixpkgs.lib.nixosSystem {
     #sane-extra-config
     somagic-easycap
 
+    sqlite-dump
+    {
+      services.sqlite-dump = [{
+        source = "/home/m/.shared/nofatty/data.db";
+        destination = "/home/m/Archive/Personal/Backup/nofatty.sql";
+        runAt = "*:0/15"; # every 15 mins
+        user = "m";
+        group = "users";
+      }];
+    }
+
     torified-users
     ./features/tor.nix
 
