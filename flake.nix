@@ -64,7 +64,9 @@
       "aarch64-darwin"
     ] (system: let
       inherit (inputs.nixpkgs-lenovo-x1.legacyPackages.${system}) callPackage;
-    in rec {
+      filterSystem = inputs.nixpkgs.lib.filterAttrs
+        (_: drv: !(drv ? meta) || !(drv.meta ? platforms) || __elem system drv.meta.platforms);
+    in filterSystem rec {
       autotalent = callPackage ./packages/autotalent {};
       cp2104-gpio = callPackage ./packages/cp2104-gpio {};
       dmenu-is-rofi = callPackage ./packages/dmenu-is-rofi {};
