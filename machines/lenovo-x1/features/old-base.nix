@@ -2,13 +2,12 @@
 
 {
   imports = [
-    ../common-x86.nix
+    ../../../nixos-config/machines/common-x86.nix
   ];
 
   powerManagement.cpuFreqGovernor = lib.mkOverride 999 "performance"; # basically lib.mkDefault, but this one is already used in power-management.nix…
 
   networking = {
-    hostName = lib.mkDefault "nixos";
     extraHosts = "127.0.0.1 ${config.networking.hostName}";
     firewall.nonetGroup.enable = lib.mkDefault true;
 

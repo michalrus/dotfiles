@@ -6,8 +6,6 @@ let
 in
 
 {
-  imports = [ ./base.nix ];
-
   nix = {
     package = pkgs-23_05.nixUnstable; # 2.15.1
     extraOptions = ''

@@ -8,6 +8,10 @@ nixpkgs.lib.nixosSystem {
     { _module.args = { inherit inputs; }; }
     nixpkgs.nixosModules.notDetected
     ./hardware.nix
+
+    { networking.hostName = "lenovo-x1"; }
+    { time.timeZone = "Europe/Warsaw"; }
+
   ] ++ (with inputs.self.nixosModules; [
 
     #cups-reenable  # disabled for battery life
@@ -49,6 +53,8 @@ nixpkgs.lib.nixosSystem {
     ./features/libvirt.nix
     #./features/mpd.nix
     #./features/musnix.nix
+    ./features/old-base.nix  # TODO
+    ./features/old-base-mine.nix  # TODO
     ./features/openvpn-michalrus_com.nix
     ./features/openvpn-nordvpn.nix
     ./features/podman.nix
