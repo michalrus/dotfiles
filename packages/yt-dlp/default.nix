@@ -1,14 +1,14 @@
-{ inputs, system }:
+{ nixpkgs, yt-dlp, system }:
+
+# XXX: it will return a newer one – either from nixpkgs or yt-dlp itself
 
 let
-  nixpkgs = inputs.nixpkgs;
-  pkgs = nixpkgs.legacyPackages.${system};
-  weAreNewer = inputs.yt-dlp.lastModified > nixpkgs.lastModified;
-  base = pkgs.yt-dlp.override { withAlias = true; };
+  weAreNewer = yt-dlp.lastModified > nixpkgs.lastModified;
+  base = nixpkgs.legacyPackages.${system}.yt-dlp.override { withAlias = true; };
 in
 if !weAreNewer
 then base
 else base.overridePythonAttrs (drv: {
-  version = "nightly-" + inputs.yt-dlp.lastModifiedDate;
-  src = inputs.yt-dlp;
+  version = "nightly-" + yt-dlp.lastModifiedDate;
+  src = yt-dlp;
 })
