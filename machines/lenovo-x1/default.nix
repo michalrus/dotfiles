@@ -56,6 +56,8 @@ nixpkgs.lib.nixosSystem {
     ./features/android.nix
     ./features/bluetooth.nix
     ./features/emacs.nix
+    ./features/fav-pkgs-cli.nix
+    ./features/fav-pkgs-desktop.nix
     ./features/hardened-chromium.nix
     ./features/hardened-firefox.nix
     ./features/ledger.nix

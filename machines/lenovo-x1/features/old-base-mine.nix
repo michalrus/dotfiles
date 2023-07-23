@@ -1,77 +1,16 @@
 { flake, config, lib, pkgs, ... }:
 
 let
-  pkgs-23_05 = flake.inputs.nixpkgs.legacyPackages.${pkgs.system};
   unfree-23_05 = import flake.inputs.nixpkgs { inherit (pkgs) system; config.allowUnfree = true; };
 in
 
 {
-  boot.kernel.sysctl = {
-    "fs.inotify.max_user_watches" = "1048576";
-  };
-
   networking.networkmanager = {
     enable = true;
     dhcp = "dhclient"; # <https://forum.salixos.org/viewtopic.php?f=30&t=7284>
   };
 
-  environment.systemPackages = with pkgs; [
-    (haskellPackages.ghcWithHoogle (hs: []))
-    (wine.override { pulseaudioSupport = true; })
-    acpitool
-    aegisub
-    alacritty
-    anki
-    bat
-    binutils
-    breeze-qt5 breeze-icons pkgs.hicolor_icon_theme kde-gtk-config breeze-gtk
-    brightnessctl
-    cool-retro-term
-    dhall
-    dvdbackup
-    feh
-    gdb
-    ipcalc
-    gettext
-    ghostscript
-    gist
-    gnome3.adwaita-icon-theme # for resizable cursors
-    gnome3.dconf   # so that GnuCash prefs can be changed
-    gnome3.zenity
-    haskellPackages.hlint
-    httrack
-    k3b
-    libguestfs
-    libxml2
-    flake.packages.${pkgs.system}.gettext-emacs
-    flake.packages.${pkgs.system}.noise
-    networkmanagerapplet
-    octave
-    pandoc
-    pdfpc
-    (python3.withPackages (p: with p; [ scipy geopy python-lsp-server requests pylint matplotlib tkinter beautifulsoup4 aiohttp humanize protobuf ]))
-    python3Packages.livereload
-    qjoypad
-    pkgs-23_05.retroarchFull
-    rpcs3
-    rustup
-    rust-analyzer
-    sqlint
-    termite
-    tigervnc
-    flake.packages.${pkgs.system}.transcribe
-    tunctl
-    vscodium
-    watchexec
-    speedread
-    xdg_utils
-  ];
-
-  programs = {
-    wireshark.enable = true;
-    wireshark.package = pkgs.wireshark-qt;
-    ssh.startAgent = false;
-  };
+  programs.ssh.startAgent = false;  # using gpg-agent as ssh-agent
 
   hardware.pulseaudio = {
     enable = true;
@@ -102,15 +41,6 @@ in
     xserver.enable = lib.mkForce false;
   };
 
-  fonts.fonts = with pkgs; [
-    anonymousPro
-    hack-font
-    iosevka-bin
-    font-awesome-ttf
-    font-awesome
-    google-fonts
-  ];
-
   users = {
     guestAccount = {
       enable = true;
@@ -122,8 +52,6 @@ in
       dotfiles-old.profiles = [ "base" "i3" "michalrus/guest" ];
       packages = with pkgs; [
         unfree-23_05.google-chrome
-        unfree-23_05.skypeforlinux
-        unfree-23_05.zoom-us
         unfree-23_05.unrar
       ];
     };
@@ -138,25 +66,9 @@ in
       dotfiles-old.base = "${config.users.users.m.home}/.dotfiles/dotfiles";
       dotfiles-old.profiles = [ "base" "michalrus/base" "michalrus/desktop" "git-annex" "michalrus/personal" "i3" "emacs" ];
       packages = with pkgs; [
-        pkgs-23_05.chromium
-        electrum
-        pkgs-23_05.gnucash
-        isync
-        jetbrains.idea-community
-        unfree-23_05.skypeforlinux
-        lilypond
-        monero-gui
         (hardened-firefox.makeWrapped {
           localAutocompletePort = config.services.firefox-autocomplete.userPorts.m;
           extraPrefs = hardened-firefox.unwrapped.cfgEnableDRM;
-        })
-        openjdk8   # for nofatty
-        (texlive.combine {
-          inherit (texlive) scheme-small latexmk titlesec tocloft todonotes cleveref lipsum biblatex logreq cm-super csquotes pgfplots adjustbox collectbox ccicons polski placeins xstring pdfpages unicode-math filehook textpos marvosym fontawesome progressbar lm-math ucharcat pdfjam
-            # for Org-mode export to PDF
-            wrapfig wasysym
-            ;
-          gregorio = flake.packages.${pkgs.system}.gregorio.forTexlive;
         })
       ];
     };
@@ -174,19 +86,9 @@ in
           localAutocompletePort = config.services.firefox-autocomplete.userPorts.mw;
           extraPrefs = hardened-firefox.unwrapped.cfgEnableDRM;
         })
-        pkgs-23_05.chromium
-        #jetbrains.idea-community
         unfree-23_05.jetbrains.webstorm
         yarn
         nodejs
-        #ansible_2_8
-        openjdk8
-        protobuf
-        sbt
-        qgis
-        josm
-        unfree-23_05.skypeforlinux
-        unfree-23_05.zoom-us
       ];
     };
   };
