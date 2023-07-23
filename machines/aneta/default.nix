@@ -24,6 +24,7 @@ in import "${nixpkgs}/nixos/lib/eval-config.nix" {
     ../common-features/nix.conf.nix
     ../common-features/locale-en-iso.nix
     ../common-features/systemd-accounting.nix
+    ../common-features/fav-pkgs-cli-thin.nix
 
     ./features/dns.nix
     ./features/nat.nix

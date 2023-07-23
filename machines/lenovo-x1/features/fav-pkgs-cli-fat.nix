@@ -3,28 +3,30 @@
 {
 
   environment.systemPackages = flake.lib.filterSystem pkgs.system (with pkgs; [
-    bat
-    binutils
+    duplicity
+    faad2
+    ffmpeg-full
     flac
+    flake.packages.${pkgs.system}.git-annex-hacks
     flake.packages.${pkgs.system}.yt-dlp
-    gdb
-    gettext
-    gist
+    gitAndTools.gitRemoteGcrypt
+    gitstats
+    gocr  # OCR
     gpac
-    httrack
-    ipcalc
+    gpgme.dev
+    graphicsmagick
+    imagemagick
+    jhead
     lame
-    libguestfs
-    libjpeg
-    libxml2
-    ntfs3g
+    normalize
     pdfgrep
-    (python3.withPackages (p: with p; [ scipy geopy python-lsp-server requests pylint matplotlib tkinter beautifulsoup4 aiohttp humanize protobuf ]))
+    poppler_utils
     python3Packages.livereload
+    (python3.withPackages (p: with p; [ scipy geopy python-lsp-server requests pylint matplotlib tkinter beautifulsoup4 aiohttp humanize protobuf ]))
+    shared_mime_info
     shellcheck
-    shntool
-    tunctl
-    watchexec
+    shntool  # view and/or modify WAVE data and properties
+    tesseract  # OCR
     x264
   ]);
 

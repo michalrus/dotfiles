@@ -2,47 +2,50 @@
 
 {
   environment.systemPackages = flake.lib.filterSystem pkgs.system (with pkgs; [
-    ripgrep
     (lowPrio gnupg1compat)
     (lowPrio stdmanpages)
     aspell
     aspellDicts.de
     aspellDicts.en
     aspellDicts.pl
+    bat
+    binutils
     catdocx
     cloc
-    duplicity
     exiv2
-    faad2
-    ffmpeg-full
-    gitAndTools.gitRemoteGcrypt
-    gitstats
+    gdb
+    gettext
+    gist
     gnupg
-    gocr
-    gpgme.dev
-    graphicsmagick
-    imagemagick
+    httrack
     imgurbash2
     indent
-    jhead
+    ipcalc
+    libjpeg
+    libxml2
     ltrace
     man_db
     manpages
-    flake.packages.${pkgs.system}.git-annex-hacks
     nix-prefetch-scripts
-    normalize
+    ntfs3g
     oathToolkit
     odt2txt
     pass
-    poppler_utils
     posix_man_pages
     powertop
-    shared_mime_info
+    ripgrep
     silver-searcher
-    sox
     speedtest-cli
     stdman
-    tesseract
+    tunctl
+    watchexec
     wrk
-  ]);
+  ])
+
+  # FIXME: these have wrong meta.platforms:
+  ++ (if pkgs.system == "x86_64-linux" then with pkgs; [
+
+    libguestfs
+
+  ] else []);
 }
