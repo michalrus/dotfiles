@@ -51,11 +51,14 @@ nixpkgs.lib.nixosSystem {
 
     ../common-features/nix.conf.nix
     ../common-features/nix.conf-work-substituters.nix
+    ../common-features/locale-en-iso.nix
 
     ./features/android.nix
+    ./features/bluetooth.nix
     ./features/emacs.nix
     ./features/hardened-chromium.nix
     ./features/hardened-firefox.nix
+    ./features/ledger.nix
     ./features/libvirt.nix
     #./features/mpd.nix
     #./features/musnix.nix
@@ -68,6 +71,11 @@ nixpkgs.lib.nixosSystem {
     ./features/transmission.nix
     ./features/udev-remap-keyboard.nix
     ./features/window-managers.nix
+    ./features/yubikey.nix
+
+    { boot.binfmt.emulatedSystems = [ "aarch64-linux" ]; }  # for building Raspberry Pi systems on x86_64
+
+    { networking.firewall.allowedTCPPorts = [ 12345 ]; }  # python -m http.server 12345
 
   ]);
 }

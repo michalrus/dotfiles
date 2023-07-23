@@ -6,46 +6,14 @@ let
 in
 
 {
-  boot.tmpOnTmpfs = true;
-
-  # For building RPi3 system on an x86 laptop:
-  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
-
   boot.kernel.sysctl = {
     "fs.inotify.max_user_watches" = "1048576";
-  };
-
-  i18n = {
-    defaultLocale = "en_US.UTF-8";
-    extraLocaleSettings = {
-      LC_TIME  = "en_DK.UTF-8"; # for 24 h
-      LC_PAPER = "en_DK.UTF-8"; # for ISO A4 instead of Letter
-    };
-  };
-
-  powerManagement = {
-    powerDownCommands = ''
-      ${pkgs.procps}/bin/pgrep ssh | while IFS= read -r pid ; do
-        if [ "$(readlink "/proc/$pid/exe")" = "${pkgs.openssh}/bin/ssh" ] ; then
-          kill "$pid"
-        fi
-      done
-    '';
-    powerUpCommands = ''
-      ${pkgs.eject}/bin/eject -i on /dev/sr0 # Why isn’t this working‽ How to block the CD eject button?
-    '';
   };
 
   networking.networkmanager = {
     enable = true;
     dhcp = "dhclient"; # <https://forum.salixos.org/viewtopic.php?f=30&t=7284>
   };
-
-  networking.firewall.allowedTCPPorts = [
-    12345 # python -m SimpleHTTPServer 12345
-
-    2049 # NFS v4 server
-  ];
 
   environment.systemPackages = with pkgs; [
     (haskellPackages.ghcWithHoogle (hs: []))
@@ -97,11 +65,6 @@ in
     watchexec
     speedread
     xdg_utils
-    yubikey-manager
-    yubikey-manager-qt
-    yubikey-personalization
-    yubikey-personalization-gui
-    yubioath-desktop
   ];
 
   programs = {
@@ -110,38 +73,10 @@ in
     ssh.startAgent = false;
   };
 
-  services.udev.packages = [
-
-    # YubiKey
-    pkgs.yubikey-personalization
-
-    # Ledger Nano S Plus
-    pkgs.ledger-udev-rules
-    (pkgs.writeTextDir "lib/udev/rules.d/19-ledger-generic.rules" ''
-      # The newest Ledger rule (not yet in Nixpkgs):
-      SUBSYSTEMS=="usb", ATTRS{idVendor}=="2c97", ATTRS{idProduct}=="0005|5000|5001|5002|5003|5004|5005|5006|5007|5008|5009|500a|500b|500c|500d|500e|500f|5010|5011|5012|5013|5014|5015|5016|5017|5018|5019|501a|501b|501c|501d|501e|501f", TAG+="uaccess", TAG+="udev-acl"
-    '')
-
-  ];
-
-  hardware.bluetooth.enable = true;
-
   hardware.pulseaudio = {
     enable = true;
     systemWide = true; # Running multiple concurrent user sessions on different TTYs, I want their audio mixed.
     support32Bit = true;
-    package = pkgs.pulseaudioFull;
-
-    # <https://nixos.wiki/wiki/Bluetooth#System-Wide_PulseAudio>:
-    extraConfig = ''
-      load-module module-bluetooth-policy
-      load-module module-bluetooth-discover
-      ## module fails to load with
-      ##   module-bluez5-device.c: Failed to get device path from module arguments
-      ##   module.c: Failed to load module "module-bluez5-device" (argument: ""): initialization failed.
-      # load-module module-bluez5-device
-      # load-module module-bluez5-discover
-    '';
   };
 
   # For system-wide PulseAudio: <https://github.com/NixOS/nixpkgs/issues/114399>
@@ -158,18 +93,10 @@ in
   '';
 
   services = {
-
-    nfs.server.enable = true;
-    nfs.server.exports = ''
-      /home/mw/VMs/Shared     127.0.0.1/8(insecure,rw,sync,no_subtree_check,all_squash,anonuid=1337,anongid=100)
-    '';
-
     logind.lidSwitch = "suspend";
     logind.extraConfig = ''
       HandlePowerKey=suspend
     '';
-
-    blueman.enable = true;
 
     # No global X11! See <./modules/no-display-manager/i3.nix>
     xserver.enable = lib.mkForce false;
@@ -268,57 +195,5 @@ in
     device = "/var/home/m/.shared";
     fsType = "fuse.bindfs";
     options = [ "map=m/mw" ];
-  };
-
-  fileSystems."/var/home/mw/VM-Shared/win10" = {
-    device = "//192.168.122.239/Shared";
-    fsType = "cifs";
-    options = [
-      "rw"
-      "username=unused" "password=" "vers=2.0"
-      "uid=mw" "forceuid" "gid=users" "forcegid"
-      "file_mode=0644" "dir_mode=0755"
-      "nofail" "_netdev" "x-systemd.automount"
-      "x-systemd.mount-timeout=5s" "x-systemd.device-timeout=5s" "x-systemd.idle-timeout=2min"
-    ];
-  };
-
-  fileSystems."/var/home/mw/VM-Shared/ubuntu" = {
-    device = "//192.168.122.114/Shared";
-    fsType = "cifs";
-    options = [
-      "rw"
-      "username=unused" "password=" "vers=2.0"
-      "uid=mw" "forceuid" "gid=users" "forcegid"
-      "file_mode=0644" "dir_mode=0755"
-      "nofail" "_netdev" "x-systemd.automount"
-      "x-systemd.mount-timeout=5s" "x-systemd.device-timeout=5s" "x-systemd.idle-timeout=2min"
-    ];
-  };
-
-  fileSystems."/var/home/mw/VM-Shared/macos11" = {
-    device = "//192.168.122.75/Shared";
-    fsType = "cifs";
-    options = [
-      "rw"
-      "username=mw" "password=dupa.8" "vers=2.0"
-      "uid=mw" "forceuid" "gid=users" "forcegid"
-      "file_mode=0644" "dir_mode=0755"
-      "nofail" "_netdev" "x-systemd.automount"
-      "x-systemd.mount-timeout=5s" "x-systemd.device-timeout=5s" "x-systemd.idle-timeout=2min"
-    ];
-  };
-
-  fileSystems."/var/home/mw/VM-Shared/macos11-dev" = {
-    device = "//192.168.122.77/Shared";
-    fsType = "cifs";
-    options = [
-      "rw"
-      "username=mw" "password=dupa.8" "vers=2.0"
-      "uid=mw" "forceuid" "gid=users" "forcegid"
-      "file_mode=0644" "dir_mode=0755"
-      "nofail" "_netdev" "x-systemd.automount"
-      "x-systemd.mount-timeout=5s" "x-systemd.device-timeout=5s" "x-systemd.idle-timeout=2min"
-    ];
   };
 }

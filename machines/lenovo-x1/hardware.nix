@@ -18,6 +18,8 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
+  boot.tmpOnTmpfs = true;
+
   boot.kernel.sysctl."vm.swappiness" = lib.mkForce 1; # Let’s try this.
   swapDevices =
     [ { device = "/dev/disk/by-uuid/5e5256ed-b8a7-48c3-b815-d85792d621d6"; }

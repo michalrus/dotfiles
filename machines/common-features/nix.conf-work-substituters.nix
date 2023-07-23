@@ -1,4 +1,4 @@
-{ flake, config, lib, pkgs, ... }:
+{ lib, pkgs, ... }:
 
 let
 
