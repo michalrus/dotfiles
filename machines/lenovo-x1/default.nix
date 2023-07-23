@@ -62,7 +62,7 @@ nixpkgs.lib.nixosSystem {
     ./features/user-guest.nix
     ./features/user-personal.nix
     ./features/user-work.nix
-    ./features/window-managers.nix
+    ./features/old-window-managers.nix
     ./features/yubikey.nix
 
     { boot.binfmt.emulatedSystems = [ "aarch64-linux" ]; }  # for building Raspberry Pi systems on x86_64
