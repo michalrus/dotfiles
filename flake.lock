@@ -1,5 +1,29 @@
 {
   "nodes": {
+    "cloudflare-ips-v4": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-V4dThTb8iw02hjngubVtSJbEeWgOS1e/ODt1fLjLZvk=",
+        "type": "file",
+        "url": "https://www.cloudflare.com/ips-v4"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://www.cloudflare.com/ips-v4"
+      }
+    },
+    "cloudflare-ips-v6": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-BgpkXCAh/MmK3GTAElKiGJctCYUN+/UgvpuawqGmitE=",
+        "type": "file",
+        "url": "https://www.cloudflare.com/ips-v6"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://www.cloudflare.com/ips-v6"
+      }
+    },
     "danPollock": {
       "flake": false,
       "locked": {
@@ -372,6 +396,23 @@
         "type": "github"
       }
     },
+    "nixpkgs-michalrus_com": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1597615765,
+        "narHash": "sha256-ckwYjLD6wWRqAax39KOAEd7FewQ9kEyXDUYq8XaLZlE=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "cb1996818edf506c0d1665ab147c253c558a7426",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "cb1996818edf506c0d1665ab147c253c558a7426",
+        "type": "github"
+      }
+    },
     "nose": {
       "flake": false,
       "locked": {
@@ -486,6 +527,8 @@
     },
     "root": {
       "inputs": {
+        "cloudflare-ips-v4": "cloudflare-ips-v4",
+        "cloudflare-ips-v6": "cloudflare-ips-v6",
         "danPollock": "danPollock",
         "home-manager": "home-manager",
         "nix-darwin": "nix-darwin",
@@ -494,6 +537,7 @@
         "nixpkgs-aneta": "nixpkgs-aneta",
         "nixpkgs-lenovo-x1": "nixpkgs-lenovo-x1",
         "nixpkgs-macbook": "nixpkgs-macbook",
+        "nixpkgs-michalrus_com": "nixpkgs-michalrus_com",
         "yt-dlp": "yt-dlp"
       }
     },

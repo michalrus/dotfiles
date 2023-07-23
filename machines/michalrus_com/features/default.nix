@@ -1,30 +1,7 @@
 { config, pkgs, lib, ... }:
 
 {
-  imports = [
-    ../../../machines/common-features/fav-pkgs-cli-thin.nix
-    ../../../machines/common-features/immutable-users.nix
-    ../../../machines/common-features/ip-reject-not-drop.nix
-    ../../../machines/common-features/kill-user-processes.nix
-    ../../../machines/common-features/more-entropy.nix
-    ../../../machines/common-features/mtr-traceroute-fping.nix
-    ../../../machines/common-features/nix.conf.nix
-    ../../../machines/common-features/systemd-accounting.nix
-    ../../../machines/common-features/zsh.nix
-
-    ./gitolite
-    ./bitlbee
-    ./kornel
-    ./openvpn
-    ./web
-    ./feeds/annibot.nix
-    ./feeds/stosowana.nix
-    ./feeds/rss2email.nix
-  ];
-
   boot.tmpOnTmpfs = false;
-
-  networking.hostName = lib.mkOverride 101 "michalrus_com";
 
   networking.firewall.allowedTCPPorts = [
     113  # identd

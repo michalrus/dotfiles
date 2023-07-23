@@ -1,7 +1,7 @@
-{ config, lib, pkgs, ... }:
+modArgs@{ flake, config, lib, pkgs, ... }:
 
 with lib;
-with import ./common.nix { inherit config lib; };
+with import ./common.nix modArgs;
 
 let
 
