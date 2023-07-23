@@ -31,13 +31,16 @@ nixpkgs.lib.nixosSystem {
 
   ]) ++ [
 
-    ../common-features/nix.conf.nix
-    ../common-features/nix.conf-work-substituters.nix
-    ../common-features/locale-en-iso.nix
-    ../common-features/systemd-accounting.nix
     ../common-features/fav-pkgs-cli-thin.nix
-
-    ../../nixos-config/machines/common.nix  # TODO
+    ../common-features/immutable-users.nix
+    ../common-features/kill-user-processes.nix
+    ../common-features/locale-en-iso.nix
+    ../common-features/more-entropy.nix
+    ../common-features/mtr-traceroute-fping.nix
+    ../common-features/nix.conf-work-substituters.nix
+    ../common-features/nix.conf.nix
+    ../common-features/systemd-accounting.nix
+    ../common-features/zsh.nix
 
     ./features/android.nix
     ./features/bluetooth.nix
@@ -67,6 +70,11 @@ nixpkgs.lib.nixosSystem {
     ./features/window-managers.nix
     ./features/wine.nix
     ./features/yubikey.nix
+
+    { security.pam.services.su.requireWheel = true; }
+
+    # FIXME: get rid of ↓
+    { environment.variables.PATH = [ "$HOME/.bin" ]; }
 
     { boot.binfmt.emulatedSystems = [ "aarch64-linux" ]; }  # for building Raspberry Pi systems on x86_64
 
@@ -98,6 +106,12 @@ nixpkgs.lib.nixosSystem {
           HandlePowerKey=suspend
         '';
       };
+    }
+
+    {
+      services.journald.extraConfig = ''
+        SystemMaxUse=200M
+      '';
     }
 
     ({ pkgs, ...}: {

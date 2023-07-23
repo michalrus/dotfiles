@@ -7,6 +7,8 @@ lib.mkMerge [
       pkg = flake.inputs.nixpkgs.legacyPackages.${pkgs.system}.nixUnstable;
     in assert lib.versionAtLeast pkg.version "2.15.1"; pkg;
 
+    nix.gc.automatic = lib.mkForce false;
+
     nix.extraOptions = ''
       experimental-features = nix-command flakes
       keep-outputs = true
@@ -45,6 +47,16 @@ lib.mkMerge [
       trustedUsers = trusted-users;
       autoOptimiseStore = auto-optimise-store;
     };
+  }
+
+  {
+    nix = if pkgs.stdenv.isLinux then
+      if lib.versionAtLeast lib.version "23.05" then {
+        settings.sandbox = lib.mkForce true;
+      } else {
+        useSandbox = lib.mkForce true;
+      }
+    else {};
   }
 
 ]

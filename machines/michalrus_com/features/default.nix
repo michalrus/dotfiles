@@ -1,22 +1,7 @@
 { config, pkgs, lib, ... }:
 
 {
-  imports = [
-    ../common.nix
-    ../../../machines/common-features/fav-pkgs-cli-thin.nix
-    ./gitolite
-    ./bitlbee
-    ./kornel
-    ./openvpn
-    ./web
-    ./feeds/annibot.nix
-    ./feeds/stosowana.nix
-    ./feeds/rss2email.nix
-  ];
-
   boot.tmpOnTmpfs = false;
-
-  networking.hostName = lib.mkOverride 101 "michalrus_com";
 
   networking.firewall.allowedTCPPorts = [
     113  # identd
@@ -32,14 +17,6 @@
     ssh.startAgent = false;
   };
 
-  systemd.extraConfig = ''
-    DefaultCPUAccounting=yes
-    DefaultBlockIOAccounting=yes
-    DefaultMemoryAccounting=yes
-    DefaultTasksAccounting=yes
-    DefaultIPAccounting=yes
-  '';
-
   services = {
     openssh = {
       enable = true;
@@ -50,6 +27,10 @@
 
     oidentd.enable = true;
     smartd.enable = false; # TODO: why won’t it work? `/dev/xvda: Unable to detect device type`
+
+    journald.extraConfig = ''
+      SystemMaxUse=200M
+    '';
   };
 
   users = {

@@ -4,8 +4,8 @@
 
 let
   flake = inputs.self;
-  nixpkgs = inputs.nixpkgs-aneta;
-  system = "aarch64-linux";
+  nixpkgs = inputs.nixpkgs-michalrus_com;
+  system = "x86_64-linux";
   pkgs = import nixpkgs { inherit system; };
 in import "${nixpkgs}/nixos/lib/eval-config.nix" {
   inherit system pkgs;
@@ -15,11 +15,14 @@ in import "${nixpkgs}/nixos/lib/eval-config.nix" {
       system.nixos.revision = nixpkgs.rev;
       _module.args = { inherit flake; };
     }
-    ./hardware.nix
-    { networking.hostName = "aneta"; }
+    { networking.hostName = "michalrus_com"; }
 
+    flake.nixosModules.firewall-comments
     flake.nixosModules.dotfiles-old
-    flake.nixosModules.gnu-screen
+    flake.nixosModules.dynamic-profiles
+
+    "${nixpkgs}/nixos/modules/virtualisation/amazon-image.nix"
+    { ec2.hvm = true; }
 
     ../common-features/fav-pkgs-cli-thin.nix
     ../common-features/immutable-users.nix
@@ -32,16 +35,16 @@ in import "${nixpkgs}/nixos/lib/eval-config.nix" {
     ../common-features/systemd-accounting.nix
     ../common-features/zsh.nix
 
-    ./features/dns.nix
-    ./features/nat.nix
-    ./features/openvpn.nix
-    #./features/proxy.nix  # TODO: needs more work
-    ./features/users.nix
+    ./features/default.nix
 
-    {
-      services.journald.extraConfig = ''
-        SystemMaxUse=200M
-      '';
-    }
+    ./features/gitolite
+    ./features/bitlbee
+    ./features/kornel
+    ./features/openvpn
+    ./features/web
+    ./features/feeds/annibot.nix
+    ./features/feeds/stosowana.nix
+    ./features/feeds/rss2email.nix
+
   ];
 }

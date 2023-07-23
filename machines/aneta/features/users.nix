@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ ... }:
 
 {
 
@@ -9,7 +9,6 @@
   };
 
   users = {
-    mutableUsers = lib.mkForce false;
     extraUsers = {
 
       m = {

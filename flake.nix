@@ -12,6 +12,11 @@
 
     nixpkgs-macbook.url = "github:nixos/nixpkgs/nixpkgs-23.05-darwin";
 
+    nixpkgs-michalrus_com = {
+      url = "github:nixos/nixpkgs/cb1996818edf506c0d1665ab147c253c558a7426";  # nixos-20.03, Aug 17, 2020
+      flake = false; # FIXME: too old
+    };
+
     nix-darwin.url = "github:lnl7/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs-macbook";
 
@@ -20,6 +25,9 @@
 
     nix-doom-emacs.url = "github:nix-community/nix-doom-emacs";
     nix-doom-emacs.inputs.nixpkgs.follows = "nixpkgs-macbook";
+
+    cloudflare-ips-v4 = { url = "https://www.cloudflare.com/ips-v4"; flake = false; };
+    cloudflare-ips-v6 = { url = "https://www.cloudflare.com/ips-v6"; flake = false; };
   };
 
   outputs = inputs: {
@@ -30,6 +38,9 @@
 
       # sudo nixos-rebuild switch -L --flake .#lenovo-x1
       lenovo-x1 = import ./machines/lenovo-x1 { inherit inputs; };
+
+      # nixos-rebuild switch -L --flake .#michalrus_com --build-host localhost --target-host root@michalrus.com
+      michalrus_com = import ./machines/michalrus_com { inherit inputs; };
     };
 
     darwinConfigurations = rec {

@@ -1,4 +1,4 @@
-{ config, pkgs }:
+{ flake, config, pkgs, ... }:
 
 with pkgs.lib;
 
@@ -69,18 +69,6 @@ rec {
     ''}
   '';
 
-  # garbage-collected on purpose
-  cloudflare-ips-v4 = pkgs.fetchurl {
-    url = "https://www.cloudflare.com/ips-v4";
-    sha256 = "0xfd3xhnly2822sljynk56dphg6ybbc4dw8nd0bgzdv7hifrkn0p";
-  };
-
-  # garbage-collected on purpose
-  cloudflare-ips-v6 = pkgs.fetchurl {
-    url = "https://www.cloudflare.com/ips-v6";
-    sha256 = "18dwrf6iw35vwpgz3mscmpmhpjf2ifyzpdgpigrd3b6gwjm18i17";
-  };
-
   setRealIPFromCloudflare =
     let
       readF = file:
@@ -89,8 +77,8 @@ rec {
         (splitString "\n"
         (builtins.readFile file)));
     in ''
-      ${readF cloudflare-ips-v4}
-      ${readF cloudflare-ips-v6}
+      ${readF flake.inputs.cloudflare-ips-v4}
+      ${readF flake.inputs.cloudflare-ips-v6}
       real_ip_header CF-Connecting-IP;
     '';
 
