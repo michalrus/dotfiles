@@ -2,14 +2,20 @@
 
 let
 
-  src = pkgs.fetchFromGitHub {
-    owner = "michalrus";
-    repo = "kornel";
-    rev = "3aa5bfca8f44b13be1404b333dc0f05dd41483e8";
-    sha256 = "06msh22z3hjqhlyan3kif3yqdhz43bd0bhvi7d5j55z9j10h5jny";
-  };
-
-  kornel = import src;
+  kornel = let
+    raw = pkgs.fetchFromGitHub {
+      owner = "michalrus";
+      repo = "kornel";
+      rev = "3aa5bfca8f44b13be1404b333dc0f05dd41483e8";
+      sha256 = "06msh22z3hjqhlyan3kif3yqdhz43bd0bhvi7d5j55z9j10h5jny";
+    };
+    patched = pkgs.runCommand "kornel-pure-src" {} ''
+      cp -r ${raw} $out
+      chmod -R +w $out
+      cd $out
+      patch -p1 -i ${./pure-build.patch}
+    '';
+  in import patched;
 
   user = "kornel";
   dataDir = "/var/lib/${user}";
@@ -49,7 +55,6 @@ in
     };
     path = with pkgs; [ kornel ];
     preStart = ''
-      # prevent-ifd-gc: ${src}
       mkdir -p "${dataDir}"
       chown -R "${user}:${user}" "${dataDir}"
       chmod 750 "${dataDir}"

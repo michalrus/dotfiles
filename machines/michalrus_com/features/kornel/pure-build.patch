@@ -1,0 +1,63 @@
+diff --git a/default.nix b/default.nix
+index d653371..a1f671e 100644
+--- a/default.nix
++++ b/default.nix
+@@ -3,7 +3,7 @@ let
+   sources = rec {
+     nixpkgs = import ./fetchNixpkgs.nix {
+       rev = "8395f9aa85e621c076334a67d814de8221ce7983";
+-      sha256 = "04b2gyji9yz9429cy7ah3yidh4clplfgd4smkd0hx06g5n5v790g";
++      sha256 = "00vqapzvn9mnyj4ak5i7wnv5dylnc3dddbd43643fnxbw85zb3kp";
+     };
+     hie-nix = (import nixpkgs {}).fetchFromGitHub {
+       owner = "domenkozar"; repo = "hie-nix";
+@@ -28,7 +28,7 @@ let
+                  (lib.splitString "\n" (builtins.readFile gitignorePath)))));
+   };
+ 
+-  inherit (import sources.nixpkgs {}) pkgs;
++  inherit (import sources.nixpkgs { system = "x86_64-linux"; }) pkgs;
+ 
+ in with (ulib pkgs); let
+ 
+@@ -58,7 +58,7 @@ in with (ulib pkgs); let
+     #   • `doCheck = false` would remove test deps from nix-shell → useless,
+     #   • `checkPhase = ""` doesn’t override (see pkgs/development/haskell-modules/generic-builder.nix).
+     checkPhase = ":";
+-    libraryHaskellDepends = drv.libraryHaskellDepends ++ [ prevent-ifd-gc ];
++    #libraryHaskellDepends = drv.libraryHaskellDepends ++ [ prevent-ifd-gc ];
+   });
+ 
+   env = pkgs.lib.overrideDerivation build.env (oldAttrs: {
+@@ -77,4 +77,4 @@ in with (ulib pkgs); let
+     srcs = pkgs.lib.attrValues sources ++ haskellPackages.haskell-prevent-ifd-gc;
+     in pkgs.writeTextDir "prevent-ifd-gc" (pkgs.lib.concatMapStringsSep "\n" toString srcs + "\n");
+ 
+-in build // { inherit env hie; }
++in build # // { inherit env hie; }
+diff --git a/fetchNixpkgs.nix b/fetchNixpkgs.nix
+index 5a78292..50e317d 100644
+--- a/fetchNixpkgs.nix
++++ b/fetchNixpkgs.nix
+@@ -14,11 +14,12 @@
+ 
+ # TODO: switch to just this after Nix 2.0 is much more mainstream:
+ #
+-#   builtins.fetchTarball {
+-#     url = "https://github.com/NixOS/nixpkgs/archive/${rev}.tar.gz";
+-#     sha256 = sha256;
+-#   }
++  builtins.fetchTarball {
++    url = "https://github.com/NixOS/nixpkgs/archive/${rev}.tar.gz";
++    sha256 = sha256;
++  }
+ 
++/*
+ (rec {
+   tarball = import <nix/fetchurl.nix> {
+     url = "https://github.com/NixOS/nixpkgs/archive/${rev}.tar.gz";
+@@ -47,3 +48,4 @@
+     coreutils = builtins.storePath builtin-paths.coreutils;
+   });
+ }).nixpkgs
++*/

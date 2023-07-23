@@ -39,7 +39,7 @@ in import "${nixpkgs}/nixos/lib/eval-config.nix" {
 
     ./features/gitolite
     ./features/bitlbee
-    #./features/kornel  # FIXME
+    ./features/kornel
     ./features/openvpn
     ./features/web
     ./features/feeds/annibot.nix
