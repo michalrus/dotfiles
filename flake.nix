@@ -10,12 +10,12 @@
     yt-dlp = { url = "github:yt-dlp/yt-dlp"; flake = false; };
     danPollock = { url = "http://someonewhocares.org/hosts/zero/hosts"; flake = false; };
 
-    nixpkgs-macbook.url = "github:nixos/nixpkgs/nixpkgs-22.05-darwin";
+    nixpkgs-macbook.url = "github:nixos/nixpkgs/nixpkgs-23.05-darwin";
 
     nix-darwin.url = "github:lnl7/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs-macbook";
 
-    home-manager.url = "github:nix-community/home-manager/release-22.05";
+    home-manager.url = "github:nix-community/home-manager/release-23.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs-macbook";
 
     nix-doom-emacs.url = "github:nix-community/nix-doom-emacs";

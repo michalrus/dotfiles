@@ -179,7 +179,7 @@
             chmod +x $out/${exe}
           '';
         in ''
-          ${doWrap "bin/emacs-28.1"}
+          ${doWrap "bin/emacs-${drv.version}"}
           ${doWrap "Applications/Emacs.app/Contents/MacOS/Emacs"}
         '');
     });
