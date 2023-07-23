@@ -2,8 +2,16 @@
 
 {
   imports = [
-    ../common.nix
     ../../../machines/common-features/fav-pkgs-cli-thin.nix
+    ../../../machines/common-features/immutable-users.nix
+    ../../../machines/common-features/ip-reject-not-drop.nix
+    ../../../machines/common-features/kill-user-processes.nix
+    ../../../machines/common-features/more-entropy.nix
+    ../../../machines/common-features/mtr-traceroute-fping.nix
+    ../../../machines/common-features/nix.conf.nix
+    ../../../machines/common-features/systemd-accounting.nix
+    ../../../machines/common-features/zsh.nix
+
     ./gitolite
     ./bitlbee
     ./kornel
@@ -32,14 +40,6 @@
     ssh.startAgent = false;
   };
 
-  systemd.extraConfig = ''
-    DefaultCPUAccounting=yes
-    DefaultBlockIOAccounting=yes
-    DefaultMemoryAccounting=yes
-    DefaultTasksAccounting=yes
-    DefaultIPAccounting=yes
-  '';
-
   services = {
     openssh = {
       enable = true;
@@ -50,6 +50,10 @@
 
     oidentd.enable = true;
     smartd.enable = false; # TODO: why won’t it work? `/dev/xvda: Unable to detect device type`
+
+    journald.extraConfig = ''
+      SystemMaxUse=200M
+    '';
   };
 
   users = {
