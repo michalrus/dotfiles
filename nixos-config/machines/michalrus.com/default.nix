@@ -2,7 +2,8 @@
 
 {
   imports = [
-    ../common-x86.nix
+    ../common.nix
+    ../../../machines/common-features/fav-pkgs-cli-thin.nix
     ./gitolite
     ./bitlbee
     ./kornel

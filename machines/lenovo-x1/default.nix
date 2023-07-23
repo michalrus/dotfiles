@@ -35,13 +35,14 @@ nixpkgs.lib.nixosSystem {
     ../common-features/nix.conf-work-substituters.nix
     ../common-features/locale-en-iso.nix
     ../common-features/systemd-accounting.nix
+    ../common-features/fav-pkgs-cli-thin.nix
 
-    ../../nixos-config/machines/common-x86.nix  # TODO
+    ../../nixos-config/machines/common.nix  # TODO
 
     ./features/android.nix
     ./features/bluetooth.nix
     ./features/emacs.nix
-    ./features/fav-pkgs-cli.nix
+    ./features/fav-pkgs-cli-fat.nix
     ./features/fav-pkgs-desktop.nix
     ./features/firefox-autocomplete.nix
     ./features/hardened-chromium.nix

@@ -1,12 +1,8 @@
 { flake, config, lib, pkgs, ... }:
 
 {
-  imports = [
-    ./common.nix
-  ];
-
-  environment.systemPackages = with pkgs; [
-    #ripgrep  # TODO: why is it not on Hydra and wants to build rustc?
+  environment.systemPackages = flake.lib.filterSystem pkgs.system (with pkgs; [
+    ripgrep
     (lowPrio gnupg1compat)
     (lowPrio stdmanpages)
     aspell
@@ -48,5 +44,5 @@
     stdman
     tesseract
     wrk
-  ];
+  ]);
 }
