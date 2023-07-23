@@ -1,8 +1,8 @@
 { flake, config, pkgs, ... }:
 
 let
-  pkgs-23_05 = flake.inputs.nixpkgs.legacyPackages.${pkgs.system};
-  unfree-23_05 = import flake.inputs.nixpkgs { inherit (pkgs) system; config.allowUnfree = true; };
+  pkgs-2305 = flake.inputs.nixpkgs-2305.legacyPackages.${pkgs.system};
+  unfree-2305 = import flake.inputs.nixpkgs-2305 { inherit (pkgs) system; config.allowUnfree = true; };
 in
 
 {
@@ -103,9 +103,9 @@ in
     pdfarranger
     pdfpc
     pinentry-gtk2
-    pkgs-23_05.chromium
-    pkgs-23_05.gnucash
-    pkgs-23_05.retroarchFull
+    pkgs-2305.chromium
+    pkgs-2305.gnucash
+    pkgs-2305.retroarchFull
     python3Packages.livestreamer
     qjoypad
     rpcs3
@@ -117,8 +117,8 @@ in
     termite
     tigervnc
     timidity
-    unfree-23_05.skypeforlinux  # FIXME: use inside browser?
-    unfree-23_05.zoom-us  # FIXME: use inside browser?
+    unfree-2305.skypeforlinux  # FIXME: use inside browser?
+    unfree-2305.zoom-us  # FIXME: use inside browser?
     utox
     xarchiver
     xdg_utils

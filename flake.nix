@@ -1,30 +1,33 @@
 {
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
-    nixpkgs-lenovo-x1.url = "github:NixOS/nixpkgs/b3d86c56c786ad9530f1400adbd4dfac3c42877b"; # nixos-21.11, Jan 25, 2022
-    nixpkgs-aneta = {
-      url = "github:NixOS/nixpkgs/d6c1b566b770cf4cf0c6d4a693da6bdf28c2c3b0"; # nixos-20.03, May 9, 2020
+    # nixpkgs-2003 = { url = "github:NixOS/nixpkgs/nixpkgs-20.03-darwin"; };
+    nixpkgs-2003 = {
+      url = "github:NixOS/nixpkgs/d6c1b566b770cf4cf0c6d4a693da6bdf28c2c3b0";
       flake = false; # FIXME: too old
     };
+    nixpkgs-2003-michalrus_com = {
+      url = "github:nixos/nixpkgs/cb1996818edf506c0d1665ab147c253c558a7426";
+      flake = false; # FIXME: too old
+    };
+
+    # nixpkgs-2111 = { url = "github:NixOS/nixpkgs/nixpkgs-21.11-darwin"; };
+    nixpkgs-2111.url = "github:NixOS/nixpkgs/b3d86c56c786ad9530f1400adbd4dfac3c42877b";
+
+    nixpkgs-2305.url = "github:nixos/nixpkgs/nixpkgs-23.05-darwin";
+
+    nix-darwin-2305.url = "github:lnl7/nix-darwin/master";
+    nix-darwin-2305.inputs.nixpkgs.follows = "nixpkgs-2305";
+
+    home-manager-2305.url = "github:nix-community/home-manager/release-23.05";
+    home-manager-2305.inputs.nixpkgs.follows = "nixpkgs-2305";
+
+    nix-doom-emacs-2305.url = "github:nix-community/nix-doom-emacs";
+    nix-doom-emacs-2305.inputs.nixpkgs.follows = "nixpkgs-2305";
+
     yt-dlp = { url = "github:yt-dlp/yt-dlp"; flake = false; };
+
     danPollock = { url = "http://someonewhocares.org/hosts/zero/hosts"; flake = false; };
-
-    nixpkgs-macbook.url = "github:nixos/nixpkgs/nixpkgs-23.05-darwin";
-
-    nixpkgs-michalrus_com = {
-      url = "github:nixos/nixpkgs/cb1996818edf506c0d1665ab147c253c558a7426";  # nixos-20.03, Aug 17, 2020
-      flake = false; # FIXME: too old
-    };
-
-    nix-darwin.url = "github:lnl7/nix-darwin/master";
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgs-macbook";
-
-    home-manager.url = "github:nix-community/home-manager/release-23.05";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs-macbook";
-
-    nix-doom-emacs.url = "github:nix-community/nix-doom-emacs";
-    nix-doom-emacs.inputs.nixpkgs.follows = "nixpkgs-macbook";
 
     cloudflare-ips-v4 = { url = "https://www.cloudflare.com/ips-v4"; flake = false; };
     cloudflare-ips-v6 = { url = "https://www.cloudflare.com/ips-v6"; flake = false; };
@@ -69,13 +72,13 @@
 
     lib = import ./lib { inherit inputs; };
 
-    packages = inputs.nixpkgs.lib.genAttrs [
+    packages = inputs.nixpkgs-2305.lib.genAttrs [
       "x86_64-linux"
       "aarch64-linux"
       "x86_64-darwin"
       "aarch64-darwin"
     ] (system: let
-      inherit (inputs.nixpkgs-lenovo-x1.legacyPackages.${system}) callPackage;
+      inherit (inputs.nixpkgs-2111.legacyPackages.${system}) callPackage;
     in inputs.self.lib.filterSystem system rec {
       autotalent = callPackage ./packages/autotalent {};
       cp2104-gpio = callPackage ./packages/cp2104-gpio {};
@@ -91,7 +94,7 @@
       tap-plugins = callPackage ./packages/tap-plugins {};
       transcribe = callPackage ./packages/transcribe {};
       vocproc = callPackage ./packages/vocproc { inherit lv2-cpp-tools; };
-      yt-dlp = import ./packages/yt-dlp { inherit system; nixpkgs = inputs.nixpkgs; inherit (inputs) yt-dlp; };
+      yt-dlp = import ./packages/yt-dlp { inherit system; nixpkgs = inputs.nixpkgs-2305; inherit (inputs) yt-dlp; };
     });
 
   };

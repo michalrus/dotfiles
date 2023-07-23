@@ -229,10 +229,10 @@
         "type": "github"
       }
     },
-    "home-manager": {
+    "home-manager-2305": {
       "inputs": {
         "nixpkgs": [
-          "nixpkgs-macbook"
+          "nixpkgs-2305"
         ]
       },
       "locked": {
@@ -250,10 +250,10 @@
         "type": "github"
       }
     },
-    "nix-darwin": {
+    "nix-darwin-2305": {
       "inputs": {
         "nixpkgs": [
-          "nixpkgs-macbook"
+          "nixpkgs-2305"
         ]
       },
       "locked": {
@@ -271,7 +271,7 @@
         "type": "github"
       }
     },
-    "nix-doom-emacs": {
+    "nix-doom-emacs-2305": {
       "inputs": {
         "doom-emacs": "doom-emacs",
         "doom-snippets": "doom-snippets",
@@ -287,7 +287,7 @@
         "format-all": "format-all",
         "nix-straight": "nix-straight",
         "nixpkgs": [
-          "nixpkgs-macbook"
+          "nixpkgs-2305"
         ],
         "nose": "nose",
         "ob-racket": "ob-racket",
@@ -331,23 +331,7 @@
         "type": "github"
       }
     },
-    "nixpkgs": {
-      "locked": {
-        "lastModified": 1689137672,
-        "narHash": "sha256-QZoHxr0a73x6rQcAo5CiwYpysHbSnk7lAR8/16um7mM=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "98da3dd0de6660d4abed7bb74e748694bd803413",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-23.05",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs-aneta": {
+    "nixpkgs-2003": {
       "flake": false,
       "locked": {
         "lastModified": 1588979025,
@@ -364,7 +348,7 @@
         "type": "github"
       }
     },
-    "nixpkgs-lenovo-x1": {
+    "nixpkgs-2111": {
       "locked": {
         "lastModified": 1643148353,
         "narHash": "sha256-VMX2quZAFjCoAFzQX23ALsLNA7Y6d6qSNIvz1ySj2iY=",
@@ -380,7 +364,7 @@
         "type": "github"
       }
     },
-    "nixpkgs-macbook": {
+    "nixpkgs-2305": {
       "locked": {
         "lastModified": 1690022785,
         "narHash": "sha256-WV3Rg6WcP3UErddn/+Kw3BTsc8kB9F4Y5sv7I/N5q4o=",
@@ -396,7 +380,7 @@
         "type": "github"
       }
     },
-    "nixpkgs-michalrus_com": {
+    "nixpkgs-2003-michalrus_com": {
       "flake": false,
       "locked": {
         "lastModified": 1597615765,
@@ -530,14 +514,13 @@
         "cloudflare-ips-v4": "cloudflare-ips-v4",
         "cloudflare-ips-v6": "cloudflare-ips-v6",
         "danPollock": "danPollock",
-        "home-manager": "home-manager",
-        "nix-darwin": "nix-darwin",
-        "nix-doom-emacs": "nix-doom-emacs",
-        "nixpkgs": "nixpkgs",
-        "nixpkgs-aneta": "nixpkgs-aneta",
-        "nixpkgs-lenovo-x1": "nixpkgs-lenovo-x1",
-        "nixpkgs-macbook": "nixpkgs-macbook",
-        "nixpkgs-michalrus_com": "nixpkgs-michalrus_com",
+        "home-manager-2305": "home-manager-2305",
+        "nix-darwin-2305": "nix-darwin-2305",
+        "nix-doom-emacs-2305": "nix-doom-emacs-2305",
+        "nixpkgs-2003": "nixpkgs-2003",
+        "nixpkgs-2111": "nixpkgs-2111",
+        "nixpkgs-2305": "nixpkgs-2305",
+        "nixpkgs-2003-michalrus_com": "nixpkgs-2003-michalrus_com",
         "yt-dlp": "yt-dlp"
       }
     },

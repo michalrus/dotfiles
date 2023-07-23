@@ -1,10 +1,10 @@
 { inputs }:
 
-# FIXME: use: lib.nixosSystem, but the current nixpkgs-aneta are too old for that:
+# FIXME: use: lib.nixosSystem, but the current nixpkgs-2003 are too old for that:
 
 let
   flake = inputs.self;
-  nixpkgs = inputs.nixpkgs-aneta;
+  nixpkgs = inputs.nixpkgs-2003;
   system = "aarch64-linux";
   pkgs = import nixpkgs { inherit system; };
 in import "${nixpkgs}/nixos/lib/eval-config.nix" {

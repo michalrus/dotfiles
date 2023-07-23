@@ -2,7 +2,7 @@
 
 let
   flake = inputs.self;
-  nixpkgs = inputs.nixpkgs-lenovo-x1;
+  nixpkgs = inputs.nixpkgs-2111;
 in
 
 nixpkgs.lib.nixosSystem {
