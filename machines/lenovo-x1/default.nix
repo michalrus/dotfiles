@@ -35,6 +35,7 @@ nixpkgs.lib.nixosSystem {
     ../common-features/nix.conf.nix
     ../common-features/nix.conf-work-substituters.nix
     ../common-features/locale-en-iso.nix
+    ../common-features/systemd-accounting.nix
 
     ./features/android.nix
     ./features/bluetooth.nix
@@ -49,7 +50,6 @@ nixpkgs.lib.nixosSystem {
     #./features/mpd.nix
     #./features/musnix.nix
     ./features/old-base.nix  # TODO
-    ./features/old-base-mine.nix  # TODO
     ./features/openvpn-michalrus_com.nix
     ./features/openvpn-nordvpn.nix
     ./features/podman.nix
@@ -62,12 +62,30 @@ nixpkgs.lib.nixosSystem {
     ./features/user-guest.nix
     ./features/user-personal.nix
     ./features/user-work.nix
-    ./features/old-window-managers.nix
+    ./features/window-managers.nix
     ./features/yubikey.nix
 
     { boot.binfmt.emulatedSystems = [ "aarch64-linux" ]; }  # for building Raspberry Pi systems on x86_64
 
     { networking.firewall.allowedTCPPorts = [ 12345 ]; }  # python -m http.server 12345
+
+    { programs.ssh.startAgent = false; } # using gpg-agent as ssh-agent
+
+    {
+      networking.networkmanager = {
+        enable = true;
+        dhcp = "dhclient"; # <https://forum.salixos.org/viewtopic.php?f=30&t=7284>
+      };
+    }
+
+    {
+      services.logind = {
+        lidSwitch = "suspend";
+        extraConfig = ''
+          HandlePowerKey=suspend
+        '';
+      };
+    }
 
     flake.nixosModules.sqlite-dump
     {

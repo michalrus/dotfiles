@@ -1,14 +1,6 @@
 { config, pkgs, lib, ... }:
 
 {
-  systemd.extraConfig = ''
-    DefaultCPUAccounting=yes
-    DefaultBlockIOAccounting=yes
-    DefaultMemoryAccounting=yes
-    DefaultTasksAccounting=yes
-    DefaultIPAccounting=yes
-  '';
-
   services.smartd.enable = false; # FIXME: ?
 
   boot.loader.grub.enable = false;

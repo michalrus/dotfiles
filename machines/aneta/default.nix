@@ -22,6 +22,8 @@ in import "${nixpkgs}/nixos/lib/eval-config.nix" {
     flake.nixosModules.gnu-screen
 
     ../common-features/nix.conf.nix
+    ../common-features/locale-en-iso.nix
+    ../common-features/systemd-accounting.nix
 
     ./features/dns.nix
     ./features/nat.nix
