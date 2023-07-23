@@ -21,7 +21,6 @@ nixpkgs.lib.nixosSystem {
     dotfiles-old
     dynamic-profiles
     #gnu-screen  # unused
-    guest-account
     hibernate-on-low-battery
     lock-vts
     lock-x11-displays
@@ -31,23 +30,7 @@ nixpkgs.lib.nixosSystem {
     #sane-extra-config
     somagic-easycap
 
-    sqlite-dump
-    {
-      services.sqlite-dump = [{
-        source = "/home/m/.shared/nofatty/data.db";
-        destination = "/home/m/Archive/Personal/Backup/nofatty.sql";
-        runAt = "*:0/15"; # every 15 mins
-        user = "m";
-        group = "users";
-      }];
-    }
-
-    torified-users
-    ./features/tor.nix
-
-    ./features/firefox-autocomplete.nix
-    { services.firefox-autocomplete.userPorts.m = 9114; }
-    { services.firefox-autocomplete.userPorts.mw = 9115; }
+  ]) ++ [
 
     ../common-features/nix.conf.nix
     ../common-features/nix.conf-work-substituters.nix
@@ -58,6 +41,7 @@ nixpkgs.lib.nixosSystem {
     ./features/emacs.nix
     ./features/fav-pkgs-cli.nix
     ./features/fav-pkgs-desktop.nix
+    ./features/firefox-autocomplete.nix
     ./features/hardened-chromium.nix
     ./features/hardened-firefox.nix
     ./features/ledger.nix
@@ -70,8 +54,14 @@ nixpkgs.lib.nixosSystem {
     ./features/openvpn-nordvpn.nix
     ./features/podman.nix
     ./features/proaudio.nix
+    flake.nixosModules.torified-users
+    ./features/tor.nix
     ./features/transmission.nix
     ./features/udev-remap-keyboard.nix
+    flake.nixosModules.guest-account
+    ./features/user-guest.nix
+    ./features/user-personal.nix
+    ./features/user-work.nix
     ./features/window-managers.nix
     ./features/yubikey.nix
 
@@ -79,5 +69,16 @@ nixpkgs.lib.nixosSystem {
 
     { networking.firewall.allowedTCPPorts = [ 12345 ]; }  # python -m http.server 12345
 
-  ]);
+    flake.nixosModules.sqlite-dump
+    {
+      services.sqlite-dump = [{
+        source = "/home/m/.shared/nofatty/data.db";
+        destination = "/home/m/Archive/Personal/Backup/nofatty.sql";
+        runAt = "*:0/15"; # every 15 mins
+        user = "m";
+        group = "users";
+      }];
+    }
+
+  ];
 }
