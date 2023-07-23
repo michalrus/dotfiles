@@ -19,21 +19,30 @@ in
     font-awesome-ttf
     font-awesome
     google-fonts
+    terminus_font
+    unifont
+    unifont_upper
   ];
+
+  fonts.enableGhostscriptFonts = true;
 
   boot.kernel.sysctl."fs.inotify.max_user_watches" = "1048576";  # for JetBrains
 
+  # Use GTK 2 in LibreOffice, as 3 has some menu rendering problems.
+  environment.variables."SAL_USE_VCLPLUGIN" = "gtk";
+
   environment.systemPackages = with pkgs; [
-    (haskellPackages.ghcWithHoogle (hs: []))
+    haskellPackages.ghc
     haskellPackages.hlint
-    rustup
-    rust-analyzer
-    sqlint
-    openjdk8
     jetbrains.idea-community
-    vscodium
     octave
+    openjdk8
     pandoc
+    protobuf
+    rust-analyzer
+    rustup
+    sqlint
+    vscodium
     (texlive.combine {
       inherit (texlive) scheme-small latexmk titlesec tocloft todonotes cleveref lipsum
         biblatex logreq cm-super csquotes pgfplots adjustbox collectbox ccicons polski
@@ -44,44 +53,76 @@ in
         ;
       gregorio = flake.packages.${pkgs.system}.gregorio.forTexlive;
     })
-    protobuf
 
-    (wine.override { pulseaudioSupport = true; })
     acpitool
     aegisub
     alacritty
+    alsaUtils
     anki
+    audacity
+    awf
     breeze-qt5 breeze-icons pkgs.hicolor_icon_theme kde-gtk-config breeze-gtk
     brightnessctl
+    calibre
+    cdparanoia
+    cdrkit
     cool-retro-term
+    devede
+    diff-pdf
+    dvdauthor
     dvdbackup
+    electrum
+    evince
     feh
-    ghostscript
-    gnome3.adwaita-icon-theme # for resizable cursors
-    gnome3.dconf   # so that GnuCash prefs can be changed
-    gnome3.zenity
-    k3b
     flake.packages.${pkgs.system}.gettext-emacs
     flake.packages.${pkgs.system}.noise
-    networkmanagerapplet
-    pdfpc
-    qjoypad
-    pkgs-23_05.retroarchFull
-    rpcs3
-    termite
-    tigervnc
     flake.packages.${pkgs.system}.transcribe
-    speedread
-    xdg_utils
-
-    pkgs-23_05.chromium
-    electrum
-    pkgs-23_05.gnucash
+    ghostscript
+    gimp
+    gnome3.adwaita-icon-theme # for resizable cursors
+    gnome3.aisleriot
+    gnome3.baobab
+    gnome3.cheese
+    gnome3.dconf   # so that GnuCash prefs can be changed
+    gnome3.zenity
+    gparted
+    gtk2  # Why? Icon cache! See #20874.
+    handbrake
+    inkscape
     isync
-    unfree-23_05.skypeforlinux  # FIXME: use inside browser?
-    unfree-23_05.zoom-us  # FIXME: use inside browser?
+    k3b
+    libnotify
+    libreoffice
     lilypond
     monero-gui
+    mpv
+    networkmanagerapplet
+    octave
+    pavucontrol
+    pcmanfm
+    pdfarranger
+    pdfpc
+    pinentry-gtk2
+    pkgs-23_05.chromium
+    pkgs-23_05.gnucash
+    pkgs-23_05.retroarchFull
+    python3Packages.livestreamer
+    qjoypad
+    rpcs3
+    rtmpdump
+    samba
+    scantailor
+    simple-scan
+    speedread
+    termite
+    tigervnc
+    timidity
+    unfree-23_05.skypeforlinux  # FIXME: use inside browser?
+    unfree-23_05.zoom-us  # FIXME: use inside browser?
+    utox
+    xarchiver
+    xdg_utils
+    xsane
   ];
 
 }

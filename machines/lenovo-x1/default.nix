@@ -26,7 +26,6 @@ nixpkgs.lib.nixosSystem {
     lock-x11-displays
     malicious-hosts
     no-display-manager
-    nonet-group
     #sane-extra-config
     somagic-easycap
 
@@ -36,6 +35,8 @@ nixpkgs.lib.nixosSystem {
     ../common-features/nix.conf-work-substituters.nix
     ../common-features/locale-en-iso.nix
     ../common-features/systemd-accounting.nix
+
+    ../../nixos-config/machines/common-x86.nix  # TODO
 
     ./features/android.nix
     ./features/bluetooth.nix
@@ -49,7 +50,6 @@ nixpkgs.lib.nixosSystem {
     ./features/libvirt.nix
     #./features/mpd.nix
     #./features/musnix.nix
-    ./features/old-base.nix  # TODO
     ./features/openvpn-michalrus_com.nix
     ./features/openvpn-nordvpn.nix
     ./features/podman.nix
@@ -61,8 +61,10 @@ nixpkgs.lib.nixosSystem {
     flake.nixosModules.guest-account
     ./features/user-guest.nix
     ./features/user-personal.nix
+    ./features/user-root.nix  # TODO: remove
     ./features/user-work.nix
     ./features/window-managers.nix
+    ./features/wine.nix
     ./features/yubikey.nix
 
     { boot.binfmt.emulatedSystems = [ "aarch64-linux" ]; }  # for building Raspberry Pi systems on x86_64
@@ -71,12 +73,22 @@ nixpkgs.lib.nixosSystem {
 
     { programs.ssh.startAgent = false; } # using gpg-agent as ssh-agent
 
+    flake.nixosModules.nonet-group
+    { networking.firewall.nonetGroup.enable = true; }
+
     {
       networking.networkmanager = {
         enable = true;
         dhcp = "dhclient"; # <https://forum.salixos.org/viewtopic.php?f=30&t=7284>
+        dns = "none";
       };
+      networking.nameservers = [
+        "1.1.1.1"
+        "1.0.0.1"
+      ];
     }
+
+    { hardware.sane.enable = true; }
 
     {
       services.logind = {
@@ -86,6 +98,13 @@ nixpkgs.lib.nixosSystem {
         '';
       };
     }
+
+    ({ pkgs, ...}: {
+      services.printing = {
+        enable = true;
+        drivers = with pkgs; [ gutenprint hplip epson-escpr ];
+      };
+    })
 
     flake.nixosModules.sqlite-dump
     {

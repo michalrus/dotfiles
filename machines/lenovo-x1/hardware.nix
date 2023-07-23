@@ -38,6 +38,10 @@
     };
   };
 
+  # “The pernicious USB-stick stall problem” <https://lwn.net/Articles/572911/>
+  boot.kernel.sysctl."vm.dirty_background_bytes" = 16 * 1024 * 1024;
+  boot.kernel.sysctl."vm.dirty_bytes" = 16 * 1024 * 1024;
+
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/da820fb1-2729-4438-9dec-eb2598611a44";
       fsType = "ext4";
