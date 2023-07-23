@@ -56,6 +56,8 @@
       torified-users = import ./modules/torified-users;
     };
 
+    lib = import ./lib { inherit inputs; };
+
     packages = inputs.nixpkgs.lib.genAttrs [
       "x86_64-linux"
       "aarch64-linux"
@@ -63,9 +65,7 @@
       "aarch64-darwin"
     ] (system: let
       inherit (inputs.nixpkgs-lenovo-x1.legacyPackages.${system}) callPackage;
-      filterSystem = inputs.nixpkgs.lib.filterAttrs
-        (_: drv: !(drv ? meta) || !(drv.meta ? platforms) || __elem system drv.meta.platforms);
-    in filterSystem rec {
+    in inputs.self.lib.filterSystem system rec {
       autotalent = callPackage ./packages/autotalent {};
       cp2104-gpio = callPackage ./packages/cp2104-gpio {};
       dmenu-is-rofi = callPackage ./packages/dmenu-is-rofi {};

@@ -31,7 +31,7 @@ in
   # Use GTK 2 in LibreOffice, as 3 has some menu rendering problems.
   environment.variables."SAL_USE_VCLPLUGIN" = "gtk";
 
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = flake.lib.filterSystem pkgs.system (with pkgs; [
     haskellPackages.ghc
     haskellPackages.hlint
     jetbrains.idea-community
@@ -123,6 +123,6 @@ in
     xarchiver
     xdg_utils
     xsane
-  ];
+  ]);
 
 }

@@ -1,8 +1,8 @@
-{ flake, pkgs, ... }:
+{ flake, pkgs, lib, ... }:
 
 {
 
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = flake.lib.filterSystem pkgs.system (with pkgs; [
     bat
     binutils
     flac
@@ -26,6 +26,6 @@
     tunctl
     watchexec
     x264
-  ];
+  ]);
 
 }
