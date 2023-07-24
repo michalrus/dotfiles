@@ -43,8 +43,8 @@ in
     rustup
     sqlint
     vscodium
-    (texlive.combine {
-      inherit (texlive) scheme-small latexmk titlesec tocloft todonotes cleveref lipsum
+    (pkgs-2305.texlive.combine {
+      inherit (pkgs-2305.texlive) scheme-small latexmk titlesec tocloft todonotes cleveref lipsum
         biblatex logreq cm-super csquotes pgfplots adjustbox collectbox ccicons polski
         placeins xstring pdfpages unicode-math filehook textpos marvosym fontawesome
         progressbar lm-math ucharcat pdfjam
