@@ -78,7 +78,7 @@
       "x86_64-darwin"
       "aarch64-darwin"
     ] (system: let
-      inherit (inputs.nixpkgs-2111.legacyPackages.${system}) callPackage;
+      inherit (inputs.nixpkgs-2305.legacyPackages.${system}) callPackage;
     in inputs.self.lib.filterSystem system rec {
       autotalent = callPackage ./packages/autotalent {};
       cp2104-gpio = callPackage ./packages/cp2104-gpio {};

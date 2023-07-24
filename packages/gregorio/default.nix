@@ -1,8 +1,8 @@
-{ stdenv, lib, fetchFromGitHub, autoreconfHook, flex, bison, fontforge, texlive }:
+{ stdenv, lib, fetchFromGitHub, autoreconfHook, flex, bison, fontforge, texlive, python3, which }:
 
 let
 
-  version = "4.1.4";
+  version = "6.0.0";
 
   pname = "gregorio";
 
@@ -12,7 +12,7 @@ let
       owner = "gregorio-project";
       repo = "gregorio";
       rev = "v" + version;
-      sha256 = "12mhfcivivc9vr4kdrh6w0zw3405hbnpv0ya18z0x0m8zqy71sz8";
+      hash = "sha256-OHeihPGDqc55od3J+VQ+nwV0G5Gcf7ib/G0K3oCnJRU=";
     };
     TEXHASH = "true";  # we don’t use neither ‘texhash’ nor ‘mktexlsr’ in Nixpkgs
     buildInputs = [
@@ -20,17 +20,35 @@ let
       (fontforge.override {
         withPython = true;
       })
-      # (texlive.combine {
-      #    inherit (texlive) scheme-minimal; # `install-gtex.sh` needs `texhash`
-      # })
+
+      # for ‘make doc’:
+      (texlive.combine {
+        inherit (texlive) scheme-small latexmk luatex luamplib luaotfload
+          appendix libertine inconsolata enumitem units framed tabulary adjustbox
+          minted luacolor bookhands multirow lstaddons alegreya luacode supertabular;
+      })
+      (python3.withPackages (ps: with ps; [ pygments ]))
+      which
     ];
-    postPatch = ''
+    postConfigure = ''
+      # Convert Python 2.7 scripts to 3.×:
+      find -iname '*.py' -not -name 'checkSyllabation.py' | xargs ${python3}/bin/2to3 -w
+
+      sed -r 's/(newfont\[glyphnumber\]\.width) = (width)/\1 = int(\2)/g' -i fonts/squarize.py
+
       patchShebangs ./install-gtex.sh
-      substituteInPlace ./install-gtex.sh --replace 'doc/Gregorio*Ref.pdf' ""
-      '';
+      #substituteInPlace ./install-gtex.sh --replace 'doc/Gregorio*Ref.pdf' ""
+    '';
+    postBuild = ''
+      (
+        # luaotfload […] no writeable cache path, quiting
+        export HOME=$(mktemp -d)
+        make doc
+      )
+    '';
     postInstall = ''
       ./install-gtex.sh dir:$out/
-      '';
+    '';
     dontFixup = true;
     meta.platforms = lib.platforms.linux ++ lib.platforms.darwin;
   };
