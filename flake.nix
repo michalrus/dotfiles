@@ -11,8 +11,7 @@
       flake = false; # FIXME: too old
     };
 
-    # nixpkgs-2111 = { url = "github:NixOS/nixpkgs/nixpkgs-21.11-darwin"; };
-    nixpkgs-2111.url = "github:NixOS/nixpkgs/b3d86c56c786ad9530f1400adbd4dfac3c42877b";
+    nixpkgs-2111.url = "github:NixOS/nixpkgs/nixpkgs-21.11-darwin";
 
     nixpkgs-2305.url = "github:nixos/nixpkgs/nixpkgs-23.05-darwin";
 
