@@ -90,7 +90,7 @@
       tap-plugins = callPackage ./packages/tap-plugins {};
       transcribe = callPackage ./packages/transcribe {};
       vocproc = callPackage ./packages/vocproc { inherit lv2-cpp-tools; };
-      yt-dlp = import ./packages/yt-dlp { inherit system; nixpkgs = inputs.nixpkgs-2305; inherit (inputs) yt-dlp; };
+      yt-dlp = callPackage ./packages/yt-dlp { flake = inputs.self; };
     });
 
   };
