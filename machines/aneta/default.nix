@@ -1,22 +1,19 @@
 { inputs }:
 
-# FIXME: use: lib.nixosSystem, but the current nixpkgs-2003 are too old for that:
-
 let
   flake = inputs.self;
   nixpkgs = inputs.nixpkgs-2003;
+in
+
+nixpkgs.lib.nixosSystem {
   system = "aarch64-linux";
-  pkgs = import nixpkgs { inherit system; };
-in import "${nixpkgs}/nixos/lib/eval-config.nix" {
-  inherit system pkgs;
   modules = [
-    {
-      system.nixos.versionSuffix = ".${pkgs.lib.substring 0 8 nixpkgs.lastModifiedDate}.${nixpkgs.shortRev}";
-      system.nixos.revision = nixpkgs.rev;
-      _module.args = { inherit flake; };
-    }
+    { _module.args = { inherit flake; }; }
+    #nixpkgs.nixosModules.notDetected
     ./hardware.nix
+
     { networking.hostName = "aneta"; }
+    { time.timeZone = "UTC"; }
 
     flake.nixosModules.dotfiles-old
     flake.nixosModules.gnu-screen

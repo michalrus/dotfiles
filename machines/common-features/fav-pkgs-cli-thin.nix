@@ -73,7 +73,6 @@
     posix_man_pages
     powertop
     pv
-    ripgrep
     silver-searcher
     smartmontools
     socat
@@ -98,6 +97,13 @@
   ++ (if pkgs.system == "x86_64-linux" then with pkgs; [
 
     libguestfs
+
+  ] else [])
+
+  # FIXME: these don’t build on aarch64-darwin in nixos-2003
+  ++ (if pkgs.system != "aarch64-linux" then with pkgs; [
+
+    ripgrep
 
   ] else []);
 }
