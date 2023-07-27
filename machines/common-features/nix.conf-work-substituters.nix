@@ -16,7 +16,7 @@ let
 in
 
 {
-  nix = if pkgs.stdenv.isDarwin || (pkgs.stdenv.isLinux && lib.versionAtLeast lib.version "23.05") then {
+  nix = if pkgs.stdenv.isDarwin || (pkgs.stdenv.isLinux && lib.versionAtLeast lib.version "23.04") then {
     settings.substituters = substituters;
     settings.trusted-public-keys = trusted-public-keys;
   } else {

@@ -2,7 +2,7 @@
 
 let
   flake = inputs.self;
-  nixpkgs = inputs.nixpkgs-2111;
+  nixpkgs = inputs.nixpkgs-2305;
 in
 
 nixpkgs.lib.nixosSystem {
@@ -14,6 +14,7 @@ nixpkgs.lib.nixosSystem {
 
     { networking.hostName = "lenovo-x1"; }
     { time.timeZone = "Europe/Warsaw"; }
+    { system.stateVersion = "23.05"; }
 
   ] ++ (with flake.nixosModules; [
 
@@ -88,7 +89,7 @@ nixpkgs.lib.nixosSystem {
     {
       networking.networkmanager = {
         enable = true;
-        dhcp = "dhclient"; # <https://forum.salixos.org/viewtopic.php?f=30&t=7284>
+        dhcp = "dhcpcd"; # <https://forum.salixos.org/viewtopic.php?f=30&t=7284>
         dns = "none";
       };
       networking.nameservers = [

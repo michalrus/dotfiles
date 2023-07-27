@@ -1,7 +1,7 @@
-{ flake, config, pkgs, ... }:
+{ config, pkgs, ... }:
 
 let
-  unfree-2305 = import flake.inputs.nixpkgs-2305 { inherit (pkgs) system; config.allowUnfree = true; };
+  unfree = import pkgs.path { inherit (pkgs) system; config.allowUnfree = true; };
 in
 
 {
@@ -20,7 +20,7 @@ in
           localAutocompletePort = config.services.firefox-autocomplete.userPorts.mw;
           extraPrefs = hardened-firefox.unwrapped.cfgEnableDRM;
         })
-        unfree-2305.jetbrains.webstorm
+        unfree.jetbrains.webstorm
         yarn
         nodejs
       ];

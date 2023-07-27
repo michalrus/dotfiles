@@ -27,7 +27,7 @@
     "danPollock": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-UlKuRaEgM/6XH2BrLUYwypDF31aix8uNIJ8ZiqApQRA=",
+        "narHash": "sha256-XfZYgWkoEqDMVAAvNNZhquFYciDgGG51N/dJEy17Puw=",
         "type": "file",
         "url": "http://someonewhocares.org/hosts/zero/hosts"
       },

@@ -63,14 +63,14 @@ in
       };
 
     users.users = lib.mkOption {
-      options = [{
-        noDisplayManager.windowManager = lib.mkOption {
+      type = lib.types.attrsOf (lib.types.submodule {
+        options.noDisplayManager.windowManager = lib.mkOption {
           type = types.attrsOf (types.submodule wmOptions);
           description = "Window manager launchers to define for this user. Accessible as TTY aliases.";
           default = {};
           example = {};
         };
-      }];
+      });
     };
 
   };

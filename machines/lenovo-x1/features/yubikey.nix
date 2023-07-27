@@ -7,7 +7,7 @@
     yubikey-manager-qt
     yubikey-personalization
     yubikey-personalization-gui
-    yubioath-desktop
+    yubioath-flutter
   ];
 
   services.udev.packages = with pkgs; [

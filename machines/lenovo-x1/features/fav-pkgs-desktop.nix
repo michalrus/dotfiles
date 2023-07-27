@@ -1,8 +1,7 @@
 { flake, config, pkgs, ... }:
 
 let
-  pkgs-2305 = flake.inputs.nixpkgs-2305.legacyPackages.${pkgs.system};
-  unfree-2305 = import flake.inputs.nixpkgs-2305 { inherit (pkgs) system; config.allowUnfree = true; };
+  unfree = import pkgs.path { inherit (pkgs) system; config.allowUnfree = true; };
 in
 
 {
@@ -16,7 +15,6 @@ in
     anonymousPro
     hack-font
     iosevka-bin
-    font-awesome-ttf
     font-awesome
     google-fonts
     terminus_font
@@ -43,8 +41,8 @@ in
     rustup
     sqlint
     vscodium
-    (pkgs-2305.texlive.combine {
-      inherit (pkgs-2305.texlive) scheme-small latexmk titlesec tocloft todonotes cleveref lipsum
+    (texlive.combine {
+      inherit (texlive) scheme-small latexmk titlesec tocloft todonotes cleveref lipsum
         biblatex logreq cm-super csquotes pgfplots adjustbox collectbox ccicons polski
         placeins xstring pdfpages unicode-math filehook textpos marvosym fontawesome
         progressbar lm-math ucharcat pdfjam
@@ -61,7 +59,7 @@ in
     anki
     audacity
     awf
-    breeze-qt5 breeze-icons pkgs.hicolor_icon_theme kde-gtk-config breeze-gtk
+    breeze-qt5 breeze-icons hicolor-icon-theme kde-gtk-config breeze-gtk
     brightnessctl
     calibre
     cdparanoia
@@ -79,11 +77,11 @@ in
     flake.packages.${pkgs.system}.transcribe
     ghostscript
     gimp
-    gnome3.adwaita-icon-theme # for resizable cursors
+    gnome3.adwaita-icon-theme  # for resizable cursors
     gnome3.aisleriot
     gnome3.baobab
     gnome3.cheese
-    gnome3.dconf   # so that GnuCash prefs can be changed
+    dconf  # so that GnuCash prefs can be changed
     gnome3.zenity
     gparted
     gtk2  # Why? Icon cache! See #20874.
@@ -103,9 +101,9 @@ in
     pdfarranger
     pdfpc
     pinentry-gtk2
-    pkgs-2305.chromium
-    pkgs-2305.gnucash
-    pkgs-2305.retroarchFull
+    chromium
+    gnucash
+    retroarchFull
     python3Packages.livestreamer
     qjoypad
     rpcs3
@@ -117,8 +115,8 @@ in
     termite
     tigervnc
     timidity
-    unfree-2305.skypeforlinux  # FIXME: use inside browser?
-    unfree-2305.zoom-us  # FIXME: use inside browser?
+    unfree.skypeforlinux  # FIXME: use inside browser?
+    unfree.zoom-us  # FIXME: use inside browser?
     utox
     xarchiver
     xdg_utils

@@ -1,9 +1,10 @@
 { config, lib, pkgs, ... }:
 
 {
-  boot.kernelPackages = pkgs.linuxPackages_5_10;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  nix.maxJobs = lib.mkDefault 16;
+  nix.settings.max-jobs = lib.mkDefault 16;
+
   powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
 
   # Use the systemd-boot EFI boot loader.
@@ -18,14 +19,14 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  boot.tmpOnTmpfs = true;
+  boot.tmp.useTmpfs = true;
 
   services.smartd.enable = true;
 
   boot.kernel.sysctl."vm.swappiness" = lib.mkForce 1; # Let’s try this.
-  swapDevices =
-    [ { device = "/dev/disk/by-uuid/5e5256ed-b8a7-48c3-b815-d85792d621d6"; }
-    ];
+  swapDevices = [
+    { device = "/dev/disk/by-uuid/5e5256ed-b8a7-48c3-b815-d85792d621d6"; }
+  ];
 
   boot.initrd.luks.devices = {
     nvme-crypt0 = {
@@ -44,20 +45,20 @@
   boot.kernel.sysctl."vm.dirty_background_bytes" = 16 * 1024 * 1024;
   boot.kernel.sysctl."vm.dirty_bytes" = 16 * 1024 * 1024;
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/da820fb1-2729-4438-9dec-eb2598611a44";
-      fsType = "ext4";
-    };
+  fileSystems."/" = {
+    device = "/dev/disk/by-uuid/da820fb1-2729-4438-9dec-eb2598611a44";
+    fsType = "ext4";
+  };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/2ED9-B6C2";
-      fsType = "vfat";
-    };
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/2ED9-B6C2";
+    fsType = "vfat";
+  };
 
-  fileSystems."/var" =
-    { device = "/dev/disk/by-uuid/099224dd-714f-4e80-8232-dbc502159696";
-      fsType = "ext4";
-    };
+  fileSystems."/var" = {
+    device = "/dev/disk/by-uuid/099224dd-714f-4e80-8232-dbc502159696";
+    fsType = "ext4";
+  };
 
   fileSystems."/home" = {
     device = "/var/home";

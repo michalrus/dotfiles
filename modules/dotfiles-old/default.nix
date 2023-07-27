@@ -8,8 +8,10 @@ let
 
 in {
   options.users.users = mkOption {
-    options = [{
-      dotfiles-old = {
+    type = (if lib.versionAtLeast lib.version "23.04"
+            then lib.types.attrsOf
+            else lib.types.loaOf) (lib.types.submodule {
+      options.dotfiles-old = {
         base = mkOption {
           type = types.path;
           default = ../../dotfiles;
@@ -47,7 +49,7 @@ in {
           '';
         };
       };
-    }];
+    });
   };
 
   config = let

@@ -23,7 +23,7 @@
     poppler_utils
     python3Packages.livereload
     (python3.withPackages (p: with p; [ scipy geopy python-lsp-server requests pylint matplotlib tkinter beautifulsoup4 aiohttp humanize protobuf ]))
-    shared_mime_info
+    shared-mime-info
     shellcheck
     shntool  # view and/or modify WAVE data and properties
     tesseract  # OCR

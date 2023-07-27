@@ -7,7 +7,7 @@ let
     withX = true;
   };
 
-  whole = (pkgs.emacsPackagesNgGen base).emacsWithPackages (epkgs:
+  whole = (pkgs.emacsPackagesFor base).emacsWithPackages (epkgs:
     # MELPA Unstable
     (with epkgs.melpaPackages; [
       company

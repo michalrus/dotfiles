@@ -1,14 +1,10 @@
-{ flake, config, lib, pkgs, ... }:
-
-let
-  pkgs-2305 = flake.inputs.nixpkgs-2305.legacyPackages.${pkgs.system};
-in
+{ config, lib, pkgs, ... }:
 
 {
 
-  environment.systemPackages = [
-    pkgs-2305.wineWowPackages.stableFull
-    pkgs-2305.winetricks
+  environment.systemPackages = with pkgs; [
+    wineWowPackages.stableFull
+    winetricks
   ];
 
   hardware = {
