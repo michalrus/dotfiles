@@ -8,8 +8,6 @@
       flake = false; # FIXME: too old
     };
 
-    nixpkgs-2111.url = "github:NixOS/nixpkgs/nixpkgs-21.11-darwin";
-
     nixpkgs-2305.url = "github:nixos/nixpkgs/nixpkgs-23.05-darwin";
 
     nix-darwin-2305.url = "github:lnl7/nix-darwin/master";
