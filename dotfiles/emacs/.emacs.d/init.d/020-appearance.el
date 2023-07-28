@@ -11,6 +11,8 @@
 (toggle-frame-maximized)
 (unless indicate-empty-lines (toggle-indicate-empty-lines))
 
+(setq ring-bell-function 'ignore)
+
 ;; A little more visibily for the active window.
 (set-face-attribute 'mode-line nil :overline "#117E99")
 
