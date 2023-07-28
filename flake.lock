@@ -24,18 +24,6 @@
         "url": "https://www.cloudflare.com/ips-v6"
       }
     },
-    "danPollock": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-XfZYgWkoEqDMVAAvNNZhquFYciDgGG51N/dJEy17Puw=",
-        "type": "file",
-        "url": "http://someonewhocares.org/hosts/zero/hosts"
-      },
-      "original": {
-        "type": "file",
-        "url": "http://someonewhocares.org/hosts/zero/hosts"
-      }
-    },
     "doom-emacs": {
       "flake": false,
       "locked": {
@@ -248,6 +236,18 @@
         "ref": "release-23.05",
         "repo": "home-manager",
         "type": "github"
+      }
+    },
+    "malicious-hosts": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-f33q/pc8s9IXE3RL9DnXZwDiA0ahlz78dK2qXXWLd68=",
+        "type": "file",
+        "url": "https://github.com/StevenBlack/hosts/raw/master/alternates/fakenews-gambling/hosts"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://github.com/StevenBlack/hosts/raw/master/alternates/fakenews-gambling/hosts"
       }
     },
     "nix-darwin-2305": {
@@ -496,8 +496,8 @@
       "inputs": {
         "cloudflare-ips-v4": "cloudflare-ips-v4",
         "cloudflare-ips-v6": "cloudflare-ips-v6",
-        "danPollock": "danPollock",
         "home-manager-2305": "home-manager-2305",
+        "malicious-hosts": "malicious-hosts",
         "nix-darwin-2305": "nix-darwin-2305",
         "nix-doom-emacs-2305": "nix-doom-emacs-2305",
         "nixpkgs-2003": "nixpkgs-2003",

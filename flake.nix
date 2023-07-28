@@ -21,7 +21,11 @@
 
     yt-dlp = { url = "github:yt-dlp/yt-dlp"; flake = false; };
 
-    danPollock = { url = "http://someonewhocares.org/hosts/zero/hosts"; flake = false; };
+    malicious-hosts = {
+      # Intentionally referenced as a file under a mutable link for semi-auto updates:
+      url = "https://github.com/StevenBlack/hosts/raw/master/alternates/fakenews-gambling/hosts";
+      flake = false;
+    };
 
     cloudflare-ips-v4 = { url = "https://www.cloudflare.com/ips-v4"; flake = false; };
     cloudflare-ips-v6 = { url = "https://www.cloudflare.com/ips-v6"; flake = false; };
@@ -55,7 +59,7 @@
       hibernate-on-low-battery = import ./modules/hibernate-on-low-battery;
       lock-vts = import ./modules/lock-vts { on-vt-switch-src = ./packages/on-vt-switch; };
       lock-x11-displays = import ./modules/lock-x11-displays;
-      malicious-hosts = import ./modules/malicious-hosts { inherit (inputs) danPollock; };
+      malicious-hosts = import ./modules/malicious-hosts { inherit (inputs) malicious-hosts; };
       no-display-manager = import ./modules/no-display-manager;  # requires ‘dynamic-profiles’
       nonet-group = import ./modules/nonet-group;
       sane-extra-config = import ./modules/sane-extra-config;

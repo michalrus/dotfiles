@@ -39,6 +39,6 @@ in
     };
   };
 
-  networking.extraHosts = (import ../../../machines/michalrus_com/features/openvpn/common.nix { inherit lib; }).extraHosts;
+  #networking.extraHosts = (import ../../../machines/michalrus_com/features/openvpn/common.nix { inherit lib; }).extraHosts;
 
 }
