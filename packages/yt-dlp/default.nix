@@ -6,7 +6,7 @@
 let
 
   ours = flake.inputs.yt-dlp;
-  theirs = yt-dlp;
+  theirs = yt-dlp.override { withAlias = true; };
 
   ourVersion = let
     file = __readFile (ours + "/yt_dlp/version.py");
