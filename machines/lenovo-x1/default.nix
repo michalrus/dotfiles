@@ -72,6 +72,21 @@ nixpkgs.lib.nixosSystem {
     ./features/wine.nix
     ./features/yubikey.nix
 
+    flake.inputs.home-manager-2305.nixosModules.home-manager
+    {
+      home-manager = {
+        extraSpecialArgs = { inherit flake; };
+        useGlobalPkgs = true;
+        useUserPackages = true;
+        sharedModules = [
+          flake.inputs.nix-doom-emacs-2305.hmModule
+          (import ../_shared_/home/shared.nix)
+          (import ./home/shared.nix)
+        ];
+        users.m = import ./home/personal.nix;
+      };
+    }
+
     { security.pam.services.su.requireWheel = true; }
 
     # FIXME: get rid of ↓

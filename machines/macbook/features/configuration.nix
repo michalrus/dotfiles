@@ -5,23 +5,12 @@
   config,
   ...
 }: {
-  # Nix configuration ------------------------------------------------------------------------------
-
-  imports = [
-    ./programs-mtr.nix
-  ];
-
   #
   # sudo launchctl config user umask 077
   #
 
   nix.configureBuildUsers = true;
   nix.nrBuildUsers = 32;
-
-  networking.hostName = "macbook";
-  # On the local network:
-  networking.localHostName = "Michals-MacBook-Pro";
-  networking.computerName = "Michal’s MacBook Pro";
 
   # Create /etc/bashrc that loads the nix-darwin environment.
   programs.bash.enable = true;

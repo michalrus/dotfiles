@@ -6,21 +6,33 @@ inputs.nix-darwin-2305.lib.darwinSystem {
   system = "aarch64-darwin";
   modules = [
     { _module.args = { inherit flake; }; }
-    ./configuration.nix
+    { nixpkgs.config.allowUnfree = true; }
+
+    {
+      networking.hostName = "macbook";
+      networking.localHostName = "Michals-MacBook-Pro";  # local network
+      networking.computerName = "Michal’s MacBook Pro";  # local network
+    }
+
+    ./features/configuration.nix
+    ./features/programs-mtr.nix
+
     flake.inputs.home-manager-2305.darwinModules.home-manager
     {
-      nixpkgs.config.allowUnfree = true;
-      home-manager.extraSpecialArgs.flake = flake;
-      home-manager.sharedModules = [
-        flake.inputs.nix-doom-emacs-2305.hmModule
-        (import ./home-common.nix)
-        (import ./home-link-darwin-apps.nix)
-      ];
-      home-manager.useGlobalPkgs = true;
-      home-manager.useUserPackages = true;
-      home-manager.users.m = import ./home-m.nix;
-      home-manager.users.mw = import ./home-mw.nix;
-      home-manager.users.friends = import ./home-friends.nix;
+      home-manager = {
+        extraSpecialArgs = { inherit flake; };
+        useGlobalPkgs = true;
+        useUserPackages = true;
+        sharedModules = [
+          flake.inputs.nix-doom-emacs-2305.hmModule
+          (import ../_shared_/home/shared.nix)
+          (import ./home/shared.nix)
+          (import ./home/link-darwin-apps.nix)
+        ];
+        users.m = import ./home/m.nix;
+        users.mw = import ./home/mw.nix;
+        users.friends = import ./home/friends.nix;
+      };
     }
 
     ../_shared_/features/nix.conf.nix
