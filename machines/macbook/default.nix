@@ -23,8 +23,8 @@ inputs.nix-darwin-2305.lib.darwinSystem {
       home-manager.users.friends = import ./home-friends.nix;
     }
 
-    ../common-features/nix.conf.nix
-    ../common-features/nix.conf-work-substituters.nix
+    ../_shared_/features/nix.conf.nix
+    ../_shared_/features/nix.conf-work-substituters.nix
 
     {
       # home directories for home-manager to pick up; they get messed up b/c of flakes

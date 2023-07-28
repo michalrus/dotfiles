@@ -24,16 +24,16 @@ in import "${nixpkgs}/nixos/lib/eval-config.nix" {
     "${nixpkgs}/nixos/modules/virtualisation/amazon-image.nix"
     { ec2.hvm = true; }
 
-    ../common-features/fav-pkgs-cli-thin.nix
-    ../common-features/immutable-users.nix
-    ../common-features/ip-reject-not-drop.nix
-    ../common-features/kill-user-processes.nix
-    ../common-features/locale-en-iso.nix
-    ../common-features/more-entropy.nix
-    ../common-features/mtr-traceroute-fping.nix
-    ../common-features/nix.conf.nix
-    ../common-features/systemd-accounting.nix
-    ../common-features/zsh.nix
+    ../_shared_/features/fav-pkgs-cli-thin.nix
+    ../_shared_/features/immutable-users.nix
+    ../_shared_/features/ip-reject-not-drop.nix
+    ../_shared_/features/kill-user-processes.nix
+    ../_shared_/features/locale-en-iso.nix
+    ../_shared_/features/more-entropy.nix
+    ../_shared_/features/mtr-traceroute-fping.nix
+    ../_shared_/features/nix.conf.nix
+    ../_shared_/features/systemd-accounting.nix
+    ../_shared_/features/zsh.nix
 
     ./features/default.nix
 
