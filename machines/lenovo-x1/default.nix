@@ -86,6 +86,7 @@ nixpkgs.lib.nixosSystem {
           ../_shared_/home/password-store.nix
           ../_shared_/home/emacs.nix
           ../_shared_/home/haskell.nix
+          ../_shared_/home/gnu-screen.nix
           ./home/shared.nix
         ];
         users.m.imports = [ ../_shared_/home/identity-personal.nix ];
