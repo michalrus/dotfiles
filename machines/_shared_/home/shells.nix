@@ -86,6 +86,8 @@ in {
     umask 0077
   '';
 
+  programs.dircolors.enable = true;
+
   programs.bat.enable = true;
 
   home.shellAliases = rec {
