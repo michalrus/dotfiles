@@ -92,6 +92,28 @@ in {
 
   programs.dircolors.enable = true;
 
+  programs.readline = {
+    enable = true;
+    extraConfig = ''
+      "\e[A":history-search-backward
+      "\e[B":history-search-forward
+
+      "\e[1;5C": forward-word
+      "\e[1;5D": backward-word
+      "\e[1;3C": forward-word
+      "\e[1;3D": backward-word
+      "\e[5D": backward-word
+      "\e[5C": forward-word
+      "\e\e[D": backward-word
+      "\e\e[C": forward-word
+
+      "\e[1~": beginning-of-line    # Home
+      "\e[4~": end-of-line          # End
+      "\e[5~": beginning-of-history # PgUp
+      "\e[6~": end-of-history       # PgDn
+    '';
+  };
+
   programs.bat.enable = true;
 
   home.shellAliases = rec {
