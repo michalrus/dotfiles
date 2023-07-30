@@ -26,4 +26,4 @@ case "$TERM" in
     ;;
 esac
 
-exec command-p ssh "$@"
+exec "$(PATH="$(getconf PATH)" command -v ssh)" "$@"
