@@ -18,7 +18,7 @@
     uid = 1347;
     description = "Michal Rus (d)";
     extraGroups = [ "audio" "nonet" "scanner" "networkmanager" "wireshark" "cdrom" "video" ];
-    dotfiles-old.profiles = [ "base" "michalrus/base" "michalrus/desktop" "michalrus/tor" "i3" "emacs" ];
+    dotfiles-old.profiles = [ "base" "michalrus/base" "michalrus/tor" "i3" "emacs" ];
     packages = with pkgs; [
       electrum
       (hardened-firefox.makeWrapped {

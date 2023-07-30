@@ -92,6 +92,7 @@ nixpkgs.lib.nixosSystem {
         ];
         users.m.imports = [ ../_shared_/home/identity-personal.nix ];
         users.mw.imports = [ ../_shared_/home/identity-work.nix ];
+        users.md.imports = [ ];
         users.guest.imports = [ ./home/guest.nix ];
         users.root.imports = [ ];
       };
