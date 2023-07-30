@@ -93,7 +93,6 @@ in
     libreoffice
     lilypond
     monero-gui
-    mpv
     networkmanagerapplet
     octave
     pavucontrol
