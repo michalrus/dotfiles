@@ -37,13 +37,13 @@ in {
     enable = true;
     enableCompletion = true;
     enableVteIntegration = true;
+    enableSyntaxHighlighting = true;
     history = {
       extended = true;
       ignoreSpace = true;
       ignoreDups = true;
       size = 100 * 1000;
     };
-    #syntaxHighlighting.enable = true;  # FIXME: update home-manager
     autocd = false;
     initExtraFirst = ''
       ${binShForEmacs}
