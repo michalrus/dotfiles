@@ -146,6 +146,7 @@ in {
     show_always = true
     format = '[$user]($style)'
     style_user = 'cyan'
+    style_root = 'bg:purple bright-white bold blink'
 
     [hostname]
     ssh_only = false

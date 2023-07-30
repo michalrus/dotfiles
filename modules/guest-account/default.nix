@@ -61,6 +61,9 @@ in
           "${cfg.skeleton}/" "${cfg.home}/"
 
         chmod 700 "${cfg.home}/"
+
+        # Set up ‘home-manager’, if available:
+        systemctl restart home-manager-guest.service || true
       '';
 
       #dep = [ "user-${toString cfg.uid}.slice" ];
