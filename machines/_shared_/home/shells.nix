@@ -49,6 +49,10 @@ in {
       size = 100 * 1000;
     };
     autocd = false;
+    completionInit = ''
+      # completion includes hidden files:
+      _comp_options+=(globdots)
+    '';
     initExtraFirst = ''
       ${binShForEmacs}
       ${turnOffCtrlZSQ}
