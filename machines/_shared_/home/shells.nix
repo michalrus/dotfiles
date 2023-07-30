@@ -184,7 +184,7 @@ in {
     up_to_date = ""
     ahead = '⇡${darwinSpace}'
     behind = '⇣${darwinSpace}'
-    diverged = '⇕${darwinSpace}'
+    diverged = '⇡${darwinSpace}$ahead_count⇣${darwinSpace}$behind_count'
     deleted = '×'
 
     [nix_shell]
