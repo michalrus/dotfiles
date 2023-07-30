@@ -16,4 +16,7 @@
   '';
 
   programs.gpg.settings.default-key = "michal.rus@iohk.io";
+
+  home.file.".avatar.jpg".source = ../assets/avatar.jpg;
+  home.file.".wallpaper.png".source = ../assets/wallpapers/yosemite.png;
 }
