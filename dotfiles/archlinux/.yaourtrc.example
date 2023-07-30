@@ -1,2 +1,0 @@
-EXPORT=1
-TMPDIR="$HOME/Cache/AUR/tmp"

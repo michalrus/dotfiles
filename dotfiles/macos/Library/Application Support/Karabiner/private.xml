@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<root>
-  <item>
-    <name>Use Space as Control modifier</name>
-    <identifier>private.space_control_key</identifier>
-    <autogen>__KeyOverlaidModifier__ KeyCode::SPACE, KeyCode::CONTROL_L, KeyCode::SPACE</autogen>
-  </item>
-</root>
