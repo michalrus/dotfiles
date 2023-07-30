@@ -25,13 +25,17 @@ inputs.nix-darwin-2305.lib.darwinSystem {
         useUserPackages = true;
         sharedModules = [
           flake.inputs.nix-doom-emacs-2305.hmModule
-          (import ../_shared_/home/shared.nix)
-          (import ./home/shared.nix)
-          (import ./home/link-darwin-apps.nix)
+          ../_shared_/home/shells.nix
+          ../_shared_/home/gnupg.nix
+          ../_shared_/home/git.nix
+          ../_shared_/home/password-store.nix
+          ../_shared_/home/emacs.nix
+          ./home/shared.nix
+          ./home/link-darwin-apps.nix
         ];
-        users.m = import ./home/m.nix;
-        users.mw = import ./home/mw.nix;
-        users.friends = import ./home/friends.nix;
+        users.m.imports = [ ../_shared_/home/identity-personal.nix ];
+        users.mw.imports = [ ../_shared_/home/identity-work.nix ];
+        users.friends.imports = [ ];
       };
     }
 

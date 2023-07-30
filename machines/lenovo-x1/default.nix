@@ -80,10 +80,17 @@ nixpkgs.lib.nixosSystem {
         useUserPackages = true;
         sharedModules = [
           flake.inputs.nix-doom-emacs-2305.hmModule
-          (import ../_shared_/home/shared.nix)
-          (import ./home/shared.nix)
+          ../_shared_/home/shells.nix
+          ../_shared_/home/gnupg.nix
+          ../_shared_/home/git.nix
+          ../_shared_/home/password-store.nix
+          ../_shared_/home/emacs.nix
+          ./home/shared.nix
         ];
-        users.m = import ./home/personal.nix;
+        users.m.imports = [ ../_shared_/home/identity-personal.nix ];
+        #users.mw.imports = [ ../_shared_/home/identity-work.nix ];
+        #users.guest.imports = [ ];
+        #users.root.imports = [ ];
       };
     }
 

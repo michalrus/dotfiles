@@ -1,3 +1,0 @@
-# -*- mode: shell-script; sh-shell: bash -*-
-
-. "$HOME/.shell/login"

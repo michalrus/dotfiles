@@ -1,7 +1,0 @@
-# -*- mode: shell-script; sh-shell: sh -*-
-
-# when leaving the console, clear the screen to increase privacy
-if [ "$SHLVL" = 1 ]; then
-  clear
-  reset
-fi
