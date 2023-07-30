@@ -104,7 +104,9 @@ in {
 
   programs.starship.enable = true;
 
-  home.file.".config/starship.toml".text = ''
+  home.file.".config/starship.toml".text = let
+    darwinSpace = if pkgs.stdenv.isDarwin then " " else "";  # in ‘Terminal.app’ some characters take space of 2?
+  in ''
     add_newline = true
 
     format = """
@@ -178,8 +180,12 @@ in {
     format = ' \([$state( $progress_current/$progress_total)]($style)\)'
 
     [git_status]
-    format = '( [$all_status$ahead_behind]($style))'
+    format = '( [$all_status$ahead_behind$ahead_count]($style))'
     up_to_date = ""
+    ahead = '⇡${darwinSpace}'
+    behind = '⇣${darwinSpace}'
+    diverged = '⇕${darwinSpace}'
+    deleted = '×'
 
     [nix_shell]
     symbol = '❄ '
