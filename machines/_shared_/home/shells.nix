@@ -23,12 +23,9 @@ in {
     enableVteIntegration = true;
     historyControl = [ "ignoredups" "ignorespace" ];
     historyFileSize = 100 * 1000;
-    bashrcExtra = ''
-      # Run these only for interactive shells (otherwise ‘home-manager-*.service’ silently breaks on NixOS):
-      if [[ $- == *i* ]] ; then
-        ${binShForEmacs}
-        ${turnOffCtrlZSQ}
-      fi
+    initExtra = ''
+      ${binShForEmacs}
+      ${turnOffCtrlZSQ}
     '';
     logoutExtra = clearAndEraseScrollback + "\n";
   };
