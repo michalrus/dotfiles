@@ -69,6 +69,11 @@ in {
       bindkey "\e[B" history-beginning-search-forward
       [[ -n "''${terminfo[kcuu1]}" ]] && bindkey "''${terminfo[kcuu1]}" history-beginning-search-backward
       [[ -n "''${terminfo[kcud1]}" ]] && bindkey "''${terminfo[kcud1]}" history-beginning-search-forward
+
+      # Auto-quote URLs when pasting them:
+      autoload -U url-quote-magic bracketed-paste-url-magic
+      zle -N self-insert url-quote-magic
+      zle -N bracketed-paste bracketed-paste-url-magic
     '';
     logoutExtra = clearAndEraseScrollback + "\n";
   };
