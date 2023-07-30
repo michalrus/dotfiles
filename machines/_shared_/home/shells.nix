@@ -109,7 +109,7 @@ in {
     $status\
     [\\(](bold bright-blue)\
     $time\
-    ([·](bold bright-blue)$cmd_duration)\
+    ([·](bright-blue)$cmd_duration)\
     [\\)](bold bright-blue)\
     $username\
     [@](bold bright-blue)\
