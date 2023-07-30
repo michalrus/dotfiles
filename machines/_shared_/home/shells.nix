@@ -136,7 +136,7 @@ in {
     show_milliseconds = false
     format = '[$duration]($style)'
     show_notifications = true
-    min_time_to_notify = 5_000
+    min_time_to_notify = 15_000
     style = 'cyan bold'
 
     [time]
