@@ -193,9 +193,8 @@ in {
     always_show_remote = true
     format = '[$branch(:$remote_name)]($style)'
     truncation_length = 25
+    truncation_symbol = '…${darwinSpace}'
     style = 'cyan'
-
-    # [git_commit]
 
     [git_commit]
     format = '[$hash$tag]($style)'
@@ -203,7 +202,7 @@ in {
     commit_hash_length = 11
 
     [git_state]
-    format = ' \([$state( $progress_current/$progress_total)]($style)\)'
+    format = ' [$state( $progress_current/$progress_total)]($style)'
 
     [git_status]
     format = '( [$all_status$ahead_behind$ahead_count]($style))'
