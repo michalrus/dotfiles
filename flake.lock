@@ -352,15 +352,31 @@
       "locked": {
         "lastModified": 1597615765,
         "narHash": "sha256-ckwYjLD6wWRqAax39KOAEd7FewQ9kEyXDUYq8XaLZlE=",
-        "owner": "nixos",
+        "owner": "NixOS",
         "repo": "nixpkgs",
         "rev": "cb1996818edf506c0d1665ab147c253c558a7426",
         "type": "github"
       },
       "original": {
-        "owner": "nixos",
+        "owner": "NixOS",
         "repo": "nixpkgs",
         "rev": "cb1996818edf506c0d1665ab147c253c558a7426",
+        "type": "github"
+      }
+    },
+    "nixpkgs-2211": {
+      "locked": {
+        "lastModified": 1688392541,
+        "narHash": "sha256-lHrKvEkCPTUO+7tPfjIcb7Trk6k31rz18vkyqmkeJfY=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "ea4c80b39be4c09702b0cb3b42eab59e2ba4f24b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-22.11-darwin",
+        "repo": "nixpkgs",
         "type": "github"
       }
     },
@@ -368,13 +384,13 @@
       "locked": {
         "lastModified": 1690022785,
         "narHash": "sha256-WV3Rg6WcP3UErddn/+Kw3BTsc8kB9F4Y5sv7I/N5q4o=",
-        "owner": "nixos",
+        "owner": "NixOS",
         "repo": "nixpkgs",
         "rev": "0ee595490f5b1d181cccc17928aa250faf4b91c1",
         "type": "github"
       },
       "original": {
-        "owner": "nixos",
+        "owner": "NixOS",
         "ref": "nixpkgs-23.05-darwin",
         "repo": "nixpkgs",
         "type": "github"
@@ -502,6 +518,7 @@
         "nix-doom-emacs-2305": "nix-doom-emacs-2305",
         "nixpkgs-2003": "nixpkgs-2003",
         "nixpkgs-2003-michalrus_com": "nixpkgs-2003-michalrus_com",
+        "nixpkgs-2211": "nixpkgs-2211",
         "nixpkgs-2305": "nixpkgs-2305",
         "yt-dlp": "yt-dlp"
       }

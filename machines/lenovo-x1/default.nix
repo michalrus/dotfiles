@@ -32,6 +32,8 @@ nixpkgs.lib.nixosSystem {
 
   ]) ++ [
 
+    (import ../_shared_/features/canoscan-lide-20.nix { inherit flake; })
+
     ../_shared_/features/fav-pkgs-cli-thin.nix
     ../_shared_/features/immutable-users.nix
     ../_shared_/features/kill-user-processes.nix
@@ -123,8 +125,6 @@ nixpkgs.lib.nixosSystem {
         "1.0.0.1"
       ];
     }
-
-    { hardware.sane.enable = true; }
 
     {
       services.logind = {

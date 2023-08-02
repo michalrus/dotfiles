@@ -4,11 +4,12 @@
     nixpkgs-2003.url = "github:NixOS/nixpkgs/nixpkgs-20.03-darwin";
 
     nixpkgs-2003-michalrus_com = {
-      url = "github:nixos/nixpkgs/cb1996818edf506c0d1665ab147c253c558a7426";
+      url = "github:NixOS/nixpkgs/cb1996818edf506c0d1665ab147c253c558a7426";
       flake = false; # FIXME: too old
     };
 
-    nixpkgs-2305.url = "github:nixos/nixpkgs/nixpkgs-23.05-darwin";
+    nixpkgs-2211.url = "github:NixOS/nixpkgs/nixpkgs-22.11-darwin";
+    nixpkgs-2305.url = "github:NixOS/nixpkgs/nixpkgs-23.05-darwin";
 
     nix-darwin-2305.url = "github:lnl7/nix-darwin/master";
     nix-darwin-2305.inputs.nixpkgs.follows = "nixpkgs-2305";
