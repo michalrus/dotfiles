@@ -193,7 +193,7 @@ in {
     always_show_remote = true
     format = '[$branch(:$remote_name)]($style)'
     truncation_length = 25
-    truncation_symbol = '…${darwinSpace}'
+    truncation_symbol = '…${darwinSpace}'   # FIXME: darwinSpace doesn’t work here – what do?
     style = 'cyan'
 
     [git_commit]
