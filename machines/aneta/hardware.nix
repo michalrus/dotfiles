@@ -6,10 +6,10 @@
   boot.loader.grub.enable = false;
   boot.loader.generic-extlinux-compatible.enable = true;
 
-  # TODO: Why doesn’t `pkgs.linuxPackages_rpi3` work? Are we missing something?
-  #boot.kernelPackages = pkgs.linuxPackages_rpi3;
-  #boot.kernelPackages = pkgs.linuxPackages_latest_ipMultipleTables; # FIXME: this overlays below don’t work with flakes
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  #boot.kernelPackages = pkgs.linuxPackages_rpi3;  # FIXME: why doesn’t this work? Are we missing something?
+  #boot.kernelPackages = pkgs.linuxPackages_latest_ipMultipleTables;  # FIXME: overlays below don’t work with flakes
+  #boot.kernelPackages = pkgs.linuxPackages_latest;  # FIXME: why doesn’t latest work?
+  boot.kernelPackages = pkgs.linuxPackages_5_6;
   boot.kernelParams = [ "cma=32M" "console=ttyS1,115200n8" ];
 
   boot.kernelModules = [ "gre" "ip_gre" "ip_tunnel" "ip_nat_pptp" ];
