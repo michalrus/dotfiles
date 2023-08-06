@@ -4,8 +4,10 @@
 
   services.openssh = {
     enable = true;
-    passwordAuthentication = false;
-    challengeResponseAuthentication = false;
+    settings = {
+      PasswordAuthentication = false;
+      KbdInteractiveAuthentication = false;
+    };
   };
 
   users = {

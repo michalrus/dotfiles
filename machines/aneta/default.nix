@@ -2,7 +2,7 @@
 
 let
   flake = inputs.self;
-  nixpkgs = inputs.nixpkgs-2003;
+  nixpkgs = inputs.nixpkgs-2305;
 in
 
 nixpkgs.lib.nixosSystem {
@@ -14,9 +14,13 @@ nixpkgs.lib.nixosSystem {
 
     { networking.hostName = "aneta"; }
     { time.timeZone = "UTC"; }
+    { system.stateVersion = "23.05"; }
 
     flake.nixosModules.dotfiles-old
     flake.nixosModules.gnu-screen
+
+    flake.nixosModules.update-raspberry-pi-firmware
+    { boot.loader.raspberryPiFirmware.version = 3; }
 
     ../_shared_/features/fav-pkgs-cli-thin.nix
     ../_shared_/features/immutable-users.nix

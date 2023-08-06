@@ -58,7 +58,10 @@ in
   config = {
 
     services.resolved.enable = false;
+
     services.nscd.enable = false;
+    system.nssModules = lib.mkForce [];
+
     services.dnsmasq.enable = false;
 
     networking.resolvconf.useLocalResolver = true;
@@ -82,11 +85,6 @@ in
           listen-on-v6 { any; };
           allow-query  { cachenetworks; };
           blackhole    { badnetworks;   };
-
-          # FIXME: re-enable after updating BIND
-          dnssec-enable no;
-          dnssec-lookaside no;
-          dnssec-validation no;
 
           directory "/run/named";
           pid-file  "/run/named/named.pid";

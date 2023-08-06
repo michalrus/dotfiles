@@ -35,13 +35,13 @@
   outputs = inputs: {
 
     nixosConfigurations = {
-      # nixos-rebuild switch -L --keep-going --flake .#aneta --build-host localhost --target-host root@10.77.2.1
+      # nixos-rebuild switch -L --keep-going --flake .#aneta --target-host root@10.77.2.1
       aneta = import ./machines/aneta { inherit inputs; };
 
       # sudo nixos-rebuild switch -L --keep-going --flake .#lenovo-x1
       lenovo-x1 = import ./machines/lenovo-x1 { inherit inputs; };
 
-      # nixos-rebuild switch -L --keep-going --flake .#michalrus_com --build-host localhost --target-host root@michalrus.com
+      # nixos-rebuild switch -L --keep-going --flake .#michalrus_com --target-host root@michalrus.com
       michalrus_com = import ./machines/michalrus_com { inherit inputs; };
     };
 
@@ -67,6 +67,7 @@
       somagic-easycap = import ./modules/somagic-easycap;
       sqlite-dump = import ./modules/sqlite-dump;
       torified-users = import ./modules/torified-users;
+      update-raspberry-pi-firmware = import ./modules/update-raspberry-pi-firmware;
     };
 
     lib = import ./lib { inherit inputs; };

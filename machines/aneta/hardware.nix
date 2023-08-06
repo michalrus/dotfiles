@@ -6,13 +6,12 @@
   boot.loader.grub.enable = false;
   boot.loader.generic-extlinux-compatible.enable = true;
 
-  #boot.kernelPackages = pkgs.linuxPackages_rpi3;  # FIXME: why doesn’t this work? Are we missing something?
-  #boot.kernelPackages = pkgs.linuxPackages_latest_ipMultipleTables;  # FIXME: overlays below don’t work with flakes
-  #boot.kernelPackages = pkgs.linuxPackages_latest;  # FIXME: why doesn’t latest work?
-  boot.kernelPackages = pkgs.linuxPackages_5_6;
+  #boot.kernelPackages = pkgs.linuxPackages_latest_ipMultipleTables;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
   boot.kernelParams = [ "cma=32M" "console=ttyS1,115200n8" ];
 
-  boot.kernelModules = [ "gre" "ip_gre" "ip_tunnel" "ip_nat_pptp" ];
+  # boot.kernelModules = [ "gre" "ip_gre" "ip_tunnel" "ip_nat_pptp" ];
   boot.kernel.sysctl."net.netfilter.nf_conntrack_helper" = 1;
 
   nixpkgs = {
@@ -56,14 +55,12 @@
   #  options cfg80211 ieee80211_regdom=EU
   #'';
 
-  nix.maxJobs = 1;
-  nix.buildCores = 1;
+  nix.settings.max-jobs = 1;
+  nix.settings.cores = 1;
 
-  fileSystems = {
-    "/" = {
-      device = "/dev/disk/by-label/NIXOS_SD";
-      fsType = "ext4";
-    };
+  fileSystems."/" = {
+    device = "/dev/disk/by-label/NIXOS_SD";
+    fsType = "ext4";
   };
 
   #swapDevices = [ { device = "/swapfile"; size = 1024; } ];
