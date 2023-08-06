@@ -241,7 +241,7 @@
     "malicious-hosts": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-HLBKxJVqQCUhy94V3bv81QOuBRTu2vRmuG0mAuNePNM=",
+        "narHash": "sha256-3X+QYdQpdu0kzjb66VrDRzu1wZmhD5059uN/BSXj424=",
         "type": "file",
         "url": "https://github.com/StevenBlack/hosts/raw/master/alternates/fakenews-gambling/hosts"
       },
@@ -590,11 +590,11 @@
     "yt-dlp": {
       "flake": false,
       "locked": {
-        "lastModified": 1690226332,
-        "narHash": "sha256-08gVLG0JW5Neft0zWH/L4ADMtbJYKq01HZ22G78tzR8=",
+        "lastModified": 1691187468,
+        "narHash": "sha256-4A1oKXPBLttzpkGQREw/VhraUnkrdqBZwJWTeBbor78=",
         "owner": "yt-dlp",
         "repo": "yt-dlp",
-        "rev": "95abea9a03289da1384e5bda3d590223ccc0a238",
+        "rev": "db7b054a6111ca387220d0eb87bf342f9c130eb8",
         "type": "github"
       },
       "original": {
