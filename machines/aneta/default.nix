@@ -44,5 +44,22 @@ nixpkgs.lib.nixosSystem {
         SystemMaxUse=200M
       '';
     }
+
+    flake.inputs.home-manager-2305.nixosModules.home-manager
+    {
+      home-manager = {
+        extraSpecialArgs = { inherit flake; };
+        useGlobalPkgs = true;
+        useUserPackages = true;
+        sharedModules = [
+          ../_shared_/home/shells.nix
+          ../_shared_/home/gnu-screen.nix
+          { home.stateVersion = "23.05"; }
+        ];
+        users.root.imports = [ ];
+        users.m.imports = [ ];
+        users.krzyszu.imports = [ ];
+      };
+    }
   ];
 }
