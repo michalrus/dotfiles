@@ -53,7 +53,6 @@
     nixosModules = {
       cups-reenable = import ./modules/cups-reenable;
       dotfiles-old = import ./modules/dotfiles-old;
-      dynamic-profiles = import ./modules/dynamic-profiles;
       firewall-comments = import ./modules/firewall-comments;
       gnu-screen = import ./modules/gnu-screen;
       guest-account = import ./modules/guest-account;
@@ -61,7 +60,6 @@
       lock-vts = import ./modules/lock-vts { on-vt-switch-src = ./packages/on-vt-switch; };
       lock-x11-displays = import ./modules/lock-x11-displays;
       malicious-hosts = import ./modules/malicious-hosts { inherit (inputs) malicious-hosts; };
-      no-display-manager = import ./modules/no-display-manager;  # requires ‘dynamic-profiles’
       nonet-group = import ./modules/nonet-group;
       sane-extra-config = import ./modules/sane-extra-config;
       somagic-easycap = import ./modules/somagic-easycap;

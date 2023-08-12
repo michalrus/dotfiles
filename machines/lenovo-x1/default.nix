@@ -20,13 +20,11 @@ nixpkgs.lib.nixosSystem {
 
     #cups-reenable  # disabled for battery life
     dotfiles-old
-    dynamic-profiles
     #gnu-screen  # unused
     hibernate-on-low-battery
     lock-vts
     lock-x11-displays
     malicious-hosts
-    no-display-manager
     #sane-extra-config
     somagic-easycap
 
