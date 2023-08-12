@@ -27,7 +27,7 @@ Emacs.pointerColorForeground: S_base1
 Emacs.menuBar:            off
 Emacs.toolBar:            off
 Emacs.verticalScrollBars: off
-Emacs.font:               Iosevka:style=Regular:size=32
+Emacs.font:               monospace:style=Regular:size=32
 Emacs.font-1:             unifont:fontformat=truetype:size=32:antialias=true
 Emacs.font-2:             FontAwesome:style=Regular:size=32
 
@@ -39,7 +39,7 @@ XTerm*saveLines: 0
 XTerm*cursorBlink: true
 XTerm*selectToClipboard: true
 XTerm*charClass: 33:48,36-47:48,58-59:48,61:48,63-64:48,95:48,126:48
-XTerm*faceName: Iosevka:style=Regular:size=12
+XTerm*faceName: monospace:style=Regular:size=12
 XTerm*visualbell: true
 XTerm*bellIsUrgent: true
 XTerm*fullscreen: never

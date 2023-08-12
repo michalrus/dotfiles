@@ -11,19 +11,6 @@ in
     package = pkgs.wireshark-qt;
   };
 
-  fonts.fonts = with pkgs; [
-    anonymousPro
-    hack-font
-    iosevka-bin
-    font-awesome
-    google-fonts
-    terminus_font
-    unifont
-    unifont_upper
-  ];
-
-  fonts.enableGhostscriptFonts = true;
-
   boot.kernel.sysctl."fs.inotify.max_user_watches" = "1048576";  # for JetBrains
 
   # Use GTK 2 in LibreOffice, as 3 has some menu rendering problems.

@@ -6,7 +6,7 @@
 , pureXauthority ? true                          # unfortunately, ‘pureXauthority’ doesn’t work with ‘emacs-daemon’
 , windowManager ? "${xterm}/bin/xterm"           # entrypoint to you window manager, e.g. i3
 , extraPackages ? []                             # extra packages to add to your transient profile
-, extraFonts ? []                                # extra font packages to configure via FontPath
+, extraFonts ? []                                # extra fonts for FontPath, give it your ‘config.fonts.fonts’
 , loadXresources ? null                          # optional path to load with xrdb
 , extraXserverArgs ? []                          # if ‘xserverConfig’ is not enough
 , journaldIdentifier ? baseNameOf windowManager  # we log to journald instead of scattered log files

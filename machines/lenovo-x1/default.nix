@@ -49,6 +49,7 @@ nixpkgs.lib.nixosSystem {
     ./features/fav-pkgs-cli-fat.nix
     ./features/fav-pkgs-desktop.nix
     ./features/firefox-autocomplete.nix
+    ./features/fonts.nix
     ./features/hardened-chromium.nix
     ./features/hardened-firefox.nix
     ./features/ledger.nix

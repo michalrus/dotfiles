@@ -4,7 +4,7 @@ set $mod Mod4
 
 bindsym $mod+Shift+e exec "zenity --no-wrap --question --default-cancel --text 'Do you want to end your session?' && ( pkill -9 gpg-agent ; i3-msg exit ; )"
 
-font pango:Iosevka 10.5
+font pango:monospace 10.5
 new_window pixel 5
 new_float normal
 

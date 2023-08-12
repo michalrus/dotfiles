@@ -65,6 +65,7 @@ let
         };
       };
     };
+    extraFonts = config.fonts.fonts;
     pureXauthority = false;  # Doesn’t work with ‘emacs-daemon’
     windowManager = "${pkgs.xterm}/bin/xterm";
     inherit (config.environment) profileRelativeEnvVars;
@@ -74,7 +75,6 @@ in
 
 {
   hardware.opengl.enable   = lib.mkDefault true;
-  fonts.enableDefaultFonts = lib.mkDefault true;
   programs.dconf.enable    = lib.mkDefault true;
 
   security.pam.services.i3lock = {};
