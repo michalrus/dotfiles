@@ -1,12 +1,8 @@
 # -*- mode: shell-script; sh-shell: sh -*-
 
-termite --name initial &
-
 emacs --frame-parameters='(quote (name . "org"))' --eval '(find-file "~/Org/ZTD.org")' &
 
 firefox &
-
-termite --name mtr -e 'mtr --displaymode 1 8.8.8.8' &
 
 # Cf. https://github.com/NixOS/nixpkgs/issues/31294
 nofatty -Dawt.useSystemAAFontSettings=lcd -Dswing.aatext=true &

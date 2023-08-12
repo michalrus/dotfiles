@@ -7,13 +7,10 @@ assign [class="^mpv$"] 2
 assign [class="^[Qq]emu-"] 4
 assign [class="^VirtualBox$"] 4
 
-assign [class="^(XTerm|Termite)$" instance="^initial$"] 1
 assign [class="^Emacs$" title="^org$"] 1
 
 assign [class="^qjackctl$"] 4
 for_window [class="^qjackctl$"] [title="^JACK Audio Connection Kit"] floating enable
-
-assign [class="^(XTerm|Termite)$" instance="^mtr$"] 8
 
 assign [class="^Gnucash$"] 10
 assign [class="^nofatty$"] 10

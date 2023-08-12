@@ -12,7 +12,7 @@ let
 
   mkI3 = { hiDPI ? true, extraConf ? "" }: (common { inherit hiDPI; }).override {
     windowManager = pkgs.writeShellScript "i3" ''
-      export TERMINAL=termite
+      export TERMINAL=alacritty
       export _JAVA_AWT_WM_NONREPARENTING=1
       export XMODIFIERS="@im=none"  # For ~/.XCompose to…
       export GTK_IM_MODULE=xim      #        … work in Gtk apps
@@ -27,7 +27,7 @@ let
     loadXresources = pkgs.writeText "xresources" (import ./window-managers/xresources.nix { inherit hiDPI; });
     extraPackages = with pkgs; [
       peek
-      termite
+      alacritty
 
       i3 i3lock i3status
       rofi flake.packages.${pkgs.system}.dmenu-is-rofi

@@ -4,5 +4,4 @@ emacs --frame-parameters='(quote (name . "org"))' --eval '(find-file "~/Org/ZTD.
 
 chromium &
 
-termite --name code &
 emacs --frame-parameters='(quote (name . "code"))' &

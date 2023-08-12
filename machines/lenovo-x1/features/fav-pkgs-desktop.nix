@@ -111,7 +111,6 @@ in
     scantailor
     simple-scan
     speedread
-    termite
     tigervnc
     timidity
     unfree.skypeforlinux  # FIXME: use inside browser?

@@ -10,8 +10,8 @@ padding:
   y: 2
 
 dpi:
-  x: 96.0
-  y: 96.0
+  x: 192
+  y: 192
 
 tabspaces: 8
 
@@ -27,17 +27,17 @@ font:
   italic:
     family: Iosevka
 
-  size: 12.0
+  size: 8.0
 
   offset:
-    x: 0.0
-    y: 0.0
+    x: 0
+    y: 0
 
   glyph_offset:
-    x: 0.0
-    y: 0.0
+    x: 0
+    y: 0
 
-  use_thin_strokes: true
+  #use_thin_strokes: true
 
 render_timer: false
 
@@ -76,7 +76,7 @@ visual_bell:
   animation: EaseOutExpo
   duration: 100
 
-background_opacity: 0.95
+window_opacity: 0.95
 
 # TODO: what with NumpadPageUp?
 # • https://github.com/jwilm/alacritty/issues/428
@@ -135,8 +135,6 @@ key_bindings:
   - { key: Back,     mods: Alt,     chars: "\x1b\x7f"                    }
   - { key: Insert,                  chars: "\x1b[2~"                     }
   - { key: Delete,                  chars: "\x1b[3~"                     }
-
-mouse_bindings:
 
 mouse:
   double_click: { threshold: 300 }
