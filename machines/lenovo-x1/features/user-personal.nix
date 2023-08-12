@@ -10,7 +10,6 @@
 
       description = "Michal Rus";
       extraGroups = [ "wheel" "audio" "nonet" "scanner" "networkmanager" "wireshark" "cdrom" "video" ];
-      dotfiles-old.base = "${config.users.users.m.home}/.dotfiles/dotfiles";
       dotfiles-old.profiles = [ "base" "michalrus/base" "git-annex" "michalrus/personal" "i3" "emacs" ];
       packages = with pkgs; [
         (hardened-firefox.makeWrapped {
