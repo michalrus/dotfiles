@@ -29,7 +29,10 @@ let
     };
 
     defaultArguments = {
-      i3 = [ "-c" (import ./dotfiles/i3.conf.nix { inherit pkgs; extraConf = i3ExtraConf; }) ];
+      i3 = [ "-c" (pkgs.writeText "i3.conf" (
+        import ./window-managers/i3.conf.nix
+        + i3ExtraConf
+      )) ];
     };
 
     environment = {
@@ -143,12 +146,6 @@ let
   '';
 
 in {
-
-  hardware.opengl.enable   = lib.mkDefault true;
-  fonts.enableDefaultFonts = lib.mkDefault true;
-  programs.dconf.enable    = lib.mkDefault true;
-
-  security.pam.services.i3lock = {};
 
   #———————————————————————— ‘production’: i3 ————————————————————————
 
