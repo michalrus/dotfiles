@@ -132,7 +132,6 @@ bar {
 
 bindsym $mod+Return exec termite
 bindsym $mod+Shift+Return exec emacs
-bindsym $mod+k exec pass-autotype
 
 exec ~/.config/autostart/dotfiles.sh
 
