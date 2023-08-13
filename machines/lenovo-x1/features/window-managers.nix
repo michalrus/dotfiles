@@ -19,7 +19,7 @@ let
       export MOZ_USE_XINPUT2=1      # For true Firefox smooth scrolling with touchpad.
 
       exec i3 -c ${pkgs.writeText "i3.conf" (
-        import ./window-managers/i3.conf.nix
+        import ./window-managers/i3.conf.nix { inherit flake lib pkgs; }
         + extraConf
       )}
     '';

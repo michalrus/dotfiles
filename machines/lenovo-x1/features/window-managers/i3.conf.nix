@@ -1,4 +1,4 @@
-''
+{ flake, lib, pkgs }: ''
 
 set $mod Mod4
 
@@ -14,6 +14,8 @@ floating_modifier $mod
 bindsym Mod4+l nop
 
 bindsym $mod+d exec "rofi -combi-modi drun,run -show combi -modi combi"
+bindsym $mod+e exec "${lib.getExe (flake.packages.${pkgs.system}.rofi-unicode-input.override { onlyEmoji = true; })}"
+bindsym $mod+u exec "${lib.getExe  flake.packages.${pkgs.system}.rofi-unicode-input}"
 bindsym $mod+Shift+q kill
 bindsym $mod+i exec xrandr-invert-colors
 bindsym      Print exec magick-screenshot

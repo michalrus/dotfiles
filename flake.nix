@@ -88,6 +88,7 @@
       on-vt-switch = callPackage ./packages/on-vt-switch {};
       noise = callPackage ./packages/noise {};
       pms5003 = callPackage ./packages/pms5003 {};
+      rofi-unicode-input = callPackage ./packages/rofi-unicode-input {};
       talentedhack = callPackage ./packages/talentedhack {};
       tap-plugins = callPackage ./packages/tap-plugins {};
       transcribe = callPackage ./packages/transcribe {};
