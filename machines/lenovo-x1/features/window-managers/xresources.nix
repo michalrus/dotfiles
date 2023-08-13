@@ -27,7 +27,7 @@ Emacs.pointerColorForeground: S_base1
 Emacs.menuBar:            off
 Emacs.toolBar:            off
 Emacs.verticalScrollBars: off
-Emacs.font:               Iosevka NFP Extralight:size=32
+Emacs.font:               Iosevka NFP Light:size=32
 Emacs.font-1:             Noto Color Emoji:size=32
 
 Xcursor.theme: Adwaita

@@ -31,7 +31,7 @@
       <alias>
         <family>for-terminal</family>
         <prefer>
-          <family>Iosevka Term Extralight</family>
+          <family>Iosevka Term Light</family>
           <family>Symbols Nerd Font</family>
           <family>Noto Color Emoji</family>
         </prefer>
@@ -39,7 +39,7 @@
       <alias>
         <family>for-editor</family>
         <prefer>
-          <family>Iosevka NFP Extralight</family>
+          <family>Iosevka NFP Light</family>
           <family>Noto Color Emoji</family>
         </prefer>
       </alias>
