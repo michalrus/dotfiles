@@ -4,7 +4,8 @@
   fonts.enableDefaultFonts = false;  # DejaVu fonts break Noto Sans Emoji fallback
 
   fonts.fonts = with pkgs; [
-    (nerdfonts.override {fonts = ["Iosevka"];})
+    iosevka-bin
+    (nerdfonts.override {fonts = ["Iosevka" "NerdFontsSymbolsOnly"];})
     noto-fonts
     noto-fonts-emoji
     noto-fonts-cjk
@@ -14,9 +15,34 @@
   fonts.enableGhostscriptFonts = true;
 
   fonts.fontconfig.defaultFonts = {
-    monospace = ["Iosevka NFM" "Noto Color Emoji"];
-    sansSerif = ["Noto Sans"   "Noto Color Emoji"];
-    serif     = ["Noto Serif"  "Noto Color Emoji"];
+    monospace = ["Noto Sans Mono"];
+    sansSerif = ["Noto Sans"];
+    serif     = ["Noto Serif"];
     emoji     = ["Noto Color Emoji"];
   };
+
+  fonts.fontconfig.localConf = ''
+    <?xml version="1.0"?>
+    <!DOCTYPE fontconfig SYSTEM "urn:fontconfig:fonts.dtd">
+    <fontconfig>
+      <match>
+        <edit mode="append" name="family"><string>Noto Color Emoji</string></edit>
+      </match>
+      <alias>
+        <family>for-terminal</family>
+        <prefer>
+          <family>Iosevka Term Extralight</family>
+          <family>Symbols Nerd Font</family>
+          <family>Noto Color Emoji</family>
+        </prefer>
+      </alias>
+      <alias>
+        <family>for-editor</family>
+        <prefer>
+          <family>Iosevka NFP Extralight</family>
+          <family>Noto Color Emoji</family>
+        </prefer>
+      </alias>
+    </fontconfig>
+  '';
 }
