@@ -18,8 +18,7 @@ bindsym $mod+e exec "${lib.getExe (flake.packages.${pkgs.system}.rofi-unicode-in
 bindsym $mod+u exec "${lib.getExe  flake.packages.${pkgs.system}.rofi-unicode-input}"
 bindsym $mod+Shift+q kill
 bindsym $mod+i exec xrandr-invert-colors
-bindsym      Print exec magick-screenshot
-bindsym $mod+Print exec magick-screenshot active
+bindsym Print exec ${lib.getExe flake.packages.${pkgs.system}.x11-screenshot}
 
 bindsym XF86AudioMute         exec --no-startup-id "amixer -q sset Master 0 mute"
 bindsym XF86AudioRaiseVolume  exec --no-startup-id amixer -q sset Master 3%+ unmute

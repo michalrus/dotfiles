@@ -95,6 +95,7 @@
       vocproc = callPackage ./packages/vocproc { inherit lv2-cpp-tools; };
       yt-dlp = callPackage ./packages/yt-dlp { flake = inputs.self; };
       x11-rootless = callPackage ./packages/x11-rootless {};
+      x11-screenshot = callPackage ./packages/x11-screenshot {};
     });
 
   };
