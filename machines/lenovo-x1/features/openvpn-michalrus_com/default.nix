@@ -27,7 +27,7 @@ in
         persist-key
         persist-tun
         mute-replay-warnings
-        ca ${../../../machines/michalrus_com/features/openvpn/ca.crt}
+        ca ${../../../../machines/michalrus_com/features/openvpn/ca.crt}
         cert ${dataDir}/client.crt
         key ${dataDir}/client.key
         remote-cert-tls server
@@ -39,6 +39,6 @@ in
     };
   };
 
-  #networking.extraHosts = (import ../../../machines/michalrus_com/features/openvpn/common.nix { inherit lib; }).extraHosts;
+  #networking.extraHosts = (import ../../../../machines/michalrus_com/features/openvpn/common.nix { inherit lib; }).extraHosts;
 
 }

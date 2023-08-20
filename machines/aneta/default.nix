@@ -22,16 +22,16 @@ nixpkgs.lib.nixosSystem {
     flake.nixosModules.update-raspberry-pi-firmware
     { boot.loader.raspberryPiFirmware.version = 3; }
 
-    ../_shared_/features/fav-pkgs-cli-thin.nix
-    ../_shared_/features/immutable-users.nix
-    ../_shared_/features/ip-reject-not-drop.nix
-    ../_shared_/features/kill-user-processes.nix
-    ../_shared_/features/locale-en-iso.nix
-    ../_shared_/features/more-entropy.nix
-    ../_shared_/features/mtr-traceroute-fping.nix
-    ../_shared_/features/nix.conf.nix
-    ../_shared_/features/systemd-accounting.nix
-    ../_shared_/features/zsh.nix
+    ../_shared_/features/fav-pkgs-cli-thin
+    ../_shared_/features/immutable-users
+    ../_shared_/features/ip-reject-not-drop
+    ../_shared_/features/kill-user-processes
+    ../_shared_/features/locale-en-iso
+    ../_shared_/features/more-entropy
+    ../_shared_/features/mtr-traceroute-fping
+    ../_shared_/features/nix.conf
+    ../_shared_/features/systemd-accounting
+    ../_shared_/features/zsh
 
     ./features/dns.nix
     ./features/nat.nix
@@ -52,8 +52,8 @@ nixpkgs.lib.nixosSystem {
         useGlobalPkgs = true;
         useUserPackages = true;
         sharedModules = [
-          ../_shared_/home/shells.nix
-          ../_shared_/home/gnu-screen.nix
+          ../_shared_/home/shells
+          ../_shared_/home/gnu-screen
           { home.stateVersion = "23.05"; }
         ];
         users.root.imports = [ ];

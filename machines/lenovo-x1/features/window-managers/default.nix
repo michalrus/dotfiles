@@ -3,8 +3,8 @@
 let
 
   users = {
-    m.i3 = mkI3 { extraConf = import ./window-managers/i3-m.conf.nix; };
-    mw.i3 = mkI3 { extraConf = import ./window-managers/i3-mw.conf.nix; };
+    m.i3 = mkI3 { extraConf = import ./i3-m.conf.nix; };
+    mw.i3 = mkI3 { extraConf = import ./i3-mw.conf.nix; };
     md.i3 = mkI3 {};
     guest.i3 = mkI3 {};
     guest.i3-low = mkI3 { hiDPI = false; };  # projector
@@ -19,12 +19,12 @@ let
       export MOZ_USE_XINPUT2=1      # For true Firefox smooth scrolling with touchpad.
 
       exec i3 -c ${pkgs.writeText "i3.conf" (
-        import ./window-managers/i3.conf.nix { inherit flake lib pkgs; }
+        import ./i3.conf.nix { inherit flake lib pkgs; }
         + extraConf
       )}
     '';
     journaldIdentifier = "i3-new";
-    loadXresources = pkgs.writeText "xresources" (import ./window-managers/xresources-emacs.nix { inherit hiDPI; });
+    loadXresources = pkgs.writeText "xresources" (import ./xresources-emacs.nix { inherit hiDPI; });
     extraPackages = with pkgs; [
       peek
       alacritty
@@ -48,7 +48,7 @@ let
     ];
   };
 
-  common = { hiDPI }: pkgs.callPackage ../../../packages/x11-rootless rec {
+  common = { hiDPI }: pkgs.callPackage ../../../../packages/x11-rootless rec {
     xserverConfig = {
       layout = "pl";
       xkbOptions = "compose:caps,numpad:microsoft";

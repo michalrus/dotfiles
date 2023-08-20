@@ -25,23 +25,23 @@ inputs.nix-darwin-2305.lib.darwinSystem {
         useUserPackages = true;
         sharedModules = [
           flake.inputs.nix-doom-emacs-2305.hmModule
-          ../_shared_/home/shells.nix
-          ../_shared_/home/gnupg.nix
-          ../_shared_/home/git.nix
-          ../_shared_/home/password-store.nix
-          ../_shared_/home/haskell.nix
-          ../_shared_/home/gnu-screen.nix
+          ../_shared_/home/shells
+          ../_shared_/home/gnupg
+          ../_shared_/home/git
+          ../_shared_/home/password-store
+          ../_shared_/home/haskell
+          ../_shared_/home/gnu-screen
           ./home/shared.nix
           ./home/link-darwin-apps.nix
         ];
-        users.m.imports = [ ../_shared_/home/identity-personal.nix ];
-        users.mw.imports = [ ../_shared_/home/identity-work.nix ];
+        users.m.imports = [ ../_shared_/home/identity-personal ];
+        users.mw.imports = [ ../_shared_/home/identity-work ];
         users.friends.imports = [ ];
       };
     }
 
-    ../_shared_/features/nix.conf.nix
-    ../_shared_/features/nix.conf-work-substituters.nix
+    ../_shared_/features/nix.conf
+    ../_shared_/features/nix.conf/work-substituters.nix
 
     {
       # home directories for home-manager to pick up; they get messed up b/c of flakes

@@ -30,48 +30,48 @@ nixpkgs.lib.nixosSystem {
 
   ]) ++ [
 
-    (import ../_shared_/features/canoscan-lide-20.nix { inherit flake; })
+    (import ../_shared_/features/canoscan-lide-20 { inherit flake; })
 
-    ../_shared_/features/fav-pkgs-cli-thin.nix
-    ../_shared_/features/immutable-users.nix
-    ../_shared_/features/kill-user-processes.nix
-    ../_shared_/features/locale-en-iso.nix
-    ../_shared_/features/more-entropy.nix
-    ../_shared_/features/mtr-traceroute-fping.nix
-    ../_shared_/features/nix.conf-work-substituters.nix
-    ../_shared_/features/nix.conf.nix
-    ../_shared_/features/systemd-accounting.nix
-    ../_shared_/features/zsh.nix
+    ../_shared_/features/fav-pkgs-cli-thin
+    ../_shared_/features/immutable-users
+    ../_shared_/features/kill-user-processes
+    ../_shared_/features/locale-en-iso
+    ../_shared_/features/more-entropy
+    ../_shared_/features/mtr-traceroute-fping
+    ../_shared_/features/nix.conf/work-substituters.nix
+    ../_shared_/features/nix.conf
+    ../_shared_/features/systemd-accounting
+    ../_shared_/features/zsh
 
-    ./features/android.nix
-    ./features/bluetooth.nix
-    ./features/emacs.nix
-    ./features/fav-pkgs-cli-fat.nix
-    ./features/fav-pkgs-desktop.nix
-    ./features/firefox-autocomplete.nix
-    ./features/fonts.nix
-    ./features/hardened-chromium.nix
-    ./features/hardened-firefox.nix
-    ./features/ledger.nix
-    ./features/libvirt.nix
-    #./features/mpd.nix
-    #./features/musnix.nix
-    ./features/openvpn-michalrus_com.nix
-    ./features/openvpn-nordvpn.nix
-    ./features/podman.nix
-    ./features/proaudio.nix
+    ./features/android
+    ./features/bluetooth
+    ./features/emacs
+    ./features/fav-pkgs-cli-fat
+    ./features/fav-pkgs-desktop
+    ./features/firefox-autocomplete
+    ./features/fonts
+    ./features/hardened-chromium
+    ./features/hardened-firefox
+    ./features/ledger
+    ./features/libvirt
+    #./features/mpd
+    #./features/musnix
+    ./features/openvpn-michalrus_com
+    ./features/openvpn-nordvpn
+    ./features/podman
+    ./features/proaudio
     flake.nixosModules.torified-users
-    ./features/tor.nix
-    ./features/transmission.nix
-    ./features/udev-remap-keyboard.nix
+    ./features/tor
+    ./features/transmission
+    ./features/udev-remap-keyboard
     flake.nixosModules.guest-account
-    ./features/user-guest.nix
-    ./features/user-personal.nix
-    ./features/user-root.nix  # TODO: remove
-    ./features/user-work.nix
-    ./features/window-managers.nix
-    ./features/wine.nix
-    ./features/yubikey.nix
+    ./features/user-guest
+    ./features/user-personal
+    ./features/user-root  # TODO: remove
+    ./features/user-work
+    ./features/window-managers
+    ./features/wine
+    ./features/yubikey
 
     flake.inputs.home-manager-2305.nixosModules.home-manager
     {
@@ -80,21 +80,21 @@ nixpkgs.lib.nixosSystem {
         useGlobalPkgs = true;
         useUserPackages = true;
         sharedModules = [
-          ../_shared_/home/shells.nix
-          ../_shared_/home/gnupg.nix
-          ../_shared_/home/git.nix
-          ../_shared_/home/password-store.nix
-          ../_shared_/home/haskell.nix
-          ../_shared_/home/gnu-screen.nix
-          ../_shared_/home/mpv.nix
+          ../_shared_/home/shells
+          ../_shared_/home/gnupg
+          ../_shared_/home/git
+          ../_shared_/home/password-store
+          ../_shared_/home/haskell
+          ../_shared_/home/gnu-screen
+          ../_shared_/home/mpv
           ./home/shared.nix
         ];
         users.m.imports = [
-          ../_shared_/home/identity-personal.nix
+          ../_shared_/home/identity-personal
           ../_shared_/home/doom-emacs
         ];
         users.mw.imports = [
-          ../_shared_/home/identity-work.nix
+          ../_shared_/home/identity-work
           ../_shared_/home/doom-emacs
         ];
         users.md.imports = [ ];

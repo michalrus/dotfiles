@@ -17,6 +17,6 @@
 
   programs.gpg.settings.default-key = "m@michalrus.com";
 
-  home.file.".avatar.jpg".source = ../assets/avatar.jpg;
-  home.file.".wallpaper.png".source = ../assets/wallpapers/yosemite.png;
+  home.file.".avatar.jpg".source = ../../assets/avatar.jpg;
+  home.file.".wallpaper.png".source = ../../assets/wallpapers/yosemite.png;
 }
