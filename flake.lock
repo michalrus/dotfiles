@@ -241,7 +241,7 @@
     "malicious-hosts": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-96tNN2sVNT73oOTQzASzQdnz9JO8Rdy33niB73h0ZWA=",
+        "narHash": "sha256-vE/nAdJmQ2dHxXQ+dQSeZNdifnpihURGcJBF6VQoSVo=",
         "type": "file",
         "url": "https://github.com/StevenBlack/hosts/raw/master/alternates/fakenews-gambling/hosts"
       },
