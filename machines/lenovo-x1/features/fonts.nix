@@ -29,7 +29,7 @@
         <edit mode="append" name="family"><string>Noto Color Emoji</string></edit>
       </match>
       <alias>
-        <family>for-terminal</family>
+        <family>for_terminal</family>
         <prefer>
           <family>Iosevka Term Light</family>
           <family>Symbols Nerd Font</family>
@@ -37,7 +37,7 @@
         </prefer>
       </alias>
       <alias>
-        <family>for-editor</family>
+        <family>for_editor</family>
         <prefer>
           <family>Iosevka NFP Light</family>
           <family>Noto Color Emoji</family>

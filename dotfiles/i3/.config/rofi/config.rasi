@@ -14,5 +14,5 @@ window {
 }
 
 * {
-  font: "for-editor 12";
+  font: "for_editor 12";
 }

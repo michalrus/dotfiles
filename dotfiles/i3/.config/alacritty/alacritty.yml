@@ -19,13 +19,13 @@ draw_bold_text_with_bright_colors: true
 
 font:
   normal:
-    family: for-terminal
+    family: for_terminal
 
   bold:
-    family: for-terminal
+    family: for_terminal
 
   italic:
-    family: for-terminal
+    family: for_terminal
 
   size: 8.0
 
