@@ -24,7 +24,7 @@ let
       )}
     '';
     journaldIdentifier = "i3-new";
-    loadXresources = pkgs.writeText "xresources" (import ./window-managers/xresources.nix { inherit hiDPI; });
+    loadXresources = pkgs.writeText "xresources" (import ./window-managers/xresources-emacs.nix { inherit hiDPI; });
     extraPackages = with pkgs; [
       peek
       alacritty

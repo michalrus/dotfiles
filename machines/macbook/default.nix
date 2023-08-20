@@ -29,7 +29,6 @@ inputs.nix-darwin-2305.lib.darwinSystem {
           ../_shared_/home/gnupg.nix
           ../_shared_/home/git.nix
           ../_shared_/home/password-store.nix
-          ../_shared_/home/emacs.nix
           ../_shared_/home/haskell.nix
           ../_shared_/home/gnu-screen.nix
           ./home/shared.nix

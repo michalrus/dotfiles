@@ -80,7 +80,6 @@ nixpkgs.lib.nixosSystem {
         useGlobalPkgs = true;
         useUserPackages = true;
         sharedModules = [
-          flake.inputs.nix-doom-emacs-2305.hmModule
           ../_shared_/home/shells.nix
           ../_shared_/home/gnupg.nix
           ../_shared_/home/git.nix
@@ -91,8 +90,14 @@ nixpkgs.lib.nixosSystem {
           ../_shared_/home/mpv.nix
           ./home/shared.nix
         ];
-        users.m.imports = [ ../_shared_/home/identity-personal.nix ];
-        users.mw.imports = [ ../_shared_/home/identity-work.nix ];
+        users.m.imports = [
+          ../_shared_/home/identity-personal.nix
+          ../_shared_/home/doom-emacs
+        ];
+        users.mw.imports = [
+          ../_shared_/home/identity-work.nix
+          ../_shared_/home/doom-emacs
+        ];
         users.md.imports = [ ];
         users.guest.imports = [ ./home/guest.nix ];
         users.root.imports = [ ];

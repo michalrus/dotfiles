@@ -14,7 +14,7 @@ in
 
       description = "Michal Rus (w)";
       extraGroups = [ "audio" "nonet" "scanner" "networkmanager" "wireshark" "cdrom" "video" ];
-      dotfiles-old.profiles = [ "base" "michalrus/base" "git-annex" "michalrus/work/iohk" "i3" "emacs" ];
+      dotfiles-old.profiles = [ "base" "michalrus/base" "git-annex" "michalrus/work/iohk" "i3" ];
       packages = with pkgs; [
         (hardened-firefox.makeWrapped {
           localAutocompletePort = config.services.firefox-autocomplete.userPorts.mw;
