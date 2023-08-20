@@ -39,17 +39,17 @@
     (display-line-numbers-mode -1)
     (company-mode -1))
   (setq org-directory "~/Org"
-      org-support-shift-select t
-      org-ctrl-k-protect-subtree 'error
-      org-todo-keywords '((sequence "TODO(t)" "DOIN(i)" "BLCK(b)" "|" "DONE(d)" "DELE(g)" "KILL(k)"))
-      org-todo-keyword-faces '(("TODO" .  org-todo)
-                               ("DOIN" . +org-todo-active)
-                               ("BLCK" . +org-todo-onhold)
-                               ("DONE" .  org-done)
-                               ("DELE" .  org-done)
-                               ("KILL" . +org-todo-cancel))
-      org-insert-heading-respect-content nil  ; insert new headings under point
-      org-startup-folded t)
+        org-support-shift-select t
+        org-ctrl-k-protect-subtree 'error
+        org-todo-keywords '((sequence "TODO(t)" "DOIN(i)" "BLCK(b)" "|" "DONE(d)" "DELE(g)" "KILL(k)"))
+        org-todo-keyword-faces '(("TODO" .  org-todo)
+                                 ("DOIN" . +org-todo-active)
+                                 ("BLCK" . +org-todo-onhold)
+                                 ("DONE" .  org-done)
+                                 ("DELE" .  org-done)
+                                 ("KILL" . +org-todo-cancel))
+        org-insert-heading-respect-content nil  ; insert new headings under point
+        org-startup-folded t)
   (map! :map org-mode-map
         "M-<left>"    nil  ; I use it for navigation
         "C-<left>"    #'org-metaleft
