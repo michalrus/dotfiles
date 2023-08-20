@@ -145,4 +145,11 @@ selection:
 
 hide_cursor_when_typing: false
 
+cursor:
+  style:
+    shape: Beam
+    blinking: Always
+  blink_interval: 500
+  blink_timeout: 0
+
 live_config_reload: true
