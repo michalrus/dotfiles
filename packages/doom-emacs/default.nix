@@ -4,7 +4,7 @@
 , doomPackagesEl ? "${doom-emacs}/templates/packages.example.el"
 , doomInitEl     ? "${doom-emacs}/templates/init.example.el"
 , doomConfigEl   ? "${doom-emacs}/templates/config.example.el"
-, vendorHash     ? "sha256-VcToMwtvAoGOnpvjcCkkEIoDz33p99NPtoYFL05jZdg="
+, vendorHash     ? "sha256-dHsRefKFJZEScduEzbF1oCHZ103/j3UdE3+mUmjjnxc=" # "sha256-VcToMwtvAoGOnpvjcCkkEIoDz33p99NPtoYFL05jZdg="
 
 , doom-data-dir  ? "~/.local/share/doom"
 , doom-cache-dir ? "~/.cache/doom"
@@ -95,15 +95,15 @@ let
 
       sed -r 's,doom-data-dir,"'"$out/.local/etc/"'",g' -i $out/lisp/doom-profiles.el
     '';
-    passthru = { inherit vendor; };
   };
 
   finalEmacs = symlinkJoin {
     name = "doom-emacs";
     meta.mainProgram = "emacs";
-    meta.platforms = lib.platforms.linux;
+    meta.platforms = lib.platforms.linux ++ lib.platforms.darwin;
     paths = [ chosenEmacs ];
     nativeBuildInputs = [ makeWrapper ];
+    passthru = { inherit vendor emacsDir; doomDir = doomDir { withConfig = true; }; };
     postBuild = ''
       ( cd $out ; grep -RF --binary-files=without-match ${chosenEmacs} . ) \
         | cut -d: -f1 | sort --unique | grep -vF './share/emacs/${chosenEmacs.version}/src/' \
@@ -114,9 +114,9 @@ let
         cp -a "$source" "$target"
         sed -r 's,${chosenEmacs},'$out',g' -i "$target"
       done
-      for exe in emacs emacs-${chosenEmacs.version} ; do
-        rm $out/bin/$exe
-        makeWrapper ${chosenEmacs}/bin/$exe $out/bin/$exe \
+      for exe in bin/emacs bin/emacs-${chosenEmacs.version} ${if stdenvNoCC.isDarwin then "Applications/Emacs.app/Contents/MacOS/Emacs" else ""} ; do
+        rm $out/$exe
+        makeWrapper ${chosenEmacs}/$exe $out/$exe \
           --set DOOMDIR ${doomDir { withConfig = true; }} \
           --add-flags --init-directory=${emacsDir}
       done
