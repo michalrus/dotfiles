@@ -4,7 +4,7 @@
 , doomPackagesEl ? "${doom-emacs}/templates/packages.example.el"
 , doomInitEl     ? "${doom-emacs}/templates/init.example.el"
 , doomConfigEl   ? "${doom-emacs}/templates/config.example.el"
-, vendorHash     ? "sha256-dHsRefKFJZEScduEzbF1oCHZ103/j3UdE3+mUmjjnxc=" # "sha256-VcToMwtvAoGOnpvjcCkkEIoDz33p99NPtoYFL05jZdg="
+, vendorHash     ? "sha256-uw2t2nyrvb1pQZpOKhPMfO7Imnbof6wlFjsAvxpmzRg="
 
 , doom-data-dir  ? "~/.local/share/doom"
 , doom-cache-dir ? "~/.cache/doom"
@@ -16,7 +16,7 @@ assert lib.versionAtLeast chosenEmacs.version "29";  # we need `--init-directory
 let
 
   doomDir = { withConfig ? true }: linkFarm "doom-dir" {
-    "package.el" = doomPackagesEl;
+    "packages.el" = doomPackagesEl;
     "init.el" = doomInitEl;
     "config.el" = if withConfig then doomConfigEl else emptyFile;
   };
@@ -82,9 +82,13 @@ let
       cp -r ${vendor} $out/.local/straight/repos
       chmod -R +w     $out/.local/straight/repos
 
+      # Or else, the true `config.el` won’t be loaded:
+      sed -r '/module-list-loader post-config-modules config-file/a\ (doom-load (expand-file-name "config" (getenv "DOOMDIR")))' \
+        -i $out/lisp/doom-profiles.el
+
       $out/bin/doom install --no-config --no-fonts --force
 
-      rm -rf $out/.local/state
+      rm -rf $out/.local/{env,state}
 
       sed -r '
         s,\(file-name-concat doom-local-dir "etc/"\),'${  lib.escapeShellArg (__toJSON "${doom-data-dir}/" )}',g
@@ -103,7 +107,7 @@ let
     meta.platforms = lib.platforms.linux ++ lib.platforms.darwin;
     paths = [ chosenEmacs ];
     nativeBuildInputs = [ makeWrapper ];
-    passthru = { inherit vendor emacsDir; doomDir = doomDir { withConfig = true; }; };
+    passthru = { inherit vendor emacsDir; doomDir = doomDir { withConfig = false; }; };
     postBuild = ''
       ( cd $out ; grep -RF --binary-files=without-match ${chosenEmacs} . ) \
         | cut -d: -f1 | sort --unique | grep -vF './share/emacs/${chosenEmacs.version}/src/' \

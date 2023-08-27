@@ -16,18 +16,21 @@
                                                (t "Georgia"))))
 (add-to-list 'default-frame-alist '(background-color . "#002b36"))  ; prevent initial flicker
 (add-hook! doom-load-theme
-  (set-face-attribute 'font-lock-constant-face      nil :foreground (doom-color 'blue))
-  (set-face-attribute 'font-lock-builtin-face       nil :foreground (doom-color 'white) :weight 'bold)
-  (set-face-attribute 'font-lock-variable-name-face nil :foreground (doom-color 'blue))
-  (set-face-attribute 'magit-section-heading        nil :foreground (doom-color 'yellow))
-  (set-face-attribute 'org-level-1 nil :weight 'normal :foreground (doom-color 'orange))
-  (set-face-attribute 'org-level-2 nil :weight 'normal :foreground (doom-color 'green))
-  (set-face-attribute 'org-level-3 nil :weight 'normal :foreground (doom-color 'blue))
-  (set-face-attribute 'org-level-4 nil :weight 'normal :foreground (doom-color 'yellow))
-  (set-face-attribute 'org-level-5 nil :weight 'normal :foreground (doom-color 'cyan))
-  (set-face-attribute 'org-level-6 nil :weight 'normal :foreground (doom-color 'green))
-  (set-face-attribute 'org-level-7 nil :weight 'normal :foreground (doom-color 'red))
-  (set-face-attribute 'org-level-8 nil :weight 'normal :foreground (doom-color 'blue))
+  (after! font-lock
+    (set-face-attribute 'font-lock-constant-face      nil :foreground (doom-color 'blue))
+    (set-face-attribute 'font-lock-builtin-face       nil :foreground (doom-color 'white) :weight 'bold)
+    (set-face-attribute 'font-lock-variable-name-face nil :foreground (doom-color 'blue)))
+  (after! magit
+    (set-face-attribute 'magit-section-heading        nil :foreground (doom-color 'yellow)))
+  (after! org
+    (set-face-attribute 'org-level-1 nil :weight 'normal :foreground (doom-color 'orange))
+    (set-face-attribute 'org-level-2 nil :weight 'normal :foreground (doom-color 'green))
+    (set-face-attribute 'org-level-3 nil :weight 'normal :foreground (doom-color 'blue))
+    (set-face-attribute 'org-level-4 nil :weight 'normal :foreground (doom-color 'yellow))
+    (set-face-attribute 'org-level-5 nil :weight 'normal :foreground (doom-color 'cyan))
+    (set-face-attribute 'org-level-6 nil :weight 'normal :foreground (doom-color 'green))
+    (set-face-attribute 'org-level-7 nil :weight 'normal :foreground (doom-color 'red))
+    (set-face-attribute 'org-level-8 nil :weight 'normal :foreground (doom-color 'blue)))
   (set-face-attribute 'cursor nil :background (doom-color 'fg))
   (setq-default cursor-type '(bar . 2))
   (blink-cursor-mode t))
