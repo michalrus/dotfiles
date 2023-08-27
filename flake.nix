@@ -17,6 +17,8 @@
     home-manager-2305.url = "github:nix-community/home-manager/release-23.05";
     home-manager-2305.inputs.nixpkgs.follows = "nixpkgs-2305";
 
+    doom-emacs = { url = "github:doomemacs/doomemacs"; flake = false; };
+
     nix-doom-emacs-2305.url = "github:nix-community/nix-doom-emacs";
     nix-doom-emacs-2305.inputs.nixpkgs.follows = "nixpkgs-2305";
 
@@ -81,6 +83,7 @@
       autotalent = callPackage ./packages/autotalent {};
       cp2104-gpio = callPackage ./packages/cp2104-gpio {};
       dmenu-is-rofi = callPackage ./packages/dmenu-is-rofi {};
+      doom-emacs = callPackage ./packages/doom-emacs { inherit (inputs) doom-emacs; };
       git-annex-hacks = callPackage ./packages/git-annex-hacks {};
       gettext-emacs = callPackage ./packages/gettext-emacs {};
       gregorio = callPackage ./packages/gregorio {};

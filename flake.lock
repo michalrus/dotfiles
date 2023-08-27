@@ -27,6 +27,22 @@
     "doom-emacs": {
       "flake": false,
       "locked": {
+        "lastModified": 1692634625,
+        "narHash": "sha256-p/vzQQ7eg9eOpcbxDzMJRAbDZWac9CHBXdwTRLc1vN8=",
+        "owner": "doomemacs",
+        "repo": "doomemacs",
+        "rev": "7a7503045850ea83f205de6e71e6d886187f4a22",
+        "type": "github"
+      },
+      "original": {
+        "owner": "doomemacs",
+        "repo": "doomemacs",
+        "type": "github"
+      }
+    },
+    "doom-emacs_2": {
+      "flake": false,
+      "locked": {
         "lastModified": 1662497747,
         "narHash": "sha256-4n7E1fqda7cn5/F2jTkOnKw1juG6XMS/FI9gqODL3aU=",
         "owner": "doomemacs",
@@ -273,7 +289,7 @@
     },
     "nix-doom-emacs-2305": {
       "inputs": {
-        "doom-emacs": "doom-emacs",
+        "doom-emacs": "doom-emacs_2",
         "doom-snippets": "doom-snippets",
         "emacs-overlay": "emacs-overlay",
         "emacs-so-long": "emacs-so-long",
@@ -512,6 +528,7 @@
       "inputs": {
         "cloudflare-ips-v4": "cloudflare-ips-v4",
         "cloudflare-ips-v6": "cloudflare-ips-v6",
+        "doom-emacs": "doom-emacs",
         "home-manager-2305": "home-manager-2305",
         "malicious-hosts": "malicious-hosts",
         "nix-darwin-2305": "nix-darwin-2305",

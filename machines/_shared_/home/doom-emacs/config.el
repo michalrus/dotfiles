@@ -81,8 +81,13 @@
 (add-hook! after-init
   (setq tab-always-indent t))
 
+(after! company
+  (map! :map company-active-map
+        "<tab>" #'company-complete-selection))
+
 ;; Auto-saving:
 (add-hook! focus-out (save-some-buffers t))
+(add-hook! doom-switch-buffer (save-some-buffers t))
 (setq auto-save-default nil)          ; don’t autosave to /tmp/,
 (setq auto-save-visited-interval 10)  ; but instead, after this many seconds idle,
 (auto-save-visited-mode t)            ; save to the actual file
@@ -116,5 +121,9 @@
   (map! :map global-gumshoe-backtracking-mode-map
         "M-<left>"  #'global-gumshoe-backtracking-mode-back
         "M-<right>" #'global-gumshoe-backtracking-mode-forward))
+
+(after! nix-mode
+  (set-company-backend! 'nix-mode 'company-files 'company-dabbrev)
+  (setq-hook! 'nix-mode-hook company-idle-delay 0.2))
 
 ;

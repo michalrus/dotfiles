@@ -10,6 +10,7 @@
     noto-fonts-emoji
     noto-fonts-cjk
     #google-fonts  # They break ‘noto-fonts-emoji’
+    liberation_ttf
   ];
 
   fonts.enableGhostscriptFonts = true;

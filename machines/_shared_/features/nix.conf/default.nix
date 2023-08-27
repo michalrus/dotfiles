@@ -52,7 +52,7 @@ lib.mkMerge [
   {
     nix = if pkgs.stdenv.isLinux then
       if lib.versionAtLeast lib.version "23.04" then {
-        settings.sandbox = lib.mkForce true;
+        settings.sandbox = lib.mkForce true;  # "relaxed" allows usage of `__noChroot = true;` for testing
       } else {
         useSandbox = lib.mkForce true;
       }
