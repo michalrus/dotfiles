@@ -37,6 +37,9 @@
 (add-hook! after-init
   (setq dired-mode-hook (remove 'dired-omit-mode dired-mode-hook)))  ; I want `..'
 
+;; Otherwise, adding another frame is not instantaneous:
+(add-hook! server-after-make-frame :append (setq server-after-make-frame-hook nil))
+
 (after! org
   (add-hook! org-mode
     (display-line-numbers-mode -1)
