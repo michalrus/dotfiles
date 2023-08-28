@@ -1,7 +1,6 @@
 ;;; Code:
 
-;; I don’t use *scratch*:
-;;(setq initial-buffer-choice (lambda () (get-buffer "*Messages*")))
+(setq initial-scratch-message nil)
 
 ;; Useless:
 (global-unset-key "\C-z")
