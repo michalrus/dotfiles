@@ -2,12 +2,7 @@
 
 let
 
-  doom-emacs = flake.packages.${pkgs.system}.doom-emacs.override {
-    doomPackagesEl = ./packages.el;
-    doomInitEl     = ./init.el;
-    doomConfigEl   = ./config.el;
-    vendorHash     = "sha256-dAuhQK5JlHQruqZOyFHsyjGXeslI2dDOYHlfEkfiExY=";
-  };
+  doom-emacs = flake.packages.${pkgs.system}.doom-emacs-mine;
 
 in
 
