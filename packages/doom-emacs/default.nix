@@ -17,8 +17,8 @@ let
 
   doomDir = { withConfig ? true }: linkFarm "doom-dir" {
     "packages.el" = doomPackagesEl;
-    "init.el" = doomInitEl;
-    "config.el" = if withConfig then doomConfigEl else emptyFile;
+    "init.el"     = doomInitEl;
+    "config.el"   = if withConfig then doomConfigEl else emptyFile;
   };
 
   vendor = stdenvNoCC.mkDerivation {
@@ -42,21 +42,13 @@ let
       export DOOMPAGER=cat
       export DOOMDIR=${doomDir { withConfig = false; }}
 
-      ~/.config/emacs/bin/doom install \
-        --strict-load ${writeText "no-native-comp.el" ''
-          (setq no-native-compile t
-                no-byte-compile t
-                straight-disable-compile t
-                straight-disable-native-compile t
-                straight-vc-git-default-clone-depth 1)
-        ''} \
-        --no-config --no-fonts --force
+      ~/.config/emacs/bin/doom install --no-config --no-fonts --force
 
       # Remove impurities that change too often, but save the source information for later investigation:
       find ~/.config/emacs/.local/straight/repos -type d -name '.git' -prune | while IFS= read -r gitDir ; do
         (
           cd "$(dirname "$gitDir")"
-          ( git remote get-url origin ; git rev-parse HEAD ; ) >git-source-info
+          ( git remote get-url origin ; git show-ref | grep $(git rev-parse HEAD) ; ) >git-source-info
         )
         rm -rf "$gitDir"
       done
