@@ -57,12 +57,10 @@
         org-insert-heading-respect-content nil  ; insert new headings under point
         org-startup-folded t)
   (map! :map org-mode-map
-        "M-<left>"    nil  ; I use it for navigation
-        "C-<left>"    #'org-metaleft
-        "M-<right>"   nil
-        "C-<right>"   #'org-metaright
-        "C-S-<left>"  #'org-shiftmetaleft  ; for consistency
-        "C-S-<right>" #'org-shiftmetaright))
+        "S-<left>"  nil "C-<left>"  #'org-shiftleft
+        "S-<right>" nil "C-<right>" #'org-shiftright
+        "S-<up>"    nil "C-<up>"    #'org-shiftup
+        "S-<down>"  nil "C-<down>"  #'org-shiftdown))
 
 (map! "C-M-<left>"  #'windmove-left
       "C-M-<right>" #'windmove-right
@@ -122,11 +120,11 @@
         gumshoe-idle-time 5
         gumshoe-display-buffer-action '((display-buffer-same-window))
         gumshoe-auto-cancel-backtracking-p t)
-  (map! "M-<left>"  #'gumshoe-backtrack
-        "M-<right>" #'gumshoe-backtrack)
+  (map! "M-s-<left>"  #'gumshoe-backtrack
+        "M-s-<right>" #'gumshoe-backtrack)
   (map! :map global-gumshoe-backtracking-mode-map
-        "M-<left>"  #'global-gumshoe-backtracking-mode-back
-        "M-<right>" #'global-gumshoe-backtracking-mode-forward))
+        "M-s-<left>"  #'global-gumshoe-backtracking-mode-back
+        "M-s-<right>" #'global-gumshoe-backtracking-mode-forward))
 
 (after! nix-mode
   (set-company-backend! 'nix-mode 'company-files 'company-dabbrev)
