@@ -69,6 +69,7 @@
     openssl
     p7zip
     pass
+    patchelf
     pciutils
     posix_man_pages
     powertop
