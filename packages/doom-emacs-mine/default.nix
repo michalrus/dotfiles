@@ -4,5 +4,5 @@ doom-emacs.override {
   doomPackagesEl = ./packages.el;
   doomInitEl     = ./init.el;
   doomConfigEl   = ./config.el;
-  vendorHash     = "sha256-GbY7Mput88pvn1/tQjZA4pUsugjBeaLhnY9Pj7yxKKo=";
+  vendorHash     = "sha256-CFo0jZgvTgBvg6dUy8ZY13gNwGGVwAbkaZ1abWsyUo0=";
 }
