@@ -58,7 +58,8 @@ nixpkgs.lib.nixosSystem {
     #./features/musnix
     ./features/openvpn-michalrus_com
     ./features/openvpn-nordvpn
-    ./features/podman
+    #./features/podman
+    ./features/docker
     ./features/proaudio
     flake.nixosModules.torified-users
     ./features/tor
