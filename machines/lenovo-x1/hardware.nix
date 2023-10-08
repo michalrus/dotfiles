@@ -19,7 +19,7 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  boot.tmp.useTmpfs = true;
+  boot.tmp.useTmpfs = false;
 
   services.smartd.enable = true;
 
