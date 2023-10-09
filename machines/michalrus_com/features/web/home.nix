@@ -40,7 +40,7 @@ mkMerge [
       body = ''
         # Generate passwords with `echo "user:$(openssl passwd)" >> .htpasswd`.
         auth_basic "Speak, friend, and enter.";
-        auth_basic_user_file "${config.services.nginx.stateDir}/auth/${domain}";
+        auth_basic_user_file "/var/spool/nginx/auth/${domain}";
 
         ${optionalString (m ? redirectRootTo)
           ''location = / { return 301 /${m.redirectRootTo}; }''}

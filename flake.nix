@@ -1,13 +1,6 @@
 {
 
   inputs = {
-    nixpkgs-2003.url = "github:NixOS/nixpkgs/nixpkgs-20.03-darwin";
-
-    nixpkgs-2003-michalrus_com = {
-      url = "github:NixOS/nixpkgs/cb1996818edf506c0d1665ab147c253c558a7426";
-      flake = false; # FIXME: too old
-    };
-
     nixpkgs-2211.url = "github:NixOS/nixpkgs/nixpkgs-22.11-darwin";
     nixpkgs-2305.url = "github:NixOS/nixpkgs/nixos-23.05";
 

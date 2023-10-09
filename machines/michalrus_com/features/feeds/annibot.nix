@@ -62,7 +62,7 @@ in
   };
 
   users = {
-    extraUsers."${user}" = { isSystemUser = true; };
+    extraUsers."${user}" = { isSystemUser = true; group = user; };
     extraGroups."${group}" = {};
   };
 

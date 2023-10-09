@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 
 {
-  boot.tmpOnTmpfs = false;
+  boot.tmp.useTmpfs = false;
 
   networking.firewall.allowedTCPPorts = [
     113  # identd
@@ -20,9 +20,9 @@
   services = {
     openssh = {
       enable = true;
-      permitRootLogin = lib.mkForce "yes"; # for remote `nixos-rebuild`
-      passwordAuthentication = false;
-      challengeResponseAuthentication = false;
+      settings.PermitRootLogin = lib.mkForce "yes"; # for remote `nixos-rebuild`
+      settings.PasswordAuthentication = false;
+      settings.KbdInteractiveAuthentication = false;
     };
 
     oidentd.enable = true;
@@ -39,7 +39,8 @@
       openssh.authorizedKeys.keyFiles = [ ../../../dotfiles/michalrus/base/.ssh/authorized_keys.d/michalrus_notebook.pub ];
     };
 
-    extraUsers.m = {
+    users.m = {
+      uid = 1000;
       isNormalUser = true;
       openssh.authorizedKeys.keyFiles = [ ../../../dotfiles/michalrus/base/.ssh/authorized_keys.d/michalrus_notebook.pub ];
       description = "Michal Rus";
@@ -48,11 +49,11 @@
       # The password is only used for sudo; should probably use custom PAM setup, cf. http://unix.stackexchange.com/a/94646
       hashedPassword = "$6$.lrNvojxVb.$rebh/ELnYtO69DyvnqL4IWE8Gsg.neIzfGTsM0NbUsl7vhblv.P.SgLQk05mJiLFMXje/9paO8DCB2M8lEfQQ1";
 
-      dotfiles-old.base = config.users.users.m.home + "/.dotfiles/dotfiles";
+      #dotfiles-old.base = config.users.users.m.home + "/.dotfiles/dotfiles";
       dotfiles-old.profiles = [ "base" "michalrus/base" "michalrus/personal" ];
     };
   };
 
   # The NixOS release to be compatible with for stateful data such as databases.
-  system.stateVersion = "16.09";
+  system.stateVersion = "23.05";
 }

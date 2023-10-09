@@ -42,7 +42,7 @@ in
 
 {
 
-  users.extraUsers."${user}" = { group = user; home = dataDir; };
+  users.extraUsers."${user}" = { group = user; home = dataDir; isSystemUser = true; };
   users.extraGroups."${user}" = { };
 
   systemd.services.kornel = {

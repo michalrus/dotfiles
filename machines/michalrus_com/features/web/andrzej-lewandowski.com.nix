@@ -136,7 +136,8 @@ in
     '';
   };
 
-  users.extraUsers."${user}"  = { isSystemUser = true; home = homeDir; };
+  users.extraUsers."${user}"  = { isSystemUser = true; home = homeDir; group = user; };
+  users.groups.${user} = {};
   users.extraGroups."${user}" = { };
   systemd.tmpfiles.rules = [ "d '${homeDir}' 0755 ${user} ${user}" ];
 

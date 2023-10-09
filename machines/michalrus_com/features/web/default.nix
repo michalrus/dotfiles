@@ -38,7 +38,7 @@ with import ./common.nix modArgs;
         error_log  syslog:server=unix:/dev/log,tag=,nohostname,facility=local2 error;
 
         types {
-          text/plain      log;
+          #text/plain      log;
           text/plain      php inc;
         }
 
@@ -56,9 +56,9 @@ with import ./common.nix modArgs;
         sendfile on;
         tcp_nopush on;
         tcp_nodelay on;
-        types_hash_max_size 2048;
+        #types_hash_max_size 2048;
 
-        default_type application/octet-stream;
+        #default_type application/octet-stream;
 
         gzip on;
         gzip_disable "msie6";

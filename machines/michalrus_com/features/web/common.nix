@@ -11,8 +11,7 @@ rec {
       webroot = acmeChallenges;
       email = "m@michalrus.com";
       postRun = "systemctl reload nginx.service";
-      extraDomains = builtins.listToAttrs (map (secondary: nameValuePair secondary null) secondaries);
-      allowKeysForGroup = true;
+      extraDomainNames = secondaries;
       group = "nginx";
     };
   };

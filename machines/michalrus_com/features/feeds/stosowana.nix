@@ -7,7 +7,7 @@ let
   group = user;
   runAt = "*:0/15"; # every 15 minutes
 
-  CryptRandomSeed = pkgs.buildPerlPackage {
+  CryptRandomSeed = pkgs.perlPackages.buildPerlPackage {
     pname = "Crypt-Random-Seed";
     version = "0.03";
     src = pkgs.fetchurl {
@@ -16,7 +16,7 @@ let
     };
   };
 
-  BytesRandomSecure = pkgs.buildPerlPackage {
+  BytesRandomSecure = pkgs.perlPackages.buildPerlPackage {
     pname = "Bytes-Random-Secure";
     version = "0.29";
     src = pkgs.fetchurl {
@@ -75,7 +75,7 @@ in
   };
 
   users = {
-    extraUsers."${user}" = { isSystemUser = true; };
+    extraUsers."${user}" = { isSystemUser = true; group = user; };
     extraGroups."${group}" = {};
   };
 
