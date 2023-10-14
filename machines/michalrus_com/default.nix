@@ -11,6 +11,8 @@ nixpkgs.lib.nixosSystem {
     { _module.args = { inherit flake; }; }
     { networking.hostName = "michalrus_com"; }
 
+    flake.inputs.agenix.nixosModules.default
+
     flake.nixosModules.firewall-comments
     flake.nixosModules.dotfiles-old
 
@@ -33,6 +35,7 @@ nixpkgs.lib.nixosSystem {
     ./features/gitolite
     ./features/bitlbee
     ./features/kornel
+    ./features/openproject
     ./features/openvpn
     ./features/web
     ./features/feeds/annibot.nix

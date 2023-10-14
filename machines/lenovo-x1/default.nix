@@ -16,6 +16,8 @@ nixpkgs.lib.nixosSystem {
     { time.timeZone = "Europe/Warsaw"; }
     { system.stateVersion = "23.05"; }
 
+    flake.inputs.agenix.nixosModules.default
+
   ] ++ (with flake.nixosModules; [
 
     #cups-reenable  # disabled for battery life

@@ -29,6 +29,12 @@
     exiv2
     ext4magic
     file
+    (flake.inputs.agenix.packages.${pkgs.system}.default.overrideAttrs (drv: {
+      # Produce ASCII-armored output instead of binary files:
+      installPhase = (drv.installPhase or "") + ''
+        sed -r 's/rage (.*ENCRYPT)/rage --armor \1/g' -i $out/bin/agenix
+      '';
+    }))
     gcc
     gdb
     gettext

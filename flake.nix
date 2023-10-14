@@ -10,6 +10,11 @@
     home-manager-2305.url = "github:nix-community/home-manager/release-23.05";
     home-manager-2305.inputs.nixpkgs.follows = "nixpkgs-2305";
 
+    agenix.url = "github:ryantm/agenix";
+    agenix.inputs.nixpkgs.follows = "nixpkgs-2305";
+    agenix.inputs.darwin.follows = "nix-darwin-2305";
+    agenix.inputs.home-manager.follows = "home-manager-2305";
+
     doom-emacs = { url = "github:doomemacs/doomemacs"; flake = false; };
 
     nix-doom-emacs-2305.url = "github:nix-community/nix-doom-emacs";
