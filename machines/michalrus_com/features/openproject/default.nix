@@ -40,73 +40,88 @@ let
     diskSize = 3072;
   };
 
-  hostPort = 8055;
-
   user = "openproject";
   dataDir = "/var/lib/${user}";
 
   imageFullName = "${modified.buildArgs.name}:${version}";
 
 in {
-  # For ‘/etc/containers/policy.json’, otherwise ‘podman load’ doesn’t work:
-  virtualisation.podman.enable = true;
-
-  users.users.${user} = {
-    isSystemUser = true;
-    group = user;
-    home = dataDir;
-    autoSubUidGidRange = true;  # for rootless podman
-  };
-  users.groups.${user} = {};
-
-  age.secrets.openproject_key_base = {
-    file = ../../../../secrets/openproject_key_base.age;
-    owner = user;
-  };
-
-  systemd.services.${user} = {
-    path = [ config.virtualisation.podman.package ];
-    wantedBy = ["multi-user.target"];
-    serviceConfig = {
-      User = user;
-      Group = user;
-      MemoryHigh = "1.4G";
-      MemoryMax = "1.5G";
-      Restart = "always";
-      Environment = "PODMAN_SYSTEMD_UNIT=${user}.service";
-      Type = "notify";
-      NotifyAccess = "all";
-      TimeoutStartSec = 0;  # ‘podman load’ can take a long time
-      TimeoutStopSec = 120;
+  options.services.openproject = {
+    port = lib.mkOption {
+      type = lib.types.port;
+      default = 8055;
     };
-    preStart = ''
-      podman image inspect ${lib.escapeShellArg imageFullName} >/dev/null || \
-        exec podman load -i ${modified}
-    '';
-    script = ''
-      export OPENPROJECT_SECRET_KEY_BASE=$(cat ${config.age.secrets.openproject_key_base.path})
-      exec podman run \
-        --rm --replace --name=${user} \
-        --detach --log-driver=journald \
-        --cgroups=no-conmon \
-        --sdnotify=conmon \
-        -v ${dataDir}/assets:/var/openproject/assets \
-        -v ${dataDir}/pgdata:/var/openproject/pgdata \
-        -p ${toString hostPort}:80 \
-        -e OPENPROJECT_SECRET_KEY_BASE'*' \
-        -e OPENPROJECT_HOST__NAME=localhost:${toString 8055} \
-        -e OPENPROJECT_HTTPS=false \
-        -e OPENPROJECT_DEFAULT__LANGUAGE=en \
-        -e OPENPROJECT_LOG__LEVEL=warn \
-        -e RAILS_MIN_THREADS=2 \
-        -e RAILS_MAX_THREADS=2 \
-        ${lib.escapeShellArg imageFullName}
-    '';
+    hostname = lib.mkOption {
+      type = lib.types.str;
+      default = "localhost:${config.services.openproject.port}";
+    };
+    https = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+    };
   };
 
-  systemd.tmpfiles.rules = [
-    "d ${dataDir}        0700 ${user} ${user} -"
-    "d ${dataDir}/assets 0700 ${user} ${user} -"
-    "d ${dataDir}/pgdata 0700 ${user} ${user} -"
-  ];
+  config = {
+    # For ‘/etc/containers/policy.json’, otherwise ‘podman load’ doesn’t work:
+    virtualisation.podman.enable = true;
+
+    users.users.${user} = {
+      isSystemUser = true;
+      group = user;
+      home = dataDir;
+      autoSubUidGidRange = true;  # for rootless podman
+    };
+    users.groups.${user} = {};
+
+    age.secrets.openproject_key_base = {
+      file = ../../../../secrets/openproject_key_base.age;
+      owner = user;
+    };
+
+    systemd.services.${user} = {
+      path = [ config.virtualisation.podman.package ];
+      wantedBy = ["multi-user.target"];
+      serviceConfig = {
+        User = user;
+        Group = user;
+        MemoryHigh = "1.4G";
+        MemoryMax = "1.5G";
+        Restart = "always";
+        Environment = "PODMAN_SYSTEMD_UNIT=${user}.service";
+        Type = "notify";
+        NotifyAccess = "all";
+        TimeoutStartSec = 0;  # ‘podman load’ can take a long time
+        TimeoutStopSec = 120;
+      };
+      preStart = ''
+        podman image inspect ${lib.escapeShellArg imageFullName} >/dev/null || \
+          exec podman load -i ${modified}
+      '';
+      script = ''
+        export OPENPROJECT_SECRET_KEY_BASE=$(cat ${config.age.secrets.openproject_key_base.path})
+        exec podman run \
+          --rm --replace --name=${user} \
+          --detach --log-driver=journald \
+          --cgroups=no-conmon \
+          --sdnotify=conmon \
+          -v ${dataDir}/assets:/var/openproject/assets \
+          -v ${dataDir}/pgdata:/var/openproject/pgdata \
+          -p ${toString config.services.openproject.port}:80 \
+          -e OPENPROJECT_SECRET_KEY_BASE'*' \
+          -e OPENPROJECT_HOST__NAME=${config.services.openproject.hostname} \
+          -e OPENPROJECT_HTTPS=${if config.services.openproject.https then "true" else "false"} \
+          -e OPENPROJECT_DEFAULT__LANGUAGE=en \
+          -e OPENPROJECT_LOG__LEVEL=warn \
+          -e RAILS_MIN_THREADS=2 \
+          -e RAILS_MAX_THREADS=2 \
+          ${lib.escapeShellArg imageFullName}
+      '';
+    };
+
+    systemd.tmpfiles.rules = [
+      "d ${dataDir}        0700 ${user} ${user} -"
+      "d ${dataDir}/assets 0700 ${user} ${user} -"
+      "d ${dataDir}/pgdata 0700 ${user} ${user} -"
+    ];
+  };
 }

@@ -6,6 +6,7 @@ with import ./common.nix modArgs;
 {
   imports = [
     ./michalrus.com.nix
+    ./openproject.nix
     ./home.nix
     ./andrzej-lewandowski.com.nix
   ];
