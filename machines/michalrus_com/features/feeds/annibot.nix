@@ -38,6 +38,11 @@ in
 
 {
 
+  age.secrets.annibot_smtp = {
+    file = ../../../../secrets/smtp_scripts_michalrus_com.age;
+    owner = user;
+  };
+
   systemd.services.annibot = {
     description = "Check contacts’ birthdays and notify about upcoming by mail.";
     serviceConfig = {
@@ -48,9 +53,16 @@ in
     path = with pkgs; [ bc curl ];
     preStart = ''
       mkdir -p "${dataDir}"
-      ln -sf ${annibot}/sample/* "${dataDir}"
+
+      cat >"${dataDir}"/config.cfg <<EOF
+      MailTo           "m@michalrus.com"
+      GmailFromName    "annibot"
+      GmailFromEmail   "scripts@michalrus.com"
+      GmailPassword    "$(cat ${config.age.secrets.annibot_smtp.path})"
+      EOF
+
       chown -R "${user}:${group}" "${dataDir}"
-      chmod 750 "${dataDir}"
+      chmod -R u=rwX,g=,o= "${dataDir}"
     '';
     script = "exec ${annibot}/libexec/run";
   };

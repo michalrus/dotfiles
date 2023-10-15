@@ -14,4 +14,5 @@ let
 
 in {
   "openproject_key_base.age".publicKeys = michalrus ++ michalrus_com;
+  "smtp_scripts_michalrus_com.age".publicKeys = michalrus ++ michalrus_com;
 }
