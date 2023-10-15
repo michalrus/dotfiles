@@ -92,8 +92,8 @@ in {
       serviceConfig = {
         User = user;
         Group = user;
-        MemoryHigh = "1.4G";
-        MemoryMax = "1.5G";
+        MemoryHigh = "1.6G";
+        MemoryMax = "1.7G";
         Restart = "always";
         Environment = "PODMAN_SYSTEMD_UNIT=${user}.service";
         Type = "notify";
