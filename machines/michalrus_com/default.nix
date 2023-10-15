@@ -39,8 +39,8 @@ nixpkgs.lib.nixosSystem {
     ./features/openvpn
     ./features/web
     ./features/feeds/annibot.nix
-    ./features/feeds/stosowana.nix
-    ./features/feeds/rss2email.nix
+    #./features/feeds/stosowana.nix
+    #./features/feeds/rss2email.nix
 
     flake.inputs.home-manager-2305.nixosModules.home-manager
     {
