@@ -42,6 +42,9 @@ let
 
   user = "openproject";
   dataDir = "/var/lib/${user}";
+  assetsDir = "${dataDir}/assets";
+  pgdataDir = "${dataDir}/pgdata";
+  cidFile = "${dataDir}/${user}.cid";
 
   imageFullName = "${modified.buildArgs.name}:${version}";
 
@@ -78,6 +81,11 @@ in {
       owner = user;
     };
 
+    age.secrets.openproject_smtp = {
+      file = ../../../../secrets/smtp_scripts_michalrus_com.age;
+      owner = user;
+    };
+
     systemd.services.${user} = {
       path = [ config.virtualisation.podman.package ];
       wantedBy = ["multi-user.target"];
@@ -92,26 +100,50 @@ in {
         NotifyAccess = "all";
         TimeoutStartSec = 0;  # ‘podman load’ can take a long time
         TimeoutStopSec = 120;
+        ExecStop = lib.getExe (pkgs.writeShellScriptBin "${user}-stop" ''
+          exec podman stop --ignore --cidfile=${cidFile} --time=110
+        '');
       };
       preStart = ''
         podman image inspect ${lib.escapeShellArg imageFullName} >/dev/null || \
           exec podman load -i ${modified}
+        [ -e ${assetsDir} ] || { mkdir -p ${assetsDir} && chown ${user}:${user} ${assetsDir} ; }
+        [ -e ${pgdataDir} ] || { mkdir -p ${pgdataDir} && chown ${user}:${user} ${pgdataDir} ; }
       '';
+      # All possible settings: https://github.com/opf/openproject/blob/v13.0.4/docs/installation-and-operations/configuration/environment/README.md?plain=1#L114
       script = ''
         export OPENPROJECT_SECRET_KEY_BASE=$(cat ${config.age.secrets.openproject_key_base.path})
+        export OPENPROJECT_SMTP__PASSWORD=$(cat ${config.age.secrets.openproject_smtp.path})
         exec podman run \
           --rm --replace --name=${user} \
           --detach --log-driver=journald \
+          --cidfile=${cidFile} \
           --cgroups=no-conmon \
           --sdnotify=conmon \
-          -v ${dataDir}/assets:/var/openproject/assets \
-          -v ${dataDir}/pgdata:/var/openproject/pgdata \
+          -v ${assetsDir}:/var/openproject/assets \
+          -v ${pgdataDir}:/var/openproject/pgdata \
           -p ${toString config.services.openproject.port}:80 \
           -e OPENPROJECT_SECRET_KEY_BASE'*' \
           -e OPENPROJECT_HOST__NAME=${config.services.openproject.hostname} \
           -e OPENPROJECT_HTTPS=${if config.services.openproject.https then "true" else "false"} \
           -e OPENPROJECT_DEFAULT__LANGUAGE=en \
+          -e OPENPROJECT_AUTOLOGIN=7 \
+          -e OPENPROJECT_SELF__REGISTRATION=0 \
           -e OPENPROJECT_LOG__LEVEL=warn \
+          -e OPENPROJECT_LOGIN__REQUIRED=true \
+          -e OPENPROJECT_MAIL__FROM='OpenProject <scripts@michalrus.com>' \
+          -e OPENPROJECT_EMAIL__DELIVERY__METHOD=smtp \
+          -e OPENPROJECT_SMTP__ADDRESS=smtp.gmail.com \
+          -e OPENPROJECT_SMTP__PORT=465 \
+          -e OPENPROJECT_SMTP__DOMAIN=michalrus.com \
+          -e OPENPROJECT_SMTP__AUTHENTICATION=plain \
+          -e OPENPROJECT_SMTP__USER__NAME='scripts@michalrus.com' \
+          -e OPENPROJECT_SMTP__PASSWORD'*' \
+          -e OPENPROJECT_SMTP__SSL=true \
+          -e OPENPROJECT_SMTP__OPENSSL__VERIFY__MODE=peer \
+          -e OPENPROJECT_SMTP__ENABLE__STARTTLS__AUTO=false \
+          -e OPENPROJECT_BCC__RECIPIENTS=true \
+          -e OPENPROJECT_WELCOME__ON__HOMESCREEN=false \
           -e RAILS_MIN_THREADS=2 \
           -e RAILS_MAX_THREADS=2 \
           ${lib.escapeShellArg imageFullName}
@@ -119,9 +151,7 @@ in {
     };
 
     systemd.tmpfiles.rules = [
-      "d ${dataDir}        0700 ${user} ${user} -"
-      "d ${dataDir}/assets 0700 ${user} ${user} -"
-      "d ${dataDir}/pgdata 0700 ${user} ${user} -"
+      "d ${dataDir} 0700 ${user} ${user} -"
     ];
   };
 }
