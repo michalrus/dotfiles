@@ -43,6 +43,8 @@
 
       # nixos-rebuild switch -L --keep-going --flake .#michalrus_com --target-host root@michalrus.com
       michalrus_com = import ./machines/michalrus_com { inherit inputs; };
+
+      dell-home-server = import ./machines/dell-home-server { inherit inputs; };
     };
 
     darwinConfigurations = rec {
