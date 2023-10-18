@@ -44,6 +44,7 @@
       # nixos-rebuild switch -L --keep-going --flake .#michalrus_com --target-host root@michalrus.com
       michalrus_com = import ./machines/michalrus_com { inherit inputs; };
 
+      # nixos-rebuild switch -L --keep-going --flake .#dell-home-server --target-host root@10.77.2.11
       dell-home-server = import ./machines/dell-home-server { inherit inputs; };
     };
 

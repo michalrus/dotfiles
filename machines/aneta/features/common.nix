@@ -12,6 +12,8 @@
 
     rpiKrzysiek   = "${p}.51";
     printer       = "${p}.5";
+
+    dell-home-server = "${p}.11";
   };
 
 }

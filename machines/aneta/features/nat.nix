@@ -99,6 +99,7 @@ lib.mkMerge [
       machines = [
         { hostName = "rpi-krzysiek"; ethernetAddress = "dc:a6:32:78:ae:d8"; ipAddress = addressing.rpiKrzysiek; }
         { hostName = "printer";      ethernetAddress = "00:1a:4b:23:ba:6e"; ipAddress = addressing.printer;     }
+        { hostName = "dell-home-server"; ethernetAddress = "e4:70:b8:f7:4b:8f"; ipAddress = addressing.dell-home-server; }
       ];
     };
 
