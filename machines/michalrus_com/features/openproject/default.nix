@@ -56,7 +56,7 @@ in {
     };
     hostname = lib.mkOption {
       type = lib.types.str;
-      default = "localhost:${config.services.openproject.port}";
+      default = "localhost:${toString config.services.openproject.port}";
     };
     https = lib.mkOption {
       type = lib.types.bool;

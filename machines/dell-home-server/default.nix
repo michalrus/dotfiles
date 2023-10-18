@@ -34,7 +34,8 @@ nixpkgs.lib.nixosSystem {
 
     ./features/users
 
-    #./features/openproject
+    ../michalrus_com/features/openproject
+    ({ config, ... }: { networking.firewall.allowedTCPPorts = [ config.services.openproject.port ]; })
 
     flake.inputs.home-manager-2305.nixosModules.home-manager
     {

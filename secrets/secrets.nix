@@ -11,8 +11,9 @@ let
   # machines
   michalrus_com = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHAq3I/JNJoWzLYn6/KSWiG3IfFthdeMGuWpRm0OSM4I"];
   lenovo_x1 = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICMEf2VphaaVMFHAnt09xyMjpnIdxaECdvTZl/i4R3s5"];
+  dell-home-server = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHIF7BIoIAPX1gBffDvuKoHHXrHRbgJdDze6DhH97N5B"];
 
 in {
-  "openproject_key_base.age".publicKeys = michalrus ++ michalrus_com;
-  "smtp_scripts_michalrus_com.age".publicKeys = michalrus ++ michalrus_com;
+  "openproject_key_base.age".publicKeys = michalrus ++ michalrus_com ++ dell-home-server;
+  "smtp_scripts_michalrus_com.age".publicKeys = michalrus ++ michalrus_com ++ dell-home-server;
 }
