@@ -33,6 +33,7 @@ nixpkgs.lib.nixosSystem {
     ../_shared_/features/zsh
 
     ./features/users
+    ./features/wireguard
 
     ../michalrus_com/features/openproject
     ({ config, ... }: { networking.firewall.allowedTCPPorts = [ config.services.openproject.port ]; })

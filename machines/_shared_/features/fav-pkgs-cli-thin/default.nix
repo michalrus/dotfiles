@@ -95,6 +95,7 @@
     watchexec
     wget
     which
+    wireguard-tools
     wirelesstools
     wrk
     zip
