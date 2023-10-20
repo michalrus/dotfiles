@@ -56,6 +56,7 @@ in
           ssl_certificate_key ${config.security.acme.certs.${config.services.openproject.hostname}.directory}/key.pem;
 
           server_name ${config.services.openproject.hostname};
+          client_max_body_size 64M;
 
           location / {
             proxy_redirect off;
