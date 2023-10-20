@@ -35,8 +35,14 @@ nixpkgs.lib.nixosSystem {
     ./features/users
     ./features/wireguard
 
-    ../michalrus_com/features/openproject
-    ({ config, ... }: { networking.firewall.allowedTCPPorts = [ config.services.openproject.port ]; })
+    ../_shared_/features/nginx-reasonable
+    ./features/nginx
+
+    ./features/openproject
+    {
+      services.openproject.hostname = "openproject.michalrus.com";
+      services.openproject.https = true;
+    }
 
     flake.inputs.home-manager-2305.nixosModules.home-manager
     {

@@ -92,8 +92,8 @@ in {
       serviceConfig = {
         User = user;
         Group = user;
-        MemoryHigh = "1.6G";
-        MemoryMax = "1.7G";
+        MemoryHigh = "9G";
+        MemoryMax = "10G";
         Restart = "always";
         Environment = "PODMAN_SYSTEMD_UNIT=${user}.service";
         Type = "notify";
@@ -144,8 +144,9 @@ in {
           -e OPENPROJECT_SMTP__ENABLE__STARTTLS__AUTO=false \
           -e OPENPROJECT_BCC__RECIPIENTS=true \
           -e OPENPROJECT_WELCOME__ON__HOMESCREEN=false \
-          -e RAILS_MIN_THREADS=2 \
-          -e RAILS_MAX_THREADS=2 \
+          -e OPENPROJECT_WEB_WORKERS=8 \
+          -e RAILS_MIN_THREADS=16 \
+          -e RAILS_MAX_THREADS=16 \
           ${lib.escapeShellArg imageFullName}
       '';
     };

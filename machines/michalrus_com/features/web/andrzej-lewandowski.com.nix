@@ -22,8 +22,8 @@ in
       name = domain;
       alternatives = [ "www.${domain}" "*.${domain}" ];
       forcedCertDir = "/var/lib/cloudflare/${domain}";
+      setRealIPFromCloudflare = true;
       body = ''
-        ${setRealIPFromCloudflare}
         root /var/www/${domain}/release/public;
         error_page 404 /pl/404.html;
         location = / { return 301 https://${domain}/pl/; }
@@ -42,9 +42,9 @@ in
     (sslServer {
       name = "dev.${domain}";
       forcedCertDir = "/var/lib/cloudflare/${domain}";
+      setRealIPFromCloudflare = true;
       # generate httpd password hashes with `openssl passwd -apr1`
       body = ''
-        ${setRealIPFromCloudflare}
         auth_basic "Speak, friend, and enter.";
         auth_basic_user_file "${pkgs.writeText "htpasswd" ''
           michalrus:$apr1$Q67KvdAC$tUSCO.hwI5nCOtmsbkjyX/
@@ -87,8 +87,8 @@ in
     (sslServer {
       name = "${altDomain}";
       forcedCertDir = "/var/lib/cloudflare/${altDomain}";
+      setRealIPFromCloudflare = true;
       body = ''
-        ${setRealIPFromCloudflare}
         return 301 https://${domain}$request_uri;
       '';
     })
@@ -96,8 +96,8 @@ in
     (sslServer {
       name = "dev.${altDomain}";
       forcedCertDir = "/var/lib/cloudflare/${altDomain}";
+      setRealIPFromCloudflare = true;
       body = ''
-        ${setRealIPFromCloudflare}
         return 301 https://dev.${domain}$request_uri;
       '';
     })

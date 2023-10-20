@@ -35,9 +35,11 @@ nixpkgs.lib.nixosSystem {
     ./features/gitolite
     ./features/bitlbee
     ./features/kornel
-    ./features/openproject
     ./features/openvpn
+
+    ../_shared_/features/nginx-reasonable
     ./features/web
+
     ./features/feeds/annibot.nix
     #./features/feeds/stosowana.nix
     #./features/feeds/rss2email.nix
