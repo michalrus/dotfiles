@@ -71,7 +71,7 @@ in
     services.bind = {
       enable = true;
 
-      configFile = pkgs.writeText "named.conf" ''
+      configFile = pkgs.writeText "named.conf" (''
         include "/etc/bind/rndc.key";
         controls {
           inet 127.0.0.1 allow {localhost;} keys {"rndc-key";};
@@ -92,7 +92,20 @@ in
           forward only;
           include "${forwardersConf}";
         };
-      '';
+      ''
+      + (let domain = "openproject.michalrus.com"; in ''
+        zone "${domain}" {
+          type master;
+          file "${pkgs.writeText "${domain}.zone" ''
+            $TTL    604800
+            @       IN      SOA     ns.${domain}. admin.michalrus.com. (2 604800 86400 2419200 604800)
+            @       IN      NS      ns.${domain}.
+            @       IN      A       10.77.2.11
+            ns      IN      A       10.77.2.11
+          ''}";
+        };
+      '')
+      );
     };
 
     systemd.services.bind.preStart = lib.mkAfter ''
