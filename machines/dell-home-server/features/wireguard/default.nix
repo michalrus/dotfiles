@@ -16,9 +16,6 @@ let iface = "wg0"; in
           publicKey = __readFile ../../../../secrets/wireguard_michalrus_com.pub;
           allowedIPs = [ "10.77.3.1/32" ];
           endpoint = "54.229.14.161:51820";
-          persistentKeepalive = 25;
-          dynamicEndpointRefreshSeconds = 60;
-          dynamicEndpointRefreshRestartSeconds = 10;
         }
       ];
     };
