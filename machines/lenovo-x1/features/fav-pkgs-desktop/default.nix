@@ -26,6 +26,7 @@ in
     protobuf
     rust-analyzer
     rustup
+    solc
     sqlint
     vscodium
     (texlive.combine {
