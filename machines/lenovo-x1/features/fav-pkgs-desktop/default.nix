@@ -20,6 +20,7 @@ in
     haskellPackages.ghc
     haskellPackages.hlint
     jetbrains.idea-community
+    nodejs_latest
     octave
     openjdk8
     pandoc
