@@ -4,13 +4,13 @@ lib.mkMerge [
 
   {
     nix.package = let
-      pkg = flake.inputs.nixpkgs-2305.legacyPackages.${pkgs.system}.nixUnstable;
-    in assert lib.versionAtLeast pkg.version "2.15.1"; pkg;
+      pkg = flake.inputs.nixpkgs-2311.legacyPackages.${pkgs.system}.nixUnstable;
+    in assert lib.versionAtLeast pkg.version "2.17.0"; pkg;
 
     nix.gc.automatic = lib.mkForce false;
 
     nix.extraOptions = ''
-      experimental-features = nix-command flakes
+      experimental-features = nix-command flakes fetch-closure
       keep-outputs = true
       keep-derivations = true
     ''
