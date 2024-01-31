@@ -2,13 +2,13 @@
 
 let
 
-  version = "13.0.4";
+  version = "13.2.0";
 
   base = pkgs.dockerTools.pullImage {
     imageName = "openproject/community";
     finalImageTag = version;
-    imageDigest = "sha256:1f80503b4f220d99d1cae7ac7418d81662c374b211942d0cca9f84418c4d47f1";
-    sha256 = "sha256-pKA0CHKaT4f6UUl1TYZeHxiFe4AKyV2CSlams+xMB28=";
+    imageDigest = "sha256:a2484212b0003923fb80822fb06b030a7966f5e84d6b16e0303d7a5035ae4af8";
+    sha256 = "sha256-t72oaM7FisqWENQV9QmXA9IXpCt63lUZV2cWWAAnFxY=";
   };
 
   imageConfig = fromImage: builtins.fromJSON (builtins.unsafeDiscardStringContext (builtins.readFile (
