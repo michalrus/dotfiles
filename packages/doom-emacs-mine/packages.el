@@ -2,6 +2,7 @@
 
 (package! git-link)
 (package! gumshoe)
+(package! jsonnet-mode)
 
 ;; Prevent this double-pin Magit bug:
 ;;   • <https://github.com/doomemacs/doomemacs/issues/7363#issuecomment-1696530746>

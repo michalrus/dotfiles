@@ -67,14 +67,17 @@
       "C-M-<up>"    #'windmove-up
       "C-M-<down>"  #'windmove-down)
 
-(after! vertico
-  (setq vertico-cycle nil
-        vertico-sort-function 'vertico-sort-alpha)
+(after! ivy
+  (setq ivy-wrap nil)
   (map! "C-s" #'+default/search-buffer))
+
+(after! projectile
+  (setq projectile-enable-caching nil))
 
 (after! recentf
   (map! "C-r" #'recentf-open-files)
-  (setq recentf-max-saved-items 1000))
+  (setq recentf-max-saved-items 1000)
+  (run-at-time t 300 'recentf-save-list))
 
 (after! magit
   (setq magit-save-repository-buffers 'dontask
@@ -128,6 +131,10 @@
 
 (after! nix-mode
   (set-company-backend! 'nix-mode 'company-files 'company-dabbrev)
-  (setq-hook! 'nix-mode-hook company-idle-delay 0.2))
+  (setq-hook! 'nix-mode-hook company-idle-delay 0.2)
+  (setq nix-indent-function 'nix-indent-line))
+
+(use-package! jsonnet-mode
+  :mode "\\.jsonnet\\'")
 
 ;
