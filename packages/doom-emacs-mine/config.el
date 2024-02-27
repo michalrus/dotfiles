@@ -76,8 +76,11 @@
 
 (after! recentf
   (map! "C-r" #'recentf-open-files)
-  (setq recentf-max-saved-items 1000)
+  (setq recentf-auto-cleanup 'never  ; requires SSH-ing to check remote entries
+        recentf-max-saved-items 1000)
   (run-at-time t 300 'recentf-save-list))
+
+(transient-mark-mode -1)
 
 (after! magit
   (setq magit-save-repository-buffers 'dontask
