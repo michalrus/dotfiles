@@ -47,6 +47,7 @@
     httperf
     httrack
     hwinfo
+    iftop
     imgurbash2
     indent
     inetutils
