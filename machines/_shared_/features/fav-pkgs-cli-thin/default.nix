@@ -1,6 +1,8 @@
 { flake, config, lib, pkgs, ... }:
 
 {
+  programs.direnv.enable = true;
+
   environment.systemPackages = flake.lib.filterSystem pkgs.system (with pkgs; [
     (hiPrio arping)
     (hiPrio netcat-openbsd)
