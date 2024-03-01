@@ -95,6 +95,9 @@
   (map! :map company-active-map
         "<tab>" #'company-complete-selection))
 
+(after! counsel
+  (setq counsel-find-file-ignore-regexp nil))
+
 ;; Auto-saving:
 (add-hook! focus-out (save-some-buffers t))
 (add-hook! doom-switch-buffer (save-some-buffers t))
