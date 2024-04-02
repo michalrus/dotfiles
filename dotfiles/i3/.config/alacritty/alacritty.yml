@@ -53,7 +53,7 @@ colors:
     cursor: '0x93a1a1'
 
   normal:
-    black:   '0x073642'
+    black:   '0x616a6a'
     red:     '0xdc322f'
     green:   '0x859900'
     yellow:  '0xb58900'
@@ -63,7 +63,7 @@ colors:
     white:   '0x93a1a1'
 
   bright:
-    black:   '0x073642'
+    black:   '0x616a6a'
     red:     '0xcb4b16'
     green:   '0x859900'
     yellow:  '0xb58900'
