@@ -80,8 +80,6 @@
         recentf-max-saved-items 1000)
   (run-at-time t 300 'recentf-save-list))
 
-(transient-mark-mode -1)
-
 (after! magit
   (setq magit-save-repository-buffers 'dontask
         magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1
