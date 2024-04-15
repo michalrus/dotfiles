@@ -10,11 +10,12 @@
 
 ;; Theme, but adjust a few faces to match the original ‘solarized-theme’:
 (setq doom-theme 'doom-solarized-dark
-      doom-font (font-spec :family "Iosevka Nerd Font Propo" :size 12.0 :weight 'light)
+      doom-font (font-spec :family "Iosevka Nerd Font Propo" :size (if doom--system-macos-p 14.0 12.0) :weight 'light)
       doom-serif-font (font-spec :family (cond ((eq system-type 'gnu/linux) "Noto Serif")
                                                (t "Georgia"))))
 (add-to-list 'default-frame-alist '(background-color . "#002b36"))  ; prevent initial flicker
 (add-hook! doom-load-theme
+  (setq frame-title-format "%b – Emacs")
   (after! font-lock
     (set-face-attribute 'font-lock-constant-face      nil :foreground (doom-color 'blue))
     (set-face-attribute 'font-lock-builtin-face       nil :foreground (doom-color 'white) :weight 'bold)
