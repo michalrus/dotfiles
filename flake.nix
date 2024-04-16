@@ -19,9 +19,6 @@
 
     doom-emacs = { url = "github:doomemacs/doomemacs"; flake = false; };
 
-    nix-doom-emacs-2305.url = "github:nix-community/nix-doom-emacs";
-    nix-doom-emacs-2305.inputs.nixpkgs.follows = "nixpkgs-2305";
-
     yt-dlp = { url = "github:yt-dlp/yt-dlp"; flake = false; };
 
     malicious-hosts = {

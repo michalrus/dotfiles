@@ -24,13 +24,13 @@ inputs.nix-darwin-2305.lib.darwinSystem {
         useGlobalPkgs = true;
         useUserPackages = true;
         sharedModules = [
-          flake.inputs.nix-doom-emacs-2305.hmModule
           ../_shared_/home/shells
           ../_shared_/home/gnupg
           ../_shared_/home/git
           ../_shared_/home/password-store
           ../_shared_/home/haskell
           ../_shared_/home/gnu-screen
+          ../_shared_/home/doom-emacs
           ./home/shared.nix
           ./home/link-darwin-apps.nix
         ];
@@ -42,6 +42,9 @@ inputs.nix-darwin-2305.lib.darwinSystem {
 
     ../_shared_/features/nix.conf
     ../_shared_/features/nix.conf/work-substituters.nix
+
+    # defaults write NSGlobalDomain KeyRepeat -int 1
+    # defaults write NSGlobalDomain InitialKeyRepeat -int 10
 
     {
       # home directories for home-manager to pick up; they get messed up b/c of flakes
