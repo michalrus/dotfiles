@@ -63,10 +63,10 @@ in
 
   systemd.user.services.emacs.Service.Restart = lib.mkForce "always";
 
-  home.sessionVariables = if pkgs.stdenv.isLinux then rec {
+  home.sessionVariables = rec {
     EDITOR = "emacs";
     VISUAL = EDITOR;
-  } else {};
+  };
 
   home.shellAliases.e = "$EDITOR";
 }
