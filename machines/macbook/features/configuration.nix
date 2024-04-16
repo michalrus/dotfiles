@@ -47,6 +47,7 @@
     git
     #gitstatus  # for powerlevel10k Zsh prompt (or else, it will download&install its own binary blobs in ~/.cache)
     bat
+    ripgrep
 
     mpv
     flake.packages.${pkgs.system}.yt-dlp
