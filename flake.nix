@@ -6,15 +6,18 @@
 
     nixpkgs-2311.url = "github:NixOS/nixpkgs/nixos-23.11";
 
-    nix-darwin-2305.url = "github:lnl7/nix-darwin/master";
-    nix-darwin-2305.inputs.nixpkgs.follows = "nixpkgs-2305";
+    nix-darwin-2311.url = "github:lnl7/nix-darwin/master";
+    nix-darwin-2311.inputs.nixpkgs.follows = "nixpkgs-2311";
 
     home-manager-2305.url = "github:nix-community/home-manager/release-23.05";
     home-manager-2305.inputs.nixpkgs.follows = "nixpkgs-2305";
 
+    home-manager-2311.url = "github:nix-community/home-manager/release-23.11";
+    home-manager-2311.inputs.nixpkgs.follows = "nixpkgs-2311";
+
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs-2305";
-    agenix.inputs.darwin.follows = "nix-darwin-2305";
+    agenix.inputs.darwin.follows = "nix-darwin-2311";
     agenix.inputs.home-manager.follows = "home-manager-2305";
 
     doom-emacs = { url = "github:doomemacs/doomemacs"; flake = false; };

@@ -3,7 +3,7 @@
     "agenix": {
       "inputs": {
         "darwin": [
-          "nix-darwin-2305"
+          "nix-darwin-2311"
         ],
         "home-manager": [
           "home-manager-2305"
@@ -87,6 +87,27 @@
         "type": "github"
       }
     },
+    "home-manager-2311": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-2311"
+        ]
+      },
+      "locked": {
+        "lastModified": 1712386041,
+        "narHash": "sha256-dA82pOMQNnCJMAsPG7AXG35VmCSMZsJHTFlTHizpKWQ=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "d6bb9f934f2870e5cbc5b94c79e9db22246141ff",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "ref": "release-23.11",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
     "malicious-hosts": {
       "flake": false,
       "locked": {
@@ -99,18 +120,18 @@
         "url": "https://github.com/StevenBlack/hosts/raw/master/alternates/fakenews-gambling/hosts"
       }
     },
-    "nix-darwin-2305": {
+    "nix-darwin-2311": {
       "inputs": {
         "nixpkgs": [
-          "nixpkgs-2305"
+          "nixpkgs-2311"
         ]
       },
       "locked": {
-        "lastModified": 1667419884,
-        "narHash": "sha256-oLNw87ZI5NxTMlNQBv1wG2N27CUzo9admaFlnmavpiY=",
+        "lastModified": 1711763326,
+        "narHash": "sha256-sXcesZWKXFlEQ8oyGHnfk4xc9f2Ip0X/+YZOq3sKviI=",
         "owner": "lnl7",
         "repo": "nix-darwin",
-        "rev": "cfc0125eafadc9569d3d6a16ee928375b77e3100",
+        "rev": "36524adc31566655f2f4d55ad6b875fb5c1a4083",
         "type": "github"
       },
       "original": {
@@ -154,11 +175,11 @@
     },
     "nixpkgs-2311": {
       "locked": {
-        "lastModified": 1705458851,
-        "narHash": "sha256-uQvEhiv33Zj/Pv364dTvnpPwFSptRZgVedDzoM+HqVg=",
+        "lastModified": 1713145326,
+        "narHash": "sha256-m7+IWM6mkWOg22EC5kRUFCycXsXLSU7hWmHdmBfmC3s=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "8bf65f17d8070a0a490daf5f1c784b87ee73982c",
+        "rev": "53a2c32bc66f5ae41a28d7a9a49d321172af621e",
         "type": "github"
       },
       "original": {
@@ -175,8 +196,9 @@
         "cloudflare-ips-v6": "cloudflare-ips-v6",
         "doom-emacs": "doom-emacs",
         "home-manager-2305": "home-manager-2305",
+        "home-manager-2311": "home-manager-2311",
         "malicious-hosts": "malicious-hosts",
-        "nix-darwin-2305": "nix-darwin-2305",
+        "nix-darwin-2311": "nix-darwin-2311",
         "nixpkgs-2211": "nixpkgs-2211",
         "nixpkgs-2305": "nixpkgs-2305",
         "nixpkgs-2311": "nixpkgs-2311",

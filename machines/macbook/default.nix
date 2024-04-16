@@ -2,7 +2,7 @@
 
 let flake = inputs.self; in
 
-inputs.nix-darwin-2305.lib.darwinSystem {
+inputs.nix-darwin-2311.lib.darwinSystem {
   system = "aarch64-darwin";
   modules = [
     { _module.args = { inherit flake; }; }
@@ -17,7 +17,7 @@ inputs.nix-darwin-2305.lib.darwinSystem {
     ./features/configuration.nix
     ./features/programs-mtr.nix
 
-    flake.inputs.home-manager-2305.darwinModules.home-manager
+    flake.inputs.home-manager-2311.darwinModules.home-manager
     {
       home-manager = {
         extraSpecialArgs = { inherit flake; };
