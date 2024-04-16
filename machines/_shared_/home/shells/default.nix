@@ -227,8 +227,8 @@ in {
 
   programs.htop.enable = true;
 
-  #programs.direnv.enable = true;
-  #programs.direnv.nix-direnv.enable = true;
+  programs.direnv.enable = true;
+  programs.direnv.nix-direnv.enable = true;
 
   home.file.".config/yt-dlp/config".text = ''
     --embed-metadata
