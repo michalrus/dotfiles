@@ -12,13 +12,6 @@
   nix.configureBuildUsers = true;
   nix.nrBuildUsers = 32;
 
-  # To test the linux-builder, try building this (not in cache.nixos.org):
-  #   linux-builder-test = callPackage ({hello}: hello.overrideAttrs (old: { pname = "hello-modified"; })) {};
-  nix.settings.extra-trusted-users = ["unused--avoid-silly-linux-builder-assertion"];
-  nix.linux-builder = {
-    enable = true;
-  };
-
   # Create /etc/bashrc that loads the nix-darwin environment.
   programs.bash.enable = true;
   programs.bash.enableCompletion = true;
