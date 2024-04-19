@@ -116,7 +116,7 @@ nixpkgs.lib.nixosSystem {
     # FIXME: get rid of ↓
     { environment.variables.PATH = [ "$HOME/.bin" ]; }
 
-    { boot.binfmt.emulatedSystems = [ "aarch64-linux" ]; }  # for building Raspberry Pi systems on x86_64
+    #{ boot.binfmt.emulatedSystems = [ "aarch64-linux" ]; }  # for building Raspberry Pi systems on x86_64
 
     { networking.firewall.allowedTCPPorts = [ 12345 ]; }  # python -m http.server 12345
 
