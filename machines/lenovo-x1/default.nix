@@ -76,8 +76,13 @@ nixpkgs.lib.nixosSystem {
     ./features/wine
     ./features/yubikey
 
-    flake.inputs.home-manager-2305.nixosModules.home-manager
     {
+      age.identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+      age.secrets.michalrus-git-annex-private-key = { file = inputs.self + "/secrets/michalrus-git-annex-private-key.age"; owner = "m"; };
+    }
+
+    flake.inputs.home-manager-2305.nixosModules.home-manager
+    ({ config, ... }: {
       home-manager = {
         extraSpecialArgs = { inherit flake; };
         useGlobalPkgs = true;
@@ -93,7 +98,7 @@ nixpkgs.lib.nixosSystem {
           ./home/shared.nix
         ];
         users.m.imports = [
-          ../_shared_/home/identity-personal
+          (import ../_shared_/home/identity-personal { sshIdentityGitAnnex = config.age.secrets.michalrus-git-annex-private-key.path; })
           ../_shared_/home/doom-emacs
         ];
         users.mw.imports = [
@@ -104,7 +109,7 @@ nixpkgs.lib.nixosSystem {
         users.guest.imports = [ ./home/guest.nix ];
         users.root.imports = [ ];
       };
-    }
+    })
 
     { security.pam.services.su.requireWheel = true; }
 

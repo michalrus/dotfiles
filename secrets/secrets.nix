@@ -18,4 +18,5 @@ in {
   "smtp_scripts_michalrus_com.age".publicKeys = michalrus ++ michalrus_com ++ dell-home-server;
   "wireguard_dell-home-server.age".publicKeys = michalrus ++ dell-home-server;
   "wireguard_michalrus_com.age".publicKeys = michalrus ++ michalrus_com;
+  "michalrus-git-annex-private-key.age".publicKeys = michalrus ++ lenovo_x1;
 }

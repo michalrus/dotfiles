@@ -121,6 +121,13 @@ in {
     '';
   };
 
+  home.file.".ssh/config".text = ''
+    HashKnownHosts no
+    ServerAliveInterval 20
+    PasswordAuthentication no
+    Include ~/.ssh/config.d/*
+  '';
+
   programs.bat.enable = true;
 
   home.shellAliases = rec {
