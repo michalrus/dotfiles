@@ -43,6 +43,9 @@
       # sudo nixos-rebuild switch -L --keep-going --flake .#lenovo-x1
       lenovo-x1 = import ./machines/lenovo-x1 { inherit inputs; };
 
+      # sudo nixos-rebuild switch -L --keep-going --flake .#macbook-nixos
+      macbook-nixos = import ./machines/macbook-nixos { inherit inputs; };
+
       # nixos-rebuild switch -L --keep-going --flake .#michalrus_com --target-host root@michalrus.com
       michalrus_com = import ./machines/michalrus_com { inherit inputs; };
 
