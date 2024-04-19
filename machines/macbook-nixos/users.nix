@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ flake, config, lib, pkgs, ... }:
 
 {
   users.users.root.hashedPassword = "$6$urdrKHI/CxKbydF5$H6vObqN/e6qhexvgI981Kq.MPcIx8PY0R.UwPveb0M.BATrF1FPFsV/n.ejgjGdmHp1K2h4LP3unbK2IWLGSP0";
@@ -8,7 +8,7 @@
     description = "Michal Rus";
     hashedPassword = "$6$5KiojYxHlGIjx/0N$u3qd01KYLOFZ0.mSfyxOoeK693TXE/UaKPiAcX/.X75A9KJnI4W/V7u2AIZYi.PW0eMDgNIJiiXGum0aaEgg//";
     extraGroups = [ "wheel" ];
-    openssh.authorizedKeys.keyFiles = [ ../../secrets/ssh-key-private.pub ];
+    openssh.authorizedKeys.keyFiles = [ ../../secrets/ssh-key-personal.pub ];
     dotfiles-old.profiles = [ "base" "michalrus/base" "michalrus/personal" ];
   };
 
