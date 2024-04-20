@@ -1,9 +1,8 @@
-{ sshIdentityGitAnnex }:
-
 {
   config,
   pkgs,
   lib,
+  secrets,
   ...
 }: {
   programs.git = {
@@ -35,7 +34,7 @@
       UserKnownHostsFile ~/.ssh/known_hosts.d/michalrus.com
       User gitolite
       IdentitiesOnly yes
-      IdentityFile ${sshIdentityGitAnnex}
+      IdentityFile ${secrets.ssh-key-personal-git-annex.path}
   '';
 
   home.file.".ssh/known_hosts.d/michalrus.com".text = ''

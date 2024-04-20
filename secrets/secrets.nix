@@ -11,6 +11,8 @@ let
   # machines
   michalrus_com = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHAq3I/JNJoWzLYn6/KSWiG3IfFthdeMGuWpRm0OSM4I"];
   lenovo_x1 = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICMEf2VphaaVMFHAnt09xyMjpnIdxaECdvTZl/i4R3s5"];
+  macbook = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILZEeBucsKC/jKItBn8MQxSBSUiO2oMCHn5u5iSxI7Ac"];
+  macbook-nixos = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO4xwYfoldXil0aOHLOzSugiLKVqh/M7Hmi6T2Awv7k0"];
   dell-home-server = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHIF7BIoIAPX1gBffDvuKoHHXrHRbgJdDze6DhH97N5B"];
 
 in {
@@ -18,5 +20,12 @@ in {
   "smtp_scripts_michalrus_com.age".publicKeys = michalrus ++ michalrus_com ++ dell-home-server;
   "wireguard_dell-home-server.age".publicKeys = michalrus ++ dell-home-server;
   "wireguard_michalrus_com.age".publicKeys = michalrus ++ michalrus_com;
-  "ssh-key-personal-git-annex.age".publicKeys = michalrus ++ lenovo_x1;
+
+  "ssh-key-personal-git-annex.age".publicKeys = michalrus ++ lenovo_x1 ++ macbook ++ macbook-nixos;
+  "ssh-config-work-devx.age".publicKeys = michalrus ++ lenovo_x1 ++ macbook ++ macbook-nixos;
+  "ssh-config-work-iog.age".publicKeys = michalrus ++ lenovo_x1 ++ macbook ++ macbook-nixos;
+  "ssh-config-work-lace.age".publicKeys = michalrus ++ lenovo_x1 ++ macbook ++ macbook-nixos;
+  "ssh-known_hosts-work-devx.age".publicKeys = michalrus ++ lenovo_x1 ++ macbook ++ macbook-nixos;
+  "ssh-known_hosts-work-iog.age".publicKeys = michalrus ++ lenovo_x1 ++ macbook ++ macbook-nixos;
+  "ssh-known_hosts-work-lace.age".publicKeys = michalrus ++ lenovo_x1 ++ macbook ++ macbook-nixos;
 }

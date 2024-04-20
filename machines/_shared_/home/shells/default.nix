@@ -68,6 +68,9 @@ in {
 
       zstyle ':completion:*' menu select
 
+      # Don’t use /etc/hosts, because they’re full of malicious hosts:
+      zstyle ':completion:*:(ssh|scp|rsync|telnet|ftp|ping):*' hosts off
+
       bindkey "\e[1;5C" forward-word
       bindkey "\e[1;5D" backward-word
       bindkey "\e[1;3C" forward-word

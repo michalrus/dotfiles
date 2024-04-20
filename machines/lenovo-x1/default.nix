@@ -79,12 +79,18 @@ nixpkgs.lib.nixosSystem {
     {
       age.identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
       age.secrets.ssh-key-personal-git-annex = { file = inputs.self + "/secrets/ssh-key-personal-git-annex.age"; owner = "m"; };
+      age.secrets.ssh-config-work-devx = { file = inputs.self + "/secrets/ssh-config-work-devx.age"; owner = "mw"; };
+      age.secrets.ssh-known_hosts-work-devx = { file = inputs.self + "/secrets/ssh-known_hosts-work-devx.age"; owner = "mw"; };
+      age.secrets.ssh-config-work-iog = { file = inputs.self + "/secrets/ssh-config-work-iog.age"; owner = "mw"; };
+      age.secrets.ssh-known_hosts-work-iog = { file = inputs.self + "/secrets/ssh-known_hosts-work-iog.age"; owner = "mw"; };
+      age.secrets.ssh-config-work-lace = { file = inputs.self + "/secrets/ssh-config-work-lace.age"; owner = "mw"; };
+      age.secrets.ssh-known_hosts-work-lace = { file = inputs.self + "/secrets/ssh-known_hosts-work-lace.age"; owner = "mw"; };
     }
 
     flake.inputs.home-manager-2305.nixosModules.home-manager
     ({ config, ... }: {
       home-manager = {
-        extraSpecialArgs = { inherit flake; };
+        extraSpecialArgs = { inherit flake; inherit (config.age) secrets; };
         useGlobalPkgs = true;
         useUserPackages = true;
         sharedModules = [
@@ -98,7 +104,7 @@ nixpkgs.lib.nixosSystem {
           ./home/shared.nix
         ];
         users.m.imports = [
-          (import ../_shared_/home/identity-personal { sshIdentityGitAnnex = config.age.secrets.ssh-key-personal-git-annex.path; })
+          ../_shared_/home/identity-personal
           ../_shared_/home/doom-emacs
         ];
         users.mw.imports = [
