@@ -89,7 +89,7 @@ in
     pdfarranger
     pdfpc
     pinentry-gtk2
-    chromium
+    flake.inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.chromium
     gnucash
     retroarchFull
     python3Packages.livestreamer

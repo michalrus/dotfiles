@@ -6,6 +6,9 @@
 
     nixpkgs-2311.url = "github:NixOS/nixpkgs/nixos-23.11";
 
+    # Chromium, yt-dlp etc.
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+
     nix-darwin-2311.url = "github:lnl7/nix-darwin/master";
     nix-darwin-2311.inputs.nixpkgs.follows = "nixpkgs-2311";
 
@@ -103,7 +106,7 @@
       tap-plugins = callPackage ./packages/tap-plugins {};
       transcribe = callPackage ./packages/transcribe {};
       vocproc = callPackage ./packages/vocproc { inherit lv2-cpp-tools; };
-      yt-dlp = callPackage ./packages/yt-dlp { flake = inputs.self; };
+      yt-dlp = inputs.nixpkgs-unstable.legacyPackages.${system}.callPackage ./packages/yt-dlp { flake = inputs.self; };
       x11-rootless = callPackage ./packages/x11-rootless {};
       x11-screenshot = callPackage ./packages/x11-screenshot {};
     });
