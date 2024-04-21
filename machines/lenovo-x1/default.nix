@@ -44,7 +44,6 @@ nixpkgs.lib.nixosSystem {
 
     ./features/android
     ./features/bluetooth
-    ./features/emacs
     ./features/fav-pkgs-cli-fat
     ./features/fav-pkgs-desktop
     ./features/firefox-autocomplete
