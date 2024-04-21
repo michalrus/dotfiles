@@ -15,9 +15,6 @@ nixpkgs.lib.nixosSystem {
     { networking.hostName = "lenovo-x1"; }
     { time.timeZone = "Europe/Warsaw"; }
     { system.stateVersion = "23.05"; }
-
-    flake.inputs.agenix.nixosModules.default
-
   ] ++ (with flake.nixosModules; [
 
     #cups-reenable  # disabled for battery life
@@ -76,6 +73,7 @@ nixpkgs.lib.nixosSystem {
     ./features/wine
     ./features/yubikey
 
+    flake.inputs.agenix.nixosModules.default
     {
       age.identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
       age.secrets.ssh-key-personal-git-annex = { file = inputs.self + "/secrets/ssh-key-personal-git-annex.age"; owner = "m"; };

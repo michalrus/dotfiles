@@ -30,6 +30,12 @@
         HostKeyAlias github.com
         UserKnownHostsFile ~/.ssh/known_hosts.d/github.com
         User git
+
+      Host gist.github.com
+        Hostname gist.github.com
+        HostKeyAlias github.com
+        UserKnownHostsFile ~/.ssh/known_hosts.d/github.com
+        User git
     '';
 
     ".ssh/known_hosts.d/github.com".text = ''

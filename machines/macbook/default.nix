@@ -17,10 +17,21 @@ inputs.nix-darwin-2311.lib.darwinSystem {
     ./features/configuration.nix
     ./features/programs-mtr.nix
 
-    flake.inputs.home-manager-2311.darwinModules.home-manager
+    flake.inputs.agenix.darwinModules.default
     {
+      age.secrets.ssh-key-personal-git-annex = { file = inputs.self + "/secrets/ssh-key-personal-git-annex.age"; owner = "m"; };
+      age.secrets.ssh-config-work-devx = { file = inputs.self + "/secrets/ssh-config-work-devx.age"; owner = "mw"; };
+      age.secrets.ssh-known_hosts-work-devx = { file = inputs.self + "/secrets/ssh-known_hosts-work-devx.age"; owner = "mw"; };
+      age.secrets.ssh-config-work-iog = { file = inputs.self + "/secrets/ssh-config-work-iog.age"; owner = "mw"; };
+      age.secrets.ssh-known_hosts-work-iog = { file = inputs.self + "/secrets/ssh-known_hosts-work-iog.age"; owner = "mw"; };
+      age.secrets.ssh-config-work-lace = { file = inputs.self + "/secrets/ssh-config-work-lace.age"; owner = "mw"; };
+      age.secrets.ssh-known_hosts-work-lace = { file = inputs.self + "/secrets/ssh-known_hosts-work-lace.age"; owner = "mw"; };
+    }
+
+    flake.inputs.home-manager-2311.darwinModules.home-manager
+    ({ config, ... }: {
       home-manager = {
-        extraSpecialArgs = { inherit flake; };
+        extraSpecialArgs = { inherit flake; inherit (config.age) secrets; };
         useGlobalPkgs = true;
         useUserPackages = true;
         sharedModules = [
@@ -38,7 +49,7 @@ inputs.nix-darwin-2311.lib.darwinSystem {
         users.mw.imports = [ ../_shared_/home/identity-work ];
         users.friends.imports = [ ];
       };
-    }
+    })
 
     ../_shared_/features/nix.conf
     ../_shared_/features/nix.conf/work-substituters.nix
