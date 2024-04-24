@@ -9,6 +9,9 @@
     # Chromium, yt-dlp etc.
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
+    # A preview PR, to build a few things that require MacOS SDK ≥13.0:
+    nixpkgs-macos-sdk-13.url = "github:NixOS/nixpkgs/pull/229210/head";
+
     nix-darwin-2311.url = "github:lnl7/nix-darwin/master";
     nix-darwin-2311.inputs.nixpkgs.follows = "nixpkgs-2311";
 
@@ -105,6 +108,7 @@
       talentedhack = callPackage ./packages/talentedhack {};
       tap-plugins = callPackage ./packages/tap-plugins {};
       transcribe = callPackage ./packages/transcribe {};
+      vftool = inputs.nixpkgs-2311.legacyPackages.${system}.callPackage ./packages/vftool { inherit (inputs) nixpkgs-macos-sdk-13; };
       vocproc = callPackage ./packages/vocproc { inherit lv2-cpp-tools; };
       yt-dlp = inputs.nixpkgs-unstable.legacyPackages.${system}.callPackage ./packages/yt-dlp { flake = inputs.self; };
       x11-rootless = callPackage ./packages/x11-rootless {};

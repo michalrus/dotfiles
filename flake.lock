@@ -189,6 +189,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-macos-sdk-13": {
+      "locked": {
+        "lastModified": 1685254091,
+        "narHash": "sha256-sD7fr8EwGkW/hEQSqyIvE0S1mfl+RV5N89H8KHlurn4=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "177b17abb0afa84781e95954096d1d856c2d00ae",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "pull/229210/head",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1713714899,
@@ -218,6 +234,7 @@
         "nixpkgs-2211": "nixpkgs-2211",
         "nixpkgs-2305": "nixpkgs-2305",
         "nixpkgs-2311": "nixpkgs-2311",
+        "nixpkgs-macos-sdk-13": "nixpkgs-macos-sdk-13",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "yt-dlp": "yt-dlp"
       }
