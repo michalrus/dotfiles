@@ -53,6 +53,8 @@ in
     calibre
     cdparanoia
     cdrkit
+    clang_16
+    clang-tools # for clangd language server
     cool-retro-term
     devede
     diff-pdf
