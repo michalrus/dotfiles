@@ -16,7 +16,7 @@ let
 in
 
 sdk.callPackage (
-  { lib, fetchFromGitHub }:
+  { lib, fetchFromGitHub, fetchurl }:
 
   sdk.clang15Stdenv.mkDerivation rec {
     name = "vftool";
@@ -27,6 +27,14 @@ sdk.callPackage (
       rev = "928324524883d24bd16d1528da9ae677943482b6";
       hash = "sha256-4/wRBrROWS6xLUt5mp4N4WuIkgCQypL73VKlXjZszEI=";
     };
+
+    patches = [
+      # Enables Rosetta and shared directories:
+      (fetchurl {
+        url = "https://github.com/evansm7/vftool/pull/39.diff";
+        hash = "sha256-iqKwYQmt5xyoZ/29SvOIGfBh9RzPn/oCYt4+poeV0Vo=";
+      })
+    ];
 
     buildInputs = [
       sdk.frameworks.Foundation
