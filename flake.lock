@@ -111,7 +111,7 @@
     "malicious-hosts": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-qaDWWLfCD4f02AybaC1OCGGlp8lkkyrwjwoJHpf6qwE=",
+        "narHash": "sha256-3nFizq8PVafCku6Hp8O1OiWdOwEeD+DdMwwqUotlPIA=",
         "type": "file",
         "url": "https://github.com/StevenBlack/hosts/raw/master/alternates/fakenews-gambling/hosts"
       },
@@ -207,11 +207,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1713714899,
-        "narHash": "sha256-+z/XjO3QJs5rLE5UOf015gdVauVRQd2vZtsFkaXBq2Y=",
+        "lastModified": 1714635257,
+        "narHash": "sha256-4cPymbty65RvF1DWQfc+Bc8B233A1BWxJnNULJKQ1EY=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "6143fc5eeb9c4f00163267708e26191d1e918932",
+        "rev": "63c3a29ca82437c87573e4c6919b09a24ea61b0f",
         "type": "github"
       },
       "original": {
