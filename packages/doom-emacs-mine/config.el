@@ -97,6 +97,11 @@
 (after! counsel
   (setq counsel-find-file-ignore-regexp nil))
 
+(after! cc-mode
+  ; Useful for editing GNU code:
+  ;(add-hook 'c-mode-hook (lambda () (setq tab-width 8)))
+  )
+
 ;; Auto-saving:
 (add-hook! focus-out (save-some-buffers t))
 (add-hook! doom-switch-buffer (save-some-buffers t))
