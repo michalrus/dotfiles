@@ -1,9 +1,9 @@
 { flake, config, pkgs, ... }:
 
 {
-  fonts.enableDefaultFonts = false;  # DejaVu fonts break Noto Sans Emoji fallback
+  fonts.enableDefaultPackages = false;  # DejaVu fonts break Noto Sans Emoji fallback
 
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     iosevka-bin
     (nerdfonts.override {fonts = ["Iosevka" "NerdFontsSymbolsOnly"];})
     noto-fonts

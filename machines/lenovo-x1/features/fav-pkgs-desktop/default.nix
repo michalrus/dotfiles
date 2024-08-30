@@ -30,17 +30,16 @@ in
     solc
     sqlint
     vscodium
-    (texlive.combine {
-      inherit (texlive) scheme-small latexmk titlesec tocloft todonotes cleveref lipsum
-        biblatex logreq cm-super csquotes pgfplots adjustbox collectbox ccicons polski
-        placeins xstring pdfpages unicode-math filehook textpos marvosym fontawesome
-        progressbar lm-math ucharcat pdfjam
-        # for Org-mode export to PDF
-        wrapfig wasysym
-        ;
-      gregorio = flake.packages.${pkgs.system}.gregorio.forTexlive;
-    })
-
+    (texlive.withPackages (ps: [
+      flake.packages.${pkgs.system}.gregorio.forTexlive
+    ] ++ (with ps; [
+      scheme-small latexmk titlesec tocloft todonotes cleveref lipsum
+      biblatex logreq cm-super csquotes pgfplots adjustbox collectbox ccicons polski
+      placeins xstring pdfpages unicode-math filehook textpos marvosym fontawesome
+      progressbar lm-math ucharcat pdfjam
+      # for Org-mode export to PDF
+      wrapfig wasysym
+    ])))
     acpitool
     aegisub
     alacritty
@@ -93,8 +92,8 @@ in
     pinentry-gtk2
     flake.inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.chromium
     gnucash
-    retroarchFull
-    python3Packages.livestreamer
+    #unfree.retroarchFull
+    streamlink
     qjoypad
     rpcs3
     rtmpdump

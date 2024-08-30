@@ -6,6 +6,8 @@
 
     nixpkgs-2311.url = "github:NixOS/nixpkgs/nixos-23.11";
 
+    nixpkgs-2405.url = "github:NixOS/nixpkgs/nixos-24.05";
+
     # Chromium, yt-dlp etc.
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
@@ -20,6 +22,9 @@
 
     home-manager-2311.url = "github:nix-community/home-manager/release-23.11";
     home-manager-2311.inputs.nixpkgs.follows = "nixpkgs-2311";
+
+    home-manager-2405.url = "github:nix-community/home-manager/release-24.05";
+    home-manager-2405.inputs.nixpkgs.follows = "nixpkgs-2405";
 
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs-2305";
@@ -84,13 +89,13 @@
 
     lib = import ./lib { inherit inputs; };
 
-    packages = inputs.nixpkgs-2305.lib.genAttrs [
+    packages = inputs.nixpkgs-2405.lib.genAttrs [
       "x86_64-linux"
       "aarch64-linux"
       "x86_64-darwin"
       "aarch64-darwin"
     ] (system: let
-      inherit (inputs.nixpkgs-2305.legacyPackages.${system}) callPackage;
+      inherit (inputs.nixpkgs-2405.legacyPackages.${system}) callPackage;
     in inputs.self.lib.filterSystem system rec {
       autotalent = callPackage ./packages/autotalent {};
       cp2104-gpio = callPackage ./packages/cp2104-gpio {};

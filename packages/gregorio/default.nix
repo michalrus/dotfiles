@@ -7,7 +7,8 @@ let
   pname = "gregorio";
 
   pkg = stdenv.mkDerivation {
-    name = pname + "-" + version;
+    inherit pname version;
+
     src = fetchFromGitHub {
       owner = "gregorio-project";
       repo = "gregorio";

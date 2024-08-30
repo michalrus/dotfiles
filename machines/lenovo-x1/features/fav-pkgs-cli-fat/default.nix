@@ -12,7 +12,7 @@
     gitAndTools.gitRemoteGcrypt
     gitstats
     gocr  # OCR
-    gpac
+    #gpac  # marked as insecure
     gpgme.dev
     graphicsmagick
     imagemagick

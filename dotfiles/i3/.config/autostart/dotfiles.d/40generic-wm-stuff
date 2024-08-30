@@ -5,7 +5,7 @@ amixer -q sset Master 0 mute
 feh --bg-scale "$HOME/.wallpaper.png" || true
 
 # Note: temporarily turned off. Stuff seems to render quicker and with less tearing without it.
-#compton &
+#picom &
 
 xbanish &
 

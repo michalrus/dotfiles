@@ -35,9 +35,11 @@ let
     ''} >$out
   '';
 
+  exeName = "rofi-unicode-input${if onlyEmoji then "-emoji" else ""}";
+
 in
 
-writeShellScriptBin "rofi-unicode-input${if onlyEmoji then "-emoji" else ""}" ''
+writeShellScriptBin exeName ''
   set -euo pipefail
 
   selected=$(${lib.getExe rofi} <${table} -dmenu -i)
@@ -48,4 +50,7 @@ writeShellScriptBin "rofi-unicode-input${if onlyEmoji then "-emoji" else ""}" ''
   ${lib.getExe xdotool} type "$character"
 ''
 
-// { meta.platforms = lib.platforms.linux; }
+// {
+  meta.platforms = lib.platforms.linux;
+  meta.mainProgram = exeName;
+}

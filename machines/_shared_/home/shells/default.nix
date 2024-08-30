@@ -41,7 +41,7 @@ in {
     enable = true;
     enableCompletion = true;
     enableVteIntegration = true;
-    enableSyntaxHighlighting = true;
+    syntaxHighlighting.enable = true;
     history = {
       extended = true;
       ignoreSpace = true;

@@ -32,7 +32,7 @@ let
       i3 i3lock i3status
       rofi flake.packages.${pkgs.system}.dmenu-is-rofi
       dunst
-      compton
+      picom
       autocutsel
       arandr
       wmctrl xtitle
@@ -50,7 +50,7 @@ let
 
   common = { hiDPI }: pkgs.callPackage ../../../../packages/x11-rootless rec {
     xserverConfig = {
-      layout = "pl";
+      xkb.layout = "pl";
       xkbOptions = "compose:caps,numpad:microsoft";
       videoDrivers = [ "intel" /* unfree "nvidia" */ "modesetting" "fbdev" ];
       upscaleDefaultCursor = hiDPI;
@@ -65,7 +65,7 @@ let
         };
       };
     };
-    extraFonts = config.fonts.fonts;
+    extraFonts = config.fonts.packages;
     pureXauthority = false;  # Doesn’t work with ‘emacs-daemon’
     windowManager = "${pkgs.xterm}/bin/xterm";
     inherit (config.environment) profileRelativeEnvVars;
@@ -81,7 +81,7 @@ in
 
   services.xserver = {
     enable = lib.mkForce false;  # no global X11 – see ‘flake.nixosModules.no-display-manager’
-    layout = lib.mkDefault "pl";
+    xkb.layout = lib.mkDefault "pl";
     synaptics = {
       enable = lib.mkDefault true;
       twoFingerScroll = true;

@@ -1,0 +1,83 @@
+live_config_reload = true
+
+[window]
+opacity = 0.95
+
+[colors]
+draw_bold_text_with_bright_colors = true
+
+[colors.bright]
+black = "0x616a6a"
+blue = "0x268bd2"
+cyan = "0x2aa198"
+green = "0x859900"
+magenta = "0xd33682"
+red = "0xcb4b16"
+white = "0xfdf6e3"
+yellow = "0xb58900"
+
+[colors.cursor]
+cursor = "0x93a1a1"
+text = "0x002b36"
+
+[colors.normal]
+black = "0x616a6a"
+blue = "0x268bd2"
+cyan = "0x2aa198"
+green = "0x859900"
+magenta = "0xd33682"
+red = "0xdc322f"
+white = "0x93a1a1"
+yellow = "0xb58900"
+
+[colors.primary]
+background = "0x002b36"
+foreground = "0x93a1a1"
+
+[cursor]
+blink_interval = 500
+blink_timeout = 0
+
+[cursor.style]
+blinking = "Always"
+shape = "Beam"
+
+[env]
+TERM = "xterm-256color"
+
+[font]
+size = 8.0
+
+[font.bold]
+family = "for_terminal"
+
+[font.glyph_offset]
+x = 0
+y = 0
+
+[font.italic]
+family = "for_terminal"
+
+[font.normal]
+family = "for_terminal"
+
+[font.offset]
+x = 0
+y = 0
+
+[[keyboard.bindings]]
+action = "Copy"
+key = "Insert"
+mods = "Control"
+
+[[keyboard.bindings]]
+action = "Paste"
+key = "Insert"
+mods = "Shift"
+
+[[keyboard.bindings]]
+action = "None"
+key = "Insert"
+
+[selection]
+semantic_escape_chars = ",│`|:\"' ()[]{}<>"
