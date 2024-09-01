@@ -15,6 +15,7 @@
     bc
     bindfs
     binutils
+    bottom  # `bin/btm`, an `htop` alternative
     calc
     catdocx
     cloc
