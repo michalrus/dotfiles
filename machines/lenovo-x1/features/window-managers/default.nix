@@ -69,6 +69,7 @@ let
     pureXauthority = false;  # Doesn’t work with ‘emacs-daemon’
     windowManager = "${pkgs.xterm}/bin/xterm";
     inherit (config.environment) profileRelativeEnvVars;
+    openglExtraPackages = config.hardware.opengl.extraPackages;
   };
 
 in
