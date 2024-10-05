@@ -10,6 +10,9 @@ nixpkgs.lib.nixosSystem {
   modules = [
     { _module.args = { inherit flake; }; }
     nixpkgs.nixosModules.notDetected
+
+    flake.inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x1-extreme-gen2
+    flake.inputs.nixos-hardware.nixosModules.common-gpu-nvidia-disable  # X11 started crashing around 2023-09-27
     ./hardware.nix
 
     { networking.hostName = "lenovo-x1"; }

@@ -26,6 +26,8 @@
     home-manager-2405.url = "github:nix-community/home-manager/release-24.05";
     home-manager-2405.inputs.nixpkgs.follows = "nixpkgs-2405";
 
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
+
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs-2305";
     agenix.inputs.darwin.follows = "nix-darwin-2311";
