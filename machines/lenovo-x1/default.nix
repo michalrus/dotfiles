@@ -106,10 +106,12 @@ nixpkgs.lib.nixosSystem {
         users.m.imports = [
           ../_shared_/home/identity-personal
           ../_shared_/home/doom-emacs
+          ../_shared_/home/zed-editor
         ];
         users.mw.imports = [
           ../_shared_/home/identity-work
           ../_shared_/home/doom-emacs
+          ../_shared_/home/zed-editor
         ];
         users.md.imports = [ ];
         users.guest.imports = [ ./home/guest.nix ];
