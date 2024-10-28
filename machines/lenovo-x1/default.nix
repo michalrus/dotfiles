@@ -11,7 +11,9 @@ nixpkgs.lib.nixosSystem {
     { _module.args = { inherit flake; }; }
     nixpkgs.nixosModules.notDetected
 
-    flake.inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x1-extreme-gen2
+    # Idle temperatures go up 60–70 ℃ with this. Without it, around 35 ℃:
+    #flake.inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x1-extreme-gen2
+
     flake.inputs.nixos-hardware.nixosModules.common-gpu-nvidia-disable  # X11 started crashing around 2023-09-27
     ./hardware.nix
 
