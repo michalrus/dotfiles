@@ -102,6 +102,10 @@
   ;(add-hook 'c-mode-hook (lambda () (setq tab-width 8)))
   )
 
+(after! lsp-mode
+  (map! :map lsp-mode-map
+        "C-c d" #'lsp-describe-thing-at-point))
+
 ;; Auto-saving:
 (add-hook! focus-out (save-some-buffers t))
 (add-hook! doom-switch-buffer (save-some-buffers t))
