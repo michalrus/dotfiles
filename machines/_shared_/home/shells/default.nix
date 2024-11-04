@@ -164,8 +164,8 @@ in {
     $directory\
     ([\\(](bold bright-blue)\
     $git_branch$git_commit$git_state$git_metrics$git_status\
-    [\\)](bold bright-blue))
-    $nix_shell$character\
+    [\\)](bold bright-blue))$nix_shell
+    $character\
     """
 
     [status]
@@ -229,8 +229,8 @@ in {
     deleted = '×'
 
     [nix_shell]
-    symbol = '❄ '
-    format = '$symbol'
+    symbol = 'nix'
+    format = '[:](bold bright-blue)[$symbol](cyan)'
 
     [character]
     success_symbol = '[❯](bold bright-blue)'
