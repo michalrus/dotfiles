@@ -247,6 +247,11 @@ in {
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
 
+  # faster fzf alternative for Ctrl-R:
+  programs.skim.enable = true;
+  programs.skim.enableBashIntegration = true;
+  programs.skim.enableZshIntegration = true;
+
   home.file.".config/yt-dlp/config".text = ''
     --embed-metadata
     --remux-video mp4
