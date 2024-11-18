@@ -92,6 +92,7 @@
     stress-ng
     tcpdump
     tunctl
+    unixtools.xxd
     unzip
     usbutils
     watchexec
