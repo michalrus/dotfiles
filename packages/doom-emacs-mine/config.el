@@ -127,6 +127,13 @@
 (map! "C-x k" #'doom/kill-this-buffer-in-all-windows
       "C-x K" #'kill-buffer)
 
+;; Turn off this "intelligent" behavior.
+(after! smartparens
+  (setq sp-autodelete-pair nil
+        sp-autodelete-closing-pair nil
+        sp-autodelete-opening-pair nil
+        sp-autodelete-wrap nil))
+
 ;; Automatic point history (a better ‘point-undo’):
 (use-package! gumshoe
   :config
