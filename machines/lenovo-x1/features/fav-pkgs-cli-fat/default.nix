@@ -11,6 +11,7 @@
     flake.packages.${pkgs.system}.yt-dlp
     gitAndTools.gitRemoteGcrypt
     gitstats
+    git-filter-repo
     gocr  # OCR
     #gpac  # marked as insecure
     gpgme.dev
