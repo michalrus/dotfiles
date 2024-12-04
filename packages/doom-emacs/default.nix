@@ -1,10 +1,10 @@
 { doom-emacs, stdenvNoCC, lib, makeWrapper, pkgs, linkFarm, symlinkJoin, gitMinimal, cacert, emptyFile, writeText
 
 , chosenEmacs    ? pkgs.emacs29
-, doomPackagesEl ? "${doom-emacs}/templates/packages.example.el"
-, doomInitEl     ? "${doom-emacs}/templates/init.example.el"
-, doomConfigEl   ? "${doom-emacs}/templates/config.example.el"
-, vendorHash     ? "sha256-uw2t2nyrvb1pQZpOKhPMfO7Imnbof6wlFjsAvxpmzRg="
+, doomPackagesEl ? "${doom-emacs}/static/packages.example.el"
+, doomInitEl     ? "${doom-emacs}/static/init.example.el"
+, doomConfigEl   ? "${doom-emacs}/static/config.example.el"
+, vendorHash     ? "sha256-gfJGLuIDuOEwkoqeyzz3xMkH75vbF0V8vTZdSf1NMS4="
 
 , doom-data-dir  ? "~/.local/share/doom"
 , doom-cache-dir ? "~/.cache/doom"
@@ -42,7 +42,7 @@ let
       export DOOMPAGER=cat
       export DOOMDIR=${doomDir { withConfig = false; }}
 
-      ~/.config/emacs/bin/doom install --no-config --no-fonts --force
+      ~/.config/emacs/bin/doom install --no-fonts --force
 
       # Remove impurities that change too often, but save the source information for later investigation:
       find ~/.config/emacs/.local/straight/repos -type d -name '.git' -prune | while IFS= read -r gitDir ; do
@@ -57,9 +57,17 @@ let
     '';
   };
 
+  fake-git = pkgs.writeShellScriptBin "git" ''
+    if [ "$1" == "-C" ] && [ "$3" == "log" ] && [ "$4" == "-1" ] && [ "$5" == "--format=%D %h %ci" ] ; then
+      echo 'HEAD -> master, origin/master, origin/HEAD 0000000 1970-01-01 00:00:00 +0000'
+    else
+      exit 1
+    fi
+  '';
+
   emacsDir = stdenvNoCC.mkDerivation {
     name = "emacs-dir";
-    nativeBuildInputs = [ chosenEmacs gitMinimal ];
+    nativeBuildInputs = [ chosenEmacs fake-git ];
     buildCommand = ''
       cp -r ${doom-emacs} $out
       chmod -R +w $out
@@ -74,11 +82,14 @@ let
       cp -r ${vendor} $out/.local/straight/repos
       chmod -R +w     $out/.local/straight/repos
 
-      # Or else, the true `config.el` won’t be loaded:
-      sed -r '/module-list-loader post-config-modules config-file/a\ (doom-load (expand-file-name "config" (getenv "DOOMDIR")))' \
-        -i $out/lisp/doom-profiles.el
+      find "$out/.local/straight/repos" -mindepth 1 -maxdepth 1 -type d -exec mkdir -p {}/.git \;
 
-      $out/bin/doom install --no-config --no-fonts --force
+      # Or else, the true `config.el` won’t be loaded:
+      sed -r '/module-list-loader post-config-modules config-file/a\              (doom-load (expand-file-name "config" (getenv "DOOMDIR")))' \
+        -i $out/lisp/lib/profiles.el
+
+      $out/bin/doom install --no-fonts --force
+      $out/bin/doom sync -U --force
 
       rm -rf $out/.local/{env,state}
 
@@ -89,7 +100,10 @@ let
         s,(\(file-name-concat) doom-profile-data-dir ("@"),\1 "'"$out/.local/etc"'" \2,g
       ' -i $out/lisp/doom.el
 
-      sed -r 's,doom-data-dir,"'"$out/.local/etc/"'",g' -i $out/lisp/doom-profiles.el
+      sed -r 's,(file-name-concat) doom-data-dir (name "@"),\1 "'"$out/.local/etc/"'" \2,g' -i $out/lisp/doom-lib.el
+
+      rm -r $out/.local/straight/repos
+      ln -sf ${vendor} $out/.local/straight/repos
     '';
   };
 
@@ -114,6 +128,7 @@ let
         rm $out/$exe
         makeWrapper ${chosenEmacs}/$exe $out/$exe \
           --set DOOMDIR ${doomDir { withConfig = true; }} \
+          --set EMACSDIR ${emacsDir} \
           --add-flags --init-directory=${emacsDir}
       done
     '';

@@ -75,6 +75,7 @@
 (after! projectile
   (setq projectile-enable-caching nil))
 
+(use-package! recentf)
 (after! recentf
   (map! "C-r" #'recentf-open-files)
   (setq recentf-auto-cleanup 'never  ; requires SSH-ing to check remote entries
