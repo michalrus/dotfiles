@@ -104,6 +104,8 @@
   )
 
 (after! lsp-mode
+  (setq lsp-disabled-clients '(rls)
+        lsp-rust-server 'rust-analyzer)
   (map! :map lsp-mode-map
         "C-c d" #'lsp-describe-thing-at-point))
 
