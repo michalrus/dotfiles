@@ -49,7 +49,7 @@ in
           listen [::]:8443 ssl proxy_protocol;
 
           set_real_ip_from 127.0.0.1;
-          set_real_ip_from 10.77.3.1;
+          set_real_ip_from 10.77.5.1;
           real_ip_header proxy_protocol;
 
           ssl_certificate     ${config.security.acme.certs.${config.services.openproject.hostname}.directory}/fullchain.pem;

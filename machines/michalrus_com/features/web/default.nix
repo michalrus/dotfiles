@@ -5,7 +5,7 @@ with import ./common.nix modArgs;
 
 let
   dellDomain = "openproject.michalrus.com";
-  dellIP = "10.77.3.11";
+  dellIP = "10.77.5.11";
 in
 
 {

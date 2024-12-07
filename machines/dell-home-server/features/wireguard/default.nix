@@ -9,12 +9,12 @@ let iface = "wg0"; in
 
   networking.wireguard.interfaces = {
     "${iface}" = {
-      ips = [ "10.77.3.11/24" ];
+      ips = [ "10.77.5.11/24" ];
       privateKeyFile = config.age.secrets.wireguard_private_key.path;
       peers = [
         {
           publicKey = __readFile ../../../../secrets/wireguard_michalrus_com.pub;
-          allowedIPs = [ "10.77.3.1/32" ];
+          allowedIPs = [ "10.77.5.1/32" ];
           endpoint = "54.229.14.161:51820";
         }
       ];
@@ -30,7 +30,7 @@ let iface = "wg0"; in
     script = ''
       while true ; do
         sleep 10
-        if ! ping -I ${iface} -c1 -W10 10.77.3.1 >/dev/null ; then
+        if ! ping -I ${iface} -c1 -W10 10.77.5.1 >/dev/null ; then
           systemctl restart wireguard-${iface}.service
         fi
       done

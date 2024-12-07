@@ -4,40 +4,17 @@ let
 
   version = "13.2.0";
 
-  base = pkgs.dockerTools.pullImage {
+  ociImage = pkgs.dockerTools.pullImage {
     imageName = "openproject/community";
     finalImageTag = version;
     imageDigest = "sha256:a2484212b0003923fb80822fb06b030a7966f5e84d6b16e0303d7a5035ae4af8";
     sha256 = "sha256-t72oaM7FisqWENQV9QmXA9IXpCt63lUZV2cWWAAnFxY=";
   };
 
-  imageConfig = fromImage: builtins.fromJSON (builtins.unsafeDiscardStringContext (builtins.readFile (
-    pkgs.runCommandNoCC "image-config" {
-      nativeBuildInputs = [ pkgs.jq ];
-    } ''
-      tar -xf ${fromImage} manifest.json
-      configJson=$(jq -r '.[0].Config' manifest.json)
-      tar -xf ${fromImage} "$configJson"
-      jq .config <"$configJson" >$out
-    ''
-  )));
-
   # <https://gist.github.com/markasoftware/f5b2e55a2c2e3abb1f9eefcdf0bfff45>
   token = pkgs.fetchurl {
     url = "https://gist.githubusercontent.com/markasoftware/f5b2e55a2c2e3abb1f9eefcdf0bfff45/raw/148c5067e30eae04f96e3233144b4404f70ade47/enterprise_token.rb";
     hash = "sha256-FEQN89hGyI0plhhpQ4/ttaSgocs+5G8ZzXYzpAr0VWQ=";
-  };
-
-  modified = pkgs.dockerTools.buildImage {
-    name = "openproject/modified";
-    tag = version;
-    fromImage = base;
-    config = imageConfig base;
-    runAsRoot = ''
-      #!${pkgs.runtimeShell}
-      cp ${token} /app/app/models/enterprise_token.rb
-    '';
-    diskSize = 3072;
   };
 
   user = "openproject";
@@ -46,7 +23,7 @@ let
   pgdataDir = "${dataDir}/pgdata";
   cidFile = "${dataDir}/${user}.cid";
 
-  imageFullName = "${modified.buildArgs.name}:${version}";
+  imageFullName = "${ociImage.imageName}:${ociImage.imageTag}";
 
 in {
   options.services.openproject = {
@@ -106,7 +83,7 @@ in {
       };
       preStart = ''
         podman image inspect ${lib.escapeShellArg imageFullName} >/dev/null || \
-          exec podman load -i ${modified}
+          exec podman load -i ${ociImage}
         [ -e ${assetsDir} ] || { mkdir -p ${assetsDir} && chown ${user}:${user} ${assetsDir} ; }
         [ -e ${pgdataDir} ] || { mkdir -p ${pgdataDir} && chown ${user}:${user} ${pgdataDir} ; }
       '';
@@ -122,6 +99,7 @@ in {
           --sdnotify=conmon \
           -v ${assetsDir}:/var/openproject/assets \
           -v ${pgdataDir}:/var/openproject/pgdata \
+          -v ${token}:/app/app/models/enterprise_token.rb:ro \
           -p ${toString config.services.openproject.port}:80 \
           -e OPENPROJECT_SECRET_KEY_BASE'*' \
           -e OPENPROJECT_HOST__NAME=${config.services.openproject.hostname} \
