@@ -8,7 +8,7 @@
     (nerdfonts.override {fonts = ["Iosevka" "NerdFontsSymbolsOnly"];})
     noto-fonts
     noto-fonts-emoji
-    noto-fonts-cjk
+    noto-fonts-cjk-sans
     #google-fonts  # They break ‘noto-fonts-emoji’
     liberation_ttf
   ];

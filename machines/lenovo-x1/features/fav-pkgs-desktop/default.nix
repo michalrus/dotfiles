@@ -43,7 +43,7 @@ in
     acpitool
     aegisub
     alacritty
-    alsaUtils
+    alsa-utils
     anki
     audacity
     awf
@@ -67,18 +67,18 @@ in
     flake.packages.${pkgs.system}.transcribe
     ghostscript
     gimp
-    gnome3.adwaita-icon-theme  # for resizable cursors
-    gnome3.aisleriot
-    gnome3.baobab
-    gnome3.cheese
+    adwaita-icon-theme  # for resizable cursors
+    aisleriot
+    baobab
+    cheese
     dconf  # so that GnuCash prefs can be changed
-    gnome3.zenity
+    zenity
     gparted
     gtk2  # Why? Icon cache! See #20874.
     handbrake
     inkscape
     isync
-    k3b
+    #k3b
     libnotify
     libreoffice
     lilypond
@@ -108,7 +108,7 @@ in
     unfree.zoom-us  # FIXME: use inside browser?
     utox
     xarchiver
-    xdg_utils
+    xdg-utils
     xsane
   ]);
 

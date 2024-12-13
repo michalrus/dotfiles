@@ -36,7 +36,7 @@ in
     ardour
     artyFX
     calf
-    distrho
+    distrho-ports
     eq10q
     guitarix
     helm

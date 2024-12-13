@@ -13,7 +13,7 @@ let
 
   somagic-easycap = pkgs.callPackage (
 
-    { stdenv, lib, fetchFromGitHub, libusb, libgcrypt }:
+    { stdenv, lib, fetchFromGitHub, libusb1, libgcrypt }:
 
     let
 
@@ -30,7 +30,7 @@ let
 
       src = "${repo}/somagic-easycap_1.1";
 
-      buildInputs = [ libusb libgcrypt ];
+      buildInputs = [ libusb1 libgcrypt ];
 
       makeFlags = [ "PREFIX=$(out)" ];
 

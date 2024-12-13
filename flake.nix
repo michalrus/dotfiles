@@ -99,13 +99,13 @@
 
     lib = import ./lib { inherit inputs; };
 
-    packages = inputs.nixpkgs-2405.lib.genAttrs [
+    packages = inputs.nixpkgs-2411.lib.genAttrs [
       "x86_64-linux"
       "aarch64-linux"
       "x86_64-darwin"
       "aarch64-darwin"
     ] (system: let
-      inherit (inputs.nixpkgs-2405.legacyPackages.${system}) callPackage;
+      inherit (inputs.nixpkgs-2411.legacyPackages.${system}) callPackage;
     in inputs.self.lib.filterSystem system rec {
       autotalent = callPackage ./packages/autotalent {};
       cp2104-gpio = callPackage ./packages/cp2104-gpio {};

@@ -7,7 +7,7 @@
       enable = true;
       enableCompletion = true;
     };
-    bash.enableCompletion = true;
+    bash.completion.enable = true;
   };
 
   users.defaultUserShell = "/run/current-system/sw/bin/zsh";

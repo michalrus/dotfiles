@@ -52,7 +52,7 @@ let
     xserverConfig = {
       xkb.layout = "pl";
       xkbOptions = "compose:caps,numpad:microsoft";
-      videoDrivers = [ "intel" /* unfree "nvidia" */ "modesetting" "fbdev" ];
+      videoDrivers = [ /* "intel" (modesetting is apparently better?) */ /* unfree "nvidia" */ "modesetting" "fbdev" ];
       upscaleDefaultCursor = hiDPI;
       dpi = if hiDPI then 192 else 96;
       libinput = rec {
@@ -69,13 +69,13 @@ let
     pureXauthority = false;  # Doesn’t work with ‘emacs-daemon’
     windowManager = "${pkgs.xterm}/bin/xterm";
     inherit (config.environment) profileRelativeEnvVars;
-    openglExtraPackages = config.hardware.opengl.extraPackages;
+    graphicsExtraPackages = config.hardware.graphics.extraPackages;
   };
 
 in
 
 {
-  hardware.opengl.enable   = lib.mkDefault true;
+  hardware.graphics.enable = lib.mkDefault true;
   programs.dconf.enable    = lib.mkDefault true;
 
   security.pam.services.i3lock = {};

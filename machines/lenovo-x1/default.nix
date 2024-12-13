@@ -2,7 +2,7 @@
 
 let
   flake = inputs.self;
-  nixpkgs = inputs.nixpkgs-2405;
+  nixpkgs = inputs.nixpkgs-2411;
 in
 
 nixpkgs.lib.nixosSystem {
@@ -89,7 +89,7 @@ nixpkgs.lib.nixosSystem {
       age.secrets.ssh-known_hosts-work-lace = { file = inputs.self + "/secrets/ssh-known_hosts-work-lace.age"; owner = "mw"; };
     }
 
-    flake.inputs.home-manager-2405.nixosModules.home-manager
+    flake.inputs.home-manager-2411.nixosModules.home-manager
     ({ config, ... }: {
       home-manager = {
         extraSpecialArgs = { inherit flake; inherit (config.age) secrets; };

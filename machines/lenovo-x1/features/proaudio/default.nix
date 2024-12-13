@@ -17,7 +17,7 @@
   environment.systemPackages = with pkgs; [
 
     ardour
-    distrho
+    distrho-ports
     calf
     x42-plugins
     x42-avldrums
