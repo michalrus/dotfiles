@@ -129,10 +129,31 @@
         "type": "github"
       }
     },
+    "home-manager-2411": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-2411"
+        ]
+      },
+      "locked": {
+        "lastModified": 1733951536,
+        "narHash": "sha256-Zb5ZCa7Xj+0gy5XVXINTSr71fCfAv+IKtmIXNrykT54=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "1318c3f3b068cdcea922fa7c1a0a1f0c96c22f5f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "ref": "release-24.11",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
     "malicious-hosts": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-dUQhftXJ7xaiX6gpB2KGlnhxeD8hxaMZ7kGSwNUOpfE=",
+        "narHash": "sha256-3AuQINARHV9qITeaFLqc5dWgZB612PNZZzdIStcOnus=",
         "type": "file",
         "url": "https://github.com/StevenBlack/hosts/raw/master/alternates/fakenews-gambling/hosts"
       },
@@ -241,6 +262,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-2411": {
+      "locked": {
+        "lastModified": 1733808091,
+        "narHash": "sha256-KWwINTQelKOoQgrXftxoqxmKFZb9pLVfnRvK270nkVk=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "a0f3e10d94359665dba45b71b4227b0aeb851f8e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-24.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-macos-sdk-13": {
       "locked": {
         "lastModified": 1685254091,
@@ -282,6 +319,7 @@
         "home-manager-2305": "home-manager-2305",
         "home-manager-2311": "home-manager-2311",
         "home-manager-2405": "home-manager-2405",
+        "home-manager-2411": "home-manager-2411",
         "malicious-hosts": "malicious-hosts",
         "nix-darwin-2311": "nix-darwin-2311",
         "nixos-hardware": "nixos-hardware",
@@ -289,6 +327,7 @@
         "nixpkgs-2305": "nixpkgs-2305",
         "nixpkgs-2311": "nixpkgs-2311",
         "nixpkgs-2405": "nixpkgs-2405",
+        "nixpkgs-2411": "nixpkgs-2411",
         "nixpkgs-macos-sdk-13": "nixpkgs-macos-sdk-13",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "yt-dlp": "yt-dlp"

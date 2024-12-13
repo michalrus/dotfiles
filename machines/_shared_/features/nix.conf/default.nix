@@ -3,10 +3,6 @@
 lib.mkMerge [
 
   {
-    nix.package = let
-      pkg = flake.inputs.nixpkgs-2311.legacyPackages.${pkgs.system}.nixUnstable;
-    in assert lib.versionAtLeast pkg.version "2.17.0"; pkg;
-
     nix.gc.automatic = lib.mkForce false;
 
     nix.extraOptions = ''

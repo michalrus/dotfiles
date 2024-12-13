@@ -79,7 +79,7 @@
     pass
     patchelf
     pciutils
-    posix_man_pages
+    man-pages-posix
     powertop
     pv
     silver-searcher

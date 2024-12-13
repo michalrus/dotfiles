@@ -8,6 +8,8 @@
 
     nixpkgs-2405.url = "github:NixOS/nixpkgs/nixos-24.05";
 
+    nixpkgs-2411.url = "github:NixOS/nixpkgs/nixos-24.11";
+
     # Chromium, yt-dlp etc.
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
@@ -25,6 +27,9 @@
 
     home-manager-2405.url = "github:nix-community/home-manager/release-24.05";
     home-manager-2405.inputs.nixpkgs.follows = "nixpkgs-2405";
+
+    home-manager-2411.url = "github:nix-community/home-manager/release-24.11";
+    home-manager-2411.inputs.nixpkgs.follows = "nixpkgs-2411";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware";
 
@@ -64,6 +69,9 @@
 
       # nixos-rebuild switch -L --keep-going --flake .#dell-home-server --target-host root@10.77.2.11
       dell-home-server = import ./machines/dell-home-server { inherit inputs; };
+
+      # nixos-rebuild switch -L --keep-going --flake .#dell-home-server --target-host root@10.77.2.12
+      monstrum = import ./machines/monstrum { inherit inputs; };
     };
 
     darwinConfigurations = rec {
