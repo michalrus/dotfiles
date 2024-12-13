@@ -34,8 +34,6 @@ nixpkgs.lib.nixosSystem {
 
   ]) ++ [
 
-    (import ../_shared_/features/canoscan-lide-20 { inherit flake; })
-
     ../_shared_/features/fav-pkgs-cli-thin
     ../_shared_/features/immutable-users
     ../_shared_/features/kill-user-processes
@@ -168,6 +166,8 @@ nixpkgs.lib.nixosSystem {
         drivers = with pkgs; [ gutenprint hplip epson-escpr ];
       };
     })
+
+    { hardware.sane.enable = true; }
 
     flake.nixosModules.sqlite-dump
     {
