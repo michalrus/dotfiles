@@ -15,7 +15,7 @@ let
     ### sway
 
     active_lock_envs=$(pgrep '^swaylock$' | awk '{ print "/proc/" $1 "/environ" }')
-    active_sockets=$(find /run/user -path '/run/user/*/sway-ipc.*.sock')
+    active_sockets=$(find /run/user -path '/run/user/*/sway-ipc.*.sock' 2>/dev/null || true)
 
     for sock in $active_sockets ; do
       if [ -z "$active_lock_envs" ] || ! grep -F $sock $active_lock_envs >/dev/null ; then
@@ -26,7 +26,7 @@ let
     ### i3
 
     active_lock_envs=$(pgrep '^i3lock$' | awk '{ print "/proc/" $1 "/environ" }')
-    active_sockets=$(find /run/user -path '/run/user/*/i3/ipc-socket.*')
+    active_sockets=$(find /run/user -path '/run/user/*/i3/ipc-socket.*' 2>/dev/null || true)
 
     for sock in $active_sockets ; do
       if [ -z "$active_lock_envs" ] || ! grep -F $sock $active_lock_envs >/dev/null ; then
