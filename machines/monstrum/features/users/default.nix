@@ -37,6 +37,9 @@
     users.root.imports = [ ];
     users.k.imports = [ { home.sessionVariables.TZ = "Europe/Warsaw"; } ];
     users.m.imports = [ ];
-    users.km.imports = [ { home.sessionVariables.TZ = "Europe/Warsaw"; } ];
+    users.km.imports = [
+      { home.sessionVariables.TZ = "Europe/Warsaw"; }
+      ../../../_shared_/home/identity-km
+    ];
   };
 }

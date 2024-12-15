@@ -25,7 +25,7 @@
     pinentry-program ${
       if pkgs.stdenv.isDarwin
       then pkgs.pinentry_mac + "/" + pkgs.pinentry_mac.binaryPath
-      else "/run/current-system/sw/bin/pinentry"  # be more specific?
+      else lib.getExe pkgs.pinentry-gtk2
     }
     # XXX: grabbing doesn’t prevent other apps snooping on X11 input events, but it’s convenient wrt. focus
     # <https://theinvisiblethings.blogspot.com/2011/04/linux-security-circus-on-gui-isolation.html>
