@@ -30,6 +30,7 @@ nixpkgs.lib.nixosSystem {
     ../_shared_/features/systemd-accounting
     ../_shared_/features/zsh
     ../_shared_/features/hyprland
+    ../_shared_/features/fonts
 
     ./features/wireguard
     ../_shared_/features/nginx-reasonable

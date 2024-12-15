@@ -45,13 +45,13 @@ nixpkgs.lib.nixosSystem {
     ../_shared_/features/systemd-accounting
     ../_shared_/features/zsh
     ../_shared_/features/hyprland
+    ../_shared_/features/fonts
 
     ./features/android
     ./features/bluetooth
     ./features/fav-pkgs-cli-fat
     ./features/fav-pkgs-desktop
     ./features/firefox-autocomplete
-    ./features/fonts
     #./features/hardened-chromium
     ./features/hardened-firefox
     ./features/ledger
