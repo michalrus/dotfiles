@@ -2,7 +2,7 @@
 
 let
   flake = inputs.self;
-  nixpkgs = inputs.nixpkgs-2405;
+  nixpkgs = inputs.nixpkgs-2411;
 in
 
 nixpkgs.lib.nixosSystem {
@@ -33,18 +33,8 @@ nixpkgs.lib.nixosSystem {
     ../_shared_/features/zsh
 
     ./features/users
-    ./features/wireguard
 
-    ../_shared_/features/nginx-reasonable
-    ./features/nginx
-
-    ./features/openproject
-    {
-      services.openproject.hostname = "openproject.michalrus.com";
-      services.openproject.https = true;
-    }
-
-    flake.inputs.home-manager-2405.nixosModules.home-manager
+    flake.inputs.home-manager-2411.nixosModules.home-manager
     {
       home-manager = {
         extraSpecialArgs = { inherit flake; };

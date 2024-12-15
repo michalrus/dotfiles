@@ -31,6 +31,15 @@ nixpkgs.lib.nixosSystem {
     ../_shared_/features/zsh
     ../_shared_/features/hyprland
 
+    ./features/wireguard
+    ../_shared_/features/nginx-reasonable
+    ./features/nginx
+    ./features/openproject
+    {
+      services.openproject.hostname = "openproject.michalrus.com";
+      services.openproject.https = true;
+    }
+
     ./features/users
 
     flake.inputs.home-manager-2411.nixosModules.home-manager

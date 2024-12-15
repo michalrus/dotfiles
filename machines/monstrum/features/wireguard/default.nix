@@ -4,7 +4,7 @@ let iface = "wg0"; in
 
 {
   age.secrets.wireguard_private_key = {
-    file = ../../../../secrets/wireguard_dell-home-server.age;
+    file = ../../../../secrets/wireguard_monstrum.age;
   };
 
   networking.wireguard.interfaces = {
