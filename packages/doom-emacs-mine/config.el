@@ -13,6 +13,7 @@
       doom-font (font-spec :family "Iosevka Nerd Font Propo" :size (if doom--system-macos-p 14.0 12.0) :weight 'light)
       doom-serif-font (font-spec :family (cond ((eq system-type 'gnu/linux) "Noto Serif")
                                                (t "Georgia"))))
+(add-to-list 'default-frame-alist '(alpha-background . 95))
 (add-to-list 'default-frame-alist '(background-color . "#002b36"))  ; prevent initial flicker
 (add-hook! doom-load-theme
   (setq frame-title-format "%b – Emacs")
@@ -77,10 +78,14 @@
 
 (use-package! recentf)
 (after! recentf
+  (recentf-load-list) ; why do I need to call this, or else the list is empty on load?
   (map! "C-r" #'recentf-open-files)
   (setq recentf-auto-cleanup 'never  ; requires SSH-ing to check remote entries
         recentf-max-saved-items 1000)
-  (run-at-time t 300 'recentf-save-list))
+  (run-at-time t 300 'recentf-save-list)
+  (run-with-idle-timer 60 t #'recentf-save-list)
+  ;(add-hook 'focus-out-hook #'recentf-save-list)
+  (add-hook 'kill-emacs-hook #'recentf-save-list))
 
 (after! magit
   (setq magit-save-repository-buffers 'dontask

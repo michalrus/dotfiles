@@ -1,0 +1,31 @@
+window#waybar {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ccc;
+}
+
+#workspaces button {
+    color: #ccc;
+    border-radius: 0px;
+    border-bottom: 2px solid transparent;
+    padding: 0 0.25em;
+}
+
+#workspaces button:hover {
+}
+
+#workspaces button.visible {
+    border-bottom: 2px solid white;
+    background-color:  rgba(255, 255, 255, 0.05);
+}
+
+label.module {
+    padding: 0 0.667em;
+}
+
+#tray {
+    padding: 0 0.667em;
+}
+
+#temperature.critical {
+    color: red;
+}

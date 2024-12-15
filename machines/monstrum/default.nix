@@ -29,9 +29,9 @@ nixpkgs.lib.nixosSystem {
     ../_shared_/features/nix.conf
     ../_shared_/features/systemd-accounting
     ../_shared_/features/zsh
+    ../_shared_/features/hyprland
 
     ./features/users
-    ./features/hyprland
 
     flake.inputs.home-manager-2411.nixosModules.home-manager
     {
@@ -46,11 +46,20 @@ nixpkgs.lib.nixosSystem {
           ../_shared_/home/gnu-screen
           ../_shared_/home/git
           ../_shared_/home/password-store
-
-          ./home/chromium
+          ../_shared_/home/mpv
+          ../_shared_/home/alacritty
+          ../_shared_/home/chromium
         ];
       };
     }
+
+    ({ pkgs, ... }: {
+      services.pipewire = {
+        enable = true;
+        pulse.enable = true;
+      };
+      environment.systemPackages = [ pkgs.pavucontrol ];
+    })
 
     # {
     #   services.printing.enable = true;

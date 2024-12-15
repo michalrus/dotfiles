@@ -1,6 +1,6 @@
 { doom-emacs, stdenvNoCC, lib, makeWrapper, pkgs, linkFarm, symlinkJoin, gitMinimal, cacert, emptyFile, writeText
 
-, chosenEmacs    ? pkgs.emacs29
+, chosenEmacs    ? pkgs.emacs29-pgtk
 , doomPackagesEl ? "${doom-emacs}/static/packages.example.el"
 , doomInitEl     ? "${doom-emacs}/static/init.example.el"
 , doomConfigEl   ? "${doom-emacs}/static/config.example.el"

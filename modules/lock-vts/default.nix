@@ -34,6 +34,18 @@ let
       fi
     done
 
+    ### hyprland
+
+    active_lock_envs=$(pgrep '^hyprlock$' | awk '{ print "/proc/" $1 "/environ" }')
+    active_sockets=$(find /run/user -path '/run/user/*/hypr/*/.socket.sock' 2>/dev/null || true)
+
+    for sock in $active_sockets ; do
+      inst_sig=$(basename "$(dirname "$sock")")
+      if [ -z "$active_lock_envs" ] || ! grep -F "$inst_sig" $active_lock_envs >/dev/null ; then
+        echo "dispatch exec hyprlock" | ${pkgs.socat}/bin/socat - UNIX-CONNECT:"$sock"
+      fi
+    done
+
     ### text-mode VT
 
     # ?

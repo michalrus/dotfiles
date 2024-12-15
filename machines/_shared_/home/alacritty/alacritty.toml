@@ -47,7 +47,7 @@ shape = "Beam"
 TERM = "xterm-256color"
 
 [font]
-size = 8.0
+size = 12.0
 
 [font.bold]
 family = "for_terminal"

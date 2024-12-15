@@ -1,0 +1,63 @@
+{
+  "mainBar": {
+    "layer": "top",
+    "position": "top",
+    "height": 30,
+    "reload_style_on_change": true,
+    "modules-center": [
+      "hyprland/window"
+    ],
+    "modules-left": [
+      "hyprland/workspaces",
+      "hyprland/submap"
+    ],
+    "modules-right": [
+      "pulseaudio",
+      "battery",
+      "temperature",
+      "load",
+      "memory",
+      "clock",
+      "tray"
+    ],
+    "battery": {
+      "format": "D {capacity}%",
+      "format-charging": "C {capacity}%",
+      "format-plugged": "F {capacity}%",
+      "interval": 30,
+      "tooltip": false,
+      "design-capacity": true
+    },
+    "clock": {
+      "format": "{:%a %d %b %H:%M:%S %z}",
+      "interval": 1,
+      "tooltip": false
+    },
+    "hyprland/window": {
+      "max-length": 80
+    },
+    "load": {
+      "format": "{load1:.2f} {load5:.2f} {load15:.2f}",
+      "interval": 10,
+      "tooltip": false
+    },
+    "memory": {
+      "format": "{used:0.1f}G ({percentage}%)",
+      "interval": 30,
+      "tooltip": false
+    },
+    "pulseaudio": {
+      "on-click": "pavucontrol",
+      "scroll-step": 1,
+      "max-volume": 150,
+      "format": "♪ {volume}%"
+    },
+    "temperature": {
+      "critical-threshold": 60,
+      "hwmon-path-abs": "/sys/devices/platform/coretemp.0/hwmon",
+      "input-filename": "temp1_input",
+      "interval": 10,
+      "tooltip": false
+    }
+  }
+}

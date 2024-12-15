@@ -44,6 +44,7 @@ nixpkgs.lib.nixosSystem {
     ../_shared_/features/nix.conf
     ../_shared_/features/systemd-accounting
     ../_shared_/features/zsh
+    ../_shared_/features/hyprland
 
     ./features/android
     ./features/bluetooth
@@ -51,7 +52,7 @@ nixpkgs.lib.nixosSystem {
     ./features/fav-pkgs-desktop
     ./features/firefox-autocomplete
     ./features/fonts
-    ./features/hardened-chromium
+    #./features/hardened-chromium
     ./features/hardened-firefox
     ./features/ledger
     ./features/libvirt
@@ -94,6 +95,8 @@ nixpkgs.lib.nixosSystem {
         useGlobalPkgs = true;
         useUserPackages = true;
         sharedModules = [
+          { home.stateVersion = "23.05"; }
+
           ../_shared_/home/shells
           ../_shared_/home/gnupg
           ../_shared_/home/git
@@ -101,20 +104,23 @@ nixpkgs.lib.nixosSystem {
           ../_shared_/home/haskell
           ../_shared_/home/gnu-screen
           ../_shared_/home/mpv
-          ./home/shared.nix
+          ../_shared_/home/alacritty
+          ../_shared_/home/chromium
         ];
         users.m.imports = [
           ../_shared_/home/identity-personal
           ../_shared_/home/doom-emacs
-          ../_shared_/home/zed-editor
+          #../_shared_/home/zed-editor
         ];
         users.mw.imports = [
           ../_shared_/home/identity-work
           ../_shared_/home/doom-emacs
-          ../_shared_/home/zed-editor
+          #../_shared_/home/zed-editor
         ];
         users.md.imports = [ ];
-        users.guest.imports = [ ./home/guest.nix ];
+        users.guest.imports = [
+          { home.file.".wallpaper.png".source = ../_shared_/assets/wallpapers/rainbow.png; }
+        ];
         users.root.imports = [ ];
       };
     })

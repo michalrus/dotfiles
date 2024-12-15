@@ -42,7 +42,6 @@ in
     ])))
     acpitool
     aegisub
-    alacritty
     alsa-utils
     anki
     audacity
@@ -90,7 +89,6 @@ in
     pdfarranger
     pdfpc
     pinentry-gtk2
-    flake.inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.chromium
     gnucash
     #unfree.retroarchFull
     streamlink
