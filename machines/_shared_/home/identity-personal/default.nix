@@ -54,11 +54,18 @@
       HostKeyAlias dell-home-server
       UserKnownHostsFile ~/.ssh/known_hosts.d/home-network
       User root
+
+    Host monstrum 10.77.2.12
+      Hostname 10.77.2.12
+      HostKeyAlias monstrum
+      UserKnownHostsFile ~/.ssh/known_hosts.d/home-network
+      User root
   '';
 
   home.file.".ssh/known_hosts.d/home-network".text = ''
     aneta ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB1nWQ6Rb+a8oxWf5IgfzSAENh7Kug0QuNRpaZM/47Qf
     aneta ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDoM/52op8WoSO26i2SJEpZVMunHpbCDu/rEMOQ3BW9xBvtQIWb8ViveUsuEhp1e0xYCj5DuMAPixJZPGFQRjEuOKcStyvHW117UsKcuCcsk2qqaEIgt398d31fBQJwBWfAY46wuYkMp2TUUfpkyPRMHjIsRrZrcz5sv0Kh/YmVyiZ9mUOtJx9GBA09uXyDwB0Rh7RK3W3G7CvPnRzPXKGfNzrW06uofpfQF633rxRKi0DpxINTQ8Ft8C4/jg2lt79Ln3D+sxmvKjb8kIKIaLCl7l81OTy/yrVoo1Cv/c39nTjB+A7lzGRWCj671NIUzKXxjsGiCa8HKAbIQ5T/o9aMDQpjtoDHyG5AY0i4VEzsykkF3DawzNXW7p0mZnLMSuiJx5TqvpaJmVcuYi+OXXF8HEAcFwY4dEi2NdKUBayod7YDRU8txHDjmLVE6rNlQFzoP+PnQ+pisoQCQ2kt10XgJju+xaqflJ+SNli9J4rWpCBhowBVcNsZjBokjESCftjRQvYt2trnkW+MIwj0DXg64317gKR2NsK75j41K66BSa7YLfhJSsM0E5f0n3MWU0TRJAiC8+4JvqERifeM8WvnfFb2Jldpzno/1JrBv5Nru06qsQt9zxWW3bKgC2nQ1npJzeR1s5uTGZsFnVVULJicStQXdQo32RSTMTgGsqwH0Q==
     dell-home-server ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHIF7BIoIAPX1gBffDvuKoHHXrHRbgJdDze6DhH97N5B
+    monstrum ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAII+f73fJcgbVVbfMI+lAzOk582TGp6t7O3jFxk60B8
   '';
 }
