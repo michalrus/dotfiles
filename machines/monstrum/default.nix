@@ -52,6 +52,7 @@ nixpkgs.lib.nixosSystem {
           { home.stateVersion = "24.11"; }
 
           ../_shared_/home/shells
+          ../_shared_/home/gnupg
           ../_shared_/home/gnu-screen
           ../_shared_/home/git
           ../_shared_/home/password-store
