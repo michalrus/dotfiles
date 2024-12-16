@@ -5,7 +5,7 @@ let
   serviceName = "qbittorrent";
   user = serviceName;
   dataDir = "/var/lib/${serviceName}";
-  downloadsDir = "/var/media/downloads/${user}";
+  downloadsDir = "/var/media/torrents";
   domain = "torrents.michalrus.com";
   rpcPort = 9092;
 
