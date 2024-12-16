@@ -16,7 +16,7 @@ let port = 51820; in
       privateKeyFile = config.age.secrets.wireguard_private_key.path;
       peers = [
         {
-          publicKey = __readFile ../../../../secrets/wireguard_dell-home-server.pub;
+          publicKey = __readFile ../../../../secrets/wireguard_monstrum.pub;
           allowedIPs = [ "10.77.5.11/32" ];
         }
       ];

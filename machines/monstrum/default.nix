@@ -41,6 +41,7 @@ nixpkgs.lib.nixosSystem {
       services.openproject.https = true;
     }
 
+    ./features/transmission
     ./features/users
 
     flake.inputs.home-manager-2411.nixosModules.home-manager

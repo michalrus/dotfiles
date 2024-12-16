@@ -4,8 +4,9 @@ with lib;
 with import ./common.nix modArgs;
 
 let
-  dellDomain = "openproject.michalrus.com";
-  dellIP = "10.77.5.11";
+  monstrumDomain1 = "openproject.michalrus.com";
+  monstrumDomain2 = "transmission.michalrus.com";
+  monstrumIP = "10.77.5.11";
 in
 
 {
@@ -47,26 +48,27 @@ in
         server {
           listen 80;
           listen [::]:80;
-          server_name ${dellDomain};
+          server_name ${monstrumDomain1} ${monstrumDomain2};
           location / {
             proxy_redirect off;
             proxy_set_header Host $host;
             proxy_set_header X-Real-IP  $remote_addr;
             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
             proxy_set_header X-Forwarded-Proto https;
-            proxy_pass http://${dellIP};
+            proxy_pass http://${monstrumIP};
           }
         }
       '';
 
       streamConfig = ''
         map $ssl_preread_server_name $upstream {
-          ${dellDomain} dell-home-server;
+          ${monstrumDomain1} monstrum;
+          ${monstrumDomain2} monstrum;
           default 127.0.0.1:8443;
         }
 
-        upstream dell-home-server {
-          server ${dellIP}:8443;
+        upstream monstrum {
+          server ${monstrumIP}:8443;
         }
 
         server {

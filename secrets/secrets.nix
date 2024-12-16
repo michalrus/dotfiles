@@ -21,6 +21,8 @@ in {
   "smtp_scripts_michalrus_com.age".publicKeys = michalrus ++ michalrus_com ++ monstrum;
   "wireguard_monstrum.age".publicKeys = michalrus ++ monstrum;
   "wireguard_michalrus_com.age".publicKeys = michalrus ++ michalrus_com;
+  "transmission_rpc_password.age".publicKeys = michalrus ++ monstrum;
+  "transmission_rpc_password_nginx.age".publicKeys = michalrus ++ monstrum;
 
   "ssh-key-personal-git-annex.age".publicKeys = michalrus ++ lenovo_x1 ++ macbook ++ macbook-nixos;
   "ssh-config-work-devx.age".publicKeys = michalrus ++ lenovo_x1 ++ macbook ++ macbook-nixos;
