@@ -5,7 +5,7 @@ with import ./common.nix modArgs;
 
 let
   monstrumDomain1 = "openproject.michalrus.com";
-  monstrumDomain2 = "transmission.michalrus.com";
+  monstrumDomain2 = "torrents.michalrus.com";
   monstrumIP = "10.77.5.11";
 in
 

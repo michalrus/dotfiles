@@ -60,17 +60,13 @@
     options = ["bind"];
   };
 
-  fileSystems."/var/home/m/Downloads" = {
-    device = "/var/media/downloads/m";
-    fsType = "none";
-    options = ["bind"];
-  };
+  fileSystems."/var/home/k/Downloads"  = { device = "/var/media/downloads/k";  fsType = "none"; options = ["bind"]; };
+  fileSystems."/var/home/m/Downloads"  = { device = "/var/media/downloads/m";  fsType = "none"; options = ["bind"]; };
+  fileSystems."/var/home/km/Downloads" = { device = "/var/media/downloads/km"; fsType = "none"; options = ["bind"]; };
 
-  fileSystems."/var/home/km/Downloads" = {
-    device = "/var/media/downloads/km";
-    fsType = "none";
-    options = ["bind"];
-  };
+  fileSystems."/var/media/downloads/k/Torrents"  = { device = "/var/media/downloads/qbittorrent"; fsType = "none"; options = ["bind"]; };
+  fileSystems."/var/media/downloads/m/Torrents"  = { device = "/var/media/downloads/qbittorrent"; fsType = "none"; options = ["bind"]; };
+  fileSystems."/var/media/downloads/km/Torrents" = { device = "/var/media/downloads/qbittorrent"; fsType = "none"; options = ["bind"]; };
 
   swapDevices = [ ];
 
