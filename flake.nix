@@ -114,6 +114,7 @@
       git-annex-hacks = callPackage ./packages/git-annex-hacks {};
       gettext-emacs = callPackage ./packages/gettext-emacs {};
       gregorio = callPackage ./packages/gregorio {};
+      hyprland-screenshot = callPackage ./packages/hyprland-screenshot {};
       lv2-cpp-tools = callPackage ./packages/lv2-cpp-tools {};
       on-vt-switch = callPackage ./packages/on-vt-switch {};
       noise = callPackage ./packages/noise {};

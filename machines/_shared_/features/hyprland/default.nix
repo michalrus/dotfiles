@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ flake, config, lib, pkgs, ... }:
 
 {
   programs.hyprland.enable = true;
@@ -22,6 +22,10 @@
     programs.waybar.settings = builtins.fromJSON (builtins.readFile ./waybar-config.json);
 
     home.file.".config/hypr/hyprlock.conf".source = ./hyprlock.conf;
+
+    home.packages = [
+      flake.packages.${pkgs.system}.hyprland-screenshot
+    ];
   })];
 
   # Only set aliases in real console:
