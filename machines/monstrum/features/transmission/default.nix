@@ -72,7 +72,7 @@ in
         auth_basic "Transmission";
         auth_basic_user_file ${pkgs.writeText "htpasswd" ''
           m:$apr1$cGe0wruI$/p0LSmjDCms61WWNSCTai0
-          k:$apr1$BKMzwgNZ$w0/cPHPSWzS4BReDXgvdH.
+          krzyszu:$apr1$apKMJVRz$18dgpOMlP2DW5xZY51CmR/
         ''};
 
         proxy_redirect off;
