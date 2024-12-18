@@ -80,6 +80,7 @@ in {
         ExecStop = lib.getExe (pkgs.writeShellScriptBin "${user}-stop" ''
           exec podman stop --ignore --cidfile=${cidFile} --time=110
         '');
+        TemporaryFileSystem = "/tmp:size=100M,mode=1777"; # otherwise it fails to start after reboot
       };
       preStart = ''
         podman image inspect ${lib.escapeShellArg imageFullName} >/dev/null || \
