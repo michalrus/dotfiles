@@ -17,6 +17,10 @@
 
     # Turn off physical display after N seconds:
     "consoleblank=30"
+
+    # The default values are high, and reported as RSS <https://github.com/openzfs/zfs/issues/10251>:
+    "zfs.zfs_arc_max=${toString (1 * 1024 * 1024 * 1024)}" # [B]
+    "zfs.zfs_arc_min=${toString (     256 * 1024 * 1024)}" # [B]
   ];
 
   boot.tmp.useTmpfs = false;
@@ -27,11 +31,19 @@
       preLVM = true;
       allowDiscards = true; # if SSD — has security implications!
     };
-    crypt-sda1 = {
-      device = "/dev/disk/by-uuid/155030a3-dbb4-4732-a6c3-b4dff9e73b05";
+    crypt-zmedia0 = {
+      # /dev/disk/by-id/dm-uuid-CRYPT-LUKS2-84561e9253ed4893865f278aea4cc0db-crypt-zmedia0
+      device = "/dev/disk/by-id/ata-ST2000DM006-2DM164_Z4Z9ZWAS";
       preLVM = true;
     };
   };
+
+  boot.supportedFilesystems.zfs = true;
+  networking.hostId = "21512317"; # for ZFS – has to be random between machines
+  services.zfs.trim.enable = true;
+  services.zfs.trim.interval = "weekly";
+  services.zfs.autoScrub.enable = true;
+  services.zfs.autoScrub.interval = "monthly";
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/f2e763fd-3f12-49b7-901e-717fddd2fd69";
@@ -50,8 +62,8 @@
     };
 
   fileSystems."/var/media" =
-    { device = "/dev/disk/by-uuid/6350a77c-1af4-4ed6-ae91-e60b43da929f";
-      fsType = "ext4";
+    { device = "zmedia/media";
+      fsType = "zfs";
     };
 
   fileSystems."/home" = {
