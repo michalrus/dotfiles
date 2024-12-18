@@ -11,6 +11,7 @@
   users.users.k = {
     isNormalUser = true;
     hashedPassword = "$6$QVBZMWiZYqFo5BgJ$p3lhNfrqhfAm/AAMifWkBCNX3uB8mtDo2yUc.S13t7vuFuNihtLkcEJ/uUqT2RW/6hLcuGz4osIkFItLH8J/R0";
+    openssh.authorizedKeys.keyFiles = [ ./k.pub ];
   };
 
   users.users.m = {
@@ -25,7 +26,10 @@
     isNormalUser = true;
     description = "K. i Michal";
     hashedPassword = "$6$j0Bwh6III9mMWiTb$daX3N4aLF9nmYAtCWK.KRPkfskfXwqfQhBk1IWlh5H7KoQ6fZTtMUKyoK/U3d9s3pMzE5L6ZnmZo9xZ1OvmTH0";
-    openssh.authorizedKeys.keyFiles = [ ../../../../dotfiles/michalrus/base/.ssh/authorized_keys.d/michalrus_notebook.pub ];
+    openssh.authorizedKeys.keyFiles = [
+      ../../../../dotfiles/michalrus/base/.ssh/authorized_keys.d/michalrus_notebook.pub
+      ./k.pub
+    ];
   };
 
   users.users.root = {
