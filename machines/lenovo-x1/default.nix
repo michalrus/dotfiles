@@ -65,7 +65,6 @@ nixpkgs.lib.nixosSystem {
     ./features/proaudio
     flake.nixosModules.torified-users
     ./features/tor
-    ./features/transmission
     ./features/udev-remap-keyboard
     flake.nixosModules.guest-account
     ./features/user-guest
