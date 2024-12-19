@@ -43,6 +43,7 @@ nixpkgs.lib.nixosSystem {
 
     ./features/torrents
     ./features/users
+    ./features/desktop-apps
 
     flake.inputs.home-manager-2411.nixosModules.home-manager
     {
