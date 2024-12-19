@@ -9,6 +9,12 @@ let
   domain = "torrents.michalrus.com";
   rpcPort = 9092;
 
+  # An alternative web UI, see <https://github.com/VueTorrent/VueTorrent/wiki/Installation>:
+  VueTorrent = pkgs.fetchzip {
+    url = "https://github.com/VueTorrent/VueTorrent/releases/download/v2.19.0/vuetorrent.zip";
+    hash = "sha256-cIY5fhcLyEPwt5D2T0S4KhAbb8Qmd9m3xcsQTa4FX+8=";
+  };
+
 in
 
 {
@@ -25,6 +31,7 @@ in
       WorkingDirectory = dataDir;
       BindPaths = [
         "${downloadsDir}:/Downloads"
+        "${VueTorrent}:/VueTorrent"
       ];
       ExecStart = "${pkgs.qbittorrent-nox}/bin/qbittorrent-nox";
     };
