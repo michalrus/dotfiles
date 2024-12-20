@@ -48,6 +48,9 @@ rec {
         listen 8443 ssl proxy_protocol;
         listen [::]:8443 ssl proxy_protocol;
 
+        # It’s getting it wrong with :8443 and SSL streaming:
+        port_in_redirect off;
+
         ${setRealIP}
 
         ssl_certificate     ${certDir}/fullchain.pem;
