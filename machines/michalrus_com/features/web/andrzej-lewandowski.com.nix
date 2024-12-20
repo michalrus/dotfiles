@@ -50,6 +50,7 @@ in
           michalrus:$apr1$Q67KvdAC$tUSCO.hwI5nCOtmsbkjyX/
           Krzyś:$apr1$.UBqHkMw$iqeyhOiJ2Q2YHKeoVTMQu.
           mikolaj:$apr1$tVowKZpr$Nul4ytYxnMYvNESnBwb2L1
+          Jools:$apr1$f25qdlv3$Fd00hYJeCLiLE53QLPGkF0
           slupska:$apr1$Kg/RRn6V$IV.hUtFMXsi48wAtHh4CL.
           #Rndl:$apr1$3lFkYcib$rL3F9IhikosYLZM8gqjry1
           kuba:$apr1$nO2liTmW$rPiuo2hZo6MxSoxyDuG4.0
