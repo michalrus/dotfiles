@@ -29,7 +29,18 @@ in
 
       package = pkgs.nginxMainline;
 
-      httpConfig = ''
+      httpConfig = let
+        readLines = file:
+            filter (s: stringLength s > 0)
+              (splitString "\n"
+                (builtins.readFile file));
+      in ''
+        geo $proxy_protocol_addr $request_from_cloudflare {
+          ${concatMapStrings (ip: ip + " 1;\n") (readLines flake.inputs.cloudflare-ips-v4)}
+          ${concatMapStrings (ip: ip + " 1;\n") (readLines flake.inputs.cloudflare-ips-v6)}
+          default 0;
+        }
+
         # Redirect all HTTP requests to HTTPS.
         server {
           listen 80 default;

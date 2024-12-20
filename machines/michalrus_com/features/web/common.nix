@@ -29,15 +29,15 @@ rec {
         if isNull forcedCertDir
         then "${config.security.acme.certs."${sslCert}".directory}"
         else forcedCertDir;
-      readF = file:
-        concatMapStrings (ip: "set_real_ip_from " + ip + ";\n")
-          (filter (s: stringLength s > 0)
-            (splitString "\n"
-              (builtins.readFile file)));
       setRealIP =
+        # XXX: we can’t have 2-stage real_ip_header (first proxy_protocol, and
+        # then CF-Connecting-IP), so let’s 403 everything not coming from
+        # Cloudflare, and then trust CF-Connecting-IP:
         if setRealIPFromCloudflare then ''
-          ${readF flake.inputs.cloudflare-ips-v4}
-          ${readF flake.inputs.cloudflare-ips-v6}
+          if ($request_from_cloudflare = 0) {
+            return 403 'Access denied. Only requests through Cloudflare are allowed.';
+          }
+          set_real_ip_from 127.0.0.1;
           real_ip_header CF-Connecting-IP;
         '' else ''
           set_real_ip_from 127.0.0.1;
