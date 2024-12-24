@@ -1,0 +1,44 @@
+diff --git a/config.py b/config.py
+index abbaee5..109a945 100644
+--- a/config.py
++++ b/config.py
+@@ -1,9 +1,11 @@
+ """ basic config file """
+-ROUTER = "192.168.1.1"
++import os
++
++ROUTER = os.getenv("ROUTER_ADDR", "11.22.33.44")
+ USER = "admin"
+ # please note some routers do not support passwords longer than 32 characters (B618s,
+ #  B818-623 and very likely others)
+-PASSWORD = b"admin-password"
++PASSWORD = open(os.getenv("PASSWORD_FILE", ""), "rb").read().strip()
+ TEST_HOST = '8.8.8.8'
+ TEST_PORT = 53
+ TEST_TIMEOUT = 3
+diff --git a/reboot_router.py b/reboot_router.py
+index 07c6942..d975570 100644
+--- a/reboot_router.py
++++ b/reboot_router.py
+@@ -101,14 +101,13 @@ def reboot(client, server, user, password):
+     url = "http://%s/api/net/reconnect" % server
+     headers = {'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                '__RequestVerificationToken': verification_token}
+-    response = client.post(
+-        url, data='<?xml version="1.0" encoding="UTF-8"?><request><ReconnectAction>1</ReconnectAction></request>', headers=headers)
+-
+-    if response.status_code!=200 or not "<response>OK</response>" in response.text.lower():
+-        print("reconnect failed, executing reboot")
+-        sleep(1)
+-        url = "http://%s/api/device/control" % server
+-        client.post(url, data='<?xml version:"1.0" encoding="UTF-8"?><request><Control>1</Control></request>', headers=headers)
++    url = "http://%s/api/device/control" % server
++    response = client.post(url, data='<?xml version="1.0" encoding="UTF-8"?><request><Control>1</Control></request>', headers=headers)
++    if response.status_code != 200:
++        print("Response Code:", response.status_code)
++        print("Response Headers:", response.headers)
++        print("Response Body:", response.text)
++        sys.exit(1)
+ 
+ 
+ def main():

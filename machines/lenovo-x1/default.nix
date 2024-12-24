@@ -51,7 +51,7 @@ nixpkgs.lib.nixosSystem {
     ./features/bluetooth
     ./features/fav-pkgs-cli-fat
     ./features/fav-pkgs-desktop
-    ./features/firefox-autocomplete
+    #./features/firefox-autocomplete
     #./features/hardened-chromium
     ./features/hardened-firefox
     ./features/ledger

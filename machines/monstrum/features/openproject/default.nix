@@ -18,6 +18,7 @@ let
   };
 
   user = "openproject";
+  uid = 2040;
   dataDir = "/var/lib/${user}";
   assetsDir = "${dataDir}/assets";
   pgdataDir = "${dataDir}/pgdata";
@@ -49,9 +50,11 @@ in {
       isSystemUser = true;
       group = user;
       home = dataDir;
-      autoSubUidGidRange = true;  # for rootless podman
+      inherit uid;
+      subUidRanges = [{ startUid = 100000; count = 65536; }];
+      subGidRanges = [{ startGid = 100000; count = 65536; }];
     };
-    users.groups.${user} = {};
+    users.groups.${user}.gid = uid;
 
     age.secrets.openproject_key_base = {
       file = ../../../../secrets/openproject_key_base.age;
@@ -72,6 +75,7 @@ in {
         MemoryHigh = "9G";
         MemoryMax = "10G";
         Restart = "always";
+        RestartSec = 10;
         Environment = "PODMAN_SYSTEMD_UNIT=${user}.service";
         Type = "notify";
         NotifyAccess = "all";
@@ -84,7 +88,7 @@ in {
       };
       preStart = ''
         podman image inspect ${lib.escapeShellArg imageFullName} >/dev/null || \
-          exec podman load -i ${ociImage}
+          podman load -i ${ociImage}
         [ -e ${assetsDir} ] || { mkdir -p ${assetsDir} && chown ${user}:${user} ${assetsDir} ; }
         [ -e ${pgdataDir} ] || { mkdir -p ${pgdataDir} && chown ${user}:${user} ${pgdataDir} ; }
       '';

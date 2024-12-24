@@ -43,9 +43,9 @@
   '';
 
   home.file.".ssh/config.d/home-network".text = ''
-    Host aneta 10.77.2.1
+    Host monstrum 10.77.2.1
       Hostname 10.77.2.1
-      HostKeyAlias aneta
+      HostKeyAlias monstrum
       UserKnownHostsFile ~/.ssh/known_hosts.d/home-network
       User root
 
@@ -55,9 +55,9 @@
       UserKnownHostsFile ~/.ssh/known_hosts.d/home-network
       User root
 
-    Host monstrum 10.77.2.12
-      Hostname 10.77.2.12
-      HostKeyAlias monstrum
+    Host aneta 10.77.2.13
+      Hostname 10.77.2.13
+      HostKeyAlias aneta
       UserKnownHostsFile ~/.ssh/known_hosts.d/home-network
       User root
   '';

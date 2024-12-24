@@ -32,7 +32,7 @@ nixpkgs.lib.nixosSystem {
     ../_shared_/features/hyprland
     ../_shared_/features/fonts
 
-    ./features/wireguard
+    ./features/wireguard-michalrus
     ../_shared_/features/nginx-reasonable
     ./features/nginx
     ./features/openproject
@@ -44,6 +44,12 @@ nixpkgs.lib.nixosSystem {
     ./features/torrents
     ./features/users
     ./features/desktop-apps
+
+    ./features/firewall
+    ./features/connmon
+    ./features/nordvpn
+    ./features/dns-bind
+    ./features/dhcp
 
     flake.inputs.home-manager-2411.nixosModules.home-manager
     {

@@ -25,6 +25,7 @@ in
     serviceConfig = {
       Type = "simple";
       Restart = "always";
+      RestartSec = 5;
       User = user;
       Group = user;
       UMask = "0002";
@@ -85,6 +86,11 @@ in
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto https;
         proxy_pass http://127.0.0.1:${toString rpcPort};
+
+        # These happen a few times a second when a WebUI is opened:
+        if ($request_uri ~* ^/api/v2/sync/) {
+            access_log off;
+        }
       }
     }
   '';
