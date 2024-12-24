@@ -27,4 +27,13 @@ in
       { id = "ejddcgojdblidajhngkogefpkknnebdh"; } # AutoplayStopper
     ];
   };
+
+  home.packages = [
+    (pkgs.writeShellApplication {
+      name = "chromium-novpn";
+      text = ''
+        exec chromium-browser --proxy-server="socks5://10.77.2.1:1080" --user-data-dir="$HOME/.config/chromium/Profile-NoVPN"
+      '';
+    })
+  ];
 }
