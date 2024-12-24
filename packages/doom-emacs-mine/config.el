@@ -71,7 +71,10 @@
 
 (after! ivy
   (setq ivy-wrap nil)
-  (map! "C-s" #'+default/search-buffer))
+  (map! "C-s" #'+default/search-buffer)
+  ; TODO: Restore sorting of (+ivy/project-search) outputs (`ag' was stable, `ripgrep' is not):
+  ;(add-to-list 'ivy-sort-matches-functions-alist '(counsel-projectile-rg . ???))
+  )
 
 (after! projectile
   (setq projectile-enable-caching nil))
@@ -101,7 +104,11 @@
         "<tab>" #'company-complete-selection))
 
 (after! counsel
-  (setq counsel-find-file-ignore-regexp nil))
+  (setq counsel-find-file-ignore-regexp nil
+        counsel-projectile-sort-files t
+        counsel-projectile-sort-directories t
+        counsel-projectile-sort-buffers t
+        counsel-projectile-sort-projects t))
 
 (after! cc-mode
   ; Useful for editing GNU code:
