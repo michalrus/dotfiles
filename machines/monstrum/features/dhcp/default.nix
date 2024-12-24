@@ -34,13 +34,13 @@ in
               pool = "10.77.2.101 - 10.77.2.240";
             }
           ];
+          reservations = [
+            { hw-address = "ac:15:a2:b3:e9:e9"; ip-address = "10.77.2.2";   } # Access Point
+            { hw-address = "00:1a:4b:23:ba:6e"; ip-address = "10.77.2.5";   } # printer
+            { hw-address = "e4:70:b8:f7:4b:8f"; ip-address = "10.77.2.11";  } # dell-home-server
+            { hw-address = "d6:b8:1b:53:d8:20"; ip-address = "10.77.2.99";  } # Michal’s MacBook
+          ];
         }
-      ];
-      reservations = [
-        { hw-address = "ac:15:a2:b3:e9:e9"; ip-address = "10.77.2.2";   } # Access Point
-        { hw-address = "00:1a:4b:23:ba:6e"; ip-address = "10.77.2.5";   } # printer
-        { hw-address = "e4:70:b8:f7:4b:8f"; ip-address = "10.77.2.11";  } # dell-home-server
-        { hw-address = "d6:b8:1b:53:d8:20"; ip-address = "10.77.2.99";  } # Michal’s MacBook
       ];
       option-data = [
         {
