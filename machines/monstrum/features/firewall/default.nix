@@ -46,6 +46,7 @@ let
     ${lib.concatMapStringsSep "\n" (port: ''-A INPUT -p tcp --dport ${toString port.from}:${toString port.to} -j ACCEPT'') config.networking.firewall.allowedTCPPortRanges}
     ${lib.concatMapStringsSep "\n" (port: ''-A INPUT -p udp --dport ${toString port} -j ACCEPT'') config.networking.firewall.allowedUDPPorts}
     ${lib.concatMapStringsSep "\n" (port: ''-A INPUT -p udp --dport ${toString port.from}:${toString port.to} -j ACCEPT'') config.networking.firewall.allowedUDPPortRanges}
+    -A INPUT -s 10.77.2.0/24 -p tcp --dport 1080 -j ACCEPT
     -A INPUT -p icmp -m icmp --icmp-type 8 -j ACCEPT
     -A INPUT -p tcp -m tcp --tcp-flags FIN,SYN,RST,ACK SYN -j LOG --log-prefix "refused connection: " --log-level 6
     -A INPUT -p tcp -m tcp ! --tcp-flags FIN,SYN,RST,ACK SYN -j REJECT --reject-with tcp-reset

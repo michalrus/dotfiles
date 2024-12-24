@@ -50,6 +50,7 @@ nixpkgs.lib.nixosSystem {
     ./features/nordvpn
     ./features/dns-bind
     ./features/dhcp
+    ./features/microsocks
 
     flake.inputs.home-manager-2411.nixosModules.home-manager
     {

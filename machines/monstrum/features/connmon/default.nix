@@ -16,6 +16,7 @@ let
   ];
   pingWaitSec = 10;
   routerIP = "10.77.3.1";
+  routesToCopyNoVPN = [ "default" "10.77.2.0/24" ];
 
   modem-restart = let
     original = pkgs.fetchFromGitHub {
@@ -113,7 +114,18 @@ in
   };
 
   # This is needed to keep the no-VPN routing ${table} always up to date:
-  systemd.services."ip-route-novpn-table" = {
+  systemd.services."ip-route-novpn-table" = let
+    copyRoutes = ''
+      for target in ${lib.escapeShellArgs routesToCopyNoVPN} ; do
+        new_route=$(ip route show "$target" || true)
+        if [ -z "$new_route" ] ; then
+          ip route delete "$target" table ${toString table} || true
+        else
+          ip route replace $new_route table ${toString table} || true
+        fi
+      done
+    '';
+  in {
     wantedBy = [ "multi-user.target" ];
     after = [ "network-pre.target" ];
     wants = [ "network.target" ];
@@ -128,12 +140,13 @@ in
     };
     path = with pkgs; [ iproute2 ];
     preStart = ''
-      ip route replace $(ip route show default) table ${toString table}
+      set -euo pipefail
+      ${copyRoutes}
     '';
     script = ''
       set -euo pipefail
       ip monitor route | while IFS= read -r ; do
-        ip route replace $(ip route show default) table ${toString table}
+        ${copyRoutes}
       done
     '';
     postStop = ''
