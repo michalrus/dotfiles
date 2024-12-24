@@ -22,8 +22,8 @@
   home.file.".wallpaper.png".source = ../../assets/wallpapers/yosemite.png;
 
   home.file.".ssh/config.d/macbook".text = ''
-    Host macbook 10.77.2.237
-      Hostname 10.77.2.237
+    Host macbook 10.77.2.99
+      Hostname 10.77.2.99
       HostKeyAlias macbook
       UserKnownHostsFile ~/.ssh/known_hosts.d/macbook
       User mw
