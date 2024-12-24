@@ -17,7 +17,7 @@ in
       dotfiles-old.profiles = [ "base" "michalrus/base" "git-annex" "michalrus/work/iohk" "i3" ];
       packages = with pkgs; [
         (hardened-firefox.makeWrapped {
-          localAutocompletePort = config.services.firefox-autocomplete.userPorts.mw;
+          localAutocompletePort = 9999; #config.services.firefox-autocomplete.userPorts.mw;
           extraPrefs = hardened-firefox.unwrapped.cfgEnableDRM;
         })
         unfree.jetbrains.webstorm
@@ -27,6 +27,6 @@ in
     };
   };
 
-  services.firefox-autocomplete.userPorts.mw = 9115;
+  #services.firefox-autocomplete.userPorts.mw = 9115;
 
 }

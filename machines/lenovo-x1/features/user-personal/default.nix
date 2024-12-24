@@ -13,14 +13,14 @@
       dotfiles-old.profiles = [ "base" "michalrus/base" "git-annex" "michalrus/personal" "i3" ];
       packages = with pkgs; [
         (hardened-firefox.makeWrapped {
-          localAutocompletePort = config.services.firefox-autocomplete.userPorts.m;
+          localAutocompletePort = 9999; #config.services.firefox-autocomplete.userPorts.m;
           extraPrefs = hardened-firefox.unwrapped.cfgEnableDRM;
         })
       ];
     };
   };
 
-  services.firefox-autocomplete.userPorts.m = 9114;
+  #services.firefox-autocomplete.userPorts.m = 9114;
 
   # FIXME: get rid of this
   fileSystems."/var/home/mw/.shared" = {

@@ -6,11 +6,11 @@
     enable = true;
     client.enable = true;
     torifiedUsers = [
-      { username = "md"; allowedLocalPorts = [ config.services.firefox-autocomplete.userPorts.md ]; }
+      { username = "md"; allowedLocalPorts = [ /*config.services.firefox-autocomplete.userPorts.md*/ ]; }
     ];
   };
 
-  services.firefox-autocomplete.userPorts.md = 9116;
+  #services.firefox-autocomplete.userPorts.md = 9116;
 
   users.extraUsers.md = {
     hashedPassword = "$6$YYkKeZ8M56$EZh1jGZbAnPaVKwnQebJ40ojqNShuU3Np2rWiPOOrfA1vXlFPCGbmbVZwOfRyCMU5y83ggkA1/jIG7Zzg6iD10";
@@ -22,7 +22,7 @@
     packages = with pkgs; [
       electrum
       (hardened-firefox.makeWrapped {
-        localAutocompletePort = config.services.firefox-autocomplete.userPorts.md;
+        localAutocompletePort = 9999; #config.services.firefox-autocomplete.userPorts.md;
         extraPrefs = ''
           // Override those for more privacy:
           lockPref("privacy.resistFingerprinting", true);
