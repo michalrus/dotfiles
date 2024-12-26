@@ -25,6 +25,7 @@ in
       { id = "dneaehbmnbhcippjikoajpoabadpodje"; } # old-reddit-redirect
       { id = "naepdomgkenhinolocfifgehidddafch"; } # browserpass # FIXME: move to ../_shared_/home/password-store
       { id = "ejddcgojdblidajhngkogefpkknnebdh"; } # AutoplayStopper
+      { id = "mnjggcdmjocbbbhaepdhchncahnbgone"; } # SponsorBlock
     ];
   };
 
