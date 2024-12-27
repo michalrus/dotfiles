@@ -35,10 +35,13 @@ let inherit (config.networking) hostName; in
 
     home.file.".config/hypr/hyprlock.conf".source = ./hyprlock.conf;
 
+    home.file.".config/swaync/style.css".source = ./swaync-style.css;
+
     home.packages = [
       flake.packages.${pkgs.system}.hyprland-screenshot
       (flake.packages.${pkgs.system}.wayland-unicode-input.override { onlyEmoji = false; })
       (flake.packages.${pkgs.system}.wayland-unicode-input.override { onlyEmoji = true;  })
+      pkgs.swaynotificationcenter
     ];
   })];
 

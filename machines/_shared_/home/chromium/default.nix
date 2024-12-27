@@ -18,6 +18,7 @@ in
     };
     commandLineArgs = [
       "--ozone-platform-hint=auto" # native Wayland
+      "--enable-native-notifications"
     ];
     dictionaries = [
       flake.packages.${pkgs.system}.hunspell-dictionaries-chromium-pl
