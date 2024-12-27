@@ -37,6 +37,8 @@ let inherit (config.networking) hostName; in
 
     home.packages = [
       flake.packages.${pkgs.system}.hyprland-screenshot
+      flake.packages.${pkgs.system}.wofi-unicode-input
+      (flake.packages.${pkgs.system}.wofi-unicode-input.override { onlyEmoji = true; })
     ];
   })];
 
