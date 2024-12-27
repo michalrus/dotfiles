@@ -1,11 +1,23 @@
 { flake, config, lib, pkgs, ... }:
 
+let inherit (config.networking) hostName; in
+
 {
   programs.hyprland.enable = true;
   programs.hyprlock.enable = true;
 
   home-manager.sharedModules = [({ config, ... }: {
-    home.file.".config/hypr/hyprland.conf".source = ./hyprland.conf;
+    home.file.".config/hypr/hyprland.conf".text = ''
+      source = ${./hyprland-monitor-lenovo-x1.conf}
+      source = ${./hyprland.conf}
+      source = ${
+        if config.home.username == "mw" || config.home.username == "m" then
+          ./hyprland-input-michalrus.conf
+        else
+          ./hyprland-input-generic.conf
+      }
+      #source = ${./hyprland-xwayland-hidpi.conf}
+    '';
 
     home.pointerCursor.gtk.enable = true;
     home.pointerCursor.package = pkgs.vanilla-dmz;
