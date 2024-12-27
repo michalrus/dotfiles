@@ -31,9 +31,13 @@ writeShellApplication {
            | "\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"' \
       | slurp)
 
+    # For slurp’s black border to disappear, see
+    # <https://github.com/hyprwm/contrib/blob/d7c55140f1785b8d9fef351f1cd2a4c9e1eaa466/grimblast/grimblast#L217>:
+    sleep 0.1
+
     grim -g "$geometry" \
       - ${if alsoSaveToDir != null then ''| tee "$target"'' else ""} \
-      | wl-copy
+      | wl-copy --type image/png
   '';
   derivationArgs.meta.description = "Takes a screenshot on Hyprland (has window selection)";
 }
