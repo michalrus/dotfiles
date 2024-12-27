@@ -26,8 +26,8 @@ let inherit (config.networking) hostName; in
     home.sessionVariables.HYPRCURSOR_SIZE = 24;
     home.sessionVariables.XCURSOR_SIZE = 24;
 
-    programs.wofi.enable = true;
-    home.file.".config/wofi/style.css".source = ./wofi-style.css;
+    programs.fuzzel.enable = true;
+    home.file.".config/fuzzel/fuzzel.ini".source = ./fuzzel.ini;
 
     programs.waybar.enable = true;
     programs.waybar.style = builtins.readFile ./waybar-style.css;
@@ -37,8 +37,8 @@ let inherit (config.networking) hostName; in
 
     home.packages = [
       flake.packages.${pkgs.system}.hyprland-screenshot
-      flake.packages.${pkgs.system}.wofi-unicode-input
-      (flake.packages.${pkgs.system}.wofi-unicode-input.override { onlyEmoji = true; })
+      (flake.packages.${pkgs.system}.wayland-unicode-input.override { onlyEmoji = false; })
+      (flake.packages.${pkgs.system}.wayland-unicode-input.override { onlyEmoji = true;  })
     ];
   })];
 

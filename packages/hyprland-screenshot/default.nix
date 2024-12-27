@@ -12,6 +12,7 @@ let
   # Get rid of the black border, because slurp is not fast enough to exit:
   grimblastPatched = grimblast.overrideAttrs (drv: {
     postInstall = (drv.postInstall or "") + ''
+      sed -r 's/sleep 0\.2/#\0/g'                       -i $out/bin/.grimblast-wrapped
       sed -r 's/slurp \$SLURP_ARGS/\0 \&\& sleep 0.1/g' -i $out/bin/.grimblast-wrapped
     '';
   });

@@ -1,4 +1,4 @@
-{ lib, fetchurl, writeShellApplication, python3, runCommand, wofi, wtype, wl-clipboard, writeText
+{ lib, fetchurl, writeShellApplication, python3, runCommand, fuzzel, wtype, wl-clipboard, writeText
 
 , onlyEmoji ? false
 
@@ -35,17 +35,20 @@ let
     ''} >$out
   '';
 
-  exeName = "wofi-unicode-input${if onlyEmoji then "-emoji" else ""}";
+  exeName = "wayland-unicode-input${if onlyEmoji then "-emoji" else ""}";
 
 in
 
 writeShellApplication {
   name = exeName;
-  runtimeInputs = [ wofi wtype wl-clipboard ];
+  runtimeInputs = [ fuzzel wtype wl-clipboard ];
   text = ''
     set -euo pipefail
 
-    selected=$(${lib.getExe wofi} <${table} --show dmenu)
+    cacheDir="$HOME"/.cache/wayland-unicode-input
+    mkdir -p "$cacheDir"
+
+    selected=$(fuzzel <${table} --dmenu --width=100 --cache="$cacheDir"/${if onlyEmoji then "emoji" else "default"})
 
     # This substring() needs to be multibyte-aware:
     character="''${selected:0:1}"
