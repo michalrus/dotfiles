@@ -31,6 +31,7 @@ nixpkgs.lib.nixosSystem {
     ../_shared_/features/zsh
     ../_shared_/features/hyprland
     ../_shared_/features/fonts
+    ../_shared_/features/desktop-apps
 
     ./features/wireguard-michalrus
     ../_shared_/features/nginx-reasonable
@@ -43,7 +44,6 @@ nixpkgs.lib.nixosSystem {
 
     ./features/torrents
     ./features/users
-    ./features/desktop-apps
 
     ./features/firewall
     ./features/connmon

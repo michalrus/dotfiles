@@ -46,6 +46,7 @@ nixpkgs.lib.nixosSystem {
     ../_shared_/features/zsh
     ../_shared_/features/hyprland
     ../_shared_/features/fonts
+    ../_shared_/features/desktop-apps
 
     ./features/android
     ./features/bluetooth
@@ -164,15 +165,6 @@ nixpkgs.lib.nixosSystem {
         SystemMaxUse=200M
       '';
     }
-
-    ({ pkgs, ...}: {
-      services.printing = {
-        enable = true;
-        drivers = with pkgs; [ gutenprint hplip epson-escpr ];
-      };
-    })
-
-    { hardware.sane.enable = true; }
 
     flake.nixosModules.sqlite-dump
     {

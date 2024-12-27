@@ -59,8 +59,6 @@ in
     dvdauthor
     dvdbackup
     electrum
-    evince
-    feh
     flake.packages.${pkgs.system}.gettext-emacs
     flake.packages.${pkgs.system}.noise
     flake.packages.${pkgs.system}.transcribe
@@ -85,7 +83,6 @@ in
     networkmanagerapplet
     octave
     pavucontrol
-    pcmanfm
     pdfarranger
     pdfpc
     pinentry-gtk2
