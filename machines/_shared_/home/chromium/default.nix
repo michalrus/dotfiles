@@ -19,7 +19,10 @@ in
     commandLineArgs = [
       "--ozone-platform-hint=auto" # native Wayland
     ];
-    dictionaries = [ pkgs.hunspellDictsChromium.en_US ];
+    dictionaries = [
+      flake.packages.${pkgs.system}.hunspell-dictionaries-chromium-pl
+      pkgs.hunspellDictsChromium.en_US
+    ];
     extensions = [
       { id = "cjpalhdlnbpafiamejdnhcphjbkeiagm"; } # ublock-origin
       { id = "dneaehbmnbhcippjikoajpoabadpodje"; } # old-reddit-redirect
