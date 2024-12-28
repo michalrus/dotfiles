@@ -16,7 +16,12 @@ in
   services.kea.dhcp4 = {
     enable = true;
     settings = {
-      interfaces-config.interfaces = [ internalInterface ];
+      interfaces-config = {
+        interfaces = [ internalInterface ];
+        service-sockets-max-retries = 999999999;
+        service-sockets-retry-wait-time = 1000;
+      };
+
       lease-database = {
         name = "/var/lib/kea/dhcp4.leases";
         persist = true;
@@ -54,7 +59,4 @@ in
       ];
     };
   };
-
-
-
 }
