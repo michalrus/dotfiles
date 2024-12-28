@@ -1,13 +1,14 @@
 window#waybar {
     background-color: rgba(255, 255, 255, 0.1);
     color: #ccc;
+    font-size: 11pt;
 }
 
 #workspaces button {
     color: #ccc;
     border-radius: 0px;
     border-bottom: 2px solid transparent;
-    padding: 0 0.25em;
+    padding: 0 0.75em;
 }
 
 #workspaces button:hover {
@@ -15,7 +16,12 @@ window#waybar {
 
 #workspaces button.visible {
     border-bottom: 2px solid white;
-    background-color:  rgba(255, 255, 255, 0.05);
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+#workspaces button.urgent {
+    border-bottom: 2px solid red;
+    background-color: rgba(255, 0, 0, 0.3);
 }
 
 label.module {

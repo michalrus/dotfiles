@@ -9,6 +9,13 @@
       evince
       qimgv
       udiskie
+      libnotify
+      networkmanagerapplet
+      pavucontrol
+      xarchiver
+      xdg-utils
+      gtk2  # For icon cache, see #20874.
+      dconf
     ];
 
     xdg.mimeApps.enable = true;
@@ -18,6 +25,7 @@
       pdfViewer = ["org.gnome.Evince.desktop"];
       imageViewer = ["qimgv.desktop"];
       videoPlayer = ["mpv.desktop"];
+      archiver = ["xarchiver.desktop"];
     in {
       "inode/directory" = fileBrowser;
 
@@ -43,6 +51,13 @@
       "video/3gpp2" = videoPlayer;
       "video/quicktime" = videoPlayer;
       "video/mpeg" = videoPlayer;
+
+      "application/zip" = archiver;
+      "application/vnd.rar" = archiver;
+      "application/x-7z-compressed" = archiver;
+      "application/x-tar" = archiver;
+      "application/x-compressed-tar" = archiver;
+      "application/x-bzip2-compressed-tar" = archiver;
     };
   }];
 

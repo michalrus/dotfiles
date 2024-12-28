@@ -11,25 +11,15 @@ in
     package = pkgs.wireshark-qt;
   };
 
-  boot.kernel.sysctl."fs.inotify.max_user_watches" = "1048576";  # for JetBrains
-
-  # Use GTK 2 in LibreOffice, as 3 has some menu rendering problems.
-  environment.variables."SAL_USE_VCLPLUGIN" = "gtk";
-
   environment.systemPackages = flake.lib.filterSystem pkgs.system (with pkgs; [
     haskellPackages.ghc
     haskellPackages.hlint
-    jetbrains.idea-community
-    nodejs_latest
     octave
-    openjdk8
     pandoc
     protobuf
     rust-analyzer
     rustup
-    solc
     sqlint
-    vscodium
     (texlive.withPackages (ps: [
       flake.packages.${pkgs.system}.gregorio.forTexlive
     ] ++ (with ps; [
@@ -46,7 +36,6 @@ in
     flake.inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.anki
     audacity
     awf
-    breeze-qt5 breeze-icons hicolor-icon-theme kde-gtk-config breeze-gtk
     brightnessctl
     calibre
     cdparanoia
@@ -64,25 +53,19 @@ in
     flake.packages.${pkgs.system}.transcribe
     ghostscript
     gimp
-    adwaita-icon-theme  # for resizable cursors
     aisleriot
     baobab
     cheese
-    dconf  # so that GnuCash prefs can be changed
     zenity
     gparted
-    gtk2  # Why? Icon cache! See #20874.
     handbrake
     inkscape
     isync
     #k3b
-    libnotify
     libreoffice
     lilypond
     monero-gui
-    networkmanagerapplet
     octave
-    pavucontrol
     pdfarranger
     pdfpc
     pinentry-gtk2
@@ -99,11 +82,9 @@ in
     statix
     tigervnc
     timidity
-    unfree.skypeforlinux  # FIXME: use inside browser?
-    unfree.zoom-us  # FIXME: use inside browser?
+    # unfree.skypeforlinux  # FIXME: use inside browser?
+    # unfree.zoom-us  # FIXME: use inside browser?
     utox
-    xarchiver
-    xdg-utils
     xsane
   ]);
 

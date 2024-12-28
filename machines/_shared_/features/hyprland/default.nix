@@ -29,6 +29,18 @@ let inherit (config.networking) hostName; in
     home.sessionVariables.HYPRCURSOR_SIZE = 24;
     home.sessionVariables.XCURSOR_SIZE = 24;
 
+    gtk.enable = true;
+    gtk.cursorTheme.package = pkgs.vanilla-dmz;
+    gtk.cursorTheme.name = "Vanilla-DMZ";
+    gtk.cursorTheme.size = 24;
+    gtk.font.name = "Noto Sans";
+    gtk.font.size = 11;
+    gtk.iconTheme.package = pkgs.papirus-icon-theme;
+    gtk.iconTheme.name = "Papirus"; # "Papirus-Dark"
+    gtk.theme.package = pkgs.breeze-gtk;
+    gtk.theme.name = "Breeze"; # "Breeze-Dark"
+    qt.style.name = "breeze";
+
     programs.fuzzel.enable = true;
     home.file.".config/fuzzel/fuzzel.ini".source = ./fuzzel.ini;
 
@@ -63,6 +75,7 @@ let inherit (config.networking) hostName; in
           exec wlsunset -l "$latitude" -L "$longitude" -t "$kelvin_night" -T "$kelvin_day"
         '';
       })
+      pkgs.hicolor-icon-theme # Papirus fallback
     ];
   })];
 
