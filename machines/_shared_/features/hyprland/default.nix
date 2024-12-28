@@ -37,11 +37,14 @@ let inherit (config.networking) hostName; in
 
     home.file.".config/swaync/style.css".source = ./swaync-style.css;
 
+    home.file.".config/hypr/hypridle.conf".source = ./hypridle.conf;
+
     home.packages = [
       flake.packages.${pkgs.system}.hyprland-screenshot
       (flake.packages.${pkgs.system}.wayland-unicode-input.override { onlyEmoji = false; })
       (flake.packages.${pkgs.system}.wayland-unicode-input.override { onlyEmoji = true;  })
       pkgs.swaynotificationcenter
+      pkgs.hypridle
     ];
   })];
 
@@ -58,4 +61,11 @@ let inherit (config.networking) hostName; in
       esac
     fi
   '';
+
+  security.sudo = {
+    enable = true;
+    extraConfig = ''
+      %users ALL = (root) NOPASSWD: /run/current-system/sw/bin/loginctl lock-sessions
+    '';
+  };
 }

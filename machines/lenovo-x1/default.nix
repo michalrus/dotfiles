@@ -27,7 +27,7 @@ nixpkgs.lib.nixosSystem {
     #gnu-screen  # unused
     hibernate-on-low-battery
     lock-vts
-    lock-x11-displays
+    #lock-x11-displays
     malicious-hosts
     #sane-extra-config
     somagic-easycap
