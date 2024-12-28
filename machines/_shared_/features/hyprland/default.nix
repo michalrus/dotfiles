@@ -16,6 +16,9 @@ let inherit (config.networking) hostName; in
         else
           ./hyprland-input-generic.conf
       }
+      ${if config.home.username == "m" then ''
+        source = ${./hyprland-redshift.conf}
+      '' else ""}
       #source = ${./hyprland-xwayland-hidpi.conf}
     '';
 
@@ -48,6 +51,18 @@ let inherit (config.networking) hostName; in
       (flake.packages.${pkgs.system}.wayland-unicode-input.override { onlyEmoji = true;  })
       pkgs.swaynotificationcenter
       pkgs.hypridle
+      (pkgs.writeShellApplication {
+        # for redshift:
+        name = "wlsunset";
+        runtimeInputs = [ pkgs.wlsunset ];
+        text = ''
+          latitude=51.26
+          longitude=16.96
+          kelvin_night=3700
+          kelvin_day=6500
+          exec wlsunset -l "$latitude" -L "$longitude" -t "$kelvin_night" -T "$kelvin_day"
+        '';
+      })
     ];
   })];
 
