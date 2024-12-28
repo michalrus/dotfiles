@@ -53,6 +53,10 @@ let
     -A INPUT -j REJECT --reject-with icmp-port-unreachable
     -A FORWARD -s 10.77.2.0/24 -m conntrack --ctstate NEW,ESTABLISHED,RELATED -j ACCEPT
     -A FORWARD -d 10.77.2.0/24 -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+    # Always allow all Wireguard packets:
+    -A OUTPUT -m mark --mark 51820 -j ACCEPT
+    # Prevent torrents from leaking our non-VPN IP:
+    -A OUTPUT -s 10.77.3.0/24 -m owner --uid-owner ${toString config.users.users.qbittorrent.uid} -j DROP
     COMMIT
 
     *mangle

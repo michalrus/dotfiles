@@ -32,7 +32,9 @@ in
       modprobe wireguard || true
       ip link add dev ${iface} type wireguard
       ip address add ${clientInternalIP}/24 dev ${iface}
-      wg set ${iface} private-key ${config.age.secrets.wireguard_monstrum.path}
+      wg set ${iface} \
+        private-key ${config.age.secrets.wireguard_monstrum.path} \
+        fwmark 51820
 
       # Use a lower MTU, because we often run WireGuard-inside-WireGuard, and
       # the default of 1420 breaks large packets like those of SSH or HTTPS:

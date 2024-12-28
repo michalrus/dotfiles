@@ -4,6 +4,7 @@ let
 
   serviceName = "qbittorrent";
   user = serviceName;
+  uid = 2048;
   dataDir = "/var/lib/${serviceName}";
   downloadsDir = "/var/media/torrents";
   domain = "torrents.michalrus.com";
@@ -48,8 +49,9 @@ in
     isSystemUser = true;
     group = user;
     home = dataDir;
+    inherit uid;
   };
-  users.groups.${user} = {};
+  users.groups.${user}.gid = uid;
 
   systemd.tmpfiles.rules = [
     "d ${dataDir}       0700 ${user} ${user} -"

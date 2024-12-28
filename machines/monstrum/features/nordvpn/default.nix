@@ -66,7 +66,9 @@ in
       modprobe wireguard || true
       ip link add dev ${iface} type wireguard
       ip address add 10.5.0.2/24 dev ${iface}
-      wg set ${iface} private-key ${config.age.secrets.wireguard_nordvpn.path}
+      wg set ${iface} \
+        private-key ${config.age.secrets.wireguard_nordvpn.path} \
+        fwmark 51820
 
       ip link set up dev ${iface}
 
