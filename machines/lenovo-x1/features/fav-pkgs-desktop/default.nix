@@ -43,7 +43,7 @@ in
     acpitool
     aegisub
     alsa-utils
-    anki
+    flake.inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.anki
     audacity
     awf
     breeze-qt5 breeze-icons hicolor-icon-theme kde-gtk-config breeze-gtk
