@@ -124,6 +124,7 @@
       talentedhack = callPackage ./packages/talentedhack {};
       tap-plugins = callPackage ./packages/tap-plugins {};
       transcribe = callPackage ./packages/transcribe {};
+      wayland-logout = callPackage ./packages/wayland-logout {};
       wayland-unicode-input = callPackage ./packages/wayland-unicode-input {};
       vftool = inputs.nixpkgs-2311.legacyPackages.${system}.callPackage ./packages/vftool { inherit (inputs) nixpkgs-macos-sdk-13; };
       vocproc = callPackage ./packages/vocproc { inherit lv2-cpp-tools; };

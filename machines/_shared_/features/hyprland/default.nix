@@ -33,7 +33,9 @@ let inherit (config.networking) hostName; in
     programs.waybar.style = builtins.readFile ./waybar-style.css;
     programs.waybar.settings = builtins.fromJSON (builtins.readFile ./waybar-config.json);
 
-    home.file.".config/hypr/hyprlock.conf".source = ./hyprlock.conf;
+    home.file.".config/hypr/hyprlock.conf".text =
+      lib.replaceStrings ["screenshot"] ["${pkgs.hyprland}/share/hypr/wall0.png"]
+      (builtins.readFile ./hyprlock.conf);
 
     home.file.".config/swaync/style.css".source = ./swaync-style.css;
 
@@ -41,6 +43,7 @@ let inherit (config.networking) hostName; in
 
     home.packages = [
       flake.packages.${pkgs.system}.hyprland-screenshot
+      flake.packages.${pkgs.system}.wayland-logout
       (flake.packages.${pkgs.system}.wayland-unicode-input.override { onlyEmoji = false; })
       (flake.packages.${pkgs.system}.wayland-unicode-input.override { onlyEmoji = true;  })
       pkgs.swaynotificationcenter
@@ -66,6 +69,12 @@ let inherit (config.networking) hostName; in
     enable = true;
     extraConfig = ''
       %users ALL = (root) NOPASSWD: /run/current-system/sw/bin/loginctl lock-sessions
+      %users ALL = (root) NOPASSWD: /run/current-system/sw/bin/chvt 1
+      %users ALL = (root) NOPASSWD: /run/current-system/sw/bin/chvt 2
+      %users ALL = (root) NOPASSWD: /run/current-system/sw/bin/chvt 3
+      %users ALL = (root) NOPASSWD: /run/current-system/sw/bin/chvt 4
+      %users ALL = (root) NOPASSWD: /run/current-system/sw/bin/chvt 5
+      %users ALL = (root) NOPASSWD: /run/current-system/sw/bin/chvt 6
     '';
   };
 }

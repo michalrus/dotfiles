@@ -154,9 +154,7 @@ nixpkgs.lib.nixosSystem {
     {
       services.logind = {
         lidSwitch = "suspend";
-        extraConfig = ''
-          HandlePowerKey=suspend
-        '';
+        powerKey = "suspend";
       };
     }
 

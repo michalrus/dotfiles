@@ -9,7 +9,7 @@ let
 in
 
 {
-  systemd.services."on-vt-switch-lock" = {
+  systemd.services."lock-on-vt-switch" = {
     wantedBy = [ "multi-user.target" ];
     after = [ "getty.target" ];
     serviceConfig = {
@@ -17,13 +17,16 @@ in
       Restart = "always";
       RestartSec = 1;
       ExecStart = let
-        handleEvent = pkgs.writeScript "handle-event" ''
-          #! ${pkgs.stdenv.shell}
+        handleEvent = pkgs.writeShellScript "handle-event" ''
           exec ${config.systemd.package}/bin/loginctl lock-sessions
         '';
       in "${on-vt-switch}/bin/on-vt-switch ${handleEvent}";
     };
   };
+
+  powerManagement.powerDownCommands = ''
+    ${config.systemd.package}/bin/loginctl lock-sessions && sleep 1
+  '';
 
   ### TODO: locking textual VTs… hmm — it seems the only option is to… kill their `login` process…
   ###   • each swaylock/i3lock has XDG_SESSION_ID set in /proc/XXX/environ
