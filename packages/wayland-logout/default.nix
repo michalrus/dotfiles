@@ -20,7 +20,7 @@ writeShellApplication {
     Power off' fuzzel --dmenu --index)
 
     case "$chosen" in
-    0)  sudo loginctl lock-sessions && sleep 2 && hyprctl dispatch dpms off ;;
+    0)  sudo loginctl lock-sessions ;;
     1)  hyprctl dispatch exit ;;
     2)  systemctl suspend -i ;;
     3)  sudo loginctl lock-sessions && sleep 1 && sudo chvt 1 ;;
