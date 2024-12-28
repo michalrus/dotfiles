@@ -1,0 +1,11 @@
+.notification-content {
+    padding: 0.5em 1em;
+}
+
+.notification-content .image {
+    padding-right: 1em;
+}
+
+.notification-content .app-icon {
+    padding-right: 1em;
+}
