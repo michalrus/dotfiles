@@ -54,7 +54,12 @@ let inherit (config.networking) hostName; in
 
     home.file.".config/swaync/style.css".source = ./swaync-style.css;
 
-    home.file.".config/hypr/hypridle.conf".source = ./hypridle.conf;
+    home.file.".config/hypr/hypridle.conf".text = ''
+      ${builtins.readFile ./hypridle.conf}
+      ${if hostName != "monstrum"
+        then builtins.readFile ./hypridle-laptop.conf
+        else builtins.readFile ./hypridle-desktop.conf}
+    '';
 
     home.packages = [
       flake.packages.${pkgs.system}.hyprland-screenshot
