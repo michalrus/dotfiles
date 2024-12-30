@@ -28,6 +28,7 @@
       archiver = ["xarchiver.desktop"];
     in {
       "inode/directory" = fileBrowser;
+      "inode/mount-point" = fileBrowser;
 
       "x-scheme-handler/http" = webBrowser;
       "x-scheme-handler/https" = webBrowser;
