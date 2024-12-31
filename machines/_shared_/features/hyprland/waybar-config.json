@@ -20,6 +20,9 @@
       "clock",
       "tray"
     ],
+    "tray": {
+      "spacing": 7
+    },
     "battery": {
       "format": "D {capacity}%",
       "format-charging": "C {capacity}%",
