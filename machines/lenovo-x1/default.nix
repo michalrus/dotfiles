@@ -47,6 +47,7 @@ nixpkgs.lib.nixosSystem {
     ../_shared_/features/hyprland
     ../_shared_/features/fonts
     ../_shared_/features/desktop-apps
+    ../_shared_/features/games
 
     ./features/android
     ./features/bluetooth

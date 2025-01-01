@@ -33,6 +33,7 @@ nixpkgs.lib.nixosSystem {
     ../_shared_/features/hyprland
     ../_shared_/features/fonts
     ../_shared_/features/desktop-apps
+    ../_shared_/features/games
 
     ./features/wireguard-michalrus
     ../_shared_/features/nginx-reasonable
@@ -52,8 +53,6 @@ nixpkgs.lib.nixosSystem {
     ./features/dns-bind
     ./features/dhcp
     ./features/microsocks
-
-    ./features/games
 
     flake.inputs.home-manager-2411.nixosModules.home-manager
     {
