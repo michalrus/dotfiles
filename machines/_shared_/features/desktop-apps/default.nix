@@ -6,6 +6,7 @@
   home-manager.sharedModules = [{
     home.packages = with pkgs; [
       pcmanfm
+      notepad-next
       evince
       qimgv
       udiskie
@@ -22,6 +23,7 @@
     xdg.mimeApps.defaultApplications = let
       webBrowser = ["chromium-browser.desktop"];
       fileBrowser = ["pcmanfm.desktop"];
+      textEditor = ["NotepadNext.desktop"];
       pdfViewer = ["org.gnome.Evince.desktop"];
       imageViewer = ["qimgv.desktop"];
       videoPlayer = ["mpv.desktop"];
@@ -32,6 +34,9 @@
 
       "x-scheme-handler/http" = webBrowser;
       "x-scheme-handler/https" = webBrowser;
+
+      "text/plain" = textEditor;
+      "application/rtf" = textEditor;
 
       "application/pdf" = pdfViewer;
 
