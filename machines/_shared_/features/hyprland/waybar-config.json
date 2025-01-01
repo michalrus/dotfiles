@@ -27,7 +27,8 @@
       "format": "? {capacity}%",
       "format-discharging": "D {capacity}%",
       "format-charging": "C {capacity}%",
-      "format-plugged": "F {capacity}%",
+      "format-plugged": "P {capacity}%",
+      "format-full": "F {capacity}%",
       "interval": 30,
       "tooltip": false,
       "design-capacity": true
