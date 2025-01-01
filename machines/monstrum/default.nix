@@ -53,6 +53,8 @@ nixpkgs.lib.nixosSystem {
     ./features/dhcp
     ./features/microsocks
 
+    ./features/games
+
     flake.inputs.home-manager-2411.nixosModules.home-manager
     {
       home-manager = {
