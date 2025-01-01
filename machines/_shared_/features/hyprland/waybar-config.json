@@ -24,7 +24,8 @@
       "spacing": 7
     },
     "battery": {
-      "format": "D {capacity}%",
+      "format": "? {capacity}%",
+      "format-discharging": "D {capacity}%",
       "format-charging": "C {capacity}%",
       "format-plugged": "F {capacity}%",
       "interval": 30,
