@@ -29,4 +29,15 @@
     options = [ "map=m/mw" ];
   };
 
+  home-manager.users.m.imports = [{
+    home.packages = [
+      (pkgs.writeShellApplication {
+        name = "chromium-crypto";
+        text = ''
+          exec chromium-browser --user-data-dir="$HOME/.config/chromium/Profile-Crypto" "$@"
+        '';
+      })
+    ];
+  }];
+
 }
