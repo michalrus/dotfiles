@@ -45,6 +45,7 @@ nixpkgs.lib.nixosSystem {
     }
 
     ./features/torrents
+    ./features/airvpn
     ./features/users
 
     ./features/firewall

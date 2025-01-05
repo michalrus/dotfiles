@@ -10,6 +10,7 @@
 
   networking.resolvconf.useLocalResolver = true;
 
+  networking.firewall.allowedTCPPorts = [ 53 ];
   networking.firewall.allowedUDPPorts = [ 53 ];
 
   services.bind = {

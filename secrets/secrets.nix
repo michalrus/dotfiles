@@ -23,6 +23,9 @@ in {
   "wireguard_michalrus_com.age".publicKeys = michalrus ++ michalrus_com;
   "wireguard_nordvpn.age".publicKeys = michalrus ++ monstrum;
   "hardware_modem_password.age".publicKeys = michalrus ++ monstrum;
+  "wireguard_airvpn_private_key.age".publicKeys = michalrus ++ monstrum;
+  "wireguard_airvpn_preshared_key.age".publicKeys = michalrus ++ monstrum;
+  "wireguard_airvpn_api_key.age".publicKeys = michalrus ++ monstrum;
 
   "ssh-key-personal-git-annex.age".publicKeys = michalrus ++ lenovo_x1 ++ macbook ++ macbook-nixos;
   "ssh-config-work-devx.age".publicKeys = michalrus ++ lenovo_x1 ++ macbook ++ macbook-nixos;
