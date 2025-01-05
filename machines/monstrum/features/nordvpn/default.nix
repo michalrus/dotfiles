@@ -4,6 +4,10 @@ let
   vsp = "nordvpn";
   iface = "wg-${vsp}";
   stateDir = "/var/lib/${vsp}";
+  ourInternalIP = "10.5.0.2";
+  theirInternalIP = "10.5.0.1";
+  pingWaitSec = 10;
+  numPings = 4;  # before considering the connection dead
 
   switchServer = pkgs.writeShellApplication {
     name = "vpn-switch-server";
@@ -51,7 +55,7 @@ in
     unitConfig = {
       StartLimitIntervalSec = 0; # no restart rate limiting
     };
-    path = with pkgs; [ kmod iproute2 procps wireguard-tools jq iputils ];
+    path = with pkgs; [ kmod iproute2 procps wireguard-tools jq iputils parallel ];
     script = ''
       set -euo pipefail
 
@@ -65,7 +69,7 @@ in
 
       modprobe wireguard || true
       ip link add dev ${iface} type wireguard
-      ip address add 10.5.0.2/24 dev ${iface}
+      ip address add ${ourInternalIP}/24 dev ${iface}
       wg set ${iface} \
         private-key ${config.age.secrets.wireguard_nordvpn.path} \
         fwmark 51820
@@ -86,10 +90,15 @@ in
       ip route replace 128.0.0.0/1 dev ${iface}
 
       # And a watchdog – on failure, it will cycle through servers, until one works:
+      export SHELL=${pkgs.stdenv.shell}
+      mkdir -p ~/.parallel/ && touch ~/.parallel/will-cite
       while true ; do
-        sleep 10
-        if ! ping -I ${iface} -c1 -W10 10.5.0.1 >/dev/null ; then
-          echo "Failed to reach 10.5.0.1 through ${iface}, will try the next server..."
+        sleep ${toString pingWaitSec}
+        # Single ping is not enough and too wobbly, let’s run a few:
+        if ! parallel --halt now,success=1 --jobs 16 --delay 1 --shuf \
+               'ping -c1 -W${toString pingWaitSec} {}' \
+               ::: ${lib.escapeShellArgs (lib.replicate numPings theirInternalIP)} >/dev/null 2>/dev/null ; then
+          echo "Failed to reach ${theirInternalIP} through ${iface}, will try the next server..."
           ith=$(( 1 + $(cat ${stateDir}/failure-mode-ith 2>/dev/null || echo -1) ))
           echo "$ith" >${stateDir}/failure-mode-ith
           selected=$(jq -r --argjson ith "$ith" '.[$ith].name' ${stateDir}/recommended.json)
