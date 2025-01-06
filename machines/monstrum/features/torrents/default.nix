@@ -9,6 +9,8 @@ let
   downloadsDir = "/var/media/torrents";
   domain = "torrents.michalrus.com";
   rpcPort = 9092;
+  externalPort = 26090;
+  externalPortWaitSec = 10;
 
   # An alternative web UI, see <https://github.com/VueTorrent/VueTorrent/wiki/Installation>:
   VueTorrent = pkgs.fetchzip {
@@ -97,4 +99,32 @@ in
     }
   '';
 
+  # Monitors whether the external port is reachable, and restarts the `qbittorrent.service` if it isn’t.
+  # Sometimes – esp. after `airvpn.service` restart, qBittorrent doesn’t notice the new address.
+  systemd.services."${serviceName}-port-monitor" = {
+    after = [ "network.target" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "simple";
+      Restart = "always";
+      RestartSec = 60;
+    };
+    path = [ config.systemd.package ] ++ (with pkgs; [ curl jq netcat-openbsd ]);
+    script = ''
+      set -euo pipefail
+      while true ; do
+        sleep 60
+        if systemctl is-active --quiet ${serviceName}.service ; then
+          userinfo=$(curl -fsSL -H @/run/agenix/wireguard_airvpn_api_key 'https://airvpn.org/api/userinfo/')
+          exit_ipv4=$(jq <<<"$userinfo" -r '.sessions[] | select(.device_name == "monstrum") | .exit_ipv4')
+          if ! nc -z -w ${toString externalPortWaitSec} "$exit_ipv4" ${toString externalPort} ; then
+            echo >&2 "TCP port $exit_ipv4:${toString externalPort} unreachable in ${toString externalPortWaitSec} seconds, restarting ${serviceName}.service..."
+            systemctl restart ${serviceName}.service
+          fi
+        else
+          echo >&2 "warning: ${serviceName}.service is stopped, skipping the external port check"
+        fi
+      done
+    '';
+  };
 }
