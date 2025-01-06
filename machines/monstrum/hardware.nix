@@ -76,9 +76,9 @@
   fileSystems."/var/home/m/Downloads"  = { device = "/var/media/downloads/m";  fsType = "none"; options = ["bind"]; };
   fileSystems."/var/home/km/Downloads" = { device = "/var/media/downloads/km"; fsType = "none"; options = ["bind"]; };
 
-  fileSystems."/var/media/downloads/k/Torrents"  = { device = "/var/media/torrents"; fsType = "none"; options = ["bind"]; };
-  fileSystems."/var/media/downloads/m/Torrents"  = { device = "/var/media/torrents"; fsType = "none"; options = ["bind"]; };
-  fileSystems."/var/media/downloads/km/Torrents" = { device = "/var/media/torrents"; fsType = "none"; options = ["bind"]; };
+  fileSystems."/var/home/k/Torrents"  = { device = "/var/media/torrents"; fsType = "none"; options = ["bind" "ro"]; };
+  fileSystems."/var/home/m/Torrents"  = { device = "/var/media/torrents"; fsType = "none"; options = ["bind" "ro"]; };
+  fileSystems."/var/home/km/Torrents" = { device = "/var/media/torrents"; fsType = "none"; options = ["bind" "ro"]; };
 
   swapDevices = [ ];
 
