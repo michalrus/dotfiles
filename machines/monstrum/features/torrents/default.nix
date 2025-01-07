@@ -116,7 +116,7 @@ in
         sleep 60
         if systemctl is-active --quiet ${serviceName}.service ; then
           userinfo=$(curl -fsSL -H @/run/agenix/wireguard_airvpn_api_key 'https://airvpn.org/api/userinfo/')
-          exit_ipv4=$(jq <<<"$userinfo" -r '.sessions[] | select(.device_name == "monstrum") | .exit_ipv4')
+          exit_ipv4=$(jq <<<"$userinfo" -r '([.sessions[] | select(.device_name == "monstrum")] | sort_by(-.connected_since_unix))[0].exit_ipv4')
           if ! nc -z -w ${toString externalPortWaitSec} "$exit_ipv4" ${toString externalPort} ; then
             echo >&2 "TCP port $exit_ipv4:${toString externalPort} unreachable in ${toString externalPortWaitSec} seconds, restarting ${serviceName}.service..."
             systemctl restart ${serviceName}.service
