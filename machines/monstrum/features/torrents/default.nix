@@ -84,10 +84,17 @@ in
       client_max_body_size 64M;
 
       location / {
+        auth_basic "Speak, friend, and enter.";
+        auth_basic_user_file "${pkgs.writeText "htpasswd" ''
+          michalrus:$apr1$4fn7tiut$PnnQScj.VLp0VIJVlxP.60
+          krzyszu:$apr1$013s09JA$S/UePzyCNcm9R19isSF6G/
+          km:$apr1$PbwyW8kI$3XBG1aWNzuF4lkR/n9SCP.
+        ''}";
+
         proxy_redirect off;
         proxy_set_header Host $host;
-        proxy_set_header X-Real-IP  $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        #proxy_set_header X-Real-IP  $remote_addr;
+        #proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto https;
         proxy_pass http://127.0.0.1:${toString rpcPort};
 
