@@ -40,6 +40,8 @@
       "x-scheme-handler/http" = webBrowser;
       "x-scheme-handler/https" = webBrowser;
 
+      "x-scheme-handler/magnet" = webBrowser;  # Let a web app inside Chromium handle them.
+
       "text/plain" = textEditor;
       "application/rtf" = textEditor;
 
