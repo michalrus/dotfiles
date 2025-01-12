@@ -6,6 +6,7 @@
   home-manager.sharedModules = [{
     home.packages = with pkgs; [
       pcmanfm
+      ffmpegthumbnailer
       notepad-next
       evince
       qimgv
