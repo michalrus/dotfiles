@@ -10,6 +10,7 @@
       notepad-next
       evince
       qimgv
+      libreoffice
       udiskie
       libnotify
       networkmanagerapplet
@@ -29,6 +30,9 @@
       imageViewer = ["qimgv.desktop"];
       videoPlayer = ["mpv.desktop"];
       archiver = ["xarchiver.desktop"];
+      wordLike = ["writer.desktop"];
+      excelLike = ["calc.desktop"];
+      powerpointLike = ["impress.desktop"];
     in {
       "inode/directory" = fileBrowser;
       "inode/mount-point" = fileBrowser;
@@ -40,6 +44,21 @@
       "application/rtf" = textEditor;
 
       "application/pdf" = pdfViewer;
+
+      "application/msword" = wordLike;
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document" = wordLike;
+      "application/vnd.oasis.opendocument.text" = wordLike;
+      "application/vnd.oasis.opendocument.text-flat-xml" = wordLike;
+
+      "application/vnd.ms-excel" = excelLike;
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" = excelLike;
+      "application/vnd.oasis.opendocument.spreadsheet" = excelLike;
+      "application/vnd.oasis.opendocument.spreadsheet-flat-xml" = excelLike;
+
+      "application/vnd.ms-powerpoint" = powerpointLike;
+      "application/vnd.openxmlformats-officedocument.presentationml.presentation" = powerpointLike;
+      "application/vnd.oasis.opendocument.presentation" = powerpointLike;
+      "application/vnd.oasis.opendocument.presentation-flat-xml" = powerpointLike;
 
       "image/jpeg" = imageViewer;
       "image/png" = imageViewer;

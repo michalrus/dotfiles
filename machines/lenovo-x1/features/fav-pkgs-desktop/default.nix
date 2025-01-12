@@ -62,7 +62,6 @@ in
     inkscape
     isync
     #k3b
-    libreoffice
     lilypond
     monero-gui
     octave
