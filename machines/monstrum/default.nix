@@ -19,6 +19,7 @@ nixpkgs.lib.nixosSystem {
     flake.inputs.agenix.nixosModules.default
     flake.nixosModules.malicious-hosts
     flake.nixosModules.lock-vts
+    flake.nixosModules.gnu-screen
 
     ../_shared_/features/fav-pkgs-cli-thin
     ../_shared_/features/immutable-users
