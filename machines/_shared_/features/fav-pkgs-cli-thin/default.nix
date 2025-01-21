@@ -23,6 +23,7 @@
     daemonize
     ddrescue
     dos2unix
+    dvdbackup
     easyrsa
     entr
     evemu
@@ -82,6 +83,7 @@
     man-pages-posix
     powertop
     pv
+    safecopy
     silver-searcher
     smartmontools
     socat
