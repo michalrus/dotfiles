@@ -18,6 +18,7 @@ in
     pandoc
     protobuf
     rust-analyzer
+    cargo-nextest
     rustup
     sqlint
     (texlive.withPackages (ps: [
