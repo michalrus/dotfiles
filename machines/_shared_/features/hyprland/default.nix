@@ -77,6 +77,7 @@ let inherit (config.networking) hostName; in
       (flake.packages.${pkgs.system}.wayland-unicode-input.override { onlyEmoji = true;  })
       pkgs.swaynotificationcenter
       pkgs.hypridle
+      pkgs.wtype
       (pkgs.writeShellApplication {
         # for redshift:
         name = "wlsunset";
