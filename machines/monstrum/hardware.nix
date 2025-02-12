@@ -36,6 +36,11 @@
       device = "/dev/disk/by-id/ata-ST2000DM006-2DM164_Z4Z9ZWAS";
       preLVM = true;
     };
+    crypt-zmedia1 = {
+      # /dev/disk/by-id/dm-uuid-CRYPT-LUKS2-d4f9d2ea8f99478592e675be448da7e5-crypt-zmedia1
+      device = "/dev/disk/by-id/ata-OOS22000G_0005BBG7";
+      preLVM = true;
+    };
   };
 
   boot.supportedFilesystems.zfs = true;
