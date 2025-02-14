@@ -47,8 +47,14 @@ let
     ${lib.concatMapStringsSep "\n" (port: ''-A INPUT -p udp --dport ${toString port} -j ACCEPT'') config.networking.firewall.allowedUDPPorts}
     ${lib.concatMapStringsSep "\n" (port: ''-A INPUT -p udp --dport ${toString port.from}:${toString port.to} -j ACCEPT'') config.networking.firewall.allowedUDPPortRanges}
     -A INPUT -s 10.77.2.0/24 -p tcp --dport 1080 -j ACCEPT
+    # torrents:
     -A INPUT -i wg-airvpn -p tcp --dport 26090 -j ACCEPT
     -A INPUT -i wg-airvpn -p udp --dport 26090 -j ACCEPT
+    # cardano-node:
+    -A INPUT -i wg-airvpn -p tcp --dport 55709 -j ACCEPT
+    -A INPUT -i wg-airvpn -p udp --dport 55709 -j ACCEPT
+    # blockfrost-platform:
+    -A INPUT -i wg-airvpn -p tcp --dport 18077 -j ACCEPT
     -A INPUT -p icmp -m icmp --icmp-type 8 -j ACCEPT
     -A INPUT -p tcp -m tcp --tcp-flags FIN,SYN,RST,ACK SYN -j LOG --log-prefix "refused connection: " --log-level 6
     -A INPUT -p tcp -m tcp ! --tcp-flags FIN,SYN,RST,ACK SYN -j REJECT --reject-with tcp-reset
@@ -61,6 +67,10 @@ let
     -A OUTPUT -o wg-airvpn -m owner --uid-owner ${toString config.users.users.qbittorrent.uid} -j ACCEPT
     -A OUTPUT -o lo        -m owner --uid-owner ${toString config.users.users.qbittorrent.uid} -j ACCEPT
     -A OUTPUT              -m owner --uid-owner ${toString config.users.users.qbittorrent.uid} -j REJECT --reject-with icmp-port-unreachable
+    # Prevent Cardano from leaking our non-VPN IP — allow only AirVPN:
+    -A OUTPUT -o wg-airvpn -m owner --uid-owner ${toString config.users.users.cardano.uid} -j ACCEPT
+    -A OUTPUT -o lo        -m owner --uid-owner ${toString config.users.users.cardano.uid} -j ACCEPT
+    -A OUTPUT              -m owner --uid-owner ${toString config.users.users.cardano.uid} -j REJECT --reject-with icmp-port-unreachable
     COMMIT
 
     *mangle

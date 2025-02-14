@@ -109,6 +109,7 @@
       autotalent = callPackage ./packages/autotalent {};
       cp2104-gpio = callPackage ./packages/cp2104-gpio {};
       dmenu-is-rofi = callPackage ./packages/dmenu-is-rofi {};
+      cardano = callPackage ./packages/cardano {};
       doom-emacs = callPackage ./packages/doom-emacs { inherit (inputs) doom-emacs; };
       doom-emacs-mine = callPackage ./packages/doom-emacs-mine { inherit doom-emacs; };
       git-annex-hacks = callPackage ./packages/git-annex-hacks {};

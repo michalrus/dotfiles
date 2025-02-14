@@ -20,6 +20,7 @@
       fetch.prune = true;
       pull.ff = "only";
       transfer.fsckObjects = true;
+      gpg.ssh.allowedSignersFile = "";
     };
   };
 

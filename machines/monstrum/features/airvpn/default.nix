@@ -121,6 +121,7 @@ in
 
       ip route replace default dev ${iface} table ${toString routingTable}
       ip rule add uidrange ${toString config.users.users.qbittorrent.uid}-${toString config.users.users.qbittorrent.uid} lookup ${toString routingTable} priority 2002
+      ip rule add uidrange ${toString config.users.users.cardano.uid    }-${toString config.users.users.cardano.uid} lookup ${toString routingTable    } priority 2002
 
       # And a watchdog – on failure, it will cycle through servers, until one works:
       export SHELL=${pkgs.stdenv.shell}
@@ -152,6 +153,7 @@ in
 
       ip route flush table ${toString routingTable} || true
       ip rule del uidrange ${toString config.users.users.qbittorrent.uid}-${toString config.users.users.qbittorrent.uid} lookup ${toString routingTable} priority 2002 || true
+      ip rule del uidrange ${toString config.users.users.cardano.uid    }-${toString config.users.users.cardano.uid} lookup ${toString routingTable    } priority 2002 || true
 
       ip link del dev ${iface} || true
     '';
