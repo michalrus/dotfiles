@@ -250,5 +250,6 @@ in {
   programs.skim.enable = true;
   programs.skim.enableBashIntegration = true;
   programs.skim.enableZshIntegration = true;
+  programs.skim.historyWidgetOptions = [ "--exact" "--no-sort" ];
 
 }
