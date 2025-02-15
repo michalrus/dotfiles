@@ -41,6 +41,7 @@ in
 
           source ${config.system.build.setEnvironment}
           cd "$HOME"
+          export XDG_RUNTIME_DIR=/run/user/$UID
           exec "$SHELL" --login -c "exec ${pkgs.screen}/bin/screen -S ${session_name} -d -m"
         '';
         serviceConfig.User = user;

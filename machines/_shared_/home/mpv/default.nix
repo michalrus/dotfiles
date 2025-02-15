@@ -1,7 +1,17 @@
 { config, flake, pkgs, lib, ... }:
 
+let
+  yt-dlp = flake.packages.${pkgs.system}.yt-dlp;
+in
+
 {
-  home.packages = [ pkgs.mpv ];
+  home.packages = [
+    pkgs.mpv
+    yt-dlp
+  ];
+
+  # Streaming only audio:
+  home.shellAliases.mpva = "mpv --ytdl-format=bestaudio";
 
   home.file.".config/mpv/input.conf".text = ''
     MBTN_LEFT  cycle pause
@@ -36,5 +46,18 @@
     sub-auto=all
     sub-margin-y=0
     sub-pos=98
+    script-opts=ytdl_hook-ytdl_path=${lib.getExe yt-dlp}
+
+    # Smooth stream start without stuttering:
+    cache-pause-initial=yes
+    cache-pause-wait=15
+  '';
+
+  # For CLI completion:
+  home.shellAliases.youtube-dl = "yt-dlp";
+
+  home.file.".config/yt-dlp/config".text = ''
+    --embed-metadata
+    --remux-video mp4
   '';
 }

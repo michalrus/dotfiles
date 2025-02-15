@@ -140,7 +140,6 @@ in {
     d = "dirs -v";
     s = "exec screen -x 7260c3b2-2e3d-4b22-8f8b-ab87de790446";
     clear = clearAndEraseScrollback;
-    youtube-dl = "yt-dlp";  # for --argv completion
     spell-password = ''bash -c 'read -s -p "Password: " pw ; echo ; fold -w1 <<<"$pw" | cat -n' '';
   };
 
@@ -251,10 +250,5 @@ in {
   programs.skim.enable = true;
   programs.skim.enableBashIntegration = true;
   programs.skim.enableZshIntegration = true;
-
-  home.file.".config/yt-dlp/config".text = ''
-    --embed-metadata
-    --remux-video mp4
-  '';
 
 }

@@ -8,7 +8,6 @@
     ffmpeg-full
     flac
     flake.packages.${pkgs.system}.git-annex-hacks
-    flake.packages.${pkgs.system}.yt-dlp
     gitAndTools.gitRemoteGcrypt
     gitstats
     git-filter-repo
