@@ -89,6 +89,10 @@ nixpkgs.lib.nixosSystem {
       environment.systemPackages = [ pkgs.pavucontrol ];
     })
 
+    ({ pkgs, ... }: {
+      environment.systemPackages = [ flake.packages.${pkgs.system}.accuradio ];
+    })
+
     # {
     #   services.printing.enable = true;
     #   services.pipewire = {
