@@ -86,7 +86,7 @@ nixpkgs.lib.nixosSystem {
         enable = true;
         pulse.enable = true;
       };
-      environment.systemPackages = [ pkgs.pavucontrol ];
+      environment.systemPackages = with pkgs; [ pavucontrol pulsemixer ];
     })
 
     ({ pkgs, ... }: {
