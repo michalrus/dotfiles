@@ -32,7 +32,9 @@ in {
   "ssh-config-work-devx.age".publicKeys = michalrus ++ lenovo_x1 ++ macbook ++ macbook-nixos;
   "ssh-config-work-iog.age".publicKeys = michalrus ++ lenovo_x1 ++ macbook ++ macbook-nixos;
   "ssh-config-work-lace.age".publicKeys = michalrus ++ lenovo_x1 ++ macbook ++ macbook-nixos;
+  "ssh-config-work-blockfrost.age".publicKeys = michalrus ++ lenovo_x1 ++ macbook ++ macbook-nixos;
   "ssh-known_hosts-work-devx.age".publicKeys = michalrus ++ lenovo_x1 ++ macbook ++ macbook-nixos;
   "ssh-known_hosts-work-iog.age".publicKeys = michalrus ++ lenovo_x1 ++ macbook ++ macbook-nixos;
   "ssh-known_hosts-work-lace.age".publicKeys = michalrus ++ lenovo_x1 ++ macbook ++ macbook-nixos;
+  "ssh-known_hosts-work-blockfrost.age".publicKeys = michalrus ++ lenovo_x1 ++ macbook ++ macbook-nixos;
 }

@@ -87,6 +87,8 @@ nixpkgs.lib.nixosSystem {
       age.secrets.ssh-known_hosts-work-iog = { file = inputs.self + "/secrets/ssh-known_hosts-work-iog.age"; owner = "mw"; };
       age.secrets.ssh-config-work-lace = { file = inputs.self + "/secrets/ssh-config-work-lace.age"; owner = "mw"; };
       age.secrets.ssh-known_hosts-work-lace = { file = inputs.self + "/secrets/ssh-known_hosts-work-lace.age"; owner = "mw"; };
+      age.secrets.ssh-config-work-blockfrost = { file = inputs.self + "/secrets/ssh-config-work-blockfrost.age"; owner = "mw"; };
+      age.secrets.ssh-known_hosts-work-blockfrost = { file = inputs.self + "/secrets/ssh-known_hosts-work-blockfrost.age"; owner = "mw"; };
     }
 
     flake.inputs.home-manager-2411.nixosModules.home-manager

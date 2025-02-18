@@ -51,4 +51,6 @@
   home.file.".ssh/known_hosts.d/iog".source = config.lib.file.mkOutOfStoreSymlink secrets.ssh-known_hosts-work-iog.path;
   home.file.".ssh/config.d/lace".source = config.lib.file.mkOutOfStoreSymlink secrets.ssh-config-work-lace.path;
   home.file.".ssh/known_hosts.d/lace".source = config.lib.file.mkOutOfStoreSymlink secrets.ssh-known_hosts-work-lace.path;
+  home.file.".ssh/config.d/blockfrost".source = config.lib.file.mkOutOfStoreSymlink secrets.ssh-config-work-blockfrost.path;
+  home.file.".ssh/known_hosts.d/blockfrost".source = config.lib.file.mkOutOfStoreSymlink secrets.ssh-known_hosts-work-blockfrost.path;
 }
