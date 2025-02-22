@@ -136,11 +136,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1736373539,
-        "narHash": "sha256-dinzAqCjenWDxuy+MqUQq0I4zUSfaCvN9rzuCmgMZJY=",
+        "lastModified": 1739757849,
+        "narHash": "sha256-Gs076ot1YuAAsYVcyidLKUMIc4ooOaRGO0PqTY7sBzA=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "bd65bc3cde04c16755955630b344bc9e35272c56",
+        "rev": "9d3d080aec2a35e05a15cedd281c2384767c2cfe",
         "type": "github"
       },
       "original": {
@@ -153,7 +153,7 @@
     "malicious-hosts": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-s5WPgWD2XagU5o/FW5CUQ4zs6WgqEioSxAerqbs4rgo=",
+        "narHash": "sha256-ewdoQiUwvFOY8Nc0Rd6d8OljhUXYy0eev8KBtLn6U5E=",
         "type": "file",
         "url": "https://github.com/StevenBlack/hosts/raw/master/alternates/fakenews-gambling/hosts"
       },
@@ -248,11 +248,11 @@
     },
     "nixpkgs-2411": {
       "locked": {
-        "lastModified": 1736867362,
-        "narHash": "sha256-i/UJ5I7HoqmFMwZEH6vAvBxOrjjOJNU739lnZnhUln8=",
+        "lastModified": 1739758141,
+        "narHash": "sha256-uq6A2L7o1/tR6VfmYhZWoVAwb3gTy7j4Jx30MIrH0rE=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "9c6b49aeac36e2ed73a8c472f1546f6d9cf1addc",
+        "rev": "c618e28f70257593de75a7044438efc1c1fc0791",
         "type": "github"
       },
       "original": {
@@ -280,11 +280,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1736798957,
-        "narHash": "sha256-qwpCtZhSsSNQtK4xYGzMiyEDhkNzOCz/Vfu4oL2ETsQ=",
+        "lastModified": 1739866667,
+        "narHash": "sha256-EO1ygNKZlsAC9avfcwHkKGMsmipUk1Uc0TbrEZpkn64=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "9abb87b552b7f55ac8916b6fc9e5cb486656a2f3",
+        "rev": "73cf49b8ad837ade2de76f87eb53fc85ed5d4680",
         "type": "github"
       },
       "original": {
@@ -319,11 +319,11 @@
     "yt-dlp": {
       "flake": false,
       "locked": {
-        "lastModified": 1739309545,
-        "narHash": "sha256-NzyfQrtMNWIf/A/KnhEFhJeoPWTx38/CMzuf4ALpB8U=",
+        "lastModified": 1739932938,
+        "narHash": "sha256-otgB9rrv6mgqLdRCuxhZirl5npNQhIKdzFLBrfPer4M=",
         "owner": "yt-dlp",
         "repo": "yt-dlp",
-        "rev": "6ca23ffaa4663cb552f937f0b1e9769b66db11bd",
+        "rev": "9c3e8b16967cb6582712b6b7e4c107631d3873d0",
         "type": "github"
       },
       "original": {
