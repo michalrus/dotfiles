@@ -29,9 +29,9 @@ in
   '';
 
   ### TODO: locking textual VTs… hmm — it seems the only option is to… kill their `login` process…
-  ###   • each swaylock/i3lock has XDG_SESSION_ID set in /proc/XXX/environ
+  ###   • each swaylock has XDG_SESSION_ID set in /proc/XXX/environ
   ###   • so list all sessions `loginctl list-sessions`…
-  ###   • … and `systemctl stop session-XXX.scope` for sessions without i3lock / swaylock
+  ###   • … and `systemctl stop session-XXX.scope` for sessions without swaylock
 
   # Lock screen on anything HID, cf. https://youtu.be/5Nk6iDryW0Y?t=1323 .
   services.udev.extraRules = ''

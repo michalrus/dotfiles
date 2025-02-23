@@ -14,7 +14,7 @@ nixpkgs.lib.nixosSystem {
     # Idle temperatures go up 60–70 ℃ with this. Without it, around 35 ℃:
     #flake.inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x1-extreme-gen2
 
-    flake.inputs.nixos-hardware.nixosModules.common-gpu-nvidia-disable  # X11 started crashing around 2023-09-27
+    flake.inputs.nixos-hardware.nixosModules.common-gpu-nvidia-disable  # battery life
     ./hardware.nix
 
     { networking.hostName = "lenovo-x1"; }
@@ -27,7 +27,6 @@ nixpkgs.lib.nixosSystem {
     #gnu-screen  # unused
     hibernate-on-low-battery
     lock-vts
-    #lock-x11-displays
     malicious-hosts
     #sane-extra-config
     somagic-easycap
@@ -73,7 +72,6 @@ nixpkgs.lib.nixosSystem {
     ./features/user-personal
     ./features/user-root  # TODO: remove
     ./features/user-work
-    ./features/window-managers
     ./features/wine
     ./features/yubikey
 

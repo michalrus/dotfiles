@@ -86,7 +86,6 @@
       guest-account = import ./modules/guest-account;
       hibernate-on-low-battery = import ./modules/hibernate-on-low-battery;
       lock-vts = import ./modules/lock-vts { on-vt-switch-src = ./packages/on-vt-switch; };
-      lock-x11-displays = import ./modules/lock-x11-displays;
       malicious-hosts = import ./modules/malicious-hosts { inherit (inputs) malicious-hosts; };
       nonet-group = import ./modules/nonet-group;
       sane-extra-config = import ./modules/sane-extra-config;
@@ -131,8 +130,6 @@
       vftool = inputs.nixpkgs-2311.legacyPackages.${system}.callPackage ./packages/vftool { inherit (inputs) nixpkgs-macos-sdk-13; };
       vocproc = callPackage ./packages/vocproc { inherit lv2-cpp-tools; };
       yt-dlp = inputs.nixpkgs-unstable.legacyPackages.${system}.callPackage ./packages/yt-dlp { flake = inputs.self; };
-      x11-rootless = callPackage ./packages/x11-rootless {};
-      x11-screenshot = callPackage ./packages/x11-screenshot {};
     });
 
   };
