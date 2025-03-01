@@ -6,54 +6,22 @@ let
   uid = 2052;
   dataDir = "/var/media/${user}";
 
-  flake-compat = pkgs.fetchFromGitHub rec {
-    owner = "edolstra";
-    repo = "flake-compat";
-    rev = "v1.1.0";
-    hash = "sha256-NeCCThCEP3eCl2l/+27kNNK7QrwZB1IJCrXfrbv5oqU=";
-    name = "${repo}-${rev}";
-  };
+  # 10.1.4
+  cardano-node-flake = builtins.getFlake "github:IntersectMBO/cardano-node/1f63dbf2ab39e0b32bf6901dc203866d3e37de08";
 
-  cardano-node-src = pkgs.fetchFromGitHub rec {
-    owner = "IntersectMBO";
-    repo = "cardano-node";
-    rev = "10.1.4";
-    hash = "sha256-Oys38YkpSpB48/H2NseP9kTWXm92a7kjAZtdnorcIEY=";
-    name = "${repo}-${rev}";
-  };
+  # published as of 2025-02-13T10:32:15Z
+  cardano-playground = builtins.getFlake "github:input-output-hk/cardano-playground/39ea4db0daa11d6334a55353f685e185765a619b";
 
-  cardano-playground = pkgs.fetchFromGitHub rec {
-    owner = "input-output-hk";
-    repo = "cardano-playground";
-    rev = "39ea4db0daa11d6334a55353f685e185765a619b"; # published as of 2025-02-13T10:32:15Z
-    hash = "sha256-ORjEkhUGwRuxj3TiRDyplddsY9p27qg5Ah3lo9U8duw=";
-    name = "${repo}-${rev}";
-  };
+  # 2450.0
+  mithril-flake = builtins.getFlake "github:input-output-hk/mithril/c6c7ebafae0158b2c1672eb96f6ef832fd542f93";
+
+  # `main` on 2025-02-25T11:42:18Z
+  blockfrost-platform-flake = builtins.getFlake "github:blockfrost/blockfrost-platform/56e8126f8daf49883d903bd32fd9d6f7e388d261";
 
   cardano-node-configs = builtins.path {
     name = "cardano-node-configs";
     path = cardano-playground + "/static/book.play.dev.cardano.org/environments";
   };
-
-  mithril-src = pkgs.fetchFromGitHub rec {
-    owner = "input-output-hk";
-    repo = "mithril";
-    rev = "2450.0";
-    hash = "sha256-jT3sjtACWtiS1agD8XR6EKz73YpL0QelIS4RcBJy3F8=";
-    name = "${repo}-${rev}";
-  };
-
-  blockfrost-platform-src = pkgs.fetchFromGitHub rec {
-    owner = "blockfrost";
-    repo = "blockfrost-platform";
-    rev = "e6f4b483e2191439365e9ae215b3f89fea2423d8"; # `main` on 2025-02-12T16:48:07Z
-    hash = "sha256-NZI2Ev3ifgodN594keNpwFCzxptz56mHqM+Q7syReNw=";
-    name = "${repo}-${rev}";
-  };
-
-  cardano-node-flake = (import flake-compat { src = cardano-node-src.outPath; }).defaultNix;
-  mithril-flake = (import flake-compat { src = mithril-src.outPath; }).defaultNix;
-  blockfrost-platform-flake = (import flake-compat { src = blockfrost-platform-src.outPath; }).defaultNix;
 
   cardano-node = cardano-node-flake.packages.${pkgs.system}.cardano-node;
   cardano-cli = cardano-node-flake.packages.${pkgs.system}.cardano-cli;
@@ -89,6 +57,7 @@ in
               | .TraceConnectionManager = false
               | .TracePeerSelection = false
               | .TracePeerSelectionActions = false
+              | .TracePeerSelectionCounters = false
               | .TraceInboundGovernor = false
             ' "$configFile" >tmp.json
             mv tmp.json "$configFile"
@@ -121,9 +90,26 @@ in
         + " --network mainnet"
         + " --log-level info"
         + " --node-socket-path ${dataDir}/node.socket"
-        + " --mode compact"
-        + " --metrics";
+        + " --mode compact";
     };
+  };
+
+  # We need to restart blockfrost-platform a few seconds after airvpn.service
+  # for it to re-register under a new IP with IceBreakers:
+  systemd.services.blockfrost-platform-delayed-restart = {
+    bindsTo = [ "airvpn.service" ];
+    partOf = [ "airvpn.service" ];
+    after = [ "airvpn.service" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Restart = "on-failure";
+      RemainAfterExit = true;
+    };
+    script = ''
+      set -euo pipefail
+      sleep 15
+      systemctl restart blockfrost-platform.service || true
+    '';
   };
 
   age.secrets.blockfrost-platform-secret = {
