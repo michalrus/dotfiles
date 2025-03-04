@@ -35,7 +35,7 @@ let
     COMMIT
   '';
 
-  actualRulesetV4 = pkgs.writeText "actual-ruleset" ''
+  actualRulesetV4 = pkgs.writeText "actual-ruleset-v4" ''
     *filter
     :INPUT DROP
     :FORWARD DROP
@@ -71,6 +71,8 @@ let
     -A OUTPUT -o wg-airvpn -m owner --uid-owner ${toString config.users.users.cardano.uid} -j ACCEPT
     -A OUTPUT -o lo        -m owner --uid-owner ${toString config.users.users.cardano.uid} -j ACCEPT
     -A OUTPUT              -m owner --uid-owner ${toString config.users.users.cardano.uid} -j REJECT --reject-with icmp-port-unreachable
+    # Prevent the `nonet` group from accessing anything:
+    -A OUTPUT -m owner --gid-owner ${toString config.users.groups.nonet.gid} -j REJECT --reject-with icmp-port-unreachable
     COMMIT
 
     *mangle
@@ -84,6 +86,35 @@ let
     -A PREROUTING -s 10.77.2.0/24 -p udp --dport 53 -j REDIRECT --to-port 53
     -A PREROUTING -s 10.77.2.0/24 -p tcp --dport 53 -j REDIRECT --to-port 53
     -A POSTROUTING -s 10.77.2.0/24 -j MASQUERADE
+    COMMIT
+
+    *raw
+    COMMIT
+
+    *security
+    COMMIT
+  '';
+
+  actualRulesetV6 = pkgs.writeText "actual-ruleset-v6" ''
+    *filter
+    :INPUT DROP
+    :FORWARD DROP
+    :OUTPUT ACCEPT
+    -A INPUT -i lo -j ACCEPT
+    -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+    -A INPUT -p tcp --dport 22 -j ACCEPT
+    -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 137 -j DROP
+    -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 139 -j DROP
+    -A INPUT -p ipv6-icmp -j ACCEPT
+    -A INPUT -d fe80::/64 -p udp -m udp --dport 546 -j ACCEPT
+    # Prevent the `nonet` group from accessing anything:
+    -A OUTPUT -m owner --gid-owner ${toString config.users.groups.nonet.gid} -j REJECT --reject-with icmp6-port-unreachable
+    COMMIT
+
+    *mangle
+    COMMIT
+
+    *nat
     COMMIT
 
     *raw
@@ -135,14 +166,16 @@ in {
       set -euo pipefail
 
       # Keep IPv6 on defaults:
-      ip6tables-restore <${reasonableEmptyRuleset { ipv6 = true; }}
+      ip6tables-restore <${actualRulesetV6}
       iptables-restore <${actualRulesetV4}
     '';
 
     postStop = ''
       set -euo pipefail
-      iptables-restore <${reasonableEmptyRuleset {}}
+      iptables-restore <${reasonableEmptyRuleset { ipv6 = false; }}
       ip6tables-restore <${reasonableEmptyRuleset { ipv6 = true; }}
     '';
   };
+
+  users.groups.nonet.gid = 2122;
 }

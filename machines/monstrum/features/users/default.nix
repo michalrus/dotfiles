@@ -10,7 +10,7 @@
 
   users.users.k = {
     isNormalUser = true;
-    extraGroups = [ "systemd-journal" ];
+    extraGroups = [ "systemd-journal" "nonet" ];
     hashedPassword = "$6$QVBZMWiZYqFo5BgJ$p3lhNfrqhfAm/AAMifWkBCNX3uB8mtDo2yUc.S13t7vuFuNihtLkcEJ/uUqT2RW/6hLcuGz4osIkFItLH8J/R0";
     openssh.authorizedKeys.keyFiles = [ ./k.pub ];
   };
@@ -18,7 +18,7 @@
   users.users.m = {
     isNormalUser = true;
     description = "Michal Rus";
-    extraGroups = [ "systemd-journal" "wheel" ];
+    extraGroups = [ "systemd-journal" "wheel" "nonet" ];
     hashedPassword = "$6$3OVhb4KbZYTkYGMC$F7E5yqxQyQqrxJlsVHyDx9pAbzZXYRu6QshnOeeHf7uo4KxM.8srNPvVdoCdZp5FZMkW0gFJOwCVoBtsVOFzg/";
     openssh.authorizedKeys.keyFiles = [ ../../../../dotfiles/michalrus/base/.ssh/authorized_keys.d/michalrus_notebook.pub ];
   };
@@ -26,7 +26,7 @@
   users.users.km = {
     isNormalUser = true;
     description = "K. i Michal";
-    extraGroups = [ "systemd-journal" ];
+    extraGroups = [ "systemd-journal" "nonet" ];
     hashedPassword = "$6$j0Bwh6III9mMWiTb$daX3N4aLF9nmYAtCWK.KRPkfskfXwqfQhBk1IWlh5H7KoQ6fZTtMUKyoK/U3d9s3pMzE5L6ZnmZo9xZ1OvmTH0";
     openssh.authorizedKeys.keyFiles = [
       ../../../../dotfiles/michalrus/base/.ssh/authorized_keys.d/michalrus_notebook.pub
@@ -47,5 +47,13 @@
       { home.sessionVariables.TZ = "Europe/Warsaw"; }
       ../../../_shared_/home/identity-km
     ];
+  };
+
+  # Allow `sudo -g nonet curl http://example.com`, because `sg` quoting is stupid.
+  security.sudo = {
+    enable = true;
+    extraConfig = lib.concatMapStringsSep "\n" (u: ''
+      ${u} ALL = (${u}:nonet) NOPASSWD: ALL
+    '') ["km" "m" "k"];
   };
 }
