@@ -37,6 +37,7 @@ nixpkgs.lib.nixosSystem {
     ../_shared_/features/fonts
     ../_shared_/features/desktop-apps
     ../_shared_/features/games
+    ../_shared_/features/wine
 
     ./features/wireguard-michalrus
     ../_shared_/features/nginx-reasonable
