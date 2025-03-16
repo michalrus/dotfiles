@@ -31,6 +31,9 @@ in
     CTRL+z   add sub-pos +1
     CTRL+x   add sub-pos -1
 
+    # By default it just toggles them on and off, but let's cycle, since one of the items is empty:
+    v cycle sid
+
     # <https://www.miejski.pl/slowo-Filmy+z+%C5%BC%C3%B3%C5%82tymi+napisami>
     SHIFT+s cycle-values sub-color "#ffff00" "#ffffff"
   '';
