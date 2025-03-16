@@ -46,6 +46,7 @@ nixpkgs.lib.nixosSystem {
     ../_shared_/features/hyprland
     ../_shared_/features/fonts
     ../_shared_/features/desktop-apps
+    ../_shared_/features/chromium
     ../_shared_/features/games
     ../_shared_/features/wine
 
@@ -106,7 +107,6 @@ nixpkgs.lib.nixosSystem {
           ../_shared_/home/gnu-screen
           ../_shared_/home/mpv
           ../_shared_/home/alacritty
-          ../_shared_/home/chromium
         ];
         users.m.imports = [
           ../_shared_/home/identity-personal
