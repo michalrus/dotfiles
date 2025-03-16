@@ -19,6 +19,11 @@
       xdg-utils
       gtk2  # For icon cache, see #20874.
       dconf
+      ffmpeg-full
+      git-filter-repo
+      graphicsmagick
+      imagemagick
+      (python3.withPackages (p: with p; [ scipy geopy python-lsp-server requests pylint matplotlib tkinter beautifulsoup4 aiohttp humanize protobuf ]))
     ];
 
     xdg.mimeApps.enable = true;
