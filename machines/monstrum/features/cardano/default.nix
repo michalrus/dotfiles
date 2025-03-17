@@ -15,8 +15,8 @@ let
   # 2450.0
   mithril-flake = builtins.getFlake "github:input-output-hk/mithril/c6c7ebafae0158b2c1672eb96f6ef832fd542f93";
 
-  # `main` on 2025-03-13T19:43:43.000Z
-  blockfrost-platform-flake = builtins.getFlake "github:blockfrost/blockfrost-platform/d1171fdee43e2e9d5edca44584983239274dc6c5";
+  # `main` on 2025-03-17T14:11:50Z
+  blockfrost-platform-flake = builtins.getFlake "github:blockfrost/blockfrost-platform/2e95fb41cdd0e77ab8c0f78ecb1a793ce446fe8d";
 
   cardano-node-configs = builtins.path {
     name = "cardano-node-configs";
