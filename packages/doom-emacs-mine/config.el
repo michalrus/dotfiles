@@ -116,6 +116,10 @@
         counsel-projectile-sort-buffers t
         counsel-projectile-sort-projects t))
 
+(map! :map global-map
+      "M-<right>" #'forward-word
+      "M-<left>"  #'backward-word)
+
 (after! cc-mode
   ; Useful for editing GNU code:
   ;(add-hook 'c-mode-hook (lambda () (setq tab-width 8)))
