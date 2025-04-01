@@ -100,18 +100,13 @@
   (setq tab-always-indent t))
 
 (after! yasnippet
-  ;; I’m not really using it:
-  (yas-global-mode -1)
   ;; Conflicts with company and `tab-always-indent'
   (define-key yas-minor-mode-map (kbd "TAB")   nil)
   (define-key yas-minor-mode-map (kbd "<tab>") nil))
 
 (after! company
-  ;; (define-key company-active-map (kbd "TAB") nil)
-  ;; (define-key company-active-map (kbd "<tab>") nil)
-
   (map! :map company-active-map
-        ;"<tab>" #'company-complete-selection  ;; By default, it’s `company-complete-common'.
+        "<tab>" #'company-complete-selection  ;; By default, it’s `company-complete-common'.
         ))
 
 (after! counsel
