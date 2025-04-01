@@ -138,5 +138,25 @@ in {
     systemd.tmpfiles.rules = [
       "d ${dataDir} 0700 ${user} ${user} -"
     ];
+
+    # Ruby is terrible with memory management… Let’s restart it each night…
+    systemd.timers."${user}-restart" = {
+      partOf = [ "${user}-restart.service" ];
+      wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnCalendar = "*-*-* 05:00:00";
+        RandomizedDelaySec = "30m";
+      };
+    };
+
+    systemd.services."${user}-restart" = {
+      path = [ config.systemd.package ];
+      serviceConfig = {
+        Type = "oneshot";
+      };
+      script = ''
+        exec systemctl restart ${user}.service
+      '';
+    };
   };
 }
