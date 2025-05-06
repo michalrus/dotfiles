@@ -59,7 +59,6 @@ nixpkgs.lib.nixosSystem {
     ./features/hardened-firefox
     ./features/ledger
     ./features/libvirt
-    ./features/virtualbox
     #./features/mpd
     #./features/musnix
     ./features/openvpn-michalrus_com
