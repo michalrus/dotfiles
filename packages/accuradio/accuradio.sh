@@ -21,8 +21,8 @@ if [ -z "$genre_state" ] ; then
     exit 1
 fi
 
-channel=$(<<<"$genre_state" jq -r '.content.genrePageData.channels[] | (.name + "   \t" + (.description | gsub("\n"; "")))' | column -t -s $'\t' | sk | sed -r 's|^(.*)   .*$|\1|g ; s|\s*$||g')
-channel_id=$(<<<"$genre_state" jq -r --arg channel "$channel" '.content.genrePageData.channels[] | select(.name == $channel) | ._id["$oid"]')
+channel=$(<<<"$genre_state" jq -r '.content.genrePageData | (.channels + [.featuredChannel]) | .[] | (.name + "   \t" + (.description | gsub("\n"; "")))' | column -t -s $'\t' | sort | sk --no-sort | sed -r 's|^(.*)   .*$|\1|g ; s|\s*$||g')
+channel_id=$(<<<"$genre_state" jq -r --arg channel "$channel" '.content.genrePageData | (.channels + [.featuredChannel]) | .[] | select(.name == $channel) | ._id["$oid"]')
 
 while true ; do
     channel_json=$(curl -fsSL "https://www.accuradio.com/playlist/json/${channel_id}/")
