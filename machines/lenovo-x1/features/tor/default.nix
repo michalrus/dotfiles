@@ -21,15 +21,15 @@
     dotfiles-old.profiles = [ "base" "michalrus/base" "michalrus/tor" ];
     packages = with pkgs; [
       electrum
-      (hardened-firefox.makeWrapped {
-        localAutocompletePort = 9999; #config.services.firefox-autocomplete.userPorts.md;
-        extraPrefs = ''
-          // Override those for more privacy:
-          lockPref("privacy.resistFingerprinting", true);
-          lockPref("dom.enable_performance", false);
-          lockPref("network.cookie.lifetimePolicy", 2); // The cookie expires at the end of the session.
-        '';
-      })
+      # (hardened-firefox.makeWrapped {
+      #   localAutocompletePort = 9999; #config.services.firefox-autocomplete.userPorts.md;
+      #   extraPrefs = ''
+      #     // Override those for more privacy:
+      #     lockPref("privacy.resistFingerprinting", true);
+      #     lockPref("dom.enable_performance", false);
+      #     lockPref("network.cookie.lifetimePolicy", 2); // The cookie expires at the end of the session.
+      #   '';
+      # })
     ];
   };
 

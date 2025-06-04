@@ -2,6 +2,6 @@
 
 emacs --frame-parameters='(quote (name . "org"))' --eval '(find-file "~/Org/ZTD.org")' &
 
-chromium &
+firefox &
 
 emacs --frame-parameters='(quote (name . "code"))' &

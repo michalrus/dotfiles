@@ -56,7 +56,7 @@ nixpkgs.lib.nixosSystem {
     ./features/fav-pkgs-desktop
     #./features/firefox-autocomplete
     #./features/hardened-chromium
-    ./features/hardened-firefox
+    #./features/hardened-firefox
     ./features/ledger
     ./features/libvirt
     #./features/mpd
@@ -103,6 +103,7 @@ nixpkgs.lib.nixosSystem {
           ../_shared_/home/gnupg
           ../_shared_/home/git
           ../_shared_/home/password-store
+          ../_shared_/home/firefox
           ../_shared_/home/haskell
           ../_shared_/home/gnu-screen
           ../_shared_/home/mpv

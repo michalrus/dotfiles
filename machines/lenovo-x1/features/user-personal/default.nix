@@ -12,10 +12,10 @@
       extraGroups = [ "wheel" "audio" "nonet" "scanner" "networkmanager" "wireshark" "cdrom" "video" ];
       dotfiles-old.profiles = [ "base" "michalrus/base" "git-annex" "michalrus/personal" ];
       packages = with pkgs; [
-        (hardened-firefox.makeWrapped {
-          localAutocompletePort = 9999; #config.services.firefox-autocomplete.userPorts.m;
-          extraPrefs = hardened-firefox.unwrapped.cfgEnableDRM;
-        })
+        # (hardened-firefox.makeWrapped {
+        #   localAutocompletePort = 9999; #config.services.firefox-autocomplete.userPorts.m;
+        #   extraPrefs = hardened-firefox.unwrapped.cfgEnableDRM;
+        # })
       ];
     };
   };

@@ -28,7 +28,7 @@
 
     xdg.mimeApps.enable = true;
     xdg.mimeApps.defaultApplications = let
-      webBrowser = ["chromium-browser.desktop"];
+      webBrowser = ["firefox.desktop"];
       fileBrowser = ["pcmanfm.desktop"];
       textEditor = ["NotepadNext.desktop"];
       pdfViewer = ["org.gnome.Evince.desktop"];
@@ -45,7 +45,7 @@
       "x-scheme-handler/http" = webBrowser;
       "x-scheme-handler/https" = webBrowser;
 
-      "x-scheme-handler/magnet" = webBrowser;  # Let a web app inside Chromium handle them.
+      "x-scheme-handler/magnet" = webBrowser;  # Let a web app inside the web browser handle them.
 
       "text/plain" = textEditor;
       "application/rtf" = textEditor;
