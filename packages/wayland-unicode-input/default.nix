@@ -62,7 +62,7 @@ writeShellApplication {
     wl-paste --no-newline >"$saved_clipboard" || do_restore=
 
     wl-copy --trim-newline <<<"$character"
-    wtype -M shift -k insert -m shift
+    wtype -M shift -P insert -m shift
 
     if [ -n "$do_restore" ] ; then
       wl-copy <"$saved_clipboard"
