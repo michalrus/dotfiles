@@ -6,11 +6,11 @@ let
   uid = 2052;
   dataDir = "/var/media/${user}";
 
-  # 10.1.4
-  cardano-node-flake = builtins.getFlake "github:IntersectMBO/cardano-node/1f63dbf2ab39e0b32bf6901dc203866d3e37de08";
+  # 10.4.1
+  cardano-node-flake = builtins.getFlake "github:IntersectMBO/cardano-node/420c94fbb075146c6ec7fba78c5b0482fafe72dd";
 
-  # published as of 2025-02-13T10:32:15Z
-  cardano-playground = builtins.getFlake "github:input-output-hk/cardano-playground/39ea4db0daa11d6334a55353f685e185765a619b";
+  # published as of 2025-05-26T19:49:13.000Z
+  cardano-playground = builtins.getFlake "github:input-output-hk/cardano-playground/34301acf4d2229db1a881aa26aef88efbcda65f5";
 
   # 2450.0
   mithril-flake = builtins.getFlake "github:input-output-hk/mithril/c6c7ebafae0158b2c1672eb96f6ef832fd542f93";
