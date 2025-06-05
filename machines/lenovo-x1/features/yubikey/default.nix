@@ -4,7 +4,7 @@
 
   environment.systemPackages = with pkgs; [
     yubikey-manager
-    yubikey-manager-qt
+    #yubikey-manager-qt # end of life
     yubikey-personalization
     yubikey-personalization-gui
     yubioath-flutter

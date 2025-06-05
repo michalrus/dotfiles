@@ -53,39 +53,42 @@ in {
       # completion includes hidden files:
       _comp_options+=(globdots)
     '';
-    initExtraFirst = ''
-      ${binShForEmacs}
-      ${turnOffCtrlZSQ}
-    '';
-    initExtra = ''
-      setopt AUTO_PUSHD
-      setopt PUSHD_IGNORE_DUPS
-      setopt PUSHD_SILENT
+    initContent = lib.mkMerge [
+      (lib.mkBefore ''
+        ${binShForEmacs}
+        ${turnOffCtrlZSQ}
+      '')
 
-      unsetopt EXTENDED_GLOB
+      ''
+        setopt AUTO_PUSHD
+        setopt PUSHD_IGNORE_DUPS
+        setopt PUSHD_SILENT
 
-      setopt APPEND_HISTORY
+        unsetopt EXTENDED_GLOB
 
-      zstyle ':completion:*' menu select
+        setopt APPEND_HISTORY
 
-      # Don’t use /etc/hosts, because they’re full of malicious hosts:
-      zstyle ':completion:*:(ssh|scp|rsync|telnet|ftp|ping):*' hosts off
+        zstyle ':completion:*' menu select
 
-      bindkey "\e[1;5C" forward-word
-      bindkey "\e[1;5D" backward-word
-      bindkey "\e[1;3C" forward-word
-      bindkey "\e[1;3D" backward-word
+        # Don’t use /etc/hosts, because they’re full of malicious hosts:
+        zstyle ':completion:*:(ssh|scp|rsync|telnet|ftp|ping):*' hosts off
 
-      bindkey "\e[A" history-beginning-search-backward
-      bindkey "\e[B" history-beginning-search-forward
-      [[ -n "''${terminfo[kcuu1]}" ]] && bindkey "''${terminfo[kcuu1]}" history-beginning-search-backward
-      [[ -n "''${terminfo[kcud1]}" ]] && bindkey "''${terminfo[kcud1]}" history-beginning-search-forward
+        bindkey "\e[1;5C" forward-word
+        bindkey "\e[1;5D" backward-word
+        bindkey "\e[1;3C" forward-word
+        bindkey "\e[1;3D" backward-word
 
-      # Auto-quote URLs when pasting them:
-      autoload -U url-quote-magic bracketed-paste-url-magic
-      zle -N self-insert url-quote-magic
-      zle -N bracketed-paste bracketed-paste-url-magic
-    '';
+        bindkey "\e[A" history-beginning-search-backward
+        bindkey "\e[B" history-beginning-search-forward
+        [[ -n "''${terminfo[kcuu1]}" ]] && bindkey "''${terminfo[kcuu1]}" history-beginning-search-backward
+        [[ -n "''${terminfo[kcud1]}" ]] && bindkey "''${terminfo[kcud1]}" history-beginning-search-forward
+
+        # Auto-quote URLs when pasting them:
+        autoload -U url-quote-magic bracketed-paste-url-magic
+        zle -N self-insert url-quote-magic
+        zle -N bracketed-paste bracketed-paste-url-magic
+      ''
+    ];
     logoutExtra = clearAndEraseScrollback + "\n";
   };
 
@@ -238,7 +241,7 @@ in {
 
   home.packages = with pkgs; [
     # Has to be managed by home-manager, to trigger installation on Darwin:
-    (nerdfonts.override {fonts = ["Iosevka"];})
+    pkgs.nerd-fonts.iosevka
   ];
 
   programs.htop.enable = true;

@@ -5,7 +5,8 @@
 
   fonts.packages = with pkgs; [
     iosevka-bin
-    (nerdfonts.override {fonts = ["Iosevka" "NerdFontsSymbolsOnly"];})
+    nerd-fonts.iosevka
+    nerd-fonts.symbols-only
     noto-fonts
     noto-fonts-emoji
     noto-fonts-cjk-sans

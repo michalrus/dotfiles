@@ -6,14 +6,6 @@ let inherit (config.networking) hostName; in
   programs.hyprland.enable = true;
 
   programs.hyprlock.enable = true;
-  programs.hyprlock.package = let
-    unstable = flake.inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
-  in unstable.hyprlock.overrideAttrs (drv: {
-    src = pkgs.fetchFromGitHub {
-      owner = "hyprwm"; repo = "hyprlock"; rev = "pull/627/head"; # FIXME: 2024-12-31 – TZ= support
-      hash = "sha256-XijqXaJGJbTQkh5Rb0Z4MEg1w3/28tYflvurM+2oUCo=";
-    };
-  });
 
   home-manager.sharedModules = [({ config, ... }: {
     home.file.".config/hypr/hyprland.conf".text = ''
@@ -46,7 +38,7 @@ let inherit (config.networking) hostName; in
     gtk.font.size = 11;
     gtk.iconTheme.package = pkgs.papirus-icon-theme;
     gtk.iconTheme.name = "Papirus"; # "Papirus-Dark"
-    gtk.theme.package = pkgs.breeze-gtk;
+    gtk.theme.package = pkgs.kdePackages.breeze-gtk;
     gtk.theme.name = "Breeze"; # "Breeze-Dark"
     qt.style.name = "breeze";
 

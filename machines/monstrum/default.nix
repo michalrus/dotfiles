@@ -2,7 +2,7 @@
 
 let
   flake = inputs.self;
-  nixpkgs = inputs.nixpkgs-2411;
+  nixpkgs = inputs.nixpkgs-2505;
 in
 
 nixpkgs.lib.nixosSystem {
@@ -62,7 +62,7 @@ nixpkgs.lib.nixosSystem {
 
     ./features/cardano
 
-    flake.inputs.home-manager-2411.nixosModules.home-manager
+    flake.inputs.home-manager-2505.nixosModules.home-manager
     {
       home-manager = {
         extraSpecialArgs = { inherit flake; };
@@ -76,6 +76,7 @@ nixpkgs.lib.nixosSystem {
           ../_shared_/home/gnu-screen
           ../_shared_/home/git
           ../_shared_/home/password-store
+          ../_shared_/home/firefox
           ../_shared_/home/mpv
           ../_shared_/home/alacritty
         ];

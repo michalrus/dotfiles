@@ -150,10 +150,31 @@
         "type": "github"
       }
     },
+    "home-manager-2505": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-2505"
+        ]
+      },
+      "locked": {
+        "lastModified": 1748665073,
+        "narHash": "sha256-RMhjnPKWtCoIIHiuR9QKD7xfsKb3agxzMfJY8V9MOew=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "282e1e029cb6ab4811114fc85110613d72771dea",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "ref": "release-25.05",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
     "malicious-hosts": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-ewdoQiUwvFOY8Nc0Rd6d8OljhUXYy0eev8KBtLn6U5E=",
+        "narHash": "sha256-vGluwEhSElQB8kcFW1VTpymw7X5tJKkhz1lnhkRmhM0=",
         "type": "file",
         "url": "https://github.com/StevenBlack/hosts/raw/master/alternates/fakenews-gambling/hosts"
       },
@@ -185,11 +206,11 @@
     },
     "nixos-hardware": {
       "locked": {
-        "lastModified": 1727613673,
-        "narHash": "sha256-qqIffTQfxMYo3MKQ9BoY2s2mdKZNnUiksdnxv81js9U=",
+        "lastModified": 1748942041,
+        "narHash": "sha256-HEu2gTct7nY0tAPRgBtqYepallryBKR1U8B4v2zEEqA=",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "f5c239fa9acb27f0a5326ba2949c00fada89ca9f",
+        "rev": "fc7c4714125cfaa19b048e8aaf86b9c53e04d853",
         "type": "github"
       },
       "original": {
@@ -262,6 +283,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-2505": {
+      "locked": {
+        "lastModified": 1748889542,
+        "narHash": "sha256-Hb4iMhIbjX45GcrgOp3b8xnyli+ysRPqAgZ/LZgyT5k=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "10d7f8d34e5eb9c0f9a0485186c1ca691d2c5922",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-25.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-macos-sdk-13": {
       "locked": {
         "lastModified": 1685254091,
@@ -280,11 +317,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1739866667,
-        "narHash": "sha256-EO1ygNKZlsAC9avfcwHkKGMsmipUk1Uc0TbrEZpkn64=",
+        "lastModified": 1748929857,
+        "narHash": "sha256-lcZQ8RhsmhsK8u7LIFsJhsLh/pzR9yZ8yqpTzyGdj+Q=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "73cf49b8ad837ade2de76f87eb53fc85ed5d4680",
+        "rev": "c2a03962b8e24e669fb37b7df10e7c79531ff1a4",
         "type": "github"
       },
       "original": {
@@ -304,6 +341,7 @@
         "home-manager-2311": "home-manager-2311",
         "home-manager-2405": "home-manager-2405",
         "home-manager-2411": "home-manager-2411",
+        "home-manager-2505": "home-manager-2505",
         "malicious-hosts": "malicious-hosts",
         "nix-darwin-2311": "nix-darwin-2311",
         "nixos-hardware": "nixos-hardware",
@@ -311,6 +349,7 @@
         "nixpkgs-2311": "nixpkgs-2311",
         "nixpkgs-2405": "nixpkgs-2405",
         "nixpkgs-2411": "nixpkgs-2411",
+        "nixpkgs-2505": "nixpkgs-2505",
         "nixpkgs-macos-sdk-13": "nixpkgs-macos-sdk-13",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "yt-dlp": "yt-dlp"
@@ -319,11 +358,11 @@
     "yt-dlp": {
       "flake": false,
       "locked": {
-        "lastModified": 1739932938,
-        "narHash": "sha256-otgB9rrv6mgqLdRCuxhZirl5npNQhIKdzFLBrfPer4M=",
+        "lastModified": 1748978446,
+        "narHash": "sha256-mpUU4HSQzPlkPNZlB14KH9iU+admF6A7hBSm9mIBl9k=",
         "owner": "yt-dlp",
         "repo": "yt-dlp",
-        "rev": "9c3e8b16967cb6582712b6b7e4c107631d3873d0",
+        "rev": "4e7c1ea346b510280218b47e8653dbbca3a69870",
         "type": "github"
       },
       "original": {

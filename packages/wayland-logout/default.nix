@@ -20,15 +20,15 @@ writeShellApplication {
     Power off' fuzzel --dmenu --index)
 
     case "$chosen" in
-    0)  sudo loginctl lock-sessions ;;
+    0)  sudo /run/current-system/sw/bin/loginctl lock-sessions ;;
     1)  hyprctl dispatch exit ;;
     2)  systemctl suspend -i ;;
-    3)  sudo loginctl lock-sessions && sleep 1 && sudo chvt 1 ;;
-    4)  sudo loginctl lock-sessions && sleep 1 && sudo chvt 2 ;;
-    5)  sudo loginctl lock-sessions && sleep 1 && sudo chvt 3 ;;
-    6)  sudo loginctl lock-sessions && sleep 1 && sudo chvt 4 ;;
-    7)  sudo loginctl lock-sessions && sleep 1 && sudo chvt 5 ;;
-    8)  sudo loginctl lock-sessions && sleep 1 && sudo chvt 6 ;;
+    3)  sudo /run/current-system/sw/bin/loginctl lock-sessions && sleep 1 && sudo chvt 1 ;;
+    4)  sudo /run/current-system/sw/bin/loginctl lock-sessions && sleep 1 && sudo chvt 2 ;;
+    5)  sudo /run/current-system/sw/bin/loginctl lock-sessions && sleep 1 && sudo chvt 3 ;;
+    6)  sudo /run/current-system/sw/bin/loginctl lock-sessions && sleep 1 && sudo chvt 4 ;;
+    7)  sudo /run/current-system/sw/bin/loginctl lock-sessions && sleep 1 && sudo chvt 5 ;;
+    8)  sudo /run/current-system/sw/bin/loginctl lock-sessions && sleep 1 && sudo chvt 6 ;;
     9)  systemctl reboot ;;
     10) systemctl hibernate -i ;;
     11) systemctl poweroff ;;
