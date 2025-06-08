@@ -100,7 +100,7 @@ in
         "Locked" = true;
       };
 
-      Preferences = builtins.mapAttrs (_: value: { Value = value; Status = "locked"; }) {
+      Preferences = builtins.mapAttrs (_: value: { Value = value; Status = "locked"; }) ({
         "browser.newtabpage.enabled" = false;
         "datareporting.healthreport.uploadEnabled" = false;
         "browser.translations.automaticallyPopup" = false;
@@ -117,7 +117,19 @@ in
         # Lost CPU cycles for a silly animation. Scrolling is still smooth on Wayland.
         "apz.overscroll.enabled" = false;
         "general.smoothScroll" = false;
-      };
+
+        # Better performance:
+        "gfx.webrender.all" = true;
+        "media.ffmpeg.vaapi.enabled" = true;
+      } // lib.optionalAttrs isMichal {
+        # More aggressive background timer throttling (it doesn’t throttle WebSocket pages, unfortunately):
+        "dom.timeout.throttling_delay" = 1000;
+        "dom.min_background_timeout_value" = 30000;
+        "dom.min_background_timeout_value_without_budget_throttling" = 30000;
+        "dom.timeout.background_throttling_max_budget" = 20;
+        "dom.timeout.budget_throttling_max_delay" = 30000;
+        "dom.timeout.background_budget_regeneration_rate" = 500;
+      });
     } // lib.optionalAttrs isMichal {
       AutofillAddressEnabled = false;
       AutofillCreditCardEnabled = false;
