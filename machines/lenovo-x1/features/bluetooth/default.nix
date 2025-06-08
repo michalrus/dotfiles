@@ -6,7 +6,7 @@
 
   services.blueman.enable = true;
 
-  hardware.pulseaudio.package = pkgs.pulseaudioFull;
+  services.pulseaudio.package = pkgs.pulseaudioFull;
 
   # <https://nixos.wiki/wiki/Bluetooth#System-Wide_PulseAudio>:
   hardware.pulseaudio.extraConfig = ''

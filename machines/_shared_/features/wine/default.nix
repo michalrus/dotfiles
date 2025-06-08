@@ -7,12 +7,10 @@
     winetricks
   ];
 
-  hardware = {
-    graphics.enable32Bit = true; # for Wine
-    pulseaudio = {
-      #enable = true;  # FIXME: conflicts with hyprland which wants PipeWire
-      support32Bit = true; # for Wine
-    };
+  hardware.graphics.enable32Bit = true; # for Wine
+  services.pulseaudio = {
+    #enable = true;  # FIXME: conflicts with hyprland which wants PipeWire
+    support32Bit = true; # for Wine
   };
 
 }
