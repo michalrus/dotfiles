@@ -9,7 +9,7 @@ in
     (pkgs.writeShellApplication {
       name = "firefox-novpn";
       text = ''
-        exec firefox -no-remote -P "$HOME/.mozilla/firefox/novpn" "$@"
+        exec firefox -no-remote -profile "$HOME/.mozilla/firefox/novpn" "$@"
       '';
     })
   ];
@@ -22,23 +22,26 @@ in
   programs.firefox = {
     enable = true;
     languagePacks = ["en-US" "pl"];
-    profiles = {
+    profiles = let
+      sharedUserPrefs = {
+        "findbar.highlightAll" = true;
+        # Lost CPU cycles for a silly animation. Unfortunately, `apz.*` cannot be locked through a policy:
+        "apz.overscroll.enabled" = false;
+      };
+    in {
       default = {
         id = 0;
         isDefault = true;
-        settings = {
-          "findbar.highlightAll" = true;
-        };
+        settings = sharedUserPrefs;
       };
       novpn = {
         id = 800;
-        settings = {
+        settings = sharedUserPrefs // {
           "network.proxy.type" = 1;
           "network.proxy.socks" = "10.77.2.1";
           "network.proxy.socks_port" = 1080;
           "network.proxy.socks_version" = 5;
           "network.proxy.socks_remote_dns" = true;
-          "findbar.highlightAll" = true;
         };
       };
     };
@@ -114,8 +117,7 @@ in
         "media.gmp-widevinecdm.enabled" = true;
         "media.gmp-widevinecdm.visible" = true;
 
-        # Lost CPU cycles for a silly animation. Scrolling is still smooth on Wayland.
-        "apz.overscroll.enabled" = false;
+        # Scrolling is still smooth on Wayland.
         "general.smoothScroll" = false;
 
         # Better performance:
