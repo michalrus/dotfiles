@@ -70,6 +70,7 @@ let inherit (config.networking) hostName; in
       pkgs.swaynotificationcenter
       pkgs.hypridle
       pkgs.wtype
+      pkgs.brightnessctl
       (pkgs.writeShellApplication {
         # for redshift:
         name = "wlsunset";

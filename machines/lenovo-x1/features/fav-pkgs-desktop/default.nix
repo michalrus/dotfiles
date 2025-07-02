@@ -37,7 +37,6 @@ in
     flake.inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.anki
     audacity
     awf
-    brightnessctl
     calibre
     cdparanoia
     cdrkit
