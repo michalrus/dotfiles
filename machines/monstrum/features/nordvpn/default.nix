@@ -200,14 +200,17 @@ in
     };
   };
 
-  systemd.services."${vsp}-select-best" = {
+  systemd.services."${vsp}-select-best" = let
+    # XXX: Don’t select the 0th best, because they’re most often slower than, say, 4th best.
+    nthBest = 4;
+  in {
     path = with pkgs; [ jq ];
     serviceConfig = {
       Type = "oneshot";
     };
     script = ''
       set -euo pipefail
-      selected=$(jq -r '.[0].name' ${stateDir}/recommended.json)
+      selected=$(jq -r '.[${toString nthBest}].name' ${stateDir}/recommended.json)
       exec ${lib.getExe switchServer} "$selected"
     '';
   };
