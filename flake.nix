@@ -123,6 +123,7 @@
       hyprland-screenshot = callPackage ./packages/hyprland-screenshot {};
       lv2-cpp-tools = callPackage ./packages/lv2-cpp-tools {};
       on-vt-switch = callPackage ./packages/on-vt-switch {};
+      naps2 = inputs.nixpkgs-2505.legacyPackages.${system}.callPackage ./packages/naps2 {};
       noise = callPackage ./packages/noise {};
       pms5003 = callPackage ./packages/pms5003 {};
       rofi-unicode-input = callPackage ./packages/rofi-unicode-input {};

@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ flake, config, lib, pkgs, ... }:
 
 {
   services.udisks2.enable = true;
@@ -24,6 +24,7 @@
       graphicsmagick
       imagemagick
       (python3.withPackages (p: with p; [ scipy geopy python-lsp-server requests pylint matplotlib tkinter beautifulsoup4 aiohttp humanize protobuf ]))
+      flake.packages.${pkgs.system}.naps2
     ];
 
     xdg.mimeApps.enable = true;
