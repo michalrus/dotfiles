@@ -3,6 +3,8 @@
 {
   services.udisks2.enable = true;
 
+  services.playerctld.enable = true;
+
   home-manager.sharedModules = [{
     home.packages = with pkgs; [
       pcmanfm
