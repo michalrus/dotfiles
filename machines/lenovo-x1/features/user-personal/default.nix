@@ -31,6 +31,8 @@
 
   home-manager.users.m.imports = [{
     home.packages = [
+      pkgs.thunderbird # for syncing uni emails to personal
+
       (pkgs.writeShellApplication {
         name = "chromium-crypto";
         text = ''
