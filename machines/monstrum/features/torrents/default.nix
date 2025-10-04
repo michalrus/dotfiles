@@ -88,6 +88,7 @@ in
         auth_basic_user_file "${pkgs.writeText "htpasswd" ''
           michalrus:$apr1$4fn7tiut$PnnQScj.VLp0VIJVlxP.60
           krzyszu:$apr1$013s09JA$S/UePzyCNcm9R19isSF6G/
+          krzyszu-mobile:$apr1$Vlo/cUn/$uHt57u8DiUV8ocVpb9GIH0
           km:$apr1$PbwyW8kI$3XBG1aWNzuF4lkR/n9SCP.
         ''}";
 
