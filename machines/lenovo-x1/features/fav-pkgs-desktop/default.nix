@@ -85,6 +85,8 @@ in
     # unfree.zoom-us  # FIXME: use inside browser?
     utox
     xsane
+    gfortran
+    fortls
   ]);
 
 }
