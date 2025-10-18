@@ -9,19 +9,16 @@ let
     then null
     else ''"'' + lib.replaceStrings [''"''] [''\"''] alsoSaveToDir + ''"'';
 
-  # Get rid of the black border, because slurp is not fast enough to exit:
-  grimblastPatched = grimblast.overrideAttrs (drv: {
-    postInstall = (drv.postInstall or "") + ''
-      sed -r 's/sleep 0\.2/#\0/g'                       -i $out/bin/.grimblast-wrapped
-      sed -r 's/slurp \$SLURP_ARGS/\0 \&\& sleep 0.1/g' -i $out/bin/.grimblast-wrapped
-    '';
-  });
-
 in
+
+# XXX: Remember to add these to `hyprland.conf` to remove the black border around screenshots:
+#
+# layerrule = noanim, hyprpicker
+# layerrule = noanim, selection
 
 writeShellApplication {
   name = "hyprland-screenshot";
-  runtimeInputs = [ grimblastPatched ];
+  runtimeInputs = [ grimblast ];
   text = ''
     set -euo pipefail
 
