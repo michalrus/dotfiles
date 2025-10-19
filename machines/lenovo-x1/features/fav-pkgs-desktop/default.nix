@@ -67,6 +67,10 @@ in
     octave
     pdfarranger
     pdfpc
+    pdftk
+    qpdf
+    ocrmypdf
+    exiftool
     pinentry-gtk2
     gnucash
     #unfree.retroarchFull
