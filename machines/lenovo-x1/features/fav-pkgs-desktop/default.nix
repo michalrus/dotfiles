@@ -28,8 +28,13 @@ in
       biblatex logreq cm-super csquotes pgfplots adjustbox collectbox ccicons polski
       placeins xstring pdfpages unicode-math filehook textpos marvosym fontawesome
       progressbar lm-math ucharcat pdfjam
+      enumitem
       # for Org-mode export to PDF
       wrapfig wasysym
+      # chemistry:
+      chemfig
+      chemformula
+      mhchem
     ])))
     acpitool
     aegisub
