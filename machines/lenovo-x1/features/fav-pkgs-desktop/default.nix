@@ -35,6 +35,7 @@ in
       chemfig
       chemformula
       mhchem
+      chemmacros translations elements relsize chemnum siunitx
     ])))
     acpitool
     aegisub
