@@ -11,7 +11,10 @@ in
   ];
 
   # Streaming only audio:
-  home.shellAliases.mpva = "mpv --ytdl-format=bestaudio";
+  home.shellAliases.mpva = "mpv --no-resume-playback --ytdl-format='bestaudio[ext=m4a]/bestaudio' --ytdl-raw-options='ignore-config='";
+
+  # The Android player is often treated better, though with lower kb/s:
+  home.shellAliases.mpva-android = "mpv --no-resume-playback --ytdl-format='bestaudio/best' --ytdl-raw-options='ignore-config=,extractor-args=youtube:player_client=android'";
 
   home.file.".config/mpv/input.conf".text = ''
     MBTN_LEFT  cycle pause
