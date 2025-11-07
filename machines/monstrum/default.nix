@@ -95,6 +95,29 @@ nixpkgs.lib.nixosSystem {
       environment.systemPackages = [ flake.packages.${pkgs.system}.accuradio ];
     })
 
+    ({ config, ... }: {
+      services.openssh.settings.PrintMotd = true;
+      environment.etc."motd".text = let
+        esc   = builtins.fromJSON ''"\u001b["'';
+        bold  = "${esc}1m";
+        reset = "${esc}0m";
+      in ''
+
+        Welcome to ${bold}${config.networking.hostName}${reset} (NixOS ${config.system.nixos.label}).
+
+        Useful commands:
+
+          ${bold}s${reset}                               – Restore a GNU screen session
+          ${bold}modem-restart${reset}                   – Soft-restart the LTE modem
+          ${bold}vpn-change-server${reset}               – Select a new (general) VPN server
+          ${bold}vpn-change-server-for-torrents${reset}  – Select a new VPN server for Torrents
+          ${bold}accuradio${reset}                       – No-ads textual UI for AccuRadio
+          ${bold}mpva${reset}                            – Stream audio from a YouTube URL
+          ${bold}mpva-android${reset}                    – Same, but use the Android player API
+          ${bold}pulsemixer${reset}                      – Sound volume controls
+      '';
+    })
+
     # {
     #   services.printing.enable = true;
     #   services.pipewire = {

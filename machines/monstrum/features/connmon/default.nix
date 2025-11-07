@@ -153,4 +153,27 @@ in
       ip route flush table ${toString table} || true
     '';
   };
+
+  # Manual `modem-restart` command for all users (preventing Ctrl+C):
+  environment.systemPackages = [
+    (pkgs.writeShellApplication {
+       name = "modem-restart";
+       runtimeInputs = [];
+       text = ''
+         exec sudo ${config.systemd.package}/bin/systemctl restart modem-restart
+       '';
+     })
+  ];
+  security.sudo = {
+    enable = true;
+    extraConfig = ''
+      %users ALL = (root) NOPASSWD: ${config.systemd.package}/bin/systemctl restart modem-restart
+    '';
+  };
+  systemd.services."modem-restart" = {
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = lib.getExe modem-restart;
+    };
+  };
 }
