@@ -160,14 +160,14 @@ in
        name = "modem-restart";
        runtimeInputs = [];
        text = ''
-         exec sudo ${config.systemd.package}/bin/systemctl restart modem-restart
+         exec sudo ${config.systemd.package}/bin/systemctl start modem-restart
        '';
      })
   ];
   security.sudo = {
     enable = true;
     extraConfig = ''
-      %users ALL = (root) NOPASSWD: ${config.systemd.package}/bin/systemctl restart modem-restart
+      %users ALL = (root) NOPASSWD: ${config.systemd.package}/bin/systemctl start modem-restart
     '';
   };
   systemd.services."modem-restart" = {
