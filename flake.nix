@@ -102,7 +102,7 @@
 
     lib = import ./lib { inherit inputs; };
 
-    packages = inputs.nixpkgs-2411.lib.genAttrs [
+    packages = inputs.nixpkgs-2505.lib.genAttrs [
       "x86_64-linux"
       "aarch64-linux"
       "x86_64-darwin"

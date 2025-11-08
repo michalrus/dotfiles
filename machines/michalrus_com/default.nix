@@ -2,7 +2,7 @@
 
 let
   flake = inputs.self;
-  nixpkgs = inputs.nixpkgs-2411;
+  nixpkgs = inputs.nixpkgs-2505;
 in
 
 nixpkgs.lib.nixosSystem {
@@ -45,7 +45,7 @@ nixpkgs.lib.nixosSystem {
     #./features/feeds/rss2email.nix
     ./features/wireguard
 
-    flake.inputs.home-manager-2411.nixosModules.home-manager
+    flake.inputs.home-manager-2505.nixosModules.home-manager
     {
       home-manager = {
         extraSpecialArgs = { inherit flake; };
