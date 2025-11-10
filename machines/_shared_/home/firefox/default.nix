@@ -53,6 +53,7 @@ in
           "https://addons.mozilla.org/firefox/downloads/latest/sponsorblock/"
           "https://addons.mozilla.org/firefox/downloads/latest/old-reddit-redirect/"
           "https://addons.mozilla.org/firefox/downloads/latest/ctrl-number-to-switch-tabs/"
+          "https://addons.mozilla.org/firefox/downloads/latest/polish-spellchecker-dictionary/"
         ];
         Locked = [
           "browserpass@maximbaz.com" # browserpass-ce
