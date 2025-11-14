@@ -67,6 +67,7 @@ let inherit (config.networking) hostName; in
       flake.packages.${pkgs.system}.wayland-logout
       (flake.packages.${pkgs.system}.wayland-unicode-input.override { onlyEmoji = false; })
       (flake.packages.${pkgs.system}.wayland-unicode-input.override { onlyEmoji = true;  })
+      (flake.packages.${pkgs.system}.wayland-random-input)
       pkgs.swaynotificationcenter
       pkgs.hypridle
       pkgs.wtype
