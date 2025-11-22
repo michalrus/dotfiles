@@ -153,11 +153,8 @@
       "C-x K" #'kill-buffer)
 
 ;; Turn off this "intelligent" behavior.
-(after! smartparens
-  (setq sp-autodelete-pair nil
-        sp-autodelete-closing-pair nil
-        sp-autodelete-opening-pair nil
-        sp-autodelete-wrap nil))
+(remove-hook 'doom-first-buffer-hook #'smartparens-global-mode)
+(add-hook    'doom-first-buffer-hook #'electric-pair-mode)
 
 ;; Automatic point history (a better ‘point-undo’):
 (use-package! gumshoe
