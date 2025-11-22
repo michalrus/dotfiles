@@ -30,6 +30,7 @@
       hunspell
       hunspellDicts.pl_PL
       hunspellDicts.en_US
+      nixd
     ];
 
     xdg.mimeApps.enable = true;
