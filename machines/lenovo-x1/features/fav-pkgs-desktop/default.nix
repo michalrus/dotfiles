@@ -36,6 +36,7 @@ in
       chemformula
       mhchem
       chemmacros translations elements relsize chemnum siunitx
+      cancel
     ])))
     acpitool
     aegisub
