@@ -39,6 +39,9 @@
 (add-hook! after-init
   (setq dired-mode-hook (remove 'dired-omit-mode dired-mode-hook)))  ; I want `..'
 
+;; Do _not_ continue line comments on <RET>…
+(setq +default-want-RET-continue-comments nil)
+
 ;; Otherwise, adding another frame is not instantaneous:
 (add-hook! server-after-make-frame :append (setq server-after-make-frame-hook nil))
 
