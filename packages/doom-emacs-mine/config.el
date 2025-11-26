@@ -158,6 +158,11 @@
 ;; Turn off this "intelligent" behavior.
 (remove-hook 'doom-first-buffer-hook #'smartparens-global-mode)
 (add-hook    'doom-first-buffer-hook #'electric-pair-mode)
+(after! elec-pair
+  (add-to-list 'electric-pair-pairs      '(?` . ?`))
+  (add-to-list 'electric-pair-text-pairs '(?` . ?`))
+  (add-to-list 'electric-pair-pairs      '(?„ . ?”))
+  (add-to-list 'electric-pair-text-pairs '(?„ . ?”)))
 
 ;; Automatic point history (a better ‘point-undo’):
 (use-package! gumshoe
