@@ -37,6 +37,7 @@ in
       mhchem
       chemmacros translations elements relsize chemnum siunitx
       cancel
+      svg transparent catchfile
     ])))
     acpitool
     aegisub
