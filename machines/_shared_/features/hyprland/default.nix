@@ -71,6 +71,7 @@ let inherit (config.networking) hostName; in
       pkgs.swaynotificationcenter
       pkgs.hypridle
       pkgs.wtype
+      pkgs.grim
       pkgs.brightnessctl
       (pkgs.writeShellApplication {
         # for redshift:
