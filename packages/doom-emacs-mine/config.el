@@ -159,10 +159,16 @@
 (remove-hook 'doom-first-buffer-hook #'smartparens-global-mode)
 (add-hook    'doom-first-buffer-hook #'electric-pair-mode)
 (after! elec-pair
+  (setq electric-pair-open-newline-between-pairs t)
   (add-to-list 'electric-pair-pairs      '(?` . ?`))
   (add-to-list 'electric-pair-text-pairs '(?` . ?`))
   (add-to-list 'electric-pair-pairs      '(?„ . ?”))
   (add-to-list 'electric-pair-text-pairs '(?„ . ?”)))
+
+;; Remove any remapping of `newline'. I want `<RET>' to map to regular `newline'
+;; which works best.
+(global-set-key [remap newline] nil)
+(global-set-key [remap newline-and-indent] nil)
 
 ;; Automatic point history (a better ‘point-undo’):
 (use-package! gumshoe
