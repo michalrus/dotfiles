@@ -136,6 +136,7 @@
       vftool = inputs.nixpkgs-2311.legacyPackages.${system}.callPackage ./packages/vftool { inherit (inputs) nixpkgs-macos-sdk-13; };
       vocproc = callPackage ./packages/vocproc { inherit lv2-cpp-tools; };
       yt-dlp = inputs.nixpkgs-unstable.legacyPackages.${system}.callPackage ./packages/yt-dlp { flake = inputs.self; };
+      zed-editor = inputs.nixpkgs-unstable.legacyPackages.${system}.callPackage ./packages/zed-editor { flake = inputs.self; };
     });
 
   };
