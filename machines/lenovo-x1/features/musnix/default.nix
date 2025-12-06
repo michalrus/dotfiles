@@ -56,7 +56,7 @@ in
     VST_PATH    = ["/lib/vst"];
   };
 
-  hardware.pulseaudio.package = pkgs.pulseaudioFull;
+  services.pulseaudio.package = pkgs.pulseaudioFull;
 
   users.extraUsers.m.extraGroups = [ "audio" ];
 

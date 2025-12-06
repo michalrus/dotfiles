@@ -9,7 +9,7 @@
   services.pulseaudio.package = pkgs.pulseaudioFull;
 
   # <https://nixos.wiki/wiki/Bluetooth#System-Wide_PulseAudio>:
-  hardware.pulseaudio.extraConfig = ''
+  services.pulseaudio.extraConfig = ''
     load-module module-bluetooth-policy
     load-module module-bluetooth-discover
     ## module fails to load with

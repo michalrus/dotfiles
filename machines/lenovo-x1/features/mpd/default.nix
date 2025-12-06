@@ -13,7 +13,7 @@
 
   # Let’s have MPD send audio to whoever PA is running as.
 
-  hardware.pulseaudio = {
+  services.pulseaudio = {
     enable = true;
     extraConfig = ''
       load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1
