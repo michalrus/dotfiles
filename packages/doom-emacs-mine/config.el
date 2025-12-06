@@ -89,6 +89,8 @@
 
 (use-package! recentf)
 (after! recentf
+  ;; A little slower, but without this ↓, Emacs won’t add files to recentf on open/visit:
+  (recentf-mode 1)
   (recentf-load-list) ; why do I need to call this, or else the list is empty on load?
   (map! "C-r" #'recentf-open-files)
   (setq recentf-auto-cleanup 'never  ; requires SSH-ing to check remote entries
