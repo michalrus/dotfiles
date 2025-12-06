@@ -39,6 +39,11 @@
 (add-hook! after-init
   (setq dired-mode-hook (remove 'dired-omit-mode dired-mode-hook)))  ; I want `..'
 
+(after! dirvish
+  ;; Do not use <left>/<right> for navigation in dired (dirvish):
+  (define-key dirvish-mode-map (kbd "<left>")  nil)
+  (define-key dirvish-mode-map (kbd "<right>") nil))
+
 ;; Do _not_ continue line comments on <RET>…
 (setq +default-want-RET-continue-comments nil)
 
