@@ -24,7 +24,7 @@ let
 
   # Fails with `EMFILE Too many open files`:
   zed-editor-flake = (
-    builtins.getFlake "github:zed-industries/zed/e55a8c9cb1756058e653b3c2f65863dd10c46b58"; # v0.216.0-pre
+    builtins.getFlake "github:zed-industries/zed/e55a8c9cb1756058e653b3c2f65863dd10c46b58" # v0.216.0-pre
   ).outputs.packages.${system}.default;
 in
 zed-editor-pre #zed-editor-flake
