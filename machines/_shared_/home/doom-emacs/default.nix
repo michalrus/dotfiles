@@ -63,6 +63,9 @@ in
 
   systemd.user.services.emacs.Service.Restart = lib.mkForce "always";
 
+  # I'm using auto-save, so this is fine:
+  systemd.user.services.emacs.Unit.X-RestartIfChanged = lib.mkForce true;
+
   home.sessionVariables = rec {
     EDITOR = "emacs";
     VISUAL = EDITOR;
