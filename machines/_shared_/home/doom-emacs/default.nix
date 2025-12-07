@@ -40,7 +40,7 @@ in
       enable = true;  # emacs-daemon systemd --user service:
       package = doom-emacs;
       client.enable = true;
-      startWithUserSession = true;
+      startWithUserSession = "graphical"; # `true` makes `gpg-agent` not work with 1st Emacs session
     };
   } else {};
 
