@@ -6,9 +6,13 @@ in
 
 {
   home.packages = [
-    pkgs.mpv
     yt-dlp
   ];
+
+  programs.mpv = {
+    enable = true;
+    scripts = with pkgs.mpvScripts; [ mpris ];
+  };
 
   # Streaming only audio:
   home.shellAliases.mpva = "mpv --no-resume-playback --ytdl-format='bestaudio[ext=m4a]/bestaudio' --ytdl-raw-options='ignore-config='";
