@@ -43,6 +43,10 @@ in
 
     # <https://www.miejski.pl/slowo-Filmy+z+%C5%BC%C3%B3%C5%82tymi+napisami>
     SHIFT+s cycle-values sub-color "#ffff00" "#ffffff"
+
+    # For remote control:
+    FORWARD multiply speed 1.1
+    REWIND  multiply speed 1/1.1
   '';
 
   home.file.".config/mpv/mpv.conf".text = ''
