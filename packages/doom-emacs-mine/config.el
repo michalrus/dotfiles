@@ -154,6 +154,10 @@
         git-link-open-in-browser t)
   (map! :leader "g l" #'git-link))
 
+;; While M-. was defined correctly, M-, was a generic “back” navigation. I have gumshoe for that.
+(map! :g "M-." #'+lookup/definition)
+(map! :g "M-," #'+lookup/references)
+
 (map! "M-=" #'er/expand-region)
 
 (map! "C-c C-o" #'browse-url-at-point)
