@@ -2,7 +2,9 @@
 
 set -euo pipefail
 
-main_html=$(curl -fsSL https://www.accuradio.com/)
+user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36'
+
+main_html=$(curl -A "$user_agent" -fsSL https://www.accuradio.com/)
 main_state=$(<<<"$main_html" grep -F 'window.__PRELOADED_STATE__' | sed -r 's|^.*window\.__PRELOADED_STATE__\s*=\s*(.*)</script>.*|\1|g')
 
 if [ -z "$main_state" ] ; then
@@ -13,7 +15,7 @@ fi
 genre=$(<<<"$main_state" jq -r '.content.genres.brands | map(.name) | .[]' | sort | sk --no-sort)
 genre_canonical=$(<<<"$main_state" jq --arg genre "$genre" -r '.content.genres.brands[] | select(.name == $genre) | ((.canonical_url | select(. != "")) // .param)')
 
-genre_html=$(curl -fsSL "https://www.accuradio.com/${genre_canonical}/")
+genre_html=$(curl -A "$user_agent" -fsSL "https://www.accuradio.com/${genre_canonical}/")
 genre_state=$(<<<"$genre_html" grep -F 'window.__PRELOADED_STATE__' | sed -r 's|^.*window\.__PRELOADED_STATE__\s*=\s*(.*)</script>.*|\1|g')
 
 if [ -z "$genre_state" ] ; then
@@ -25,7 +27,7 @@ channel=$(<<<"$genre_state" jq -r '.content.genrePageData | (.channels + [.featu
 channel_id=$(<<<"$genre_state" jq -r --arg channel "$channel" '.content.genrePageData | (.channels + [.featuredChannel]) | .[] | select(.name == $channel) | ._id["$oid"]')
 
 while true ; do
-    channel_json=$(curl -fsSL "https://www.accuradio.com/playlist/json/${channel_id}/")
+    channel_json=$(curl -A "$user_agent" -fsSL "https://www.accuradio.com/playlist/json/${channel_id}/")
 
     jq <<<"$channel_json" -c '.[] | select(.ad_type == null)' | while IFS= read -r track ; do
         track_url=$(jq -r '.primary + .fn + ".m4a"' <<<"$track")
@@ -37,6 +39,6 @@ while true ; do
         echo "URL:     $track_url"
         echo
 
-        mpv --no-resume-playback "$track_url"
+        mpv --user-agent="$user_agent" --no-ytdl --no-resume-playback "$track_url"
     done
 done
