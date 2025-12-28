@@ -32,17 +32,21 @@ in
       "gnu-screen-${user}" = {
         description = "GNU Screen (${user})";
         serviceConfig = {
-          Type = "forking";
+          Type = "simple";
           Restart = "always";
         };
+        environment = {
+          TERM = "xterm-256color";
+          COLORTERM = "truecolor";
+          SHELL = config.users.defaultUserShell;
+        };
+        path = [ pkgs.screen ];
         script = ''
-          # For some reason, SHELL is not being set for root. *.*
-          export SHELL=${config.users.defaultUserShell}
-
           source ${config.system.build.setEnvironment}
           cd "$HOME"
           export XDG_RUNTIME_DIR=/run/user/$UID
-          exec "$SHELL" --login -c "exec ${pkgs.screen}/bin/screen -S ${session_name} -d -m"
+          export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$UID/bus
+          exec "$SHELL" --login -c "exec screen -a -U -S ${session_name} -D -m -T screen.$TERM"
         '';
         serviceConfig.User = user;
         wantedBy = [ "multi-user.target" ];

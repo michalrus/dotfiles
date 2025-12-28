@@ -19,6 +19,13 @@
 
     # hack: %s is added at the end (not shown) to refresh load every second
     caption always " %H: %2n: %t %-15=%l %s"
+
+    defmousetrack off
+    mousetrack off
+
+    defutf8 on
+
+    termcapinfo xterm*|xterm-256color|screen.xterm*|rxvt*  ti@:te@:XT:Km@:
   '';
 
 }
