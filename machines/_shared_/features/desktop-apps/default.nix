@@ -22,15 +22,14 @@
       gtk2  # For icon cache, see #20874.
       dconf
       ffmpeg-full
-      git-filter-repo
       graphicsmagick
       imagemagick
-      (python3.withPackages (p: with p; [ scipy geopy python-lsp-server requests pylint matplotlib tkinter beautifulsoup4 aiohttp humanize protobuf ]))
       flake.packages.${pkgs.system}.naps2
       hunspell
       hunspellDicts.pl_PL
       hunspellDicts.en_US
-      nixd
+      mc
+      cool-retro-term
     ];
 
     xdg.mimeApps.enable = true;
