@@ -22,12 +22,12 @@
     x42-plugins
     x42-avldrums
     x42-gmsynth
-    flake.packages.${pkgs.system}.autotalent
-    flake.packages.${pkgs.system}.talentedhack
+    flake.packages.${pkgs.stdenv.hostPlatform.system}.autotalent
+    flake.packages.${pkgs.stdenv.hostPlatform.system}.talentedhack
     surge
     surge-XT
-    flake.packages.${pkgs.system}.vocproc
-    flake.packages.${pkgs.system}.tap-plugins
+    flake.packages.${pkgs.stdenv.hostPlatform.system}.vocproc
+    flake.packages.${pkgs.stdenv.hostPlatform.system}.tap-plugins
     rubberband
 
   ];

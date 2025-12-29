@@ -1,11 +1,11 @@
 { ... }:
 
 {
-  systemd.extraConfig = ''
-    DefaultCPUAccounting=yes
-    DefaultBlockIOAccounting=yes
-    DefaultMemoryAccounting=yes
-    DefaultTasksAccounting=yes
-    DefaultIPAccounting=yes
-  '';
+  systemd.settings.Manager = {
+    DefaultCPUAccounting = true;
+    DefaultBlockIOAccounting = true;
+    DefaultMemoryAccounting = true;
+    DefaultTasksAccounting = true;
+    DefaultIPAccounting = true;
+  };
 }

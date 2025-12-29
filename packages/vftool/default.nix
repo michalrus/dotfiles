@@ -1,6 +1,8 @@
-{ system, nixpkgs-macos-sdk-13, runCommandNoCC }:
+{ stdenv, nixpkgs-macos-sdk-13, runCommandNoCC }:
 
 let
+
+  inherit (stdenv.hostPlatform) system;
 
   nixpkgsPatched = runCommandNoCC "nixpkgs-patched" {} ''
     cp -r ${nixpkgs-macos-sdk-13} $out

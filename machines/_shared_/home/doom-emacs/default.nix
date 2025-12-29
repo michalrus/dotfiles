@@ -3,7 +3,7 @@
 let
 
   doom-emacs = let
-    underlying = flake.packages.${pkgs.system}.doom-emacs-mine;
+    underlying = flake.packages.${pkgs.stdenv.hostPlatform.system}.doom-emacs-mine;
   in if !pkgs.stdenv.isDarwin then underlying else underlying.overrideAttrs (old: {
     # On macOS, I want the icon to launch `emacsclient` for the daemon we run below:
     buildCommand = old.buildCommand + ''

@@ -5,7 +5,7 @@ let
   cfg = config.boot.loader.raspberryPiFirmware;
 
   sdCardSystem = import "${pkgs.path}/nixos/lib/eval-config.nix" {
-    inherit (pkgs) system;
+    inherit (pkgs.stdenv.hostPlatform) system;
     modules = [ "${pkgs.path}/nixos/modules/installer/sd-card/sd-image-aarch64.nix" ];
   };
 

@@ -1,4 +1,4 @@
-{ flake, system, lib, yt-dlp, pandoc, which }:
+{ flake, lib, yt-dlp, pandoc, which }:
 
 # XXX: it will return a newer one – either from nixpkgs or yt-dlp itself
 # – looking at versions; if versions are equal, it’ll take our input

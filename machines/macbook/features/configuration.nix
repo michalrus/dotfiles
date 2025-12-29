@@ -50,9 +50,9 @@
     ripgrep
 
     mpv
-    flake.packages.${pkgs.system}.yt-dlp
+    flake.packages.${pkgs.stdenv.hostPlatform.system}.yt-dlp
 
-    flake.packages.${pkgs.system}.noise
+    flake.packages.${pkgs.stdenv.hostPlatform.system}.noise
 
     # FIXME: for some reason it's no longer visible in Launchpad – and the custom path can be set via defaults as well
     #
@@ -62,7 +62,7 @@
     #    (drv.installPhase or "")
     #    + ''
     #      rm $out/Applications/IINA.app/Contents/MacOS/youtube-dl
-    #      ln -s ${flake.packages.${pkgs.system}.yt-dlp}/bin/yt-dlp $out/Applications/IINA.app/Contents/MacOS/youtube-dl
+    #      ln -s ${flake.packages.${pkgs.stdenv.hostPlatform.system}.yt-dlp}/bin/yt-dlp $out/Applications/IINA.app/Contents/MacOS/youtube-dl
     #    '';
     #}))
 

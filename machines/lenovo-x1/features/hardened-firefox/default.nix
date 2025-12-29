@@ -8,7 +8,7 @@ let
       rev = "12d9950bf47e0ac20d4d04e189448ee075242117";
       sha256 = "09wy33zbzxj33296ddrrb79630kxpj1c3kiv38zs4wrw24206c2v";
     }
-  ) { inherit (pkgs) system; };
+  ) { inherit (pkgs.stdenv.hostPlatform) system; };
 
   makeWrapped =
     args@{ localAutocompletePort, extraPrefs }:

@@ -23,10 +23,10 @@ let
     path = cardano-playground + "/static/book.play.dev.cardano.org/environments";
   };
 
-  cardano-node = cardano-node-flake.packages.${pkgs.system}.cardano-node;
-  cardano-cli = cardano-node-flake.packages.${pkgs.system}.cardano-cli;
-  mithril-client = mithril-flake.packages.${pkgs.system}.mithril-client-cli;
-  blockfrost-platform = blockfrost-platform-flake.packages.${pkgs.system}.default;
+  cardano-node = cardano-node-flake.packages.${pkgs.stdenv.hostPlatform.system}.cardano-node;
+  cardano-cli = cardano-node-flake.packages.${pkgs.stdenv.hostPlatform.system}.cardano-cli;
+  mithril-client = mithril-flake.packages.${pkgs.stdenv.hostPlatform.system}.mithril-client-cli;
+  blockfrost-platform = blockfrost-platform-flake.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
 in
 

@@ -3,7 +3,7 @@
 {
   programs.git = {
     enable = true;
-    aliases = rec {
+    settings.alias = rec {
       s = "status";
       d = "diff";
       c = "diff --cached";
@@ -13,7 +13,7 @@
       lga = lg + " --all";
       ff = "merge --ff-only";
     };
-    extraConfig = {
+    settings = {
       core.safecrlf = false;
       core.commentchar = ";";
       merge.conflictstyle = "diff3";

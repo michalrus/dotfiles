@@ -1,11 +1,11 @@
 { flake, config, lib, pkgs, ... }:
 
 {
-  environment.systemPackages = flake.lib.filterSystem pkgs.system (with pkgs; [
-    (hiPrio arping)
-    (hiPrio netcat-openbsd)
-    (lowPrio gnupg1compat)
-    (lowPrio stdmanpages)
+  environment.systemPackages = flake.lib.filterSystem pkgs.stdenv.hostPlatform.system (with pkgs; [
+    (lib.hiPrio arping)
+    (lib.hiPrio netcat-openbsd)
+    (lib.lowPrio gnupg1compat)
+    (lib.lowPrio stdmanpages)
     arpoison
     aspell
     aspellDicts.de
@@ -31,7 +31,7 @@
     exiv2
     ext4magic
     file
-    (flake.inputs.agenix.packages.${pkgs.system}.default.overrideAttrs (drv: {
+    (flake.inputs.agenix.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs (drv: {
       # Produce ASCII-armored output instead of binary files:
       installPhase = (drv.installPhase or "") + ''
         sed -r 's/rage (.*ENCRYPT)/rage --armor \1/g' -i $out/bin/agenix
@@ -73,7 +73,7 @@
     nix-prefetch-scripts
     nmap
     ntfs3g
-    oathToolkit
+    oath-toolkit
     odt2txt
     openssl
     p7zip
@@ -107,14 +107,14 @@
   ])
 
   # FIXME: these have wrong meta.platforms:
-  ++ (if pkgs.system == "x86_64-linux" then with pkgs; [
+  ++ (if pkgs.stdenv.hostPlatform.system == "x86_64-linux" then with pkgs; [
 
     libguestfs
 
   ] else [])
 
   # FIXME: these don’t build on aarch64-darwin in nixos-2003
-  ++ (if pkgs.system != "aarch64-linux" then with pkgs; [
+  ++ (if pkgs.stdenv.hostPlatform.system != "aarch64-linux" then with pkgs; [
 
     ripgrep
 

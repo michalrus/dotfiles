@@ -8,7 +8,7 @@
     nerd-fonts.iosevka
     nerd-fonts.symbols-only
     noto-fonts
-    noto-fonts-emoji
+    noto-fonts-color-emoji
     noto-fonts-cjk-sans
     #google-fonts  # They break ‘noto-fonts-emoji’
     liberation_ttf

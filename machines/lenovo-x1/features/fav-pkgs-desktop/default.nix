@@ -1,7 +1,7 @@
 { flake, config, pkgs, ... }:
 
 let
-  unfree = import pkgs.path { inherit (pkgs) system; config.allowUnfree = true; };
+  unfree = import pkgs.path { inherit (pkgs.stdenv.hostPlatform) system; config.allowUnfree = true; };
 in
 
 {
@@ -11,7 +11,7 @@ in
     package = pkgs.wireshark-qt;
   };
 
-  environment.systemPackages = flake.lib.filterSystem pkgs.system (with pkgs; [
+  environment.systemPackages = flake.lib.filterSystem pkgs.stdenv.hostPlatform.system (with pkgs; [
     haskellPackages.ghc
     haskellPackages.hlint
     octave
@@ -22,7 +22,7 @@ in
     rustup
     sqlint
     (texlive.withPackages (ps: [
-      flake.packages.${pkgs.system}.gregorio.forTexlive
+      flake.packages.${pkgs.stdenv.hostPlatform.system}.gregorio.forTexlive
     ] ++ (with ps; [
       scheme-small latexmk titlesec tocloft todonotes cleveref lipsum
       biblatex logreq cm-super csquotes pgfplots adjustbox collectbox ccicons polski
@@ -42,13 +42,12 @@ in
     acpitool
     aegisub
     alsa-utils
-    flake.inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.anki
+    flake.inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.anki
     audacity
-    awf
     calibre
     cdparanoia
     cdrkit
-    clang_16
+    clang
     clang-tools # for clangd language server
     cool-retro-term
     devede
@@ -56,9 +55,9 @@ in
     dvdauthor
     dvdbackup
     electrum
-    flake.packages.${pkgs.system}.gettext-emacs
-    flake.packages.${pkgs.system}.noise
-    flake.packages.${pkgs.system}.transcribe
+    flake.packages.${pkgs.stdenv.hostPlatform.system}.gettext-emacs
+    flake.packages.${pkgs.stdenv.hostPlatform.system}.noise
+    flake.packages.${pkgs.stdenv.hostPlatform.system}.transcribe
     ghostscript
     gimp
     aisleriot
@@ -81,14 +80,12 @@ in
     exiftool
     pinentry-gtk2
     gnucash
-    #unfree.retroarchFull
+    #unfree.retroarch-full
     streamlink
     qjoypad
     rpcs3
     rtmpdump
     samba
-    scantailor
-    simple-scan
     speedread
     statix
     tigervnc

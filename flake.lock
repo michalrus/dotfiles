@@ -3,21 +3,22 @@
     "agenix": {
       "inputs": {
         "darwin": [
-          "nix-darwin-2311"
+          "nix-darwin-2511"
         ],
         "home-manager": [
           "home-manager-2305"
         ],
         "nixpkgs": [
-          "nixpkgs-2305"
-        ]
+          "nixpkgs-2511"
+        ],
+        "systems": "systems"
       },
       "locked": {
-        "lastModified": 1696775529,
-        "narHash": "sha256-TYlE4B0ktPtlJJF9IFxTWrEeq+XKG8Ny0gc2FGEAdj0=",
+        "lastModified": 1762618334,
+        "narHash": "sha256-wyT7Pl6tMFbFrs8Lk/TlEs81N6L+VSybPfiIgzU8lbQ=",
         "owner": "ryantm",
         "repo": "agenix",
-        "rev": "daf42cb35b2dc614d1551e37f96406e4c4a2d3e4",
+        "rev": "fcdea223397448d35d9b31f798479227e80183f6",
         "type": "github"
       },
       "original": {
@@ -171,10 +172,31 @@
         "type": "github"
       }
     },
+    "home-manager-2511": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-2511"
+        ]
+      },
+      "locked": {
+        "lastModified": 1766939458,
+        "narHash": "sha256-VvZeAKyB3vhyHStSO8ACKzWRKNQPmVWktjfuSVdvtUA=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "e298a148013c980e3c8c0ac075295fab5074d643",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "ref": "release-25.11",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
     "malicious-hosts": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-qXPYZNA8r8GslkNY+pUqOMT0Uw83pPrXBkostfQmaM4=",
+        "narHash": "sha256-/0kI8uegSr9q6H0En9GPWg7a20jRJgd6vulRWdABCTQ=",
         "type": "file",
         "url": "https://github.com/StevenBlack/hosts/raw/master/alternates/fakenews-gambling/hosts"
       },
@@ -204,13 +226,34 @@
         "type": "github"
       }
     },
+    "nix-darwin-2511": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-2511"
+        ]
+      },
+      "locked": {
+        "lastModified": 1765066094,
+        "narHash": "sha256-0YSU35gfRFJzx/lTGgOt6ubP8K6LeW0vaywzNNqxkl4=",
+        "owner": "nix-darwin",
+        "repo": "nix-darwin",
+        "rev": "688427b1aab9afb478ca07989dc754fa543e03d5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-darwin",
+        "ref": "nix-darwin-25.11",
+        "repo": "nix-darwin",
+        "type": "github"
+      }
+    },
     "nixos-hardware": {
       "locked": {
-        "lastModified": 1748942041,
-        "narHash": "sha256-HEu2gTct7nY0tAPRgBtqYepallryBKR1U8B4v2zEEqA=",
+        "lastModified": 1766568855,
+        "narHash": "sha256-UXVtN77D7pzKmzOotFTStgZBqpOcf8cO95FcupWp4Zo=",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "fc7c4714125cfaa19b048e8aaf86b9c53e04d853",
+        "rev": "c5db9569ac9cc70929c268ac461f4003e3e5ca80",
         "type": "github"
       },
       "original": {
@@ -299,6 +342,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-2511": {
+      "locked": {
+        "lastModified": 1766736597,
+        "narHash": "sha256-BASnpCLodmgiVn0M1MU2Pqyoz0aHwar/0qLkp7CjvSQ=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "f560ccec6b1116b22e6ed15f4c510997d99d5852",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-25.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-macos-sdk-13": {
       "locked": {
         "lastModified": 1685254091,
@@ -317,11 +376,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1764950072,
-        "narHash": "sha256-BmPWzogsG2GsXZtlT+MTcAWeDK5hkbGRZTeZNW42fwA=",
+        "lastModified": 1766902085,
+        "narHash": "sha256-coBu0ONtFzlwwVBzmjacUQwj3G+lybcZ1oeNSQkgC0M=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "f61125a668a320878494449750330ca58b78c557",
+        "rev": "c0b0e0fddf73fd517c3471e546c0df87a42d53f4",
         "type": "github"
       },
       "original": {
@@ -342,27 +401,45 @@
         "home-manager-2405": "home-manager-2405",
         "home-manager-2411": "home-manager-2411",
         "home-manager-2505": "home-manager-2505",
+        "home-manager-2511": "home-manager-2511",
         "malicious-hosts": "malicious-hosts",
         "nix-darwin-2311": "nix-darwin-2311",
+        "nix-darwin-2511": "nix-darwin-2511",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs-2305": "nixpkgs-2305",
         "nixpkgs-2311": "nixpkgs-2311",
         "nixpkgs-2405": "nixpkgs-2405",
         "nixpkgs-2411": "nixpkgs-2411",
         "nixpkgs-2505": "nixpkgs-2505",
+        "nixpkgs-2511": "nixpkgs-2511",
         "nixpkgs-macos-sdk-13": "nixpkgs-macos-sdk-13",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "yt-dlp": "yt-dlp"
       }
     },
+    "systems": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
     "yt-dlp": {
       "flake": false,
       "locked": {
-        "lastModified": 1763766500,
-        "narHash": "sha256-hVwpCNFvRHx0C2YLB9yEyheTlFxU/26Qkw8Wy1yYoXs=",
+        "lastModified": 1766976603,
+        "narHash": "sha256-4b+0trT1d/BajDtuGz8o6nB9UqeRaKwucJ5UR/d0UnQ=",
         "owner": "yt-dlp",
         "repo": "yt-dlp",
-        "rev": "0c696239ef418776ac6ba20284bd2f3976a011b4",
+        "rev": "fcd47d2db3f871c7b7d638773c36cc503119742d",
         "type": "github"
       },
       "original": {

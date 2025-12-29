@@ -4,6 +4,8 @@ with python3.pkgs;
 
 buildPythonApplication {
   name = "cp2104-gpio";
+  pyproject = true;
+  build-system = [ setuptools ];
   src = runCommand "src" {} ''
     mkdir $out
 

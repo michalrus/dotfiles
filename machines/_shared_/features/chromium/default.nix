@@ -2,7 +2,7 @@
 
 let
   unfree-unstable = import flake.inputs.nixpkgs-unstable.outPath {
-    inherit (pkgs) system; config.allowUnfree = true;
+    inherit (pkgs.stdenv.hostPlatform) system; config.allowUnfree = true;
   };
 in
 
@@ -32,7 +32,7 @@ in
           "--enable-native-notifications"
         ];
         dictionaries = [
-          flake.packages.${pkgs.system}.hunspell-dictionaries-chromium-pl
+          flake.packages.${pkgs.stdenv.hostPlatform.system}.hunspell-dictionaries-chromium-pl
           pkgs.hunspellDictsChromium.en_US
         ];
         extensions = [

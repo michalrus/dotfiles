@@ -11,6 +11,8 @@
 
     nixpkgs-2505.url = "github:NixOS/nixpkgs/nixos-25.05";
 
+    nixpkgs-2511.url = "github:NixOS/nixpkgs/nixos-25.11";
+
     # Chromium, yt-dlp etc.
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
@@ -19,6 +21,9 @@
 
     nix-darwin-2311.url = "github:lnl7/nix-darwin/master";
     nix-darwin-2311.inputs.nixpkgs.follows = "nixpkgs-2311";
+
+    nix-darwin-2511.url = "github:nix-darwin/nix-darwin/nix-darwin-25.11";
+    nix-darwin-2511.inputs.nixpkgs.follows = "nixpkgs-2511";
 
     home-manager-2305.url = "github:nix-community/home-manager/release-23.05";
     home-manager-2305.inputs.nixpkgs.follows = "nixpkgs-2305";
@@ -35,11 +40,14 @@
     home-manager-2505.url = "github:nix-community/home-manager/release-25.05";
     home-manager-2505.inputs.nixpkgs.follows = "nixpkgs-2505";
 
+    home-manager-2511.url = "github:nix-community/home-manager/release-25.11";
+    home-manager-2511.inputs.nixpkgs.follows = "nixpkgs-2511";
+
     nixos-hardware.url = "github:NixOS/nixos-hardware";
 
     agenix.url = "github:ryantm/agenix";
-    agenix.inputs.nixpkgs.follows = "nixpkgs-2305";
-    agenix.inputs.darwin.follows = "nix-darwin-2311";
+    agenix.inputs.nixpkgs.follows = "nixpkgs-2511";
+    agenix.inputs.darwin.follows = "nix-darwin-2511";
     agenix.inputs.home-manager.follows = "home-manager-2305";
 
     doom-emacs = { url = "github:doomemacs/doomemacs"; flake = false; };
@@ -102,28 +110,31 @@
 
     lib = import ./lib { inherit inputs; };
 
-    packages = inputs.nixpkgs-2505.lib.genAttrs [
+    packages = inputs.nixpkgs-2511.lib.genAttrs [
       "x86_64-linux"
       "aarch64-linux"
       "x86_64-darwin"
       "aarch64-darwin"
     ] (system: let
-      inherit (inputs.nixpkgs-2411.legacyPackages.${system}) callPackage;
+      inherit (inputs.nixpkgs-2511.legacyPackages.${system}) callPackage;
     in inputs.self.lib.filterSystem system rec {
       accuradio = callPackage ./packages/accuradio {};
       autotalent = callPackage ./packages/autotalent {};
       cp2104-gpio = callPackage ./packages/cp2104-gpio {};
       dmenu-is-rofi = callPackage ./packages/dmenu-is-rofi {};
-      doom-emacs = callPackage ./packages/doom-emacs { inherit (inputs) doom-emacs; };
-      doom-emacs-mine = callPackage ./packages/doom-emacs-mine { inherit doom-emacs; };
+      # FIXME:
+      doom-emacs = inputs.nixpkgs-2411.legacyPackages.${system}.callPackage ./packages/doom-emacs { inherit (inputs) doom-emacs; };
+      # FIXME:
+      doom-emacs-mine = inputs.nixpkgs-2411.legacyPackages.${system}.callPackage ./packages/doom-emacs-mine { inherit doom-emacs; };
       git-annex-hacks = callPackage ./packages/git-annex-hacks {};
       gettext-emacs = callPackage ./packages/gettext-emacs {};
-      gregorio = callPackage ./packages/gregorio {};
+      # FIXME:
+      gregorio = inputs.nixpkgs-2411.legacyPackages.${system}.callPackage ./packages/gregorio {};
       hunspell-dictionaries-chromium-pl = callPackage ./packages/hunspell-dictionaries-chromium-pl {};
       hyprland-screenshot = callPackage ./packages/hyprland-screenshot {};
       lv2-cpp-tools = callPackage ./packages/lv2-cpp-tools {};
       on-vt-switch = callPackage ./packages/on-vt-switch {};
-      naps2 = inputs.nixpkgs-2505.legacyPackages.${system}.callPackage ./packages/naps2 {};
+      naps2 = callPackage ./packages/naps2 {};
       noise = callPackage ./packages/noise {};
       pms5003 = callPackage ./packages/pms5003 {};
       rofi-unicode-input = callPackage ./packages/rofi-unicode-input {};
@@ -133,10 +144,11 @@
       wayland-logout = callPackage ./packages/wayland-logout {};
       wayland-unicode-input = callPackage ./packages/wayland-unicode-input {};
       wayland-random-input = callPackage ./packages/wayland-random-input {};
+      # FIXME:
       vftool = inputs.nixpkgs-2311.legacyPackages.${system}.callPackage ./packages/vftool { inherit (inputs) nixpkgs-macos-sdk-13; };
       vocproc = callPackage ./packages/vocproc { inherit lv2-cpp-tools; };
       yt-dlp = inputs.nixpkgs-unstable.legacyPackages.${system}.callPackage ./packages/yt-dlp { flake = inputs.self; };
-      zed-editor = inputs.nixpkgs-unstable.legacyPackages.${system}.callPackage ./packages/zed-editor { flake = inputs.self; };
+      #zed-editor = inputs.nixpkgs-unstable.legacyPackages.${system}.callPackage ./packages/zed-editor { flake = inputs.self; };
     });
 
   };

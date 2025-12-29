@@ -1,7 +1,7 @@
 { config, flake, pkgs, lib, ... }:
 
 let
-  yt-dlp = flake.packages.${pkgs.system}.yt-dlp;
+  yt-dlp = flake.packages.${pkgs.stdenv.hostPlatform.system}.yt-dlp;
 in
 
 {

@@ -6,5 +6,5 @@
     libmtp
   ];
 
-  services.udev.packages = [ pkgs.android-udev-rules ];
+  #services.udev.packages = [ pkgs.android-udev-rules ]; # already built-in
 }

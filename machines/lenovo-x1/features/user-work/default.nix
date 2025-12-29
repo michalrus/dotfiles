@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 let
-  unfree = import pkgs.path { inherit (pkgs) system; config.allowUnfree = true; };
+  unfree = import pkgs.path { inherit (pkgs.stdenv.hostPlatform) system; config.allowUnfree = true; };
 in
 
 {
@@ -14,7 +14,7 @@ in
 
       description = "Michal Rus (w)";
       extraGroups = [ "audio" "nonet" "scanner" "networkmanager" "wireshark" "cdrom" "video" ];
-      dotfiles-old.profiles = [ "base" "michalrus/base" "git-annex" "michalrus/work/iohk" ];
+      dotfiles-old.profiles = [ "base" "michalrus/base" /*"git-annex"*/ "michalrus/work/iohk" ];
       packages = with pkgs; [
         # (hardened-firefox.makeWrapped {
         #   localAutocompletePort = 9999; #config.services.firefox-autocomplete.userPorts.mw;

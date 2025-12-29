@@ -2,7 +2,7 @@
 
 let
   flake = inputs.self;
-  nixpkgs = inputs.nixpkgs-2505;
+  nixpkgs = inputs.nixpkgs-2511;
 in
 
 nixpkgs.lib.nixosSystem {
@@ -91,7 +91,7 @@ nixpkgs.lib.nixosSystem {
       age.secrets.ssh-known_hosts-work-blockfrost = { file = inputs.self + "/secrets/ssh-known_hosts-work-blockfrost.age"; owner = "mw"; };
     }
 
-    flake.inputs.home-manager-2505.nixosModules.home-manager
+    flake.inputs.home-manager-2511.nixosModules.home-manager
     ({ config, ... }: {
       home-manager = {
         extraSpecialArgs = { inherit flake; inherit (config.age) secrets; };
@@ -155,9 +155,9 @@ nixpkgs.lib.nixosSystem {
     }
 
     {
-      services.logind = {
-        lidSwitch = "suspend";
-        powerKey = "suspend";
+      services.logind.settings.Login = {
+        HandleLidSwitch = "suspend";
+        HandlePowerKey = "suspend";
       };
     }
 

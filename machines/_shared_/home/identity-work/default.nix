@@ -6,8 +6,8 @@
   ...
 }: {
   programs.git = {
-    userEmail = "michal.rus@iohk.io";
-    userName = "Michal Rus";
+    settings.user.email = "michal.rus@iohk.io";
+    settings.user.name = "Michal Rus";
     signing.key = "michal.rus@iohk.io";
     signing.signByDefault = true;
   };
@@ -29,7 +29,7 @@
       User mw
 
     Host macbook-nixos
-      ${if pkgs.system == "aarch64-linux" then "#" else ""}ProxyJump macbook
+      ${if pkgs.stdenv.hostPlatform.system == "aarch64-linux" then "#" else ""}ProxyJump macbook
       Hostname 192.168.65.2
       HostKeyAlias macbook-nixos
       UserKnownHostsFile ~/.ssh/known_hosts.d/dev-machines

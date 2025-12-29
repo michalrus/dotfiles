@@ -6,8 +6,8 @@
   ...
 }: {
   programs.git = {
-    userEmail = "km@monstrum";
-    userName = "K i M";
+    settings.user.email = "km@monstrum";
+    settings.user.name = "K i M";
     signing.key = "km@monstrum";
     signing.signByDefault = true;
   };

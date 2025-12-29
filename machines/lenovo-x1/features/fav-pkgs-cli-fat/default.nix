@@ -2,12 +2,12 @@
 
 {
 
-  environment.systemPackages = flake.lib.filterSystem pkgs.system (with pkgs; [
+  environment.systemPackages = flake.lib.filterSystem pkgs.stdenv.hostPlatform.system (with pkgs; [
     duplicity
     faad2
     flac
-    flake.packages.${pkgs.system}.git-annex-hacks
-    gitAndTools.gitRemoteGcrypt
+    #flake.packages.${pkgs.stdenv.hostPlatform.system}.git-annex-hacks
+    #gitAndTools.gitRemoteGcrypt
     gitstats
     gocr  # OCR
     #gpac  # marked as insecure
@@ -16,7 +16,7 @@
     lame
     normalize
     pdfgrep
-    poppler_utils
+    poppler-utils
     python3Packages.livereload
     shared-mime-info
     shellcheck
