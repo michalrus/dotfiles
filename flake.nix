@@ -11,7 +11,11 @@
 
     nixpkgs-2505.url = "github:NixOS/nixpkgs/nixos-25.05";
 
-    nixpkgs-2511.url = "github:NixOS/nixpkgs/nixos-25.11";
+    # FIXME: Geniuses at CUPS didn’t test the most common UX before releasing… See:
+    # <https://github.com/OpenPrinting/cups/issues/1429>
+    # <https://github.com/NixOS/nixpkgs/pull/468820>
+    #nixpkgs-2511.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs-2511.url = "github:NixOS/nixpkgs/c8cfcd6ccd422e41cc631a0b73ed4d5a925c393d"; # nixos-25.11 just before broken CUPS 2.4.15
 
     # Chromium, yt-dlp etc.
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
