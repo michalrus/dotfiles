@@ -24,7 +24,7 @@ let
       rev = "b6d7d5b877e9d530424df9cde01e3e34c9fcbf82";
       hash = "sha256-cZyLs6EKiWJ2r+ky7TTYXyikF+HNGnlurzYQpEpG75c=";
     };
-    patched = pkgs.runCommandNoCC "${original.name}-patched" {} ''
+    patched = pkgs.runCommand "${original.name}-patched" {} ''
       cp -r ${original} $out
       chmod -R +w $out
       cd $out

@@ -47,7 +47,7 @@ in
       WorkingDirectory = dataDir;
       ExecStart = let
         # Make the P2P code less chatty in logs:
-        configs = pkgs.runCommandNoCC "cardano-node-configs" {
+        configs = pkgs.runCommand "cardano-node-configs" {
           buildInputs = with pkgs; [ jq ];
         } ''
           cp -r ${cardano-node-configs} $out
