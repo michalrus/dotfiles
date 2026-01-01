@@ -17,9 +17,6 @@ in
     octave
     pandoc
     protobuf
-    rust-analyzer
-    cargo-nextest
-    rustup
     sqlint
     (texlive.withPackages (ps: [
       flake.packages.${pkgs.stdenv.hostPlatform.system}.gregorio.forTexlive

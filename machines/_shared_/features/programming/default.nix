@@ -8,6 +8,11 @@
       nixd
       fpc
       ghc
+      rustc
+      rustfmt
+      rust-analyzer
+      cargo
+      cargo-nextest
     ];
   }];
 }
