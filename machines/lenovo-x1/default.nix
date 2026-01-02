@@ -50,6 +50,7 @@ nixpkgs.lib.nixosSystem {
     ../_shared_/features/chromium
     ../_shared_/features/games
     ../_shared_/features/wine
+    ../_shared_/features/bubblewrap
 
     ./features/android
     ./features/bluetooth
