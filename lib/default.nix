@@ -1,6 +1,6 @@
 { inputs }:
 
-let inherit (inputs.nixpkgs-2505) lib; in
+let inherit (inputs.nixpkgs-2511) lib; in
 
 rec {
 
