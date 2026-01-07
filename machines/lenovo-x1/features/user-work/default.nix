@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, flake, ... }:
 
 let
   unfree = import pkgs.path { inherit (pkgs.stdenv.hostPlatform) system; config.allowUnfree = true; };
@@ -26,6 +26,21 @@ in
       ];
     };
   };
+
+  home-manager.users.mw.imports = [{
+    services.gnome-keyring = {
+      enable = true;
+      components = [ "pkcs11" "secrets" ]; # provides org.freedesktop.secrets for `jump-cloud-password-manager`
+    };
+    home.file.".config/hypr/hyprland.conf".text = ''
+      exec-once = systemctl --user start gnome-keyring.service
+    '';
+    home.packages = [
+      flake.packages.${pkgs.stdenv.hostPlatform.system}.jumpcloud-password-manager
+      pkgs.seahorse # to manage `gnome-keyring` – you have to create a "login" password keyring in it
+      pkgs.gcr # provides `org.gnome.keyring.SystemPrompter` + `gcr-prompter`
+    ];
+  }];
 
   #services.firefox-autocomplete.userPorts.mw = 9115;
 
