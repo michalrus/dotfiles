@@ -9,7 +9,7 @@
       uid = 31337;
 
       description = "Michal Rus";
-      extraGroups = [ "wheel" "audio" "nonet" "scanner" "networkmanager" "wireshark" "cdrom" "video" ];
+      extraGroups = [ "wheel" "audio" "nonet" "scanner" "networkmanager" "wireshark" "cdrom" "video" "dialout" /* for UART */ ];
       dotfiles-old.profiles = [ "base" "michalrus/base" /*"git-annex"*/ "michalrus/personal" ];
       packages = with pkgs; [
         # (hardened-firefox.makeWrapped {
