@@ -45,12 +45,12 @@
   xdg-utils,
   xorg,
 }:
-stdenv.mkDerivation {
+stdenv.mkDerivation rec {
   pname = "jumpcloud-password-manager";
   version = "3.3.34";
 
   src = fetchurl {
-    url = "https://cdn.pwm.jumpcloud.com/DA/release/x64/JumpCloud-Password-Manager-latest.deb";
+    url = "https://cdn.pwm.jumpcloud.com/DA/release/x64/JumpCloud-Password-Manager-${version}.deb";
     hash = "sha256-nTCvtrorLy2056zBkpcQXpJEGH5uoKkWcyTcmT0SJRU=";
   };
 
