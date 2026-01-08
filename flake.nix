@@ -136,6 +136,7 @@
       gregorio = inputs.nixpkgs-2411.legacyPackages.${system}.callPackage ./packages/gregorio {};
       hunspell-dictionaries-chromium-pl = callPackage ./packages/hunspell-dictionaries-chromium-pl {};
       hyprland-screenshot = callPackage ./packages/hyprland-screenshot {};
+      jumpcloud-password-manager = callPackage ./packages/jumpcloud-password-manager {};
       lv2-cpp-tools = callPackage ./packages/lv2-cpp-tools {};
       on-vt-switch = callPackage ./packages/on-vt-switch {};
       naps2 = callPackage ./packages/naps2 {};
