@@ -148,6 +148,7 @@
       transcribe = callPackage ./packages/transcribe {};
       wayland-logout = callPackage ./packages/wayland-logout {};
       wayland-unicode-input = callPackage ./packages/wayland-unicode-input {};
+      wayland-emoji-input = callPackage ./packages/wayland-unicode-input { onlyEmoji = true; };
       wayland-random-input = callPackage ./packages/wayland-random-input {};
       # FIXME:
       vftool = inputs.nixpkgs-2311.legacyPackages.${system}.callPackage ./packages/vftool { inherit (inputs) nixpkgs-macos-sdk-13; };

@@ -1,4 +1,4 @@
-{ lib, fetchurl, writeShellApplication, python3, runCommand, fuzzel, wtype, wl-clipboard, writeText
+{ lib, fetchurl, writeShellApplication, jq, python3, runCommand, fuzzel, wtype, wl-clipboard, writeText
 
 , onlyEmoji ? false
 
@@ -6,24 +6,24 @@
 
 let
 
-  raw = fetchurl {
+  raw-unicode = fetchurl {
     url = "https://www.unicode.org/Public/UNIDATA/UnicodeData.txt";
     hash = "sha256-gG6a7WUDcZfx7IXhK+bozYcPxWCLTeD//ZkPaJ83anM=";
   };
 
-  table = runCommand "unicode-table" {} ''
-    ${lib.getExe python3} <${raw} ${writeText "transform.py" ''
+  raw-emoji = fetchurl {
+    url = "https://github.com/muan/emojilib/raw/refs/tags/v4.0.2/dist/emoji-en-US.json";
+    hash = "sha256-PjrIs6OhLkFIV++80GwcdPtFeEjlZezeM3LP+Ca/wDI=";
+  };
+
+  table-unicode = runCommand "unicode-table" {} ''
+    ${lib.getExe python3} <${raw-unicode} ${writeText "transform.py" ''
       import sys
-      emojiLo = int('1F100', 16)
-      emojiHi = int('1FAFF', 16)
-      onlyEmoji = ${if onlyEmoji then "True" else "False"}
       for line in sys.stdin:
         try:
           fields = line.split(';')
           codepoint = fields[0]
           codepoint_int = int(codepoint, 16)
-          if onlyEmoji and (codepoint_int < emojiLo or codepoint_int > emojiHi):
-            continue
           name = fields[1].lower()
           altname = fields[10]
           rune = chr(codepoint_int)
@@ -33,6 +33,16 @@ let
         except UnicodeEncodeError as e:
           continue
     ''} >$out
+  '';
+
+  table-emoji = runCommand "emoji-table" {
+    nativeBuildInputs = [jq];
+  } ''
+    jq --raw-output '
+        . | to_entries | .[] | .key + "\t" + (.value | join(" · ") | sub("_"; " "; "g"))
+      ' \
+      <${raw-emoji} \
+      >$out
   '';
 
   exeName = "wayland-unicode-input${if onlyEmoji then "-emoji" else ""}";
@@ -48,26 +58,17 @@ writeShellApplication {
     cacheDir="$HOME"/.cache/wayland-unicode-input
     mkdir -p "$cacheDir"
 
-    selected=$(fuzzel <${table} --dmenu --width=100 --cache="$cacheDir"/${if onlyEmoji then "emoji" else "default"})
+    selected=$(
+      fuzzel \
+        <${if onlyEmoji then table-emoji else table-unicode} \
+        --dmenu --width=100 \
+        --cache="$cacheDir"/${if onlyEmoji then "emoji" else "default"} \
+        --accept-nth=1 \
+      | tr -d '\n'
+    )
 
-    # This substring() needs to be multibyte-aware:
-    character="''${selected:0:1}"
-
-    # `wtype` doesn’t work directly with Chromium, see
-    # <https://github.com/atx/wtype/issues/31>, so let’s go via `wl-clipboard`:
-    saved_clipboard=$(mktemp -p "$XDG_RUNTIME_DIR")
-    trap 'rm "$saved_clipboard"' EXIT
-
-    do_restore=1
-    wl-paste --no-newline >"$saved_clipboard" || do_restore=
-
-    wl-copy --trim-newline <<<"$character"
-    wtype -M shift -P insert -m shift
-
-    if [ -n "$do_restore" ] ; then
-      wl-copy <"$saved_clipboard"
-    fi
+    printf '%s' "''${selected}" | wtype -
   '';
-  derivationArgs.meta.description = "Takes a screenshot on Hyprland (has window selection)";
+  derivationArgs.meta.description = "${if onlyEmoji then "Emoji" else "Unicode"} selector on Wayland";
   derivationArgs.meta.platforms = lib.platforms.linux;
 }

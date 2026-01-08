@@ -65,9 +65,9 @@ let inherit (config.networking) hostName; in
     home.packages = [
       flake.packages.${pkgs.stdenv.hostPlatform.system}.hyprland-screenshot
       flake.packages.${pkgs.stdenv.hostPlatform.system}.wayland-logout
-      (flake.packages.${pkgs.stdenv.hostPlatform.system}.wayland-unicode-input.override { onlyEmoji = false; })
-      (flake.packages.${pkgs.stdenv.hostPlatform.system}.wayland-unicode-input.override { onlyEmoji = true;  })
-      (flake.packages.${pkgs.stdenv.hostPlatform.system}.wayland-random-input)
+      flake.packages.${pkgs.stdenv.hostPlatform.system}.wayland-unicode-input
+      flake.packages.${pkgs.stdenv.hostPlatform.system}.wayland-emoji-input
+      flake.packages.${pkgs.stdenv.hostPlatform.system}.wayland-random-input
       pkgs.swaynotificationcenter
       pkgs.hypridle
       pkgs.wtype
