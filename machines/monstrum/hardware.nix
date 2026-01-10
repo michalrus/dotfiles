@@ -85,7 +85,18 @@
   fileSystems."/var/home/m/Torrents"  = { device = "/var/media/torrents"; fsType = "none"; options = ["bind" "ro"]; };
   fileSystems."/var/home/km/Torrents" = { device = "/var/media/torrents"; fsType = "none"; options = ["bind" "ro"]; };
 
+  boot.kernel.sysctl."vm.swappiness" = 60; # Let’s try the default 60 with `zramSwap`.
   swapDevices = [ ];
+  zramSwap = {
+    enable = true;
+    memoryPercent = 50;
+    algorithm = "zstd";
+  };
+  systemd.oomd = {
+    enable = true;
+    enableRootSlice = true; # like Fedora
+    enableUserSlices = true; # like Fedora
+  };
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's

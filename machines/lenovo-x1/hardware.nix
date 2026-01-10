@@ -37,10 +37,20 @@
 
   services.smartd.enable = true;
 
-  boot.kernel.sysctl."vm.swappiness" = lib.mkForce 1; # Let’s try this.
+  boot.kernel.sysctl."vm.swappiness" = 60; # Let’s try the default 60 with `zramSwap`.
   swapDevices = [
     { device = "/dev/disk/by-uuid/5e5256ed-b8a7-48c3-b815-d85792d621d6"; }
   ];
+  zramSwap = {
+    enable = true;
+    memoryPercent = 50;
+    algorithm = "zstd";
+  };
+  systemd.oomd = {
+    enable = true;
+    enableRootSlice = true; # like Fedora
+    enableUserSlices = true; # like Fedora
+  };
 
   boot.initrd.luks.devices = {
     nvme-crypt0 = {

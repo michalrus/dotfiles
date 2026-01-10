@@ -9,7 +9,10 @@ nixpkgs.lib.nixosSystem {
   system = "x86_64-linux";
   modules = [
     { _module.args = { inherit flake; }; }
+    ./hardware.nix
+
     { networking.hostName = "michalrus_com"; }
+    { time.timeZone = "UTC"; }
 
     flake.inputs.agenix.nixosModules.default
 
