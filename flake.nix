@@ -123,6 +123,7 @@
       inherit (inputs.nixpkgs-2511.legacyPackages.${system}) callPackage;
     in inputs.self.lib.filterSystem system rec {
       accuradio = callPackage ./packages/accuradio {};
+      amscope-amlite = callPackage ./packages/amscope-amlite {};
       autotalent = callPackage ./packages/autotalent {};
       cp2104-gpio = callPackage ./packages/cp2104-gpio {};
       dmenu-is-rofi = callPackage ./packages/dmenu-is-rofi {};
