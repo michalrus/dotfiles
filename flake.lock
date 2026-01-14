@@ -6,7 +6,7 @@
           "nix-darwin-2511"
         ],
         "home-manager": [
-          "home-manager-2305"
+          "home-manager-2511"
         ],
         "nixpkgs": [
           "nixpkgs-2511"
@@ -67,111 +67,6 @@
         "type": "github"
       }
     },
-    "home-manager-2305": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs-2305"
-        ]
-      },
-      "locked": {
-        "lastModified": 1687871164,
-        "narHash": "sha256-bBFlPthuYX322xOlpJvkjUBz0C+MOBjZdDOOJJ+G2jU=",
-        "owner": "nix-community",
-        "repo": "home-manager",
-        "rev": "07c347bb50994691d7b0095f45ebd8838cf6bc38",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "ref": "release-23.05",
-        "repo": "home-manager",
-        "type": "github"
-      }
-    },
-    "home-manager-2311": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs-2311"
-        ]
-      },
-      "locked": {
-        "lastModified": 1712386041,
-        "narHash": "sha256-dA82pOMQNnCJMAsPG7AXG35VmCSMZsJHTFlTHizpKWQ=",
-        "owner": "nix-community",
-        "repo": "home-manager",
-        "rev": "d6bb9f934f2870e5cbc5b94c79e9db22246141ff",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "ref": "release-23.11",
-        "repo": "home-manager",
-        "type": "github"
-      }
-    },
-    "home-manager-2405": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs-2405"
-        ]
-      },
-      "locked": {
-        "lastModified": 1720042825,
-        "narHash": "sha256-A0vrUB6x82/jvf17qPCpxaM+ulJnD8YZwH9Ci0BsAzE=",
-        "owner": "nix-community",
-        "repo": "home-manager",
-        "rev": "e1391fb22e18a36f57e6999c7a9f966dc80ac073",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "ref": "release-24.05",
-        "repo": "home-manager",
-        "type": "github"
-      }
-    },
-    "home-manager-2411": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs-2411"
-        ]
-      },
-      "locked": {
-        "lastModified": 1739757849,
-        "narHash": "sha256-Gs076ot1YuAAsYVcyidLKUMIc4ooOaRGO0PqTY7sBzA=",
-        "owner": "nix-community",
-        "repo": "home-manager",
-        "rev": "9d3d080aec2a35e05a15cedd281c2384767c2cfe",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "ref": "release-24.11",
-        "repo": "home-manager",
-        "type": "github"
-      }
-    },
-    "home-manager-2505": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs-2505"
-        ]
-      },
-      "locked": {
-        "lastModified": 1748665073,
-        "narHash": "sha256-RMhjnPKWtCoIIHiuR9QKD7xfsKb3agxzMfJY8V9MOew=",
-        "owner": "nix-community",
-        "repo": "home-manager",
-        "rev": "282e1e029cb6ab4811114fc85110613d72771dea",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "ref": "release-25.05",
-        "repo": "home-manager",
-        "type": "github"
-      }
-    },
     "home-manager-2511": {
       "inputs": {
         "nixpkgs": [
@@ -203,27 +98,6 @@
       "original": {
         "type": "file",
         "url": "https://github.com/StevenBlack/hosts/raw/master/alternates/fakenews-gambling/hosts"
-      }
-    },
-    "nix-darwin-2311": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs-2311"
-        ]
-      },
-      "locked": {
-        "lastModified": 1711763326,
-        "narHash": "sha256-sXcesZWKXFlEQ8oyGHnfk4xc9f2Ip0X/+YZOq3sKviI=",
-        "owner": "lnl7",
-        "repo": "nix-darwin",
-        "rev": "36524adc31566655f2f4d55ad6b875fb5c1a4083",
-        "type": "github"
-      },
-      "original": {
-        "owner": "lnl7",
-        "ref": "master",
-        "repo": "nix-darwin",
-        "type": "github"
       }
     },
     "nix-darwin-2511": {
@@ -262,22 +136,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-2305": {
-      "locked": {
-        "lastModified": 1694937365,
-        "narHash": "sha256-iHZSGrb9gVpZRR4B2ishUN/1LRKWtSHZNO37C8z1SmA=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "5d017a8822e0907fb96f7700a319f9fe2434de02",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-23.05",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nixpkgs-2311": {
       "locked": {
         "lastModified": 1713145326,
@@ -294,22 +152,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-2405": {
-      "locked": {
-        "lastModified": 1724727824,
-        "narHash": "sha256-0XH9MJk54imJm+RHOLTUJ7e+ponLW00tw5ke4MTVa1Y=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "36bae45077667aff5720e5b3f1a5458f51cf0776",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-24.05",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nixpkgs-2411": {
       "locked": {
         "lastModified": 1739758141,
@@ -322,22 +164,6 @@
       "original": {
         "owner": "NixOS",
         "ref": "nixos-24.11",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs-2505": {
-      "locked": {
-        "lastModified": 1748889542,
-        "narHash": "sha256-Hb4iMhIbjX45GcrgOp3b8xnyli+ysRPqAgZ/LZgyT5k=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "10d7f8d34e5eb9c0f9a0485186c1ca691d2c5922",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-25.05",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -396,21 +222,12 @@
         "cloudflare-ips-v4": "cloudflare-ips-v4",
         "cloudflare-ips-v6": "cloudflare-ips-v6",
         "doom-emacs": "doom-emacs",
-        "home-manager-2305": "home-manager-2305",
-        "home-manager-2311": "home-manager-2311",
-        "home-manager-2405": "home-manager-2405",
-        "home-manager-2411": "home-manager-2411",
-        "home-manager-2505": "home-manager-2505",
         "home-manager-2511": "home-manager-2511",
         "malicious-hosts": "malicious-hosts",
-        "nix-darwin-2311": "nix-darwin-2311",
         "nix-darwin-2511": "nix-darwin-2511",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs-2305": "nixpkgs-2305",
         "nixpkgs-2311": "nixpkgs-2311",
-        "nixpkgs-2405": "nixpkgs-2405",
         "nixpkgs-2411": "nixpkgs-2411",
-        "nixpkgs-2505": "nixpkgs-2505",
         "nixpkgs-2511": "nixpkgs-2511",
         "nixpkgs-macos-sdk-13": "nixpkgs-macos-sdk-13",
         "nixpkgs-unstable": "nixpkgs-unstable",
