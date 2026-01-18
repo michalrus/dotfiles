@@ -10,6 +10,8 @@
     keyserver = "hkp://keyserver.ubuntu.com";
   };
 
+  # TODO: don’t re-export if it’s already set by OpenSSH
+
   home.sessionVariables = if pkgs.stdenv.isLinux then {
     SSH_AUTH_SOCK = "$HOME/.gnupg/S.gpg-agent.ssh";
   } else {};
