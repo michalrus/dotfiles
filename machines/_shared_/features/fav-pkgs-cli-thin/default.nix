@@ -46,6 +46,7 @@
     gnupg
     hdparm
     htop
+    btop
     httperf
     httrack
     hwinfo

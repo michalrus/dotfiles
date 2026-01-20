@@ -245,6 +245,7 @@ in {
   ];
 
   programs.htop.enable = true;
+  programs.btop.enable = true;
 
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
