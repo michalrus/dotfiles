@@ -25,6 +25,8 @@
 
     defutf8 on
 
+    truecolor on
+
     termcapinfo xterm*|xterm-256color|screen.xterm*|rxvt*  ti@:te@:XT:Km@:
   '';
 
