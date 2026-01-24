@@ -86,6 +86,7 @@ let inherit (config.networking) hostName; in
         '';
       })
       pkgs.hicolor-icon-theme # Papirus fallback
+      pkgs.wf-recorder
     ];
   })];
 
