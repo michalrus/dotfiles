@@ -28,6 +28,7 @@
       imagemagick
       flake.packages.${pkgs.stdenv.hostPlatform.system}.naps2
       flake.packages.${pkgs.stdenv.hostPlatform.system}.noise
+      hugin
       hunspell
       hunspellDicts.pl_PL
       hunspellDicts.en_US
