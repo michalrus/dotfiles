@@ -7,11 +7,12 @@ in
 {
   home.packages = [
     yt-dlp
+    pkgs.python3Packages.subliminal
   ];
 
   programs.mpv = {
     enable = true;
-    scripts = with pkgs.mpvScripts; [ mpris ];
+    scripts = with pkgs.mpvScripts; [ mpris thumbnail autosub easycrop acompressor ];
   };
 
   # Streaming only audio:
@@ -50,6 +51,9 @@ in
   '';
 
   home.file.".config/mpv/mpv.conf".text = ''
+    # for `mpvScripts.thumbnail`
+    osc=no
+
     volume-max=400.0
     audio-channels=stereo
     osd-fractions=yes
