@@ -96,6 +96,10 @@ nixpkgs.lib.nixosSystem {
       environment.systemPackages = [ flake.packages.${pkgs.stdenv.hostPlatform.system}.accuradio ];
     })
 
+    ({ pkgs, ... }: {
+      environment.systemPackages = with pkgs; [ wayvnc ];
+    })
+
     ({ config, ... }: {
       services.openssh.settings.PrintMotd = true;
       environment.etc."motd".text = let
