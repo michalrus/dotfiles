@@ -13,6 +13,10 @@
       rust-analyzer
       cargo
       cargo-nextest
+      flake.packages.${pkgs.stdenv.hostPlatform.system}.opencode-vm
     ];
   }];
+
+  # For `opencode-vm` above:
+  programs.fuse.userAllowOther = true;
 }

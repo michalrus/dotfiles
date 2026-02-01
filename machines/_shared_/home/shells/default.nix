@@ -207,28 +207,45 @@ in {
     truncation_length = 3
     fish_style_pwd_dir_length = 1
 
-    [git_branch]
-    always_show_remote = true
-    format = '[$branch(:$remote_name)]($style)'
-    truncation_length = 25
-    truncation_symbol = '…${darwinSpace}'   # FIXME: darwinSpace doesn’t work here – what do?
-    style = 'cyan'
+    ${if config.home.sessionVariables ? STARSHIP_NO_GIT_INTEGRATION then ''
+      [git_branch]
+      disabled = true
 
-    [git_commit]
-    format = '[$hash$tag]($style)'
-    style = 'cyan'
-    commit_hash_length = 11
+      [git_commit]
+      disabled = true
 
-    [git_state]
-    format = ' [$state( $progress_current/$progress_total)]($style)'
+      [git_state]
+      disabled = true
 
-    [git_status]
-    format = '( [$all_status$ahead_behind$ahead_count]($style))'
-    up_to_date = ""
-    ahead = '⇡${darwinSpace}'
-    behind = '⇣${darwinSpace}'
-    diverged = '⇡${darwinSpace}$ahead_count⇣${darwinSpace}$behind_count'
-    deleted = '×'
+      [git_metrics]
+      disabled = true
+
+      [git_status]
+      disabled = true
+    '' else ''
+      [git_branch]
+      always_show_remote = true
+      format = '[$branch(:$remote_name)]($style)'
+      truncation_length = 25
+      truncation_symbol = '…${darwinSpace}'   # FIXME: darwinSpace doesn’t work here – what do?
+      style = 'cyan'
+
+      [git_commit]
+      format = '[$hash$tag]($style)'
+      style = 'cyan'
+      commit_hash_length = 11
+
+      [git_state]
+      format = ' [$state( $progress_current/$progress_total)]($style)'
+
+      [git_status]
+      format = '( [$all_status$ahead_behind$ahead_count]($style))'
+      up_to_date = ""
+      ahead = '⇡${darwinSpace}'
+      behind = '⇣${darwinSpace}'
+      diverged = '⇡${darwinSpace}$ahead_count⇣${darwinSpace}$behind_count'
+      deleted = '×'
+    ''}
 
     [nix_shell]
     symbol = 'nix'
