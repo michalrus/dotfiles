@@ -4,6 +4,21 @@
   services.udisks2.enable = true;
 
   services.playerctld.enable = true;
+  # Sometimes, `playerctld` segfaults, see
+  # <https://github.com/altdesktop/playerctl/issues/339>, and
+  # <https://github.com/altdesktop/playerctl/pull/349>.
+  systemd.user.services.playerctld.serviceConfig = {
+    Restart = "always";
+    RestartSec = 1;
+  };
+  services.playerctld.package = pkgs.playerctl.overrideAttrs (old: {
+    patches = (old.patches or []) ++ [
+      (pkgs.fetchurl {
+        url = "https://github.com/altdesktop/playerctl/pull/349.diff";
+        hash = "sha256-GJpmwvGKzOGgYkNDdx4heueAHIQ+R7jCjWQy2ouTXVU=";
+      })
+    ];
+  });
 
   home-manager.sharedModules = [{
     home.packages = with pkgs; [
