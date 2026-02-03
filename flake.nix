@@ -136,6 +136,7 @@
       jumpcloud-password-manager = callPackage ./packages/jumpcloud-password-manager {};
       lv2-cpp-tools = callPackage ./packages/lv2-cpp-tools {};
       opencode-vm = callPackage ./packages/opencode-vm { nixpkgs = inputs.nixpkgs-2511; nixpkgs-unstable = inputs.nixpkgs-unstable; home-manager = inputs.home-manager-2511; };
+      opencode-bwrap = callPackage ./packages/opencode-bwrap { nixpkgs-unstable = inputs.nixpkgs-unstable; };
       on-vt-switch = callPackage ./packages/on-vt-switch {};
       naps2 = callPackage ./packages/naps2 {};
       noise = callPackage ./packages/noise {};

@@ -14,6 +14,7 @@
       cargo
       cargo-nextest
       flake.packages.${pkgs.stdenv.hostPlatform.system}.opencode-vm
+      flake.packages.${pkgs.stdenv.hostPlatform.system}.opencode-bwrap
     ];
   }];
 
