@@ -28,16 +28,6 @@
       UserKnownHostsFile ~/.ssh/known_hosts.d/michalrus.com
       User m
 
-    Host opencode-vm
-      Hostname 127.0.0.1
-      Port 2221
-      HostKeyAlias opencode-vm
-      UserKnownHostsFile /dev/null
-      StrictHostKeyChecking no
-      User root
-      IdentitiesOnly yes
-      IdentityFile ~/.ssh/id_ed25519-opencode-vm
-
     Host annex
       Hostname michalrus.com
       HostKeyAlias michalrus.com
