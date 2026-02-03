@@ -14,6 +14,15 @@
       cargo
       cargo-nextest
       flake.packages.${pkgs.stdenv.hostPlatform.system}.opencode-bwrap
+      delta
+      fd
+      gh
+      httpie # HTTP requests
+      jq
+      shellcheck
+      shfmt
+      xh # HTTP requests
+      yq # jq for YAML
     ];
   }];
 }

@@ -94,6 +94,7 @@
     strace
     stress-ng
     tcpdump
+    tree
     tunctl
     unixtools.xxd
     unzip
