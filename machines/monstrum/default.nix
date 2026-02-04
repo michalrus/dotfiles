@@ -85,6 +85,15 @@ nixpkgs.lib.nixosSystem {
       };
     }
 
+    {
+      services.udev.extraHwdb = ''
+        # Flirc USB (common: 20A0:0006)
+        evdev:input:b0003v20A0p0006*
+          KEYBOARD_KEY_000c00b0=playcd
+          KEYBOARD_KEY_000c00b1=pausecd
+      '';
+    }
+
     ({ pkgs, ... }: {
       services.pipewire = {
         enable = true;
