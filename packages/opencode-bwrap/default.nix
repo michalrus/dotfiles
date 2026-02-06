@@ -134,6 +134,8 @@ let
         --ro-bind /etc/profiles/per-user/"$USER" /etc/profiles/per-user/"$USER"
         --ro-bind /etc/static/ssl /etc/static/ssl
         --ro-bind /etc/ssl /etc/ssl
+        --ro-bind /etc/static/nix /etc/static/nix
+        --ro-bind /etc/nix /etc/nix
         --ro-bind /etc/static/terminfo /etc/static/terminfo
         --ro-bind /etc/terminfo /etc/terminfo
         --ro-bind /bin/sh /bin/sh
