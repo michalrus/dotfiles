@@ -66,6 +66,7 @@
     lshw
     lsof
     ltrace
+    lz4
     (if lib.versionAtLeast lib.version "23.04" then man-db else man_db)
     (if lib.versionAtLeast lib.version "23.04" then man-pages else manpages)
     mkpasswd
