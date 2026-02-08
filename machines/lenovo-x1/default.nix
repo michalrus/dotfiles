@@ -52,6 +52,7 @@ nixpkgs.lib.nixosSystem {
     ../_shared_/features/wine
     ../_shared_/features/bubblewrap
     ../_shared_/features/amscope-amlite
+    ../_shared_/features/logitech-mouse
 
     ./features/android
     ./features/bluetooth

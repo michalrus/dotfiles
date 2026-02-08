@@ -41,6 +41,7 @@ nixpkgs.lib.nixosSystem {
     ../_shared_/features/games
     ../_shared_/features/wine
     ../_shared_/features/bubblewrap
+    ../_shared_/features/logitech-mouse
 
     ./features/wireguard-michalrus
     ../_shared_/features/nginx-reasonable
