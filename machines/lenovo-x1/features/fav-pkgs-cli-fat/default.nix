@@ -17,6 +17,8 @@
     normalize
     pdfgrep
     poppler-utils
+    unpaper
+    img2pdf
     python3Packages.livereload
     shared-mime-info
     shellcheck
