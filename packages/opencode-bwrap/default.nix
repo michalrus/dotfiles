@@ -162,6 +162,11 @@ let
         bwrap_opts+=( --bind "$sandbox_home"/"$f" "$HOME"/"$f" )
       done
 
+      bwrap_opts+=(
+        --ro-bind "${./AGENTS.md}" "$HOME"/.config/opencode/AGENTS.md
+        --ro-bind "${./opencode.json}" "$HOME"/.config/opencode/opencode.json
+      )
+
       rw_opts=()
       ro_git_opts=()
 
