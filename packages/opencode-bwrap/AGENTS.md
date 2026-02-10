@@ -24,7 +24,7 @@ This file lists the CLI tools available on PATH and the tools I prefer to use. I
 
 After editing program source files, I must run the language-appropriate formatter and linter and fix issues until the tools pass cleanly. This also applies to docs and config files covered by the examples below.
 
-Mandatory checklist after any edit:
+Mandatory checklist after edits and before returning the next response to the user:
 
 - Run formatter(s)
 - Run linter(s)
