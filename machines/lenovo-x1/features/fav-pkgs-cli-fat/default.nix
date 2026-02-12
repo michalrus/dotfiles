@@ -21,7 +21,6 @@
     img2pdf
     python3Packages.livereload
     shared-mime-info
-    shellcheck
     shntool  # view and/or modify WAVE data and properties
     tesseract  # OCR
     x264
