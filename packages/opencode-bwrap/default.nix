@@ -150,6 +150,7 @@ let
         --setenv LANG "$LANG"
         --setenv LOCALE_ARCHIVE "$LOCALE_ARCHIVE"
         --setenv LOCALE_ARCHIVE_2_27 "$LOCALE_ARCHIVE_2_27"
+        --setenv OPENCODE_DISABLE_LSP_DOWNLOAD "true"
       )
 
       for d in "''${persist_dirs[@]}" ; do

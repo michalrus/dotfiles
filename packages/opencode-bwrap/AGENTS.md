@@ -4,7 +4,7 @@ This file lists the CLI tools available on PATH and the tools I prefer to use. I
 
 ## Preferred tools (available)
 
-- VCS: git
+- VCS: git, gh
 - Search: rg, fd, tree
 - Runtimes/build: python3, rustc, cargo
 - Data/format: jq, yq, sqlite3
@@ -19,6 +19,7 @@ This file lists the CLI tools available on PATH and the tools I prefer to use. I
 - I will ask the user to install any missing Python packages because the system is NixOS, and I will not attempt pip installs unless explicitly asked.
 - If project-specific tooling is required, I will be run inside a Nix devshell that provides it (the user will enter it first, then run `opencode` inside).
 - Available Python packages: numpy, cv2 (OpenCV), matplotlib, scipy, bs4 (BeautifulSoup4).
+- The GitHub CLI (`gh`) is available for repository search, issues, and PR workflows.
 
 ## Linting and formatting (required)
 
