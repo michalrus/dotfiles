@@ -6,6 +6,7 @@
       git-filter-repo
       (python3.withPackages (p: with p; [ scipy geopy python-lsp-server requests pylint matplotlib tkinter beautifulsoup4 aiohttp humanize protobuf lz4 opencv4 ]))
       nixd
+      alejandra
       fpc
       ghc
       gnumake
