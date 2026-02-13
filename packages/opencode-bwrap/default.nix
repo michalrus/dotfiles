@@ -4,6 +4,23 @@ let
 
   unsafe = nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.opencode;
 
+  config = {
+    "$schema" = "https://opencode.ai/config.json";
+    share = "disabled";
+    theme = "solarized";
+    lsp = false;
+    tui = {
+      diff_style = "stacked";
+    };
+    autoupdate = false;
+    experimental = {
+      disable_paste_summary = true;
+    };
+    instructions = [
+      ./preamble.md
+    ];
+  };
+
   bashrc = pkgs.writeText "opecode-bashrc" ''
     # Commands that should be applied only for interactive shells.
     [[ $- == *i* ]] || return
@@ -151,6 +168,7 @@ let
         --setenv LOCALE_ARCHIVE "$LOCALE_ARCHIVE"
         --setenv LOCALE_ARCHIVE_2_27 "$LOCALE_ARCHIVE_2_27"
         --setenv OPENCODE_DISABLE_LSP_DOWNLOAD "true"
+        --setenv OPENCODE_CONFIG ${pkgs.writeText "config.json" (builtins.toJSON config)}
       )
 
       for d in "''${persist_dirs[@]}" ; do
@@ -162,11 +180,6 @@ let
         touch "$sandbox_home"/"$f"
         bwrap_opts+=( --bind "$sandbox_home"/"$f" "$HOME"/"$f" )
       done
-
-      bwrap_opts+=(
-        --ro-bind "${./AGENTS.md}" "$HOME"/.config/opencode/AGENTS.md
-        --ro-bind "${./opencode.json}" "$HOME"/.config/opencode/opencode.json
-      )
 
       rw_opts=()
       ro_git_opts=()
