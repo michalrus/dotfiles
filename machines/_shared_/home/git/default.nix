@@ -3,6 +3,35 @@
 {
   programs.git = {
     enable = true;
+    ignores = [
+      # Emacs temporary files
+      "flycheck_*"
+      "*~"
+      ''\#*\#''
+      ''.\#*''
+
+      # QEMU disks
+      "*.qcow2"
+
+      # Python
+      "__pycache__/"
+      "*.py[codz]"
+      "*$py.class"
+
+      # Rust (rustfmt)
+      "*.rs.bk"
+
+      # Linux
+      ".fuse_hidden*"
+      ".nfs*"
+      "nohup.out"
+
+      # macOS
+      ".DS_Store"
+
+      # Agents
+      ".serena/"
+    ];
     settings.alias = rec {
       s = "status";
       d = "diff";
