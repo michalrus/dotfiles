@@ -1,7 +1,9 @@
-{ pkgs, lib, nixpkgs-unstable, serena }:
-
-let
-
+{
+  pkgs,
+  lib,
+  nixpkgs-unstable,
+  serena,
+}: let
   unsafe = nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.opencode;
 
   config = {
@@ -36,9 +38,15 @@ let
 
     PS1=$"\n"'\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 
+    stty -ixon       # turn off C-s and C-q
+    stty susp undef  # turn off C-z
+
     shopt -s histappend
-    export HISTCONTROL=ignoredups
+    export HISTCONTROL=ignoredups:ignorespace
     PROMPT_COMMAND='history -a; history -n'
+
+    bind '"\e[A": history-search-backward'
+    bind '"\e[B": history-search-forward'
 
     eval "$(${lib.getExe pkgs.direnv} hook bash)"
   '';
@@ -53,8 +61,8 @@ let
   bwrapTiocstiFilter = pkgs.stdenv.mkDerivation rec {
     name = "bwrap-tiocsti-seccomp-filter";
     dontUnpack = true;
-    nativeBuildInputs = [ pkgs.pkg-config ];
-    buildInputs = [ pkgs.libseccomp ];
+    nativeBuildInputs = [pkgs.pkg-config];
+    buildInputs = [pkgs.libseccomp];
     src = pkgs.writeText "gen.c" ''
       #include <errno.h>
       #include <asm/termbits.h>  // TIOCSTI
@@ -112,7 +120,7 @@ let
 
   safe = pkgs.writeShellApplication {
     name = "opencode-bwrap";
-    runtimeInputs = with pkgs; [ coreutils findutils ];
+    runtimeInputs = with pkgs; [coreutils findutils];
     text = ''
       data_dir="$HOME"/.local/share/opencode-bwrap
 
@@ -168,9 +176,9 @@ let
         --ro-bind "${pkgs.nix-direnv}/share/nix-direnv/direnvrc" "$HOME"/.config/direnv/lib/nix-direnv.sh
         --setenv HOME "$HOME"
         --setenv PATH ${lib.makeBinPath [
-          unsafe
-          serena
-        ]}:/etc/profiles/per-user/"$USER"/bin:/run/current-system/sw/bin
+        unsafe
+        serena
+      ]}:/etc/profiles/per-user/"$USER"/bin:/run/current-system/sw/bin
         --setenv USER "$USER"
         --setenv TERM "$TERM"
         --setenv TERMINFO_DIRS /etc/profiles/per-user/"$USER"/share/terminfo:/run/current-system/sw/share/terminfo
@@ -236,7 +244,5 @@ let
     derivationArgs.meta.description = "Enters a (multi-)project sandbox to run `opencode` inside; `.git` entries are mounted read-only.";
     derivationArgs.meta.platforms = lib.platforms.linux;
   };
-
 in
-
-safe
+  safe
