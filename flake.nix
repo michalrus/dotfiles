@@ -62,6 +62,11 @@
 
     cloudflare-ips-v4 = { url = "https://www.cloudflare.com/ips-v4"; flake = false; };
     cloudflare-ips-v6 = { url = "https://www.cloudflare.com/ips-v6"; flake = false; };
+
+    serena = {
+      url = "github:oraios/serena/main";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
 
   outputs = inputs: {
@@ -135,7 +140,7 @@
       hyprland-screenshot = callPackage ./packages/hyprland-screenshot {};
       jumpcloud-password-manager = callPackage ./packages/jumpcloud-password-manager {};
       lv2-cpp-tools = callPackage ./packages/lv2-cpp-tools {};
-      opencode-bwrap = callPackage ./packages/opencode-bwrap { nixpkgs-unstable = inputs.nixpkgs-unstable; };
+      opencode-bwrap = callPackage ./packages/opencode-bwrap { nixpkgs-unstable = inputs.nixpkgs-unstable; serena = inputs.serena.packages.${system}.default; };
       on-vt-switch = callPackage ./packages/on-vt-switch {};
       naps2 = callPackage ./packages/naps2 {};
       noise = callPackage ./packages/noise {};
