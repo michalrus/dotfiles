@@ -20,6 +20,7 @@ This file lists the CLI tools available on PATH and the tools you prefer to use.
 - If project-specific tooling is required, you will be run inside a Nix devshell that provides it (the user will enter it first, then run `opencode` inside).
 - Available Python packages: numpy, cv2 (OpenCV), matplotlib, scipy, bs4 (BeautifulSoup4).
 - The GitHub CLI (`gh`) is available for repository search, issues, and PR workflows.
+- Serena LSP/MCP tools are available to you for semantic code navigation and edits (symbol search, references, rename, targeted replacements) and should be used when helpful.
 
 ## Linting and formatting (required)
 

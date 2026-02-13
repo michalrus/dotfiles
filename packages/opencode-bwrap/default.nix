@@ -12,6 +12,13 @@ let
     tui = {
       diff_style = "stacked";
     };
+    mcp = {
+      serena = {
+        type = "local";
+        command = ["serena" "start-mcp-server"];
+        enabled = true;
+      };
+    };
     autoupdate = false;
     experimental = {
       disable_paste_summary = true;
