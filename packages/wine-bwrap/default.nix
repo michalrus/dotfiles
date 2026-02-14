@@ -98,7 +98,7 @@
           --ro-bind /sys/block /sys/block
           --ro-bind /sys/class/block /sys/class/block
           --ro-bind /sys/dev/block /sys/dev/block
-          --ro-bind /run/udev /run/udev
+          # --ro-bind /run/udev /run/udev
           --ro-bind /run/dbus/system_bus_socket /run/dbus/system_bus_socket
           --setenv HOME "$HOME"
           --setenv USER "$USER"
