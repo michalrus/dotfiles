@@ -4,8 +4,6 @@
   shareNet ? true,
 }: let
   #
-  # TODO: 002c:err:winediag:getaddrinfo Failed to resolve your host name IP
-  #
   # TODO: 0170:err:winediag:ntlm_check_version ntlm_auth was not found. Make sure that ntlm_auth >= 3.0.25 is in your path. Usually, you can find it in the winbind package of your distribution.
   #
   # TODO: 00b0:err:ntoskrnl:ZwLoadDriver failed to create driver L"\\Registry\\Machine\\System\\CurrentControlSet\\Services\\winebth": c00000e5
@@ -98,7 +96,9 @@ in
         --ro-bind ${wineGeckoDir32} /opt/wine/gecko/wine-gecko-${wineGeckoVersion}-x86
         --ro-bind ${wineGeckoDir64} /opt/wine/gecko/wine-gecko-${wineGeckoVersion}-x86_64
         --bind "$wine_prefix" "$wine_prefix"
+        --hostname localhost
         --ro-bind /etc/resolv.conf /etc/resolv.conf
+        --ro-bind ${pkgs.writeText "etc-hosts" "127.0.0.1 localhost"} /etc/hosts
         --ro-bind /etc/static/ssl /etc/static/ssl
         --ro-bind /etc/ssl /etc/ssl
         --ro-bind /sys/block /sys/block
