@@ -1,8 +1,10 @@
-{ config, lib, pkgs, ... }:
+{ flake, config, lib, pkgs, ... }:
 
 {
 
   environment.systemPackages = with pkgs; [
+    flake.packages.${pkgs.stdenv.hostPlatform.system}.wine-bwrap
+    # FIXME: remove normal Wine from PATH?
     wineWowPackages.stableFull
     winetricks
   ];
