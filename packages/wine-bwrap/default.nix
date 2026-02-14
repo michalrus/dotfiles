@@ -5,29 +5,20 @@
 }: let
   wine = pkgs.wineWowPackages.stable;
   ntlm_auth = pkgs.samba;
-  wineMonoVersion = let
-    file = pkgs.runCommand "wine-mono-version.txt" {} ''
-      tar --wildcards -xOf ${wine.src} '*/dlls/mscoree/mscoree_private.h' \
-          | grep -aE 'WINE_MONO_VERSION' \
-            | sed -E 's/.*"([^"]+)".*/\1/' \
+  getWineAddonVersion = defineName: fileName: let
+    file = pkgs.runCommand "wine-${lib.toLower defineName}-version.txt" {} ''
+      tar --wildcards -xOf ${wine.src} '*/${fileName}' \
+          | sed -nE 's/.*${defineName}[[:space:]]+"([^"]+)".*/\1/p' \
+          | head -n 1 \
             > $out
     '';
     version = lib.fileContents file;
   in
     if version == ""
-    then throw "wine-bwrap: unable to detect WINE_MONO_VERSION from Wine source"
+    then throw "wine-bwrap: unable to detect ${defineName} from Wine source"
     else version;
-  wineGeckoVersion = let
-    file = pkgs.runCommand "wine-gecko-version.txt" {} ''
-      tar --wildcards -xOf ${wine.src} '*/dlls/appwiz.cpl/addons.c' \
-          | sed -nE 's/^#define GECKO_VERSION "([^"]+)".*/\1/p' \
-            > $out
-    '';
-    version = lib.fileContents file;
-  in
-    if version == ""
-    then throw "wine-bwrap: unable to detect GECKO_VERSION from Wine source"
-    else version;
+  wineMonoVersion = getWineAddonVersion "WINE_MONO_VERSION" "dlls/mscoree/mscoree_private.h";
+  wineGeckoVersion = getWineAddonVersion "GECKO_VERSION" "dlls/appwiz.cpl/addons.c";
   wineMonoDir = pkgs.fetchzip {
     name = "wine-mono-${wineMonoVersion}";
     url = "https://dl.winehq.org/wine/wine-mono/${wineMonoVersion}/wine-mono-${wineMonoVersion}-x86.tar.xz";
