@@ -3,9 +3,6 @@
   pkgs,
   shareNet ? false,
 }: let
-  #
-  # TODO: 00b0:err:ntoskrnl:ZwLoadDriver failed to create driver L"\\Registry\\Machine\\System\\CurrentControlSet\\Services\\winebth": c00000e5
-  #
   wine = pkgs.wineWowPackages.stable;
   ntlm_auth = pkgs.samba;
   wineMonoVersion = let
@@ -104,6 +101,7 @@ in
         --ro-bind /sys/class/block /sys/class/block
         --ro-bind /sys/dev/block /sys/dev/block
         --ro-bind /run/udev /run/udev
+        --ro-bind /run/dbus/system_bus_socket /run/dbus/system_bus_socket
         --setenv HOME "$HOME"
         --setenv USER "$USER"
         --setenv PATH ${lib.makeBinPath [wine pkgs.coreutils pkgs.iproute2 ntlm_auth]}
