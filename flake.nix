@@ -153,6 +153,7 @@
       wayland-unicode-input = callPackage ./packages/wayland-unicode-input {};
       wayland-emoji-input = callPackage ./packages/wayland-unicode-input { onlyEmoji = true; };
       wayland-random-input = callPackage ./packages/wayland-random-input {};
+      wine-bwrap = callPackage ./packages/wine-bwrap {};
       # FIXME:
       vftool = inputs.nixpkgs-2311.legacyPackages.${system}.callPackage ./packages/vftool { inherit (inputs) nixpkgs-macos-sdk-13; };
       vocproc = callPackage ./packages/vocproc { inherit lv2-cpp-tools; };
