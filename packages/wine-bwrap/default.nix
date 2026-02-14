@@ -1,14 +1,13 @@
 {
   lib,
   pkgs,
-  shareNet ? true,
+  shareNet ? false,
 }: let
-  #
-  # TODO: 0170:err:winediag:ntlm_check_version ntlm_auth was not found. Make sure that ntlm_auth >= 3.0.25 is in your path. Usually, you can find it in the winbind package of your distribution.
   #
   # TODO: 00b0:err:ntoskrnl:ZwLoadDriver failed to create driver L"\\Registry\\Machine\\System\\CurrentControlSet\\Services\\winebth": c00000e5
   #
   wine = pkgs.wineWowPackages.stable;
+  ntlm_auth = pkgs.samba;
   wineMonoVersion = let
     file = pkgs.runCommand "wine-mono-version.txt" {} ''
       tar --wildcards -xOf ${wine.src} '*/dlls/mscoree/mscoree_private.h' \
@@ -107,7 +106,7 @@ in
         --ro-bind /run/udev /run/udev
         --setenv HOME "$HOME"
         --setenv USER "$USER"
-        --setenv PATH ${lib.makeBinPath [wine pkgs.coreutils pkgs.iproute2]}
+        --setenv PATH ${lib.makeBinPath [wine pkgs.coreutils pkgs.iproute2 ntlm_auth]}
         --setenv WINEPREFIX "$wine_prefix"
         --setenv LANG "$LANG"
         --setenv LOCALE_ARCHIVE "$LOCALE_ARCHIVE"
