@@ -1,5 +1,20 @@
 { flake, config, lib, pkgs, ... }:
 
+let
+  treefmt-wrapper = flake.inputs.treefmt-nix.lib.mkWrapper pkgs {
+    projectRootFile = ".git";
+    programs = {
+      alejandra.enable = true; # Nix
+      prettier.enable = true;
+      ruff.enable = true; # Python
+      rufo.enable = true; # Ruby
+      rustfmt.enable = true;
+      shfmt.enable = true;
+      taplo.enable = true; # TOML
+      yamlfmt.enable = true;
+    };
+  };
+in
 {
   home-manager.sharedModules = [{
     home.packages = with pkgs; [
@@ -25,6 +40,7 @@
       jq
       shellcheck
       shfmt
+      treefmt-wrapper
       xh # HTTP requests
       yq # jq for YAML
       prettier

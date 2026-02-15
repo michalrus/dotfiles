@@ -50,6 +50,11 @@
     agenix.inputs.darwin.follows = "nix-darwin-2511";
     agenix.inputs.home-manager.follows = "home-manager-2511";
 
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs-2511";
+    };
+
     doom-emacs = { url = "github:doomemacs/doomemacs"; flake = false; };
 
     yt-dlp = { url = "github:yt-dlp/yt-dlp"; flake = false; };
