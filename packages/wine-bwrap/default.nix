@@ -3,7 +3,7 @@
   pkgs,
 }: let
   wine = pkgs.wineWowPackages.stable;
-  winetricks = pkgs.winetricks;
+  inherit (pkgs) winetricks;
   ntlm_auth = pkgs.samba;
   getWineAddonVersion = defineName: fileName: let
     file = pkgs.runCommand "wine-${lib.toLower defineName}-version.txt" {} ''
@@ -109,9 +109,22 @@
           --setenv LOCALE_ARCHIVE_2_27 "$LOCALE_ARCHIVE_2_27"
         )
 
-        if [ -n "''${WINEARCH:-}" ]; then
-          bwrap_opts+=( --setenv WINEARCH "$WINEARCH" )
-        fi
+        wine_env_vars=(
+          WINEARCH
+          WINEDEBUG
+          WINEDLLOVERRIDES
+          WINEESYNC
+          WINEFSYNC
+          WINESYNC
+          WINELOADER
+          WINESERVER
+        )
+
+        for wine_env_var in "''${wine_env_vars[@]}"; do
+          if [ -n "''${!wine_env_var:-}" ]; then
+            bwrap_opts+=( --setenv "$wine_env_var" "''${!wine_env_var}" )
+          fi
+        done
 
         if [ -n "''${DISPLAY:-}" ]; then
           bwrap_opts+=(
