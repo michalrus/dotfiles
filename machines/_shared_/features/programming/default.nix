@@ -1,7 +1,7 @@
 { flake, config, lib, pkgs, ... }:
 
 let
-  treefmt-wrapper = flake.inputs.treefmt-nix.lib.mkWrapper pkgs {
+  treefmt-wrapper = (flake.inputs.treefmt-nix.lib.mkWrapper pkgs {
     programs = {
       alejandra.enable = true; # Nix
       prettier.enable = true;
@@ -12,7 +12,14 @@ let
       taplo.enable = true; # TOML
       yamlfmt.enable = true;
     };
-  };
+  }).overrideAttrs (drv: {
+    buildCommand =
+      drv.buildCommand
+      + ''
+        chmod +w $out/bin/treefmt
+        sed -r '/--tree-root-file=/ d' -i $out/bin/treefmt
+      '';
+  });
 in
 {
   home-manager.sharedModules = [{
