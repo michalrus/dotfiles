@@ -1,22 +1,23 @@
-{ config, pkgs, lib, ... }:
-
-let
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
   iface = "wg-michalrus";
   serverExternalIP = "54.229.14.161";
   serverInternalIP = "10.77.5.1";
   clientInternalIP = "10.77.5.11";
-in
-
-{
+in {
   age.secrets.wireguard_monstrum = {
     file = ../../../../secrets/wireguard_monstrum.age;
   };
 
   systemd.services."wireguard-michalrus" = {
-    wantedBy = [ "multi-user.target" ];
-    after = [ "network-pre.target" ];
-    wants = [ "network.target" ];
-    before = [ "network.target" ];
+    wantedBy = ["multi-user.target"];
+    after = ["network-pre.target"];
+    wants = ["network.target"];
+    before = ["network.target"];
     serviceConfig = {
       Type = "simple";
       Restart = "always";
@@ -25,7 +26,7 @@ in
     unitConfig = {
       StartLimitIntervalSec = 0; # no restart rate limiting
     };
-    path = with pkgs; [ kmod iproute2 wireguard-tools iputils ];
+    path = with pkgs; [kmod iproute2 wireguard-tools iputils];
     script = ''
       set -euo pipefail
 

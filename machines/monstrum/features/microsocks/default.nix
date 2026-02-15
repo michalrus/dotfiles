@@ -1,15 +1,16 @@
-{ config, lib, pkgs, ... }:
-
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   user = "microsocks";
   uid = 2044;
 
   # XXX: keep it the same as the one in connmon.service and esp.
   # ip-route-novpn-table.service – otherwise it won’t bypass VPN
   table = 2964;
-in
-
-{
+in {
   users.users.${user} = {
     isSystemUser = true;
     group = user;
@@ -19,8 +20,8 @@ in
   users.groups.${user}.gid = uid;
 
   systemd.services."microsocks" = {
-    wantedBy = [ "multi-user.target" ];
-    after = [ "network.target" ];
+    wantedBy = ["multi-user.target"];
+    after = ["network.target"];
     serviceConfig = {
       Type = "simple";
       Restart = "always";
@@ -33,7 +34,7 @@ in
     unitConfig = {
       StartLimitIntervalSec = 0; # no restart rate limiting
     };
-    path = with pkgs; [ microsocks iproute2 ];
+    path = with pkgs; [microsocks iproute2];
     # Bypass VPN:
     preStart = ''
       ip rule add uidrange ${toString uid}-${toString uid} lookup ${toString table} priority 2001

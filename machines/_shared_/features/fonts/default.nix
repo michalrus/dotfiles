@@ -1,17 +1,18 @@
-{ flake, config, pkgs, ... }:
-
-let
+{
+  flake,
+  config,
+  pkgs,
+  ...
+}: let
   google-fonts--no-emoji = pkgs.symlinkJoin {
     name = "google-fonts--no-emoji";
-    paths = [ pkgs.google-fonts ];
+    paths = [pkgs.google-fonts];
     postBuild = ''
       find "$out/share/fonts" -type l -iname '*emoji*' -delete
     '';
   };
-in
-
-{
-  fonts.enableDefaultPackages = false;  # DejaVu fonts break Noto Sans Emoji fallback
+in {
+  fonts.enableDefaultPackages = false; # DejaVu fonts break Noto Sans Emoji fallback
 
   fonts.packages = with pkgs; [
     iosevka-bin
@@ -20,7 +21,7 @@ in
     noto-fonts
     noto-fonts-color-emoji
     noto-fonts-cjk-sans
-    google-fonts--no-emoji  # The original `google-fonts` break ‘noto-fonts-emoji’
+    google-fonts--no-emoji # The original `google-fonts` break ‘noto-fonts-emoji’
     liberation_ttf
   ];
 
@@ -29,8 +30,8 @@ in
   fonts.fontconfig.defaultFonts = {
     monospace = ["Noto Sans Mono"];
     sansSerif = ["Noto Sans"];
-    serif     = ["Noto Serif"];
-    emoji     = ["Noto Color Emoji"];
+    serif = ["Noto Serif"];
+    emoji = ["Noto Color Emoji"];
   };
 
   fonts.fontconfig.localConf = ''

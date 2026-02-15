@@ -1,19 +1,17 @@
-{ config, pkgs, ... }:
-
-let
-
+{
+  config,
+  pkgs,
+  ...
+}: let
   # TODO: move to flake inputs
   repo = pkgs.fetchFromGitHub {
-    owner = "musnix"; repo = "musnix";
+    owner = "musnix";
+    repo = "musnix";
     rev = "7207f25dc03c55488cc495f3db5641c3c0ba5f96";
     sha256 = "135jlcjm1s6lj9alhqllms6d7qsx43x609lyjck5waif8s7a3fz4";
   };
-
-in
-
-{
-
-  imports = [ "${repo}" ];
+in {
+  imports = ["${repo}"];
 
   musnix = {
     enable = true;
@@ -29,7 +27,7 @@ in
   environment.variables."ARDOUR_IMAGE_SURFACE" = "1";
 
   environment.systemPackages = with pkgs; [
-    (writeTextDir "prevent-ifd-gc" (toString [ repo ]))
+    (writeTextDir "prevent-ifd-gc" (toString [repo]))
     a2jmidid
     aeolus
     airwave
@@ -49,15 +47,14 @@ in
   ];
 
   environment.profileRelativeEnvVars = {
-    DSSI_PATH   = ["/lib/dssi"];
+    DSSI_PATH = ["/lib/dssi"];
     LADSPA_PATH = ["/lib/ladspa"];
-    LV2_PATH    = ["/lib/lv2"];
-    LXVST_PATH  = ["/lib/lxvst"];
-    VST_PATH    = ["/lib/vst"];
+    LV2_PATH = ["/lib/lv2"];
+    LXVST_PATH = ["/lib/lxvst"];
+    VST_PATH = ["/lib/vst"];
   };
 
   services.pulseaudio.package = pkgs.pulseaudioFull;
 
-  users.extraUsers.m.extraGroups = [ "audio" ];
-
+  users.extraUsers.m.extraGroups = ["audio"];
 }

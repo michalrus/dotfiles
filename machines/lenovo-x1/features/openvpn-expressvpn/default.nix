@@ -1,17 +1,13 @@
-{ config, lib, pkgs, ... }:
-
-with lib;
-
-let
-
-  dataDir = "/var/lib/openvpn/expressvpn";
-
-in
-
 {
-
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+with lib; let
+  dataDir = "/var/lib/openvpn/expressvpn";
+in {
   networking = {
-
     # FIXME:
     networkmanager.dispatcherScripts = [
       {
@@ -100,5 +96,4 @@ in
       '';
     };
   };
-
 }

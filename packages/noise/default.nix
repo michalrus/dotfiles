@@ -1,5 +1,9 @@
-{ stdenv, lib, fetchzip, sox }:
-
+{
+  stdenv,
+  lib,
+  fetchzip,
+  sox,
+}:
 stdenv.mkDerivation {
   name = "noise";
 

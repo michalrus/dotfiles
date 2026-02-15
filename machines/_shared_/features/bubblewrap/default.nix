@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   security.wrappers = {
     # Low-level unprivileged sandboxing tool, see <https://github.com/containers/bubblewrap>.
     bwrap = {

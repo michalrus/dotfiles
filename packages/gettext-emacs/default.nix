@@ -1,5 +1,7 @@
-{ stdenv, gettext }:
-
+{
+  stdenv,
+  gettext,
+}:
 stdenv.mkDerivation {
   name = "gettext-emacs-mode";
   src = gettext.src;

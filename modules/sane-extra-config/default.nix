@@ -1,18 +1,20 @@
-{ config, lib, pkgs, ... }:
-
-with lib;
-
-let
-
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+with lib; let
   cfg = config.hardware.sane;
 
-  pkg = if cfg.snapshot
+  pkg =
+    if cfg.snapshot
     then pkgs.sane-backends-git
     else pkgs.sane-backends;
 
-  backends = [ pkg ] ++ cfg.extraBackends;
+  backends = [pkg] ++ cfg.extraBackends;
 
-  saneConfig = pkgs.mkSaneConfig { paths = backends; };
+  saneConfig = pkgs.mkSaneConfig {paths = backends;};
 
   saneExtraConfig = pkgs.runCommand "sane-extra-config" {} ''
     cp -Lr '${saneConfig}'/etc/sane.d $out
@@ -25,15 +27,12 @@ let
     '') (mapAttrsToList nameValuePair cfg.extraConfig)}
     chmod -w $out
   '';
-
-in
-
-{
+in {
   options = {
     hardware.sane.extraConfig = mkOption {
       type = types.attrsOf types.lines;
       default = {};
-      example = { "some-backend" = "# some lines to add to its .conf"; };
+      example = {"some-backend" = "# some lines to add to its .conf";};
     };
   };
 

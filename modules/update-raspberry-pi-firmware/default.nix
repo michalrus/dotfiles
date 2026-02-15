@@ -1,24 +1,31 @@
-{ lib, pkgs, config, ... }:
-
-let
-
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}: let
   cfg = config.boot.loader.raspberryPiFirmware;
 
   sdCardSystem = import "${pkgs.path}/nixos/lib/eval-config.nix" {
     inherit (pkgs.stdenv.hostPlatform) system;
-    modules = [ "${pkgs.path}/nixos/modules/installer/sd-card/sd-image-aarch64.nix" ];
+    modules = ["${pkgs.path}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"];
   };
 
-  extraConfigTxt = pkgs.writeText "extra-config.txt" ("\n" + ''
-    ${if cfg.version == 3 then ''
-      # Or else we'll get garbled U-Boot output, see:
-      # - <https://github.com/raspberrypi/linux/issues/4123>
-      # - <https://nixos.wiki/wiki/NixOS_on_ARM/Raspberry_Pi_3#Early_boot>
-      core_freq=250
-    '' else ""}
+  extraConfigTxt = pkgs.writeText "extra-config.txt" ("\n"
+    + ''
+      ${
+        if cfg.version == 3
+        then ''
+          # Or else we'll get garbled U-Boot output, see:
+          # - <https://github.com/raspberrypi/linux/issues/4123>
+          # - <https://nixos.wiki/wiki/NixOS_on_ARM/Raspberry_Pi_3#Early_boot>
+          core_freq=250
+        ''
+        else ""
+      }
 
-    ${cfg.extraConfigTxt}
-  '');
+      ${cfg.extraConfigTxt}
+    '');
 
   freshFirmware = pkgs.runCommand "rpi-firmware-partition" {} ''
     mkdir -p $NIX_BUILD_TOP/firmware
@@ -46,12 +53,10 @@ let
       cp -rp ${freshFirmware}/. ${lib.escapeShellArg mountPoint}/
     fi
   '';
-
 in {
-
   options.boot.loader.raspberryPiFirmware = {
     version = lib.mkOption {
-      type = lib.types.enum [ 0 1 2 3 4 ];
+      type = lib.types.enum [0 1 2 3 4];
     };
 
     extraConfigTxt = lib.mkOption {
@@ -68,9 +73,8 @@ in {
 
     # They’re ordered by name after satisfying dependencies:
     system.activationScripts.update-rpi-firmware = {
-      deps = [ "binsh" "wrappers" "var" ];
+      deps = ["binsh" "wrappers" "var"];
       text = toString activationScript;
     };
   };
-
 }

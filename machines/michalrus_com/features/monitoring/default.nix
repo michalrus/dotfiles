@@ -1,27 +1,29 @@
-{ config, lib, pkgs, ... }:
-
-with lib;
-
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+with lib; let
   influxdbCollecdPort = 25826;
   influxdb10 =
     (pkgs.influxdb.overrideAttrs (oldAttrs: {
-      patches = [ ./influxdb-add_increase.patch ];
-    })).bin // { outputs = [ "bin" ]; };
-in
-
-{
-
+      patches = [./influxdb-add_increase.patch];
+    })).bin
+    // {outputs = ["bin"];};
+in {
   services.influxdb = {
     enable = true;
     package = influxdb10;
     extraConfig = {
-      collectd = [{
-        enabled = true;
-        typesdb = "${pkgs.collectd}/share/collectd/types.db";
-        database = "collectd";
-        port = influxdbCollecdPort;
-      }];
+      collectd = [
+        {
+          enabled = true;
+          typesdb = "${pkgs.collectd}/share/collectd/types.db";
+          database = "collectd";
+          port = influxdbCollecdPort;
+        }
+      ];
     };
   };
 
@@ -72,5 +74,4 @@ in
       </Plugin>
     '';
   };
-
 }

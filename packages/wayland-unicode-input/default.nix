@@ -1,11 +1,16 @@
-{ lib, fetchurl, writeShellApplication, jq, python3, runCommand, fuzzel, wtype, wl-clipboard, writeText
-
-, onlyEmoji ? false
-
-}:
-
-let
-
+{
+  lib,
+  fetchurl,
+  writeShellApplication,
+  jq,
+  python3,
+  runCommand,
+  fuzzel,
+  wtype,
+  wl-clipboard,
+  writeText,
+  onlyEmoji ? false,
+}: let
   raw-unicode = fetchurl {
     url = "https://www.unicode.org/Public/UNIDATA/UnicodeData.txt";
     hash = "sha256-gG6a7WUDcZfx7IXhK+bozYcPxWCLTeD//ZkPaJ83anM=";
@@ -35,40 +40,55 @@ let
     ''} >$out
   '';
 
-  table-emoji = runCommand "emoji-table" {
-    nativeBuildInputs = [jq];
-  } ''
-    jq --raw-output '
-        . | to_entries | .[] | .key + "\t" + (.value | join(" · ") | sub("_"; " "; "g"))
-      ' \
-      <${raw-emoji} \
-      >$out
-  '';
+  table-emoji =
+    runCommand "emoji-table" {
+      nativeBuildInputs = [jq];
+    } ''
+      jq --raw-output '
+          . | to_entries | .[] | .key + "\t" + (.value | join(" · ") | sub("_"; " "; "g"))
+        ' \
+        <${raw-emoji} \
+        >$out
+    '';
 
-  exeName = "wayland-unicode-input${if onlyEmoji then "-emoji" else ""}";
-
+  exeName = "wayland-unicode-input${
+    if onlyEmoji
+    then "-emoji"
+    else ""
+  }";
 in
+  writeShellApplication {
+    name = exeName;
+    runtimeInputs = [fuzzel wtype wl-clipboard];
+    text = ''
+      set -euo pipefail
 
-writeShellApplication {
-  name = exeName;
-  runtimeInputs = [ fuzzel wtype wl-clipboard ];
-  text = ''
-    set -euo pipefail
+      cacheDir="$HOME"/.cache/wayland-unicode-input
+      mkdir -p "$cacheDir"
 
-    cacheDir="$HOME"/.cache/wayland-unicode-input
-    mkdir -p "$cacheDir"
+      selected=$(
+        fuzzel \
+          <${
+        if onlyEmoji
+        then table-emoji
+        else table-unicode
+      } \
+          --dmenu --width=100 \
+          --cache="$cacheDir"/${
+        if onlyEmoji
+        then "emoji"
+        else "default"
+      } \
+          --accept-nth=1 \
+        | tr -d '\n'
+      )
 
-    selected=$(
-      fuzzel \
-        <${if onlyEmoji then table-emoji else table-unicode} \
-        --dmenu --width=100 \
-        --cache="$cacheDir"/${if onlyEmoji then "emoji" else "default"} \
-        --accept-nth=1 \
-      | tr -d '\n'
-    )
-
-    printf '%s' "''${selected}" | wtype -
-  '';
-  derivationArgs.meta.description = "${if onlyEmoji then "Emoji" else "Unicode"} selector on Wayland";
-  derivationArgs.meta.platforms = lib.platforms.linux;
-}
+      printf '%s' "''${selected}" | wtype -
+    '';
+    derivationArgs.meta.description = "${
+      if onlyEmoji
+      then "Emoji"
+      else "Unicode"
+    } selector on Wayland";
+    derivationArgs.meta.platforms = lib.platforms.linux;
+  }

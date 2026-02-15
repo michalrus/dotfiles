@@ -1,10 +1,12 @@
-{ config, flake, pkgs, lib, ... }:
-
-let
-  yt-dlp = flake.packages.${pkgs.stdenv.hostPlatform.system}.yt-dlp;
-in
-
 {
+  config,
+  flake,
+  pkgs,
+  lib,
+  ...
+}: let
+  yt-dlp = flake.packages.${pkgs.stdenv.hostPlatform.system}.yt-dlp;
+in {
   home.packages = [
     yt-dlp
     pkgs.python3Packages.subliminal
@@ -12,7 +14,7 @@ in
 
   programs.mpv = {
     enable = true;
-    scripts = with pkgs.mpvScripts; [ mpris thumbnail autosub easycrop acompressor ];
+    scripts = with pkgs.mpvScripts; [mpris thumbnail autosub easycrop acompressor];
   };
 
   # Streaming only audio:

@@ -1,17 +1,14 @@
-{ on-vt-switch-src }:
-
-{ config, pkgs, lib, ... }:
-
-let
-
+{on-vt-switch-src}: {
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
   on-vt-switch = pkgs.callPackage on-vt-switch-src {};
-
-in
-
-{
+in {
   systemd.services."lock-on-vt-switch" = {
-    wantedBy = [ "multi-user.target" ];
-    after = [ "getty.target" ];
+    wantedBy = ["multi-user.target"];
+    after = ["getty.target"];
     serviceConfig = {
       Type = "simple";
       Restart = "always";

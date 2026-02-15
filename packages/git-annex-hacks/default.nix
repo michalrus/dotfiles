@@ -1,7 +1,14 @@
-{ stdenv, lib, git, gitAndTools, writeScriptBin, symlinkJoin, fetchurl, writeScript, writeText}:
-
-let
-
+{
+  stdenv,
+  lib,
+  git,
+  gitAndTools,
+  writeScriptBin,
+  symlinkJoin,
+  fetchurl,
+  writeScript,
+  writeText,
+}: let
   inherit (gitAndTools) gitAnnex;
 
   git-annex = let
@@ -46,10 +53,10 @@ let
       exec ${gitAnnex}/bin/git-annex "$@"
     '';
   in
-  symlinkJoin {
-    inherit (gitAnnex) name;
-    paths = [ git-annex-bin gitAnnex git-annex-desktop ];
-  };
+    symlinkJoin {
+      inherit (gitAnnex) name;
+      paths = [git-annex-bin gitAnnex git-annex-desktop];
+    };
 
   git-annex-desktop = let
     script = writeScript "script" ''
@@ -76,17 +83,17 @@ let
       sha256 = "0wrzllbb39l6zkmf7r0migwqdvcinjkhln24953cxyv1g6jrsarh";
     };
   in
-  stdenv.mkDerivation {
-    name = "git-annex-desktop";
+    stdenv.mkDerivation {
+      name = "git-annex-desktop";
 
-    phases = [ "installPhase" ];
+      phases = ["installPhase"];
 
-    installPhase = ''
-      mkdir -p $out/share/applications
-      mkdir -p $out/share/icons/hicolor/scalable/apps
-      ln -s ${launcher} $out/share/applications/git-annex.desktop
-      ln -s ${logo} $out/share/icons/hicolor/scalable/apps/git-annex.svg
-    '';
-  };
-
-in git-annex // { meta.platforms = lib.platforms.linux; }
+      installPhase = ''
+        mkdir -p $out/share/applications
+        mkdir -p $out/share/icons/hicolor/scalable/apps
+        ln -s ${launcher} $out/share/applications/git-annex.desktop
+        ln -s ${logo} $out/share/icons/hicolor/scalable/apps/git-annex.svg
+      '';
+    };
+in
+  git-annex // {meta.platforms = lib.platforms.linux;}

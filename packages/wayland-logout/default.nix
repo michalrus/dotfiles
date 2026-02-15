@@ -1,8 +1,11 @@
-{ lib, writeShellApplication, fuzzel }:
-
+{
+  lib,
+  writeShellApplication,
+  fuzzel,
+}:
 writeShellApplication {
   name = "wayland-logout";
-  runtimeInputs = [ fuzzel ];
+  runtimeInputs = [fuzzel];
   text = ''
     set -euo pipefail
 

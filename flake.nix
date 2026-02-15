@@ -1,5 +1,4 @@
 {
-
   inputs = {
     # nixpkgs-2305.url = "github:NixOS/nixpkgs/nixos-23.05";
 
@@ -55,9 +54,15 @@
       inputs.nixpkgs.follows = "nixpkgs-2511";
     };
 
-    doom-emacs = { url = "github:doomemacs/doomemacs"; flake = false; };
+    doom-emacs = {
+      url = "github:doomemacs/doomemacs";
+      flake = false;
+    };
 
-    yt-dlp = { url = "github:yt-dlp/yt-dlp"; flake = false; };
+    yt-dlp = {
+      url = "github:yt-dlp/yt-dlp";
+      flake = false;
+    };
 
     malicious-hosts = {
       # Intentionally referenced as a file under a mutable link for semi-auto updates:
@@ -65,8 +70,14 @@
       flake = false;
     };
 
-    cloudflare-ips-v4 = { url = "https://www.cloudflare.com/ips-v4"; flake = false; };
-    cloudflare-ips-v6 = { url = "https://www.cloudflare.com/ips-v6"; flake = false; };
+    cloudflare-ips-v4 = {
+      url = "https://www.cloudflare.com/ips-v4";
+      flake = false;
+    };
+    cloudflare-ips-v6 = {
+      url = "https://www.cloudflare.com/ips-v6";
+      flake = false;
+    };
 
     serena = {
       url = "github:oraios/serena/main";
@@ -75,30 +86,29 @@
   };
 
   outputs = inputs: {
-
     nixosConfigurations = {
       # nixos-rebuild switch -L --keep-going --flake .#aneta --target-host root@10.77.2.1
-      aneta = import ./machines/aneta { inherit inputs; };
+      aneta = import ./machines/aneta {inherit inputs;};
 
       # sudo nixos-rebuild switch -L --keep-going --flake .#lenovo-x1
-      lenovo-x1 = import ./machines/lenovo-x1 { inherit inputs; };
+      lenovo-x1 = import ./machines/lenovo-x1 {inherit inputs;};
 
       # sudo nixos-rebuild switch -L --keep-going --flake .#macbook-nixos
-      macbook-nixos = import ./machines/macbook-nixos { inherit inputs; };
+      macbook-nixos = import ./machines/macbook-nixos {inherit inputs;};
 
       # nixos-rebuild switch -L --keep-going --flake .#michalrus_com --target-host root@michalrus.com
-      michalrus_com = import ./machines/michalrus_com { inherit inputs; };
+      michalrus_com = import ./machines/michalrus_com {inherit inputs;};
 
       # nixos-rebuild switch -L --keep-going --flake .#dell-home-server --target-host root@10.77.2.11
-      dell-home-server = import ./machines/dell-home-server { inherit inputs; };
+      dell-home-server = import ./machines/dell-home-server {inherit inputs;};
 
       # nixos-rebuild switch -L --keep-going --flake .#dell-home-server --target-host root@10.77.2.12
-      monstrum = import ./machines/monstrum { inherit inputs; };
+      monstrum = import ./machines/monstrum {inherit inputs;};
     };
 
     darwinConfigurations = rec {
       # darwin-rebuild switch -L --keep-going --flake .#macbook
-      macbook = import ./machines/macbook { inherit inputs; };
+      macbook = import ./machines/macbook {inherit inputs;};
     };
 
     nixosModules = {
@@ -108,8 +118,8 @@
       gnu-screen = import ./modules/gnu-screen;
       guest-account = import ./modules/guest-account;
       hibernate-on-low-battery = import ./modules/hibernate-on-low-battery;
-      lock-vts = import ./modules/lock-vts { on-vt-switch-src = ./packages/on-vt-switch; };
-      malicious-hosts = import ./modules/malicious-hosts { inherit (inputs) malicious-hosts; };
+      lock-vts = import ./modules/lock-vts {on-vt-switch-src = ./packages/on-vt-switch;};
+      malicious-hosts = import ./modules/malicious-hosts {inherit (inputs) malicious-hosts;};
       nonet-group = import ./modules/nonet-group;
       sane-extra-config = import ./modules/sane-extra-config;
       somagic-easycap = import ./modules/somagic-easycap;
@@ -118,55 +128,58 @@
       update-raspberry-pi-firmware = import ./modules/update-raspberry-pi-firmware;
     };
 
-    lib = import ./lib { inherit inputs; };
+    lib = import ./lib {inherit inputs;};
 
-    packages = inputs.nixpkgs-2511.lib.genAttrs [
-      "x86_64-linux"
-      "aarch64-linux"
-      "x86_64-darwin"
-      "aarch64-darwin"
-    ] (system: let
-      inherit (inputs.nixpkgs-2511.legacyPackages.${system}) callPackage;
-    in inputs.self.lib.filterSystem system rec {
-      accuradio = callPackage ./packages/accuradio {};
-      amscope-amlite = callPackage ./packages/amscope-amlite {};
-      autotalent = callPackage ./packages/autotalent {};
-      cp2104-gpio = callPackage ./packages/cp2104-gpio {};
-      dmenu-is-rofi = callPackage ./packages/dmenu-is-rofi {};
-      # FIXME:
-      doom-emacs = inputs.nixpkgs-2411.legacyPackages.${system}.callPackage ./packages/doom-emacs { inherit (inputs) doom-emacs; };
-      # FIXME:
-      doom-emacs-mine = inputs.nixpkgs-2411.legacyPackages.${system}.callPackage ./packages/doom-emacs-mine { inherit doom-emacs; };
-      git-annex-hacks = callPackage ./packages/git-annex-hacks {};
-      gettext-emacs = callPackage ./packages/gettext-emacs {};
-      # FIXME:
-      gregorio = inputs.nixpkgs-2411.legacyPackages.${system}.callPackage ./packages/gregorio {};
-      hunspell-dictionaries-chromium-pl = callPackage ./packages/hunspell-dictionaries-chromium-pl {};
-      hyprland-screenshot = callPackage ./packages/hyprland-screenshot {};
-      jumpcloud-password-manager = callPackage ./packages/jumpcloud-password-manager {};
-      lv2-cpp-tools = callPackage ./packages/lv2-cpp-tools {};
-      nixlint = callPackage ./packages/nixlint {};
-      opencode-bwrap = callPackage ./packages/opencode-bwrap { nixpkgs-unstable = inputs.nixpkgs-unstable; serena = inputs.serena.packages.${system}.default; };
-      on-vt-switch = callPackage ./packages/on-vt-switch {};
-      naps2 = callPackage ./packages/naps2 {};
-      noise = callPackage ./packages/noise {};
-      pms5003 = callPackage ./packages/pms5003 {};
-      rofi-unicode-input = callPackage ./packages/rofi-unicode-input {};
-      talentedhack = callPackage ./packages/talentedhack {};
-      tap-plugins = callPackage ./packages/tap-plugins {};
-      transcribe = callPackage ./packages/transcribe {};
-      wayland-logout = callPackage ./packages/wayland-logout {};
-      wayland-unicode-input = callPackage ./packages/wayland-unicode-input {};
-      wayland-emoji-input = callPackage ./packages/wayland-unicode-input { onlyEmoji = true; };
-      wayland-random-input = callPackage ./packages/wayland-random-input {};
-      wine-bwrap = callPackage ./packages/wine-bwrap {};
-      # FIXME:
-      vftool = inputs.nixpkgs-2311.legacyPackages.${system}.callPackage ./packages/vftool { inherit (inputs) nixpkgs-macos-sdk-13; };
-      vocproc = callPackage ./packages/vocproc { inherit lv2-cpp-tools; };
-      yt-dlp = inputs.nixpkgs-unstable.legacyPackages.${system}.callPackage ./packages/yt-dlp { flake = inputs.self; };
-      #zed-editor = inputs.nixpkgs-unstable.legacyPackages.${system}.callPackage ./packages/zed-editor { flake = inputs.self; };
-    });
-
+    packages =
+      inputs.nixpkgs-2511.lib.genAttrs [
+        "x86_64-linux"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "aarch64-darwin"
+      ] (system: let
+        inherit (inputs.nixpkgs-2511.legacyPackages.${system}) callPackage;
+      in
+        inputs.self.lib.filterSystem system rec {
+          accuradio = callPackage ./packages/accuradio {};
+          amscope-amlite = callPackage ./packages/amscope-amlite {};
+          autotalent = callPackage ./packages/autotalent {};
+          cp2104-gpio = callPackage ./packages/cp2104-gpio {};
+          dmenu-is-rofi = callPackage ./packages/dmenu-is-rofi {};
+          # FIXME:
+          doom-emacs = inputs.nixpkgs-2411.legacyPackages.${system}.callPackage ./packages/doom-emacs {inherit (inputs) doom-emacs;};
+          # FIXME:
+          doom-emacs-mine = inputs.nixpkgs-2411.legacyPackages.${system}.callPackage ./packages/doom-emacs-mine {inherit doom-emacs;};
+          git-annex-hacks = callPackage ./packages/git-annex-hacks {};
+          gettext-emacs = callPackage ./packages/gettext-emacs {};
+          # FIXME:
+          gregorio = inputs.nixpkgs-2411.legacyPackages.${system}.callPackage ./packages/gregorio {};
+          hunspell-dictionaries-chromium-pl = callPackage ./packages/hunspell-dictionaries-chromium-pl {};
+          hyprland-screenshot = callPackage ./packages/hyprland-screenshot {};
+          jumpcloud-password-manager = callPackage ./packages/jumpcloud-password-manager {};
+          lv2-cpp-tools = callPackage ./packages/lv2-cpp-tools {};
+          nixlint = callPackage ./packages/nixlint {};
+          opencode-bwrap = callPackage ./packages/opencode-bwrap {
+            nixpkgs-unstable = inputs.nixpkgs-unstable;
+            serena = inputs.serena.packages.${system}.default;
+          };
+          on-vt-switch = callPackage ./packages/on-vt-switch {};
+          naps2 = callPackage ./packages/naps2 {};
+          noise = callPackage ./packages/noise {};
+          pms5003 = callPackage ./packages/pms5003 {};
+          rofi-unicode-input = callPackage ./packages/rofi-unicode-input {};
+          talentedhack = callPackage ./packages/talentedhack {};
+          tap-plugins = callPackage ./packages/tap-plugins {};
+          transcribe = callPackage ./packages/transcribe {};
+          wayland-logout = callPackage ./packages/wayland-logout {};
+          wayland-unicode-input = callPackage ./packages/wayland-unicode-input {};
+          wayland-emoji-input = callPackage ./packages/wayland-unicode-input {onlyEmoji = true;};
+          wayland-random-input = callPackage ./packages/wayland-random-input {};
+          wine-bwrap = callPackage ./packages/wine-bwrap {};
+          # FIXME:
+          vftool = inputs.nixpkgs-2311.legacyPackages.${system}.callPackage ./packages/vftool {inherit (inputs) nixpkgs-macos-sdk-13;};
+          vocproc = callPackage ./packages/vocproc {inherit lv2-cpp-tools;};
+          yt-dlp = inputs.nixpkgs-unstable.legacyPackages.${system}.callPackage ./packages/yt-dlp {flake = inputs.self;};
+          #zed-editor = inputs.nixpkgs-unstable.legacyPackages.${system}.callPackage ./packages/zed-editor { flake = inputs.self; };
+        });
   };
-
 }

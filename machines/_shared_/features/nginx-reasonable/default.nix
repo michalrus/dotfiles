@@ -1,6 +1,10 @@
-{ flake, config, lib, pkgs, ... }:
-
 {
+  flake,
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   services.nginx.httpConfig = ''
     charset utf-8;
 

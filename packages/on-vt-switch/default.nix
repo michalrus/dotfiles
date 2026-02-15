@@ -1,18 +1,22 @@
-{ stdenv, lib }:
+{
+  stdenv,
+  lib,
+}: let
+  name = "on-vt-switch";
+in
+  stdenv.mkDerivation {
+    inherit name;
 
-let name = "on-vt-switch"; in
+    src =
+      builtins.filterSource (
+        path: type: let b = baseNameOf path; in b == "${name}.c" || b == "Makefile"
+      )
+      ./.;
 
-stdenv.mkDerivation {
-  inherit name;
+    installPhase = ''
+      mkdir -p $out/bin
+      cp ${name} $out/bin
+    '';
 
-  src = builtins.filterSource (
-    path: type: let b = baseNameOf path; in b == "${name}.c" || b == "Makefile"
-  ) ./.;
-
-  installPhase = ''
-    mkdir -p $out/bin
-    cp ${name} $out/bin
-  '';
-
-  meta.platforms = lib.platforms.linux;
-}
+    meta.platforms = lib.platforms.linux;
+  }

@@ -1,7 +1,10 @@
-{ config, flake, pkgs, lib, ... }:
-
 {
-
+  config,
+  flake,
+  pkgs,
+  lib,
+  ...
+}: {
   programs.gpg.enable = true;
 
   programs.gpg.settings = {
@@ -12,9 +15,12 @@
 
   # TODO: don’t re-export if it’s already set by OpenSSH
 
-  home.sessionVariables = if pkgs.stdenv.isLinux then {
-    SSH_AUTH_SOCK = "$HOME/.gnupg/S.gpg-agent.ssh";
-  } else {};
+  home.sessionVariables =
+    if pkgs.stdenv.isLinux
+    then {
+      SSH_AUTH_SOCK = "$HOME/.gnupg/S.gpg-agent.ssh";
+    }
+    else {};
 
   home.file.".gnupg/gpg-agent.conf".text = ''
     default-cache-ttl 0
@@ -34,10 +40,12 @@
     grab
   '';
 
-  targets = if pkgs.stdenv.isDarwin then {
-    # FIXME: this still doesn’t work:
-    # what ‘no-allow-external-cache’ should’ve done above:
-    darwin.defaults."org.gpgtools.pinentry-mac".DisableKeychain = true;
-  } else {};
-
+  targets =
+    if pkgs.stdenv.isDarwin
+    then {
+      # FIXME: this still doesn’t work:
+      # what ‘no-allow-external-cache’ should’ve done above:
+      darwin.defaults."org.gpgtools.pinentry-mac".DisableKeychain = true;
+    }
+    else {};
 }

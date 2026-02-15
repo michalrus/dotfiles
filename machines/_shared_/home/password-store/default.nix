@@ -1,7 +1,10 @@
-{ config, flake, pkgs, lib, ... }:
-
 {
-
+  config,
+  flake,
+  pkgs,
+  lib,
+  ...
+}: {
   home.packages = with pkgs; [
     oath-toolkit
   ];
@@ -14,5 +17,4 @@
 
   # Browser integration of password-store via Native Messaging:
   programs.browserpass.enable = true;
-
 }

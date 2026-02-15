@@ -1,7 +1,9 @@
-{ transcribe, writeScript, strace, lib }:
-
-let
-
+{
+  transcribe,
+  writeScript,
+  strace,
+  lib,
+}: let
   randomString = "2f506693-50da-4c29-901f-e8e79f9448d9";
 
   dumpDRM = writeScript "transcribe-dump-drm" ''
@@ -16,12 +18,14 @@ let
     logFile="$logDir/$(date -Ins).log"
     exec ${strace}/bin/strace -e trace=openat,open -o "$logFile" -- ${randomString} "$@"
   '';
-
-in transcribe.overrideAttrs (drv: {
-  postFixup = (drv.postFixup or "") + ''
-    rm $out/bin/transcribe
-    cp ${dumpDRM} $out/bin/transcribe
-    substituteInPlace $out/bin/transcribe --replace ${randomString} $out/libexec/transcribe
-  '';
-  meta = removeAttrs drv.meta ["license"]; # allow unfree
-})
+in
+  transcribe.overrideAttrs (drv: {
+    postFixup =
+      (drv.postFixup or "")
+      + ''
+        rm $out/bin/transcribe
+        cp ${dumpDRM} $out/bin/transcribe
+        substituteInPlace $out/bin/transcribe --replace ${randomString} $out/libexec/transcribe
+      '';
+    meta = removeAttrs drv.meta ["license"]; # allow unfree
+  })

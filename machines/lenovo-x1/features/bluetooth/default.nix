@@ -1,7 +1,10 @@
-{ flake, config, lib, pkgs, ... }:
-
 {
-
+  flake,
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   hardware.bluetooth.enable = true;
 
   services.blueman.enable = true;
@@ -18,5 +21,4 @@
     # load-module module-bluez5-device
     # load-module module-bluez5-discover
   '';
-
 }

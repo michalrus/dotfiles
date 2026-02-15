@@ -1,7 +1,9 @@
-{ flake, pkgs, lib, ... }:
-
 {
-
+  flake,
+  pkgs,
+  lib,
+  ...
+}: {
   environment.systemPackages = flake.lib.filterSystem pkgs.stdenv.hostPlatform.system (with pkgs; [
     duplicity
     faad2
@@ -9,7 +11,7 @@
     #flake.packages.${pkgs.stdenv.hostPlatform.system}.git-annex-hacks
     #gitAndTools.gitRemoteGcrypt
     gitstats
-    gocr  # OCR
+    gocr # OCR
     #gpac  # marked as insecure
     gpgme.dev
     jhead
@@ -21,9 +23,8 @@
     img2pdf
     python3Packages.livereload
     shared-mime-info
-    shntool  # view and/or modify WAVE data and properties
-    tesseract  # OCR
+    shntool # view and/or modify WAVE data and properties
+    tesseract # OCR
     x264
   ]);
-
 }

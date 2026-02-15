@@ -1,11 +1,13 @@
-{ config, lib, pkgs, ... }:
-
-with lib;
-
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+with lib; let
   groupName = "nonet";
   cfg = config.networking.firewall.nonetGroup;
-  rule  = "OUTPUT -m owner --gid-owner ${groupName} -j REJECT --reject-with icmp-port-unreachable";
+  rule = "OUTPUT -m owner --gid-owner ${groupName} -j REJECT --reject-with icmp-port-unreachable";
   rule6 = "OUTPUT -m owner --gid-owner ${groupName} -j REJECT --reject-with icmp6-port-unreachable";
 
   flushRules = ''
@@ -19,9 +21,7 @@ let
     iptables  -w -A ${rule}
     ip6tables -w -A ${rule6}
   '';
-in
-
-{
+in {
   options = {
     networking.firewall.nonetGroup = {
       enable = mkOption {
@@ -32,8 +32,7 @@ in
   };
 
   config = mkMerge [
-
-    { networking.firewall.extraCommands = mkBefore flushRules; }
+    {networking.firewall.extraCommands = mkBefore flushRules;}
 
     (mkIf cfg.enable {
       networking.firewall = {
@@ -44,6 +43,5 @@ in
 
       users.extraGroups."${groupName}" = {};
     })
-
   ];
 }

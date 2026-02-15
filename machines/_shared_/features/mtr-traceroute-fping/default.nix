@@ -1,7 +1,4 @@
-{ pkgs, ... }:
-
-{
-
+{pkgs, ...}: {
   programs.mtr.enable = true;
 
   security.wrappers.fping = {
@@ -17,5 +14,4 @@
     owner = "root";
     group = "root";
   };
-
 }

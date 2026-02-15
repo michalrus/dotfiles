@@ -1,23 +1,26 @@
-{ config, lib, pkgs, ... }:
-
-let
-  internalInterface = "enp16s0";
-in
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+  internalInterface = "enp16s0";
+in {
   networking.interfaces.${internalInterface} = {
     useDHCP = false;
-    ipv4.addresses = [{
-      address = "10.77.2.1";
-      prefixLength = 24;
-    }];
+    ipv4.addresses = [
+      {
+        address = "10.77.2.1";
+        prefixLength = 24;
+      }
+    ];
   };
 
   services.kea.dhcp4 = {
     enable = true;
     settings = {
       interfaces-config = {
-        interfaces = [ internalInterface ];
+        interfaces = [internalInterface];
         service-sockets-max-retries = 999999999;
         service-sockets-retry-wait-time = 1000;
       };
@@ -40,10 +43,22 @@ in
             }
           ];
           reservations = [
-            { hw-address = "ac:15:a2:b3:e9:e9"; ip-address = "10.77.2.2";   } # Access Point
-            { hw-address = "00:1a:4b:23:ba:6e"; ip-address = "10.77.2.5";   } # printer
-            { hw-address = "e4:70:b8:f7:4b:8f"; ip-address = "10.77.2.11";  } # dell-home-server
-            { hw-address = "d6:b8:1b:53:d8:20"; ip-address = "10.77.2.99";  } # Michal’s MacBook
+            {
+              hw-address = "ac:15:a2:b3:e9:e9";
+              ip-address = "10.77.2.2";
+            } # Access Point
+            {
+              hw-address = "00:1a:4b:23:ba:6e";
+              ip-address = "10.77.2.5";
+            } # printer
+            {
+              hw-address = "e4:70:b8:f7:4b:8f";
+              ip-address = "10.77.2.11";
+            } # dell-home-server
+            {
+              hw-address = "d6:b8:1b:53:d8:20";
+              ip-address = "10.77.2.99";
+            } # Michal’s MacBook
           ];
         }
       ];

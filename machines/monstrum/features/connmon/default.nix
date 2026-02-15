@@ -1,8 +1,11 @@
-{ config, lib, pkgs, ... }:
-
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 # This will monitor Internet connectivity (over a few predefined IPs in
 # parallel, bypassing the VPN), and restart the modem if none is detected.
-
 let
   user = "connmon";
   uid = 988;
@@ -16,11 +19,12 @@ let
   ];
   pingWaitSec = 10;
   routerIP = "10.77.3.1";
-  routesToCopyNoVPN = [ "default" "10.77.2.0/24" ];
+  routesToCopyNoVPN = ["default" "10.77.2.0/24"];
 
   modem-restart = let
     original = pkgs.fetchFromGitHub {
-      owner = "mkorz"; repo = "b618reboot";
+      owner = "mkorz";
+      repo = "b618reboot";
       rev = "b6d7d5b877e9d530424df9cde01e3e34c9fcbf82";
       hash = "sha256-cZyLs6EKiWJ2r+ky7TTYXyikF+HNGnlurzYQpEpG75c=";
     };
@@ -30,22 +34,20 @@ let
       cd $out
       patch -p1 -i ${./huawei-scram-reboot.diff}
     '';
-  in pkgs.writeShellApplication {
-    name = "modem-restart";
-    runtimeInputs = [ (pkgs.python3.withPackages (ps: with ps; [ requests ])) ];
-    text = ''
-      set -euo pipefail
-      export PASSWORD_FILE=${config.age.secrets.hardware_modem_password.path}
-      export ROUTER_ADDR=${routerIP}
-      # no GC: original=${original}
-      exec python3 ${patched}/reboot_router.py
-    '';
-    derivationArgs.meta.description = "Takes a screenshot on Hyprland (has window selection)";
-  };
-
-in
-
-{
+  in
+    pkgs.writeShellApplication {
+      name = "modem-restart";
+      runtimeInputs = [(pkgs.python3.withPackages (ps: with ps; [requests]))];
+      text = ''
+        set -euo pipefail
+        export PASSWORD_FILE=${config.age.secrets.hardware_modem_password.path}
+        export ROUTER_ADDR=${routerIP}
+        # no GC: original=${original}
+        exec python3 ${patched}/reboot_router.py
+      '';
+      derivationArgs.meta.description = "Takes a screenshot on Hyprland (has window selection)";
+    };
+in {
   age.secrets.hardware_modem_password = {
     file = ../../../../secrets/hardware_modem_password.age;
     owner = user;
@@ -62,10 +64,10 @@ in
 
   systemd.services."connmon" = {
     description = "Internet connectivity monitor";
-    wantedBy = [ "multi-user.target" ];
-    after = [ "network-pre.target" "ip-route-novpn-table.service" ];
-    wants = [ "network.target" "ip-route-novpn-table.service" ];
-    before = [ "network.target" ];
+    wantedBy = ["multi-user.target"];
+    after = ["network-pre.target" "ip-route-novpn-table.service"];
+    wants = ["network.target" "ip-route-novpn-table.service"];
+    before = ["network.target"];
     serviceConfig = {
       Type = "simple";
       Restart = "always";
@@ -78,7 +80,7 @@ in
     unitConfig = {
       StartLimitIntervalSec = 0; # no restart rate limiting
     };
-    path = with pkgs; [ iproute2 iputils stdenv.shellPackage parallel ];
+    path = with pkgs; [iproute2 iputils stdenv.shellPackage parallel];
     # Bypass VPN:
     preStart = ''
       ip rule add uidrange ${toString uid}-${toString uid} lookup ${toString table} priority 2000
@@ -126,10 +128,10 @@ in
       done
     '';
   in {
-    wantedBy = [ "multi-user.target" ];
-    after = [ "network-pre.target" ];
-    wants = [ "network.target" ];
-    before = [ "network.target" ];
+    wantedBy = ["multi-user.target"];
+    after = ["network-pre.target"];
+    wants = ["network.target"];
+    before = ["network.target"];
     serviceConfig = {
       Type = "simple";
       Restart = "always";
@@ -138,7 +140,7 @@ in
     unitConfig = {
       StartLimitIntervalSec = 0; # no restart rate limiting
     };
-    path = with pkgs; [ iproute2 ];
+    path = with pkgs; [iproute2];
     preStart = ''
       set -euo pipefail
       ${copyRoutes}
@@ -157,12 +159,12 @@ in
   # Manual `modem-restart` command for all users (preventing Ctrl+C):
   environment.systemPackages = [
     (pkgs.writeShellApplication {
-       name = "modem-restart";
-       runtimeInputs = [];
-       text = ''
-         exec sudo ${config.systemd.package}/bin/systemctl start modem-restart
-       '';
-     })
+      name = "modem-restart";
+      runtimeInputs = [];
+      text = ''
+        exec sudo ${config.systemd.package}/bin/systemctl start modem-restart
+      '';
+    })
   ];
   security.sudo = {
     enable = true;

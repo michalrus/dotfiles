@@ -1,9 +1,10 @@
-{ config, lib, pkgs, ... }:
-
-with lib;
-
-let
-
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+with lib; let
   cfg = config.services.tor.torifiedUsers;
 
   transPort = 9040;
@@ -20,49 +21,54 @@ let
     done
   '';
 
-  setupRules = ''
+  setupRules =
+    ''
 
-    ip46tables -w -t nat    -N ${chain}
-    ip46tables -w -t filter -N ${chain}
+      ip46tables -w -t nat    -N ${chain}
+      ip46tables -w -t filter -N ${chain}
 
-  '' + (concatMapStringsSep "\n" (u: let user = u.username; localPorts = u.allowedLocalPorts ++ [allowedSocksPort]; in ''
+    ''
+    + (concatMapStringsSep "\n" (u: let
+        user = u.username;
+        localPorts = u.allowedLocalPorts ++ [allowedSocksPort];
+      in ''
 
-    ${concatMapStringsSep "\n" (port: ''
-      iptables -w -t nat -A ${chain} -d 127.0.0.0/8 -p tcp -m owner --uid-owner ${user} -m tcp --dport ${toString port} -j ACCEPT
-    '') localPorts}
+        ${concatMapStringsSep "\n" (port: ''
+            iptables -w -t nat -A ${chain} -d 127.0.0.0/8 -p tcp -m owner --uid-owner ${user} -m tcp --dport ${toString port} -j ACCEPT
+          '')
+          localPorts}
 
-    # Redirect all of IPv4 TCP to TransProxy.
-    iptables -w -t nat -A ${chain} -p tcp -m owner --uid-owner ${user} -m tcp -j REDIRECT --to-ports ${toString transPort}
+        # Redirect all of IPv4 TCP to TransProxy.
+        iptables -w -t nat -A ${chain} -p tcp -m owner --uid-owner ${user} -m tcp -j REDIRECT --to-ports ${toString transPort}
 
-    # Redirect all DNS queries to TransProxy.
-    iptables -w -t nat -A ${chain} -p udp -m owner --uid-owner ${user} -m udp --dport 53 -j REDIRECT --to-ports ${toString dnsPort}
+        # Redirect all DNS queries to TransProxy.
+        iptables -w -t nat -A ${chain} -p udp -m owner --uid-owner ${user} -m udp --dport 53 -j REDIRECT --to-ports ${toString dnsPort}
 
-    # Unblock those redirection targets.
-    ${concatMapStringsSep "\n" (port: ''
-      iptables -w -t filter -A ${chain} -d 127.0.0.0/8 -p tcp -m owner --uid-owner ${user} -m tcp --dport ${toString port} -j ACCEPT
-      iptables -w -t filter -A ${chain} -d 127.0.0.0/8 -p tcp -m owner --uid-owner ${user} -m tcp --sport ${toString port} -j ACCEPT
-    '') localPorts}
-    iptables -w -t filter -A ${chain} -d 127.0.0.0/8 -p tcp -m owner --uid-owner ${user} -m tcp --dport ${toString transPort} -j ACCEPT
-    iptables -w -t filter -A ${chain} -d 127.0.0.0/8 -p udp -m owner --uid-owner ${user} -m udp --dport ${toString dnsPort} -j ACCEPT
+        # Unblock those redirection targets.
+        ${concatMapStringsSep "\n" (port: ''
+            iptables -w -t filter -A ${chain} -d 127.0.0.0/8 -p tcp -m owner --uid-owner ${user} -m tcp --dport ${toString port} -j ACCEPT
+            iptables -w -t filter -A ${chain} -d 127.0.0.0/8 -p tcp -m owner --uid-owner ${user} -m tcp --sport ${toString port} -j ACCEPT
+          '')
+          localPorts}
+        iptables -w -t filter -A ${chain} -d 127.0.0.0/8 -p tcp -m owner --uid-owner ${user} -m tcp --dport ${toString transPort} -j ACCEPT
+        iptables -w -t filter -A ${chain} -d 127.0.0.0/8 -p udp -m owner --uid-owner ${user} -m udp --dport ${toString dnsPort} -j ACCEPT
 
-    # Drop everything else.
-    ip46tables -w -t filter -A ${chain} -m owner --uid-owner ${user} -j DROP
+        # Drop everything else.
+        ip46tables -w -t filter -A ${chain} -m owner --uid-owner ${user} -j DROP
 
-  '') cfg) + ''
+      '')
+      cfg)
+    + ''
 
-    ip46tables -w -t nat    -A OUTPUT -j ${chain}
-    ip46tables -w -t filter -A OUTPUT -j ${chain}
+      ip46tables -w -t nat    -A OUTPUT -j ${chain}
+      ip46tables -w -t filter -A OUTPUT -j ${chain}
 
-  '';
-
-in
-
-{
-
+    '';
+in {
   options.services.tor.torifiedUsers = mkOption {
     type = types.listOf (types.submodule {
       options = {
-        username = mkOption { type = types.str; };
+        username = mkOption {type = types.str;};
         allowedLocalPorts = mkOption {
           type = types.listOf types.int;
           default = [];
@@ -78,10 +84,9 @@ in
   };
 
   config = mkMerge [
-    { networking.firewall.extraCommands = mkBefore flushRules; }
+    {networking.firewall.extraCommands = mkBefore flushRules;}
 
     (mkIf (cfg != []) {
-
       services.tor = {
         enable = true;
         client.enable = true;
@@ -110,8 +115,6 @@ in
         extraCommands = setupRules;
         extraStopCommands = flushRules;
       };
-
     })
   ];
-
 }

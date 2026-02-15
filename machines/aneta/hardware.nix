@@ -1,6 +1,9 @@
-{ config, pkgs, lib, ... }:
-
 {
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
   services.smartd.enable = false; # FIXME: ?
 
   boot.loader.grub.enable = false;
@@ -9,7 +12,7 @@
   #boot.kernelPackages = pkgs.linuxPackages_latest_ipMultipleTables;
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  boot.kernelParams = [ "cma=32M" "console=ttyS1,115200n8" ];
+  boot.kernelParams = ["cma=32M" "console=ttyS1,115200n8"];
 
   # boot.kernelModules = [ "gre" "ip_gre" "ip_tunnel" "ip_nat_pptp" ];
   boot.kernel.sysctl."net.netfilter.nf_conntrack_helper" = 1;
@@ -18,8 +21,10 @@
     overlays = [
       (self: super: {
         linuxPackages_latest_ipMultipleTables = pkgs.linuxPackagesFor (pkgs.linuxPackages_latest.kernel.override {
-          structuredExtraConfig = with (import "${pkgs.path}/lib/kernel.nix" { inherit lib; version = null; });
-          {
+          structuredExtraConfig = with (import "${pkgs.path}/lib/kernel.nix" {
+            inherit lib;
+            version = null;
+          }); {
             IP_ADVANCED_ROUTER = yes;
             IP_MULTIPLE_TABLES = yes;
             IP_ROUTE_MULTIPATH = yes;

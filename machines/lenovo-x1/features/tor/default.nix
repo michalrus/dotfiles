@@ -1,12 +1,20 @@
-{ config, pkgs, ... }:
-
 {
-
+  config,
+  pkgs,
+  ...
+}: {
   services.tor = {
     enable = true;
     client.enable = true;
     torifiedUsers = [
-      { username = "md"; allowedLocalPorts = [ /*config.services.firefox-autocomplete.userPorts.md*/ ]; }
+      {
+        username = "md";
+        allowedLocalPorts = [
+          /*
+          config.services.firefox-autocomplete.userPorts.md
+          */
+        ];
+      }
     ];
   };
 
@@ -17,8 +25,8 @@
     isNormalUser = true;
     uid = 1347;
     description = "Michal Rus (d)";
-    extraGroups = [ "audio" "nonet" "scanner" "networkmanager" "wireshark" "cdrom" "video" ];
-    dotfiles-old.profiles = [ "base" "michalrus/base" "michalrus/tor" ];
+    extraGroups = ["audio" "nonet" "scanner" "networkmanager" "wireshark" "cdrom" "video"];
+    dotfiles-old.profiles = ["base" "michalrus/base" "michalrus/tor"];
     packages = with pkgs; [
       electrum
       # (hardened-firefox.makeWrapped {
@@ -32,5 +40,4 @@
       # })
     ];
   };
-
 }

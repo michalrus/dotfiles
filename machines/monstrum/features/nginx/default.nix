@@ -1,11 +1,13 @@
-{ flake, config, lib, pkgs, ... }:
-
-let
-  acmeChallenges = "/var/www/acme-challenges";
-in
-
 {
-  networking.firewall.allowedTCPPorts = [ 80 443 8443 ];
+  flake,
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+  acmeChallenges = "/var/www/acme-challenges";
+in {
+  networking.firewall.allowedTCPPorts = [80 443 8443];
 
   systemd.tmpfiles.rules = [
     "d ${acmeChallenges}/.well-known                0755 root root -"
@@ -78,5 +80,4 @@ in
       '';
     };
   };
-
 }

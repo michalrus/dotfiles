@@ -1,18 +1,21 @@
-{ config, lib, pkgs, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   nix.settings.max-jobs = lib.mkDefault 4;
   nix.settings.cores = lib.mkDefault 4;
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usb_storage" ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
-  boot.blacklistedKernelModules = [ "radeon" "amdgpu" ]; # I’m getting some errors in journal.
+  boot.initrd.availableKernelModules = ["xhci_pci" "ehci_pci" "ahci" "usb_storage"];
+  boot.kernelModules = ["kvm-intel"];
+  boot.extraModulePackages = [];
+  boot.blacklistedKernelModules = ["radeon" "amdgpu"]; # I’m getting some errors in journal.
 
   boot.kernelPackages = pkgs.linuxPackages_latest; # pkgs.linuxPackages_5_6;
 
   # Turn off physical display after N seconds:
-  boot.kernelParams = [ "consoleblank=30" ];
+  boot.kernelParams = ["consoleblank=30"];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -40,7 +43,7 @@
   fileSystems."/home" = {
     device = "/var/home";
     fsType = "none";
-    options = [ "bind" ];
+    options = ["bind"];
   };
 
   #boot.kernel.sysctl."vm.swappiness" = lib.mkForce 1; # Let’s try this.

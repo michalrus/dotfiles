@@ -1,45 +1,100 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" ng-app>
   <head>
     <title>Michal Rus • meteo</title>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <link rel="shortcut icon" href="/favicon.ico" />
     <style>
-      a       { cursor: pointer; text-decoration: none; color: #555; }
-      a:hover { color: #888; }
-      nav     { position: fixed; top: 0; left: 0; right: 0; height: 5em; text-align: center; border-bottom: 1px solid #ddd; }
-      nav div { display: inline-block; margin: 1em; }
-      nav p   { margin: 0; font-size: 1.5em; }
-      nav ul  { list-style-type: none; margin: 0; padding: 0; overflow: hidden; display: inline-block; }
-      nav li  { float: left; margin: 0 0.2em; }
-      article { position: fixed; top: 5em; bottom: 0; left: 0; right: 0; }
-      iframe  { width: 100%; height: 100%; border: 0; }
+      a {
+        cursor: pointer;
+        text-decoration: none;
+        color: #555;
+      }
+      a:hover {
+        color: #888;
+      }
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5em;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+      }
+      nav div {
+        display: inline-block;
+        margin: 1em;
+      }
+      nav p {
+        margin: 0;
+        font-size: 1.5em;
+      }
+      nav ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        display: inline-block;
+      }
+      nav li {
+        float: left;
+        margin: 0 0.2em;
+      }
+      article {
+        position: fixed;
+        top: 5em;
+        bottom: 0;
+        left: 0;
+        right: 0;
+      }
+      iframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
+      }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.14/angular.min.js"></script>
     <script>
+      function MeteoCtrl($scope, $interval) {
+        $scope.data = [
+          { name: "Kłodawa", id: 1768 },
+          { name: "Kraków", id: 462 },
+          { name: "Legnica", id: 982 },
+          { name: "Miłakowo", id: 1563 },
+          { name: "Wrocław", id: 983 },
+        ];
+        $scope.url = "";
 
-function MeteoCtrl($scope, $interval) {
-  $scope.data = [
-    { name: 'Kłodawa',  id: 1768 },
-    { name: 'Kraków',   id:  462 },
-    { name: 'Legnica',  id:  982 },
-    { name: 'Miłakowo', id: 1563 },
-    { name: 'Wrocław',  id:  983 },
-  ];
-  $scope.url = '';
+        $scope.um = function (id) {
+          return (
+            "https://new.meteo.pl/um/php/meteorogram_id_um.php?ntype=0u&id=" +
+            id
+          );
+        };
+        $scope.coamps = function (id) {
+          return (
+            "https://new.meteo.pl/php/meteorogram_id_coamps.php?ntype=2n&id=" +
+            id
+          );
+        };
 
-  $scope.um     = function(id) { return 'https://new.meteo.pl/um/php/meteorogram_id_um.php?ntype=0u&id=' + id; };
-  $scope.coamps = function(id) { return 'https://new.meteo.pl/php/meteorogram_id_coamps.php?ntype=2n&id=' + id; };
-
-  $scope.anchor = null;
-  $scope.setAnchor = function($event) { $scope.anchor = $event.target; };
-  $interval(function(){
-    if ($scope.anchor != null) $scope.anchor.click();
-  }, 2 * 60 * 1000);
-}
-
+        $scope.anchor = null;
+        $scope.setAnchor = function ($event) {
+          $scope.anchor = $event.target;
+        };
+        $interval(
+          function () {
+            if ($scope.anchor != null) $scope.anchor.click();
+          },
+          2 * 60 * 1000,
+        );
+      }
     </script>
   </head>
   <body ng-controller="MeteoCtrl">
@@ -48,8 +103,22 @@ function MeteoCtrl($scope, $interval) {
       <div ng-repeat="d in data">
         <p>{{d.name}}</p>
         <ul>
-          <li><a target="frame" ng-click="setAnchor($event)" ng-href="{{um(d.id)}}">UM</a></li>
-          <li><a target="frame" ng-click="setAnchor($event)" ng-href="{{coamps(d.id)}}">COAMPS</a></li>
+          <li>
+            <a
+              target="frame"
+              ng-click="setAnchor($event)"
+              ng-href="{{um(d.id)}}"
+              >UM</a
+            >
+          </li>
+          <li>
+            <a
+              target="frame"
+              ng-click="setAnchor($event)"
+              ng-href="{{coamps(d.id)}}"
+              >COAMPS</a
+            >
+          </li>
         </ul>
       </div>
     </nav>

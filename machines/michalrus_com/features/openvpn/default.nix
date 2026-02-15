@@ -1,29 +1,26 @@
-{ config, lib, pkgs, ... }:
-
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-
-with (import ./common.nix { inherit lib; });
-
-let
-
+with (import ./common.nix {inherit lib;}); let
   dataDir = "/var/lib/openvpn";
 
   ccdDir = pkgs.runCommand "ccd" {} ''
     mkdir -p $out
     ${concatStringsSep "\n" (mapAttrsToList (common: v: ''
-      echo >$out/${common} \
-        'ifconfig-push ${subnet}.${v.ip} 255.255.255.0
-         ${v.extra or ""}'
-    '') ccd)}
+        echo >$out/${common} \
+          'ifconfig-push ${subnet}.${v.ip} 255.255.255.0
+           ${v.extra or ""}'
+      '')
+      ccd)}
   '';
 
   ippFile = pkgs.writeText "ipp" ((concatStringsSep "\n" (mapAttrsToList (common: v: "${common},${subnet}.${v.ip}") ccd)) + "\n");
-
-in
-
-{
-
-  networking.firewall.allowedUDPPorts = [ 1194 53 ];
+in {
+  networking.firewall.allowedUDPPorts = [1194 53];
 
   services.openvpn.servers = {
     server = {
@@ -59,5 +56,4 @@ in
   };
 
   networking.extraHosts = extraHosts;
-
 }

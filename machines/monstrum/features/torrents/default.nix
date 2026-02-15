@@ -1,7 +1,9 @@
-{ config, lib, pkgs, ... }:
-
-let
-
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   serviceName = "qbittorrent";
   user = serviceName;
   uid = 2048;
@@ -17,14 +19,11 @@ let
     url = "https://github.com/VueTorrent/VueTorrent/releases/download/v2.19.0/vuetorrent.zip";
     hash = "sha256-cIY5fhcLyEPwt5D2T0S4KhAbb8Qmd9m3xcsQTa4FX+8=";
   };
-
-in
-
-{
+in {
   systemd.services.${serviceName} = {
     description = "qBittorrent-nox service";
-    after = [ "network.target" ];
-    wantedBy = [ "multi-user.target" ];
+    after = ["network.target"];
+    wantedBy = ["multi-user.target"];
     serviceConfig = {
       Type = "simple";
       Restart = "always";
@@ -86,11 +85,11 @@ in
       location / {
         auth_basic "Speak, friend, and enter.";
         auth_basic_user_file "${pkgs.writeText "htpasswd" ''
-          michalrus:$apr1$4fn7tiut$PnnQScj.VLp0VIJVlxP.60
-          krzyszu:$apr1$013s09JA$S/UePzyCNcm9R19isSF6G/
-          krzyszu-mobile:$apr1$Vlo/cUn/$uHt57u8DiUV8ocVpb9GIH0
-          km:$apr1$PbwyW8kI$3XBG1aWNzuF4lkR/n9SCP.
-        ''}";
+      michalrus:$apr1$4fn7tiut$PnnQScj.VLp0VIJVlxP.60
+      krzyszu:$apr1$013s09JA$S/UePzyCNcm9R19isSF6G/
+      krzyszu-mobile:$apr1$Vlo/cUn/$uHt57u8DiUV8ocVpb9GIH0
+      km:$apr1$PbwyW8kI$3XBG1aWNzuF4lkR/n9SCP.
+    ''}";
 
         proxy_redirect off;
         proxy_set_header Host $host;
@@ -110,14 +109,14 @@ in
   # Monitors whether the external port is reachable, and restarts the `qbittorrent.service` if it isn’t.
   # Sometimes – esp. after `airvpn.service` restart, qBittorrent doesn’t notice the new address.
   systemd.services."${serviceName}-port-monitor" = {
-    after = [ "network.target" ];
-    wantedBy = [ "multi-user.target" ];
+    after = ["network.target"];
+    wantedBy = ["multi-user.target"];
     serviceConfig = {
       Type = "simple";
       Restart = "always";
       RestartSec = 60;
     };
-    path = [ config.systemd.package ] ++ (with pkgs; [ curl jq netcat-openbsd ]);
+    path = [config.systemd.package] ++ (with pkgs; [curl jq netcat-openbsd]);
     script = ''
       set -euo pipefail
       while true ; do

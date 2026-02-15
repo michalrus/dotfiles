@@ -1,15 +1,12 @@
-{ config, lib, pkgs, ... }:
-
-with lib;
-
-let
-
-  dataDir = "/var/lib/openvpn/nordvpn";
-
-in
-
 {
-
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+with lib; let
+  dataDir = "/var/lib/openvpn/nordvpn";
+in {
   services.openvpn.servers.nordvpn = {
     updateResolvConf = true;
     autoStart = false;
@@ -18,5 +15,4 @@ in
       auth-user-pass ${dataDir}/auth-user-pass
     '';
   };
-
 }

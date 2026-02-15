@@ -1,8 +1,11 @@
-{ config, flake, pkgs, lib, ... }:
-
 {
-
-  home.packages = [ pkgs.screen ];
+  config,
+  flake,
+  pkgs,
+  lib,
+  ...
+}: {
+  home.packages = [pkgs.screen];
 
   home.file.".screenrc".text = ''
     vbell off
@@ -29,5 +32,4 @@
 
     termcapinfo xterm*|xterm-256color|screen.xterm*|rxvt*  ti@:te@:XT:Km@:
   '';
-
 }

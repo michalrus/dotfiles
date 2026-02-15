@@ -1,13 +1,13 @@
-{ config, lib, pkgs, ... }:
-
-with lib;
-
-let
-  cfg = config.users.guestAccount;
-  emptyDir = pkgs.runCommand "empty-directory" { preferLocalBuild = true; } "mkdir -p $out";
-in
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+with lib; let
+  cfg = config.users.guestAccount;
+  emptyDir = pkgs.runCommand "empty-directory" {preferLocalBuild = true;} "mkdir -p $out";
+in {
   options = {
     users.guestAccount = {
       enable = mkOption {
@@ -39,7 +39,6 @@ in
   };
 
   config = mkIf cfg.enable {
-
     users.extraUsers.guest = {
       hashedPassword = "";
       isNormalUser = true;
@@ -50,7 +49,6 @@ in
     };
 
     systemd.services."guest-account-cleanup" = let
-
       cleanup = pkgs.writeScript "guest-account-cleanup" ''
         #!${pkgs.stdenv.shell}
 
@@ -70,8 +68,7 @@ in
       # After systemd-243 the user-.slice is not stopped after logout, so let’s depend on the user@.service.
       #   freenode/#systemd:
       #   11:34 <boucman> I'm not sure about the internal systemd logic, but it's possible the slice was kept alive because of the dependency
-      dep = [ "user@${toString cfg.uid}.service" ];
-
+      dep = ["user@${toString cfg.uid}.service"];
     in {
       wantedBy = dep;
       partOf = dep; # so that it’s killed after user logs out
@@ -83,6 +80,5 @@ in
         ExecStop = "${cleanup}";
       };
     };
-
   };
 }

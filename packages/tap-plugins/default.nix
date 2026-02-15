@@ -1,5 +1,9 @@
-{ stdenv, lib, fetchFromGitHub, perl }:
-
+{
+  stdenv,
+  lib,
+  fetchFromGitHub,
+  perl,
+}:
 stdenv.mkDerivation rec {
   pname = "tap-plugins";
   version = "1.0.1";
@@ -11,7 +15,7 @@ stdenv.mkDerivation rec {
     sha256 = "0c6qhyf8smlypc36vmpr42dm3mrzk6pg9cc9r0vx22qbrd5zfpjw";
   };
 
-  nativeBuildInputs = [ perl ];
+  nativeBuildInputs = [perl];
 
   # To avoid name clashes, plugins should be compiled with symbols hidden, except for `ladspa_descriptor`:
   preConfigure = ''
@@ -31,7 +35,7 @@ stdenv.mkDerivation rec {
     homepage = "http://tap-plugins.sourceforge.net/";
     description = "Tom's Audio Processing plugins for audio engineering on the Linux platform";
     license = licenses.gpl2;
-    maintainers = [ maintainers.michalrus ];
+    maintainers = [maintainers.michalrus];
     platforms = platforms.linux;
   };
 }

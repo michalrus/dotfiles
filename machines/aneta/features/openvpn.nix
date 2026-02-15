@@ -1,9 +1,10 @@
-{ config, lib, pkgs, ... }:
-
-with lib;
-
-let
-
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+with lib; let
   name = "nordvpn";
 
   dataDir = "/var/lib/openvpn/${name}";
@@ -28,13 +29,8 @@ let
 
     ${config.services.bind.script.setCustomForwarders} $IF_DNS_NAMESERVERS
   '';
-
-in
-
-{
-
+in {
   networking = {
-
     # FIXME:
     networkmanager.dispatcherScripts = [
       {
@@ -50,7 +46,6 @@ in
     ];
 
     networkmanager.dns = lib.mkForce "none";
-
   };
 
   systemd.services."openvpn-${name}" = {
@@ -80,6 +75,4 @@ in
       auth-user-pass ${dataDir}/auth-user-pass
     '';
   };
-
 }
-

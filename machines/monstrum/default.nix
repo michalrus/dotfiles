@@ -1,146 +1,143 @@
-{ inputs }:
-
-let
+{inputs}: let
   flake = inputs.self;
   nixpkgs = inputs.nixpkgs-2511;
 in
+  nixpkgs.lib.nixosSystem {
+    system = "x86_64-linux";
+    modules = [
+      {_module.args = {inherit flake;};}
+      nixpkgs.nixosModules.notDetected
+      ./hardware.nix
 
-nixpkgs.lib.nixosSystem {
-  system = "x86_64-linux";
-  modules = [
-    { _module.args = { inherit flake; }; }
-    nixpkgs.nixosModules.notDetected
-    ./hardware.nix
+      {networking.hostName = "monstrum";}
+      {time.timeZone = "UTC";}
+      {system.stateVersion = "24.11";}
 
-    { networking.hostName = "monstrum"; }
-    { time.timeZone = "UTC"; }
-    { system.stateVersion = "24.11"; }
+      flake.inputs.agenix.nixosModules.default
+      flake.nixosModules.malicious-hosts
+      flake.nixosModules.lock-vts
 
-    flake.inputs.agenix.nixosModules.default
-    flake.nixosModules.malicious-hosts
-    flake.nixosModules.lock-vts
+      flake.nixosModules.gnu-screen
+      {services.gnu-screen.usersAlways = ["root" "km"];}
 
-    flake.nixosModules.gnu-screen
-    { services.gnu-screen.usersAlways = [ "root" "km" ]; }
+      ../_shared_/features/fav-pkgs-cli-thin
+      ../_shared_/features/immutable-users
+      ../_shared_/features/ip-reject-not-drop
+      ../_shared_/features/kill-user-processes
+      ../_shared_/features/locale-en-iso
+      ../_shared_/features/more-entropy
+      ../_shared_/features/mtr-traceroute-fping
+      ../_shared_/features/nix.conf
+      ../_shared_/features/systemd-accounting
+      ../_shared_/features/zsh
+      ../_shared_/features/hyprland
+      ../_shared_/features/fonts
+      ../_shared_/features/desktop-apps
+      ../_shared_/features/programming
+      ../_shared_/features/chromium
+      ../_shared_/features/games
+      ../_shared_/features/wine
+      ../_shared_/features/bubblewrap
+      ../_shared_/features/logitech-mouse
 
-    ../_shared_/features/fav-pkgs-cli-thin
-    ../_shared_/features/immutable-users
-    ../_shared_/features/ip-reject-not-drop
-    ../_shared_/features/kill-user-processes
-    ../_shared_/features/locale-en-iso
-    ../_shared_/features/more-entropy
-    ../_shared_/features/mtr-traceroute-fping
-    ../_shared_/features/nix.conf
-    ../_shared_/features/systemd-accounting
-    ../_shared_/features/zsh
-    ../_shared_/features/hyprland
-    ../_shared_/features/fonts
-    ../_shared_/features/desktop-apps
-    ../_shared_/features/programming
-    ../_shared_/features/chromium
-    ../_shared_/features/games
-    ../_shared_/features/wine
-    ../_shared_/features/bubblewrap
-    ../_shared_/features/logitech-mouse
+      ./features/wireguard-michalrus
+      ../_shared_/features/nginx-reasonable
+      ./features/nginx
+      ./features/openproject
+      {
+        services.openproject.hostname = "openproject.michalrus.com";
+        services.openproject.https = true;
+      }
 
-    ./features/wireguard-michalrus
-    ../_shared_/features/nginx-reasonable
-    ./features/nginx
-    ./features/openproject
-    {
-      services.openproject.hostname = "openproject.michalrus.com";
-      services.openproject.https = true;
-    }
+      ./features/torrents
+      ./features/airvpn
+      ./features/users
 
-    ./features/torrents
-    ./features/airvpn
-    ./features/users
+      ./features/firewall
+      ./features/connmon
+      ./features/nordvpn
+      ./features/dns-bind
+      ./features/dhcp
+      ./features/microsocks
 
-    ./features/firewall
-    ./features/connmon
-    ./features/nordvpn
-    ./features/dns-bind
-    ./features/dhcp
-    ./features/microsocks
+      ./features/cardano
 
-    ./features/cardano
+      flake.inputs.home-manager-2511.nixosModules.home-manager
+      {
+        home-manager = {
+          extraSpecialArgs = {inherit flake;};
+          useGlobalPkgs = true;
+          useUserPackages = true;
+          sharedModules = [
+            {home.stateVersion = "24.11";}
 
-    flake.inputs.home-manager-2511.nixosModules.home-manager
-    {
-      home-manager = {
-        extraSpecialArgs = { inherit flake; };
-        useGlobalPkgs = true;
-        useUserPackages = true;
-        sharedModules = [
-          { home.stateVersion = "24.11"; }
+            ../_shared_/home/shells
+            ../_shared_/home/gnupg
+            ../_shared_/home/gnu-screen
+            ../_shared_/home/git
+            ../_shared_/home/password-store
+            ../_shared_/home/firefox
+            ../_shared_/home/mpv
+            ../_shared_/home/alacritty
+          ];
+        };
+      }
 
-          ../_shared_/home/shells
-          ../_shared_/home/gnupg
-          ../_shared_/home/gnu-screen
-          ../_shared_/home/git
-          ../_shared_/home/password-store
-          ../_shared_/home/firefox
-          ../_shared_/home/mpv
-          ../_shared_/home/alacritty
-        ];
-      };
-    }
+      {
+        services.udev.extraHwdb = ''
+          # Flirc USB (common: 20A0:0006)
+          evdev:input:b0003v20A0p0006*
+            KEYBOARD_KEY_000c00b0=playcd
+            KEYBOARD_KEY_000c00b1=pausecd
+        '';
+      }
 
-    {
-      services.udev.extraHwdb = ''
-        # Flirc USB (common: 20A0:0006)
-        evdev:input:b0003v20A0p0006*
-          KEYBOARD_KEY_000c00b0=playcd
-          KEYBOARD_KEY_000c00b1=pausecd
-      '';
-    }
+      ({pkgs, ...}: {
+        services.pipewire = {
+          enable = true;
+          pulse.enable = true;
+        };
+        environment.systemPackages = with pkgs; [pavucontrol pulsemixer];
+      })
 
-    ({ pkgs, ... }: {
-      services.pipewire = {
-        enable = true;
-        pulse.enable = true;
-      };
-      environment.systemPackages = with pkgs; [ pavucontrol pulsemixer ];
-    })
+      ({pkgs, ...}: {
+        environment.systemPackages = [flake.packages.${pkgs.stdenv.hostPlatform.system}.accuradio];
+      })
 
-    ({ pkgs, ... }: {
-      environment.systemPackages = [ flake.packages.${pkgs.stdenv.hostPlatform.system}.accuradio ];
-    })
+      ({pkgs, ...}: {
+        environment.systemPackages = with pkgs; [wayvnc];
+      })
 
-    ({ pkgs, ... }: {
-      environment.systemPackages = with pkgs; [ wayvnc ];
-    })
+      ({config, ...}: {
+        services.openssh.settings.PrintMotd = true;
+        environment.etc."motd".text = let
+          esc = builtins.fromJSON ''"\u001b["'';
+          bold = "${esc}1m";
+          reset = "${esc}0m";
+        in ''
 
-    ({ config, ... }: {
-      services.openssh.settings.PrintMotd = true;
-      environment.etc."motd".text = let
-        esc   = builtins.fromJSON ''"\u001b["'';
-        bold  = "${esc}1m";
-        reset = "${esc}0m";
-      in ''
+          Welcome to ${bold}${config.networking.hostName}${reset} (NixOS ${config.system.nixos.label}).
 
-        Welcome to ${bold}${config.networking.hostName}${reset} (NixOS ${config.system.nixos.label}).
+          Useful commands:
 
-        Useful commands:
+            ${bold}s${reset}                               – Restore a GNU screen session
+            ${bold}modem-restart${reset}                   – Soft-restart the LTE modem
+            ${bold}vpn-change-server${reset}               – Select a new (general) VPN server
+            ${bold}vpn-change-server-for-torrents${reset}  – Select a new VPN server for Torrents
+            ${bold}accuradio${reset}                       – No-ads textual UI for AccuRadio
+            ${bold}mpva${reset}                            – Stream audio from a YouTube URL
+            ${bold}mpva-android${reset}                    – Same, but use the Android player API
+            ${bold}pulsemixer${reset}                      – Sound volume controls
+        '';
+      })
 
-          ${bold}s${reset}                               – Restore a GNU screen session
-          ${bold}modem-restart${reset}                   – Soft-restart the LTE modem
-          ${bold}vpn-change-server${reset}               – Select a new (general) VPN server
-          ${bold}vpn-change-server-for-torrents${reset}  – Select a new VPN server for Torrents
-          ${bold}accuradio${reset}                       – No-ads textual UI for AccuRadio
-          ${bold}mpva${reset}                            – Stream audio from a YouTube URL
-          ${bold}mpva-android${reset}                    – Same, but use the Android player API
-          ${bold}pulsemixer${reset}                      – Sound volume controls
-      '';
-    })
-
-    # {
-    #   services.printing.enable = true;
-    #   services.pipewire = {
-    #     enable = true;
-    #     pulse.enable = true;
-    #   };
-    #   networking.firewall.enable = false;
-    # }
-  ];
-}
+      # {
+      #   services.printing.enable = true;
+      #   services.pipewire = {
+      #     enable = true;
+      #     pulse.enable = true;
+      #   };
+      #   networking.firewall.enable = false;
+      # }
+    ];
+  }

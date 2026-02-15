@@ -1,14 +1,17 @@
-{ config, lib, pkgs, ... }:
-
-with import ./common.nix;
-
-let
-
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+with import ./common.nix; let
   standardForwarders = [
     # Cloudflare
-    "1.1.1.1" "1.0.0.1"
+    "1.1.1.1"
+    "1.0.0.1"
     # Google
-    "8.8.8.8" "8.8.4.4"
+    "8.8.8.8"
+    "8.8.4.4"
   ];
 
   forwardersConf = "/etc/bind/forwarders.conf";
@@ -18,13 +21,8 @@ let
     forwarders { ${lib.concatMapStrings (entry: " ${entry}; ") standardForwarders} };
     EOF
   '';
-
-in
-
-{
-
+in {
   options = {
-
     services.bind.script.setCustomForwarders = lib.mkOption {
       type = lib.types.path;
       internal = true;
@@ -52,11 +50,9 @@ in
         ${config.systemd.package}/bin/systemctl reload --no-block bind.service
       '';
     };
-
   };
 
   config = {
-
     services.resolved.enable = false;
 
     services.nscd.enable = false;
@@ -66,52 +62,53 @@ in
 
     networking.resolvconf.useLocalResolver = true;
 
-    networking.firewall.allowedUDPPorts = [ 53 ];
+    networking.firewall.allowedUDPPorts = [53];
 
     services.bind = {
       enable = true;
 
-      configFile = pkgs.writeText "named.conf" (''
-        include "/etc/bind/rndc.key";
-        controls {
-          inet 127.0.0.1 allow {localhost;} keys {"rndc-key";};
-        };
+      configFile = pkgs.writeText "named.conf" (
+        ''
+          include "/etc/bind/rndc.key";
+          controls {
+            inet 127.0.0.1 allow {localhost;} keys {"rndc-key";};
+          };
 
-        acl cachenetworks { 127.0.0.0/8; ${addressing.subnet}; };
-        acl badnetworks   { };
+          acl cachenetworks { 127.0.0.0/8; ${addressing.subnet}; };
+          acl badnetworks   { };
 
-        options {
-          listen-on    { any; };
-          listen-on-v6 { any; };
-          allow-query  { cachenetworks; };
-          blackhole    { badnetworks;   };
+          options {
+            listen-on    { any; };
+            listen-on-v6 { any; };
+            allow-query  { cachenetworks; };
+            blackhole    { badnetworks;   };
 
-          directory "/run/named";
-          pid-file  "/run/named/named.pid";
+            directory "/run/named";
+            pid-file  "/run/named/named.pid";
 
-          forward only;
-          include "${forwardersConf}";
-        };
-      ''
-      + (let domain = "openproject.michalrus.com"; in ''
-        zone "${domain}" {
-          type master;
-          file "${pkgs.writeText "${domain}.zone" ''
+            forward only;
+            include "${forwardersConf}";
+          };
+        ''
+        + (let
+          domain = "openproject.michalrus.com";
+        in ''
+          zone "${domain}" {
+            type master;
+            file "${pkgs.writeText "${domain}.zone" ''
             $TTL    604800
             @       IN      SOA     ns.${domain}. admin.michalrus.com. (2 604800 86400 2419200 604800)
             @       IN      NS      ns.${domain}.
             @       IN      A       10.77.2.11
             ns      IN      A       10.77.2.11
           ''}";
-        };
-      '')
+          };
+        '')
       );
     };
 
     systemd.services.bind.preStart = lib.mkAfter ''
       ${unsetCustomForwarders}
     '';
-
   };
-
 }

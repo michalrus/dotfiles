@@ -4,13 +4,8 @@
     "position": "top",
     "height": 30,
     "reload_style_on_change": true,
-    "modules-center": [
-      "hyprland/window"
-    ],
-    "modules-left": [
-      "hyprland/workspaces",
-      "hyprland/submap"
-    ],
+    "modules-center": ["hyprland/window"],
+    "modules-left": ["hyprland/workspaces", "hyprland/submap"],
     "modules-right": [
       "pulseaudio",
       "battery",

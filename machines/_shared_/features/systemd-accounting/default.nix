@@ -1,6 +1,4 @@
-{ ... }:
-
-{
+{...}: {
   systemd.settings.Manager = {
     DefaultCPUAccounting = true;
     DefaultBlockIOAccounting = true;

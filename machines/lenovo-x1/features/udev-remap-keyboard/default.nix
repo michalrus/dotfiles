@@ -1,7 +1,9 @@
-{ config, lib, pkgs, ... }:
-
 {
-
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   # Find scancodes by running `evtest`.
   # Find devices by running `evemu-describe`.
   # Find ${vendorId} by running `lsusb`.
@@ -18,5 +20,4 @@
       KEYBOARD_KEY_700e0=capslock   # was leftctrl
       KEYBOARD_KEY_700e4=compose    # was rightctrl
   '';
-
 }

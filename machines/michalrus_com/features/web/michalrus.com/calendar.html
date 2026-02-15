@@ -1,139 +1,181 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-	<head>
-		<title>Michal Rus • calendar</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<link rel="stylesheet" href="/css/style.css" type="text/css" />
-		<link rel="shortcut icon" href="/favicon.ico" />
-		<!--[if lt IE 9]>
-			<script src="//ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js">IE7_PNG_SUFFIX=".png";</script><![endif]-->
-		<!--[if lt IE 9]>
-			<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-		<script src="//cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.6/jstz.min.js"></script>
-                <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-		<style>
+  <head>
+    <title>Michal Rus • calendar</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <link rel="stylesheet" href="/css/style.css" type="text/css" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <!--[if lt IE 9]>
+      <script src="//ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js">
+        IE7_PNG_SUFFIX=".png";
+      </script><!
+    [endif]-->
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script
+    ><![endif]-->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.6/jstz.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <style>
+      .stretch {
+        display: block;
+        position: absolute;
+        height: auto;
+        min-width: 250px;
+        bottom: 21px;
+        top: 64px;
+        left: 21px;
+        right: 21px;
+      }
 
-.stretch {
-	display: block;
-	position:absolute;
-	height:auto;
-	min-width: 250px;
-	bottom: 21px;
-	top: 64px;
-	left: 21px;
-	right: 21px;
-}
+      .hint {
+        font-size: 0.8em;
+        margin-left: 31px;
+        margin-left: 51px;
+        margin-left: 47px;
+        text-align: center;
+        width: 70px;
+        padding: 10px;
+        padding-bottom: 0;
+        background: #6688ee;
+        background: #404040;
+        background: #777;
+        background: #95adf3;
+        color: #fff;
+        font-family: sans-serif;
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px;
+        border-radius: 10px;
+      }
 
-.hint {
-	font-size: 0.8em;
-	margin-left: 31px;
-	margin-left: 51px;
-	margin-left: 47px;
-	text-align: center;
-	width: 70px;
-	padding: 10px;
-	padding-bottom: 0;
-	background: #6688ee;
-	background: #404040;
-	background: #777;
-	background: #95ADF3;
-	color: #fff;
-	font-family: sans-serif;
-	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;
-	border-radius: 10px;
-}
+      .hint:after {
+        content: "";
+        border: solid 10px transparent;
+        border-top-color: #6688ee;
+        border-top-color: #404040;
+        border-top-color: #777;
+        border-top-color: #95adf3;
+        border-bottom: 0;
+        width: 0;
+        height: 0;
+        overflow: hidden;
+        display: block;
+        position: relative;
+        bottom: -10px;
+        margin: auto;
+        margin-left: 45px;
+        margin-left: 25px;
+      }
 
-.hint:after {
-	content: "";
-	border: solid 10px transparent;
-	border-top-color: #6688ee;
-	border-top-color: #404040;
-	border-top-color: #777;
-	border-top-color: #95ADF3;
-	border-bottom: 0;
-	width: 0;
-	height: 0;
-	overflow: hidden;
-	display: block;
-	position: relative;
-	bottom: -10px;
-	margin: auto;
-	margin-left: 45px;
-	margin-left: 25px;
-}
+      .calendar iframe {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body id="index" class="home">
+    <div class="hint">next week</div>
+    <div id="calendar" class="calendar stretch"></div>
 
-.calendar iframe {
-	display: block;
-	width: 100%;
-	height: 100%;
-}
+    <script type="text/javascript">
+      (function () {
+        settings = {
+          showTitle: 0,
+          mode: "WEEK",
+          height: 600,
+          wkst: 2,
+          bgcolor: "#FFFFFF",
+          ctz: jstz.determine().name(),
+        };
 
-		</style>
-	</head>
-	<body id="index" class="home">
+        calendars = [
+          ["#000000", "m@michalrus.com"], // Invites
+          [
+            "#1B887A",
+            "7v2c2cq8kfft24pnj0f145dqd3i3l138@import.calendar.google.com",
+          ], // Meetup.com
+          [
+            "#1B887A",
+            "michalrus.com_kv4h7dnm4msfgf87p5k5lasosg@group.calendar.google.com",
+          ], // Education
+          ["#29527A", "en.polish#holiday@group.v.calendar.google.com"], // Polish holidays
+          [
+            "#2952A3",
+            "michalrus.com_4sf0ml705babpceg16j29chgms@group.calendar.google.com",
+          ], // Travel
+          [
+            "#2F6309",
+            "0dl9car0g2t1umefm1brn9r82o8477as@import.calendar.google.com",
+          ], // Facebook Events
+          [
+            "#2F6309",
+            "michalrus.com_l9ukoks8cl6n8g2h343qs53uus@group.calendar.google.com",
+          ], // Słupska, Agata
+          [
+            "#2F6309",
+            "michalrus.com_thtdi7mh3070gblmqs77qlqj9g@group.calendar.google.com",
+          ], // Social
+          [
+            "#333333",
+            "michalrus.com_giam6n4ot7hsq3p1gvd3p0kmec@group.calendar.google.com",
+          ], // Work
+          [
+            "#711616",
+            "dirv9v10c32debb8njakrl0mdpp7d8fm@import.calendar.google.com",
+          ], // Moon/Astro
+          [
+            "#AB8B00",
+            "michalrus.com_q3q9n0dh8miackpeqne4i54g9o@group.calendar.google.com",
+          ], // To-dos
+          [
+            "#B1365F",
+            "michalrus.com_s196end2re40p44rvajarcisj8@group.calendar.google.com",
+          ], // Appointments
+        ];
 
+        calendarsMap = $.map(calendars, function (a) {
+          return [
+            { name: "src", value: a[1] },
+            { name: "color", value: a[0] },
+          ];
+        });
 
-<div class="hint">next week</div>
-<div id="calendar" class="calendar stretch"></div>
+        embedUrl =
+          "https://calendar.google.com/calendar/embed?" +
+          $.param(settings) +
+          "&" +
+          $.param(calendarsMap);
 
+        escapedUrl = $("<div/>").text(embedUrl).html();
 
+        document.getElementById("calendar").innerHTML =
+          '<iframe src="' +
+          escapedUrl +
+          '" style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>';
+      })();
+    </script>
 
-<script type="text/javascript">
-  (function(){
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(["_setAccount", "UA-29063970-1"]);
+      _gaq.push(["_trackPageview"]);
 
-    settings = {
-      'showTitle': 0,
-      'mode':      'WEEK',
-      'height':    600,
-      'wkst':      2,
-      'bgcolor':   '#FFFFFF',
-      'ctz':       jstz.determine().name(),
-    };
-
-    calendars = [
-      ['#000000', 'm@michalrus.com'],                                                    // Invites
-      ['#1B887A', '7v2c2cq8kfft24pnj0f145dqd3i3l138@import.calendar.google.com'],        // Meetup.com
-      ['#1B887A', 'michalrus.com_kv4h7dnm4msfgf87p5k5lasosg@group.calendar.google.com'], // Education
-      ['#29527A', 'en.polish#holiday@group.v.calendar.google.com'],                      // Polish holidays
-      ['#2952A3', 'michalrus.com_4sf0ml705babpceg16j29chgms@group.calendar.google.com'], // Travel
-      ['#2F6309', '0dl9car0g2t1umefm1brn9r82o8477as@import.calendar.google.com'],        // Facebook Events
-      ['#2F6309', 'michalrus.com_l9ukoks8cl6n8g2h343qs53uus@group.calendar.google.com'], // Słupska, Agata
-      ['#2F6309', 'michalrus.com_thtdi7mh3070gblmqs77qlqj9g@group.calendar.google.com'], // Social
-      ['#333333', 'michalrus.com_giam6n4ot7hsq3p1gvd3p0kmec@group.calendar.google.com'], // Work
-      ['#711616', 'dirv9v10c32debb8njakrl0mdpp7d8fm@import.calendar.google.com'],        // Moon/Astro
-      ['#AB8B00', 'michalrus.com_q3q9n0dh8miackpeqne4i54g9o@group.calendar.google.com'], // To-dos
-      ['#B1365F', 'michalrus.com_s196end2re40p44rvajarcisj8@group.calendar.google.com'], // Appointments
-    ];
-
-    calendarsMap = $.map(calendars, function(a) {
-      return [ { name: 'src', value: a[1] }, { name: 'color', value: a[0] } ];
-    });
-
-    embedUrl = 'https://calendar.google.com/calendar/embed?' + $.param(settings) + '&' + $.param(calendarsMap);
-
-    escapedUrl = $('<div/>').text(embedUrl).html();
-
-    document.getElementById('calendar').innerHTML =
-      '<iframe src="' + escapedUrl + '" style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>';
-
-  })();
-</script>
-
-<script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-29063970-1']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-</script>
-
-
-	</body>
+      (function () {
+        var ga = document.createElement("script");
+        ga.type = "text/javascript";
+        ga.async = true;
+        ga.src =
+          ("https:" == document.location.protocol
+            ? "https://ssl"
+            : "http://www") + ".google-analytics.com/ga.js";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </body>
 </html>

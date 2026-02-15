@@ -1,6 +1,10 @@
-{ flake, config, lib, pkgs, ... }:
-
 {
+  flake,
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   environment.systemPackages = with pkgs; [
     v4l-utils
     flake.packages.${pkgs.stdenv.hostPlatform.system}.amscope-amlite

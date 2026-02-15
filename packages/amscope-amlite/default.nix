@@ -1,8 +1,16 @@
-{ stdenv, fetchzip, autoPatchelfHook, gcc, libz, freetype, fontconfig, libGL, libxcb, libXrender
-, writeShellApplication }:
-
-let
-
+{
+  stdenv,
+  fetchzip,
+  autoPatchelfHook,
+  gcc,
+  libz,
+  freetype,
+  fontconfig,
+  libGL,
+  libxcb,
+  libXrender,
+  writeShellApplication,
+}: let
   # This is the same exact hash as on the installation CD added to AmScope MU1403:
   src-2018 = fetchzip {
     url = "https://storage.googleapis.com/software-download-d79bb.appspot.com/software/AmLite/Linux/20180326/AmScopeAmLite_20180326.tar";
@@ -75,7 +83,5 @@ let
         ${unsafe}/bin/AmLite
     '';
   };
-
 in
-
-bwrap
+  bwrap

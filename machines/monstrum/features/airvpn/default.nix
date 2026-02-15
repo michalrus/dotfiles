@@ -1,6 +1,9 @@
-{ config, lib, pkgs, ... }:
-
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   vsp = "airvpn";
   iface = "wg-${vsp}";
   stateDir = "/var/lib/${vsp}";
@@ -13,7 +16,7 @@ let
 
   switchServer = pkgs.writeShellApplication {
     name = "vpn-switch-server";
-    runtimeInputs = with pkgs; [ jq config.systemd.package ];
+    runtimeInputs = with pkgs; [jq config.systemd.package];
     text = ''
       set -euo pipefail
 
@@ -54,9 +57,7 @@ let
        )
       )'
   '';
-in
-
-{
+in {
   age.secrets.wireguard_airvpn_private_key = {
     file = ../../../../secrets/wireguard_airvpn_private_key.age;
   };
@@ -70,10 +71,10 @@ in
   };
 
   systemd.services.${vsp} = {
-    wantedBy = [ "multi-user.target" ];
-    after = [ "network-pre.target" ];
-    wants = [ "network.target" ];
-    before = [ "network.target" ];
+    wantedBy = ["multi-user.target"];
+    after = ["network-pre.target"];
+    wants = ["network.target"];
+    before = ["network.target"];
     serviceConfig = {
       Type = "simple";
       RemainAfterExit = true;
@@ -85,7 +86,7 @@ in
     unitConfig = {
       StartLimitIntervalSec = 0; # no restart rate limiting
     };
-    path = with pkgs; [ kmod iproute2 procps wireguard-tools jq iputils parallel ];
+    path = with pkgs; [kmod iproute2 procps wireguard-tools jq iputils parallel];
     script = ''
       set -euo pipefail
 
@@ -121,7 +122,7 @@ in
 
       ip route replace default dev ${iface} table ${toString routingTable}
       ip rule add uidrange ${toString config.users.users.qbittorrent.uid}-${toString config.users.users.qbittorrent.uid} lookup ${toString routingTable} priority 2002
-      ip rule add uidrange ${toString config.users.users.cardano.uid    }-${toString config.users.users.cardano.uid} lookup ${toString routingTable    } priority 2002
+      ip rule add uidrange ${toString config.users.users.cardano.uid}-${toString config.users.users.cardano.uid} lookup ${toString routingTable} priority 2002
 
       # And a watchdog – on failure, it will cycle through servers, until one works:
       export SHELL=${pkgs.stdenv.shell}
@@ -153,7 +154,7 @@ in
 
       ip route flush table ${toString routingTable} || true
       ip rule del uidrange ${toString config.users.users.qbittorrent.uid}-${toString config.users.users.qbittorrent.uid} lookup ${toString routingTable} priority 2002 || true
-      ip rule del uidrange ${toString config.users.users.cardano.uid    }-${toString config.users.users.cardano.uid} lookup ${toString routingTable    } priority 2002 || true
+      ip rule del uidrange ${toString config.users.users.cardano.uid}-${toString config.users.users.cardano.uid} lookup ${toString routingTable} priority 2002 || true
 
       ip link del dev ${iface} || true
     '';
@@ -166,8 +167,8 @@ in
   # ---------------------------------- periodically refresh config ---------------------------------- #
 
   systemd.timers."${vsp}-refresh-config" = {
-    partOf = [ "${vsp}-refresh-config.service" ];
-    wantedBy = [ "timers.target" ];
+    partOf = ["${vsp}-refresh-config.service"];
+    wantedBy = ["timers.target"];
     timerConfig = {
       OnCalendar = "hourly";
       RandomizedDelaySec = "10m";
@@ -175,7 +176,7 @@ in
   };
 
   systemd.services."${vsp}-refresh-config" = {
-    path = with pkgs; [ curl jq ];
+    path = with pkgs; [curl jq];
     serviceConfig = {
       Type = "oneshot";
     };
@@ -198,20 +199,20 @@ in
 
   environment.systemPackages = [
     (pkgs.writeShellApplication {
-       name = "vpn-change-server-for-torrents";
-       runtimeInputs = with pkgs; [ coreutils util-linux jq skim ];
-       text = ''
-         set -euo pipefail
+      name = "vpn-change-server-for-torrents";
+      runtimeInputs = with pkgs; [coreutils util-linux jq skim];
+      text = ''
+        set -euo pipefail
 
-         selected=$(${listRecommended} | jq -r '
-             .[]
-             | "\(.public_name)\t\(.country_name)\t\(.location)\tload: \(.currentload)%"' \
-           | column -t -s $'\t' \
-           | sk --no-sort --prompt 'server (last is best): ' \
-           | sed -r 's/  .*//g')
-         exec sudo ${lib.getExe switchServer} "$selected"
-       '';
-     })
+        selected=$(${listRecommended} | jq -r '
+            .[]
+            | "\(.public_name)\t\(.country_name)\t\(.location)\tload: \(.currentload)%"' \
+          | column -t -s $'\t' \
+          | sk --no-sort --prompt 'server (last is best): ' \
+          | sed -r 's/  .*//g')
+        exec sudo ${lib.getExe switchServer} "$selected"
+      '';
+    })
   ];
 
   security.sudo = {
@@ -224,8 +225,8 @@ in
   # ---------------------------------- jump to the best server at night ---------------------------------- #
 
   systemd.timers."${vsp}-select-best" = {
-    partOf = [ "${vsp}-select-best.service" ];
-    wantedBy = [ "timers.target" ];
+    partOf = ["${vsp}-select-best.service"];
+    wantedBy = ["timers.target"];
     timerConfig = {
       OnCalendar = "*-*-* 03:45:00";
       RandomizedDelaySec = "30m";
@@ -233,7 +234,7 @@ in
   };
 
   systemd.services."${vsp}-select-best" = {
-    path = with pkgs; [ jq ];
+    path = with pkgs; [jq];
     serviceConfig = {
       Type = "oneshot";
     };

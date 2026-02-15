@@ -1,7 +1,5 @@
-{ ... }:
-
-{
+{...}: {
   users.users.root = {
-    dotfiles-old.profiles = [ "base" ];
+    dotfiles-old.profiles = ["base"];
   };
 }

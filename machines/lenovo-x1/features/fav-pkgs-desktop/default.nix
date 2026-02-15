@@ -1,11 +1,14 @@
-{ flake, config, pkgs, ... }:
-
-let
-  unfree = import pkgs.path { inherit (pkgs.stdenv.hostPlatform) system; config.allowUnfree = true; };
-in
-
 {
-
+  flake,
+  config,
+  pkgs,
+  ...
+}: let
+  unfree = import pkgs.path {
+    inherit (pkgs.stdenv.hostPlatform) system;
+    config.allowUnfree = true;
+  };
+in {
   programs.wireshark = {
     enable = true;
     package = pkgs.wireshark-qt;
@@ -14,24 +17,58 @@ in
   environment.systemPackages = flake.lib.filterSystem pkgs.stdenv.hostPlatform.system (with pkgs; [
     haskellPackages.ghc
     haskellPackages.hlint
-    (texlive.withPackages (ps: [
-      flake.packages.${pkgs.stdenv.hostPlatform.system}.gregorio.forTexlive
-    ] ++ (with ps; [
-      scheme-small latexmk titlesec tocloft todonotes cleveref lipsum
-      biblatex logreq cm-super csquotes pgfplots adjustbox collectbox ccicons polski
-      placeins xstring pdfpages unicode-math filehook textpos marvosym fontawesome
-      progressbar lm-math ucharcat pdfjam
-      enumitem
-      # for Org-mode export to PDF
-      wrapfig wasysym
-      # chemistry:
-      chemfig
-      chemformula
-      mhchem
-      chemmacros translations elements relsize chemnum siunitx
-      cancel
-      svg transparent catchfile
-    ])))
+    (texlive.withPackages (ps:
+      [
+        flake.packages.${pkgs.stdenv.hostPlatform.system}.gregorio.forTexlive
+      ]
+      ++ (with ps; [
+        scheme-small
+        latexmk
+        titlesec
+        tocloft
+        todonotes
+        cleveref
+        lipsum
+        biblatex
+        logreq
+        cm-super
+        csquotes
+        pgfplots
+        adjustbox
+        collectbox
+        ccicons
+        polski
+        placeins
+        xstring
+        pdfpages
+        unicode-math
+        filehook
+        textpos
+        marvosym
+        fontawesome
+        progressbar
+        lm-math
+        ucharcat
+        pdfjam
+        enumitem
+        # for Org-mode export to PDF
+        wrapfig
+        wasysym
+        # chemistry:
+        chemfig
+        chemformula
+        mhchem
+        chemmacros
+        translations
+        elements
+        relsize
+        chemnum
+        siunitx
+        cancel
+        svg
+        transparent
+        catchfile
+      ])))
     acpitool
     aegisub
     alsa-utils
@@ -86,5 +123,4 @@ in
     gfortran
     fortls
   ]);
-
 }

@@ -1,7 +1,9 @@
-{ config, lib, pkgs, ... }:
-
-let
-
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   version = "13.2.0";
 
   ociImage = pkgs.dockerTools.pullImage {
@@ -25,7 +27,6 @@ let
   cidFile = "${dataDir}/${user}.cid";
 
   imageFullName = "${ociImage.imageName}:${ociImage.imageTag}";
-
 in {
   options.services.openproject = {
     port = lib.mkOption {
@@ -51,8 +52,18 @@ in {
       group = user;
       home = dataDir;
       inherit uid;
-      subUidRanges = [{ startUid = 100000; count = 65536; }];
-      subGidRanges = [{ startGid = 100000; count = 65536; }];
+      subUidRanges = [
+        {
+          startUid = 100000;
+          count = 65536;
+        }
+      ];
+      subGidRanges = [
+        {
+          startGid = 100000;
+          count = 65536;
+        }
+      ];
     };
     users.groups.${user}.gid = uid;
 
@@ -67,7 +78,7 @@ in {
     };
 
     systemd.services.${user} = {
-      path = [ config.virtualisation.podman.package ];
+      path = [config.virtualisation.podman.package];
       wantedBy = ["multi-user.target"];
       serviceConfig = {
         User = user;
@@ -79,7 +90,7 @@ in {
         Environment = "PODMAN_SYSTEMD_UNIT=${user}.service";
         Type = "notify";
         NotifyAccess = "all";
-        TimeoutStartSec = 0;  # ‘podman load’ can take a long time
+        TimeoutStartSec = 0; # ‘podman load’ can take a long time
         TimeoutStopSec = 120;
         ExecStop = lib.getExe (pkgs.writeShellScriptBin "${user}-stop" ''
           exec podman stop --ignore --cidfile=${cidFile} --time=110
@@ -108,7 +119,11 @@ in {
           -p ${toString config.services.openproject.port}:80 \
           -e OPENPROJECT_SECRET_KEY_BASE'*' \
           -e OPENPROJECT_HOST__NAME=${config.services.openproject.hostname} \
-          -e OPENPROJECT_HTTPS=${if config.services.openproject.https then "true" else "false"} \
+          -e OPENPROJECT_HTTPS=${
+          if config.services.openproject.https
+          then "true"
+          else "false"
+        } \
           -e OPENPROJECT_DEFAULT__LANGUAGE=en \
           -e OPENPROJECT_AUTOLOGIN=7 \
           -e OPENPROJECT_SELF__REGISTRATION=0 \
@@ -141,8 +156,8 @@ in {
 
     # Ruby is terrible with memory management… Let’s restart it each night…
     systemd.timers."${user}-restart" = {
-      partOf = [ "${user}-restart.service" ];
-      wantedBy = [ "timers.target" ];
+      partOf = ["${user}-restart.service"];
+      wantedBy = ["timers.target"];
       timerConfig = {
         OnCalendar = "*-*-* 05:00:00";
         RandomizedDelaySec = "30m";
@@ -150,7 +165,7 @@ in {
     };
 
     systemd.services."${user}-restart" = {
-      path = [ config.systemd.package ];
+      path = [config.systemd.package];
       serviceConfig = {
         Type = "oneshot";
       };

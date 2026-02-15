@@ -1,17 +1,20 @@
-{ config, lib, pkgs, ... }:
-
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   vsp = "nordvpn";
   iface = "wg-${vsp}";
   stateDir = "/var/lib/${vsp}";
   ourInternalIP = "10.5.0.2";
   theirInternalIP = "10.5.0.1";
   pingWaitSec = 10;
-  numPings = 4;  # before considering the connection dead
+  numPings = 4; # before considering the connection dead
 
   switchServer = pkgs.writeShellApplication {
     name = "vpn-switch-server";
-    runtimeInputs = with pkgs; [ jq config.systemd.package ];
+    runtimeInputs = with pkgs; [jq config.systemd.package];
     text = ''
       set -euo pipefail
       candidate=$(jq <${stateDir}/recommended.json --arg name "$1" '
@@ -32,18 +35,16 @@ let
       fi
     '';
   };
-in
-
-{
+in {
   age.secrets.wireguard_nordvpn = {
     file = ../../../../secrets/wireguard_nordvpn.age;
   };
 
   systemd.services.${vsp} = {
-    wantedBy = [ "multi-user.target" ];
-    after = [ "network-pre.target" ];
-    wants = [ "network.target" ];
-    before = [ "network.target" ];
+    wantedBy = ["multi-user.target"];
+    after = ["network-pre.target"];
+    wants = ["network.target"];
+    before = ["network.target"];
     serviceConfig = {
       Type = "simple";
       RemainAfterExit = true;
@@ -55,7 +56,7 @@ in
     unitConfig = {
       StartLimitIntervalSec = 0; # no restart rate limiting
     };
-    path = with pkgs; [ kmod iproute2 procps wireguard-tools jq iputils parallel ];
+    path = with pkgs; [kmod iproute2 procps wireguard-tools jq iputils parallel];
     script = ''
       set -euo pipefail
 
@@ -132,8 +133,8 @@ in
   # ---------------------------------- periodically refresh config ---------------------------------- #
 
   systemd.timers."${vsp}-refresh-config" = {
-    partOf = [ "${vsp}-refresh-config.service" ];
-    wantedBy = [ "timers.target" ];
+    partOf = ["${vsp}-refresh-config.service"];
+    wantedBy = ["timers.target"];
     timerConfig = {
       OnCalendar = "hourly";
       RandomizedDelaySec = "10m";
@@ -141,7 +142,7 @@ in
   };
 
   systemd.services."${vsp}-refresh-config" = {
-    path = with pkgs; [ curl jq ];
+    path = with pkgs; [curl jq];
     serviceConfig = {
       Type = "oneshot";
     };
@@ -164,22 +165,22 @@ in
 
   environment.systemPackages = [
     (pkgs.writeShellApplication {
-       name = "vpn-change-server";
-       runtimeInputs = with pkgs; [ coreutils util-linux jq skim ];
-       text = ''
-         set -euo pipefail
-         selected=$(jq <${stateDir}/recommended.json -r '
-             .[]
-             | select(.status == "online")
-             | select(any(.technologies[]?; .identifier == "wireguard_udp"))
-             | "\(.name)\t\(.locations[0].country.city.name)\t\(.load) users"
-           ' \
-           | column -t -s $'\t' \
-           | sk --no-sort --prompt 'server (last is best): ' \
-           | sed -r 's/  .*//g')
-         exec sudo ${lib.getExe switchServer} "$selected"
-       '';
-     })
+      name = "vpn-change-server";
+      runtimeInputs = with pkgs; [coreutils util-linux jq skim];
+      text = ''
+        set -euo pipefail
+        selected=$(jq <${stateDir}/recommended.json -r '
+            .[]
+            | select(.status == "online")
+            | select(any(.technologies[]?; .identifier == "wireguard_udp"))
+            | "\(.name)\t\(.locations[0].country.city.name)\t\(.load) users"
+          ' \
+          | column -t -s $'\t' \
+          | sk --no-sort --prompt 'server (last is best): ' \
+          | sed -r 's/  .*//g')
+        exec sudo ${lib.getExe switchServer} "$selected"
+      '';
+    })
   ];
 
   security.sudo = {
@@ -192,8 +193,8 @@ in
   # ---------------------------------- jump to the best server at night ---------------------------------- #
 
   systemd.timers."${vsp}-select-best" = {
-    partOf = [ "${vsp}-select-best.service" ];
-    wantedBy = [ "timers.target" ];
+    partOf = ["${vsp}-select-best.service"];
+    wantedBy = ["timers.target"];
     timerConfig = {
       OnCalendar = "*-*-* 03:45:00";
       RandomizedDelaySec = "30m";
@@ -204,7 +205,7 @@ in
     # XXX: Don’t select the 0th best, because they’re most often slower than, say, 4th best.
     nthBest = 4;
   in {
-    path = with pkgs; [ jq ];
+    path = with pkgs; [jq];
     serviceConfig = {
       Type = "oneshot";
     };

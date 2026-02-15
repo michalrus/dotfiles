@@ -1,30 +1,33 @@
-{ config, pkgs, lib, ... }:
-
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 # A HTTP and SOCKS5 proxy to bypass VPN.
-
-with import ./common.nix;
-
-let
-
+with import ./common.nix; let
   portHttp = 8888;
   portSocks5 = 1080;
   userHttp = "proxyhttp";
   userSocks5 = "proxysocks5";
 
   microsocks = pkgs.callPackage (
-    { stdenv, fetchFromGitHub }:
-
-    stdenv.mkDerivation rec {
-      pname = "microsocks";
-      version = "1.0.2";
-      #name = "${pname}-${pver}";
-      src = fetchFromGitHub {
-        repo = "microsocks"; owner = "rofl0r";
-        rev = "v${version}";
-        sha256 = "1di11wx9ihwa0g9qzsqrb3ka2xxjb10fyc7hwjhn58mxdfwlavl0";
-      };
-      makeFlags = [ "prefix=$(out)" ];
-    }
+    {
+      stdenv,
+      fetchFromGitHub,
+    }:
+      stdenv.mkDerivation rec {
+        pname = "microsocks";
+        version = "1.0.2";
+        #name = "${pname}-${pver}";
+        src = fetchFromGitHub {
+          repo = "microsocks";
+          owner = "rofl0r";
+          rev = "v${version}";
+          sha256 = "1di11wx9ihwa0g9qzsqrb3ka2xxjb10fyc7hwjhn58mxdfwlavl0";
+        };
+        makeFlags = ["prefix=$(out)"];
+      }
   ) {};
 
   # We need 1.11.0-rc1 for ProtectSystem=strict <https://github.com/tinyproxy/tinyproxy/issues/353>
@@ -36,7 +39,7 @@ let
       repo = "tinyproxy";
       owner = "tinyproxy";
     };
-    configureFlags = (old.configureFlags or []) ++ [ "--disable-manpage-support" ];
+    configureFlags = (old.configureFlags or []) ++ ["--disable-manpage-support"];
   });
 
   tinyproxyConf = pkgs.writeText "tinyproxy.conf" ''
@@ -56,26 +59,17 @@ let
     Allow ${addressing.subnet}
     DisableViaHeader Yes
   '';
-
-in
-
-{
-
-
-
+in {
   #networking.firewall.enable = lib.mkForce false;
 
   networking.firewall.logRefusedConnections = true;
   networking.firewall.logRefusedPackets = true;
 
-
   # Z ==false działa! Przynajmniej curl --interface wwan0
   networking.firewall.checkReversePath = false;
   # natomiast 2nd routing table nadal nie działa z poniższymi odkomentowanymi:
 
-
   # TODO: everywhere: sysctl -ar 'rp_filter' = 0
-
 
   # Make them accessible only from internal subnet:
   networking.firewall.extraCommands = ''
@@ -124,8 +118,8 @@ in
   # iptables -t mangle -A OUTPUT -m owner --uid-owner proxy-http -j MARK --set-mark 500
 
   systemd.services.proxy-socks = {
-    after = [ "network.target" ];
-    wantedBy = [ "multi-user.target" ];
+    after = ["network.target"];
+    wantedBy = ["multi-user.target"];
     serviceConfig = {
       User = userSocks5;
       Group = userSocks5;
@@ -139,8 +133,8 @@ in
   };
 
   systemd.services.proxy-http = {
-    after = [ "network.target" ];
-    wantedBy = [ "multi-user.target" ];
+    after = ["network.target"];
+    wantedBy = ["multi-user.target"];
     serviceConfig = {
       User = userHttp;
       Group = userHttp;
@@ -153,9 +147,18 @@ in
     };
   };
 
-  users.extraUsers."${userHttp}"    = { group = userHttp; home = "/var/empty"; shell = "/run/current-system/sw/bin/nologin"; isSystemUser = true; };
-  users.extraGroups."${userHttp}"   = { };
-  users.extraUsers."${userSocks5}"  = { group = userSocks5; home = "/var/empty"; shell = "/run/current-system/sw/bin/nologin"; isSystemUser = true; };
-  users.extraGroups."${userSocks5}" = { };
-
+  users.extraUsers."${userHttp}" = {
+    group = userHttp;
+    home = "/var/empty";
+    shell = "/run/current-system/sw/bin/nologin";
+    isSystemUser = true;
+  };
+  users.extraGroups."${userHttp}" = {};
+  users.extraUsers."${userSocks5}" = {
+    group = userSocks5;
+    home = "/var/empty";
+    shell = "/run/current-system/sw/bin/nologin";
+    isSystemUser = true;
+  };
+  users.extraGroups."${userSocks5}" = {};
 }

@@ -1,7 +1,8 @@
-{ config, pkgs, ... }:
-
-let
-
+{
+  config,
+  pkgs,
+  ...
+}: let
   kornel = let
     raw = pkgs.fetchFromGitHub {
       owner = "michalrus";
@@ -15,7 +16,8 @@ let
       cd $out
       patch -p1 -i ${./pure-build.patch}
     '';
-  in import patched;
+  in
+    import patched;
 
   user = "kornel";
   dataDir = "/var/lib/${user}";
@@ -37,23 +39,23 @@ let
     , logTraffic = False
     }
   '';
-
-in
-
-{
-
-  users.extraUsers."${user}" = { group = user; home = dataDir; isSystemUser = true; };
-  users.extraGroups."${user}" = { };
+in {
+  users.extraUsers."${user}" = {
+    group = user;
+    home = dataDir;
+    isSystemUser = true;
+  };
+  users.extraGroups."${user}" = {};
 
   systemd.services.kornel = {
-    after = [ "network.target" ];
-    wantedBy = [ "multi-user.target" ];
+    after = ["network.target"];
+    wantedBy = ["multi-user.target"];
     serviceConfig = {
       User = user;
       Group = user;
       PermissionsStartOnly = true;
     };
-    path = with pkgs; [ kornel ];
+    path = with pkgs; [kornel];
     preStart = ''
       mkdir -p "${dataDir}"
       chown -R "${user}:${user}" "${dataDir}"
@@ -61,5 +63,4 @@ in
     '';
     script = ''exec kornel-exe -c ${configFile}'';
   };
-
 }

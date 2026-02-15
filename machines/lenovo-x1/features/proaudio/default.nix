@@ -1,21 +1,23 @@
-{ flake, config, lib, pkgs, ... }:
-
 {
-
+  flake,
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   # TODO: don’t add these globally…?
 
   environment.profileRelativeEnvVars = {
-    DSSI_PATH   = ["/lib/dssi"];
+    DSSI_PATH = ["/lib/dssi"];
     LADSPA_PATH = ["/lib/ladspa"];
-    LV2_PATH    = ["/lib/lv2"];
-    LXVST_PATH  = ["/lib/lxvst"];
-    VST_PATH    = ["/lib/vst"];
+    LV2_PATH = ["/lib/lv2"];
+    LXVST_PATH = ["/lib/lxvst"];
+    VST_PATH = ["/lib/vst"];
   };
 
   # TODO: don’t add these globally…?
 
   environment.systemPackages = with pkgs; [
-
     ardour
     distrho-ports
     calf
@@ -29,7 +31,5 @@
     flake.packages.${pkgs.stdenv.hostPlatform.system}.vocproc
     flake.packages.${pkgs.stdenv.hostPlatform.system}.tap-plugins
     rubberband
-
   ];
-
 }

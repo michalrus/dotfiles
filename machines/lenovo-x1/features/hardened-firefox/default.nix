@@ -1,26 +1,29 @@
-{ pkgs, ... }:
-
-let
-
+{pkgs, ...}: let
   pkgs-oldstable = import (
     pkgs.fetchFromGitHub {
-      owner = "NixOS"; repo = "nixpkgs";
+      owner = "NixOS";
+      repo = "nixpkgs";
       rev = "12d9950bf47e0ac20d4d04e189448ee075242117";
       sha256 = "09wy33zbzxj33296ddrrb79630kxpj1c3kiv38zs4wrw24206c2v";
     }
-  ) { inherit (pkgs.stdenv.hostPlatform) system; };
+  ) {inherit (pkgs.stdenv.hostPlatform) system;};
 
-  makeWrapped =
-    args@{ localAutocompletePort, extraPrefs }:
+  makeWrapped = args @ {
+    localAutocompletePort,
+    extraPrefs,
+  }:
     pkgs-oldstable.wrapFirefox (unwrapped.override args) {};
 
   unwrapped = pkgs-oldstable.callPackage (
-
-    { runCommand, writeText, writeScript, firefox-unwrapped, fetchurl,
-      localAutocompletePort ? 999999999, extraPrefs ? "" }:
-
-    let
-
+    {
+      runCommand,
+      writeText,
+      writeScript,
+      firefox-unwrapped,
+      fetchurl,
+      localAutocompletePort ? 999999999,
+      extraPrefs ? "",
+    }: let
       mkLocalAutocomplete = name: "http://127.0.0.1:${toString localAutocompletePort}/${name}?q={searchTerms}";
 
       emptySearchEngineName = "(empty default search engine)";
@@ -238,12 +241,19 @@ let
         }
       ];
 
-      searchEnginesIconsNoGC = writeText "searchEnginesIconsNoGC" (toString (map ({IconURL ? null, ...}: (if isNull IconURL then "" else (toDataUrl IconURL).noGC) ) searchEngines));
+      searchEnginesIconsNoGC = writeText "searchEnginesIconsNoGC" (toString (map ({IconURL ? null, ...}: (
+          if isNull IconURL
+          then ""
+          else (toDataUrl IconURL).noGC
+        ))
+        searchEngines));
 
       policies = writeText "policies.json" (builtins.toJSON {
         policies = {
-
-          DNSOverHTTPS = { Enabled = false; Locked = true; };
+          DNSOverHTTPS = {
+            Enabled = false;
+            Locked = true;
+          };
           Bookmarks = [];
           DisableMasterPasswordCreation = true; # use an external passwd manager
           DisableFeedbackCommands = true;
@@ -256,12 +266,25 @@ let
           DisableProfileRefresh = true;
           DisableTelemetry = true;
           DontCheckDefaultBrowser = true;
-          EnableTrackingProtection = { Value = true; Locked = true; };
+          EnableTrackingProtection = {
+            Value = true;
+            Locked = true;
+          };
           NoDefaultBookmarks = true;
           OfferToSaveLogins = false;
-          Homepage = { URL = "about:blank"; StartPage = "previous-session"; Locked = true; };
-          PopupBlocking = { Default = true; Locked = true; };
-          FlashPlugin = { Default = false; Locked = true; };
+          Homepage = {
+            URL = "about:blank";
+            StartPage = "previous-session";
+            Locked = true;
+          };
+          PopupBlocking = {
+            Default = true;
+            Locked = true;
+          };
+          FlashPlugin = {
+            Default = false;
+            Locked = true;
+          };
           OverrideFirstRunPage = "";
           OverridePostUpdatePage = "";
           #Proxy = { Mode = "none"; Locked = true; };
@@ -272,29 +295,46 @@ let
             # TODO: post a bug to have another policy `SearchEngines.RemoveAllAndAddDefault`
             # Note: if search.json.mozlz4 is removed before Firefox runs, we *can* delete Google. Otherwise, not.
             Remove = [
-              "Amazon.com" "Bing" "DuckDuckGo" "eBay" "Google" "Twitter" "Wikipedia (en)"
+              "Amazon.com"
+              "Bing"
+              "DuckDuckGo"
+              "eBay"
+              "Google"
+              "Twitter"
+              "Wikipedia (en)"
             ];
 
             # Have an empty engine as a default, because the browser sends search suggestions to the default engine, even when input without a keyword (even when the pref. `keyword.enabled` is false).
             Default = emptySearchEngineName;
             PreventInstalls = true;
 
-            Add = map (eng@{IconURL ? null, ...}: eng // (if isNull IconURL then {} else { IconURL = (toDataUrl IconURL).url; })) searchEngines;
+            Add = map (eng @ {IconURL ? null, ...}:
+              eng
+              // (
+                if isNull IconURL
+                then {}
+                else {IconURL = (toDataUrl IconURL).url;}
+              ))
+            searchEngines;
           };
 
           Permissions = {
-            Location      = { BlockNewRequests = true; Locked = true; };
-            Notifications = { BlockNewRequests = true; Locked = true; };
+            Location = {
+              BlockNewRequests = true;
+              Locked = true;
+            };
+            Notifications = {
+              BlockNewRequests = true;
+              Locked = true;
+            };
           };
 
-
-# https://addons.mozilla.org/en-US/firefox/addon/container-outgoing-links/
-
+          # https://addons.mozilla.org/en-US/firefox/addon/container-outgoing-links/
 
           Extensions = {
             Install = [
               "https://addons.mozilla.org/firefox/downloads/latest/multi-account-containers/"
-#              "https://addons.mozilla.org/firefox/downloads/latest/temporary-containers/"
+              #              "https://addons.mozilla.org/firefox/downloads/latest/temporary-containers/"
               "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/"
               "https://addons.mozilla.org/firefox/downloads/latest/https-everywhere/"
               "https://addons.mozilla.org/firefox/downloads/latest/add-url-to-window-title/"
@@ -305,7 +345,7 @@ let
             ];
             Locked = [
               "@testpilot-containers"
-#              "{c607c8df-14a7-4f28-894f-29e8722976af}" # temporary-containers
+              #              "{c607c8df-14a7-4f28-894f-29e8722976af}" # temporary-containers
               "uBlock0@raymondhill.net"
               "https-everywhere@eff.org"
               "autt@ericgoldman.name" # add-url-to-window-title
@@ -315,7 +355,6 @@ let
               "jid1-KKzOGWgsW3Ao4Q@jetpack" # i-dont-care-about-cookies
             ];
           };
-
         };
       });
 
@@ -558,14 +597,17 @@ let
         ${extraPrefs}
       '';
 
-      toDataUrl = args@{ url, sha256, mimetype }:
-        let
-          dled = fetchurl { inherit (args) url sha256; };
-          encoded = runCommand "toDataUrl" {} ''base64 -w 0 ${dled} >$out'';
-        in {
-          url = "data:" + mimetype + ";base64," + builtins.readFile encoded;
-          noGC = [dled encoded];
-        };
+      toDataUrl = args @ {
+        url,
+        sha256,
+        mimetype,
+      }: let
+        dled = fetchurl {inherit (args) url sha256;};
+        encoded = runCommand "toDataUrl" {} ''base64 -w 0 ${dled} >$out'';
+      in {
+        url = "data:" + mimetype + ";base64," + builtins.readFile encoded;
+        noGC = [dled encoded];
+      };
 
       preStartScript = writeScript "firefox-pre-start" ''
         mkdir -p $HOME/.mozilla/firefox
@@ -575,41 +617,36 @@ let
 
         systemctl --user start firefox-autocomplete.service &
       '';
-
     in
+      runCommand firefox-unwrapped.name {
+        inherit (firefox-unwrapped) passthru meta;
+        inherit cfgPrivacy cfgTelemetryOff cfgUX cfgEnableDRM policies;
+      } ''
+        cp -a ${firefox-unwrapped} $out
+        chmod -R u+rwX $out
 
-    runCommand firefox-unwrapped.name {
-      inherit (firefox-unwrapped) passthru meta;
-      inherit cfgPrivacy cfgTelemetryOff cfgUX cfgEnableDRM policies;
-    } ''
-      cp -a ${firefox-unwrapped} $out
-      chmod -R u+rwX $out
+        substituteInPlace $out/bin/firefox \
+          --replace ${firefox-unwrapped} $out \
+          --replace 'exec ' '${preStartScript} ; exec '
+        ln -sf $out/lib/firefox/firefox $out/bin/.firefox-wrapped
 
-      substituteInPlace $out/bin/firefox \
-        --replace ${firefox-unwrapped} $out \
-        --replace 'exec ' '${preStartScript} ; exec '
-      ln -sf $out/lib/firefox/firefox $out/bin/.firefox-wrapped
+        ln -s ${searchEnginesIconsNoGC} $out/searchEnginesIconsNoGC.keep
 
-      ln -s ${searchEnginesIconsNoGC} $out/searchEnginesIconsNoGC.keep
+        mkdir -p $out/lib/firefox/distribution
+        ln -s ${policies} $out/lib/firefox/distribution/policies.json
 
-      mkdir -p $out/lib/firefox/distribution
-      ln -s ${policies} $out/lib/firefox/distribution/policies.json
+        mkdir -p $out/lib/firefox/defaults/pref
+        chmod 755 $out/lib/firefox/defaults/pref
+        echo ----------------------------------------------------------
+        ls -alh $out/lib/firefox/defaults/pref
 
-      mkdir -p $out/lib/firefox/defaults/pref
-      chmod 755 $out/lib/firefox/defaults/pref
-      echo ----------------------------------------------------------
-      ls -alh $out/lib/firefox/defaults/pref
+        echo ----------------------------------------------------------
+        ln -s ${autoconfig} $out/lib/firefox/defaults/pref/autoconfig.js'~'
 
-      echo ----------------------------------------------------------
-      ln -s ${autoconfig} $out/lib/firefox/defaults/pref/autoconfig.js'~'
-
-      ln -s ${firefox-cfg} $out/lib/firefox/firefox.cfg
-    ''
-
+        ln -s ${firefox-cfg} $out/lib/firefox/firefox.cfg
+      ''
   ) {};
-
-in  {
-
+in {
   nixpkgs.overlays = [
     (_: _: {
       hardened-firefox = {
@@ -617,5 +654,4 @@ in  {
       };
     })
   ];
-
 }

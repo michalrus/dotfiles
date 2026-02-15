@@ -1,7 +1,8 @@
-{ config, pkgs, ... }:
-
-let
-
+{
+  config,
+  pkgs,
+  ...
+}: let
   dataDir = "/var/lib/annibot";
   user = "annibot";
   group = user;
@@ -15,9 +16,16 @@ let
       repo = "annibot";
       sha256 = "1vb1m5a9xdxcnx05f9s0a3d46n7yz64wiqql37wl4zf0xq1zxw5i";
     };
-    buildInputs = with pkgs; [ makeWrapper perl ] ++ (with perlPackages; [
-      NetSMTPSSL XMLSimple IPCRun3 DateCalc MIMEBase64 AuthenSASL
-    ]);
+    buildInputs = with pkgs;
+      [makeWrapper perl]
+      ++ (with perlPackages; [
+        NetSMTPSSL
+        XMLSimple
+        IPCRun3
+        DateCalc
+        MIMEBase64
+        AuthenSASL
+      ]);
     installPhase = ''
       mkdir -p $out/libexec $out/sample
       cp get-all login run $out/libexec
@@ -33,11 +41,7 @@ let
       wrapProgram $out/libexec/run --prefix PERL5LIB : "$PERL5LIB"
     '';
   };
-
-in
-
-{
-
+in {
   age.secrets.annibot_smtp = {
     file = ../../../../secrets/smtp_scripts_michalrus_com.age;
     owner = user;
@@ -50,7 +54,7 @@ in
       Group = group;
       PermissionsStartOnly = true;
     };
-    path = with pkgs; [ bc curl ];
+    path = with pkgs; [bc curl];
     preStart = ''
       mkdir -p "${dataDir}"
 
@@ -68,14 +72,16 @@ in
   };
 
   systemd.timers.annibot = {
-    partOf = [ "annibot.service" ];
-    wantedBy = [ "timers.target" ];
+    partOf = ["annibot.service"];
+    wantedBy = ["timers.target"];
     timerConfig.OnCalendar = runAt;
   };
 
   users = {
-    extraUsers."${user}" = { isSystemUser = true; group = user; };
+    extraUsers."${user}" = {
+      isSystemUser = true;
+      group = user;
+    };
     extraGroups."${group}" = {};
   };
-
 }

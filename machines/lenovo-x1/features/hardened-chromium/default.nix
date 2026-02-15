@@ -1,9 +1,10 @@
-{ config, lib, pkgs, ... }:
-
-let
-
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   policies = builtins.toJSON {
-
     HomepageIsNewTabPage = true;
     HomepageLocation = "about:blank";
     NewTabPageLocation = "chrome:newtab";
@@ -69,8 +70,8 @@ let
     BackgroundModeEnabled = false;
 
     SpellcheckEnabled = true;
-    SpellcheckLanguage = [ "en" "pl" ];
-    AllowedLanguages = [ "en-US" "en" "pl" ];
+    SpellcheckLanguage = ["en" "pl"];
+    AllowedLanguages = ["en-US" "en" "pl"];
     ApplicationLocaleValue = "en-US";
     AutofillAddressEnabled = false;
     AutofillCreditCardEnabled = false;
@@ -81,7 +82,8 @@ let
     #DefaultSearchProviderSuggestURL = "https://encrypted.google.com/complete/search?output=chrome&q={searchTerms}";
 
     #ExtensionInstallBlacklist = ["*"];
-    ExtensionInstallForcelist  = # doesn’t apply to incognito?
+    ExtensionInstallForcelist =
+      # doesn’t apply to incognito?
       map (x: x + ";https://clients2.google.com/service/update2/crx")
       [
         "cjpalhdlnbpafiamejdnhcphjbkeiagm" # uBlock Origin
@@ -90,14 +92,8 @@ let
         "ignpacbgnbnkaiooknalneoeladjnfgb" # URL in title
       ];
     #ExtensionSettings = {};
-
   };
-
-in
-
-{
-
+in {
   environment.etc."chromium/policies/managed/default.json".text = policies;
   environment.etc."opt/chrome/policies/managed/default.json".text = policies;
-
 }

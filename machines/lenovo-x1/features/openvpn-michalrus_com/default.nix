@@ -1,15 +1,12 @@
-{ config, lib, pkgs, ... }:
-
-with lib;
-
-let
-
-  dataDir = "/var/lib/openvpn/michalrus_com";
-
-in
-
 {
-
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+with lib; let
+  dataDir = "/var/lib/openvpn/michalrus_com";
+in {
   services.openvpn.servers = {
     michalrus_com = {
       config = ''
@@ -40,5 +37,4 @@ in
   };
 
   #networking.extraHosts = (import ../../../../machines/michalrus_com/features/openvpn/common.nix { inherit lib; }).extraHosts;
-
 }

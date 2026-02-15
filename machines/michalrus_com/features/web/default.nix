@@ -1,22 +1,23 @@
-modArgs@{ flake, config, lib, pkgs, ... }:
-
+modArgs @ {
+  flake,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with import ./common.nix modArgs;
-
-let
+with import ./common.nix modArgs; let
   monstrumDomain1 = "openproject.michalrus.com";
   monstrumDomain2 = "torrents.michalrus.com";
   monstrumIP = "10.77.5.11";
-in
-
-{
+in {
   imports = [
     ./michalrus.com.nix
     ./home.nix
     ./andrzej-lewandowski.com.nix
   ];
 
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
+  networking.firewall.allowedTCPPorts = [80 443];
 
   systemd.tmpfiles.rules = [
     "d ${acmeChallenges}/.well-known                0755 root root -"
@@ -31,9 +32,9 @@ in
 
       httpConfig = let
         readLines = file:
-            filter (s: stringLength s > 0)
-              (splitString "\n"
-                (builtins.readFile file));
+          filter (s: stringLength s > 0)
+          (splitString "\n"
+            (builtins.readFile file));
       in ''
         geo $proxy_protocol_addr $request_from_cloudflare {
           ${concatMapStrings (ip: ip + " 1;\n") (readLines flake.inputs.cloudflare-ips-v4)}
@@ -91,5 +92,4 @@ in
       '';
     };
   };
-
 }

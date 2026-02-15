@@ -1,7 +1,10 @@
-{ config, flake, pkgs, lib, ... }:
-
-let
-
+{
+  config,
+  flake,
+  pkgs,
+  lib,
+  ...
+}: let
   # faster than ‘reset’, see <https://apple.stackexchange.com/a/113168>
   clearAndEraseScrollback = "clear && printf '\\e[3J'";
 
@@ -14,14 +17,12 @@ let
     # In Emacs TRAMP sessions, use plain ‘/bin/sh’:
     [ "$TERM" != "dumb" ] || exec /bin/sh
   '';
-
 in {
-
   programs.bash = {
     enable = true;
     enableCompletion = true;
     enableVteIntegration = true;
-    historyControl = [ "ignoredups" "ignorespace" ];
+    historyControl = ["ignoredups" "ignorespace"];
     historyFileSize = 100 * 1000;
     initExtra = ''
       ${binShForEmacs}
@@ -29,8 +30,9 @@ in {
 
       # Needed for Startship’s ‘cmd_duration’:
       source ${pkgs.fetchFromGitHub {
-        owner = "rcaloras"; repo = "bash-preexec";
-        rev = "fb23d474b330fac4704b9baa7cfa98745ab1015b";  # Mar 13, 2023
+        owner = "rcaloras";
+        repo = "bash-preexec";
+        rev = "fb23d474b330fac4704b9baa7cfa98745ab1015b"; # Mar 13, 2023
         hash = "sha256-sLHTmplKIcsCNqG+JoJKc58sWimqqfJwUxEteRxFf4w=";
       }}/bash-preexec.sh
     '';
@@ -149,7 +151,10 @@ in {
   programs.starship.enable = true;
 
   home.file.".config/starship.toml".text = let
-    darwinSpace = if pkgs.stdenv.isDarwin then " " else "";  # in ‘Terminal.app’ some characters take space of 2?
+    darwinSpace =
+      if pkgs.stdenv.isDarwin
+      then " "
+      else ""; # in ‘Terminal.app’ some characters take space of 2?
   in ''
     add_newline = true
 
@@ -207,45 +212,49 @@ in {
     truncation_length = 3
     fish_style_pwd_dir_length = 1
 
-    ${if config.home.sessionVariables ? STARSHIP_NO_GIT_INTEGRATION then ''
-      [git_branch]
-      disabled = true
+    ${
+      if config.home.sessionVariables ? STARSHIP_NO_GIT_INTEGRATION
+      then ''
+        [git_branch]
+        disabled = true
 
-      [git_commit]
-      disabled = true
+        [git_commit]
+        disabled = true
 
-      [git_state]
-      disabled = true
+        [git_state]
+        disabled = true
 
-      [git_metrics]
-      disabled = true
+        [git_metrics]
+        disabled = true
 
-      [git_status]
-      disabled = true
-    '' else ''
-      [git_branch]
-      always_show_remote = true
-      format = '[$branch(:$remote_name)]($style)'
-      truncation_length = 25
-      truncation_symbol = '…${darwinSpace}'   # FIXME: darwinSpace doesn’t work here – what do?
-      style = 'cyan'
+        [git_status]
+        disabled = true
+      ''
+      else ''
+        [git_branch]
+        always_show_remote = true
+        format = '[$branch(:$remote_name)]($style)'
+        truncation_length = 25
+        truncation_symbol = '…${darwinSpace}'   # FIXME: darwinSpace doesn’t work here – what do?
+        style = 'cyan'
 
-      [git_commit]
-      format = '[$hash$tag]($style)'
-      style = 'cyan'
-      commit_hash_length = 11
+        [git_commit]
+        format = '[$hash$tag]($style)'
+        style = 'cyan'
+        commit_hash_length = 11
 
-      [git_state]
-      format = ' [$state( $progress_current/$progress_total)]($style)'
+        [git_state]
+        format = ' [$state( $progress_current/$progress_total)]($style)'
 
-      [git_status]
-      format = '( [$all_status$ahead_behind$ahead_count]($style))'
-      up_to_date = ""
-      ahead = '⇡${darwinSpace}'
-      behind = '⇣${darwinSpace}'
-      diverged = '⇡${darwinSpace}$ahead_count⇣${darwinSpace}$behind_count'
-      deleted = '×'
-    ''}
+        [git_status]
+        format = '( [$all_status$ahead_behind$ahead_count]($style))'
+        up_to_date = ""
+        ahead = '⇡${darwinSpace}'
+        behind = '⇣${darwinSpace}'
+        diverged = '⇡${darwinSpace}$ahead_count⇣${darwinSpace}$behind_count'
+        deleted = '×'
+      ''
+    }
 
     [nix_shell]
     symbol = 'nix'
@@ -271,6 +280,5 @@ in {
   programs.skim.enable = true;
   programs.skim.enableBashIntegration = true;
   programs.skim.enableZshIntegration = true;
-  programs.skim.historyWidgetOptions = [ "--exact" "--no-sort" ];
-
+  programs.skim.historyWidgetOptions = ["--exact" "--no-sort"];
 }

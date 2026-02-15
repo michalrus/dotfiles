@@ -1,6 +1,9 @@
-{ config, lib, pkgs, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   nix.settings.max-jobs = lib.mkDefault 16;
@@ -14,16 +17,16 @@
   ## High-DPI console
   #console.font = lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "sdhci_pci" ];
-  boot.initrd.kernelModules = [ "dm-snapshot" ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
+  boot.initrd.availableKernelModules = ["xhci_pci" "nvme" "usb_storage" "sd_mod" "sdhci_pci"];
+  boot.initrd.kernelModules = ["dm-snapshot"];
+  boot.kernelModules = ["kvm-intel"];
+  boot.extraModulePackages = [];
 
   boot.tmp.useTmpfs = false;
 
   # OpenGL
   nixpkgs.config.packageOverrides = pkgs: {
-    intel-vaapi-driver = pkgs.intel-vaapi-driver.override { enableHybridCodec = true; };
+    intel-vaapi-driver = pkgs.intel-vaapi-driver.override {enableHybridCodec = true;};
   };
   hardware.graphics = {
     enable = true;
@@ -39,7 +42,7 @@
 
   boot.kernel.sysctl."vm.swappiness" = 60; # Let’s try the default 60 with `zramSwap`.
   swapDevices = [
-    { device = "/dev/disk/by-uuid/5e5256ed-b8a7-48c3-b815-d85792d621d6"; }
+    {device = "/dev/disk/by-uuid/5e5256ed-b8a7-48c3-b815-d85792d621d6";}
   ];
   zramSwap = {
     enable = true;
@@ -87,6 +90,6 @@
   fileSystems."/home" = {
     device = "/var/home";
     fsType = "none";
-    options = [ "bind" ];
+    options = ["bind"];
   };
 }

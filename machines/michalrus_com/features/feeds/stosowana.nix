@@ -1,7 +1,8 @@
-{ config, pkgs, ... }:
-
-let
-
+{
+  config,
+  pkgs,
+  ...
+}: let
   dataDir = "/var/lib/stosowana";
   user = "stosowana";
   group = user;
@@ -23,7 +24,7 @@ let
       url = mirror://cpan/authors/id/D/DA/DAVIDO/Bytes-Random-Secure-0.29.tar.gz;
       sha256 = "1bl5mvcx8ggwgv5s2jg85fxni2hqgif636k1gjhgq7m1wqwx7fsk";
     };
-    propagatedBuildInputs = with pkgs.perlPackages; [ MathRandomISAAC CryptRandomSeed ];
+    propagatedBuildInputs = with pkgs.perlPackages; [MathRandomISAAC CryptRandomSeed];
   };
 
   phpbb3mail = pkgs.stdenv.mkDerivation {
@@ -34,10 +35,18 @@ let
       repo = "phpbb3mail";
       sha256 = "09wivd6833m3f68bqlm88mrk8ap2kf4x7icbqwph7gmzwkm40par";
     };
-    buildInputs = with pkgs; [ makeWrapper perl ] ++ (with perlPackages; [
-      DBI DBDSQLite NetSMTPSSL AuthenSASL BytesRandomSecure LWPUserAgent
-      LWPProtocolHttps DateCalc
-    ]);
+    buildInputs = with pkgs;
+      [makeWrapper perl]
+      ++ (with perlPackages; [
+        DBI
+        DBDSQLite
+        NetSMTPSSL
+        AuthenSASL
+        BytesRandomSecure
+        LWPUserAgent
+        LWPProtocolHttps
+        DateCalc
+      ]);
     installPhase = ''
       mkdir -p $out/libexec $out/sample
       cp run $out/libexec
@@ -47,11 +56,7 @@ let
       wrapProgram $out/libexec/run --prefix PERL5LIB : "$PERL5LIB"
     '';
   };
-
-in
-
-{
-
+in {
   systemd.services.stosowana = {
     description = "Check new posts on Stosowana.pl and notify by mail.";
     serviceConfig = {
@@ -69,14 +74,16 @@ in
   };
 
   systemd.timers.stosowana = {
-    partOf = [ "stosowana.service" ];
-    wantedBy = [ "timers.target" ];
+    partOf = ["stosowana.service"];
+    wantedBy = ["timers.target"];
     timerConfig.OnCalendar = runAt;
   };
 
   users = {
-    extraUsers."${user}" = { isSystemUser = true; group = user; };
+    extraUsers."${user}" = {
+      isSystemUser = true;
+      group = user;
+    };
     extraGroups."${group}" = {};
   };
-
 }

@@ -1,7 +1,4 @@
-{ pkgs, ... }:
-
-{
-
+{pkgs, ...}: {
   ## Allow unsafe internal UEFI snapshots in libvirt globally:
   /*
   nixpkgs.overlays = [
@@ -29,10 +26,10 @@
     options kvm ignore_msrs=1 report_ignored_msrs=0
   '';
 
-  users.extraUsers.m.extraGroups = [ "libvirtd" ];
-  users.extraUsers.mw.extraGroups = [ "libvirtd" ];
+  users.extraUsers.m.extraGroups = ["libvirtd"];
+  users.extraUsers.mw.extraGroups = ["libvirtd"];
 
-  networking.firewall.allowedTCPPorts = [ 2049 ]; # NFS v4 server
+  networking.firewall.allowedTCPPorts = [2049]; # NFS v4 server
 
   services.nfs.server = {
     enable = true;
@@ -46,11 +43,21 @@
     fsType = "cifs";
     options = [
       "rw"
-      "username=unused" "password=" "vers=2.0"
-      "uid=mw" "forceuid" "gid=users" "forcegid"
-      "file_mode=0644" "dir_mode=0755"
-      "nofail" "_netdev" "x-systemd.automount"
-      "x-systemd.mount-timeout=5s" "x-systemd.device-timeout=5s" "x-systemd.idle-timeout=2min"
+      "username=unused"
+      "password="
+      "vers=2.0"
+      "uid=mw"
+      "forceuid"
+      "gid=users"
+      "forcegid"
+      "file_mode=0644"
+      "dir_mode=0755"
+      "nofail"
+      "_netdev"
+      "x-systemd.automount"
+      "x-systemd.mount-timeout=5s"
+      "x-systemd.device-timeout=5s"
+      "x-systemd.idle-timeout=2min"
     ];
   };
 
@@ -59,11 +66,21 @@
     fsType = "cifs";
     options = [
       "rw"
-      "username=unused" "password=" "vers=2.0"
-      "uid=mw" "forceuid" "gid=users" "forcegid"
-      "file_mode=0644" "dir_mode=0755"
-      "nofail" "_netdev" "x-systemd.automount"
-      "x-systemd.mount-timeout=5s" "x-systemd.device-timeout=5s" "x-systemd.idle-timeout=2min"
+      "username=unused"
+      "password="
+      "vers=2.0"
+      "uid=mw"
+      "forceuid"
+      "gid=users"
+      "forcegid"
+      "file_mode=0644"
+      "dir_mode=0755"
+      "nofail"
+      "_netdev"
+      "x-systemd.automount"
+      "x-systemd.mount-timeout=5s"
+      "x-systemd.device-timeout=5s"
+      "x-systemd.idle-timeout=2min"
     ];
   };
 
@@ -72,11 +89,21 @@
     fsType = "cifs";
     options = [
       "rw"
-      "username=unused" "password=" "vers=2.0"
-      "uid=mw" "forceuid" "gid=users" "forcegid"
-      "file_mode=0644" "dir_mode=0755"
-      "nofail" "_netdev" "x-systemd.automount"
-      "x-systemd.mount-timeout=5s" "x-systemd.device-timeout=5s" "x-systemd.idle-timeout=2min"
+      "username=unused"
+      "password="
+      "vers=2.0"
+      "uid=mw"
+      "forceuid"
+      "gid=users"
+      "forcegid"
+      "file_mode=0644"
+      "dir_mode=0755"
+      "nofail"
+      "_netdev"
+      "x-systemd.automount"
+      "x-systemd.mount-timeout=5s"
+      "x-systemd.device-timeout=5s"
+      "x-systemd.idle-timeout=2min"
     ];
   };
 
@@ -85,11 +112,21 @@
     fsType = "cifs";
     options = [
       "rw"
-      "username=mw" "password=dupa.8" "vers=2.0"
-      "uid=mw" "forceuid" "gid=users" "forcegid"
-      "file_mode=0644" "dir_mode=0755"
-      "nofail" "_netdev" "x-systemd.automount"
-      "x-systemd.mount-timeout=5s" "x-systemd.device-timeout=5s" "x-systemd.idle-timeout=2min"
+      "username=mw"
+      "password=dupa.8"
+      "vers=2.0"
+      "uid=mw"
+      "forceuid"
+      "gid=users"
+      "forcegid"
+      "file_mode=0644"
+      "dir_mode=0755"
+      "nofail"
+      "_netdev"
+      "x-systemd.automount"
+      "x-systemd.mount-timeout=5s"
+      "x-systemd.device-timeout=5s"
+      "x-systemd.idle-timeout=2min"
     ];
   };
 
@@ -98,11 +135,21 @@
     fsType = "cifs";
     options = [
       "rw"
-      "username=mw" "password=dupa.8" "vers=2.0"
-      "uid=mw" "forceuid" "gid=users" "forcegid"
-      "file_mode=0644" "dir_mode=0755"
-      "nofail" "_netdev" "x-systemd.automount"
-      "x-systemd.mount-timeout=5s" "x-systemd.device-timeout=5s" "x-systemd.idle-timeout=2min"
+      "username=mw"
+      "password=dupa.8"
+      "vers=2.0"
+      "uid=mw"
+      "forceuid"
+      "gid=users"
+      "forcegid"
+      "file_mode=0644"
+      "dir_mode=0755"
+      "nofail"
+      "_netdev"
+      "x-systemd.automount"
+      "x-systemd.mount-timeout=5s"
+      "x-systemd.device-timeout=5s"
+      "x-systemd.idle-timeout=2min"
     ];
   };
 }

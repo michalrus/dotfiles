@@ -1,7 +1,4 @@
-{ pkgs, ... }:
-
-{
-
+{pkgs, ...}: {
   environment.systemPackages = with pkgs; [
     yubikey-manager
     #yubikey-manager-qt # end of life
@@ -13,5 +10,4 @@
   services.udev.packages = with pkgs; [
     yubikey-personalization
   ];
-
 }

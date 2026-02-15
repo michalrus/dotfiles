@@ -1,9 +1,10 @@
-{ config, lib, pkgs, ... }:
-
-with lib;
-
-let
-
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+with lib; let
   port = 6698;
 
   clientbufferFixed = overrideDerivation pkgs.zncModules.clientbuffer (oldAttrs: {
@@ -21,16 +22,21 @@ let
 
   acmeCert = "michalrus.com";
 
-  zncDerivation = a@{
-    src, module_name, version,
+  zncDerivation = a @ {
+    src,
+    module_name,
+    version,
     buildPhase ? "${pkgs.znc}/bin/znc-buildmod ${module_name}.cpp",
-    installPhase ? "install -D ${module_name}.so $out/lib/znc/${module_name}.so", ...
-  } : pkgs.stdenv.mkDerivation (a // {
-    inherit buildPhase;
-    inherit installPhase;
-    name = "znc-${module_name}-${version}";
-    passthru.module_name = module_name;
-  });
+    installPhase ? "install -D ${module_name}.so $out/lib/znc/${module_name}.so",
+    ...
+  }:
+    pkgs.stdenv.mkDerivation (a
+      // {
+        inherit buildPhase;
+        inherit installPhase;
+        name = "znc-${module_name}-${version}";
+        passthru.module_name = module_name;
+      });
 
   antiidle = zncDerivation rec {
     version = "unknown";
@@ -51,7 +57,7 @@ let
       rev = "d0b61291c5ac7e85c049836f96ce88e141251b1f";
       sha256 = "1388dd2ncll42xxckrjyajwbfxwbgq0qgx65vpa27q62ms98jzkd";
     };
-    patches = [ ./autoinvitejoin-all.patch ];
+    patches = [./autoinvitejoin-all.patch];
   };
 
   cfg = config.services.znc;
@@ -59,40 +65,41 @@ let
   # Prepare the server ACME cert for ZNC.
   createZncPem = let
     src = "${config.security.acme.directory}/${acmeCert}";
-    dh  = "${cfg.dataDir}/dhparam.pem";
+    dh = "${cfg.dataDir}/dhparam.pem";
     dst = "${cfg.dataDir}/znc.pem";
-  in pkgs.writeScript "create-znc-pem" ''
-    [ -e "${dh}" ] || ${pkgs.openssl.bin}/bin/openssl dhparam -out "${dh}" 4096
-    (
-      cat "${src}/key.pem" ; echo # why no \n at EOL?
-      cat "${src}/fullchain.pem" ; echo
-      cat "${dh}"
-    ) >"${dst}"
-    chmod 444 "${dst}" # safe, its directory is 700 znc:znc
-  '';
-
-in
-
-{
-  networking.firewall.allowedTCPPorts = [ port ];
+  in
+    pkgs.writeScript "create-znc-pem" ''
+      [ -e "${dh}" ] || ${pkgs.openssl.bin}/bin/openssl dhparam -out "${dh}" 4096
+      (
+        cat "${src}/key.pem" ; echo # why no \n at EOL?
+        cat "${src}/fullchain.pem" ; echo
+        cat "${dh}"
+      ) >"${dst}"
+      chmod 444 "${dst}" # safe, its directory is 700 znc:znc
+    '';
+in {
+  networking.firewall.allowedTCPPorts = [port];
 
   # Unfortunately, the znc module doesn’t have the package configurable.
-  nixpkgs.overlays = [ (self: super: {
-    znc = super.znc.overrideDerivation (oldAttrs: {
-      patches = [
-        ./timeouts.patch
-        ./always-has-self-message.patch
-        ./log-timestamp.patch
-        ./log-join-part-quit.patch
-      ];
-    });
-  }) ];
+  nixpkgs.overlays = [
+    (self: super: {
+      znc = super.znc.overrideDerivation (oldAttrs: {
+        patches = [
+          ./timeouts.patch
+          ./always-has-self-message.patch
+          ./log-timestamp.patch
+          ./log-join-part-quit.patch
+        ];
+      });
+    })
+  ];
 
   services = {
     znc = {
       enable = true;
-      modulePackages = [ clientbufferFixed antiidle autoinvitejoin ] ++
-        (with pkgs.zncModules; [ playback push ]);
+      modulePackages =
+        [clientbufferFixed antiidle autoinvitejoin]
+        ++ (with pkgs.zncModules; [playback push]);
       mutable = true;
       zncConf = ''
         # Generate the config with `znc -c`.
@@ -114,5 +121,4 @@ in
     ${createZncPem}
     chown -R "${cfg.user}:${cfg.user}" "${cfg.dataDir}" # group == cfg.user? smelly…
   '';
-
 }

@@ -1,7 +1,8 @@
-{ stdenv, nixpkgs-macos-sdk-13, runCommand }:
-
-let
-
+{
+  stdenv,
+  nixpkgs-macos-sdk-13,
+  runCommand,
+}: let
   inherit (stdenv.hostPlatform) system;
 
   nixpkgsPatched = runCommand "nixpkgs-patched" {} ''
@@ -11,55 +12,56 @@ let
     patch -p1 -i ${./nixpkgs-macos-sdk-virtualization.patch}
   '';
 
-  pkgs = import nixpkgsPatched { inherit system; };
+  pkgs = import nixpkgsPatched {inherit system;};
 
   sdk = pkgs.darwin.apple_sdk_13_1;
-
 in
+  sdk.callPackage (
+    {
+      lib,
+      fetchFromGitHub,
+      fetchurl,
+    }:
+      sdk.clang15Stdenv.mkDerivation rec {
+        name = "vftool";
 
-sdk.callPackage (
-  { lib, fetchFromGitHub, fetchurl }:
+        src = fetchFromGitHub {
+          owner = "evansm7";
+          repo = "vftool";
+          rev = "928324524883d24bd16d1528da9ae677943482b6";
+          hash = "sha256-4/wRBrROWS6xLUt5mp4N4WuIkgCQypL73VKlXjZszEI=";
+        };
 
-  sdk.clang15Stdenv.mkDerivation rec {
-    name = "vftool";
+        patches = [
+          # Enables Rosetta and shared directories:
+          (fetchurl {
+            url = "https://github.com/evansm7/vftool/pull/39.diff";
+            hash = "sha256-iqKwYQmt5xyoZ/29SvOIGfBh9RzPn/oCYt4+poeV0Vo=";
+          })
+        ];
 
-    src = fetchFromGitHub {
-      owner = "evansm7";
-      repo = "vftool";
-      rev = "928324524883d24bd16d1528da9ae677943482b6";
-      hash = "sha256-4/wRBrROWS6xLUt5mp4N4WuIkgCQypL73VKlXjZszEI=";
-    };
+        buildInputs = [
+          sdk.frameworks.Foundation
+          sdk.frameworks.Virtualization
+          sdk.frameworks.CloudKit
+          pkgs.darwin.sigtool
+        ];
 
-    patches = [
-      # Enables Rosetta and shared directories:
-      (fetchurl {
-        url = "https://github.com/evansm7/vftool/pull/39.diff";
-        hash = "sha256-iqKwYQmt5xyoZ/29SvOIGfBh9RzPn/oCYt4+poeV0Vo=";
-      })
-    ];
+        buildPhase = ''
+          make
+        '';
 
-    buildInputs = [
-      sdk.frameworks.Foundation
-      sdk.frameworks.Virtualization
-      sdk.frameworks.CloudKit
-      pkgs.darwin.sigtool
-    ];
+        installPhase = ''
+          mkdir -p $out/bin
+          cp build/* $out/bin/
+        '';
 
-    buildPhase = ''
-      make
-    '';
-
-    installPhase = ''
-      mkdir -p $out/bin
-      cp build/* $out/bin/
-    '';
-
-    meta = with lib; {
-      homepage = "https://github.com/evansm7/vftool";
-      description = "A simple macOS Virtualisation.framework wrapper";
-      license = licenses.mit;
-      maintainers = [ maintainers.michalrus ];
-      platforms = platforms.darwin;
-    };
-  }
-) {}
+        meta = with lib; {
+          homepage = "https://github.com/evansm7/vftool";
+          description = "A simple macOS Virtualisation.framework wrapper";
+          license = licenses.mit;
+          maintainers = [maintainers.michalrus];
+          platforms = platforms.darwin;
+        };
+      }
+  ) {}

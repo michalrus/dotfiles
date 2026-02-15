@@ -1,7 +1,9 @@
-{ config, lib, pkgs, ... }:
-
-let
-
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   user = "cardano";
   uid = 2052;
   dataDir = "/var/media/${user}";
@@ -27,16 +29,12 @@ let
   cardano-cli = cardano-node-flake.packages.${pkgs.stdenv.hostPlatform.system}.cardano-cli;
   mithril-client = mithril-flake.packages.${pkgs.stdenv.hostPlatform.system}.mithril-client-cli;
   blockfrost-platform = blockfrost-platform-flake.packages.${pkgs.stdenv.hostPlatform.system}.default;
-
-in
-
-{
-
-  environment.systemPackages = [ cardano-node cardano-cli mithril-client blockfrost-platform ];
+in {
+  environment.systemPackages = [cardano-node cardano-cli mithril-client blockfrost-platform];
 
   systemd.services.cardano-node = {
-    after = [ "network.target" ];
-    wantedBy = [ "multi-user.target" ];
+    after = ["network.target"];
+    wantedBy = ["multi-user.target"];
     serviceConfig = {
       Type = "simple";
       Restart = "always";
@@ -47,23 +45,25 @@ in
       WorkingDirectory = dataDir;
       ExecStart = let
         # Make the P2P code less chatty in logs:
-        configs = pkgs.runCommand "cardano-node-configs" {
-          buildInputs = with pkgs; [ jq ];
-        } ''
-          cp -r ${cardano-node-configs} $out
-          chmod -R +w $out
-          find $out -name 'config.json' | while IFS= read -r configFile ; do
-            jq '.
-              | .TraceConnectionManager = false
-              | .TracePeerSelection = false
-              | .TracePeerSelectionActions = false
-              | .TracePeerSelectionCounters = false
-              | .TraceInboundGovernor = false
-            ' "$configFile" >tmp.json
-            mv tmp.json "$configFile"
-          done
-        '';
-      in "${lib.getExe cardano-node} run"
+        configs =
+          pkgs.runCommand "cardano-node-configs" {
+            buildInputs = with pkgs; [jq];
+          } ''
+            cp -r ${cardano-node-configs} $out
+            chmod -R +w $out
+            find $out -name 'config.json' | while IFS= read -r configFile ; do
+              jq '.
+                | .TraceConnectionManager = false
+                | .TracePeerSelection = false
+                | .TracePeerSelectionActions = false
+                | .TracePeerSelectionCounters = false
+                | .TraceInboundGovernor = false
+              ' "$configFile" >tmp.json
+              mv tmp.json "$configFile"
+            done
+          '';
+      in
+        "${lib.getExe cardano-node} run"
         + " --config ${configs}/mainnet/config.json"
         + " --topology ${configs}/mainnet/topology.json"
         + " --port 55709"
@@ -73,8 +73,8 @@ in
   };
 
   systemd.services.blockfrost-platform = {
-    after = [ "network.target" ];
-    wantedBy = [ "multi-user.target" ];
+    after = ["network.target"];
+    wantedBy = ["multi-user.target"];
     serviceConfig = {
       Type = "simple";
       Restart = "always";
@@ -83,7 +83,8 @@ in
       Group = user;
       UMask = "0022";
       WorkingDirectory = dataDir;
-      ExecStart = "${lib.getExe blockfrost-platform}"
+      ExecStart =
+        "${lib.getExe blockfrost-platform}"
         + " --config ${config.age.secrets.blockfrost-platform-secret.path}"
         + " --server-address 0.0.0.0"
         + " --server-port 18077"
@@ -97,10 +98,10 @@ in
   # We need to restart blockfrost-platform a few seconds after airvpn.service
   # for it to re-register under a new IP with IceBreakers:
   systemd.services.blockfrost-platform-delayed-restart = {
-    bindsTo = [ "airvpn.service" ];
-    partOf = [ "airvpn.service" ];
-    after = [ "airvpn.service" ];
-    wantedBy = [ "multi-user.target" ];
+    bindsTo = ["airvpn.service"];
+    partOf = ["airvpn.service"];
+    after = ["airvpn.service"];
+    wantedBy = ["multi-user.target"];
     serviceConfig = {
       Restart = "on-failure";
       RemainAfterExit = true;
@@ -128,5 +129,4 @@ in
   systemd.tmpfiles.rules = [
     "d ${dataDir} 0755 ${user} ${user} -"
   ];
-
 }

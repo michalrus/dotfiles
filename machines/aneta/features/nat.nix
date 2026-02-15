@@ -1,9 +1,10 @@
-{ config, pkgs, lib, ... }:
-
-with import ./common.nix;
-
-let
-
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+with import ./common.nix; let
   flushRules = ''
 
     iptables -w -D FORWARD -j nixos-fw-forward 2> /dev/null || true
@@ -42,67 +43,75 @@ let
     iptables -w -t nat -A PREROUTING -j nixos-fw-nat-prerouting
 
   '';
-
-
 in
+  lib.mkMerge [
+    {networking.firewall.extraCommands = lib.mkBefore flushRules;}
 
-lib.mkMerge [
+    {
+      networking.networkmanager = {
+        enable = true;
+        unmanaged = ["eth0"];
+      };
 
-  { networking.firewall.extraCommands = lib.mkBefore flushRules; }
+      hardware.usbWwan.enable = true;
 
-  {
-    networking.networkmanager = {
-      enable = true;
-      unmanaged = [ "eth0" ];
-    };
+      systemd.services.ModemManager = {
+        wantedBy = ["NetworkManager.service"];
+        partOf = ["NetworkManager.service"];
+        after = ["NetworkManager.service"];
+      };
 
-    hardware.usbWwan.enable = true;
-
-    systemd.services.ModemManager = {
-      wantedBy = [ "NetworkManager.service" ];
-      partOf   = [ "NetworkManager.service" ];
-      after    = [ "NetworkManager.service" ];
-    };
-
-    networking.interfaces.eth0.ipv4.addresses = [{
-      address = addressing.router;
-      prefixLength = addressing.prefixLength;
-    }];
-
-    environment.systemPackages = with pkgs; [
-      modemmanager # for `mmcli`
-    ];
-
-    boot.kernel.sysctl = {
-      "net.ipv4.conf.all.forwarding"     = lib.mkOverride 99 true;
-      "net.ipv4.conf.default.forwarding" = lib.mkOverride 99 true;
-    };
-
-    networking.firewall = {
-      enable = true;
-      extraCommands = setupRules;
-      extraStopCommands = flushRules;
-    };
-
-    services.dhcpd4 = {
-      enable = true;
-      interfaces = ["eth0"];
-      extraConfig = ''
-        option subnet-mask ${addressing.netmask};
-        option broadcast-address ${addressing.broadcast};
-        option routers ${addressing.router};
-        option domain-name-servers ${addressing.router};
-        subnet ${addressing.prefix} netmask ${addressing.netmask} {
-          range ${addressing.dhcpRangeLow} ${addressing.dhcpRangeHigh};
+      networking.interfaces.eth0.ipv4.addresses = [
+        {
+          address = addressing.router;
+          prefixLength = addressing.prefixLength;
         }
-      '';
-      machines = [
-        { hostName = "rpi-krzysiek"; ethernetAddress = "dc:a6:32:78:ae:d8"; ipAddress = addressing.rpiKrzysiek; }
-        { hostName = "printer";      ethernetAddress = "00:1a:4b:23:ba:6e"; ipAddress = addressing.printer;     }
-        { hostName = "dell-home-server"; ethernetAddress = "e4:70:b8:f7:4b:8f"; ipAddress = addressing.dell-home-server; }
       ];
-    };
 
-  }
+      environment.systemPackages = with pkgs; [
+        modemmanager # for `mmcli`
+      ];
 
-]
+      boot.kernel.sysctl = {
+        "net.ipv4.conf.all.forwarding" = lib.mkOverride 99 true;
+        "net.ipv4.conf.default.forwarding" = lib.mkOverride 99 true;
+      };
+
+      networking.firewall = {
+        enable = true;
+        extraCommands = setupRules;
+        extraStopCommands = flushRules;
+      };
+
+      services.dhcpd4 = {
+        enable = true;
+        interfaces = ["eth0"];
+        extraConfig = ''
+          option subnet-mask ${addressing.netmask};
+          option broadcast-address ${addressing.broadcast};
+          option routers ${addressing.router};
+          option domain-name-servers ${addressing.router};
+          subnet ${addressing.prefix} netmask ${addressing.netmask} {
+            range ${addressing.dhcpRangeLow} ${addressing.dhcpRangeHigh};
+          }
+        '';
+        machines = [
+          {
+            hostName = "rpi-krzysiek";
+            ethernetAddress = "dc:a6:32:78:ae:d8";
+            ipAddress = addressing.rpiKrzysiek;
+          }
+          {
+            hostName = "printer";
+            ethernetAddress = "00:1a:4b:23:ba:6e";
+            ipAddress = addressing.printer;
+          }
+          {
+            hostName = "dell-home-server";
+            ethernetAddress = "e4:70:b8:f7:4b:8f";
+            ipAddress = addressing.dell-home-server;
+          }
+        ];
+      };
+    }
+  ]

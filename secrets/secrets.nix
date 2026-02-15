@@ -1,5 +1,4 @@
 let
-
   # people
   michalrus = [
     # personal GPG:
@@ -15,7 +14,6 @@ let
   macbook-nixos = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO4xwYfoldXil0aOHLOzSugiLKVqh/M7Hmi6T2Awv7k0"];
   dell-home-server = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHIF7BIoIAPX1gBffDvuKoHHXrHRbgJdDze6DhH97N5B"];
   monstrum = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAII+f73fJcgbVVbfMI+lAzOk582TGp6t7O3jFxk60B8"];
-
 in {
   "openproject_key_base.age".publicKeys = michalrus ++ michalrus_com ++ monstrum;
   "smtp_scripts_michalrus_com.age".publicKeys = michalrus ++ michalrus_com ++ monstrum;
