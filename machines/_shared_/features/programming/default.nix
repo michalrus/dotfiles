@@ -27,7 +27,6 @@ in
       git-filter-repo
       (python3.withPackages (p: with p; [ scipy geopy python-lsp-server requests pylint matplotlib tkinter beautifulsoup4 aiohttp humanize protobuf lz4 opencv4 ]))
       nixd
-      alejandra
       fpc
       ghc
       gnumake
@@ -45,13 +44,17 @@ in
       httpie # HTTP requests
       jq
       shellcheck
-      shfmt
       treefmt-wrapper
       xh # HTTP requests
       yq # jq for YAML
-      prettier
-      yamlfmt
       yamllint
+      clang
+      clang-tools # for clangd language server
+      octave
+      pandoc
+      protobuf
+      sqlint
+      statix
     ];
   }];
 }

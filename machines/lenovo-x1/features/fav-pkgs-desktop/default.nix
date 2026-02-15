@@ -14,10 +14,6 @@ in
   environment.systemPackages = flake.lib.filterSystem pkgs.stdenv.hostPlatform.system (with pkgs; [
     haskellPackages.ghc
     haskellPackages.hlint
-    octave
-    pandoc
-    protobuf
-    sqlint
     (texlive.withPackages (ps: [
       flake.packages.${pkgs.stdenv.hostPlatform.system}.gregorio.forTexlive
     ] ++ (with ps; [
@@ -44,8 +40,6 @@ in
     calibre
     cdparanoia
     cdrkit
-    clang
-    clang-tools # for clangd language server
     cool-retro-term
     devede
     diff-pdf
@@ -68,7 +62,6 @@ in
     #k3b
     lilypond
     monero-gui
-    octave
     pdfarranger
     pdfpc
     pdftk
@@ -84,7 +77,6 @@ in
     rtmpdump
     samba
     speedread
-    statix
     tigervnc
     timidity
     # unfree.skypeforlinux  # FIXME: use inside browser?
