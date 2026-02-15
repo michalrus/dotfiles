@@ -1,7 +1,5 @@
 {
   flake,
-  config,
-  lib,
   pkgs,
   ...
 }: let
@@ -62,6 +60,7 @@ in {
         sqlint
         statix
       ];
+      home.shellAliases.oc = "opencode-bwrap";
     }
   ];
 }
