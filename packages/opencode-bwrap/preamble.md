@@ -22,23 +22,21 @@ This file lists the CLI tools available on PATH and the tools you prefer to use.
 - The GitHub CLI (`gh`) is available for repository search, issues, and PR workflows.
 - Serena LSP/MCP tools are available to you for semantic code navigation and edits (symbol search, references, rename, targeted replacements) and should be used when helpful.
 
-## Linting and formatting (required)
+## Linting (required)
 
-After editing program source files, you must run the language-appropriate formatter and linter and fix issues until the tools pass cleanly. This also applies to docs and config files covered by the examples below.
+After editing program source files, you must run the language-appropriate linter and fix issues until the tools pass cleanly. This also applies to docs and config files covered by the examples below.
 
 Mandatory checklist after edits and before returning the next response to the user:
 
-- Run formatter(s)
 - Run linter(s)
 - Fix issues until clean
 
-Do not report formatter/linter runs when they are clean and make no changes.
+Do not report linter runs when they are clean and make no changes.
 
 Examples:
 
-- Rust: cargo fmt, cargo clippy
-- Python: black, pylint
-- Bash: shfmt, shellcheck
-- Nix: alejandra, nixlint <file-or-dir>
-- Markdown/JSON: prettier (no linter)
-- YAML: yamlfmt, yamllint
+- Rust: cargo clippy
+- Python: pylint
+- Bash: shellcheck
+- Nix: nixlint <file-or-dir>
+- YAML: yamllint

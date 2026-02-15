@@ -11,6 +11,51 @@
     share = "disabled";
     theme = "solarized";
     lsp = false;
+    formatter = {
+      biome.disabled = true;
+      cargofmt.disabled = true;
+      oxfmt.disabled = true;
+      ruff.disabled = true;
+      rubocop.disabled = true;
+      rustfmt.disabled = true;
+      shfmt.disabled = true;
+      standardrb.disabled = true;
+      uv.disabled = true;
+      nixfmt.disabled = true;
+      prettier.disabled = true;
+      treefmt = {
+        command = ["treefmt" "$FILE"];
+        extensions = [
+          ".bash"
+          ".cjs"
+          ".css"
+          ".envrc"
+          ".envrc.*"
+          ".html"
+          ".js"
+          ".json"
+          ".json5"
+          ".jsonc"
+          ".jsx"
+          ".md"
+          ".mdx"
+          ".mjs"
+          ".nix"
+          ".py"
+          ".pyi"
+          ".rb"
+          ".rs"
+          ".scss"
+          ".sh"
+          ".toml"
+          ".ts"
+          ".tsx"
+          ".vue"
+          ".yaml"
+          ".yml"
+        ];
+      };
+    };
     tui = {
       diff_style = "stacked";
     };

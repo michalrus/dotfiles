@@ -2,7 +2,6 @@
 
 let
   treefmt-wrapper = flake.inputs.treefmt-nix.lib.mkWrapper pkgs {
-    projectRootFile = ".git";
     programs = {
       alejandra.enable = true; # Nix
       prettier.enable = true;
