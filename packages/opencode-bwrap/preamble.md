@@ -39,7 +39,6 @@ Examples:
 - Rust: cargo fmt, cargo clippy
 - Python: black, pylint
 - Bash: shfmt, shellcheck
+- Nix: alejandra, nixlint <file-or-dir>
 - Markdown/JSON: prettier (no linter)
 - YAML: yamlfmt, yamllint
-
-If the required tools are unavailable, you must say so and request their installation.

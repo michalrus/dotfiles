@@ -18,6 +18,7 @@
       cargo-nextest
       clippy
       flake.packages.${pkgs.stdenv.hostPlatform.system}.opencode-bwrap
+      flake.packages.${pkgs.stdenv.hostPlatform.system}.nixlint
       fd
       gh
       httpie # HTTP requests
