@@ -83,11 +83,11 @@
           grep = "allow"; # content search – like `rg` but builtin
           list = "allow"; # listing files in a directory
           bash = "allow"; # running shell commands
-          task = "ask"; # launching subagents
-          skill = "ask"; # loading a skill (from the current repository)
+          task = "allow"; # launching subagents
+          skill = "allow"; # loading a skill (from the current repository)
           lsp = "deny"; # running LSP queries (currently non-granular) – we have a better `serena` for this
           todoread = "allow"; # reading the todo list
-          todowrite = "ask"; # updating the todo list
+          todowrite = "allow"; # updating the todo list
           webfetch = "allow"; # fetching a URL
           websearch = "allow"; # web/code search
           codesearch = "allow"; # web/code search
