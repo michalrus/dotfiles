@@ -164,6 +164,7 @@
     extraPath = [
       winetricks
       pkgs.cabextract
+      pkgs.findutils
       pkgs.curl
       pkgs.gawk
       pkgs.gnused
