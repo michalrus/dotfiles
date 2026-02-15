@@ -5,7 +5,8 @@ let
     programs = {
       alejandra.enable = true; # Nix
       prettier.enable = true;
-      ruff.enable = true; # Python
+      ruff-check.enable = true; # Python
+      ruff-format.enable = true; # Python
       rufo.enable = true; # Ruby
       rustfmt.enable = true;
       shfmt.enable = true;
