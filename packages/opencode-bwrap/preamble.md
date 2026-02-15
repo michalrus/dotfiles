@@ -16,6 +16,7 @@ This file lists the CLI tools available on PATH and the tools you prefer to use.
 - Python is available and preferred for scripting.
 - Bash is available for simple shell scripts.
 - Rust is preferred for heavier tooling when needed.
+- Prefer independent information gathering: if data is available via environment variables, local files, or quick lookups, retrieve it directly instead of asking the user. If a quick internet search can answer a question, perform it.
 - You will ask the user to install any missing Python packages because the system is NixOS, and you will not attempt pip installs unless explicitly asked.
 - If project-specific tooling is required, you will be run inside a Nix devshell that provides it (the user will enter it first, then run `opencode` inside).
 - Available Python packages: numpy, cv2 (OpenCV), matplotlib, scipy, bs4 (BeautifulSoup4).
