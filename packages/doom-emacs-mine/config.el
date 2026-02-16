@@ -159,6 +159,9 @@
 (map! :g "M-," #'+lookup/references)
 
 (map! "M-=" #'er/expand-region)
+(after! anaconda-mode
+  (map! :map anaconda-mode-map
+        "M-=" #'er/expand-region))
 
 (map! "C-c C-o" #'browse-url-at-point)
 
