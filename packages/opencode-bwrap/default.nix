@@ -254,6 +254,7 @@
         --setenv LANG "$LANG"
         --setenv LOCALE_ARCHIVE "$LOCALE_ARCHIVE"
         --setenv LOCALE_ARCHIVE_2_27 "$LOCALE_ARCHIVE_2_27"
+        --setenv NIX_PATH ${lib.escapeShellArg "nixpkgs=${pkgs.path}"}
         --setenv OPENCODE_DISABLE_LSP_DOWNLOAD "true"
         --setenv OPENCODE_CONFIG ${pkgs.writeText "config.json" (builtins.toJSON config)}
       )
