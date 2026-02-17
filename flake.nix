@@ -171,7 +171,10 @@
           noise = callPackage ./packages/noise {};
           pms5003 = callPackage ./packages/pms5003 {};
           qemu-win10 = callPackage ./packages/qemu-win10 {};
-          radio = callPackage ./packages/radio {inherit accuradio;};
+          radio = callPackage ./packages/radio {
+            inherit accuradio radio-chillhop;
+          };
+          radio-chillhop = callPackage ./packages/radio-chillhop {};
           rofi-unicode-input = callPackage ./packages/rofi-unicode-input {};
           talentedhack = callPackage ./packages/talentedhack {};
           tap-plugins = callPackage ./packages/tap-plugins {};

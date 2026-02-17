@@ -6,6 +6,7 @@
   mpv,
   mpvScripts,
   accuradio,
+  radio-chillhop,
   yq,
 }: let
   mpv' = mpv.override {scripts = with mpvScripts; [mpris];};
@@ -23,7 +24,7 @@
 in
   writeShellApplication {
     name = "radio";
-    runtimeInputs = [skim mpv' accuradio yq];
+    runtimeInputs = [skim mpv' accuradio radio-chillhop yq];
     text = radioScript;
     derivationArgs.meta.description = "Interactive terminal radio menu";
   }
