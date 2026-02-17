@@ -269,6 +269,10 @@
         bwrap_opts+=( --bind "$sandbox_home"/"$f" "$HOME"/"$f" )
       done
 
+      if [ -f "$HOME"/.config/git/ignore ] ; then
+        bwrap_opts+=( --ro-bind "$HOME"/.config/git/ignore "$HOME"/.config/git/ignore )
+      fi
+
       rw_opts=()
       ro_git_opts=()
 
