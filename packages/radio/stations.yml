@@ -31,3 +31,19 @@ stations:
 
   - name: "Renaissance: Concertzender Oude Muziek"
     url: https://streams.greenhost.nl:8006/oudemuziek
+
+  - name: "Lo-fi: Lofi Girl · lofi hip hop radio · beats to relax/study to"
+    url: https://www.youtube.com/watch?v=jfKfPfyJRdk
+    player: mpva-android
+
+  - name: "Lo-fi: Lofi Girl · synthwave radio · beats to chill/game to"
+    url: https://www.youtube.com/watch?v=4xDzrJKXOOY
+    player: mpva-android
+
+  - name: "Lo-fi: Lofi Girl · jazz lofi radio · beats to chill/study to"
+    url: https://www.youtube.com/watch?v=HuFYqnbVbzY
+    player: mpva-android
+
+  - name: "Lo-fi: Lofi Girl · asian lofi radio · beats to relax/study to"
+    url: https://www.youtube.com/watch?v=Na0w3Mz46GA
+    player: mpva-android

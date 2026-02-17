@@ -6,22 +6,28 @@
   ...
 }: let
   yt-dlp = flake.packages.${pkgs.stdenv.hostPlatform.system}.yt-dlp;
+  # Streaming only audio:
+  mpva = pkgs.writeShellApplication {
+    name = "mpva";
+    text = ''exec mpv --no-resume-playback --no-video --ytdl-format='bestaudio[ext=m4a]/bestaudio' --ytdl-raw-options='ignore-config=' "$@"'';
+  };
+  # The Android player is often treated better, though with lower kb/s:
+  mpva-android = pkgs.writeShellApplication {
+    name = "mpva-android";
+    text = ''exec mpv --no-resume-playback --no-video --ytdl-format='bestaudio/best' --ytdl-raw-options='ignore-config=,extractor-args=youtube:player_client=android' "$@"'';
+  };
 in {
   home.packages = [
     yt-dlp
     pkgs.python3Packages.subliminal
+    mpva
+    mpva-android
   ];
 
   programs.mpv = {
     enable = true;
     scripts = with pkgs.mpvScripts; [mpris thumbnail autosub easycrop acompressor];
   };
-
-  # Streaming only audio:
-  home.shellAliases.mpva = "mpv --no-resume-playback --no-video --ytdl-format='bestaudio[ext=m4a]/bestaudio' --ytdl-raw-options='ignore-config='";
-
-  # The Android player is often treated better, though with lower kb/s:
-  home.shellAliases.mpva-android = "mpv --no-resume-playback --no-video --ytdl-format='bestaudio/best' --ytdl-raw-options='ignore-config=,extractor-args=youtube:player_client=android'";
 
   home.file.".config/mpv/input.conf".text = ''
     MBTN_LEFT  cycle pause

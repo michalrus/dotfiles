@@ -13,6 +13,13 @@ get_station_url() {
   yq -r --arg station "$name" '.stations[] | select(.name == $station) | .url' "$stations_yaml"
 }
 
+get_station_player() {
+  local name="$1"
+
+  # shellcheck disable=SC2016
+  yq -r --arg station "$name" '.stations[] | select(.name == $station) | (.player // "")' "$stations_yaml"
+}
+
 get_station_infixes() {
   local name="$1"
 
@@ -32,6 +39,7 @@ play_stream() {
   local url="$2"
   local infixes="${3:-}"
   local mute_empty_title="${4:-false}"
+  local player_override="${5:-}"
   local mpv_args=(
     --user-agent="$user_agent"
     --no-ytdl
@@ -51,6 +59,10 @@ play_stream() {
   echo "Station: $name"
   echo "URL:     $url"
   echo
+
+  if [ -n "$player_override" ] && [ "$player_override" != "null" ]; then
+    exec "$player_override" "$url"
+  fi
 
   exec mpv "${mpv_args[@]}" "$url"
 }
@@ -72,6 +84,7 @@ case "$station" in
   ;;
 *)
   url=$(get_station_url "$station")
+  player=$(get_station_player "$station")
   infixes=$(get_station_infixes "$station")
   mute_empty_title=$(get_station_mute_empty_title "$station")
   if [ -z "$url" ]; then
@@ -79,6 +92,6 @@ case "$station" in
     exit 1
   fi
 
-  play_stream "$station" "$url" "$infixes" "$mute_empty_title"
+  play_stream "$station" "$url" "$infixes" "$mute_empty_title" "$player"
   ;;
 esac
