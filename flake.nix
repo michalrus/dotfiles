@@ -44,10 +44,14 @@
 
     nixos-hardware.url = "github:NixOS/nixos-hardware";
 
-    agenix.url = "github:ryantm/agenix";
-    agenix.inputs.nixpkgs.follows = "nixpkgs-2511";
-    agenix.inputs.darwin.follows = "nix-darwin-2511";
-    agenix.inputs.home-manager.follows = "home-manager-2511";
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs = {
+        nixpkgs.follows = "nixpkgs-2511";
+        darwin.follows = "nix-darwin-2511";
+        home-manager.follows = "home-manager-2511";
+      };
+    };
 
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
@@ -106,7 +110,7 @@
       monstrum = import ./machines/monstrum {inherit inputs;};
     };
 
-    darwinConfigurations = rec {
+    darwinConfigurations = {
       # darwin-rebuild switch -L --keep-going --flake .#macbook
       macbook = import ./machines/macbook {inherit inputs;};
     };
@@ -159,7 +163,7 @@
           lv2-cpp-tools = callPackage ./packages/lv2-cpp-tools {};
           nixlint = callPackage ./packages/nixlint {};
           opencode-bwrap = callPackage ./packages/opencode-bwrap {
-            nixpkgs-unstable = inputs.nixpkgs-unstable;
+            inherit (inputs) nixpkgs-unstable;
             serena = inputs.serena.packages.${system}.default;
           };
           on-vt-switch = callPackage ./packages/on-vt-switch {};
