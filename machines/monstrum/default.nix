@@ -101,7 +101,8 @@ in
       })
 
       ({pkgs, ...}: {
-        environment.systemPackages = [flake.packages.${pkgs.stdenv.hostPlatform.system}.accuradio];
+        environment.systemPackages = [flake.packages.${pkgs.stdenv.hostPlatform.system}.radio];
+        home-manager.sharedModules = [{home.shellAliases.accuradio = "radio";}];
       })
 
       ({pkgs, ...}: {
@@ -124,7 +125,7 @@ in
             ${bold}modem-restart${reset}                   – Soft-restart the LTE modem
             ${bold}vpn-change-server${reset}               – Select a new (general) VPN server
             ${bold}vpn-change-server-for-torrents${reset}  – Select a new VPN server for Torrents
-            ${bold}accuradio${reset}                       – No-ads textual UI for AccuRadio
+            ${bold}radio${reset}                           – No-ads textual UI for AccuRadio et al.
             ${bold}mpva${reset}                            – Stream audio from a YouTube URL
             ${bold}mpva-android${reset}                    – Same, but use the Android player API
             ${bold}pulsemixer${reset}                      – Sound volume controls

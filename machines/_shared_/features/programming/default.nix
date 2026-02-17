@@ -13,6 +13,7 @@
         rufo.enable = true; # Ruby
         rustfmt.enable = true;
         shfmt.enable = true;
+        stylua.enable = true; # Lua
         taplo.enable = true; # TOML
         yamlfmt.enable = true;
       };

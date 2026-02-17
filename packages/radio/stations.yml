@@ -1,0 +1,33 @@
+# yamllint disable rule:document-start
+stations:
+  - name: "Acid jazz: acid-jazz-radio.de"
+    url: http://stream.laut.fm/acidjazz
+    mute_title_infixes:
+      - Ein bisschen Verbraucherinformationen
+    mute_empty_title: false
+
+  - name: "Acid jazz: 181.fm"
+    url: http://listen.181fm.com/181-acidjazz_128k.mp3
+    mute_title_infixes: []
+    mute_empty_title: true
+
+  - name: "Polskie Radio Program I („Jedynka”)"
+    url: https://stream11.polskieradio.pl/pr1/pr1.sdp/playlist.m3u8
+
+  - name: "Polskie Radio Program II („Dwójka”)"
+    url: https://stream12.polskieradio.pl/pr2/pr2.sdp/playlist.m3u8
+
+  - name: "Polskie Radio Program III („Trójka”)"
+    url: https://stream13.polskieradio.pl/pr3/pr3.sdp/playlist.m3u8
+
+  - name: "Polskie Radio Program IV („Czwórka”)"
+    url: https://stream14.polskieradio.pl/pr4/pr4.sdp/playlist.m3u8
+
+  - name: "Radio Maryja"
+    url: https://radiomaryja.fastcast4u.com/proxy/radiomaryja?mp=/1
+
+  - name: "Renaissance: Ancient FM"
+    url: https://mediaserv73.live-streams.nl:18058/stream
+
+  - name: "Renaissance: Concertzender Oude Muziek"
+    url: https://streams.greenhost.nl:8006/oudemuziek
