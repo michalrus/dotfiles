@@ -142,6 +142,7 @@ in {
     l = ''ls -lh --color --group-directories-first $([ "$PWD" = "$HOME" ] && echo "" || echo "-A")'';
     ll = l;
     g = "git";
+    f = "treefmt";
     d = "dirs -v";
     s = "exec screen -x 7260c3b2-2e3d-4b22-8f8b-ab87de790446";
     clear = clearAndEraseScrollback;
