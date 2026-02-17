@@ -1,10 +1,4 @@
-{
-  config,
-  flake,
-  pkgs,
-  lib,
-  ...
-}: {
+{pkgs, ...}: {
   home.packages = [pkgs.screen];
 
   home.file.".screenrc".text = ''
@@ -13,7 +7,7 @@
     startup_message off
     bell_msg ""
 
-    altscreen off
+    altscreen on
     defscrollback 100000
 
     bind - resize -3
@@ -30,6 +24,6 @@
 
     truecolor on
 
-    termcapinfo xterm*|xterm-256color|screen.xterm*|rxvt*  ti@:te@:XT:Km@:
+    termcapinfo xterm*|xterm-256color|screen.xterm*|rxvt*  XT:Km@:
   '';
 }
