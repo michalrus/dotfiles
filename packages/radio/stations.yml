@@ -11,16 +11,16 @@ stations:
     mute_title_infixes: []
     mute_empty_title: true
 
-  - name: "Polskie Radio Program I („Jedynka”)"
+  - name: "Polskie Radio: Program I („Jedynka”)"
     url: https://stream11.polskieradio.pl/pr1/pr1.sdp/playlist.m3u8
 
-  - name: "Polskie Radio Program II („Dwójka”)"
+  - name: "Polskie Radio: Program II („Dwójka”)"
     url: https://stream12.polskieradio.pl/pr2/pr2.sdp/playlist.m3u8
 
-  - name: "Polskie Radio Program III („Trójka”)"
+  - name: "Polskie Radio: Program III („Trójka”)"
     url: https://stream13.polskieradio.pl/pr3/pr3.sdp/playlist.m3u8
 
-  - name: "Polskie Radio Program IV („Czwórka”)"
+  - name: "Polskie Radio: Program IV („Czwórka”)"
     url: https://stream14.polskieradio.pl/pr4/pr4.sdp/playlist.m3u8
 
   - name: "Radio Maryja"
