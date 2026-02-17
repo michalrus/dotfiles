@@ -15,6 +15,7 @@
         shfmt.enable = true;
         stylua.enable = true; # Lua
         taplo.enable = true; # TOML
+        xmllint.enable = true; # XML
         yamlfmt.enable = true;
       };
     }).overrideAttrs (drv: {
