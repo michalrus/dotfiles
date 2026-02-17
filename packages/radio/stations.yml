@@ -47,3 +47,12 @@ stations:
   - name: "Lo-fi: Lofi Girl · asian lofi radio · beats to relax/study to"
     url: https://www.youtube.com/watch?v=Na0w3Mz46GA
     player: mpva-android
+
+  - name: "Downtempo: Soma FM: Groove Salad"
+    url: https://somafm.com/groovesalad256.pls
+
+  - name: "Downtempo: Soma FM: Groove Salad Classic"
+    url: https://somafm.com/gsclassic130.pls
+
+  - name: "Downtempo: Soma FM: DEF CON Radio"
+    url: https://somafm.com/defcon256.pls
