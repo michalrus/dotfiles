@@ -8,6 +8,9 @@ system_image="$data_dir/system.qcow2"
 shared_dir="$data_dir/shared"
 guest_iso_default="@virtioWinIso@"
 share_tag="hostshare"
+spice_addr="127.0.0.1"
+spice_port="${QEMU_WIN10_SPICE_PORT:-5900}"
+spice_viewer="remote-viewer"
 
 usage() {
   cat <<EOF
@@ -36,6 +39,31 @@ EOF
 die() {
   echo >&2 "$prog: $*"
   exit 1
+}
+
+require_spice_viewer() {
+  command -v "$spice_viewer" >/dev/null 2>&1 || die "missing $spice_viewer in PATH"
+}
+
+spice_port_in_use() {
+  if (exec 3<>"/dev/tcp/$spice_addr/$spice_port") 2>/dev/null; then
+    exec 3<&- 3>&-
+    return 0
+  fi
+  return 1
+}
+
+wait_for_spice() {
+  local attempts=100
+  while [ "$attempts" -gt 0 ]; do
+    if (exec 3<>"/dev/tcp/$spice_addr/$spice_port") 2>/dev/null; then
+      exec 3<&- 3>&-
+      return 0
+    fi
+    attempts=$((attempts - 1))
+    sleep 0.05
+  done
+  return 1
 }
 
 mode=""
@@ -224,14 +252,19 @@ qemu_args=(
   -smp "$cpus"
   -rtc base=localtime
   -vga none
+  -display none
   -device "qxl-vga,ram_size_mb=${qxl_ram_mb},vram_size_mb=${qxl_vram_mb},vgamem_mb=${qxl_vgamem_mb}"
+  -device "virtio-serial-pci,id=virtio-serial0"
+  -chardev "spicevmc,id=spicechannel0,name=vdagent"
+  -device "virtserialport,bus=virtio-serial0.0,nr=1,chardev=spicechannel0,name=com.redhat.spice.0"
   -usb
   -device usb-tablet
   -device virtio-rng-pci
   -device virtio-balloon-pci
-  -audiodev "pa,id=audio0"
+  -audiodev "spice,id=audio0"
   -device ich9-intel-hda
   -device "hda-duplex,audiodev=audio0"
+  -spice "port=$spice_port,addr=$spice_addr,disable-ticketing=on,image-compression=off,seamless-migration=on"
   -nic none
   -boot menu=on
   -virtfs "local,path=$shared_dir,mount_tag=$share_tag,security_model=none"
@@ -250,4 +283,41 @@ for iso_path in "${isos[@]}"; do
   )
 done
 
-exec qemu-system-x86_64 "${qemu_args[@]}"
+require_spice_viewer
+if spice_port_in_use; then
+  die "SPICE port ${spice_addr}:${spice_port} is already in use"
+fi
+
+qemu-system-x86_64 "${qemu_args[@]}" &
+qemu_pid=$!
+cleanup_done="false"
+
+cleanup() {
+  if [ "$cleanup_done" = "true" ]; then
+    return
+  fi
+  cleanup_done="true"
+  local status=0
+
+  if [ -n "${qemu_pid:-}" ] && kill -0 "$qemu_pid" 2>/dev/null; then
+    kill "$qemu_pid" 2>/dev/null || true
+  fi
+  if [ -n "${qemu_pid:-}" ]; then
+    if ! wait "$qemu_pid" 2>/dev/null; then
+      status=$?
+    else
+      status=0
+    fi
+    qemu_pid=""
+  fi
+
+  exit "$status"
+}
+
+trap cleanup EXIT INT TERM
+
+if wait_for_spice; then
+  "$spice_viewer" "spice://${spice_addr}:${spice_port}"
+else
+  echo >&2 "$prog: timed out waiting for SPICE on ${spice_addr}:${spice_port}"
+fi

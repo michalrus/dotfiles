@@ -8,6 +8,7 @@ pkgs.writeShellApplication rec {
     pkgs.coreutils
     pkgs.qemu
     pkgs.util-linux
+    pkgs.virt-viewer
   ];
   text =
     builtins.replaceStrings
