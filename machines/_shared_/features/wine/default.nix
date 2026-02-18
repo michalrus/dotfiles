@@ -7,6 +7,7 @@
 }: {
   environment.systemPackages = with pkgs; [
     flake.packages.${pkgs.stdenv.hostPlatform.system}.wine-bwrap
+    flake.packages.${pkgs.stdenv.hostPlatform.system}.qemu-win10
     # FIXME: remove normal Wine from PATH?
     wineWowPackages.stableFull
     winetricks
