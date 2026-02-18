@@ -232,8 +232,7 @@ elif [ "$mode" = "apps" ] || [ "$mode" = "apps-rw" ]; then
   if [ "$mode" = "apps" ]; then
     [ -f "$apps_image" ] || die "missing $apps_image; use --apps-rw to create it"
     overlay_stamp="$(date -Ins)"
-    overlay_stamp="${overlay_stamp//:/-}"
-    overlay_stamp="${overlay_stamp//+/-}"
+    overlay_stamp="${overlay_stamp//[^0-9A-Za-zT]/-}"
     overlay_image="$data_dir/overlay-$overlay_stamp.qcow2"
     qemu-img create -f qcow2 -b "$apps_image" -F qcow2 "$overlay_image"
     disk_image="$overlay_image"
