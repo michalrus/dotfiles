@@ -9,7 +9,7 @@ in
         {_module.args = {inherit flake;};}
         nixpkgs.nixosModules.notDetected
 
-        # Idle temperatures go up 60–70 ℃ with this. Without it, around 35 ℃:
+        # FIXME: Idle temperatures go up 60–70 ℃ with this. Without it, around 35 ℃:
         #flake.inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x1-extreme-gen2
 
         flake.inputs.nixos-hardware.nixosModules.common-gpu-nvidia-disable # battery life
