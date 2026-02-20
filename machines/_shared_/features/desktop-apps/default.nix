@@ -56,6 +56,7 @@
         hunspellDicts.en_US
         mc
         cool-retro-term
+        libva-utils
       ];
 
       xdg.mimeApps.enable = true;
