@@ -57,6 +57,7 @@
         mc
         cool-retro-term
         libva-utils
+        kdePackages.kdenlive
       ];
 
       xdg.mimeApps.enable = true;
