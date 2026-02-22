@@ -45,8 +45,11 @@
       ff = "merge --ff-only";
     };
     settings = {
-      core.safecrlf = false;
-      core.commentchar = ";";
+      core = {
+        safecrlf = false;
+        commentchar = ";";
+        hooksPath = "~/.config/git/hooks";
+      };
       merge.conflictstyle = "diff3";
       fetch.prune = true;
       pull.ff = "only";
@@ -57,6 +60,8 @@
 
   home.file =
     {
+      ".config/git/hooks".source = ./hooks;
+
       ".ssh/config.d/github.com".text = ''
         Host github.com
           Hostname github.com
