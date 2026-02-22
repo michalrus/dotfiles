@@ -3,8 +3,7 @@
   lib,
   pkgs,
   ...
-}:
-with lib; let
+}: let
   name = "nordvpn";
 
   dataDir = "/var/lib/openvpn/${name}";

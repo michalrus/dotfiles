@@ -1,5 +1,4 @@
 {
-  config,
   pkgs,
   lib,
   ...
@@ -23,9 +22,11 @@
   services = {
     openssh = {
       enable = true;
-      settings.PermitRootLogin = lib.mkForce "yes"; # for remote `nixos-rebuild`
-      settings.PasswordAuthentication = false;
-      settings.KbdInteractiveAuthentication = false;
+      settings = {
+        PermitRootLogin = lib.mkForce "yes"; # for remote `nixos-rebuild`
+        PasswordAuthentication = false;
+        KbdInteractiveAuthentication = false;
+      };
     };
 
     oidentd.enable = true;

@@ -1,6 +1,6 @@
 {inputs}: let
   inherit (inputs.nixpkgs-2511) lib;
-in rec {
+in {
   # Filters a list/attrs of derivations to only include those available on a ‘system’:
   filterSystem = system: drvs: let
     p = drv: (!(drv ? meta) || !(drv.meta ? platforms) || lib.elem system drv.meta.platforms);

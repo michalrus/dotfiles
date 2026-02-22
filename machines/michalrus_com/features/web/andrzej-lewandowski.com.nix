@@ -1,5 +1,4 @@
 modArgs @ {
-  flake,
   config,
   lib,
   pkgs,
@@ -105,105 +104,110 @@ in {
   # Rebuild GitHub webhook:
   #
 
-  systemd.sockets."webhook-${user}" = {
-    partOf = ["webhook-${user}@.service"];
-    wantedBy = ["sockets.target"];
-    socketConfig = {
-      ListenStream = toString webhookPort;
-      Accept = "yes";
+  users = {
+    extraUsers."${user}" = {
+      isSystemUser = true;
+      home = homeDir;
+      group = user;
     };
+    groups.${user} = {};
+    extraGroups."${user}" = {};
   };
 
-  systemd.services."webhook-${user}@" = {
-    requires = ["webhook-${user}.socket"];
-    serviceConfig = {
-      Type = "oneshot";
-      StandardInput = "null"; # don’t ever change that, to avoid shell injection!
-      StandardOutput = "socket";
+  systemd = {
+    sockets."webhook-${user}" = {
+      partOf = ["webhook-${user}@.service"];
+      wantedBy = ["sockets.target"];
+      socketConfig = {
+        ListenStream = toString webhookPort;
+        Accept = "yes";
+      };
     };
-    script = ''
-      systemctl start --no-block 'rebuild-${user}.service'
 
-      printf 'HTTP/1.1 200 OK\r\n'
-      printf 'Content-Type: text/plain; charset=utf-8\r\n'
-      printf 'Content-Length: 3\r\n'
-      printf 'Connection: close\r\n'
-      printf '\r\n'
-      printf 'ok\n'
-    '';
-  };
+    services."webhook-${user}@" = {
+      requires = ["webhook-${user}.socket"];
+      serviceConfig = {
+        Type = "oneshot";
+        StandardInput = "null"; # don’t ever change that, to avoid shell injection!
+        StandardOutput = "socket";
+      };
+      script = ''
+        systemctl start --no-block 'rebuild-${user}.service'
 
-  users.extraUsers."${user}" = {
-    isSystemUser = true;
-    home = homeDir;
-    group = user;
-  };
-  users.groups.${user} = {};
-  users.extraGroups."${user}" = {};
-  systemd.tmpfiles.rules = ["d '${homeDir}' 0755 ${user} ${user}"];
+        printf 'HTTP/1.1 200 OK\r\n'
+        printf 'Content-Type: text/plain; charset=utf-8\r\n'
+        printf 'Content-Length: 3\r\n'
+        printf 'Connection: close\r\n'
+        printf '\r\n'
+        printf 'ok\n'
+      '';
+    };
 
-  systemd.services."rebuild-${user}" = {
-    path = with pkgs; [
-      # <https://github.com/NixOS/nixpkgs/blob/89e9f68549f312d7b500f9cfe14c3f1d95ae2299/nixos/modules/tasks/auto-upgrade.nix#L91>
-      coreutils
-      gnutar
-      xz.bin
-      gzip
-      gitMinimal
-      config.nix.package.out
-      openssh
-      bash
-    ];
-    serviceConfig = {
-      Type = "oneshot";
-      User = user;
-      Group = user;
-      UMask = "0022";
-      WorkingDirectory = homeDir;
-      ExecStart = let
-        exec = pkgs.writeScriptBin "rebuild" ''
-          #! ${pkgs.stdenv.shell}
+    tmpfiles.rules = ["d '${homeDir}' 0755 ${user} ${user}"];
 
-          set -o errexit
+    services."rebuild-${user}" = {
+      path = with pkgs; [
+        # <https://github.com/NixOS/nixpkgs/blob/89e9f68549f312d7b500f9cfe14c3f1d95ae2299/nixos/modules/tasks/auto-upgrade.nix#L91>
+        coreutils
+        gnutar
+        xz.bin
+        gzip
+        gitMinimal
+        config.nix.package.out
+        openssh
+        bash
+      ];
+      serviceConfig = {
+        Type = "oneshot";
+        User = user;
+        Group = user;
+        UMask = "0022";
+        WorkingDirectory = homeDir;
+        ExecStart = let
+          exec = pkgs.writeScriptBin "rebuild" ''
+            #! ${pkgs.stdenv.shell}
 
-          src=${homeDir}/src
-          if [ ! -e $src ] ; then
-            git clone --bare git@github.com:michalrus/andrzej-lewandowski.com.git src
-            cd $src
-            git config --local --add remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
-          fi
+            set -o errexit
 
-          cd ${homeDir}/src
-          git fetch --all
-
-          declare -A baseURL
-          baseURL[master]='https://dev.${domain}/'
-          baseURL[release]='https://${domain}/'
-
-          for branch in master release ; do
-            echo "--- Building: $branch ---"
-
-            dst=${homeDir}/$branch
-            if [ ! -e $dst ] ; then
+            src=${homeDir}/src
+            if [ ! -e $src ] ; then
+              git clone --bare git@github.com:michalrus/andrzej-lewandowski.com.git src
               cd $src
-              git worktree add $dst origin/$branch
+              git config --local --add remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
             fi
 
-            cd $dst
-            git checkout origin/$branch
+            cd ${homeDir}/src
+            git fetch --all
 
-            mkdir -p config/production
-            cat <<EOF >config/production/config.yaml
+            declare -A baseURL
+            baseURL[master]='https://dev.${domain}/'
+            baseURL[release]='https://${domain}/'
 
-          baseURL: "''${baseURL[$branch]}"
-          cacheDir: "$dst/cache"
+            for branch in master release ; do
+              echo "--- Building: $branch ---"
 
-          EOF
+              dst=${homeDir}/$branch
+              if [ ! -e $dst ] ; then
+                cd $src
+                git worktree add $dst origin/$branch
+              fi
 
-            nix-shell --run "make"
-          done
-        '';
-      in "${exec}/bin/rebuild";
+              cd $dst
+              git checkout origin/$branch
+
+              mkdir -p config/production
+              cat <<EOF >config/production/config.yaml
+
+            baseURL: "''${baseURL[$branch]}"
+            cacheDir: "$dst/cache"
+
+            EOF
+
+              nix-shell --run "make"
+            done
+          '';
+        in "${exec}/bin/rebuild";
+      };
     };
   };
 }

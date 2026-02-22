@@ -22,7 +22,7 @@ in
       fetchFromGitHub,
       fetchurl,
     }:
-      sdk.clang15Stdenv.mkDerivation rec {
+      sdk.clang15Stdenv.mkDerivation {
         name = "vftool";
 
         src = fetchFromGitHub {

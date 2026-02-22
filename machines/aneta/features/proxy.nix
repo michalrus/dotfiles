@@ -1,9 +1,4 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}:
+{pkgs, ...}:
 # A HTTP and SOCKS5 proxy to bypass VPN.
 with import ./common.nix; let
   portHttp = 8888;
@@ -62,20 +57,22 @@ with import ./common.nix; let
 in {
   #networking.firewall.enable = lib.mkForce false;
 
-  networking.firewall.logRefusedConnections = true;
-  networking.firewall.logRefusedPackets = true;
+  networking.firewall = {
+    logRefusedConnections = true;
+    logRefusedPackets = true;
 
-  # Z ==false działa! Przynajmniej curl --interface wwan0
-  networking.firewall.checkReversePath = false;
-  # natomiast 2nd routing table nadal nie działa z poniższymi odkomentowanymi:
+    # Z ==false działa! Przynajmniej curl --interface wwan0
+    checkReversePath = false;
+    # natomiast 2nd routing table nadal nie działa z poniższymi odkomentowanymi:
 
-  # TODO: everywhere: sysctl -ar 'rp_filter' = 0
+    # TODO: everywhere: sysctl -ar 'rp_filter' = 0
 
-  # Make them accessible only from internal subnet:
-  networking.firewall.extraCommands = ''
-    iptables -A nixos-fw -p tcp -s ${addressing.subnet} --dport ${toString portHttp}   -j nixos-fw-accept
-    iptables -A nixos-fw -p tcp -s ${addressing.subnet} --dport ${toString portSocks5} -j nixos-fw-accept
-  '';
+    # Make them accessible only from internal subnet:
+    extraCommands = ''
+      iptables -A nixos-fw -p tcp -s ${addressing.subnet} --dport ${toString portHttp}   -j nixos-fw-accept
+      iptables -A nixos-fw -p tcp -s ${addressing.subnet} --dport ${toString portSocks5} -j nixos-fw-accept
+    '';
+  };
 
   # Add the 2nd routing table, bypassing VPN:
 
@@ -147,18 +144,20 @@ in {
     };
   };
 
-  users.extraUsers."${userHttp}" = {
-    group = userHttp;
-    home = "/var/empty";
-    shell = "/run/current-system/sw/bin/nologin";
-    isSystemUser = true;
+  users = {
+    extraUsers."${userHttp}" = {
+      group = userHttp;
+      home = "/var/empty";
+      shell = "/run/current-system/sw/bin/nologin";
+      isSystemUser = true;
+    };
+    extraGroups."${userHttp}" = {};
+    extraUsers."${userSocks5}" = {
+      group = userSocks5;
+      home = "/var/empty";
+      shell = "/run/current-system/sw/bin/nologin";
+      isSystemUser = true;
+    };
+    extraGroups."${userSocks5}" = {};
   };
-  users.extraGroups."${userHttp}" = {};
-  users.extraUsers."${userSocks5}" = {
-    group = userSocks5;
-    home = "/var/empty";
-    shell = "/run/current-system/sw/bin/nologin";
-    isSystemUser = true;
-  };
-  users.extraGroups."${userSocks5}" = {};
 }

@@ -1,9 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}: let
+{pkgs, ...}: let
   name = "hibernate-on-low-battery";
   criticalPercent = 5; # %
 in {

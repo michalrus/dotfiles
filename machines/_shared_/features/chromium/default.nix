@@ -1,7 +1,5 @@
 {
   flake,
-  config,
-  lib,
   pkgs,
   ...
 }: let
@@ -19,8 +17,8 @@ in {
       ExtensionManifestV2Availability = 2;
     };
   in {
-    "chromium/policies/managed/default.json".text = __toJSON policies;
-    "opt/chrome/policies/managed/default.json".text = __toJSON policies;
+    "chromium/policies/managed/default.json".text = builtins.toJSON policies;
+    "opt/chrome/policies/managed/default.json".text = builtins.toJSON policies;
   };
 
   home-manager.sharedModules = [

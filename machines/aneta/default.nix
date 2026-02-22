@@ -53,9 +53,11 @@ in
             ../_shared_/home/gnu-screen
             {home.stateVersion = "23.05";}
           ];
-          users.root.imports = [];
-          users.m.imports = [];
-          users.krzyszu.imports = [];
+          users = {
+            root.imports = [];
+            m.imports = [];
+            krzyszu.imports = [];
+          };
         };
       }
     ];

@@ -12,14 +12,14 @@ let
   theirs = yt-dlp.override {withAlias = true;};
 
   ourVersion = let
-    file = __readFile (ours + "/yt_dlp/version.py");
-    ms = __match ".*'([0-9]+\.[0-9]+\.[0-9]+)'.*" file;
+    file = builtins.readFile (ours + "/yt_dlp/version.py");
+    ms = builtins.match ".*'([0-9]+\.[0-9]+\.[0-9]+)'.*" file;
   in
-    if __isList ms && __length ms == 1
-    then __head ms
+    if builtins.isList ms && builtins.length ms == 1
+    then builtins.head ms
     else throw "Cannot determine version of ‘inputs.yt-dlp’";
 
-  theyAreNewer = __compareVersions theirs.version ourVersion > 0;
+  theyAreNewer = builtins.compareVersions theirs.version ourVersion > 0;
 in
   if theyAreNewer
   then theirs

@@ -79,7 +79,7 @@
     '';
 
     logo = fetchurl {
-      url = https://git-annex.branchable.com/logo.svg;
+      url = "https://git-annex.branchable.com/logo.svg";
       sha256 = "0wrzllbb39l6zkmf7r0migwqdvcinjkhln24953cxyv1g6jrsarh";
     };
   in

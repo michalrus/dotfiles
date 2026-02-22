@@ -1,9 +1,4 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}: let
+{config, ...}: let
   port = 51820;
 in {
   networking.firewall.allowedUDPPorts = [port];
@@ -19,7 +14,7 @@ in {
       privateKeyFile = config.age.secrets.wireguard_private_key.path;
       peers = [
         {
-          publicKey = __readFile ../../../../secrets/wireguard_monstrum.pub;
+          publicKey = builtins.readFile ../../../../secrets/wireguard_monstrum.pub;
           allowedIPs = ["10.77.5.11/32"];
         }
       ];

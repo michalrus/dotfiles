@@ -8,11 +8,7 @@
     }
   ) {inherit (pkgs.stdenv.hostPlatform) system;};
 
-  makeWrapped = args @ {
-    localAutocompletePort,
-    extraPrefs,
-  }:
-    pkgs-oldstable.wrapFirefox (unwrapped.override args) {};
+  makeWrapped = args: pkgs-oldstable.wrapFirefox (unwrapped.override args) {};
 
   unwrapped = pkgs-oldstable.callPackage (
     {
@@ -242,7 +238,7 @@
       ];
 
       searchEnginesIconsNoGC = writeText "searchEnginesIconsNoGC" (toString (map ({IconURL ? null, ...}: (
-          if isNull IconURL
+          if IconURL == null
           then ""
           else (toDataUrl IconURL).noGC
         ))
@@ -311,7 +307,7 @@
             Add = map (eng @ {IconURL ? null, ...}:
               eng
               // (
-                if isNull IconURL
+                if IconURL == null
                 then {}
                 else {IconURL = (toDataUrl IconURL).url;}
               ))
@@ -597,12 +593,12 @@
         ${extraPrefs}
       '';
 
-      toDataUrl = args @ {
+      toDataUrl = {
         url,
         sha256,
         mimetype,
       }: let
-        dled = fetchurl {inherit (args) url sha256;};
+        dled = fetchurl {inherit url sha256;};
         encoded = runCommand "toDataUrl" {} ''base64 -w 0 ${dled} >$out'';
       in {
         url = "data:" + mimetype + ";base64," + builtins.readFile encoded;

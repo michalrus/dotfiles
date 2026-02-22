@@ -9,7 +9,6 @@
   gitMinimal,
   cacert,
   emptyFile,
-  writeText,
   chosenEmacs ? pkgs.emacs29-pgtk,
   doomPackagesEl ? "${doom-emacs}/static/packages.example.el",
   doomInitEl ? "${doom-emacs}/static/init.example.el",
@@ -108,9 +107,9 @@ assert lib.versionAtLeast chosenEmacs.version "29"; # we need `--init-directory`
         rm -rf $out/.local/{env,state}
 
         sed -r '
-          s,\(file-name-concat doom-local-dir "etc/"\),'${lib.escapeShellArg (__toJSON "${doom-data-dir}/")}',g
-          s,\(file-name-concat doom-local-dir "cache/"\),'${lib.escapeShellArg (__toJSON "${doom-cache-dir}/")}',g
-          s,\(file-name-concat doom-local-dir "state/"\),'${lib.escapeShellArg (__toJSON "${doom-state-dir}/")}',g
+          s,\(file-name-concat doom-local-dir "etc/"\),'${lib.escapeShellArg (builtins.toJSON "${doom-data-dir}/")}',g
+          s,\(file-name-concat doom-local-dir "cache/"\),'${lib.escapeShellArg (builtins.toJSON "${doom-cache-dir}/")}',g
+          s,\(file-name-concat doom-local-dir "state/"\),'${lib.escapeShellArg (builtins.toJSON "${doom-state-dir}/")}',g
           s,(\(file-name-concat) doom-profile-data-dir ("@"),\1 "'"$out/.local/etc"'" \2,g
         ' -i $out/lisp/doom.el
 

@@ -25,92 +25,96 @@
     path = cardano-playground + "/static/book.play.dev.cardano.org/environments";
   };
 
-  cardano-node = cardano-node-flake.packages.${pkgs.stdenv.hostPlatform.system}.cardano-node;
-  cardano-cli = cardano-node-flake.packages.${pkgs.stdenv.hostPlatform.system}.cardano-cli;
+  cardano-node-packages = cardano-node-flake.packages.${pkgs.stdenv.hostPlatform.system};
+  inherit (cardano-node-packages) cardano-node cardano-cli;
   mithril-client = mithril-flake.packages.${pkgs.stdenv.hostPlatform.system}.mithril-client-cli;
   blockfrost-platform = blockfrost-platform-flake.packages.${pkgs.stdenv.hostPlatform.system}.default;
 in {
   environment.systemPackages = [cardano-node cardano-cli mithril-client blockfrost-platform];
 
-  systemd.services.cardano-node = {
-    after = ["network.target"];
-    wantedBy = ["multi-user.target"];
-    serviceConfig = {
-      Type = "simple";
-      Restart = "always";
-      RestartSec = 5;
-      User = user;
-      Group = user;
-      UMask = "0022";
-      WorkingDirectory = dataDir;
-      ExecStart = let
-        # Make the P2P code less chatty in logs:
-        configs =
-          pkgs.runCommand "cardano-node-configs" {
-            buildInputs = with pkgs; [jq];
-          } ''
-            cp -r ${cardano-node-configs} $out
-            chmod -R +w $out
-            find $out -name 'config.json' | while IFS= read -r configFile ; do
-              jq '.
-                | .TraceConnectionManager = false
-                | .TracePeerSelection = false
-                | .TracePeerSelectionActions = false
-                | .TracePeerSelectionCounters = false
-                | .TraceInboundGovernor = false
-              ' "$configFile" >tmp.json
-              mv tmp.json "$configFile"
-            done
-          '';
-      in
-        "${lib.getExe cardano-node} run"
-        + " --config ${configs}/mainnet/config.json"
-        + " --topology ${configs}/mainnet/topology.json"
-        + " --port 55709"
-        + " --socket-path ${dataDir}/node.socket"
-        + " --database-path ${dataDir}/db";
-    };
-  };
+  systemd = {
+    services = {
+      cardano-node = {
+        after = ["network.target"];
+        wantedBy = ["multi-user.target"];
+        serviceConfig = {
+          Type = "simple";
+          Restart = "always";
+          RestartSec = 5;
+          User = user;
+          Group = user;
+          UMask = "0022";
+          WorkingDirectory = dataDir;
+          ExecStart = let
+            # Make the P2P code less chatty in logs:
+            configs =
+              pkgs.runCommand "cardano-node-configs" {
+                buildInputs = with pkgs; [jq];
+              } ''
+                cp -r ${cardano-node-configs} $out
+                chmod -R +w $out
+                find $out -name 'config.json' | while IFS= read -r configFile ; do
+                  jq '.
+                    | .TraceConnectionManager = false
+                    | .TracePeerSelection = false
+                    | .TracePeerSelectionActions = false
+                    | .TracePeerSelectionCounters = false
+                    | .TraceInboundGovernor = false
+                  ' "$configFile" >tmp.json
+                  mv tmp.json "$configFile"
+                done
+              '';
+          in
+            "${lib.getExe cardano-node} run"
+            + " --config ${configs}/mainnet/config.json"
+            + " --topology ${configs}/mainnet/topology.json"
+            + " --port 55709"
+            + " --socket-path ${dataDir}/node.socket"
+            + " --database-path ${dataDir}/db";
+        };
+      };
 
-  systemd.services.blockfrost-platform = {
-    after = ["network.target"];
-    wantedBy = ["multi-user.target"];
-    serviceConfig = {
-      Type = "simple";
-      Restart = "always";
-      RestartSec = 5;
-      User = user;
-      Group = user;
-      UMask = "0022";
-      WorkingDirectory = dataDir;
-      ExecStart =
-        "${lib.getExe blockfrost-platform}"
-        + " --config ${config.age.secrets.blockfrost-platform-secret.path}"
-        + " --server-address 0.0.0.0"
-        + " --server-port 18077"
-        + " --network mainnet"
-        + " --log-level info"
-        + " --node-socket-path ${dataDir}/node.socket"
-        + " --mode compact";
-    };
-  };
+      blockfrost-platform = {
+        after = ["network.target"];
+        wantedBy = ["multi-user.target"];
+        serviceConfig = {
+          Type = "simple";
+          Restart = "always";
+          RestartSec = 5;
+          User = user;
+          Group = user;
+          UMask = "0022";
+          WorkingDirectory = dataDir;
+          ExecStart =
+            "${lib.getExe blockfrost-platform}"
+            + " --config ${config.age.secrets.blockfrost-platform-secret.path}"
+            + " --server-address 0.0.0.0"
+            + " --server-port 18077"
+            + " --network mainnet"
+            + " --log-level info"
+            + " --node-socket-path ${dataDir}/node.socket"
+            + " --mode compact";
+        };
+      };
 
-  # We need to restart blockfrost-platform a few seconds after airvpn.service
-  # for it to re-register under a new IP with IceBreakers:
-  systemd.services.blockfrost-platform-delayed-restart = {
-    bindsTo = ["airvpn.service"];
-    partOf = ["airvpn.service"];
-    after = ["airvpn.service"];
-    wantedBy = ["multi-user.target"];
-    serviceConfig = {
-      Restart = "on-failure";
-      RemainAfterExit = true;
+      # We need to restart blockfrost-platform a few seconds after airvpn.service
+      # for it to re-register under a new IP with IceBreakers:
+      blockfrost-platform-delayed-restart = {
+        bindsTo = ["airvpn.service"];
+        partOf = ["airvpn.service"];
+        after = ["airvpn.service"];
+        wantedBy = ["multi-user.target"];
+        serviceConfig = {
+          Restart = "on-failure";
+          RemainAfterExit = true;
+        };
+        script = ''
+          set -euo pipefail
+          sleep 15
+          systemctl restart blockfrost-platform.service || true
+        '';
+      };
     };
-    script = ''
-      set -euo pipefail
-      sleep 15
-      systemctl restart blockfrost-platform.service || true
-    '';
   };
 
   age.secrets.blockfrost-platform-secret = {

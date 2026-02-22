@@ -13,7 +13,7 @@
 
   python = pkgs.python3Packages;
 
-  old-html2text = python.buildPythonPackage rec {
+  old-html2text = python.buildPythonPackage {
     name = "html2text";
     src = pkgs.fetchFromGitHub {
       owner = "Alir3z4";
@@ -52,7 +52,7 @@ in {
       XDG_DATA_HOME = config.users.extraUsers."${user}".home;
       XDG_CONFIG_HOME = config.users.extraUsers."${user}".home;
     };
-    path = with pkgs; [rss2email];
+    path = [rss2email];
     preStart = ''
       mkdir -p "${dataDir}"
       ln -sf "${rss2email}/bin/r2e" "${dataDir}/r2e"

@@ -8,9 +8,11 @@ in
       {nixpkgs.config.allowUnfree = true;}
 
       {
-        networking.hostName = "macbook";
-        networking.localHostName = "Michals-MacBook-Pro"; # local network
-        networking.computerName = "Michal’s MacBook Pro"; # local network
+        networking = {
+          hostName = "macbook";
+          localHostName = "Michals-MacBook-Pro"; # local network
+          computerName = "Michal’s MacBook Pro"; # local network
+        };
       }
 
       ./features/configuration.nix
@@ -18,41 +20,51 @@ in
 
       flake.inputs.agenix.darwinModules.default
       {
-        age.secrets.ssh-key-personal-git-annex = {
-          file = inputs.self + "/secrets/ssh-key-personal-git-annex.age";
-          owner = "m";
-        };
-        age.secrets.ssh-config-work-devx = {
-          file = inputs.self + "/secrets/ssh-config-work-devx.age";
-          owner = "mw";
-        };
-        age.secrets.ssh-known_hosts-work-devx = {
-          file = inputs.self + "/secrets/ssh-known_hosts-work-devx.age";
-          owner = "mw";
-        };
-        age.secrets.ssh-config-work-iog = {
-          file = inputs.self + "/secrets/ssh-config-work-iog.age";
-          owner = "mw";
-        };
-        age.secrets.ssh-known_hosts-work-iog = {
-          file = inputs.self + "/secrets/ssh-known_hosts-work-iog.age";
-          owner = "mw";
-        };
-        age.secrets.ssh-config-work-lace = {
-          file = inputs.self + "/secrets/ssh-config-work-lace.age";
-          owner = "mw";
-        };
-        age.secrets.ssh-known_hosts-work-lace = {
-          file = inputs.self + "/secrets/ssh-known_hosts-work-lace.age";
-          owner = "mw";
-        };
-        age.secrets.ssh-config-work-blockfrost = {
-          file = inputs.self + "/secrets/ssh-config-work-blockfrost.age";
-          owner = "mw";
-        };
-        age.secrets.ssh-known_hosts-work-blockfrost = {
-          file = inputs.self + "/secrets/ssh-known_hosts-work-blockfrost.age";
-          owner = "mw";
+        age = {
+          secrets = let
+            sec = name:
+              builtins.path {
+                path = inputs.self + "/secrets/" + name;
+                inherit name;
+              };
+          in {
+            ssh-key-personal-git-annex = {
+              file = sec "ssh-key-personal-git-annex.age";
+              owner = "m";
+            };
+            ssh-config-work-devx = {
+              file = sec "ssh-config-work-devx.age";
+              owner = "mw";
+            };
+            ssh-known_hosts-work-devx = {
+              file = sec "ssh-known_hosts-work-devx.age";
+              owner = "mw";
+            };
+            ssh-config-work-iog = {
+              file = sec "ssh-config-work-iog.age";
+              owner = "mw";
+            };
+            ssh-known_hosts-work-iog = {
+              file = sec "ssh-known_hosts-work-iog.age";
+              owner = "mw";
+            };
+            ssh-config-work-lace = {
+              file = sec "ssh-config-work-lace.age";
+              owner = "mw";
+            };
+            ssh-known_hosts-work-lace = {
+              file = sec "ssh-known_hosts-work-lace.age";
+              owner = "mw";
+            };
+            ssh-config-work-blockfrost = {
+              file = sec "ssh-config-work-blockfrost.age";
+              owner = "mw";
+            };
+            ssh-known_hosts-work-blockfrost = {
+              file = sec "ssh-known_hosts-work-blockfrost.age";
+              owner = "mw";
+            };
+          };
         };
       }
 
@@ -76,9 +88,11 @@ in
             ./home/shared.nix
             ./home/link-darwin-apps.nix
           ];
-          users.m.imports = [../_shared_/home/identity-personal];
-          users.mw.imports = [../_shared_/home/identity-work];
-          users.friends.imports = [];
+          users = {
+            m.imports = [../_shared_/home/identity-personal];
+            mw.imports = [../_shared_/home/identity-work];
+            friends.imports = [];
+          };
         };
       })
 
@@ -90,9 +104,13 @@ in
 
       {
         # home directories for home-manager to pick up; they get messed up b/c of flakes
-        users.users.m.home = "/Users/m";
-        users.users.mw.home = "/Users/mw";
-        users.users.friends.home = "/Users/friends";
+        users = {
+          users = {
+            m.home = "/Users/m";
+            mw.home = "/Users/mw";
+            friends.home = "/Users/friends";
+          };
+        };
       }
     ];
   }

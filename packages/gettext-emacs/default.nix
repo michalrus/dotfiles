@@ -4,7 +4,7 @@
 }:
 stdenv.mkDerivation {
   name = "gettext-emacs-mode";
-  src = gettext.src;
+  inherit (gettext) src;
   phases = "unpackPhase installPhase";
   installPhase = ''
     el=$out/share/emacs/site-lisp

@@ -1,10 +1,4 @@
-{
-  config,
-  flake,
-  pkgs,
-  lib,
-  ...
-}: {
+{pkgs, ...}: {
   home.packages = with pkgs; [
     oath-toolkit
   ];

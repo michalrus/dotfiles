@@ -58,141 +58,170 @@
       )'
   '';
 in {
-  age.secrets.wireguard_airvpn_private_key = {
-    file = ../../../../secrets/wireguard_airvpn_private_key.age;
-  };
-
-  age.secrets.wireguard_airvpn_preshared_key = {
-    file = ../../../../secrets/wireguard_airvpn_preshared_key.age;
-  };
-
-  age.secrets.wireguard_airvpn_api_key = {
-    file = ../../../../secrets/wireguard_airvpn_api_key.age;
-  };
-
-  systemd.services.${vsp} = {
-    wantedBy = ["multi-user.target"];
-    after = ["network-pre.target"];
-    wants = ["network.target"];
-    before = ["network.target"];
-    serviceConfig = {
-      Type = "simple";
-      RemainAfterExit = true;
-      Restart = "always";
-      RestartSec = 5;
-      RuntimeDirectory = vsp;
-      RuntimeDirectoryMode = "0700";
+  age = {
+    secrets = {
+      wireguard_airvpn_private_key = {
+        file = ../../../../secrets/wireguard_airvpn_private_key.age;
+      };
+      wireguard_airvpn_preshared_key = {
+        file = ../../../../secrets/wireguard_airvpn_preshared_key.age;
+      };
+      wireguard_airvpn_api_key = {
+        file = ../../../../secrets/wireguard_airvpn_api_key.age;
+      };
     };
-    unitConfig = {
-      StartLimitIntervalSec = 0; # no restart rate limiting
-    };
-    path = with pkgs; [kmod iproute2 procps wireguard-tools jq iputils parallel];
-    script = ''
-      set -euo pipefail
+  };
 
-      server_json=$(cat ${stateDir}/selected.json)
-      jq -r .name   <<<"$server_json" >/run/${vsp}/server_name   &&   server_name=$(cat /run/${vsp}/server_name)
-      jq -r .ip     <<<"$server_json" >/run/${vsp}/server_ip     &&     server_ip=$(cat /run/${vsp}/server_ip)
-      jq -r .pubkey <<<"$server_json" >/run/${vsp}/server_pubkey && server_pubkey=$(cat /run/${vsp}/server_pubkey)
-      unset server_json
+  systemd = {
+    services = {
+      ${vsp} = {
+        wantedBy = ["multi-user.target"];
+        after = ["network-pre.target"];
+        wants = ["network.target"];
+        before = ["network.target"];
+        serviceConfig = {
+          Type = "simple";
+          RemainAfterExit = true;
+          Restart = "always";
+          RestartSec = 5;
+          RuntimeDirectory = vsp;
+          RuntimeDirectoryMode = "0700";
+        };
+        unitConfig = {
+          StartLimitIntervalSec = 0; # no restart rate limiting
+        };
+        path = with pkgs; [kmod iproute2 procps wireguard-tools jq iputils parallel];
+        script = ''
+          set -euo pipefail
 
-      echo "Setting up link with '$server_name'..."
+          server_json=$(cat ${stateDir}/selected.json)
+          jq -r .name   <<<"$server_json" >/run/${vsp}/server_name   &&   server_name=$(cat /run/${vsp}/server_name)
+          jq -r .ip     <<<"$server_json" >/run/${vsp}/server_ip     &&     server_ip=$(cat /run/${vsp}/server_ip)
+          jq -r .pubkey <<<"$server_json" >/run/${vsp}/server_pubkey && server_pubkey=$(cat /run/${vsp}/server_pubkey)
+          unset server_json
 
-      modprobe wireguard || true
-      ip link add dev ${iface} type wireguard
-      ip address add ${ourInternalIP}/32 dev ${iface}
-      wg set ${iface} \
-        private-key ${config.age.secrets.wireguard_airvpn_private_key.path} \
-        fwmark 51820
+          echo "Setting up link with '$server_name'..."
 
-      # Use a lower MTU, because we run WireGuard-inside-WireGuard, and
-      # the default of 1420 breaks large packets like those of SSH or HTTPS:
-      ip link set dev ${iface} mtu 1320
+          modprobe wireguard || true
+          ip link add dev ${iface} type wireguard
+          ip address add ${ourInternalIP}/32 dev ${iface}
+          wg set ${iface} \
+            private-key ${config.age.secrets.wireguard_airvpn_private_key.path} \
+            fwmark 51820
 
-      ip link set up dev ${iface}
+          # Use a lower MTU, because we run WireGuard-inside-WireGuard, and
+          # the default of 1420 breaks large packets like those of SSH or HTTPS:
+          ip link set dev ${iface} mtu 1320
 
-      wg set ${iface} \
-        peer "$server_pubkey" \
-        endpoint "$server_ip":1637 \
-        preshared-key ${config.age.secrets.wireguard_airvpn_preshared_key.path} \
-        persistent-keepalive 15 \
-        allowed-ips 0.0.0.0/0,::/0
+          ip link set up dev ${iface}
 
-      ip route replace ${theirInternalIP} dev ${iface} proto kernel scope link src ${ourInternalIP}
+          wg set ${iface} \
+            peer "$server_pubkey" \
+            endpoint "$server_ip":1637 \
+            preshared-key ${config.age.secrets.wireguard_airvpn_preshared_key.path} \
+            persistent-keepalive 15 \
+            allowed-ips 0.0.0.0/0,::/0
 
-      ip route replace default dev ${iface} table ${toString routingTable}
-      ip rule add uidrange ${toString config.users.users.qbittorrent.uid}-${toString config.users.users.qbittorrent.uid} lookup ${toString routingTable} priority 2002
-      ip rule add uidrange ${toString config.users.users.cardano.uid}-${toString config.users.users.cardano.uid} lookup ${toString routingTable} priority 2002
+          ip route replace ${theirInternalIP} dev ${iface} proto kernel scope link src ${ourInternalIP}
 
-      # And a watchdog – on failure, it will cycle through servers, until one works:
-      export SHELL=${pkgs.stdenv.shell}
-      mkdir -p ~/.parallel/ && touch ~/.parallel/will-cite
-      while true ; do
-        sleep 10
-        # Single ping is not enough for AirVPN, let’s run 4:
-        if ! parallel --halt now,success=1 --jobs 16 --delay 1 --shuf \
-               'ping -c1 -W10 {}' \
-               ::: ${lib.escapeShellArgs (lib.replicate 4 theirInternalIP)} >/dev/null 2>/dev/null ; then
-          echo "Failed to reach ${theirInternalIP} through ${iface}, will try the next server..."
-          ith=$(( 1 + $(cat ${stateDir}/failure-mode-ith 2>/dev/null || echo -1) ))
-          echo "$ith" >${stateDir}/failure-mode-ith
-          selected=$(${listRecommended} | jq -r --argjson ith "$ith" '.[$ith].public_name')
-          ${lib.getExe switchServer} "$selected"
-          exit 1
-        else
-          if [ -e ${stateDir}/failure-mode-ith ] ; then
-            rm ${stateDir}/failure-mode-ith
+          ip route replace default dev ${iface} table ${toString routingTable}
+          ip rule add uidrange ${toString config.users.users.qbittorrent.uid}-${toString config.users.users.qbittorrent.uid} lookup ${toString routingTable} priority 2002
+          ip rule add uidrange ${toString config.users.users.cardano.uid}-${toString config.users.users.cardano.uid} lookup ${toString routingTable} priority 2002
+
+          # And a watchdog – on failure, it will cycle through servers, until one works:
+          export SHELL=${pkgs.stdenv.shell}
+          mkdir -p ~/.parallel/ && touch ~/.parallel/will-cite
+          while true ; do
+            sleep 10
+            # Single ping is not enough for AirVPN, let’s run 4:
+            if ! parallel --halt now,success=1 --jobs 16 --delay 1 --shuf \
+                   'ping -c1 -W10 {}' \
+                   ::: ${lib.escapeShellArgs (lib.replicate 4 theirInternalIP)} >/dev/null 2>/dev/null ; then
+              echo "Failed to reach ${theirInternalIP} through ${iface}, will try the next server..."
+              ith=$(( 1 + $(cat ${stateDir}/failure-mode-ith 2>/dev/null || echo -1) ))
+              echo "$ith" >${stateDir}/failure-mode-ith
+              selected=$(${listRecommended} | jq -r --argjson ith "$ith" '.[$ith].public_name')
+              ${lib.getExe switchServer} "$selected"
+              exit 1
+            else
+              if [ -e ${stateDir}/failure-mode-ith ] ; then
+                rm ${stateDir}/failure-mode-ith
+              fi
+            fi
+          done
+        '';
+
+        postStop = ''
+          set -euo pipefail
+
+          ip route del ${theirInternalIP} dev ${iface} || true
+
+          ip route flush table ${toString routingTable} || true
+          ip rule del uidrange ${toString config.users.users.qbittorrent.uid}-${toString config.users.users.qbittorrent.uid} lookup ${toString routingTable} priority 2002 || true
+          ip rule del uidrange ${toString config.users.users.cardano.uid}-${toString config.users.users.cardano.uid} lookup ${toString routingTable} priority 2002 || true
+
+          ip link del dev ${iface} || true
+        '';
+      };
+
+      "${vsp}-refresh-config" = {
+        path = with pkgs; [curl jq];
+        serviceConfig = {
+          Type = "oneshot";
+        };
+        script = ''
+          set -euo pipefail
+          cd ${stateDir}
+          curl -fsSL -H @${config.age.secrets.wireguard_airvpn_api_key.path} 'https://airvpn.org/api/status/' -o recommended.json.new
+          num_servers="$(jq '.servers | length' recommended.json.new)"
+          if [ "$num_servers" -ge 64 ] ; then
+            mv recommended.json.new recommended.json
+            chmod 644 recommended.json
+          else
+            echo >&2 "Got too little AirVPN servers from their API (only $num_servers), will keep the previous list."
+            exit 1
           fi
-        fi
-      done
-    '';
+        '';
+      };
 
-    postStop = ''
-      set -euo pipefail
-
-      ip route del ${theirInternalIP} dev ${iface} || true
-
-      ip route flush table ${toString routingTable} || true
-      ip rule del uidrange ${toString config.users.users.qbittorrent.uid}-${toString config.users.users.qbittorrent.uid} lookup ${toString routingTable} priority 2002 || true
-      ip rule del uidrange ${toString config.users.users.cardano.uid}-${toString config.users.users.cardano.uid} lookup ${toString routingTable} priority 2002 || true
-
-      ip link del dev ${iface} || true
-    '';
-  };
-
-  systemd.tmpfiles.rules = [
-    "d ${stateDir} 0755 root root -"
-  ];
-
-  # ---------------------------------- periodically refresh config ---------------------------------- #
-
-  systemd.timers."${vsp}-refresh-config" = {
-    partOf = ["${vsp}-refresh-config.service"];
-    wantedBy = ["timers.target"];
-    timerConfig = {
-      OnCalendar = "hourly";
-      RandomizedDelaySec = "10m";
+      "${vsp}-select-best" = {
+        path = with pkgs; [jq];
+        serviceConfig = {
+          Type = "oneshot";
+        };
+        script = ''
+          set -euo pipefail
+          selected=$(${listRecommended} | jq -r '.[0].public_name')
+          exec ${lib.getExe switchServer} "$selected"
+        '';
+      };
     };
-  };
 
-  systemd.services."${vsp}-refresh-config" = {
-    path = with pkgs; [curl jq];
-    serviceConfig = {
-      Type = "oneshot";
+    tmpfiles.rules = [
+      "d ${stateDir} 0755 root root -"
+    ];
+
+    # ---------------------------------- periodically refresh config ---------------------------------- #
+
+    timers = {
+      "${vsp}-refresh-config" = {
+        partOf = ["${vsp}-refresh-config.service"];
+        wantedBy = ["timers.target"];
+        timerConfig = {
+          OnCalendar = "hourly";
+          RandomizedDelaySec = "10m";
+        };
+      };
+
+      "${vsp}-select-best" = {
+        partOf = ["${vsp}-select-best.service"];
+        wantedBy = ["timers.target"];
+        timerConfig = {
+          OnCalendar = "*-*-* 03:45:00";
+          RandomizedDelaySec = "30m";
+        };
+      };
     };
-    script = ''
-      set -euo pipefail
-      cd ${stateDir}
-      curl -fsSL -H @${config.age.secrets.wireguard_airvpn_api_key.path} 'https://airvpn.org/api/status/' -o recommended.json.new
-      num_servers="$(jq '.servers | length' recommended.json.new)"
-      if [ "$num_servers" -ge 64 ] ; then
-        mv recommended.json.new recommended.json
-        chmod 644 recommended.json
-      else
-        echo >&2 "Got too little AirVPN servers from their API (only $num_servers), will keep the previous list."
-        exit 1
-      fi
-    '';
   };
 
   # ---------------------------------- allow users to change servers ---------------------------------- #
@@ -223,25 +252,4 @@ in {
   };
 
   # ---------------------------------- jump to the best server at night ---------------------------------- #
-
-  systemd.timers."${vsp}-select-best" = {
-    partOf = ["${vsp}-select-best.service"];
-    wantedBy = ["timers.target"];
-    timerConfig = {
-      OnCalendar = "*-*-* 03:45:00";
-      RandomizedDelaySec = "30m";
-    };
-  };
-
-  systemd.services."${vsp}-select-best" = {
-    path = with pkgs; [jq];
-    serviceConfig = {
-      Type = "oneshot";
-    };
-    script = ''
-      set -euo pipefail
-      selected=$(${listRecommended} | jq -r '.[0].public_name')
-      exec ${lib.getExe switchServer} "$selected"
-    '';
-  };
 }

@@ -9,7 +9,7 @@ in
 
     src =
       builtins.filterSource (
-        path: type: let b = baseNameOf path; in b == "${name}.c" || b == "Makefile"
+        path: _: let b = baseNameOf path; in b == "${name}.c" || b == "Makefile"
       )
       ./.;
 

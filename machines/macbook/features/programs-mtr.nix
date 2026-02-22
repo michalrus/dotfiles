@@ -1,8 +1,4 @@
-{
-  pkgs,
-  lib,
-  ...
-}: let
+{pkgs, ...}: let
   mtrWrapped = pkgs.mtr.overrideAttrs (drv: {
     postFixup =
       (drv.postFixup or "")
@@ -20,7 +16,7 @@ in {
     ALL ALL = (root) NOPASSWD: ${mtrWrapped}/bin/.mtr-packet-wrapped
   '';
 
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = [
     mtrWrapped
   ];
 }

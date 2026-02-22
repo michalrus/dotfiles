@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: let
+{pkgs, ...}: let
   unfree = import pkgs.path {
     inherit (pkgs.stdenv.hostPlatform) system;
     config.allowUnfree = true;
@@ -17,7 +13,7 @@ in {
 
     users.guest = {
       dotfiles-old.profiles = ["base" "michalrus/guest"];
-      packages = with pkgs; [
+      packages = [
         #unfree.google-chrome  # FIXME: remove, chromium can now do widevine
         unfree.unrar
       ];

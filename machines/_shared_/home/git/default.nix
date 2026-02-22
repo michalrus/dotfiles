@@ -1,8 +1,6 @@
 {
   config,
-  flake,
   pkgs,
-  lib,
   ...
 }: {
   programs.git = {

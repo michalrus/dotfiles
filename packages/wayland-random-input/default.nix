@@ -1,12 +1,10 @@
 {
   lib,
   writeShellApplication,
-  runCommand,
   coreutils,
   fuzzel,
   wtype,
   wl-clipboard,
-  writeText,
   util-linux,
   xxd,
   calc,

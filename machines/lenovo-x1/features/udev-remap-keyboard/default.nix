@@ -1,9 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}: {
+_: {
   # Find scancodes by running `evtest`.
   # Find devices by running `evemu-describe`.
   # Find ${vendorId} by running `lsusb`.

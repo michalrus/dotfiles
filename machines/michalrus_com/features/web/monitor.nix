@@ -1,12 +1,11 @@
-modArgs @ {
-  flake,
+{
   config,
-  lib,
   pkgs,
+  lib,
   ...
 }:
 with lib;
-with import ./common.nix modArgs; let
+with import ./common.nix {inherit lib pkgs config;}; let
   domain = "monitor.michalrus.com";
 in
   mkMerge [
@@ -15,7 +14,7 @@ in
     {
       services.grafana = {
         enable = true;
-        domain = domain;
+        inherit domain;
         rootUrl = "https://${domain}/";
       };
 

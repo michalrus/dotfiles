@@ -1,6 +1,5 @@
 {
   flake,
-  config,
   lib,
   pkgs,
   ...
@@ -30,20 +29,29 @@ in {
   # No need for the wrapper which this option forces:
   programs.emacs.enable = lib.mkForce false;
 
-  home.packages = [
-    doom-emacs
-    (lib.hiPrio (pkgs.writeShellScriptBin "emacs" ''
-      set -eou pipefail
-      ${
-        if pkgs.stdenv.isLinux
-        then ''
-          systemctl start --user emacs.service
-        ''
-        else ""
-      }
-      exec ${doom-emacs}/bin/emacsclient -c "$@"
-    ''))
-  ];
+  home = {
+    packages = [
+      doom-emacs
+      (lib.hiPrio (pkgs.writeShellScriptBin "emacs" ''
+        set -eou pipefail
+        ${
+          if pkgs.stdenv.isLinux
+          then ''
+            systemctl start --user emacs.service
+          ''
+          else ""
+        }
+        exec ${doom-emacs}/bin/emacsclient -c "$@"
+      ''))
+    ];
+
+    sessionVariables = rec {
+      EDITOR = "emacs";
+      VISUAL = EDITOR;
+    };
+
+    shellAliases.e = "$EDITOR";
+  };
 
   services =
     if pkgs.stdenv.isLinux
@@ -83,11 +91,4 @@ in {
 
   # I'm using auto-save, so this is fine:
   systemd.user.services.emacs.Unit.X-RestartIfChanged = lib.mkForce true;
-
-  home.sessionVariables = rec {
-    EDITOR = "emacs";
-    VISUAL = EDITOR;
-  };
-
-  home.shellAliases.e = "$EDITOR";
 }

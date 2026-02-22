@@ -1,11 +1,7 @@
-{
-  config,
-  flake,
-  pkgs,
-  lib,
-  ...
-}: {
-  home.packages = [pkgs.alacritty];
-  home.sessionVariables.TERMINAL = "alacritty";
-  home.file.".config/alacritty/alacritty.toml".source = ./alacritty.toml;
+{pkgs, ...}: {
+  home = {
+    packages = [pkgs.alacritty];
+    sessionVariables.TERMINAL = "alacritty";
+    file.".config/alacritty/alacritty.toml".source = ./alacritty.toml;
+  };
 }

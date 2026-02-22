@@ -2,7 +2,6 @@
   transcribe,
   writeScript,
   strace,
-  lib,
 }: let
   randomString = "2f506693-50da-4c29-901f-e8e79f9448d9";
 

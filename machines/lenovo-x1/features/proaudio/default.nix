@@ -1,7 +1,5 @@
 {
   flake,
-  config,
-  lib,
   pkgs,
   ...
 }: {

@@ -77,101 +77,105 @@ in {
       owner = user;
     };
 
-    systemd.services.${user} = {
-      path = [config.virtualisation.podman.package];
-      wantedBy = ["multi-user.target"];
-      serviceConfig = {
-        User = user;
-        Group = user;
-        MemoryHigh = "9G";
-        MemoryMax = "10G";
-        Restart = "always";
-        RestartSec = 10;
-        Environment = "PODMAN_SYSTEMD_UNIT=${user}.service";
-        Type = "notify";
-        NotifyAccess = "all";
-        TimeoutStartSec = 0; # ‘podman load’ can take a long time
-        TimeoutStopSec = 120;
-        ExecStop = lib.getExe (pkgs.writeShellScriptBin "${user}-stop" ''
-          exec podman stop --ignore --cidfile=${cidFile} --time=110
-        '');
-        TemporaryFileSystem = "/tmp:size=100M,mode=1777"; # otherwise it fails to start after reboot
-      };
-      preStart = ''
-        podman image inspect ${lib.escapeShellArg imageFullName} >/dev/null || \
-          podman load -i ${ociImage}
-        [ -e ${assetsDir} ] || { mkdir -p ${assetsDir} && chown ${user}:${user} ${assetsDir} ; }
-        [ -e ${pgdataDir} ] || { mkdir -p ${pgdataDir} && chown ${user}:${user} ${pgdataDir} ; }
-      '';
-      # All possible settings: https://github.com/opf/openproject/blob/v13.0.4/docs/installation-and-operations/configuration/environment/README.md?plain=1#L114
-      script = ''
-        export OPENPROJECT_SECRET_KEY_BASE=$(cat ${config.age.secrets.openproject_key_base.path})
-        export OPENPROJECT_SMTP__PASSWORD=$(cat ${config.age.secrets.openproject_smtp.path})
-        exec podman run \
-          --rm --replace --name=${user} \
-          --detach --log-driver=journald \
-          --cidfile=${cidFile} \
-          --cgroups=no-conmon \
-          --sdnotify=conmon \
-          -v ${assetsDir}:/var/openproject/assets \
-          -v ${pgdataDir}:/var/openproject/pgdata \
-          -v ${token}:/app/app/models/enterprise_token.rb:ro \
-          -p ${toString config.services.openproject.port}:80 \
-          -e OPENPROJECT_SECRET_KEY_BASE'*' \
-          -e OPENPROJECT_HOST__NAME=${config.services.openproject.hostname} \
-          -e OPENPROJECT_HTTPS=${
-          if config.services.openproject.https
-          then "true"
-          else "false"
-        } \
-          -e OPENPROJECT_DEFAULT__LANGUAGE=en \
-          -e OPENPROJECT_AUTOLOGIN=7 \
-          -e OPENPROJECT_SELF__REGISTRATION=0 \
-          -e OPENPROJECT_LOG__LEVEL=warn \
-          -e OPENPROJECT_LOGIN__REQUIRED=true \
-          -e OPENPROJECT_MAIL__FROM='OpenProject <scripts@michalrus.com>' \
-          -e OPENPROJECT_EMAIL__DELIVERY__METHOD=smtp \
-          -e OPENPROJECT_SMTP__ADDRESS=smtp.gmail.com \
-          -e OPENPROJECT_SMTP__PORT=465 \
-          -e OPENPROJECT_SMTP__DOMAIN=michalrus.com \
-          -e OPENPROJECT_SMTP__AUTHENTICATION=plain \
-          -e OPENPROJECT_SMTP__USER__NAME='scripts@michalrus.com' \
-          -e OPENPROJECT_SMTP__PASSWORD'*' \
-          -e OPENPROJECT_SMTP__SSL=true \
-          -e OPENPROJECT_SMTP__OPENSSL__VERIFY__MODE=peer \
-          -e OPENPROJECT_SMTP__ENABLE__STARTTLS__AUTO=false \
-          -e OPENPROJECT_BCC__RECIPIENTS=true \
-          -e OPENPROJECT_WELCOME__ON__HOMESCREEN=false \
-          -e OPENPROJECT_ATTACHMENT__MAX__SIZE=65536 \
-          -e OPENPROJECT_WEB_WORKERS=8 \
-          -e RAILS_MIN_THREADS=16 \
-          -e RAILS_MAX_THREADS=16 \
-          ${lib.escapeShellArg imageFullName}
-      '';
-    };
+    systemd = {
+      services = {
+        ${user} = {
+          path = [config.virtualisation.podman.package];
+          wantedBy = ["multi-user.target"];
+          serviceConfig = {
+            User = user;
+            Group = user;
+            MemoryHigh = "9G";
+            MemoryMax = "10G";
+            Restart = "always";
+            RestartSec = 10;
+            Environment = "PODMAN_SYSTEMD_UNIT=${user}.service";
+            Type = "notify";
+            NotifyAccess = "all";
+            TimeoutStartSec = 0; # ‘podman load’ can take a long time
+            TimeoutStopSec = 120;
+            ExecStop = lib.getExe (pkgs.writeShellScriptBin "${user}-stop" ''
+              exec podman stop --ignore --cidfile=${cidFile} --time=110
+            '');
+            TemporaryFileSystem = "/tmp:size=100M,mode=1777"; # otherwise it fails to start after reboot
+          };
+          preStart = ''
+            podman image inspect ${lib.escapeShellArg imageFullName} >/dev/null || \
+              podman load -i ${ociImage}
+            [ -e ${assetsDir} ] || { mkdir -p ${assetsDir} && chown ${user}:${user} ${assetsDir} ; }
+            [ -e ${pgdataDir} ] || { mkdir -p ${pgdataDir} && chown ${user}:${user} ${pgdataDir} ; }
+          '';
+          # All possible settings: https://github.com/opf/openproject/blob/v13.0.4/docs/installation-and-operations/configuration/environment/README.md?plain=1#L114
+          script = ''
+            export OPENPROJECT_SECRET_KEY_BASE=$(cat ${config.age.secrets.openproject_key_base.path})
+            export OPENPROJECT_SMTP__PASSWORD=$(cat ${config.age.secrets.openproject_smtp.path})
+            exec podman run \
+              --rm --replace --name=${user} \
+              --detach --log-driver=journald \
+              --cidfile=${cidFile} \
+              --cgroups=no-conmon \
+              --sdnotify=conmon \
+              -v ${assetsDir}:/var/openproject/assets \
+              -v ${pgdataDir}:/var/openproject/pgdata \
+              -v ${token}:/app/app/models/enterprise_token.rb:ro \
+              -p ${toString config.services.openproject.port}:80 \
+              -e OPENPROJECT_SECRET_KEY_BASE'*' \
+              -e OPENPROJECT_HOST__NAME=${config.services.openproject.hostname} \
+              -e OPENPROJECT_HTTPS=${
+              if config.services.openproject.https
+              then "true"
+              else "false"
+            } \
+              -e OPENPROJECT_DEFAULT__LANGUAGE=en \
+              -e OPENPROJECT_AUTOLOGIN=7 \
+              -e OPENPROJECT_SELF__REGISTRATION=0 \
+              -e OPENPROJECT_LOG__LEVEL=warn \
+              -e OPENPROJECT_LOGIN__REQUIRED=true \
+              -e OPENPROJECT_MAIL__FROM='OpenProject <scripts@michalrus.com>' \
+              -e OPENPROJECT_EMAIL__DELIVERY__METHOD=smtp \
+              -e OPENPROJECT_SMTP__ADDRESS=smtp.gmail.com \
+              -e OPENPROJECT_SMTP__PORT=465 \
+              -e OPENPROJECT_SMTP__DOMAIN=michalrus.com \
+              -e OPENPROJECT_SMTP__AUTHENTICATION=plain \
+              -e OPENPROJECT_SMTP__USER__NAME='scripts@michalrus.com' \
+              -e OPENPROJECT_SMTP__PASSWORD'*' \
+              -e OPENPROJECT_SMTP__SSL=true \
+              -e OPENPROJECT_SMTP__OPENSSL__VERIFY__MODE=peer \
+              -e OPENPROJECT_SMTP__ENABLE__STARTTLS__AUTO=false \
+              -e OPENPROJECT_BCC__RECIPIENTS=true \
+              -e OPENPROJECT_WELCOME__ON__HOMESCREEN=false \
+              -e OPENPROJECT_ATTACHMENT__MAX__SIZE=65536 \
+              -e OPENPROJECT_WEB_WORKERS=8 \
+              -e RAILS_MIN_THREADS=16 \
+              -e RAILS_MAX_THREADS=16 \
+              ${lib.escapeShellArg imageFullName}
+          '';
+        };
 
-    systemd.tmpfiles.rules = [
-      "d ${dataDir} 0700 ${user} ${user} -"
-    ];
-
-    # Ruby is terrible with memory management… Let’s restart it each night…
-    systemd.timers."${user}-restart" = {
-      partOf = ["${user}-restart.service"];
-      wantedBy = ["timers.target"];
-      timerConfig = {
-        OnCalendar = "*-*-* 05:00:00";
-        RandomizedDelaySec = "30m";
+        "${user}-restart" = {
+          path = [config.systemd.package];
+          serviceConfig = {
+            Type = "oneshot";
+          };
+          script = ''
+            exec systemctl restart ${user}.service
+          '';
+        };
       };
-    };
 
-    systemd.services."${user}-restart" = {
-      path = [config.systemd.package];
-      serviceConfig = {
-        Type = "oneshot";
+      tmpfiles.rules = [
+        "d ${dataDir} 0700 ${user} ${user} -"
+      ];
+
+      # Ruby is terrible with memory management… Let’s restart it each night…
+      timers."${user}-restart" = {
+        partOf = ["${user}-restart.service"];
+        wantedBy = ["timers.target"];
+        timerConfig = {
+          OnCalendar = "*-*-* 05:00:00";
+          RandomizedDelaySec = "30m";
+        };
       };
-      script = ''
-        exec systemctl restart ${user}.service
-      '';
     };
   };
 }

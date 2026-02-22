@@ -3,7 +3,6 @@
   lib,
   fetchzip,
   pkg-config,
-  lvtk,
   lv2,
   fftw,
   gtkmm2,

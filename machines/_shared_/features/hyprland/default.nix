@@ -13,91 +13,114 @@ in {
 
   home-manager.sharedModules = [
     ({config, ...}: {
-      home.file.".config/hypr/hyprland.conf".text = ''
-        source = ${./hyprland-monitor-lenovo-x1.conf}
-        source = ${./hyprland.conf}
-        source = ${
-          if config.home.username == "mw" || config.home.username == "m"
-          then ./hyprland-input-michalrus.conf
-          else ./hyprland-input-generic.conf
-        }
-        ${
-          if config.home.username == "m"
-          then ''
-            source = ${./hyprland-redshift.conf}
-          ''
-          else ""
-        }
-        #source = ${./hyprland-xwayland-hidpi.conf}
-      '';
+      home = {
+        file = {
+          ".config/hypr/hyprland.conf".text = ''
+            source = ${./hyprland-monitor-lenovo-x1.conf}
+            source = ${./hyprland.conf}
+            source = ${
+              if config.home.username == "mw" || config.home.username == "m"
+              then ./hyprland-input-michalrus.conf
+              else ./hyprland-input-generic.conf
+            }
+            ${
+              if config.home.username == "m"
+              then ''
+                source = ${./hyprland-redshift.conf}
+              ''
+              else ""
+            }
+            #source = ${./hyprland-xwayland-hidpi.conf}
+          '';
 
-      home.pointerCursor.gtk.enable = true;
-      home.pointerCursor.package = pkgs.vanilla-dmz;
-      home.pointerCursor.name = "Vanilla-DMZ";
-      home.sessionVariables.HYPRCURSOR_THEME = config.home.pointerCursor.name;
-      home.sessionVariables.HYPRCURSOR_SIZE = 24;
-      home.sessionVariables.XCURSOR_SIZE = 24;
+          ".config/fuzzel/fuzzel.ini".source = ./fuzzel.ini;
 
-      gtk.enable = true;
-      gtk.cursorTheme.package = pkgs.vanilla-dmz;
-      gtk.cursorTheme.name = "Vanilla-DMZ";
-      gtk.cursorTheme.size = 24;
-      gtk.font.name = "Noto Sans";
-      gtk.font.size = 11;
-      gtk.iconTheme.package = pkgs.papirus-icon-theme;
-      gtk.iconTheme.name = "Papirus"; # "Papirus-Dark"
-      gtk.theme.package = pkgs.kdePackages.breeze-gtk;
-      gtk.theme.name = "Breeze"; # "Breeze-Dark"
+          ".config/hypr/hyprlock.conf".text =
+            lib.replaceStrings ["screenshot"] ["${pkgs.hyprland}/share/hypr/wall0.png"]
+            (builtins.readFile ./hyprlock.conf);
+
+          ".config/swaync/style.css".source = ./swaync-style.css;
+
+          ".config/hypr/hypridle.conf".text = ''
+            ${builtins.readFile ./hypridle.conf}
+            ${
+              if hostName != "monstrum"
+              then builtins.readFile ./hypridle-laptop.conf
+              else builtins.readFile ./hypridle-desktop.conf
+            }
+          '';
+        };
+
+        pointerCursor = {
+          gtk.enable = true;
+          package = pkgs.vanilla-dmz;
+          name = "Vanilla-DMZ";
+        };
+
+        sessionVariables = {
+          HYPRCURSOR_THEME = config.home.pointerCursor.name;
+          HYPRCURSOR_SIZE = 24;
+          XCURSOR_SIZE = 24;
+        };
+
+        packages = [
+          flake.packages.${pkgs.stdenv.hostPlatform.system}.hyprland-screenshot
+          flake.packages.${pkgs.stdenv.hostPlatform.system}.wayland-logout
+          flake.packages.${pkgs.stdenv.hostPlatform.system}.wayland-unicode-input
+          flake.packages.${pkgs.stdenv.hostPlatform.system}.wayland-emoji-input
+          flake.packages.${pkgs.stdenv.hostPlatform.system}.wayland-random-input
+          pkgs.swaynotificationcenter
+          pkgs.hypridle
+          pkgs.wtype
+          pkgs.grim
+          pkgs.brightnessctl
+          (pkgs.writeShellApplication {
+            # for redshift:
+            name = "wlsunset";
+            runtimeInputs = [pkgs.wlsunset];
+            text = ''
+              latitude=51.26
+              longitude=16.96
+              kelvin_night=3700
+              kelvin_day=6500
+              exec wlsunset -l "$latitude" -L "$longitude" -t "$kelvin_night" -T "$kelvin_day"
+            '';
+          })
+          pkgs.hicolor-icon-theme # Papirus fallback
+          pkgs.wf-recorder
+        ];
+      };
+
+      gtk = {
+        enable = true;
+        cursorTheme = {
+          package = pkgs.vanilla-dmz;
+          name = "Vanilla-DMZ";
+          size = 24;
+        };
+        font = {
+          name = "Noto Sans";
+          size = 11;
+        };
+        iconTheme = {
+          package = pkgs.papirus-icon-theme;
+          name = "Papirus"; # "Papirus-Dark"
+        };
+        theme = {
+          package = pkgs.kdePackages.breeze-gtk;
+          name = "Breeze"; # "Breeze-Dark"
+        };
+      };
       qt.style.name = "breeze";
 
-      programs.fuzzel.enable = true;
-      home.file.".config/fuzzel/fuzzel.ini".source = ./fuzzel.ini;
-
-      programs.waybar.enable = true;
-      programs.waybar.style = builtins.readFile ./waybar-style.css;
-      programs.waybar.settings = builtins.fromJSON (builtins.readFile ./waybar-config.json);
-
-      home.file.".config/hypr/hyprlock.conf".text =
-        lib.replaceStrings ["screenshot"] ["${pkgs.hyprland}/share/hypr/wall0.png"]
-        (builtins.readFile ./hyprlock.conf);
-
-      home.file.".config/swaync/style.css".source = ./swaync-style.css;
-
-      home.file.".config/hypr/hypridle.conf".text = ''
-        ${builtins.readFile ./hypridle.conf}
-        ${
-          if hostName != "monstrum"
-          then builtins.readFile ./hypridle-laptop.conf
-          else builtins.readFile ./hypridle-desktop.conf
-        }
-      '';
-
-      home.packages = [
-        flake.packages.${pkgs.stdenv.hostPlatform.system}.hyprland-screenshot
-        flake.packages.${pkgs.stdenv.hostPlatform.system}.wayland-logout
-        flake.packages.${pkgs.stdenv.hostPlatform.system}.wayland-unicode-input
-        flake.packages.${pkgs.stdenv.hostPlatform.system}.wayland-emoji-input
-        flake.packages.${pkgs.stdenv.hostPlatform.system}.wayland-random-input
-        pkgs.swaynotificationcenter
-        pkgs.hypridle
-        pkgs.wtype
-        pkgs.grim
-        pkgs.brightnessctl
-        (pkgs.writeShellApplication {
-          # for redshift:
-          name = "wlsunset";
-          runtimeInputs = [pkgs.wlsunset];
-          text = ''
-            latitude=51.26
-            longitude=16.96
-            kelvin_night=3700
-            kelvin_day=6500
-            exec wlsunset -l "$latitude" -L "$longitude" -t "$kelvin_night" -T "$kelvin_day"
-          '';
-        })
-        pkgs.hicolor-icon-theme # Papirus fallback
-        pkgs.wf-recorder
-      ];
+      programs = {
+        fuzzel.enable = true;
+        waybar = {
+          enable = true;
+          style = builtins.readFile ./waybar-style.css;
+          settings = builtins.fromJSON (builtins.readFile ./waybar-config.json);
+        };
+      };
     })
   ];
 

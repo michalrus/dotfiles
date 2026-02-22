@@ -1,10 +1,4 @@
-{
-  config,
-  flake,
-  pkgs,
-  lib,
-  ...
-}: {
+_: {
   home.file.".ghci".text = ''
     :set prompt "λ> "
     :set +s

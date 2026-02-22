@@ -1,45 +1,37 @@
 {
-  flake,
   config,
   lib,
   pkgs,
   ...
-}:
-lib.mkMerge [
-  {
-    nix.gc.automatic = lib.mkForce false;
+}: {
+  nix = lib.mkMerge [
+    {
+      gc.automatic = lib.mkForce false;
 
-    nix.extraOptions =
-      ''
-        experimental-features = nix-command flakes fetch-closure
-        keep-outputs = true
-        keep-derivations = true
-      ''
-      + lib.optionalString (pkgs.stdenv.hostPlatform.system == "aarch64-darwin") ''
-        # Allow building for ‘x86_64-darwin’ using Rosetta 2:
-        extra-platforms = x86_64-darwin aarch64-darwin
-      '';
+      extraOptions =
+        ''
+          experimental-features = nix-command flakes fetch-closure
+          keep-outputs = true
+          keep-derivations = true
+        ''
+        + lib.optionalString (pkgs.stdenv.hostPlatform.system == "aarch64-darwin") ''
+          # Allow building for ‘x86_64-darwin’ using Rosetta 2:
+          extra-platforms = x86_64-darwin aarch64-darwin
+        '';
 
-    nix.nixPath = lib.mkForce (
-      if pkgs.stdenv.isDarwin
-      then [
-        {darwin-config = "${config.environment.darwinConfig}";}
-        {nixpkgs = pkgs.path;}
-      ]
-      else [
-        "nixpkgs=${pkgs.path}"
-      ]
-    );
-  }
+      nixPath = lib.mkForce (
+        if pkgs.stdenv.isDarwin
+        then [
+          {darwin-config = "${config.environment.darwinConfig}";}
+          {nixpkgs = pkgs.path;}
+        ]
+        else [
+          "nixpkgs=${pkgs.path}"
+        ]
+      );
+    }
 
-  {
-    # Unfortunately, ‘false’ is broken w.r.t. ‘pkgs.buildEnv’ inheriting ‘config.system.path.postBuild’
-    # – e.g. per-user packages.
-    #channel.enable = false;  # we’re using flakes
-  }
-
-  {
-    nix = let
+    (let
       trusted-users = lib.mkForce ["root"]; # disallow poisoning the cache
       auto-optimise-store = true;
     in
@@ -51,11 +43,9 @@ lib.mkMerge [
       else {
         trustedUsers = trusted-users;
         autoOptimiseStore = auto-optimise-store;
-      };
-  }
+      })
 
-  {
-    nix =
+    (
       if pkgs.stdenv.isLinux
       then
         if lib.versionAtLeast lib.version "23.04"
@@ -65,6 +55,13 @@ lib.mkMerge [
         else {
           useSandbox = lib.mkForce true;
         }
-      else {};
-  }
-]
+      else {}
+    )
+
+    {
+      # Unfortunately, ‘false’ is broken w.r.t. ‘pkgs.buildEnv’ inheriting ‘config.system.path.postBuild’
+      # – e.g. per-user packages.
+      #channel.enable = false;  # we’re using flakes
+    }
+  ];
+}

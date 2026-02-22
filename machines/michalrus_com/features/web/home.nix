@@ -1,12 +1,11 @@
-modArgs @ {
-  flake,
-  config,
+{
   lib,
   pkgs,
+  config,
   ...
 }:
 with lib;
-with import ./common.nix modArgs; let
+with import ./common.nix {inherit lib pkgs config;}; let
   inherit (import ../openvpn/common.nix {inherit lib;}) subnet-chwalecice;
 
   domain = "home.michalrus.com";

@@ -38,118 +38,120 @@
     '';
   };
 
-  fileSystems."/var/home/mw/VM-Shared/win10-new" = {
-    device = "//192.168.122.241/Shared";
-    fsType = "cifs";
-    options = [
-      "rw"
-      "username=unused"
-      "password="
-      "vers=2.0"
-      "uid=mw"
-      "forceuid"
-      "gid=users"
-      "forcegid"
-      "file_mode=0644"
-      "dir_mode=0755"
-      "nofail"
-      "_netdev"
-      "x-systemd.automount"
-      "x-systemd.mount-timeout=5s"
-      "x-systemd.device-timeout=5s"
-      "x-systemd.idle-timeout=2min"
-    ];
-  };
+  fileSystems = {
+    "/var/home/mw/VM-Shared/win10-new" = {
+      device = "//192.168.122.241/Shared";
+      fsType = "cifs";
+      options = [
+        "rw"
+        "username=unused"
+        "password="
+        "vers=2.0"
+        "uid=mw"
+        "forceuid"
+        "gid=users"
+        "forcegid"
+        "file_mode=0644"
+        "dir_mode=0755"
+        "nofail"
+        "_netdev"
+        "x-systemd.automount"
+        "x-systemd.mount-timeout=5s"
+        "x-systemd.device-timeout=5s"
+        "x-systemd.idle-timeout=2min"
+      ];
+    };
 
-  fileSystems."/var/home/mw/VM-Shared/win10" = {
-    device = "//192.168.122.239/Shared";
-    fsType = "cifs";
-    options = [
-      "rw"
-      "username=unused"
-      "password="
-      "vers=2.0"
-      "uid=mw"
-      "forceuid"
-      "gid=users"
-      "forcegid"
-      "file_mode=0644"
-      "dir_mode=0755"
-      "nofail"
-      "_netdev"
-      "x-systemd.automount"
-      "x-systemd.mount-timeout=5s"
-      "x-systemd.device-timeout=5s"
-      "x-systemd.idle-timeout=2min"
-    ];
-  };
+    "/var/home/mw/VM-Shared/win10" = {
+      device = "//192.168.122.239/Shared";
+      fsType = "cifs";
+      options = [
+        "rw"
+        "username=unused"
+        "password="
+        "vers=2.0"
+        "uid=mw"
+        "forceuid"
+        "gid=users"
+        "forcegid"
+        "file_mode=0644"
+        "dir_mode=0755"
+        "nofail"
+        "_netdev"
+        "x-systemd.automount"
+        "x-systemd.mount-timeout=5s"
+        "x-systemd.device-timeout=5s"
+        "x-systemd.idle-timeout=2min"
+      ];
+    };
 
-  fileSystems."/var/home/mw/VM-Shared/ubuntu" = {
-    device = "//192.168.122.114/Shared";
-    fsType = "cifs";
-    options = [
-      "rw"
-      "username=unused"
-      "password="
-      "vers=2.0"
-      "uid=mw"
-      "forceuid"
-      "gid=users"
-      "forcegid"
-      "file_mode=0644"
-      "dir_mode=0755"
-      "nofail"
-      "_netdev"
-      "x-systemd.automount"
-      "x-systemd.mount-timeout=5s"
-      "x-systemd.device-timeout=5s"
-      "x-systemd.idle-timeout=2min"
-    ];
-  };
+    "/var/home/mw/VM-Shared/ubuntu" = {
+      device = "//192.168.122.114/Shared";
+      fsType = "cifs";
+      options = [
+        "rw"
+        "username=unused"
+        "password="
+        "vers=2.0"
+        "uid=mw"
+        "forceuid"
+        "gid=users"
+        "forcegid"
+        "file_mode=0644"
+        "dir_mode=0755"
+        "nofail"
+        "_netdev"
+        "x-systemd.automount"
+        "x-systemd.mount-timeout=5s"
+        "x-systemd.device-timeout=5s"
+        "x-systemd.idle-timeout=2min"
+      ];
+    };
 
-  fileSystems."/var/home/mw/VM-Shared/macos11" = {
-    device = "//192.168.122.75/Shared";
-    fsType = "cifs";
-    options = [
-      "rw"
-      "username=mw"
-      "password=dupa.8"
-      "vers=2.0"
-      "uid=mw"
-      "forceuid"
-      "gid=users"
-      "forcegid"
-      "file_mode=0644"
-      "dir_mode=0755"
-      "nofail"
-      "_netdev"
-      "x-systemd.automount"
-      "x-systemd.mount-timeout=5s"
-      "x-systemd.device-timeout=5s"
-      "x-systemd.idle-timeout=2min"
-    ];
-  };
+    "/var/home/mw/VM-Shared/macos11" = {
+      device = "//192.168.122.75/Shared";
+      fsType = "cifs";
+      options = [
+        "rw"
+        "username=mw"
+        "password=dupa.8"
+        "vers=2.0"
+        "uid=mw"
+        "forceuid"
+        "gid=users"
+        "forcegid"
+        "file_mode=0644"
+        "dir_mode=0755"
+        "nofail"
+        "_netdev"
+        "x-systemd.automount"
+        "x-systemd.mount-timeout=5s"
+        "x-systemd.device-timeout=5s"
+        "x-systemd.idle-timeout=2min"
+      ];
+    };
 
-  fileSystems."/var/home/mw/VM-Shared/macos11-dev" = {
-    device = "//192.168.122.77/Shared";
-    fsType = "cifs";
-    options = [
-      "rw"
-      "username=mw"
-      "password=dupa.8"
-      "vers=2.0"
-      "uid=mw"
-      "forceuid"
-      "gid=users"
-      "forcegid"
-      "file_mode=0644"
-      "dir_mode=0755"
-      "nofail"
-      "_netdev"
-      "x-systemd.automount"
-      "x-systemd.mount-timeout=5s"
-      "x-systemd.device-timeout=5s"
-      "x-systemd.idle-timeout=2min"
-    ];
+    "/var/home/mw/VM-Shared/macos11-dev" = {
+      device = "//192.168.122.77/Shared";
+      fsType = "cifs";
+      options = [
+        "rw"
+        "username=mw"
+        "password=dupa.8"
+        "vers=2.0"
+        "uid=mw"
+        "forceuid"
+        "gid=users"
+        "forcegid"
+        "file_mode=0644"
+        "dir_mode=0755"
+        "nofail"
+        "_netdev"
+        "x-systemd.automount"
+        "x-systemd.mount-timeout=5s"
+        "x-systemd.device-timeout=5s"
+        "x-systemd.idle-timeout=2min"
+      ];
+    };
   };
 }

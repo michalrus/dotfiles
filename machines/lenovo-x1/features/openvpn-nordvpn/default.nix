@@ -1,10 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
-with lib; let
+_: let
   dataDir = "/var/lib/openvpn/nordvpn";
 in {
   services.openvpn.servers.nordvpn = {

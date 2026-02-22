@@ -1,5 +1,4 @@
 {
-  flake,
   config,
   pkgs,
   ...
@@ -26,7 +25,7 @@ with pkgs.lib; rec {
     setRealIPFromCloudflare ? false,
   }: let
     certDir =
-      if isNull forcedCertDir
+      if forcedCertDir == null
       then "${config.security.acme.certs."${sslCert}".directory}"
       else forcedCertDir;
     setRealIP =

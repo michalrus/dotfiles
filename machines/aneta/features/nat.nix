@@ -1,5 +1,4 @@
 {
-  config,
   pkgs,
   lib,
   ...
@@ -48,9 +47,24 @@ in
     {networking.firewall.extraCommands = lib.mkBefore flushRules;}
 
     {
-      networking.networkmanager = {
-        enable = true;
-        unmanaged = ["eth0"];
+      networking = {
+        networkmanager = {
+          enable = true;
+          unmanaged = ["eth0"];
+        };
+
+        interfaces.eth0.ipv4.addresses = [
+          {
+            address = addressing.router;
+            inherit (addressing) prefixLength;
+          }
+        ];
+
+        firewall = {
+          enable = true;
+          extraCommands = setupRules;
+          extraStopCommands = flushRules;
+        };
       };
 
       hardware.usbWwan.enable = true;
@@ -61,13 +75,6 @@ in
         after = ["NetworkManager.service"];
       };
 
-      networking.interfaces.eth0.ipv4.addresses = [
-        {
-          address = addressing.router;
-          prefixLength = addressing.prefixLength;
-        }
-      ];
-
       environment.systemPackages = with pkgs; [
         modemmanager # for `mmcli`
       ];
@@ -75,12 +82,6 @@ in
       boot.kernel.sysctl = {
         "net.ipv4.conf.all.forwarding" = lib.mkOverride 99 true;
         "net.ipv4.conf.default.forwarding" = lib.mkOverride 99 true;
-      };
-
-      networking.firewall = {
-        enable = true;
-        extraCommands = setupRules;
-        extraStopCommands = flushRules;
       };
 
       services.dhcpd4 = {

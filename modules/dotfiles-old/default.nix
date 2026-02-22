@@ -58,7 +58,7 @@ in {
   config = let
     usersWithMutableDotfiles =
       filterAttrs (
-        n: u:
+        _: u:
           length u.dotfiles-old.profiles
           != 0
           && !isStorePath "${u.dotfiles-old.base}"
@@ -67,7 +67,7 @@ in {
 
     usersWithImmutableDotfiles =
       filterAttrs (
-        n: u:
+        _: u:
           length u.dotfiles-old.profiles
           != 0
           && isStorePath "${u.dotfiles-old.base}"

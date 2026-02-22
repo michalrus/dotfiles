@@ -1,7 +1,6 @@
 {on-vt-switch-src}: {
   config,
   pkgs,
-  lib,
   ...
 }: let
   on-vt-switch = pkgs.callPackage on-vt-switch-src {};

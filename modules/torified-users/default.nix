@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 with lib; let
@@ -87,27 +86,29 @@ in {
     {networking.firewall.extraCommands = mkBefore flushRules;}
 
     (mkIf (cfg != []) {
-      services.tor = {
-        enable = true;
-        client.enable = true;
-        settings = {
-          VirtualAddrNetworkIPv4 = "10.192.0.0/10";
-          AutomapHostsOnResolve = true;
-          TransPort = transPort;
-          DNSPort = dnsPort;
+      services = {
+        tor = {
+          enable = true;
+          client.enable = true;
+          settings = {
+            VirtualAddrNetworkIPv4 = "10.192.0.0/10";
+            AutomapHostsOnResolve = true;
+            TransPort = transPort;
+            DNSPort = dnsPort;
+          };
+          # extraConfig = ''
+          #   VirtualAddrNetworkIPv4 10.192.0.0/10
+          #   AutomapHostsOnResolve 1
+          #   TransPort ${toString transPort}
+          #   DNSPort ${toString dnsPort}
+          # '';
         };
-        # extraConfig = ''
-        #   VirtualAddrNetworkIPv4 10.192.0.0/10
-        #   AutomapHostsOnResolve 1
-        #   TransPort ${toString transPort}
-        #   DNSPort ${toString dnsPort}
-        # '';
-      };
 
-      # It’s important that the users issue NS queries themselves. In
-      # other cases, this will leak deanonymizing DNS packets.
-      services.resolved.enable = false;
-      services.nscd.enable = false;
+        # It’s important that the users issue NS queries themselves. In
+        # other cases, this will leak deanonymizing DNS packets.
+        resolved.enable = false;
+        nscd.enable = false;
+      };
       system.nssModules = lib.mkForce [];
 
       networking.firewall = {

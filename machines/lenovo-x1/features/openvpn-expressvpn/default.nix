@@ -1,10 +1,8 @@
 {
-  config,
   lib,
   pkgs,
   ...
-}:
-with lib; let
+}: let
   dataDir = "/var/lib/openvpn/expressvpn";
 in {
   networking = {

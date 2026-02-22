@@ -1,9 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}: let
+{pkgs, ...}: let
   nme = "cups-reenable";
 in {
   # For some reason some printers get paused after something

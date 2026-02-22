@@ -15,7 +15,6 @@ with lib;
     somagic-easycap = pkgs.callPackage (
       {
         stdenv,
-        lib,
         fetchFromGitHub,
         libusb1,
         libgcrypt,

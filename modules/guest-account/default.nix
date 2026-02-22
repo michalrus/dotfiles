@@ -42,8 +42,7 @@ in {
     users.extraUsers.guest = {
       hashedPassword = "";
       isNormalUser = true;
-      home = cfg.home;
-      uid = cfg.uid;
+      inherit (cfg) home uid;
       description = "Guest";
       extraGroups = cfg.groups;
     };

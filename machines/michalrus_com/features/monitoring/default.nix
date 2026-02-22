@@ -1,13 +1,7 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
-with lib; let
+{pkgs, ...}: let
   influxdbCollecdPort = 25826;
   influxdb10 =
-    (pkgs.influxdb.overrideAttrs (oldAttrs: {
+    (pkgs.influxdb.overrideAttrs (_: {
       patches = [./influxdb-add_increase.patch];
     })).bin
     // {outputs = ["bin"];};
@@ -40,7 +34,7 @@ in {
       # Send data to InfluxDB collectd service.
       LoadPlugin network
       <Plugin network>
-        Server "localhost" "${toString influxdbCollecdPort}"
+        Server "localhost" "${builtins.toString influxdbCollecdPort}"
       </Plugin>
 
       LoadPlugin cpu

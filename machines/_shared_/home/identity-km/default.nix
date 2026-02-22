@@ -1,10 +1,4 @@
-{
-  config,
-  pkgs,
-  lib,
-  secrets,
-  ...
-}: {
+_: {
   programs.git = {
     settings.user.email = "km@monstrum";
     settings.user.name = "K i M";

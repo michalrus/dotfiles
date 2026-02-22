@@ -79,42 +79,52 @@ in
 
         flake.inputs.agenix.nixosModules.default
         {
-          age.identityPaths = ["/etc/ssh/ssh_host_ed25519_key"];
-          age.secrets.ssh-key-personal-git-annex = {
-            file = inputs.self + "/secrets/ssh-key-personal-git-annex.age";
-            owner = "m";
-          };
-          age.secrets.ssh-config-work-devx = {
-            file = inputs.self + "/secrets/ssh-config-work-devx.age";
-            owner = "mw";
-          };
-          age.secrets.ssh-known_hosts-work-devx = {
-            file = inputs.self + "/secrets/ssh-known_hosts-work-devx.age";
-            owner = "mw";
-          };
-          age.secrets.ssh-config-work-iog = {
-            file = inputs.self + "/secrets/ssh-config-work-iog.age";
-            owner = "mw";
-          };
-          age.secrets.ssh-known_hosts-work-iog = {
-            file = inputs.self + "/secrets/ssh-known_hosts-work-iog.age";
-            owner = "mw";
-          };
-          age.secrets.ssh-config-work-lace = {
-            file = inputs.self + "/secrets/ssh-config-work-lace.age";
-            owner = "mw";
-          };
-          age.secrets.ssh-known_hosts-work-lace = {
-            file = inputs.self + "/secrets/ssh-known_hosts-work-lace.age";
-            owner = "mw";
-          };
-          age.secrets.ssh-config-work-blockfrost = {
-            file = inputs.self + "/secrets/ssh-config-work-blockfrost.age";
-            owner = "mw";
-          };
-          age.secrets.ssh-known_hosts-work-blockfrost = {
-            file = inputs.self + "/secrets/ssh-known_hosts-work-blockfrost.age";
-            owner = "mw";
+          age = {
+            identityPaths = ["/etc/ssh/ssh_host_ed25519_key"];
+            secrets = let
+              sec = name:
+                builtins.path {
+                  path = inputs.self + "/secrets/" + name;
+                  inherit name;
+                };
+            in {
+              ssh-key-personal-git-annex = {
+                file = sec "ssh-key-personal-git-annex.age";
+                owner = "m";
+              };
+              ssh-config-work-devx = {
+                file = sec "ssh-config-work-devx.age";
+                owner = "mw";
+              };
+              ssh-known_hosts-work-devx = {
+                file = sec "ssh-known_hosts-work-devx.age";
+                owner = "mw";
+              };
+              ssh-config-work-iog = {
+                file = sec "ssh-config-work-iog.age";
+                owner = "mw";
+              };
+              ssh-known_hosts-work-iog = {
+                file = sec "ssh-known_hosts-work-iog.age";
+                owner = "mw";
+              };
+              ssh-config-work-lace = {
+                file = sec "ssh-config-work-lace.age";
+                owner = "mw";
+              };
+              ssh-known_hosts-work-lace = {
+                file = sec "ssh-known_hosts-work-lace.age";
+                owner = "mw";
+              };
+              ssh-config-work-blockfrost = {
+                file = sec "ssh-config-work-blockfrost.age";
+                owner = "mw";
+              };
+              ssh-known_hosts-work-blockfrost = {
+                file = sec "ssh-known_hosts-work-blockfrost.age";
+                owner = "mw";
+              };
+            };
           };
         }
 
@@ -140,21 +150,23 @@ in
               ../_shared_/home/mpv
               ../_shared_/home/alacritty
             ];
-            users.m.imports = [
-              ../_shared_/home/identity-personal
-              ../_shared_/home/doom-emacs
-              ../_shared_/home/zed-editor
-            ];
-            users.mw.imports = [
-              ../_shared_/home/identity-work
-              ../_shared_/home/doom-emacs
-              ../_shared_/home/zed-editor
-            ];
-            users.md.imports = [];
-            users.guest.imports = [
-              {home.file.".wallpaper.png".source = ../_shared_/assets/wallpapers/rainbow.png;}
-            ];
-            users.root.imports = [];
+            users = {
+              m.imports = [
+                ../_shared_/home/identity-personal
+                ../_shared_/home/doom-emacs
+                ../_shared_/home/zed-editor
+              ];
+              mw.imports = [
+                ../_shared_/home/identity-work
+                ../_shared_/home/doom-emacs
+                ../_shared_/home/zed-editor
+              ];
+              md.imports = [];
+              guest.imports = [
+                {home.file.".wallpaper.png".source = ../_shared_/assets/wallpapers/rainbow.png;}
+              ];
+              root.imports = [];
+            };
           };
         })
 

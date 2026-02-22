@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: let
+{pkgs, ...}: let
   kornel = let
     raw = pkgs.fetchFromGitHub {
       owner = "michalrus";
@@ -55,7 +51,7 @@ in {
       Group = user;
       PermissionsStartOnly = true;
     };
-    path = with pkgs; [kornel];
+    path = [kornel];
     preStart = ''
       mkdir -p "${dataDir}"
       chown -R "${user}:${user}" "${dataDir}"

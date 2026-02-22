@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   services.bitlbee = {
     enable = true;
     plugins = with pkgs; [bitlbee-facebook];

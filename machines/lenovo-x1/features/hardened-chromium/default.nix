@@ -1,9 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}: let
+_: let
   policies = builtins.toJSON {
     HomepageIsNewTabPage = true;
     HomepageLocation = "about:blank";

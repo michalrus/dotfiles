@@ -1,22 +1,17 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}: let
+{config, ...}: let
   appsToLink =
-    __concatMap (
+    builtins.concatMap (
       package: let
         apps = "${package}/Applications";
       in
-        if __pathExists apps
-        then map (app: "${apps}/${app}") (__attrNames (__readDir apps))
+        if builtins.pathExists apps
+        then builtins.map (app: "${apps}/${app}") (builtins.attrNames (builtins.readDir apps))
         else []
     )
     config.home.packages;
 in {
-  home.file = __listToAttrs (map (app: {
-      name = "Applications/${__unsafeDiscardStringContext (baseNameOf app)}/Contents";
+  home.file = builtins.listToAttrs (builtins.map (app: {
+      name = "Applications/${builtins.unsafeDiscardStringContext (builtins.baseNameOf app)}/Contents";
       value.source = "${app}/Contents";
     })
     appsToLink);

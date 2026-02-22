@@ -12,12 +12,13 @@
   writeShellApplication,
 }: let
   # This is the same exact hash as on the installation CD added to AmScope MU1403:
-  src-2018 = fetchzip {
-    url = "https://storage.googleapis.com/software-download-d79bb.appspot.com/software/AmLite/Linux/20180326/AmScopeAmLite_20180326.tar";
-    hash = "sha256-18Yb27zmd+ImLkZSXQ5mrkIFltL/w9py27tWd9memDM=";
-    stripRoot = false;
-  };
-
+  #
+  # src-2018 = fetchzip {
+  #   url = "https://storage.googleapis.com/software-download-d79bb.appspot.com/software/AmLite/Linux/20180326/AmScopeAmLite_20180326.tar";
+  #   hash = "sha256-18Yb27zmd+ImLkZSXQ5mrkIFltL/w9py27tWd9memDM=";
+  #   stripRoot = false;
+  # };
+  #
   unsafe = stdenv.mkDerivation rec {
     pname = "AmLite";
     version = "20232603";

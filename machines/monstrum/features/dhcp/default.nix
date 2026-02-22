@@ -1,9 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}: let
+_: let
   internalInterface = "enp16s0";
 in {
   networking.interfaces.${internalInterface} = {

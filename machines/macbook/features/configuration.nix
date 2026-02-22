@@ -1,7 +1,6 @@
 {
   pkgs,
   flake,
-  lib,
   config,
   ...
 }: {
@@ -13,67 +12,76 @@
   nix.nrBuildUsers = 32;
 
   # Create /etc/bashrc that loads the nix-darwin environment.
-  programs.bash.enable = true;
-  programs.bash.completion.enable = true;
+  programs = {
+    bash = {
+      enable = true;
+      completion.enable = true;
+    };
 
-  programs.zsh.enable = true;
-  programs.zsh.enableCompletion = true;
-  programs.zsh.enableBashCompletion = true;
+    zsh = {
+      enable = true;
+      enableCompletion = true;
+      enableBashCompletion = true;
+    };
+  };
 
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
 
   programs.nix-index.enable = true;
 
-  environment.darwinConfig = config.users.users.m.home + "/.dotfiles/macos/flake.nix";
+  environment = {
+    darwinConfig = config.users.users.m.home + "/.dotfiles/macos/flake.nix";
 
-  environment.systemPackages = with pkgs; [
-    alejandra
-    coreutils
-    findutils
-    gnugrep
-    gnused
-    gnutar
-    gnumake
-    curl
-    wget
-    gnupg
-    ffmpeg-full
-    imagemagickBig
-    exiftool
-    jq
-    calc
-    nano
-    git
-    #gitstatus  # for powerlevel10k Zsh prompt (or else, it will download&install its own binary blobs in ~/.cache)
-    bat
-    ripgrep
+    systemPackages = with pkgs; [
+      alejandra
+      coreutils
+      findutils
+      gnugrep
+      gnused
+      gnutar
+      gnumake
+      curl
+      wget
+      gnupg
+      ffmpeg-full
+      imagemagickBig
+      exiftool
+      jq
+      calc
+      nano
+      git
+      #gitstatus  # for powerlevel10k Zsh prompt (or else, it will download&install its own binary blobs in ~/.cache)
+      bat
+      ripgrep
 
-    mpv
-    flake.packages.${pkgs.stdenv.hostPlatform.system}.yt-dlp
+      mpv
+      flake.packages.${pkgs.stdenv.hostPlatform.system}.yt-dlp
 
-    flake.packages.${pkgs.stdenv.hostPlatform.system}.noise
+      flake.packages.${pkgs.stdenv.hostPlatform.system}.noise
 
-    # FIXME: for some reason it's no longer visible in Launchpad – and the custom path can be set via defaults as well
-    #
-    # Substitute IINA’s built-in `youtube-dl` with the freshest one:
-    #(iina.overrideAttrs (drv: {
-    #  installPhase =
-    #    (drv.installPhase or "")
-    #    + ''
-    #      rm $out/Applications/IINA.app/Contents/MacOS/youtube-dl
-    #      ln -s ${flake.packages.${pkgs.stdenv.hostPlatform.system}.yt-dlp}/bin/yt-dlp $out/Applications/IINA.app/Contents/MacOS/youtube-dl
-    #    '';
-    #}))
+      # FIXME: for some reason it's no longer visible in Launchpad – and the custom path can be set via defaults as well
+      #
+      # Substitute IINA’s built-in `youtube-dl` with the freshest one:
+      #
+      # (iina.overrideAttrs (drv: {
+      #  installPhase =
+      #    (drv.installPhase or "")
+      #    + ''
+      #      rm $out/Applications/IINA.app/Contents/MacOS/youtube-dl
+      #      ln -s ${flake.packages.${pkgs.stdenv.hostPlatform.system}.yt-dlp}/bin/yt-dlp $out/Applications/IINA.app/Contents/MacOS/youtube-dl
+      #    '';
+      # }))
 
-    python3
-  ];
+      python3
+    ];
+
+    variables = {
+    };
+  };
 
   programs.gnupg.agent.enable = true;
   programs.gnupg.agent.enableSSHSupport = true;
-
-  environment.variables = {
-  };
 
   system.activationScripts.postActivation.text = ''
     echo >&2 "system defaults (custom)..."

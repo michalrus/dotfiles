@@ -7,7 +7,7 @@
 with lib; let
   port = 6698;
 
-  clientbufferFixed = overrideDerivation pkgs.zncModules.clientbuffer (oldAttrs: {
+  clientbufferFixed = overrideDerivation pkgs.zncModules.clientbuffer (_: {
     src = pkgs.fetchFromGitHub {
       owner = "jpnurmi";
       repo = "znc-clientbuffer";
@@ -23,7 +23,6 @@ with lib; let
   acmeCert = "michalrus.com";
 
   zncDerivation = a @ {
-    src,
     module_name,
     version,
     buildPhase ? "${pkgs.znc}/bin/znc-buildmod ${module_name}.cpp",
@@ -38,7 +37,7 @@ with lib; let
         passthru.module_name = module_name;
       });
 
-  antiidle = zncDerivation rec {
+  antiidle = zncDerivation {
     version = "unknown";
     module_name = "antiidle";
     src = pkgs.fetchurl {
@@ -48,7 +47,7 @@ with lib; let
     unpackPhase = "cp $src antiidle.cpp";
   };
 
-  autoinvitejoin = zncDerivation rec {
+  autoinvitejoin = zncDerivation {
     version = "20160621";
     module_name = "autoinvitejoin";
     src = pkgs.fetchFromGitHub {
@@ -82,8 +81,8 @@ in {
 
   # Unfortunately, the znc module doesn’t have the package configurable.
   nixpkgs.overlays = [
-    (self: super: {
-      znc = super.znc.overrideDerivation (oldAttrs: {
+    (_: super: {
+      znc = super.znc.overrideDerivation (_: {
         patches = [
           ./timeouts.patch
           ./always-has-self-message.patch
@@ -110,15 +109,21 @@ in {
   };
 
   # Fix missing `exec`.
-  systemd.services.znc.script = mkForce "exec ${pkgs.znc}/bin/znc --foreground --datadir ${cfg.dataDir} ${toString cfg.extraFlags}";
+  systemd = {
+    services = {
+      znc = {
+        script = mkForce "exec ${pkgs.znc}/bin/znc --foreground --datadir ${cfg.dataDir} ${toString cfg.extraFlags}";
+        serviceConfig.PermissionsStartOnly = true;
+        preStart = ''
+          ${createZncPem}
+          chown -R "${cfg.user}:${cfg.user}" "${cfg.dataDir}" # group == cfg.user? smelly…
+        '';
+      };
+    };
+  };
 
   # Note that there’s no need to restart znc.service itself, when ACME
   # updates the cert, as `znc.pem` is re-read every time a new client
   # connects.
   security.acme.certs."${acmeCert}".postRun = "${createZncPem}";
-  systemd.services.znc.serviceConfig.PermissionsStartOnly = true;
-  systemd.services.znc.preStart = ''
-    ${createZncPem}
-    chown -R "${cfg.user}:${cfg.user}" "${cfg.dataDir}" # group == cfg.user? smelly…
-  '';
 }

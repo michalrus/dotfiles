@@ -1,5 +1,4 @@
 modArgs @ {
-  flake,
   config,
   lib,
   pkgs,

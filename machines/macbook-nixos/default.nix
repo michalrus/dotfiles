@@ -48,9 +48,11 @@ in
               ../_shared_/home/gnu-screen
               {home.stateVersion = "23.11";}
             ];
-            users.m.imports = [../_shared_/home/identity-personal];
-            users.mw.imports = [../_shared_/home/identity-work];
-            users.root.imports = [];
+            users = {
+              m.imports = [../_shared_/home/identity-personal];
+              mw.imports = [../_shared_/home/identity-work];
+              root.imports = [];
+            };
           };
         }
 

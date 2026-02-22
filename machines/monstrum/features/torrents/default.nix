@@ -1,6 +1,5 @@
 {
   config,
-  lib,
   pkgs,
   ...
 }: let
@@ -20,30 +19,68 @@
     hash = "sha256-cIY5fhcLyEPwt5D2T0S4KhAbb8Qmd9m3xcsQTa4FX+8=";
   };
 in {
-  systemd.services.${serviceName} = {
-    description = "qBittorrent-nox service";
-    after = ["network.target"];
-    wantedBy = ["multi-user.target"];
-    serviceConfig = {
-      Type = "simple";
-      Restart = "always";
-      RestartSec = 5;
-      User = user;
-      Group = user;
-      UMask = "0002";
-      WorkingDirectory = dataDir;
-      BindPaths = [
-        "${downloadsDir}:/Downloads"
-        "${VueTorrent}:/VueTorrent"
-      ];
-      ExecStart = "${pkgs.qbittorrent-nox}/bin/qbittorrent-nox";
+  systemd = {
+    services = {
+      ${serviceName} = {
+        description = "qBittorrent-nox service";
+        after = ["network.target"];
+        wantedBy = ["multi-user.target"];
+        serviceConfig = {
+          Type = "simple";
+          Restart = "always";
+          RestartSec = 5;
+          User = user;
+          Group = user;
+          UMask = "0002";
+          WorkingDirectory = dataDir;
+          BindPaths = [
+            "${downloadsDir}:/Downloads"
+            "${VueTorrent}:/VueTorrent"
+          ];
+          ExecStart = "${pkgs.qbittorrent-nox}/bin/qbittorrent-nox";
+        };
+        environment = {
+          QBT_PROFILE = dataDir;
+          QBT_WEBUI_PORT = toString rpcPort;
+          QBT_CONFIRM_LEGAL_NOTICE = toString 1;
+          QBT_RELATIVE_FASTRESUME = toString 1;
+        };
+      };
+
+      # Monitors whether the external port is reachable, and restarts the `qbittorrent.service` if it isn’t.
+      # Sometimes – esp. after `airvpn.service` restart, qBittorrent doesn’t notice the new address.
+      "${serviceName}-port-monitor" = {
+        after = ["network.target"];
+        wantedBy = ["multi-user.target"];
+        serviceConfig = {
+          Type = "simple";
+          Restart = "always";
+          RestartSec = 60;
+        };
+        path = [config.systemd.package] ++ (with pkgs; [curl jq netcat-openbsd]);
+        script = ''
+          set -euo pipefail
+          while true ; do
+            sleep 60
+            if systemctl is-active --quiet ${serviceName}.service ; then
+              userinfo=$(curl -fsSL -H @/run/agenix/wireguard_airvpn_api_key 'https://airvpn.org/api/userinfo/')
+              exit_ipv4=$(jq <<<"$userinfo" -r '([.sessions[] | select(.device_name == "monstrum")] | sort_by(-.connected_since_unix))[0].exit_ipv4')
+              if ! nc -z -w ${toString externalPortWaitSec} "$exit_ipv4" ${toString externalPort} ; then
+                echo >&2 "TCP port $exit_ipv4:${toString externalPort} unreachable in ${toString externalPortWaitSec} seconds, restarting ${serviceName}.service..."
+                systemctl restart ${serviceName}.service
+              fi
+            else
+              echo >&2 "warning: ${serviceName}.service is stopped, skipping the external port check"
+            fi
+          done
+        '';
+      };
     };
-    environment = {
-      QBT_PROFILE = dataDir;
-      QBT_WEBUI_PORT = toString rpcPort;
-      QBT_CONFIRM_LEGAL_NOTICE = toString 1;
-      QBT_RELATIVE_FASTRESUME = toString 1;
-    };
+
+    tmpfiles.rules = [
+      "d ${dataDir}       0700 ${user} ${user} -"
+      "d ${downloadsDir}  0755 ${user} ${user} -"
+    ];
   };
 
   users.users.${user} = {
@@ -53,11 +90,6 @@ in {
     inherit uid;
   };
   users.groups.${user}.gid = uid;
-
-  systemd.tmpfiles.rules = [
-    "d ${dataDir}       0700 ${user} ${user} -"
-    "d ${downloadsDir}  0755 ${user} ${user} -"
-  ];
 
   security.acme.certs.${domain} = {
     webroot = "/var/www/acme-challenges";
@@ -105,33 +137,4 @@ in {
       }
     }
   '';
-
-  # Monitors whether the external port is reachable, and restarts the `qbittorrent.service` if it isn’t.
-  # Sometimes – esp. after `airvpn.service` restart, qBittorrent doesn’t notice the new address.
-  systemd.services."${serviceName}-port-monitor" = {
-    after = ["network.target"];
-    wantedBy = ["multi-user.target"];
-    serviceConfig = {
-      Type = "simple";
-      Restart = "always";
-      RestartSec = 60;
-    };
-    path = [config.systemd.package] ++ (with pkgs; [curl jq netcat-openbsd]);
-    script = ''
-      set -euo pipefail
-      while true ; do
-        sleep 60
-        if systemctl is-active --quiet ${serviceName}.service ; then
-          userinfo=$(curl -fsSL -H @/run/agenix/wireguard_airvpn_api_key 'https://airvpn.org/api/userinfo/')
-          exit_ipv4=$(jq <<<"$userinfo" -r '([.sessions[] | select(.device_name == "monstrum")] | sort_by(-.connected_since_unix))[0].exit_ipv4')
-          if ! nc -z -w ${toString externalPortWaitSec} "$exit_ipv4" ${toString externalPort} ; then
-            echo >&2 "TCP port $exit_ipv4:${toString externalPort} unreachable in ${toString externalPortWaitSec} seconds, restarting ${serviceName}.service..."
-            systemctl restart ${serviceName}.service
-          fi
-        else
-          echo >&2 "warning: ${serviceName}.service is stopped, skipping the external port check"
-        fi
-      done
-    '';
-  };
 }

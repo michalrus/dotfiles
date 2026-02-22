@@ -93,7 +93,7 @@ in
           (pkg
             // {
               tlType = "run";
-              pname = pname;
+              inherit pname;
             })
           #(pkg // { tlType = "bin"; pname = pname; }) # I’ve had enough.
         ]

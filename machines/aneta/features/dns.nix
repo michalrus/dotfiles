@@ -53,58 +53,60 @@ in {
   };
 
   config = {
-    services.resolved.enable = false;
+    services = {
+      resolved.enable = false;
+      nscd.enable = false;
+      dnsmasq.enable = false;
 
-    services.nscd.enable = false;
+      bind = {
+        enable = true;
+
+        configFile = pkgs.writeText "named.conf" (
+          ''
+            include "/etc/bind/rndc.key";
+            controls {
+              inet 127.0.0.1 allow {localhost;} keys {"rndc-key";};
+            };
+
+            acl cachenetworks { 127.0.0.0/8; ${addressing.subnet}; };
+            acl badnetworks   { };
+
+            options {
+              listen-on    { any; };
+              listen-on-v6 { any; };
+              allow-query  { cachenetworks; };
+              blackhole    { badnetworks;   };
+
+              directory "/run/named";
+              pid-file  "/run/named/named.pid";
+
+              forward only;
+              include "${forwardersConf}";
+            };
+          ''
+          + (let
+            domain = "openproject.michalrus.com";
+          in ''
+            zone "${domain}" {
+              type master;
+              file "${pkgs.writeText "${domain}.zone" ''
+              $TTL    604800
+              @       IN      SOA     ns.${domain}. admin.michalrus.com. (2 604800 86400 2419200 604800)
+              @       IN      NS      ns.${domain}.
+              @       IN      A       10.77.2.11
+              ns      IN      A       10.77.2.11
+            ''}";
+            };
+          '')
+        );
+      };
+    };
+
     system.nssModules = lib.mkForce [];
 
-    services.dnsmasq.enable = false;
-
-    networking.resolvconf.useLocalResolver = true;
-
-    networking.firewall.allowedUDPPorts = [53];
-
-    services.bind = {
-      enable = true;
-
-      configFile = pkgs.writeText "named.conf" (
-        ''
-          include "/etc/bind/rndc.key";
-          controls {
-            inet 127.0.0.1 allow {localhost;} keys {"rndc-key";};
-          };
-
-          acl cachenetworks { 127.0.0.0/8; ${addressing.subnet}; };
-          acl badnetworks   { };
-
-          options {
-            listen-on    { any; };
-            listen-on-v6 { any; };
-            allow-query  { cachenetworks; };
-            blackhole    { badnetworks;   };
-
-            directory "/run/named";
-            pid-file  "/run/named/named.pid";
-
-            forward only;
-            include "${forwardersConf}";
-          };
-        ''
-        + (let
-          domain = "openproject.michalrus.com";
-        in ''
-          zone "${domain}" {
-            type master;
-            file "${pkgs.writeText "${domain}.zone" ''
-            $TTL    604800
-            @       IN      SOA     ns.${domain}. admin.michalrus.com. (2 604800 86400 2419200 604800)
-            @       IN      NS      ns.${domain}.
-            @       IN      A       10.77.2.11
-            ns      IN      A       10.77.2.11
-          ''}";
-          };
-        '')
-      );
+    networking = {
+      resolvconf.useLocalResolver = true;
+      firewall.allowedUDPPorts = [53];
     };
 
     systemd.services.bind.preStart = lib.mkAfter ''

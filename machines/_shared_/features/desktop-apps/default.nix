@@ -1,13 +1,32 @@
 {
   flake,
-  config,
-  lib,
   pkgs,
   ...
 }: {
-  services.udisks2.enable = true;
+  services = {
+    udisks2.enable = true;
 
-  services.playerctld.enable = true;
+    playerctld.enable = true;
+    playerctld.package = pkgs.playerctl.overrideAttrs (old: {
+      patches =
+        (old.patches or [])
+        ++ [
+          (pkgs.fetchurl {
+            # Sometimes, `playerctld` segfaults, see
+            # <https://github.com/altdesktop/playerctl/issues/339>, and
+            # <https://github.com/altdesktop/playerctl/pull/349>.
+            url = "https://github.com/altdesktop/playerctl/pull/349.diff";
+            hash = "sha256-GJpmwvGKzOGgYkNDdx4heueAHIQ+R7jCjWQy2ouTXVU=";
+          })
+        ];
+    });
+
+    printing = {
+      enable = true;
+      drivers = with pkgs; [gutenprint hplip epson-escpr];
+    };
+  };
+
   # Sometimes, `playerctld` segfaults, see
   # <https://github.com/altdesktop/playerctl/issues/339>, and
   # <https://github.com/altdesktop/playerctl/pull/349>.
@@ -15,16 +34,6 @@
     Restart = "always";
     RestartSec = 1;
   };
-  services.playerctld.package = pkgs.playerctl.overrideAttrs (old: {
-    patches =
-      (old.patches or [])
-      ++ [
-        (pkgs.fetchurl {
-          url = "https://github.com/altdesktop/playerctl/pull/349.diff";
-          hash = "sha256-GJpmwvGKzOGgYkNDdx4heueAHIQ+R7jCjWQy2ouTXVU=";
-        })
-      ];
-  });
 
   home-manager.sharedModules = [
     {
@@ -128,11 +137,6 @@
       };
     }
   ];
-
-  services.printing = {
-    enable = true;
-    drivers = with pkgs; [gutenprint hplip epson-escpr];
-  };
 
   hardware.sane.enable = true;
 }

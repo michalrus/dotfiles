@@ -1,10 +1,4 @@
-{
-  flake,
-  config,
-  lib,
-  pkgs,
-  ...
-}: let
+{pkgs, ...}: let
   unfree = import pkgs.path {
     inherit (pkgs.stdenv.hostPlatform) system;
     config.allowUnfree = true;

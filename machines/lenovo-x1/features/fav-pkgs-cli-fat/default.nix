@@ -1,7 +1,6 @@
 {
   flake,
   pkgs,
-  lib,
   ...
 }: {
   environment.systemPackages = flake.lib.filterSystem pkgs.stdenv.hostPlatform.system (with pkgs; [
