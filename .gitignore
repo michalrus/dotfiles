@@ -1,4 +1,5 @@
 result
+result-*
 .DS_Store
 flycheck_*
 *.qcow2
