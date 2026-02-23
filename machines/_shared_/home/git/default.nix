@@ -58,6 +58,9 @@
     };
   };
 
+  home.packages = [
+    pkgs.cocogitto # Conventional Commits TUI, <https://docs.cocogitto.io/>
+  ];
   home.file =
     {
       ".config/git/hooks".source = ./hooks;
