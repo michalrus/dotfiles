@@ -5,7 +5,7 @@ if [ -n "${SKIP_COG+x}" ]; then
   exit 0
 fi
 
-if cog verify --file "$1"; then
+if cog verify --ignore-merge-commits --file "$1"; then
   exit 0
 else
   status=$?
