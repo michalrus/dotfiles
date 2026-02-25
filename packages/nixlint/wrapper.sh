@@ -2,7 +2,7 @@
 set -euo pipefail
 
 usage() {
-  echo "Usage: nixlint [--fix] <file-or-dir>..." >&2
+  echo "Usage: nixlint [--fix] [<file-or-dir>...]" >&2
 }
 
 fix=0
@@ -31,11 +31,11 @@ while true; do
   esac
 done
 
-targets=("$@")
-
-if [ "${#targets[@]}" -eq 0 ]; then
-  usage
-  exit 2
+if [ "$#" -eq 0 ]; then
+  repo_root=$(git rev-parse --show-toplevel 2>/dev/null) || true
+  targets=("${repo_root:-.}")
+else
+  targets=("$@")
 fi
 
 declare -A seen
@@ -53,6 +53,13 @@ add_file() {
 add_path() {
   local target="$1"
   if [ -d "$target" ]; then
+    if git -C "$target" rev-parse --show-toplevel &>/dev/null; then
+      while IFS= read -r -d "" file; do
+        add_file "$target/$file"
+      done < <(git -C "$target" ls-files -z --cached --others --exclude-standard -- '*.nix')
+      return
+    fi
+
     while IFS= read -r -d "" file; do
       add_file "$file"
     done < <(find "$target" -type f -iname "*.nix" -print0)

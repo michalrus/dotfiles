@@ -2,6 +2,7 @@
   lib,
   writeShellApplication,
   findutils,
+  git,
   statix,
   deadnix,
   nil,
@@ -15,6 +16,7 @@ writeShellApplication {
   name = "nixlint";
   runtimeInputs = [
     findutils
+    git
     statix
     deadnix
     nil
