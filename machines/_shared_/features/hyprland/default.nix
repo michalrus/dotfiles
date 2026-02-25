@@ -88,6 +88,7 @@ in {
           })
           pkgs.hicolor-icon-theme # Papirus fallback
           pkgs.wf-recorder
+          pkgs.slurp
         ];
       };
 
