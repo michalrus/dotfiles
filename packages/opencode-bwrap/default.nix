@@ -6,6 +6,20 @@
 }: let
   unsafe = nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.opencode;
 
+  opencode-md-table-formatter = pkgs.fetchFromGitHub {
+    owner = "franlol";
+    repo = "opencode-md-table-formatter";
+    tag = "v0.0.6";
+    hash = "sha256-cmLsPeUnGo1spaz1UGhIYPdmIdRnLQ3tEaONoMGBTcw=";
+  };
+
+  opencode-plugins = pkgs.linkFarm "opencode-plugins" [
+    {
+      name = "opencode-md-table-formatter.ts";
+      path = "${opencode-md-table-formatter}/index.ts";
+    }
+  ];
+
   config = {
     "$schema" = "https://opencode.ai/config.json";
     share = "disabled";
@@ -272,6 +286,9 @@
       if [ -f "$HOME"/.config/git/ignore ] ; then
         bwrap_opts+=( --ro-bind "$HOME"/.config/git/ignore "$HOME"/.config/git/ignore )
       fi
+
+      # OpenCode plugins (pinned via fetchFromGitHub, mounted read-only)
+      bwrap_opts+=( --ro-bind ${opencode-plugins} "$HOME"/.config/opencode/plugins )
 
       rw_opts=()
       ro_git_opts=()
