@@ -298,14 +298,16 @@
         rw_opts+=( --bind "$d" "$d" )
 
         # Then over-mount any `.git` entries inside it as read-only (dir, file, or symlink)
-        while IFS= read -r -d "" gitpath; do
-          ro_git_opts+=( --ro-bind "$gitpath" "$gitpath" )
-        done < <(
-          find "$d" \
-            -name .git \
-            \( -type d -o -type f -o -type l \) \
-            -print0 2>/dev/null || true
-        )
+        if [ -z "''${OPENCODE_UNSAFE_RW_GIT-}" ]; then
+          while IFS= read -r -d "" gitpath; do
+            ro_git_opts+=( --ro-bind "$gitpath" "$gitpath" )
+          done < <(
+            find "$d" \
+              -name .git \
+              \( -type d -o -type f -o -type l \) \
+              -print0 2>/dev/null || true
+          )
+        fi
       done
 
       exec bwrap \
@@ -315,7 +317,7 @@
         --seccomp 3 3< <(${lib.getExe bwrapTiocstiFilter}) \
         -- "$shell_exe"
     '';
-    derivationArgs.meta.description = "Enters a (multi-)project sandbox to run `opencode` inside; `.git` entries are mounted read-only.";
+    derivationArgs.meta.description = "Enters a (multi-)project sandbox to run `opencode` inside; `.git` entries are mounted read-only unless OPENCODE_UNSAFE_RW_GIT is set.";
     derivationArgs.meta.platforms = lib.platforms.linux;
   };
 in
