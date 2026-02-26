@@ -212,6 +212,7 @@
 
       # Only these will persist in the sandbox $HOME:
       persist_dirs=(
+        .bin
         .cache .config .local
         .cargo
         .bun .npm .yarn
@@ -261,7 +262,7 @@
         --setenv PATH ${lib.makeBinPath [
         unsafe
         serena
-      ]}:/etc/profiles/per-user/"$USER"/bin:/run/current-system/sw/bin
+      ]}:/etc/profiles/per-user/"$USER"/bin:/run/current-system/sw/bin:"$HOME"/.bin
         --setenv USER "$USER"
         --setenv TERM "$TERM"
         --setenv TERMINFO_DIRS /etc/profiles/per-user/"$USER"/share/terminfo:/run/current-system/sw/share/terminfo
