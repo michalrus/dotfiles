@@ -1,0 +1,54 @@
+diff --git a/Src/Zle/compcore.c b/Src/Zle/compcore.c
+index 4ac5d089f..ee1af1449 100644
+--- a/Src/Zle/compcore.c
++++ b/Src/Zle/compcore.c
+@@ -293,6 +293,11 @@ do_completion(UNUSED(Hookdef dummy), Compldat dat)
+ 
+     METACHECK();
+ 
++    /* Save the user's EXTENDEDGLOB setting before the completion system
++     * overrides it via _comp_setup.  This is used by quotestring() to
++     * decide whether '#' and '~' need escaping on the command line. */
++    comp_user_extglob = isset(EXTENDEDGLOB);
++
+     pushheap();
+ 
+     ainfo = fainfo = NULL;
+diff --git a/Src/utils.c b/Src/utils.c
+index 62bd3e602..d8237b5d1 100644
+--- a/Src/utils.c
++++ b/Src/utils.c
+@@ -45,6 +45,14 @@ mod_export char *scriptfilename;
+ /**/
+ mod_export int incompfunc;
+ 
++/* User's EXTENDEDGLOB state saved at the start of completion,
++ * before the completion system's _comp_setup overrides it.
++ * Used by quotestring() to decide whether '#' and '~' need escaping
++ * on the user's command line. */
++
++/**/
++mod_export int comp_user_extglob;
++
+ #ifdef MULTIBYTE_SUPPORT
+ struct widechar_array {
+     wchar_t *chars;
+@@ -6205,11 +6213,16 @@ quotestring(const char *s, int instring)
+ 		continue;
+ 	    }
+ 	    else if (ispecial(*u) &&
+-		     ((*u != '=' && *u != '~') ||
++		     ((*u != '=' && *u != '~' && *u != '#') ||
+ 		      u == s ||
+ 		      (isset(MAGICEQUALSUBST) &&
+ 		       (u[-1] == '=' || u[-1] == ':')) ||
+-		      (*u == '~' && isset(EXTENDEDGLOB))) &&
++		      (*u == '~' &&
++		       (incompfunc ? comp_user_extglob :
++			isset(EXTENDEDGLOB))) ||
++		      (*u == '#' &&
++		       (incompfunc ? comp_user_extglob :
++			isset(EXTENDEDGLOB)))) &&
+ 		     (instring == QT_BACKSLASH ||
+ 		      instring == QT_SINGLE_OPTIONAL ||
+ 		      (isset(BANGHIST) && *u == (char)bangchar &&
