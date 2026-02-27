@@ -3,6 +3,13 @@
   pkgs,
   ...
 }: {
+  programs.diff-highlight = {
+    enable = true;
+    enableGitIntegration = true;
+  };
+
+  programs.difftastic.enable = true;
+
   programs.git = {
     enable = true;
     ignores = [
