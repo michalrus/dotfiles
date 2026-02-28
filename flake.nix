@@ -83,6 +83,12 @@
       flake = false;
     };
 
+    bun2nix = {
+      url = "github:nix-community/bun2nix";
+      inputs.nixpkgs.follows = "nixpkgs-2511";
+      inputs.treefmt-nix.follows = "treefmt-nix";
+    };
+
     serena = {
       url = "github:oraios/serena/main";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -164,6 +170,7 @@
           nixlint = callPackage ./packages/nixlint {};
           opencode-bwrap = callPackage ./packages/opencode-bwrap {
             inherit (inputs) nixpkgs-unstable;
+            bun2nix = inputs.bun2nix.packages.${system}.default;
             serena = inputs.serena.packages.${system}.default;
           };
           on-vt-switch = callPackage ./packages/on-vt-switch {};

@@ -2,6 +2,7 @@
   pkgs,
   lib,
   nixpkgs-unstable,
+  bun2nix,
   serena,
 }: let
   unsafe = nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.opencode;
@@ -9,19 +10,8 @@
   escapeHatch = pkgs.callPackage ./bwrap-escape-hatch {};
   escapeHatchShims = escapeHatch.mkGuestWrappers ["notify-send" "aplay"];
 
-  opencode-md-table-formatter = pkgs.fetchFromGitHub {
-    owner = "franlol";
-    repo = "opencode-md-table-formatter";
-    tag = "v0.0.6";
-    hash = "sha256-cmLsPeUnGo1spaz1UGhIYPdmIdRnLQ3tEaONoMGBTcw=";
-  };
-
-  opencode-plugins = pkgs.linkFarm "opencode-plugins" [
-    {
-      name = "opencode-md-table-formatter.ts";
-      path = "${opencode-md-table-formatter}/index.ts";
-    }
-  ];
+  plugins = import ./plugins.nix {inherit pkgs lib bun2nix;};
+  inherit (plugins) opencode-plugins;
 
   config = {
     "$schema" = "https://opencode.ai/config.json";
@@ -283,6 +273,7 @@
       meta.description = "Enters a (multi-)project sandbox to run `opencode` inside; `.git` entries are mounted read-only unless OPENCODE_UNSAFE_RW_GIT is set.";
       meta.platforms = lib.platforms.linux;
       passthru.bwrap-escape-hatch = escapeHatch // {inherit escapeHatchShims;};
+      passthru.plugins = plugins;
     };
   };
 in
