@@ -28,8 +28,13 @@
           text = ''
             resp=$(socat - \
               UNIX-CONNECT:"$XDG_RUNTIME_DIR/bwrap-escape-hatch.sock" \
-              <<< "$(jq -cn ${"'"}''$ARGS.positional${"'"} --args -- ${lib.escapeShellArg cmd} "$@")")
-            exit_code=$(printf '%s\n' "$resp" | tail -1 | jq -r '.exit_code // 1')
+              <<< "$(jq -cn '$ARGS.positional' --args -- ${lib.escapeShellArg cmd} "$@")")
+            last_line=$(printf '%s\n' "$resp" | tail -1)
+            error=$(printf '%s' "$last_line" | jq -r '.error // empty')
+            if [[ -n "$error" ]]; then
+              echo "${cmd}: $error" >&2
+            fi
+            exit_code=$(printf '%s' "$last_line" | jq -r '.exit_code // 1')
             exit "$exit_code"
           '';
         })
