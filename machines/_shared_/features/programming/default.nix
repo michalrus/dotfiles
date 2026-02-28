@@ -28,6 +28,18 @@
     });
 in {
   home-manager.sharedModules = [
+    flake.packages.${pkgs.stdenv.hostPlatform.system}.opencode-bwrap.bwrap-escape-hatch.hmModule
+    {
+      services.bwrap-escape-hatch = {
+        enable = true;
+        rules = [
+          {
+            note = "Desktop notifications (any title + body)";
+            argv = ["notify-send" "--" "*" "*"];
+          }
+        ];
+      };
+    }
     {
       home.packages = with pkgs; [
         git-filter-repo

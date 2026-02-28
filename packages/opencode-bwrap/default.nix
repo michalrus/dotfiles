@@ -6,6 +6,9 @@
 }: let
   unsafe = nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.opencode;
 
+  escapeHatch = pkgs.callPackage ./bwrap-escape-hatch {};
+  escapeHatchShims = escapeHatch.mkGuestWrappers ["notify-send" "aplay"];
+
   opencode-md-table-formatter = pkgs.fetchFromGitHub {
     owner = "franlol";
     repo = "opencode-md-table-formatter";
@@ -240,6 +243,7 @@
         --share-net
         --tmpfs /tmp
         --tmpfs /run/user/"$UID"
+        --ro-bind /run/user/"$UID"/bwrap-escape-hatch.sock /run/user/"$UID"/bwrap-escape-hatch.sock
         --setenv XDG_RUNTIME_DIR /run/user/"$UID"
         --tmpfs "$HOME"
         --ro-bind /nix /nix
@@ -262,6 +266,7 @@
         --setenv PATH ${lib.makeBinPath [
         unsafe
         serena
+        escapeHatchShims
       ]}:/etc/profiles/per-user/"$USER"/bin:/run/current-system/sw/bin:"$HOME"/.bin
         --setenv USER "$USER"
         --setenv TERM "$TERM"
@@ -335,8 +340,11 @@
         --seccomp 3 3< <(${lib.getExe bwrapTiocstiFilter}) \
         -- "$shell_exe"
     '';
-    derivationArgs.meta.description = "Enters a (multi-)project sandbox to run `opencode` inside; `.git` entries are mounted read-only unless OPENCODE_UNSAFE_RW_GIT is set.";
-    derivationArgs.meta.platforms = lib.platforms.linux;
+    derivationArgs = {
+      meta.description = "Enters a (multi-)project sandbox to run `opencode` inside; `.git` entries are mounted read-only unless OPENCODE_UNSAFE_RW_GIT is set.";
+      meta.platforms = lib.platforms.linux;
+      passthru.bwrap-escape-hatch = escapeHatch // {inherit escapeHatchShims;};
+    };
   };
 in
   safe
