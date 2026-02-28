@@ -88,7 +88,17 @@ fn respond_ok(exit_code: i32) {
     let _ = io::stdout().flush();
 }
 
+fn notify_desktop(title: &str, body: &str) {
+    let _ = Command::new("notify-send")
+        .args(["--", title, body])
+        .stdin(Stdio::null())
+        .stdout(Stdio::null())
+        .stderr(Stdio::null())
+        .status();
+}
+
 fn respond_error(msg: &str) {
+    notify_desktop("❌  bwrap-escape-hatch misuse", msg);
     let resp = ErrorResponse {
         ok: false,
         error: msg.to_owned(),
