@@ -116,35 +116,7 @@
   };
 
   bashrc = pkgs.writeText "opecode-bashrc" ''
-    # Commands that should be applied only for interactive shells.
-    [[ $- == *i* ]] || return
-
-    alias l='ls -Alh --color --group-directories-first'
-    alias oc='opencode'
-
-    __prompt_hook() {
-      __last_ec=$?
-      history -a; history -n
-    }
-
-    __show_ec() {
-      if (( __last_ec != 0 )); then
-        printf '(\001\033[1;97;41m\002%d\001\033[0m\002)' "$__last_ec"
-      fi
-    }
-
-    PROMPT_COMMAND=__prompt_hook
-    PS1=$"\n"'$(__show_ec)\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-
-    stty -ixon       # turn off C-s and C-q
-    stty susp undef  # turn off C-z
-
-    shopt -s histappend
-    export HISTCONTROL=ignoredups:ignorespace
-
-    bind '"\e[A": history-search-backward'
-    bind '"\e[B": history-search-forward'
-
+    ${builtins.readFile ./bashrc}
     eval "$(${lib.getExe pkgs.direnv} hook bash)"
   '';
 
@@ -160,51 +132,7 @@
     dontUnpack = true;
     nativeBuildInputs = [pkgs.pkg-config];
     buildInputs = [pkgs.libseccomp];
-    src = pkgs.writeText "gen.c" ''
-      #include <errno.h>
-      #include <asm/termbits.h>  // TIOCSTI
-      #include <sys/ioctl.h>     // ioctl()
-      #include <seccomp.h>
-      #include <stdio.h>
-      #include <stdlib.h>
-
-      int main(void) {
-        scmp_filter_ctx ctx = seccomp_init(SCMP_ACT_ALLOW);
-        if (!ctx) {
-          perror("seccomp_init");
-          return 1;
-        }
-
-        // ioctl(request) is arg1 (0-based: arg0=fd, arg1=request, arg2=argp)
-        //
-        // Masked compare avoids the classic 64-bit bypass where high bits are set
-        // but the kernel ignores them for ioctl request decoding.
-        int rc = seccomp_rule_add(
-          ctx,
-          SCMP_ACT_ERRNO(EPERM),
-          SCMP_SYS(ioctl),
-          1,
-          SCMP_A1(SCMP_CMP_MASKED_EQ, 0xffffffffu, (unsigned)TIOCSTI)
-        );
-        if (rc < 0) {
-          errno = -rc;
-          perror("seccomp_rule_add");
-          seccomp_release(ctx);
-          return 1;
-        }
-
-        rc = seccomp_export_bpf(ctx, fileno(stdout));
-        if (rc < 0) {
-          errno = -rc;
-          perror("seccomp_export_bpf");
-          seccomp_release(ctx);
-          return 1;
-        }
-
-        seccomp_release(ctx);
-        return 0;
-      }
-    '';
+    src = ./seccomp-tiocsti-filter.c;
     buildPhase = ''
       cc -O2 -Wall -Wextra -o gen "$src" -lseccomp
     '';
