@@ -122,14 +122,25 @@
     alias l='ls -Alh --color --group-directories-first'
     alias oc='opencode'
 
-    PS1=$"\n"'\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    __prompt_hook() {
+      __last_ec=$?
+      history -a; history -n
+    }
+
+    __show_ec() {
+      if (( __last_ec != 0 )); then
+        printf '(\001\033[1;97;41m\002%d\001\033[0m\002)' "$__last_ec"
+      fi
+    }
+
+    PROMPT_COMMAND=__prompt_hook
+    PS1=$"\n"'$(__show_ec)\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 
     stty -ixon       # turn off C-s and C-q
     stty susp undef  # turn off C-z
 
     shopt -s histappend
     export HISTCONTROL=ignoredups:ignorespace
-    PROMPT_COMMAND='history -a; history -n'
 
     bind '"\e[A": history-search-backward'
     bind '"\e[B": history-search-forward'
