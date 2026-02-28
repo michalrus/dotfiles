@@ -1,9 +1,9 @@
+#include <asm/termbits.h> // TIOCSTI
 #include <errno.h>
-#include <asm/termbits.h>  // TIOCSTI
-#include <sys/ioctl.h>     // ioctl()
 #include <seccomp.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/ioctl.h> // ioctl()
 
 int main(void) {
   scmp_filter_ctx ctx = seccomp_init(SCMP_ACT_ALLOW);
@@ -17,12 +17,8 @@ int main(void) {
   // Masked compare avoids the classic 64-bit bypass where high bits are set
   // but the kernel ignores them for ioctl request decoding.
   int rc = seccomp_rule_add(
-    ctx,
-    SCMP_ACT_ERRNO(EPERM),
-    SCMP_SYS(ioctl),
-    1,
-    SCMP_A1(SCMP_CMP_MASKED_EQ, 0xffffffffu, (unsigned)TIOCSTI)
-  );
+      ctx, SCMP_ACT_ERRNO(EPERM), SCMP_SYS(ioctl), 1,
+      SCMP_A1(SCMP_CMP_MASKED_EQ, 0xffffffffu, (unsigned)TIOCSTI));
   if (rc < 0) {
     errno = -rc;
     perror("seccomp_rule_add");

@@ -7,6 +7,7 @@
     (flake.inputs.treefmt-nix.lib.mkWrapper pkgs {
       programs = {
         alejandra.enable = true; # Nix
+        clang-format.enable = true; # Nix
         prettier.enable = true;
         ruff-check.enable = true; # Python
         ruff-format.enable = true; # Python
