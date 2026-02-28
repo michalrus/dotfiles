@@ -1,0 +1,29 @@
+Always use sendLinuxNotificationDirect on Linux/BSD to ensure "--" is
+passed before positional arguments, preventing titles that start with
+a dash from being misinterpreted as flags by notify-send.
+
+Previously, when notify-send didn't support --replace-id (version < 0.8)
+or when linuxGrouping was disabled, the code fell through to node-notifier's
+NotifySend which doesn't insert "--" between flags and positional args.
+
+--- a/src/notify.ts
++++ b/src/notify.ts
+@@ -125,14 +125,11 @@
+   }
+ 
+   if (platform === "Linux" || platform.match(/BSD$/)) {
+-    if (linuxGrouping) {
+-      if (linuxNotifySendSupportsReplace === null) {
+-        linuxNotifySendSupportsReplace = await detectNotifySendCapabilities()
+-      }
+-      if (linuxNotifySendSupportsReplace) {
+-        return sendLinuxNotificationDirect(title, message, timeout, iconPath, true)
+-      }
++    if (linuxNotifySendSupportsReplace === null) {
++      linuxNotifySendSupportsReplace = await detectNotifySendCapabilities()
+     }
++    const useGrouping = linuxGrouping && linuxNotifySendSupportsReplace
++    return sendLinuxNotificationDirect(title, message, timeout, iconPath, useGrouping)
+   }
+ 
+   return new Promise((resolve) => {

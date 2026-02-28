@@ -1,10 +1,14 @@
-{package}: {
+{
+  package,
+  plugins,
+}: {
   config,
   lib,
   pkgs,
   ...
 }: let
   cfg = config.services.bwrap-escape-hatch;
+  inherit (plugins) opencode-notifier;
 
   rulesFormat = lib.types.submodule {
     options = {
@@ -26,7 +30,24 @@ in {
 
     rules = lib.mkOption {
       type = lib.types.listOf rulesFormat;
-      default = [];
+      default = [
+        {
+          note = "notifications";
+          argv = ["notify-send" "--" "*" "*"];
+        }
+        {
+          note = "notifications";
+          argv = ["notify-send" "--version"];
+        }
+        {
+          note = "notifications";
+          argv = ["notify-send" "--icon" "${opencode-notifier}/logos/*.png" "--expire-time" "*" "--" "*" "*"];
+        }
+        {
+          note = "sounds";
+          argv = ["aplay" "${opencode-notifier}/sounds/*.wav"];
+        }
+      ];
       example = lib.literalExpression ''
         [
           { note = "Desktop notifications (any title + body)"; argv = ["notify-send" "--" "*" "*"]; }

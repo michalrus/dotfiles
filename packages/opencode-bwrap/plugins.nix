@@ -28,12 +28,15 @@
 
     src = opencode-notifier-src;
 
+    patches = [./opencode-notifier-notify-send-double-dash.patch];
+
     nativeBuildInputs = [bun2nix.hook];
 
     bunDeps = bun2nix.fetchBunDeps {
       bunNix = opencode-notifier-bun-nix;
     };
 
+    dontUseBunPatch = true;
     dontUseBunBuild = true;
     dontUseBunCheck = true;
     dontUseBunInstall = true;

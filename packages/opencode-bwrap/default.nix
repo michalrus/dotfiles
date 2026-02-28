@@ -7,7 +7,7 @@
 }: let
   unsafe = nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.opencode;
 
-  escapeHatch = pkgs.callPackage ./bwrap-escape-hatch {};
+  escapeHatch = pkgs.callPackage ./bwrap-escape-hatch {inherit plugins;};
   escapeHatchShims = escapeHatch.mkGuestWrappers ["notify-send" "aplay"];
 
   plugins = import ./plugins.nix {inherit pkgs lib bun2nix;};

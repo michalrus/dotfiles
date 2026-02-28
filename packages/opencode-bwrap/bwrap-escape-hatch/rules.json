@@ -1,6 +1,6 @@
 [
   {
-    "note": "Desktop notifications (any title + body)",
+    "note": "notifications",
     "argv": ["notify-send", "--", "*", "*"]
   }
 ]

@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  plugins,
   ...
 }: let
   package = pkgs.rustPlatform.buildRustPackage {
@@ -41,7 +42,7 @@
       cmds;
     };
 
-  hmModule = import ./hm-module.nix {inherit package;};
+  hmModule = import ./hm-module.nix {inherit package plugins;};
 in {
   inherit package mkGuestWrappers hmModule;
 }

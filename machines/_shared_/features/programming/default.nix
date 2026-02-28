@@ -27,21 +27,13 @@
           sed -r '/--tree-root-file=/ d' -i $out/bin/treefmt
         '';
     });
+  inherit (flake.packages.${pkgs.stdenv.hostPlatform.system}) opencode-bwrap;
 in {
   home-manager.sharedModules = [
-    flake.packages.${pkgs.stdenv.hostPlatform.system}.opencode-bwrap.bwrap-escape-hatch.hmModule
+    opencode-bwrap.bwrap-escape-hatch.hmModule
     {
-      services.bwrap-escape-hatch = {
-        enable = true;
-        rules = [
-          {
-            note = "Desktop notifications (any title + body)";
-            argv = ["notify-send" "--" "*" "*"];
-          }
-        ];
-      };
-    }
-    {
+      services.bwrap-escape-hatch.enable = true;
+
       home.packages = with pkgs; [
         git-filter-repo
         (python3.withPackages (p: with p; [scipy geopy python-lsp-server requests pylint matplotlib tkinter beautifulsoup4 aiohttp humanize protobuf lz4 opencv4]))
@@ -56,7 +48,7 @@ in {
         cargo
         cargo-nextest
         clippy
-        flake.packages.${pkgs.stdenv.hostPlatform.system}.opencode-bwrap
+        opencode-bwrap
         flake.packages.${pkgs.stdenv.hostPlatform.system}.nixlint
         fd
         gh
