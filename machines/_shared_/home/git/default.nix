@@ -3,65 +3,67 @@
   pkgs,
   ...
 }: {
-  programs.diff-highlight = {
-    enable = true;
-    enableGitIntegration = true;
-  };
-
-  programs.difftastic.enable = true;
-
-  programs.git = {
-    enable = true;
-    ignores = [
-      # Emacs temporary files
-      "flycheck_*"
-      "*~"
-      ''\#*\#''
-      ''.\#*''
-
-      # QEMU disks
-      "*.qcow2"
-
-      # Python
-      "__pycache__/"
-      "*.py[codz]"
-      "*$py.class"
-
-      # Rust (rustfmt)
-      "*.rs.bk"
-
-      # Linux
-      ".fuse_hidden*"
-      ".nfs*"
-      "nohup.out"
-
-      # macOS
-      ".DS_Store"
-
-      # Agents
-      ".serena/"
-    ];
-    settings.alias = rec {
-      s = "status";
-      d = "diff";
-      c = "diff --cached";
-      a = "add";
-      co = "checkout";
-      lg = "log --color --graph --pretty=format:'%Cred%h%Creset %C(bold magenta)%G?%Creset%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --abbrev-commit --date-order";
-      lga = lg + " --all";
-      ff = "merge --ff-only";
+  programs = {
+    diff-highlight = {
+      enable = true;
+      enableGitIntegration = true;
     };
-    settings = {
-      core = {
-        safecrlf = false;
-        commentchar = ";";
-        hooksPath = "~/.config/git/hooks";
+
+    difftastic.enable = true;
+
+    git = {
+      enable = true;
+      ignores = [
+        # Emacs temporary files
+        "flycheck_*"
+        "*~"
+        ''\#*\#''
+        ''.\#*''
+
+        # QEMU disks
+        "*.qcow2"
+
+        # Python
+        "__pycache__/"
+        "*.py[codz]"
+        "*$py.class"
+
+        # Rust (rustfmt)
+        "*.rs.bk"
+
+        # Linux
+        ".fuse_hidden*"
+        ".nfs*"
+        "nohup.out"
+
+        # macOS
+        ".DS_Store"
+
+        # Agents
+        ".serena/"
+      ];
+      settings.alias = rec {
+        s = "status";
+        d = "diff";
+        c = "diff --cached";
+        a = "add";
+        co = "checkout";
+        lg = "log --color --graph --pretty=format:'%Cred%h%Creset %C(bold magenta)%G?%Creset%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --abbrev-commit --date-order";
+        lga = lg + " --all";
+        ff = "merge --ff-only";
       };
-      merge.conflictstyle = "diff3";
-      fetch.prune = true;
-      pull.ff = "only";
-      transfer.fsckObjects = true;
-      gpg.ssh.allowedSignersFile = "";
+      settings = {
+        core = {
+          safecrlf = false;
+          commentchar = ";";
+          hooksPath = "~/.config/git/hooks";
+        };
+        merge.conflictstyle = "diff3";
+        fetch.prune = true;
+        pull.ff = "only";
+        transfer.fsckObjects = true;
+        gpg.ssh.allowedSignersFile = "";
+      };
     };
   };
 
