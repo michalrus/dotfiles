@@ -1,0 +1,42 @@
+--- a/src/utils.rs	2026-03-01 12:13:51.236923984 +0000
++++ b/src/utils.rs	2026-03-01 12:14:30.125452824 +0000
+@@ -699,7 +699,8 @@
+     // Fast returns for zero cases to render something
+     match (raw_millis, show_millis) {
+         (0, true) => return "0ms".into(),
+-        (0..=999, false) => return "0s".into(),
++        (1..=999, true) => return format!("{raw_millis}ms"),
++        (0..=999, _) => return "0s".into(),
+         _ => (),
+     }
+ 
+@@ -728,8 +729,8 @@
+         },
+     );
+ 
+-    if show_millis {
+-        result + &millis.to_string() + "ms"
++    if show_millis && raw_seconds < 10 {
++        format!("{}.{:03}s", raw_seconds, millis)
+     } else {
+         result
+     }
+@@ -804,15 +805,15 @@
+     }
+     #[test]
+     fn render_time_test_10s() {
+-        assert_eq!(render_time(10_000_u128, true), "10s0ms");
++        assert_eq!(render_time(10_000_u128, true), "10s");
+     }
+     #[test]
+     fn render_time_test_90s() {
+-        assert_eq!(render_time(90_000_u128, true), "1m30s0ms");
++        assert_eq!(render_time(90_000_u128, true), "1m30s");
+     }
+     #[test]
+     fn render_time_test_10110s() {
+-        assert_eq!(render_time(10_110_000_u128, true), "2h48m30s0ms");
++        assert_eq!(render_time(10_110_000_u128, true), "2h48m30s");
+     }
+     #[test]
+     fn render_time_test_1d() {

@@ -121,7 +121,12 @@ in {
 
     bat.enable = true;
 
-    starship.enable = true;
+    starship = {
+      enable = true;
+      package = pkgs.starship.overrideAttrs (drv: {
+        patches = (drv.patches or []) ++ [./startship--better-time-reporting.patch];
+      });
+    };
 
     htop.enable = true;
     btop.enable = true;
@@ -202,7 +207,7 @@ in {
 
       [cmd_duration]
       min_time = 0
-      show_milliseconds = false
+      show_milliseconds = true
       format = '[$duration]($style)'
       show_notifications = true
       min_time_to_notify = 15_000
