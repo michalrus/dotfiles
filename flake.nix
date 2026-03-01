@@ -1,14 +1,6 @@
 {
   inputs = {
-    # nixpkgs-2305.url = "github:NixOS/nixpkgs/nixos-23.05";
-
     nixpkgs-2311.url = "github:NixOS/nixpkgs/nixos-23.11";
-
-    # nixpkgs-2405.url = "github:NixOS/nixpkgs/nixos-24.05";
-
-    nixpkgs-2411.url = "github:NixOS/nixpkgs/nixos-24.11";
-
-    # nixpkgs-2505.url = "github:NixOS/nixpkgs/nixos-25.05";
 
     nixpkgs-2511.url = "github:NixOS/nixpkgs/nixos-25.11";
 
@@ -18,26 +10,8 @@
     # A preview PR, to build a few things that require MacOS SDK ≥13.0:
     nixpkgs-macos-sdk-13.url = "github:NixOS/nixpkgs/pull/229210/head";
 
-    # nix-darwin-2311.url = "github:lnl7/nix-darwin/master";
-    # nix-darwin-2311.inputs.nixpkgs.follows = "nixpkgs-2311";
-
     nix-darwin-2511.url = "github:nix-darwin/nix-darwin/nix-darwin-25.11";
     nix-darwin-2511.inputs.nixpkgs.follows = "nixpkgs-2511";
-
-    # home-manager-2305.url = "github:nix-community/home-manager/release-23.05";
-    # home-manager-2305.inputs.nixpkgs.follows = "nixpkgs-2305";
-
-    # home-manager-2311.url = "github:nix-community/home-manager/release-23.11";
-    # home-manager-2311.inputs.nixpkgs.follows = "nixpkgs-2311";
-
-    # home-manager-2405.url = "github:nix-community/home-manager/release-24.05";
-    # home-manager-2405.inputs.nixpkgs.follows = "nixpkgs-2405";
-
-    # home-manager-2411.url = "github:nix-community/home-manager/release-24.11";
-    # home-manager-2411.inputs.nixpkgs.follows = "nixpkgs-2411";
-
-    # home-manager-2505.url = "github:nix-community/home-manager/release-25.05";
-    # home-manager-2505.inputs.nixpkgs.follows = "nixpkgs-2505";
 
     home-manager-2511.url = "github:nix-community/home-manager/release-25.11";
     home-manager-2511.inputs.nixpkgs.follows = "nixpkgs-2511";
