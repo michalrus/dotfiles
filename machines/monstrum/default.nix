@@ -105,9 +105,7 @@ in
         home-manager.sharedModules = [{home.shellAliases.accuradio = "radio";}];
       })
 
-      ({pkgs, ...}: {
-        home-manager.sharedModules = [{programs.spotify-player.enable = true;}];
-      })
+      {home-manager.sharedModules = [{programs.spotify-player.enable = true;}];}
 
       ({pkgs, ...}: {
         environment.systemPackages = with pkgs; [wayvnc];
