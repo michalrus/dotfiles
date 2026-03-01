@@ -1,0 +1,41 @@
+# Commands that should be applied only for interactive shells.
+[[ -o interactive ]] || return
+
+alias l='ls -Alh --color --group-directories-first'
+alias oc='opencode'
+
+# Prompt: newline, (exit-code) if non-zero, user@host:dir%
+__show_ec() {
+  local ec=$?
+  if (( ec != 0 )); then
+    printf '(\e[1;97;41m%d\e[0m)' "$ec"
+  fi
+}
+setopt PROMPT_SUBST
+PS1=$'\n''$(__show_ec)%B%F{green}%n@%m%f%b:%B%F{blue}%~%f%b%# '
+
+stty -ixon       # turn off C-s and C-q
+stty susp undef  # turn off C-z
+
+# History
+HISTFILE=~/.zsh_history
+HISTSIZE=50000
+SAVEHIST=50000
+setopt APPEND_HISTORY
+setopt INC_APPEND_HISTORY
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
+
+# Up/Down search history by prefix
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey '^[[A' up-line-or-beginning-search
+bindkey '^[[B' down-line-or-beginning-search
+
+# Tab completion: interactive menu you can arrow through
+autoload -Uz compinit && compinit
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+eval "$(dircolors -b)"
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"

@@ -105,9 +105,14 @@
     };
   };
 
-  bashrc = pkgs.writeText "opecode-bashrc" ''
+  bashrc = pkgs.writeText "opencode-bashrc" ''
     ${builtins.readFile ./bashrc}
     eval "$(${lib.getExe pkgs.direnv} hook bash)"
+  '';
+
+  zshrc = pkgs.writeText "opencode-zshrc" ''
+    ${builtins.readFile ./zshrc}
+    eval "$(${lib.getExe pkgs.direnv} hook zsh)"
   '';
 
   # With `--new-session` we don’t have a controlling TTY for the Bash inside the
@@ -150,10 +155,10 @@
         .bun .npm .yarn
       )
       persist_files=(
-        .bash_history .python_history
+        .bash_history .zsh_history .python_history
       )
 
-      shell_exe=${lib.getExe pkgs.stdenv.shellPackage}
+      shell_exe=${lib.getExe pkgs.zsh}
 
       GID=$(id -g)
 
@@ -190,7 +195,10 @@
         --ro-bind /bin/sh /bin/sh
         --ro-bind /usr/bin/env /usr/bin/env
         --ro-bind ${bashrc} /etc/bashrc
+        --ro-bind ${zshrc} /etc/zshrc
+        --ro-bind ${pkgs.emptyFile} "$HOME"/.zshrc
         --ro-bind "${pkgs.nix-direnv}/share/nix-direnv/direnvrc" "$HOME"/.config/direnv/lib/nix-direnv.sh
+        --setenv SHELL "$shell_exe"
         --setenv HOME "$HOME"
         --setenv PATH ${lib.makeBinPath [
         unsafe
