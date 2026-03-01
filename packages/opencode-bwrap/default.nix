@@ -10,9 +10,6 @@
   escapeHatch = pkgs.callPackage ./bwrap-escape-hatch {inherit plugins;};
   escapeHatchShims = escapeHatch.mkGuestWrappers ["notify-send" "aplay"];
 
-  plugins = import ./plugins.nix {inherit pkgs lib bun2nix;};
-  inherit (plugins) opencode-plugins;
-
   config = {
     "$schema" = "https://opencode.ai/config.json";
     share = "disabled";
@@ -102,6 +99,21 @@
           doom_loop = "deny"; # triggered when the same tool call repeats 3 times with identical input
         };
       };
+    };
+  };
+
+  plugins = import ./plugins.nix {inherit pkgs lib bun2nix;};
+  inherit (plugins) opencode-plugins;
+
+  opencode-notifier-config = {
+    showSessionTitle = true;
+    messages = {
+      permission = "{sessionTitle}\n→ needs permission";
+      complete = "{sessionTitle}\n→ session finished";
+      subagent_complete = "{sessionTitle}\n→ subagent completed";
+      error = "{sessionTitle}\n→ error";
+      question = "{sessionTitle}\n→ question(s)";
+      user_cancelled = "{sessionTitle}\n→ cancelled by user";
     };
   };
 
@@ -232,6 +244,9 @@
 
       # OpenCode plugins (pinned via fetchFromGitHub, mounted read-only)
       bwrap_opts+=( --ro-bind ${opencode-plugins} "$HOME"/.config/opencode/plugins )
+
+      # opencode-notifier config
+      bwrap_opts+=( --ro-bind ${pkgs.writeText "opencode-notifier.json" (builtins.toJSON opencode-notifier-config)} "$HOME"/.config/opencode/opencode-notifier.json )
 
       rw_opts=()
       ro_git_opts=()
