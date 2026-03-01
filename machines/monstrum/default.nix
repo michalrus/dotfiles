@@ -106,6 +106,10 @@ in
       })
 
       ({pkgs, ...}: {
+        home-manager.sharedModules = [{programs.spotify-player.enable = true;}];
+      })
+
+      ({pkgs, ...}: {
         environment.systemPackages = with pkgs; [wayvnc];
       })
 
@@ -126,6 +130,7 @@ in
             ${bold}vpn-change-server${reset}               – Select a new (general) VPN server
             ${bold}vpn-change-server-for-torrents${reset}  – Select a new VPN server for Torrents
             ${bold}radio${reset}                           – No-ads textual UI for AccuRadio et al.
+            ${bold}spotify_player${reset}                  – Textual UI for Spotify
             ${bold}mpva${reset}                            – Stream audio from a YouTube URL
             ${bold}mpva-android${reset}                    – Same, but use the Android player API
             ${bold}pulsemixer${reset}                      – Sound volume controls
