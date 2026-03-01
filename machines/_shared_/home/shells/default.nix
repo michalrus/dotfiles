@@ -71,6 +71,7 @@ in {
           setopt APPEND_HISTORY
 
           zstyle ':completion:*' menu select
+          zstyle ':completion:*' list-colors "''${(s.:.)LS_COLORS}"
 
           # Don’t use /etc/hosts, because they’re full of malicious hosts:
           zstyle ':completion:*:(ssh|scp|rsync|telnet|ftp|ping):*' hosts off
