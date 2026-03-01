@@ -10,7 +10,7 @@
   python3,
   which,
 }: let
-  version = "6.0.0";
+  version = "6.1.0";
 
   pname = "gregorio";
 
@@ -21,7 +21,7 @@
       owner = "gregorio-project";
       repo = "gregorio";
       rev = "v" + version;
-      hash = "sha256-OHeihPGDqc55od3J+VQ+nwV0G5Gcf7ib/G0K3oCnJRU=";
+      hash = "sha256-GzodkL0CFq6zYsJrHe05hHpl9mmm/moaKAAte/AYqFg=";
     };
     TEXHASH = "true"; # we don’t use neither ‘texhash’ nor ‘mktexlsr’ in Nixpkgs
     buildInputs = [
@@ -57,19 +57,14 @@
           alegreya
           luacode
           supertabular
+          xstring
           ;
       })
       (python3.withPackages (ps: with ps; [pygments]))
       which
     ];
     postConfigure = ''
-      # Convert Python 2.7 scripts to 3.×:
-      find -iname '*.py' -not -name 'checkSyllabation.py' | xargs ${python3}/bin/2to3 -w
-
-      sed -r 's/(newfont\[glyphnumber\]\.width) = (width)/\1 = int(\2)/g' -i fonts/squarize.py
-
       patchShebangs ./install-gtex.sh
-      #substituteInPlace ./install-gtex.sh --replace 'doc/Gregorio*Ref.pdf' ""
     '';
     postBuild = ''
       (
