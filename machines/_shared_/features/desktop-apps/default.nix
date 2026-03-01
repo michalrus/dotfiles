@@ -5,6 +5,8 @@
 }: {
   services = {
     udisks2.enable = true;
+    gvfs.enable = true; # Mount, trash, and other functionalities
+    tumbler.enable = true; # Thumbnail support for images
 
     playerctld.enable = true;
     playerctld.package = pkgs.playerctl.overrideAttrs (old: {
@@ -25,6 +27,18 @@
       enable = true;
       drivers = with pkgs; [gutenprint hplip epson-escpr];
     };
+  };
+
+  programs = {
+    dconf.enable = true;
+    thunar = {
+      enable = true;
+      plugins = with pkgs.xfce; [
+        thunar-archive-plugin
+        thunar-volman
+      ];
+    };
+    xfconf.enable = true;
   };
 
   # Sometimes, `playerctld` segfaults, see
@@ -72,7 +86,7 @@
       xdg.mimeApps.enable = true;
       xdg.mimeApps.defaultApplications = let
         webBrowser = ["firefox.desktop"];
-        fileBrowser = ["pcmanfm.desktop"];
+        fileBrowser = ["thunar.desktop"];
         textEditor = ["NotepadNext.desktop"];
         pdfViewer = ["org.gnome.Evince.desktop"];
         imageViewer = ["qimgv.desktop"];
