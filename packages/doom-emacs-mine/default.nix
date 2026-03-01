@@ -5,7 +5,7 @@ doom-emacs.override {
   doomConfigEl = ./config.el;
   vendorHash =
     {
-      "x86_64-linux" = "sha256-IMD890+lh1NAnf6qXkmluULKOXCuORMKMiZ0DOlZtyQ=";
+      "x86_64-linux" = "sha256-i5oO6NSmYh+5QMgqf6itcFw/jZMVUZaaDw9RYwbAauY=";
       "aarch64-darwin" = ""; # FIXME
     }.${
       doom-emacs.system

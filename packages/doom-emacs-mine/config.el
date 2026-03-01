@@ -159,6 +159,12 @@
 (setq auto-save-visited-interval 10)  ; but instead, after this many seconds idle,
 (auto-save-visited-mode t)            ; save to the actual file
 
+(use-package! difftastic
+  :commands (difftastic-magit-diff difftastic-magit-show)
+  :config
+  (require 'difftastic-bindings)
+  (difftastic-bindings-mode))
+
 (use-package! git-link
   :config
   (setq git-link-use-commit t
