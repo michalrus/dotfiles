@@ -103,19 +103,7 @@
   };
 
   plugins = import ./plugins.nix {inherit pkgs lib bun2nix;};
-  inherit (plugins) opencode-plugins;
-
-  opencode-notifier-config = {
-    showSessionTitle = true;
-    messages = {
-      permission = "{sessionTitle}\n→ needs permission";
-      complete = "{sessionTitle}\n→ session finished";
-      subagent_complete = "{sessionTitle}\n→ subagent completed";
-      error = "{sessionTitle}\n→ error";
-      question = "{sessionTitle}\n→ question(s)";
-      user_cancelled = "{sessionTitle}\n→ cancelled by user";
-    };
-  };
+  inherit (plugins) opencode-plugins opencode-notifier-config;
 
   bashrc = pkgs.writeText "opencode-bashrc" ''
     ${builtins.readFile ./bashrc}

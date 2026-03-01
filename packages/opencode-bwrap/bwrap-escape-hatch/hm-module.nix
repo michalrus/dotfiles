@@ -8,7 +8,7 @@
   ...
 }: let
   cfg = config.services.bwrap-escape-hatch;
-  inherit (plugins) opencode-notifier;
+  inherit (plugins) opencode-notifier opencode-notifier-sounds;
 
   rulesFormat = lib.types.submodule {
     options = {
@@ -45,7 +45,7 @@ in {
         }
         {
           note = "sounds";
-          argv = ["aplay" "${opencode-notifier}/sounds/*.wav"];
+          argv = ["aplay" "${opencode-notifier-sounds}/*.wav"];
         }
       ];
       example = lib.literalExpression ''

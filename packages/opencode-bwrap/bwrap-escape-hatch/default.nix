@@ -7,7 +7,7 @@
   package = pkgs.rustPlatform.buildRustPackage {
     pname = "bwrap-escape-hatch";
     version = "0.1.0";
-    src = lib.cleanSource ./.;
+    src = lib.sources.sourceFilesBySuffices (lib.cleanSource ./.) [".rs" "Cargo.toml" "Cargo.lock"];
     cargoHash = "sha256-VKjZZG0cUzyi7HssYJ4Rd4QVS3CsNul0fv4lg0ly924=";
 
     meta = {
