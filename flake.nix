@@ -150,9 +150,10 @@
           pms5003 = callPackage ./packages/pms5003 {};
           qemu-win10 = callPackage ./packages/qemu-win10 {};
           radio = callPackage ./packages/radio {
-            inherit accuradio radio-chillhop;
+            inherit accuradio radio-chillhop radio-jazzradio-fr;
           };
           radio-chillhop = callPackage ./packages/radio-chillhop {};
+          radio-jazzradio-fr = callPackage ./packages/radio-jazzradio-fr {};
           rofi-unicode-input = callPackage ./packages/rofi-unicode-input {};
           talentedhack = callPackage ./packages/talentedhack {};
           tap-plugins = callPackage ./packages/tap-plugins {};

@@ -71,7 +71,7 @@ mapfile -t stations_from_yaml < <(
   yq -r '.stations | .[] | .name' "$stations_yaml"
 )
 mapfile -t stations < <(
-  printf '%s\n' "AccuRadio.com" "Chillhop.com" "${stations_from_yaml[@]}" | LC_ALL=C sort -u
+  printf '%s\n' "AccuRadio.com" "Chillhop.com" "JazzRadio.fr" "${stations_from_yaml[@]}" | LC_ALL=C sort -u
 )
 
 station=$(printf '%s\n' "${stations[@]}" | sk --no-sort)
@@ -86,6 +86,9 @@ case "$station" in
   ;;
 "Chillhop.com")
   exec radio-chillhop
+  ;;
+"JazzRadio.fr")
+  exec radio-jazzradio-fr
   ;;
 *)
   url=$(get_station_url "$station")
