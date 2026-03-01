@@ -21,6 +21,7 @@
     mousetrack off
 
     defutf8 on
+    defc1 off
 
     truecolor on
 
