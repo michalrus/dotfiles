@@ -96,6 +96,7 @@
       pass
       patchelf
       pciutils
+      pstree
       man-pages-posix
       powertop
       pv
