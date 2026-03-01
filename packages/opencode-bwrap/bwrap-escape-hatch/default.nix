@@ -19,27 +19,33 @@
 
   # Generate per-command shim scripts for use inside the sandbox.
   # Each shim connects to the escape-hatch socket and proxies argv as JSON.
-  mkGuestWrappers = cmds:
+  # `specs` is a list of { name, hostBin } where `name` is the shim command
+  # visible inside the guest, and `hostBin` is the full /nix/store path that
+  # the escape-hatch daemon will execute on the host.
+  mkGuestWrappers = specs:
     pkgs.symlinkJoin {
       name = "bwrap-escape-hatch-shims";
-      paths = map (cmd:
+      paths = map ({
+        name,
+        hostBin,
+      }:
         pkgs.writeShellApplication {
-          name = cmd;
+          inherit name;
           runtimeInputs = [pkgs.socat pkgs.jq];
           text = ''
             resp=$(socat - \
               UNIX-CONNECT:"$XDG_RUNTIME_DIR/bwrap-escape-hatch.sock" \
-              <<< "$(jq -cn '$ARGS.positional' --args -- ${lib.escapeShellArg cmd} "$@")")
+              <<< "$(jq -cn '$ARGS.positional' --args -- ${lib.escapeShellArg hostBin} "$@")")
             last_line=$(printf '%s\n' "$resp" | tail -1)
             error=$(printf '%s' "$last_line" | jq -r '.error // empty')
             if [[ -n "$error" ]]; then
-              echo "${cmd}: $error" >&2
+              echo "${name}: $error" >&2
             fi
             exit_code=$(printf '%s' "$last_line" | jq -r '.exit_code // 1')
             exit "$exit_code"
           '';
         })
-      cmds;
+      specs;
     };
 
   hmModule = import ./hm-module.nix {inherit package plugins;};

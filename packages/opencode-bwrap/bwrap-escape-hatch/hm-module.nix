@@ -33,19 +33,19 @@ in {
       default = [
         {
           note = "notifications";
-          argv = ["notify-send" "--" "*" "*"];
+          argv = ["${pkgs.libnotify}/bin/notify-send" "--" "*" "*"];
         }
         {
           note = "notifications";
-          argv = ["notify-send" "--version"];
+          argv = ["${pkgs.libnotify}/bin/notify-send" "--version"];
         }
         {
           note = "notifications";
-          argv = ["notify-send" "--icon" "${opencode-notifier}/logos/*.png" "--expire-time" "*" "--" "*" "*"];
+          argv = ["${pkgs.libnotify}/bin/notify-send" "--icon" "${opencode-notifier}/logos/*.png" "--expire-time" "*" "--" "*" "*"];
         }
         {
           note = "sounds";
-          argv = ["aplay" "${opencode-notifier-sounds}/*.wav"];
+          argv = ["${pkgs.alsa-utils}/bin/aplay" "${opencode-notifier-sounds}/*.wav"];
         }
       ];
       example = lib.literalExpression ''

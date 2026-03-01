@@ -8,7 +8,16 @@
   unsafe = nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.opencode;
 
   escapeHatch = pkgs.callPackage ./bwrap-escape-hatch {inherit plugins;};
-  escapeHatchShims = escapeHatch.mkGuestWrappers ["notify-send" "aplay"];
+  escapeHatchShims = escapeHatch.mkGuestWrappers [
+    {
+      name = "notify-send";
+      hostBin = "${pkgs.libnotify}/bin/notify-send";
+    }
+    {
+      name = "aplay";
+      hostBin = "${pkgs.alsa-utils}/bin/aplay";
+    }
+  ];
 
   config = {
     "$schema" = "https://opencode.ai/config.json";
