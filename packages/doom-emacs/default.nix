@@ -33,8 +33,16 @@ assert lib.versionAtLeast chosenEmacs.version "29"; # we need `--init-directory`
         "snippets" = emptyDirectory;
       };
 
+    # Short hash of user config files that affect vendored packages.
+    # Embedding it in the derivation name ensures that any change to
+    # packages.el or init.el invalidates the old vendorHash — so you
+    # get an immediate build failure reminding you to update it.
+    doomConfigFingerprint = builtins.substring 0 8 (builtins.hashString "sha256"
+      (builtins.hashFile "sha256" doomPackagesEl
+        + builtins.hashFile "sha256" doomInitEl));
+
     vendor = stdenvNoCC.mkDerivation {
-      name = "doom-emacs-vendor-${doom-emacs.rev}";
+      name = "doom-emacs-vendor-${doom-emacs.rev}-${doomConfigFingerprint}";
 
       # These ↓ prevent rebuilds after determining ‘vendorHash’ in the first pass:
       outputHashMode = "recursive";

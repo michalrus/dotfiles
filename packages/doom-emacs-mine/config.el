@@ -165,7 +165,7 @@
         git-link-open-in-browser t)
   (map! :leader "g l" #'git-link))
 
-;; While M-. was defined correctly, M-, was a generic “back” navigation. I have gumshoe for that.
+;; While M-. was defined correctly, M-, was a generic “back” navigation. I have `better-jumper' for that.
 (map! :g "M-." #'+lookup/definition)
 (map! :g "M-," #'+lookup/references)
 
@@ -195,21 +195,64 @@
 (global-set-key [remap newline] nil)
 (global-set-key [remap newline-and-indent] nil)
 
-;; Automatic point history (a better ‘point-undo’):
-(use-package! gumshoe
+;; Browser-like back/forward navigation with better-jumper.
+;;
+;; better-jumper implements the correct browser model: a ring + cursor.
+;; New jump with `replace' behavior truncates forward history, then appends.
+;; Back/forward simply move the cursor.  We call `better-jumper-set-jump'
+;; via :before advice on key navigation commands to record the origin.
+(use-package! better-jumper
   :config
-  (global-gumshoe-mode 1)
-  (setq gumshoe-show-footprints-p nil
-        gumshoe-prefer-same-window t
-        gumshoe-follow-distance 20
-        gumshoe-idle-time 5
-        gumshoe-display-buffer-action '((display-buffer-same-window))
-        gumshoe-auto-cancel-backtracking-p t)
-  (map! "M-s-<left>"  #'gumshoe-backtrack
-        "M-s-<right>" #'gumshoe-backtrack)
-  (map! :map global-gumshoe-backtracking-mode-map
-        "M-s-<left>"  #'global-gumshoe-backtracking-mode-back
-        "M-s-<right>" #'global-gumshoe-backtracking-mode-forward))
+  (setq better-jumper-context 'window
+        better-jumper-add-jump-behavior 'replace
+        better-jumper-max-length 200
+        better-jumper-use-evil-jump-advice nil)
+
+  ;; Allow non-file buffers to be jump targets.  The default pattern only
+  ;; matches *new* and *scratch*.  This pattern is used in two places:
+  ;;   1. --push: to record non-file buffers by name (only when buffer-file-name is nil)
+  ;;   2. --jump: to decide switch-to-buffer vs find-file when restoring
+  ;; So it must match buffer names like *magit: repo* and file.el.~rev~
+  ;; but NOT absolute file paths (which start with /).
+  (setq better-jumper--buffer-targets "^[^/]"
+        better-jumper-disabled-modes nil)
+
+  (better-jumper-mode 1)
+
+  ;; Record the origin before each jump command.
+  (dolist (fn '(;; Definition/reference jumps (xref, the engine behind +lookup):
+                xref-find-definitions
+                xref-find-references
+                xref-go-back
+                xref-pop-marker-stack
+                ;; Buffer/file switches:
+                switch-to-buffer
+                pop-to-buffer-same-window
+                find-file
+                ;; Magit:
+                magit-status
+                magit-diff-visit-file
+                magit-find-file
+                ;; Compilation/error navigation:
+                compile-goto-error
+                next-error
+                ;; Occur/grep result jumps:
+                occur-mode-goto-occurrence
+                ;; Org link following:
+                org-open-at-point
+                ;; Bookmark jumps:
+                bookmark-jump
+                ;; Large in-buffer jumps:
+                beginning-of-buffer
+                end-of-buffer))
+    (advice-add fn :before (lambda (&rest _) (better-jumper-set-jump))))
+
+  ;; Passively record position after 5s idle, so that spots where you
+  ;; pause to read/think become reachable via back/forward.
+  (run-with-idle-timer 5 t #'better-jumper-set-jump)
+
+  (map! "M-s-<left>"  #'better-jumper-jump-backward
+        "M-s-<right>" #'better-jumper-jump-forward))
 
 (after! nix-mode
   (set-company-backend! 'nix-mode 'company-files 'company-dabbrev)
