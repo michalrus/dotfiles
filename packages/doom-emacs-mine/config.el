@@ -104,7 +104,18 @@
   (setq magit-save-repository-buffers 'dontask
         magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1
         vc-follow-symlinks t)
-  (global-auto-revert-mode t))
+  (global-auto-revert-mode t)
+  ;; Restore pre-4.4.0 visit behavior: RET on added/context lines in
+  ;; staged/unstaged diffs visits the worktree file (editable), but RET
+  ;; on removed lines still visits the old blob (read-only).
+  ;; `magit-diff-visit-prefer-worktree' is too blunt — it forces worktree
+  ;; for removed lines too — so we advise the command directly.
+  (define-advice magit-diff-visit-file
+      (:override (&optional other-window) prefer-worktree-except-removed)
+    (magit-diff-visit-file--internal
+     (and (memq (magit-diff--dwim) '(staged unstaged))
+          (not (magit-diff-on-removed-line-p)))
+     (and other-window t))))
 
 (add-hook! after-init
   (setq tab-always-indent t))
