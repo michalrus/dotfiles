@@ -155,7 +155,7 @@
         .bun .npm .yarn
       )
       persist_files=(
-        .bash_history .zsh_history .python_history
+        .bash_history .python_history
       )
 
       shell_exe=${lib.getExe pkgs.zsh}
