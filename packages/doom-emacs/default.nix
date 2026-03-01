@@ -9,11 +9,12 @@
   gitMinimal,
   cacert,
   emptyFile,
-  chosenEmacs ? pkgs.emacs29-pgtk,
+  emptyDirectory,
+  chosenEmacs ? pkgs.emacs30-pgtk,
   doomPackagesEl ? "${doom-emacs}/static/packages.example.el",
   doomInitEl ? "${doom-emacs}/static/init.example.el",
   doomConfigEl ? "${doom-emacs}/static/config.example.el",
-  vendorHash ? "sha256-gfJGLuIDuOEwkoqeyzz3xMkH75vbF0V8vTZdSf1NMS4=",
+  vendorHash ? "sha256-xajw0wwjPRVjSlN+zcWW/kviRyQNvXdL88UJvjjG37I=",
   doom-data-dir ? "~/.local/share/doom",
   doom-cache-dir ? "~/.cache/doom",
   doom-state-dir ? "~/.local/state/doom",
@@ -29,6 +30,7 @@ assert lib.versionAtLeast chosenEmacs.version "29"; # we need `--init-directory`
           if withConfig
           then doomConfigEl
           else emptyFile;
+        "snippets" = emptyDirectory;
       };
 
     vendor = stdenvNoCC.mkDerivation {
@@ -55,7 +57,7 @@ assert lib.versionAtLeast chosenEmacs.version "29"; # we need `--init-directory`
         export DOOMPAGER=cat
         export DOOMDIR=${doomDir {withConfig = false;}}
 
-        ~/.config/emacs/bin/doom install --no-fonts --force
+        ~/.config/emacs/bin/doom install --force
 
         # Remove impurities that change too often, but save the source information for later investigation:
         find ~/.config/emacs/.local/straight/repos -type d -name '.git' -prune | while IFS= read -r gitDir ; do
@@ -101,7 +103,7 @@ assert lib.versionAtLeast chosenEmacs.version "29"; # we need `--init-directory`
         sed -r '/module-list-loader post-config-modules config-file/a\              (doom-load (expand-file-name "config" (getenv "DOOMDIR")))' \
           -i $out/lisp/lib/profiles.el
 
-        $out/bin/doom install --no-fonts --force
+        $out/bin/doom install --force
         $out/bin/doom sync -U --force
 
         rm -rf $out/.local/{env,state}

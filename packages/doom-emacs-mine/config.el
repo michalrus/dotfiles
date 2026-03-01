@@ -19,7 +19,7 @@
   (setq frame-title-format "%b – Emacs")
   (after! font-lock
     (set-face-attribute 'font-lock-constant-face      nil :foreground (doom-color 'blue))
-    (set-face-attribute 'font-lock-builtin-face       nil :foreground (doom-color 'white) :weight 'bold)
+    (set-face-attribute 'font-lock-builtin-face       nil :foreground (doom-color 'fg) :weight 'bold)
     (set-face-attribute 'font-lock-variable-name-face nil :foreground (doom-color 'blue)))
   (after! magit
     (set-face-attribute 'magit-section-heading        nil :foreground (doom-color 'yellow)))
