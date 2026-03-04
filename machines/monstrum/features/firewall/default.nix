@@ -83,6 +83,19 @@
     COMMIT
 
     *mangle
+    # Clamp TCP MSS (Maximum Segment Size) to the PMTU (Path MTU) for
+    # WireGuard tunnels. Without this, TCP peers negotiate segment sizes
+    # based on the LAN's 1500 MTU, but those segments are too large after
+    # WireGuard encapsulation. PMTUD (Path MTU Discovery) relies on ICMP
+    # which is often dropped by firewalls, so we proactively rewrite the
+    # MSS in SYN packets to fit the tunnel. Fixes truncated downloads
+    # (e.g. Nix's "Truncated tar archive" errors fetching from GitHub).
+    -A FORWARD -o wg-nordvpn -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
+    -A FORWARD -i wg-nordvpn -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
+    -A OUTPUT -o wg-nordvpn -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
+    -A FORWARD -o wg-airvpn -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
+    -A FORWARD -i wg-airvpn -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
+    -A OUTPUT -o wg-airvpn -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
     COMMIT
 
     *nat
