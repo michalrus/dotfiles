@@ -151,6 +151,9 @@
     name = "opencode-bwrap";
     runtimeInputs = with pkgs; [coreutils findutils];
     text = ''
+      # Keep build-time-only dependencies alive (prevent GC):
+      # ${lib.getExe bun2nix}
+
       data_dir="$HOME"/.local/share/opencode-bwrap
 
       sandbox_home="$data_dir"/home
