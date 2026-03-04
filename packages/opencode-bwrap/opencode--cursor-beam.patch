@@ -1,0 +1,13 @@
+Force a blinking beam (line) cursor instead of the default blinking block.
+
+--- a/packages/opencode/src/cli/cmd/tui/component/prompt/index.tsx
++++ b/packages/opencode/src/cli/cmd/tui/component/prompt/index.tsx
+@@ -947,7 +947,7 @@
+               }}
+               onMouseDown={(r: MouseEvent) => r.target?.focus()}
+               focusedBackgroundColor={theme.backgroundElement}
+-              cursorColor={theme.text}
++              cursorColor={theme.text} cursorStyle={{ style: "line", blinking: true }}
+               syntaxStyle={syntax()}
+             />
+             <box flexDirection="row" flexShrink={0} paddingTop={1} gap={1}>

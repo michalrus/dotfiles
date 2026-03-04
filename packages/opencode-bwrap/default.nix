@@ -5,7 +5,9 @@
   bun2nix,
   serena,
 }: let
-  unsafe = nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.opencode;
+  unsafe = nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.opencode.overrideAttrs (prev: {
+    patches = (prev.patches or []) ++ [./opencode--cursor-beam.patch];
+  });
 
   escapeHatch = pkgs.callPackage ./bwrap-escape-hatch {inherit plugins;};
   escapeHatchShims = escapeHatch.mkGuestWrappers [
