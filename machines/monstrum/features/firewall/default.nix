@@ -64,7 +64,7 @@
     -A INPUT -i wg-airvpn -p tcp --dport 18077 -j ACCEPT
     -A INPUT -p icmp -m icmp --icmp-type 8 -j ACCEPT
     -A INPUT -p tcp -m tcp --tcp-flags FIN,SYN,RST,ACK SYN -j LOG --log-prefix "refused connection: " --log-level 6
-    -A INPUT -p tcp -m tcp ! --tcp-flags FIN,SYN,RST,ACK SYN -j REJECT --reject-with tcp-reset
+    -A INPUT -p tcp -m tcp ! --tcp-flags FIN,SYN,RST,ACK SYN -j DROP
     -A INPUT -j REJECT --reject-with icmp-port-unreachable
     -A FORWARD -s 10.77.2.0/24 -m conntrack --ctstate NEW,ESTABLISHED,RELATED -j ACCEPT
     -A FORWARD -d 10.77.2.0/24 -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
