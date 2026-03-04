@@ -36,8 +36,8 @@
     '';
   };
 in {
-  age.secrets.wireguard_nordvpn = {
-    file = ../../../../secrets/wireguard_nordvpn.age;
+  age.secrets.nordvpn_token = {
+    file = ../../../../secrets/nordvpn_token.age;
   };
 
   systemd = {
@@ -58,7 +58,7 @@ in {
         unitConfig = {
           StartLimitIntervalSec = 0; # no restart rate limiting
         };
-        path = with pkgs; [kmod iproute2 procps wireguard-tools jq iputils parallel];
+        path = with pkgs; [kmod iproute2 procps wireguard-tools jq iputils parallel curl coreutils];
         script = ''
           set -euo pipefail
 
@@ -68,14 +68,40 @@ in {
           jq -r .pubkey <<<"$server_json" >/run/${vsp}/server_pubkey && server_pubkey=$(cat /run/${vsp}/server_pubkey)
           unset server_json
 
+          # Fetch the NordLynx private key from NordVPN's API (like their official app does).
+          # Without this, NordVPN appears to throttle/RST long TCP connections on plain WireGuard.
+          auth_file=/run/${vsp}/auth_header
+          install -m 0600 /dev/null "$auth_file"
+          { echo -n 'Authorization: Basic '
+            { echo -n 'token:' ; tr -d '\n' <${config.age.secrets.nordvpn_token.path} ; } | base64 -w 0
+          } >"$auth_file"
+
+          creds_file=/run/${vsp}/credentials
+          install -m 0600 /dev/null "$creds_file"
+          curl -fsSL "https://api.nordvpn.com/v1/users/services/credentials" \
+            -H "Content-Type: application/json" \
+            -H @"$auth_file" \
+            -A "NordApp Linux 4.4.0 $(uname -r | cut -d '-' -f 1-2)-generic" \
+            -o "$creds_file"
+          rm -f "$auth_file"
+
+          privkey_file=/run/${vsp}/privkey
+          install -m 0600 /dev/null "$privkey_file"
+          jq -er -j '.nordlynx_private_key' "$creds_file" >"$privkey_file"
+          rm -f "$creds_file"
+
           echo "Setting up link with '$server_name'..."
 
           modprobe wireguard || true
           ip link add dev ${iface} type wireguard
           ip address add ${ourInternalIP}/24 dev ${iface}
           wg set ${iface} \
-            private-key ${config.age.secrets.wireguard_nordvpn.path} \
+            private-key "$privkey_file" \
             fwmark 51820
+          rm -f "$privkey_file"
+
+          # Use a lower MTU to avoid PMTUD blackholes on the NordVPN path.
+          ip link set dev ${iface} mtu 1420
 
           ip link set up dev ${iface}
 
@@ -118,6 +144,7 @@ in {
         postStop = ''
           set -euo pipefail
 
+          rm -f /run/${vsp}/privkey /run/${vsp}/auth_header /run/${vsp}/credentials
           ip link del dev ${iface}
 
           ip route delete   0.0.0.0/1 || true

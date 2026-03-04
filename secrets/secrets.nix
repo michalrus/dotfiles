@@ -19,7 +19,7 @@ in {
   "smtp_scripts_michalrus_com.age".publicKeys = michalrus ++ michalrus_com ++ monstrum;
   "wireguard_monstrum.age".publicKeys = michalrus ++ monstrum;
   "wireguard_michalrus_com.age".publicKeys = michalrus ++ michalrus_com;
-  "wireguard_nordvpn.age".publicKeys = michalrus ++ monstrum;
+  "nordvpn_token.age".publicKeys = michalrus ++ monstrum;
   "hardware_modem_password.age".publicKeys = michalrus ++ monstrum;
   "wireguard_airvpn_private_key.age".publicKeys = michalrus ++ monstrum;
   "wireguard_airvpn_preshared_key.age".publicKeys = michalrus ++ monstrum;
