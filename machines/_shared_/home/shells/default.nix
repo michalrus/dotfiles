@@ -124,7 +124,12 @@ in {
     starship = {
       enable = true;
       package = pkgs.starship.overrideAttrs (drv: {
-        patches = (drv.patches or []) ++ [./startship--better-time-reporting.patch];
+        patches =
+          (drv.patches or [])
+          ++ [
+            ./startship--better-time-reporting.patch
+            ./starship--no-repeated-notifications.patch
+          ];
       });
     };
 

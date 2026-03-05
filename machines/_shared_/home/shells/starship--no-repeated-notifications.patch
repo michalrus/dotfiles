@@ -1,0 +1,56 @@
+--- a/src/modules/cmd_duration.rs
++++ b/src/modules/cmd_duration.rs
+@@ -68,6 +68,8 @@
+     context: &'a Context,
+     elapsed: u128,
+ ) -> Module<'a> {
++    use std::fs;
++    use std::path::PathBuf;
+     use notify_rust::{Notification, Timeout};
+     use nu_ansi_term::{AnsiStrings, unstyle};
+ 
+@@ -83,6 +85,33 @@
+             };
+         }
+ 
++        // Prevent duplicate notifications on prompt redraws (e.g. terminal
++        // resize, vi-mode switch).  We store the duration value of the last
++        // notification in a per-session marker file.  If the current duration
++        // matches, the notification has already been shown for this command.
++        // See https://github.com/starship/starship/issues/3291
++        let marker: Option<PathBuf> = context.get_env("STARSHIP_SESSION_KEY").map(|key| {
++            // Prefer XDG_RUNTIME_DIR (tmpfs on systemd systems) to avoid
++            // unnecessary disk writes; fall back to the OS temp directory.
++            let base = context
++                .get_env("XDG_RUNTIME_DIR")
++                .map(PathBuf::from)
++                .unwrap_or_else(std::env::temp_dir);
++            let dir = base.join("starship-notify");
++            let _ = fs::create_dir_all(&dir);
++            dir.join(key)
++        });
++
++        if let Some(ref path) = marker {
++            if let Ok(contents) = fs::read_to_string(path) {
++                if let Ok(prev) = contents.trim().parse::<u128>() {
++                    if prev == elapsed {
++                        return module;
++                    }
++                }
++            }
++        }
++
+         // On macOS 26+ notify-rust will get stuck finding the current application identifier
+         // so we set it manually to the default terminal app.
+         #[cfg(target_os = "macos")]
+@@ -108,6 +137,10 @@
+         if let Err(err) = notification.show() {
+             log::trace!("Cannot show notification: {err}");
+         }
++
++        if let Some(ref path) = marker {
++            let _ = fs::write(path, elapsed.to_string());
++        }
+     }
+ 
+     module
