@@ -1,6 +1,7 @@
 ;;; Code:
 
-(setq initial-scratch-message nil)
+(setq initial-scratch-message nil
+      scroll-margin 0)
 
 ;; Useless:
 (global-unset-key "\C-z")
