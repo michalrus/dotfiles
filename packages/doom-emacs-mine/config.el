@@ -43,7 +43,12 @@
 (after! dirvish
   ;; Do not use <left>/<right> for navigation in dired (dirvish):
   (define-key dirvish-mode-map (kbd "<left>")  nil)
-  (define-key dirvish-mode-map (kbd "<right>") nil))
+  (define-key dirvish-mode-map (kbd "<right>") nil)
+  ;; Dirvish forces '(box . 4) via dirvish--maybe-toggle-cursor on every
+  ;; update; override the visible-cursor branch to use our preferred bar:
+  (define-advice dirvish--maybe-toggle-cursor
+      (:filter-args (_args) use-bar-cursor)
+    (list '(bar . 2))))
 
 ;; Do _not_ continue line comments on <RET>…
 (setq +default-want-RET-continue-comments nil)
