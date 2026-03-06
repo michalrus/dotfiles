@@ -1,0 +1,233 @@
+diff --git a/src/Compositor.cpp b/src/Compositor.cpp
+index 2dc798e4..69afa69c 100644
+--- a/src/Compositor.cpp
++++ b/src/Compositor.cpp
+@@ -2110,6 +2110,65 @@ void CCompositor::swapActiveWorkspaces(PHLMONITOR pMonitorA, PHLMONITOR pMonitor
+     EMIT_HOOK_EVENT("moveWorkspace", (std::vector<std::any>{PWORKSPACEB, pMonitorA}));
+ }
+ 
++void CCompositor::swapWorkspaces(PHLWORKSPACE pWorkspaceA, PHLWORKSPACE pWorkspaceB) {
++    if (!pWorkspaceA || !pWorkspaceB || pWorkspaceA == pWorkspaceB)
++        return;
++
++    // If the workspaces are on different monitors, fall back to swapActiveWorkspaces
++    // which handles the cross-monitor geometry adjustments.
++    const auto PMONITORA = pWorkspaceA->m_monitor.lock();
++    const auto PMONITORB = pWorkspaceB->m_monitor.lock();
++    if (PMONITORA != PMONITORB) {
++        // swapActiveWorkspaces requires both to be the active workspace on their
++        // respective monitors.  If they aren't, this is not a supported case.
++        if (PMONITORA && PMONITORB && PMONITORA->m_activeWorkspace == pWorkspaceA && PMONITORB->m_activeWorkspace == pWorkspaceB) {
++            swapActiveWorkspaces(PMONITORA, PMONITORB);
++            return;
++        }
++        Debug::log(ERR, "swapWorkspaces: cross-monitor swap requires both workspaces to be active on their monitors");
++        return;
++    }
++
++    const auto PMONITOR = PMONITORA;
++    if (!PMONITOR)
++        return;
++
++    const auto IDA = pWorkspaceA->m_id;
++    const auto IDB = pWorkspaceB->m_id;
++    const auto NAMEA = pWorkspaceA->m_name;
++    const auto NAMEB = pWorkspaceB->m_name;
++
++    Debug::log(LOG, "swapWorkspaces: swapping {} ({}) and {} ({}) on monitor {}", IDA, NAMEA, IDB, NAMEB, PMONITOR->m_id);
++
++    // 1. Swap IDs and names on the workspace objects.
++    pWorkspaceA->m_id   = IDB;
++    pWorkspaceA->m_name = NAMEB;
++    pWorkspaceB->m_id   = IDA;
++    pWorkspaceB->m_name = NAMEA;
++
++    // 2. Update layout node workspace IDs.
++    g_pLayoutManager->getCurrentLayout()->swapWorkspaceIDs(IDA, IDB);
++
++    // 3. Update m_prevWorkspace references across all workspaces.
++    for (auto const& ws : getWorkspaces()) {
++        auto prev = ws->getPrevWorkspaceIDName();
++        if (prev.id == IDA) {
++            ws->rememberPrevWorkspace(pWorkspaceB);
++        } else if (prev.id == IDB) {
++            ws->rememberPrevWorkspace(pWorkspaceA);
++        }
++    }
++
++    // 4. Damage the monitor to ensure a repaint.
++    g_pHyprRenderer->damageMonitor(PMONITOR);
++
++    // 5. Emit IPC events.
++    g_pEventManager->postEvent(SHyprIPCEvent{.event = "renameworkspace", .data = std::format("{},{}", pWorkspaceA->m_id, pWorkspaceA->m_name)});
++    g_pEventManager->postEvent(SHyprIPCEvent{.event = "renameworkspace", .data = std::format("{},{}", pWorkspaceB->m_id, pWorkspaceB->m_name)});
++    pWorkspaceA->m_events.renamed.emit();
++    pWorkspaceB->m_events.renamed.emit();
++}
++
+ PHLMONITOR CCompositor::getMonitorFromString(const std::string& name) {
+     if (name == "current")
+         return g_pCompositor->m_lastMonitor.lock();
+diff --git a/src/Compositor.hpp b/src/Compositor.hpp
+index bf6401e5..f1c91137 100644
+--- a/src/Compositor.hpp
++++ b/src/Compositor.hpp
+@@ -133,6 +133,7 @@ class CCompositor {
+     MONITORID              getNextAvailableMonitorID(std::string const& name);
+     void                   moveWorkspaceToMonitor(PHLWORKSPACE, PHLMONITOR, bool noWarpCursor = false);
+     void                   swapActiveWorkspaces(PHLMONITOR, PHLMONITOR);
++    void                   swapWorkspaces(PHLWORKSPACE, PHLWORKSPACE);
+     PHLMONITOR             getMonitorFromString(const std::string&);
+     bool                   workspaceIDOutOfBounds(const WORKSPACEID&);
+     void                   setWindowFullscreenInternal(const PHLWINDOW PWINDOW, const eFullscreenMode MODE);
+diff --git a/src/layout/DwindleLayout.cpp b/src/layout/DwindleLayout.cpp
+index e46a0963..41bfc2b9 100644
+--- a/src/layout/DwindleLayout.cpp
++++ b/src/layout/DwindleLayout.cpp
+@@ -1170,6 +1170,15 @@ void CHyprDwindleLayout::replaceWindowDataWith(PHLWINDOW from, PHLWINDOW to) {
+     applyNodeDataToWindow(PNODE, true);
+ }
+ 
++void CHyprDwindleLayout::swapWorkspaceIDs(WORKSPACEID a, WORKSPACEID b) {
++    for (auto& nd : m_dwindleNodesData) {
++        if (nd.workspaceID == a)
++            nd.workspaceID = b;
++        else if (nd.workspaceID == b)
++            nd.workspaceID = a;
++    }
++}
++
+ std::string CHyprDwindleLayout::getLayoutName() {
+     return "dwindle";
+ }
+diff --git a/src/layout/DwindleLayout.hpp b/src/layout/DwindleLayout.hpp
+index de80beed..f3925e03 100644
+--- a/src/layout/DwindleLayout.hpp
++++ b/src/layout/DwindleLayout.hpp
+@@ -69,6 +69,7 @@ class CHyprDwindleLayout : public IHyprLayout {
+     virtual void                     alterSplitRatio(PHLWINDOW, float, bool);
+     virtual std::string              getLayoutName();
+     virtual void                     replaceWindowDataWith(PHLWINDOW from, PHLWINDOW to);
++    virtual void                     swapWorkspaceIDs(WORKSPACEID a, WORKSPACEID b);
+     virtual Vector2D                 predictSizeForNewWindowTiled();
+ 
+     virtual void                     onEnable();
+diff --git a/src/layout/IHyprLayout.hpp b/src/layout/IHyprLayout.hpp
+index d97a2ba8..9f6bc541 100644
+--- a/src/layout/IHyprLayout.hpp
++++ b/src/layout/IHyprLayout.hpp
+@@ -182,6 +182,14 @@ class IHyprLayout {
+     */
+     virtual void replaceWindowDataWith(PHLWINDOW from, PHLWINDOW to) = 0;
+ 
++    /*
++        Called when two workspace IDs are being swapped.
++        Layouts that store workspace IDs in their node data must update them.
++    */
++    virtual void swapWorkspaceIDs(WORKSPACEID a, WORKSPACEID b) {
++        ;
++    }
++
+     /*
+         Determines if a window can be focused. If hidden this usually means the window is part of a group.
+     */
+diff --git a/src/layout/MasterLayout.cpp b/src/layout/MasterLayout.cpp
+index b40c339a..cb28033d 100644
+--- a/src/layout/MasterLayout.cpp
++++ b/src/layout/MasterLayout.cpp
+@@ -1491,6 +1491,22 @@ void CHyprMasterLayout::replaceWindowDataWith(PHLWINDOW from, PHLWINDOW to) {
+     applyNodeDataToWindow(PNODE);
+ }
+ 
++void CHyprMasterLayout::swapWorkspaceIDs(WORKSPACEID a, WORKSPACEID b) {
++    for (auto& nd : m_masterNodesData) {
++        if (nd.workspaceID == a)
++            nd.workspaceID = b;
++        else if (nd.workspaceID == b)
++            nd.workspaceID = a;
++    }
++
++    for (auto& wd : m_masterWorkspacesData) {
++        if (wd.workspaceID == a)
++            wd.workspaceID = b;
++        else if (wd.workspaceID == b)
++            wd.workspaceID = a;
++    }
++}
++
+ Vector2D CHyprMasterLayout::predictSizeForNewWindowTiled() {
+     static auto PNEWSTATUS = CConfigValue<std::string>("master:new_status");
+ 
+diff --git a/src/layout/MasterLayout.hpp b/src/layout/MasterLayout.hpp
+index a5968916..077f2793 100644
+--- a/src/layout/MasterLayout.hpp
++++ b/src/layout/MasterLayout.hpp
+@@ -67,6 +67,7 @@ class CHyprMasterLayout : public IHyprLayout {
+     virtual void                     alterSplitRatio(PHLWINDOW, float, bool);
+     virtual std::string              getLayoutName();
+     virtual void                     replaceWindowDataWith(PHLWINDOW from, PHLWINDOW to);
++    virtual void                     swapWorkspaceIDs(WORKSPACEID a, WORKSPACEID b);
+     virtual Vector2D                 predictSizeForNewWindowTiled();
+ 
+     virtual void                     onEnable();
+diff --git a/src/managers/KeybindManager.cpp b/src/managers/KeybindManager.cpp
+index 68750ad7..02bc5c43 100644
+--- a/src/managers/KeybindManager.cpp
++++ b/src/managers/KeybindManager.cpp
+@@ -128,6 +128,7 @@ CKeybindManager::CKeybindManager() {
+     m_dispatchers["resizewindowpixel"]              = resizeWindow;
+     m_dispatchers["swapnext"]                       = swapnext;
+     m_dispatchers["swapactiveworkspaces"]           = swapActiveWorkspaces;
++    m_dispatchers["swapworkspaces"]                = swapWorkspaces;
+     m_dispatchers["pin"]                            = pinActive;
+     m_dispatchers["mouse"]                          = mouse;
+     m_dispatchers["bringactivetotop"]               = bringActiveToTop;
+@@ -2728,6 +2729,36 @@ SDispatchResult CKeybindManager::swapActiveWorkspaces(std::string args) {
+     return {};
+ }
+ 
++SDispatchResult CKeybindManager::swapWorkspaces(std::string args) {
++    const auto FIRST  = args.substr(0, args.find_first_of(' '));
++    const auto SECOND = args.substr(args.find_first_of(' ') + 1);
++
++    const auto& [IDA, NAMEA, AUTOA] = getWorkspaceIDNameFromString(FIRST);
++    const auto& [IDB, NAMEB, AUTOB] = getWorkspaceIDNameFromString(SECOND);
++
++    if (IDA == WORKSPACE_INVALID || IDB == WORKSPACE_INVALID)
++        return {.success = false, .error = "Invalid workspace identifier"};
++
++    if (IDA == IDB)
++        return {};
++
++    auto PWORKSPACEA = g_pCompositor->getWorkspaceByID(IDA);
++    auto PWORKSPACEB = g_pCompositor->getWorkspaceByID(IDB);
++
++    const auto PMONITOR = g_pCompositor->m_lastMonitor.lock();
++    if (!PMONITOR)
++        return {.success = false, .error = "No active monitor"};
++
++    if (!PWORKSPACEA)
++        PWORKSPACEA = g_pCompositor->createNewWorkspace(IDA, PMONITOR->m_id, NAMEA);
++    if (!PWORKSPACEB)
++        PWORKSPACEB = g_pCompositor->createNewWorkspace(IDB, PMONITOR->m_id, NAMEB);
++
++    g_pCompositor->swapWorkspaces(PWORKSPACEA, PWORKSPACEB);
++
++    return {};
++}
++
+ SDispatchResult CKeybindManager::pinActive(std::string args) {
+ 
+     PHLWINDOW PWINDOW = nullptr;
+diff --git a/src/managers/KeybindManager.hpp b/src/managers/KeybindManager.hpp
+index 592588b5..17a6fce6 100644
+--- a/src/managers/KeybindManager.hpp
++++ b/src/managers/KeybindManager.hpp
+@@ -222,6 +222,7 @@ class CKeybindManager {
+     static SDispatchResult dpms(std::string);
+     static SDispatchResult swapnext(std::string);
+     static SDispatchResult swapActiveWorkspaces(std::string);
++    static SDispatchResult swapWorkspaces(std::string);
+     static SDispatchResult pinActive(std::string);
+     static SDispatchResult mouse(std::string);
+     static SDispatchResult bringActiveToTop(std::string);

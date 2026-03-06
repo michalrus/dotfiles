@@ -7,6 +7,14 @@
 }: let
   inherit (config.networking) hostName;
 in {
+  nixpkgs.overlays = [
+    (_: super: {
+      hyprland = super.hyprland.overrideAttrs (drv: {
+        patches = (drv.patches or []) ++ [./hyprland--swap-workspaces.patch];
+      });
+    })
+  ];
+
   programs.hyprland.enable = true;
 
   programs.hyprlock.enable = true;
