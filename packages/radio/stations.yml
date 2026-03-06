@@ -2,14 +2,17 @@
 stations:
   - name: "Acid jazz: acid-jazz-radio.de"
     url: http://stream.laut.fm/acidjazz
-    mute_title_infixes:
+    mute-title-infixes:
       - Ein bisschen Verbraucherinformationen
-    mute_empty_title: false
+      - schon fast die Hälfte geschafft
+      - gleich geht's los mit laut.fm
+      - zweite Halbzeit
+    mute-empty-title: false
 
   - name: "Acid jazz: 181.fm"
     url: http://listen.181fm.com/181-acidjazz_128k.mp3
-    mute_title_infixes: []
-    mute_empty_title: true
+    mute-title-infixes: []
+    mute-empty-title: true
 
   - name: "Polskie Radio: Program I („Jedynka”)"
     url: https://stream11.polskieradio.pl/pr1/pr1.sdp/playlist.m3u8
@@ -34,19 +37,19 @@ stations:
 
   - name: "Lo-fi: Lofi Girl · lofi hip hop radio · beats to relax/study to"
     url: https://www.youtube.com/watch?v=jfKfPfyJRdk
-    player: mpva-android
+    mpv-override: mpva-android
 
   - name: "Lo-fi: Lofi Girl · synthwave radio · beats to chill/game to"
     url: https://www.youtube.com/watch?v=4xDzrJKXOOY
-    player: mpva-android
+    mpv-override: mpva-android
 
   - name: "Lo-fi: Lofi Girl · jazz lofi radio · beats to chill/study to"
     url: https://www.youtube.com/watch?v=HuFYqnbVbzY
-    player: mpva-android
+    mpv-override: mpva-android
 
   - name: "Lo-fi: Lofi Girl · asian lofi radio · beats to relax/study to"
     url: https://www.youtube.com/watch?v=Na0w3Mz46GA
-    player: mpva-android
+    mpv-override: mpva-android
 
   - name: "Downtempo: Soma FM: Groove Salad"
     url: https://somafm.com/groovesalad256.pls

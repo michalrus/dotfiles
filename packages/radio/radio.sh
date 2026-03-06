@@ -13,25 +13,25 @@ get_station_url() {
   yq -r --arg station "$name" '.stations[] | select(.name == $station) | .url' "$stations_yaml"
 }
 
-get_station_player() {
+get_station_mpv_override() {
   local name="$1"
 
   # shellcheck disable=SC2016
-  yq -r --arg station "$name" '.stations[] | select(.name == $station) | (.player // "")' "$stations_yaml"
+  yq -r --arg station "$name" '.stations[] | select(.name == $station) | (."mpv-override" // "")' "$stations_yaml"
 }
 
 get_station_infixes() {
   local name="$1"
 
   # shellcheck disable=SC2016
-  yq -r --arg station "$name" '.stations[] | select(.name == $station) | (.mute_title_infixes // []) | join(",")' "$stations_yaml"
+  yq -r --arg station "$name" '.stations[] | select(.name == $station) | (."mute-title-infixes" // []) | join(",")' "$stations_yaml"
 }
 
 get_station_mute_empty_title() {
   local name="$1"
 
   # shellcheck disable=SC2016
-  yq -r --arg station "$name" '.stations[] | select(.name == $station) | (.mute_empty_title // false)' "$stations_yaml"
+  yq -r --arg station "$name" '.stations[] | select(.name == $station) | (."mute-empty-title" // false)' "$stations_yaml"
 }
 
 play_stream() {
@@ -39,20 +39,21 @@ play_stream() {
   local url="$2"
   local infixes="${3:-}"
   local mute_empty_title="${4:-false}"
-  local player_override="${5:-}"
+  local mpv_override="${5:-}"
   local mpv_args=(
     --user-agent="$user_agent"
     --no-ytdl
     --no-resume-playback
+    --loop-file=inf
     --script="$mpv_mute_script"
   )
 
   if [ -n "$infixes" ]; then
-    mpv_args+=(--script-opts="radio-mute-title_infixes=$infixes")
+    mpv_args+=(--script-opts-append="radio-mute-title_infixes=$infixes")
   fi
 
   if [ "$mute_empty_title" = "true" ]; then
-    mpv_args+=(--script-opts="radio-mute-mute_empty_title=yes")
+    mpv_args+=(--script-opts-append="radio-mute-mute_empty_title=yes")
   fi
 
   echo
@@ -60,11 +61,29 @@ play_stream() {
   echo "URL:     $url"
   echo
 
-  if [ -n "$player_override" ] && [ "$player_override" != "null" ]; then
-    exec "$player_override" "$url"
+  local cmd
+  if [ -n "$mpv_override" ] && [ "$mpv_override" != "null" ]; then
+    cmd=("$mpv_override" --loop-file=inf "$url")
+  else
+    cmd=(mpv "${mpv_args[@]}" "$url")
   fi
 
-  exec mpv "${mpv_args[@]}" "$url"
+  local retry_delay=2
+  local max_retry_delay=60
+  while true; do
+    local start=$SECONDS
+    "${cmd[@]}" && break
+    # Reset backoff if player ran for more than a minute (transient vs. immediate failure)
+    if ((SECONDS - start > 60)); then
+      retry_delay=2
+    fi
+    echo >&2 "Player exited with error, retrying in ${retry_delay}s..."
+    sleep "$retry_delay"
+    retry_delay=$((retry_delay * 2))
+    if ((retry_delay > max_retry_delay)); then
+      retry_delay=$max_retry_delay
+    fi
+  done
 }
 
 mapfile -t stations_from_yaml < <(
@@ -92,7 +111,7 @@ case "$station" in
   ;;
 *)
   url=$(get_station_url "$station")
-  player=$(get_station_player "$station")
+  mpv_override=$(get_station_mpv_override "$station")
   infixes=$(get_station_infixes "$station")
   mute_empty_title=$(get_station_mute_empty_title "$station")
   if [ -z "$url" ]; then
@@ -100,6 +119,6 @@ case "$station" in
     exit 1
   fi
 
-  play_stream "$station" "$url" "$infixes" "$mute_empty_title" "$player"
+  play_stream "$station" "$url" "$infixes" "$mute_empty_title" "$mpv_override"
   ;;
 esac
