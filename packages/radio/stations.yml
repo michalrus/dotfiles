@@ -51,6 +51,14 @@ stations:
     url: https://www.youtube.com/watch?v=Na0w3Mz46GA
     mpv-override: mpva-android
 
+  - name: "Lo-fi: Lofi Girl · lofi hip hop radio · beats to sleep/chill to"
+    url: https://www.youtube.com/watch?v=28KRPhVzCus
+    mpv-override: mpva-android
+
+  - name: "Lo-fi: Lofi Girl · dark ambient radio · music to escape/dream to"
+    url: https://www.youtube.com/watch?v=S_MOd40zlYU
+    mpv-override: mpva-android
+
   - name: "Downtempo: Soma FM: Groove Salad"
     url: https://somafm.com/groovesalad256.pls
 
