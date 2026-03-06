@@ -106,6 +106,9 @@
   ;(add-hook 'focus-out-hook #'recentf-save-list)
   (add-hook 'kill-emacs-hook #'recentf-save-list))
 
+(add-hook! 'magit-section-mode-hook
+  (display-line-numbers-mode -1))
+
 (after! magit
   (setq magit-save-repository-buffers 'dontask
         magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1
