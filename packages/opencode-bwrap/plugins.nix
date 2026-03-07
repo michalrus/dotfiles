@@ -3,13 +3,6 @@
   lib,
   bun2nix,
 }: let
-  opencode-md-table-formatter = pkgs.fetchFromGitHub {
-    owner = "franlol";
-    repo = "opencode-md-table-formatter";
-    tag = "v0.0.6";
-    hash = "sha256-cmLsPeUnGo1spaz1UGhIYPdmIdRnLQ3tEaONoMGBTcw=";
-  };
-
   opencode-notifier-src = pkgs.fetchFromGitHub {
     owner = "mohak34";
     repo = "opencode-notifier";
@@ -98,17 +91,12 @@
 
   opencode-plugins = pkgs.linkFarm "opencode-plugins" [
     {
-      name = "opencode-md-table-formatter.ts";
-      path = "${opencode-md-table-formatter}/index.ts";
-    }
-    {
       name = "opencode-notifier.js";
       path = "${opencode-notifier}/dist/index.js";
     }
   ];
 in {
   inherit
-    opencode-md-table-formatter
     opencode-notifier
     opencode-notifier-config
     opencode-notifier-sounds
