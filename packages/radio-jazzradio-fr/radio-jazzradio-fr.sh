@@ -121,17 +121,20 @@ retry_delay=2
 max_retry_delay=60
 while true; do
   start=$SECONDS
+  rc=0
   mpv \
     --user-agent="$user_agent" \
     --no-ytdl \
     --no-resume-playback \
     --loop-file=inf \
-    "$stream_url" && break
+    "$stream_url" || rc=$?
+  # Exit on success (0) or signal quit (4)
+  if ((rc == 0 || rc == 4)); then exit "$rc"; fi
   # Reset backoff if mpv ran for more than a minute (transient vs. immediate failure)
   if ((SECONDS - start > 60)); then
     retry_delay=2
   fi
-  echo >&2 "mpv exited with error, retrying in ${retry_delay}s..."
+  echo >&2 "mpv exited with error (code $rc), retrying in ${retry_delay}s..."
   sleep "$retry_delay"
   retry_delay=$((retry_delay * 2))
   if ((retry_delay > max_retry_delay)); then

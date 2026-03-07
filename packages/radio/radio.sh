@@ -72,12 +72,15 @@ play_stream() {
   local max_retry_delay=60
   while true; do
     local start=$SECONDS
-    "${cmd[@]}" && break
-    # Reset backoff if player ran for more than a minute (transient vs. immediate failure)
+    local rc=0
+    "${cmd[@]}" || rc=$?
+    # Exit on success (0) or signal quit (4)
+    if ((rc == 0 || rc == 4)); then exit "$rc"; fi
+    # Reset backoff if mpv ran for more than a minute (transient vs. immediate failure)
     if ((SECONDS - start > 60)); then
       retry_delay=2
     fi
-    echo >&2 "Player exited with error, retrying in ${retry_delay}s..."
+    echo >&2 "mpv exited with error (code $rc), retrying in ${retry_delay}s..."
     sleep "$retry_delay"
     retry_delay=$((retry_delay * 2))
     if ((retry_delay > max_retry_delay)); then
