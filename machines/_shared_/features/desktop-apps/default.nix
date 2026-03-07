@@ -54,7 +54,6 @@
       home.packages = with pkgs; [
         pcmanfm
         doublecmd
-        xfce.thunar
         ffmpegthumbnailer
         notepad-next
         evince
