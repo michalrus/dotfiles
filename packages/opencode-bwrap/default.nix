@@ -88,28 +88,12 @@
     instructions = [
       ./preamble.md
     ];
-    agent = {
-      build = {
-        # We’re running in a strict sandbox, so let’s relax the default permissions:
-        permission = {
-          read = "allow"; # reading a file
-          edit = "allow"; # all file modifications
-          glob = "allow"; # file globbing – like `fd` but builtin
-          grep = "allow"; # content search – like `rg` but builtin
-          list = "allow"; # listing files in a directory
-          bash = "allow"; # running shell commands
-          task = "allow"; # launching subagents
-          skill = "allow"; # loading a skill (from the current repository)
-          lsp = "deny"; # running LSP queries (currently non-granular) – we have a better `serena` for this
-          todoread = "allow"; # reading the todo list
-          todowrite = "allow"; # updating the todo list
-          webfetch = "allow"; # fetching a URL
-          websearch = "allow"; # web/code search
-          codesearch = "allow"; # web/code search
-          external_directory = "allow"; # triggered when a tool touches paths outside the project working directory
-          doom_loop = "deny"; # triggered when the same tool call repeats 3 times with identical input
-        };
-      };
+    # We're running in a strict sandbox, so let's relax the default permissions.
+    # Set at top level so all agents (build, plan, custom) inherit them.
+    permission = {
+      "*" = "allow";
+      lsp = "deny"; # we have a better serena for this
+      doom_loop = "deny";
     };
   };
 
