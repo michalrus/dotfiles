@@ -79,6 +79,7 @@ in {
           flake.packages.${pkgs.stdenv.hostPlatform.system}.wayland-random-input
           pkgs.swaynotificationcenter
           pkgs.hypridle
+          pkgs.wl-clipboard
           pkgs.wtype
           pkgs.grim
           pkgs.brightnessctl
