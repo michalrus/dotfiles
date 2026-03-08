@@ -67,6 +67,7 @@ in {
           setopt PUSHD_SILENT
 
           unsetopt EXTENDED_GLOB
+          setopt NO_EQUALS
 
           setopt APPEND_HISTORY
 

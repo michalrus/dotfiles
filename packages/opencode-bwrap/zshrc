@@ -12,6 +12,7 @@ __show_ec() {
   fi
 }
 setopt PROMPT_SUBST
+setopt NO_EQUALS
 PS1=$'\n''$(__show_ec)%B%F{green}%n@%m%f%b:%B%F{blue}%~%f%b%# '
 
 stty -ixon       # turn off C-s and C-q
