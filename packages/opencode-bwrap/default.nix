@@ -38,6 +38,7 @@
       uv.disabled = true;
       nixfmt.disabled = true;
       prettier.disabled = true;
+      gofmt.disable = true;
       treefmt = {
         command = ["treefmt" "$FILE"];
         extensions = [
@@ -46,6 +47,7 @@
           ".css"
           ".envrc"
           ".envrc.*"
+          ".go"
           ".html"
           ".js"
           ".json"

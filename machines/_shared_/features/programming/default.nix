@@ -8,6 +8,7 @@
       programs = {
         alejandra.enable = true; # Nix
         clang-format.enable = true; # Nix
+        gofumpt.enable = true; # Go
         prettier.enable = true;
         ruff-check.enable = true; # Python
         ruff-format.enable = true; # Python
