@@ -27,7 +27,10 @@ pkgs.writeShellApplication rec {
         stable. Overlays are kept on disk until you prune them. All images live
         under `~/.local/share/qemu-win10/*.qcow2`.
 
-        The virtual machine is run without network access.
+        The virtual machine always has a NIC present (e1000) but with no
+        network backend attached, so there is no network access. Pass
+        `--net` to enable user-mode (NAT) internet access; this option
+        is only available with `--apps` and `--apps-rw`.
 
         There's also a single shared directory between the host and guest for
         file transfer.
@@ -66,6 +69,8 @@ pkgs.writeShellApplication rec {
           `${name} --install-base --iso ~/Downloads/Win10-LTSC.iso --iso ~/Downloads/Drivers.iso`
         - Boot a named apps image read-write to install/update apps:
           `${name} --apps-rw gamebox --iso ~/Downloads/Installer.iso`
+        - Normal ephemeral run with internet access:
+          `${name} --apps finereader --net`
         - Run with a custom shared directory:
           `${name} --apps finereader --share-dir ~/share/qemu`
         - Prune past overlays:

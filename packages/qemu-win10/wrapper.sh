@@ -16,8 +16,8 @@ usage() {
   cat <<EOF
 usage:
   $prog --install-base [--iso <iso> ...]
-  $prog -a, --apps <name> [--iso <iso> ...]
-  $prog --apps-rw <name> [--iso <iso> ...]
+  $prog -a, --apps <name> [--net] [--iso <iso> ...]
+  $prog --apps-rw <name> [--net] [--iso <iso> ...]
   $prog --prune-overlays
   $prog --unsafe-base-rw [--iso <iso> ...]
   $prog -l, --list-apps
@@ -25,6 +25,7 @@ usage:
 
 options:
   -m, --mem <size>   Set RAM size (default: 4G)
+  --net              Enable user-mode internet access (apps/apps-rw only)
   --iso <file>       Attach an ISO image (repeatable)
   --share-dir <dir>  Override the shared host directory
 
@@ -69,6 +70,7 @@ wait_for_spice() {
 mode=""
 apps_name=""
 install_base="false"
+enable_net="false"
 isos=()
 
 set_mode() {
@@ -87,7 +89,7 @@ set_apps_name() {
   apps_name="$next_name"
 }
 
-if ! parsed_args=$(getopt -o a:hlm: --long help,mem:,install-base,unsafe-base-rw,apps:,apps-rw:,iso:,share-dir:,list-apps,prune-overlays -- "$@"); then
+if ! parsed_args=$(getopt -o a:hlm: --long help,mem:,install-base,unsafe-base-rw,apps:,apps-rw:,net,iso:,share-dir:,list-apps,prune-overlays -- "$@"); then
   usage
   exit 2
 fi
@@ -112,6 +114,10 @@ while true; do
     set_mode "apps-rw"
     set_apps_name "$2"
     shift 2
+    ;;
+  --net)
+    enable_net="true"
+    shift 1
     ;;
   --mem | -m)
     mem="$2"
@@ -159,6 +165,10 @@ fi
 if [ -z "$mode" ]; then
   usage
   exit 2
+fi
+
+if [ "$enable_net" = "true" ] && [ "$mode" != "apps" ] && [ "$mode" != "apps-rw" ]; then
+  die "--net can only be used with --apps or --apps-rw"
 fi
 
 [ -n "$shared_dir" ] || die "--share-dir requires a path"
@@ -264,11 +274,22 @@ qemu_args=(
   -device ich9-intel-hda
   -device "hda-duplex,audiodev=audio0"
   -spice "port=$spice_port,addr=$spice_addr,disable-ticketing=on,image-compression=off,seamless-migration=on"
-  -nic none
   -boot menu=on
   -virtfs "local,path=$shared_dir,mount_tag=$share_tag,security_model=none"
   -drive "file=$disk_image,if=virtio,format=qcow2,cache=writeback,discard=unmap"
 )
+
+if [ "$enable_net" = "true" ]; then
+  qemu_args+=(
+    -netdev "user,id=net0"
+    -device "e1000,netdev=net0"
+  )
+else
+  qemu_args+=(
+    -nic none
+    -device "e1000"
+  )
+fi
 
 if [ "$mode" = "install-base" ] || [ "$mode" = "unsafe-base-rw" ]; then
   qemu_args+=(
