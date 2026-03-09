@@ -23,6 +23,18 @@ This file lists the CLI tools available on PATH and the tools you prefer to use.
 - The GitHub CLI (`gh`) is available for repository search, issues, and PR workflows.
 - Serena LSP/MCP tools are available to you for semantic code navigation and edits (symbol search, references, rename, targeted replacements) and should be used when helpful.
 
+## Do not search `/nix/store` directly
+
+NEVER run `fd`, `find`, `rg`, `grep`, `ls`, or any other search/listing tool directly on `/nix/store` (or broad globs like `/nix/store/*`). The store may contain millions of paths from years-old derivations that were never garbage-collected, so searching it is both slow and meaningless.
+
+To locate a store path, first obtain the **exact top-level derivation output** (including hash) from an authoritative Nix command, for example:
+
+- `nix eval` / `nix-instantiate --eval` to query an attribute
+- `nix build` / `nix-build` to realise a derivation and get its output path
+- `nix path-info` to resolve a store path
+
+Once you have the precise output path (e.g. `/nix/store/vk82…-coreutils-full-9.8/`), you are free to use `fd`, `rg`, `find`, `cat`, etc. **inside** that specific derivation directory.
+
 ## Linting (required)
 
 After editing program source files, you must run the language-appropriate linter and fix issues until the tools pass cleanly. This also applies to docs and config files covered by the examples below.
