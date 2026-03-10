@@ -30,6 +30,7 @@ in
         somagic-easycap
       ])
       ++ [
+        ../_shared_/features/firmware
         ../_shared_/features/fav-pkgs-cli-thin
         ../_shared_/features/immutable-users
         ../_shared_/features/kill-user-processes

@@ -60,8 +60,6 @@
   };
   environment.sessionVariables.LIBVA_DRIVER_NAME = "iHD";
 
-  services.smartd.enable = true;
-
   swapDevices = [
     {device = "/dev/disk/by-uuid/5e5256ed-b8a7-48c3-b815-d85792d621d6";}
   ];
@@ -69,11 +67,6 @@
     enable = true;
     memoryPercent = 50;
     algorithm = "zstd";
-  };
-  systemd.oomd = {
-    enable = true;
-    enableRootSlice = true; # like Fedora
-    enableUserSlices = true; # like Fedora
   };
 
   fileSystems = {

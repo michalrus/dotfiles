@@ -50,12 +50,10 @@
       git
       gnumake
       gnupg
-      hdparm
       htop
       btop
       httperf
       httrack
-      hwinfo
       iftop
       imgurbash2
       indent
@@ -68,8 +66,6 @@
       libfaketime
       libjpeg
       libxml2
-      lm_sensors
-      lshw
       lsof
       ltrace
       lz4
@@ -95,10 +91,8 @@
       p7zip
       pass
       patchelf
-      pciutils
       pstree
       man-pages-posix
-      powertop
       pv
       safecopy
       silver-searcher
@@ -114,7 +108,6 @@
       tunctl
       unixtools.xxd
       unzip
-      usbutils
       watchexec
       wget
       which

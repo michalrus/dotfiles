@@ -20,6 +20,7 @@ in
       flake.nixosModules.gnu-screen
       {services.gnu-screen.usersAlways = ["root" "km"];}
 
+      ../_shared_/features/firmware
       ../_shared_/features/fav-pkgs-cli-thin
       ../_shared_/features/immutable-users
       ../_shared_/features/ip-reject-not-drop
