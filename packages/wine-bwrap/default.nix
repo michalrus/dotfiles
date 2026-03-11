@@ -92,7 +92,7 @@
           --bind "$wine_prefix" "$wine_prefix"
           --hostname localhost
           --ro-bind /etc/resolv.conf /etc/resolv.conf
-          --ro-bind ${pkgs.writeText "etc-hosts" "127.0.0.1 localhost"} /etc/hosts
+          --ro-bind ${pkgs.writeText "etc-hosts" "127.0.0.1 localhost\n"} /etc/hosts
           --ro-bind /etc/static/ssl /etc/static/ssl
           --ro-bind /etc/ssl /etc/ssl
           --ro-bind /sys/block /sys/block

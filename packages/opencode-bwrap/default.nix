@@ -182,6 +182,7 @@
         --tmpfs "$HOME"
         --ro-bind /nix /nix
         --ro-bind /etc/resolv.conf /etc/resolv.conf
+        --ro-bind ${pkgs.writeText "etc-hosts" "127.0.0.1 localhost\n"} /etc/hosts
         --ro-bind "$etc_passwd" /etc/passwd
         --ro-bind "$etc_group" /etc/group
         --ro-bind /run/current-system/sw /run/current-system/sw/
