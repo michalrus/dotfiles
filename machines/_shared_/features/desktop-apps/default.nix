@@ -80,6 +80,7 @@
         cool-retro-term
         libva-utils
         kdePackages.kdenlive
+        sshfs
       ];
 
       xdg.mimeApps.enable = true;
