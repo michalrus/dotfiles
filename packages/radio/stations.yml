@@ -67,3 +67,7 @@ stations:
 
   - name: "Downtempo: Soma FM: DEF CON Radio"
     url: https://somafm.com/defcon256.pls
+
+  - name: "Muzak: Utopian Scholastic · 1990s Nostalgic Atmospheres"
+    url: https://www.youtube.com/watch?v=6QOUNvMX-ws
+    mpv-override: mpva-android
