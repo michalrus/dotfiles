@@ -17,6 +17,9 @@
     [ "$TERM" != "dumb" ] || exec /bin/sh
   '';
 in {
+  # Export variables like `$XDG_CACHE_HOME`:
+  xdg.enable = true;
+
   programs = {
     bash = {
       enable = true;

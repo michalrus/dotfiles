@@ -80,6 +80,11 @@ in {
         cache-pause-wait=15
       '';
 
+      # Enable timeline preview for videos up to 5 hours (default: 1 hour); if longer, press Shift+T
+      ".config/mpv/script-opts/mpv_thumbnail_script.conf".text = ''
+        autogenerate_max_duration=${toString (5 * 60 * 60)}
+      '';
+
       ".config/yt-dlp/config".text = ''
         --embed-metadata
         --remux-video mp4
