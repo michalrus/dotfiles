@@ -66,7 +66,6 @@
     acpitool
     aegisub
     alsa-utils
-    flake.inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.anki
     audacity
     calibre
     cdparanoia

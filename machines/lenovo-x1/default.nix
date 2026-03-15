@@ -44,6 +44,7 @@ in
         ../_shared_/features/hyprland
         ../_shared_/features/fonts
         ../_shared_/features/desktop-apps
+        ../_shared_/features/anki
         ../_shared_/features/programming
         ../_shared_/features/chromium
         ../_shared_/features/games
