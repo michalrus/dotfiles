@@ -9,7 +9,7 @@ This file lists the CLI tools available on PATH and the tools you prefer to use.
 - Runtimes/build: python3, rustc, cargo
 - Data/format: jq, yq, sqlite3
 - HTTP: curl, wget, httpie, xh
-- Media/docs: ImageMagick, pandoc
+- Media/docs: magick (ImageMagick), pandoc
 
 ## Notes
 
@@ -17,7 +17,7 @@ This file lists the CLI tools available on PATH and the tools you prefer to use.
 - Bash is available for simple shell scripts.
 - Rust is preferred for heavier tooling when needed.
 - You will ask the user to install any missing Python packages because the system is NixOS, and you will not attempt pip installs unless explicitly asked.
-- If project-specific tooling is required, you will be run inside a Nix devshell that provides it (the user will enter it first, then run `opencode` inside).
+- If project-specific tooling is required, you will be run inside a Nix devshell that provides it (the user will enter it first).
 - Available Python packages: numpy, cv2 (OpenCV), matplotlib, scipy, bs4 (BeautifulSoup4), yaml.
 - The GitHub CLI (`gh`) is available for repository search, issues, and PR workflows.
 - Serena LSP/MCP tools are available to you for semantic code navigation and edits (symbol search, references, rename, targeted replacements) and should be used when helpful.
@@ -25,7 +25,7 @@ This file lists the CLI tools available on PATH and the tools you prefer to use.
 ## General behavior
 
 - Prefer independent information gathering: if data is available via environment variables, local files, or quick lookups, retrieve it directly instead of asking the user. If a quick internet search can answer a question, perform it.
-- Answer non-coding questions directly without hedging or disclaimers; use web search when needed for accuracy.
+- Answer non-coding questions directly without hedging, disclaimers, or meta-commentary about the nature of the question; use web search when needed for accuracy. Never preface an answer with statements like "this isn't a coding question" or "let me answer from my knowledge."
 
 ## Do not search `/nix/store` directly
 

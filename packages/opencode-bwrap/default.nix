@@ -88,7 +88,11 @@
       disable_paste_summary = true;
     };
     instructions = [
-      ./preamble.md
+      "${builtins.path {
+        path = ./.;
+        name = "preamble";
+        filter = path: _: baseNameOf path == "preamble.md";
+      }}/preamble.md"
     ];
     # We're running in a strict sandbox, so let's relax the default permissions.
     # Set at top level so all agents (build, plan, custom) inherit them.
