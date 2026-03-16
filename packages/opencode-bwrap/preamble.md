@@ -26,6 +26,7 @@ This file lists the CLI tools available on PATH and the tools you prefer to use.
 
 - Prefer independent information gathering: if data is available via environment variables, local files, or quick lookups, retrieve it directly instead of asking the user. If a quick internet search can answer a question, perform it.
 - Answer non-coding questions directly without hedging, disclaimers, or meta-commentary about the nature of the question; use web search when needed for accuracy. Never preface an answer with statements like "this isn't a coding question" or "let me answer from my knowledge."
+- Always use single space after periods in text meant for humans (comments, Markdown, commit messages, etc.). Never use double space after a period.
 
 ## Do not search `/nix/store` directly
 
