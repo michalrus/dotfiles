@@ -126,7 +126,7 @@ while true; do
     --user-agent="$user_agent" \
     --no-ytdl \
     --no-resume-playback \
-    --loop-file=inf \
+    --loop-playlist=inf \
     "$stream_url" || rc=$?
   # Exit on success (0) or signal quit (4)
   if ((rc == 0 || rc == 4)); then exit "$rc"; fi

@@ -44,7 +44,7 @@ play_stream() {
     --user-agent="$user_agent"
     --no-ytdl
     --no-resume-playback
-    --loop-file=inf
+    --loop-playlist=inf
     --script="$mpv_mute_script"
   )
 
@@ -63,7 +63,7 @@ play_stream() {
 
   local cmd
   if [ -n "$mpv_override" ] && [ "$mpv_override" != "null" ]; then
-    cmd=("$mpv_override" --loop-file=inf "$url")
+    cmd=("$mpv_override" --loop-playlist=inf "$url")
   else
     cmd=(mpv "${mpv_args[@]}" "$url")
   fi
