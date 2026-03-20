@@ -136,7 +136,7 @@
         fi
 
         # shellcheck disable=SC2016
-        exec bwrap \
+        exec ${lib.getExe pkgs.bubblewrap} \
           "''${bwrap_opts[@]}" \
           -- ${lib.getExe pkgs.bash} -c ${lib.escapeShellArg ((lib.optionalString (!shareNet) ''
             # Set-up the loopback interface, because some apps will not accept missing network:

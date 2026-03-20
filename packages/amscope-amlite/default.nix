@@ -1,5 +1,6 @@
 {
   stdenv,
+  lib,
   fetchzip,
   autoPatchelfHook,
   gcc,
@@ -10,6 +11,7 @@
   libxcb,
   libXrender,
   writeShellApplication,
+  bubblewrap,
 }: let
   # This is the same exact hash as on the installation CD added to AmScope MU1403:
   #
@@ -61,7 +63,7 @@
     name = "AmLite";
     text = ''
       mkdir -p "$HOME"/Pictures/AmLite
-      exec bwrap \
+      exec ${lib.getExe bubblewrap} \
         --unshare-all --new-session --die-with-parent \
         --clearenv \
         --proc /proc \
