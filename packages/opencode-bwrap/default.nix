@@ -146,7 +146,7 @@
 
   safe = pkgs.writeShellApplication {
     name = "opencode-bwrap";
-    runtimeInputs = with pkgs; [coreutils findutils];
+    runtimeInputs = with pkgs; [bubblewrap coreutils findutils];
     text = ''
       # Keep build-time-only dependencies alive (prevent GC):
       # ${lib.getExe bun2nix}
@@ -229,6 +229,16 @@
         mkdir -p "$sandbox_home"/"$d"
         bwrap_opts+=( --bind "$sandbox_home"/"$d" "$HOME"/"$d" )
       done
+
+      # Host's Nix evaluation cache (tarballs, git archives fetched during
+      # flake eval) mounted read-only with a tmpfs overlay so the sandbox
+      # appears to have a writable cache without leaking writes to the host.
+      if [ -d "$HOME/.cache/nix" ]; then
+        bwrap_opts+=(
+          --overlay-src "$HOME/.cache/nix"
+          --tmp-overlay "$HOME/.cache/nix"
+        )
+      fi
 
       for f in "''${persist_files[@]}" ; do
         touch "$sandbox_home"/"$f"
