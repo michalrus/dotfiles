@@ -223,7 +223,6 @@
         --setenv LOCALE_ARCHIVE_2_27 "$LOCALE_ARCHIVE_2_27"
         --setenv NIX_PATH ${lib.escapeShellArg "nixpkgs=${pkgs.path}"}
         --setenv OPENCODE_DISABLE_LSP_DOWNLOAD "true"
-        --setenv OPENCODE_CONFIG ${pkgs.writeText "config.json" (builtins.toJSON config)}
       )
 
       for d in "''${persist_dirs[@]}" ; do
@@ -245,6 +244,9 @@
 
       # opencode-notifier config
       bwrap_opts+=( --ro-bind ${pkgs.writeText "opencode-notifier.json" (builtins.toJSON opencode-notifier-config)} "$HOME"/.config/opencode/opencode-notifier.json )
+
+      # OpenCode config
+      bwrap_opts+=( --ro-bind ${pkgs.writeText "config.json" (builtins.toJSON config)} "$HOME"/.config/opencode/config.json )
 
       rw_opts=()
       ro_git_opts=()
