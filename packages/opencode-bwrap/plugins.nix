@@ -3,6 +3,52 @@
   lib,
   bun2nix,
 }: let
+  # See <https://github.com/ex-machina-co/opencode-anthropic-auth/pull/13>:
+  opencode-anthropic-auth = let
+    src = pkgs.fetchFromGitHub {
+      owner = "ex-machina-co";
+      repo = "opencode-anthropic-auth";
+      rev = "78ac824951ccb6e39c036f8ff3933dc23a877cea"; # pull/13/head
+      hash = "sha256-VUhShn/Pg3SWW0xjc0TO4bVtlUilnadHbAs+CY3V6nc=";
+    };
+    # IFD: generate bun.nix from the upstream bun.lock using the bun2nix CLI.
+    bun-nix = pkgs.runCommandLocal "opencode-anthropic-auth-bun.nix" {} ''
+      ${lib.getExe bun2nix} --lock-file ${src}/bun.lock --output-file "$out"
+    '';
+  in
+    pkgs.stdenv.mkDerivation rec {
+      pname = "opencode-anthropic-auth";
+      version = "0.0.20-pull.13";
+
+      inherit src;
+
+      nativeBuildInputs = [bun2nix.hook];
+
+      bunDeps = bun2nix.fetchBunDeps {
+        bunNix = bun-nix;
+      };
+
+      dontUseBunPatch = true;
+      dontUseBunBuild = true;
+      dontUseBunCheck = true;
+      dontUseBunInstall = true;
+
+      buildPhase = ''
+        runHook preBuild
+        bun build src/index.ts --outdir dist --target node
+        runHook postBuild
+      '';
+
+      installPhase = ''
+        runHook preInstall
+        mkdir -p "$out/dist"
+        cp dist/index.js "$out/dist/index.js"
+        printf "\n\n// src: %s\n" ${src} >>"$out/dist/index.js"
+        printf "\n\n// bun-nix: %s\n" ${bun-nix} >>"$out/dist/index.js"
+        runHook postInstall
+      '';
+    };
+
   opencode-notifier-src = pkgs.fetchFromGitHub {
     owner = "mohak34";
     repo = "opencode-notifier";
@@ -91,12 +137,17 @@
 
   opencode-plugins = pkgs.linkFarm "opencode-plugins" [
     {
+      name = "opencode-anthropic-auth.js";
+      path = "${opencode-anthropic-auth}/dist/index.js";
+    }
+    {
       name = "opencode-notifier.js";
       path = "${opencode-notifier}/dist/index.js";
     }
   ];
 in {
   inherit
+    opencode-anthropic-auth
     opencode-notifier
     opencode-notifier-config
     opencode-notifier-sounds

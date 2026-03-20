@@ -1,0 +1,13 @@
+diff --git a/packages/opencode/src/plugin/index.ts b/packages/opencode/src/plugin/index.ts
+index 8790efac4..467b1eb4c 100644
+--- a/packages/opencode/src/plugin/index.ts
++++ b/packages/opencode/src/plugin/index.ts
+@@ -16,7 +16,7 @@ import { gitlabAuthPlugin as GitlabAuthPlugin } from "@gitlab/opencode-gitlab-au
+ export namespace Plugin {
+   const log = Log.create({ service: "plugin" })
+ 
+-  const BUILTIN = ["opencode-anthropic-auth@0.0.13"]
++  const BUILTIN: string[] = []
+ 
+   // Built-in plugins that are directly imported (not installed from npm)
+   const INTERNAL_PLUGINS: PluginInstance[] = [CodexAuthPlugin, CopilotAuthPlugin, GitlabAuthPlugin]
