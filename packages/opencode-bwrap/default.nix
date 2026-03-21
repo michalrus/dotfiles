@@ -186,7 +186,6 @@
         --share-net
         --tmpfs /tmp
         --tmpfs /run/user/"$UID"
-        --ro-bind /run/user/"$UID"/bwrap-escape-hatch.sock /run/user/"$UID"/bwrap-escape-hatch.sock
         --setenv XDG_RUNTIME_DIR /run/user/"$UID"
         --tmpfs "$HOME"
         --ro-bind /nix /nix
@@ -244,6 +243,10 @@
         touch "$sandbox_home"/"$f"
         bwrap_opts+=( --bind "$sandbox_home"/"$f" "$HOME"/"$f" )
       done
+
+      if [ -S /run/user/"$UID"/bwrap-escape-hatch.sock ]; then
+        bwrap_opts+=( --ro-bind /run/user/"$UID"/bwrap-escape-hatch.sock /run/user/"$UID"/bwrap-escape-hatch.sock )
+      fi
 
       if [ -f "$HOME"/.config/git/ignore ] ; then
         bwrap_opts+=( --ro-bind "$HOME"/.config/git/ignore "$HOME"/.config/git/ignore )
