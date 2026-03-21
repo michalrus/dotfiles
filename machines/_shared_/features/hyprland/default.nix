@@ -12,6 +12,9 @@ in {
       hyprland = super.hyprland.overrideAttrs (drv: {
         patches = (drv.patches or []) ++ [./hyprland--swap-workspaces.patch];
       });
+      hyprlock = super.hyprlock.overrideAttrs (drv: {
+        patches = (drv.patches or []) ++ [./hyprlock--date-variable.patch];
+      });
     })
   ];
 

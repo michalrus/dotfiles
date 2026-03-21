@@ -1,0 +1,58 @@
+--- a/src/renderer/widgets/IWidget.cpp	2026-03-21 11:27:25.564942028 +0000
++++ b/src/renderer/widgets/IWidget.cpp	2026-03-21 11:32:31.320648338 +0000
+@@ -3,6 +3,7 @@
+ #include "../../core/hyprlock.hpp"
+ #include "../../auth/Auth.hpp"
+ #include <chrono>
++#include <ctime>
+ #include <unistd.h>
+ #include <pwd.h>
+ #include <hyprutils/string/String.hpp>
+@@ -172,6 +173,35 @@
+         (HRS < 12 ? " AM" : " PM");
+ }
+ 
++static std::string getDate(const std::string& fmt) {
++    const auto NOW = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
++    struct tm  tm;
++    localtime_r(&NOW, &tm);
++    char buf[256];
++    strftime(buf, sizeof(buf), fmt.c_str(), &tm);
++    return buf;
++}
++
++static void replaceAllDate(std::string& str) {
++    const std::string DEFAULT_FMT = "%A, %B %-d";
++    size_t            pos         = 0;
++
++    while ((pos = str.find("$DATE", pos)) != std::string::npos) {
++        std::string fmt     = DEFAULT_FMT;
++        size_t      replLen = 5; // length of "$DATE"
++        if (pos + 5 < str.size() && str[pos + 5] == '[') {
++            const auto CLOSE = str.find(']', pos + 6);
++            if (CLOSE != std::string::npos) {
++                fmt     = str.substr(pos + 6, CLOSE - pos - 6);
++                replLen = CLOSE - pos + 1;
++            }
++        }
++        const std::string DATE = getDate(fmt);
++        str.replace(pos, replLen, DATE);
++        pos += DATE.length();
++    }
++}
++
+ IWidget::SFormatResult IWidget::formatString(std::string in) {
+ 
+     auto  uidPassword = getpwuid(getuid());
+@@ -199,6 +229,11 @@
+         result.updateEveryMs = result.updateEveryMs != 0 && result.updateEveryMs < 1000 ? result.updateEveryMs : 1000;
+     }
+ 
++    if (in.contains("$DATE")) {
++        replaceAllDate(in);
++        result.updateEveryMs = result.updateEveryMs != 0 && result.updateEveryMs < 60000 ? result.updateEveryMs : 60000;
++    }
++
+     if (in.contains("$ATTEMPTS")) {
+         replaceAllAttempts(in);
+         result.allowForceUpdate = true;
