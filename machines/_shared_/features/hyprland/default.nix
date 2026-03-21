@@ -144,8 +144,8 @@ in {
         echo >&2
         echo >&2 -e "Run '\e[1mHyprland\e[0m' or '\e[1mhl\e[0m' to start a graphical environment."
 
-        alias ${lib.escapeShellArg "Hyprland=clear && printf '\\e[3J' && exec Hyprland"}
-        alias ${lib.escapeShellArg "hl=clear && printf '\\e[3J' && exec Hyprland"}
+        alias ${lib.escapeShellArg "Hyprland=clear && printf '\\e[3J' && exec systemd-cat -t Hyprland Hyprland"}
+        alias ${lib.escapeShellArg "hl=clear && printf '\\e[3J' && exec systemd-cat -t Hyprland Hyprland"}
       ;;
       esac
     fi
