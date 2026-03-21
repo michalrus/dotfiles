@@ -52,6 +52,9 @@ in
         ../_shared_/features/amscope-amlite
         ../_shared_/features/logitech-mouse
 
+        ../_shared_/features/pipewire-system-wide
+        {users.groups.pipewire.members = ["m" "mw" "md" "guest"];}
+
         ./features/android
         ./features/bluetooth
         ./features/fav-pkgs-cli-fat

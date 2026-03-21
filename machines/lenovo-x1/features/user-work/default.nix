@@ -15,7 +15,7 @@ in {
       uid = 1337;
 
       description = "Michal Rus (w)";
-      extraGroups = ["audio" "nonet" "scanner" "networkmanager" "wireshark" "cdrom" "video"];
+      extraGroups = ["nonet" "scanner" "networkmanager" "wireshark" "cdrom" "video"];
       dotfiles-old.profiles = [
         "base"
         "michalrus/base"

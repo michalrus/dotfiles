@@ -8,7 +8,7 @@ in {
     guestAccount = {
       enable = true;
       skeleton = "/home/guest.skel";
-      groups = ["audio" "nonet" "scanner" "networkmanager" "video"];
+      groups = ["nonet" "scanner" "networkmanager" "video"];
     };
 
     users.guest = {

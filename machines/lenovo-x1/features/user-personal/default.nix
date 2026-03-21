@@ -8,7 +8,6 @@
       description = "Michal Rus";
       extraGroups = [
         "wheel"
-        "audio"
         "nonet"
         "scanner"
         "networkmanager"

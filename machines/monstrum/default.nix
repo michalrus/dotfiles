@@ -91,13 +91,8 @@ in
         '';
       }
 
-      ({pkgs, ...}: {
-        services.pipewire = {
-          enable = true;
-          pulse.enable = true;
-        };
-        environment.systemPackages = with pkgs; [pavucontrol pulsemixer];
-      })
+      ../_shared_/features/pipewire-system-wide
+      {users.groups.pipewire.members = ["k" "m" "km"];}
 
       ({pkgs, ...}: {
         environment.systemPackages = [flake.packages.${pkgs.stdenv.hostPlatform.system}.radio];
