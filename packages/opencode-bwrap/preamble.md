@@ -30,7 +30,7 @@ This file lists the CLI tools available on PATH and the tools you prefer to use.
 
 ## Do not search `/nix/store` directly
 
-NEVER run `fd`, `find`, `rg`, `grep`, `ls`, or any other search/listing tool directly on `/nix/store` (or broad globs like `/nix/store/*`). The store may contain millions of paths from years-old derivations that were never garbage-collected, so searching it is both slow and meaningless.
+NEVER run `fd`, `find`, `rg`, `grep`, `ls`, or any other search/listing tool directly on `/nix/store` (or broad globs like `/nix/store/*`). This also means never searching from `/` or any other ancestor directory that would recurse into `/nix/store`. The store may contain millions of paths from years-old derivations that were never garbage-collected, so searching it is both slow and meaningless.
 
 To locate a store path, first obtain the **exact top-level derivation output** (including hash) from an authoritative Nix command, for example:
 
