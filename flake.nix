@@ -57,19 +57,13 @@
       flake = false;
     };
 
-    bun2nix = {
-      url = "github:nix-community/bun2nix";
-      inputs.nixpkgs.follows = "nixpkgs-2511";
-      inputs.treefmt-nix.follows = "treefmt-nix";
-    };
-
-    serena = {
-      url = "github:oraios/serena/main";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-
     nixlint = {
       url = "github:michalrus/nixlint";
+      inputs.nixpkgs.follows = "nixpkgs-2511";
+    };
+
+    opencode-bwrap-nix = {
+      url = "github:michalrus/opencode-bwrap-nix";
       inputs.nixpkgs.follows = "nixpkgs-2511";
     };
   };
@@ -143,11 +137,6 @@
           hyprland-screenshot = callPackage ./packages/hyprland-screenshot {};
           jumpcloud-password-manager = callPackage ./packages/jumpcloud-password-manager {};
           lv2-cpp-tools = callPackage ./packages/lv2-cpp-tools {};
-          opencode-bwrap = callPackage ./packages/opencode-bwrap {
-            inherit (inputs) nixpkgs-unstable;
-            bun2nix = inputs.bun2nix.packages.${system}.default;
-            serena = inputs.serena.packages.${system}.default;
-          };
           on-vt-switch = callPackage ./packages/on-vt-switch {};
           naps2 = callPackage ./packages/naps2 {};
           noise = callPackage ./packages/noise {};

@@ -28,12 +28,19 @@
           sed -r '/--tree-root-file=/ d' -i $out/bin/treefmt
         '';
     });
-  inherit (flake.packages.${pkgs.stdenv.hostPlatform.system}) opencode-bwrap;
 in {
   home-manager.sharedModules = [
-    opencode-bwrap.bwrap-escape-hatch.hmModule
+    flake.inputs.opencode-bwrap-nix.homeManagerModules.default
     {
-      services.bwrap-escape-hatch.enable = true;
+      programs.opencode-bwrap = {
+        enable = true;
+        preamble = "${builtins.path {
+          path = ./.;
+          name = "preamble";
+          filter = path: _: baseNameOf path == "preamble.md";
+        }}/preamble.md";
+      };
+      home.shellAliases.oc = "opencode-bwrap";
 
       home.packages = with pkgs; [
         git-filter-repo
@@ -49,7 +56,6 @@ in {
         cargo
         cargo-nextest
         clippy
-        opencode-bwrap
         flake.inputs.nixlint.packages.${pkgs.stdenv.hostPlatform.system}.nixlint
         fd
         gh
@@ -68,7 +74,6 @@ in {
         sqlint
         statix
       ];
-      home.shellAliases.oc = "opencode-bwrap";
     }
   ];
 }
