@@ -404,6 +404,7 @@
         "nixpkgs-unstable": "nixpkgs-unstable",
         "opencode-bwrap-nix": "opencode-bwrap-nix",
         "treefmt-nix": "treefmt-nix_2",
+        "wine-bwrap-nix": "wine-bwrap-nix",
         "yt-dlp": "yt-dlp"
       }
     },
@@ -544,6 +545,26 @@
       "original": {
         "owner": "pyproject-nix",
         "repo": "uv2nix",
+        "type": "github"
+      }
+    },
+    "wine-bwrap-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-2511"
+        ]
+      },
+      "locked": {
+        "lastModified": 1774205327,
+        "narHash": "sha256-iuRFSpBGemQoYdnu7ZD3FaKYlzoVl0WVDlWXXxO9dcE=",
+        "owner": "michalrus",
+        "repo": "wine-bwrap-nix",
+        "rev": "b4bc93c844baaa496d46832322e95f22f7c992ad",
+        "type": "github"
+      },
+      "original": {
+        "owner": "michalrus",
+        "repo": "wine-bwrap-nix",
         "type": "github"
       }
     },
