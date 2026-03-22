@@ -71,6 +71,11 @@
       url = "github:michalrus/wine-bwrap-nix";
       inputs.nixpkgs.follows = "nixpkgs-2511";
     };
+
+    radio-nix = {
+      url = "github:michalrus/radio.nix";
+      inputs.nixpkgs.follows = "nixpkgs-2511";
+    };
   };
 
   outputs = inputs: {
@@ -128,7 +133,6 @@
         inherit (inputs.nixpkgs-2511.legacyPackages.${system}) callPackage;
       in
         inputs.self.lib.filterSystem system rec {
-          accuradio = callPackage ./packages/accuradio {};
           amscope-amlite = callPackage ./packages/amscope-amlite {};
           autotalent = callPackage ./packages/autotalent {};
           cp2104-gpio = callPackage ./packages/cp2104-gpio {};
@@ -147,11 +151,6 @@
           noise = callPackage ./packages/noise {};
           pms5003 = callPackage ./packages/pms5003 {};
           qemu-win10 = callPackage ./packages/qemu-win10 {};
-          radio = callPackage ./packages/radio {
-            inherit accuradio radio-chillhop radio-jazzradio-fr;
-          };
-          radio-chillhop = callPackage ./packages/radio-chillhop {};
-          radio-jazzradio-fr = callPackage ./packages/radio-jazzradio-fr {};
           rofi-unicode-input = callPackage ./packages/rofi-unicode-input {};
           talentedhack = callPackage ./packages/talentedhack {};
           tap-plugins = callPackage ./packages/tap-plugins {};

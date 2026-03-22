@@ -387,6 +387,26 @@
         "type": "github"
       }
     },
+    "radio-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-2511"
+        ]
+      },
+      "locked": {
+        "lastModified": 1774220871,
+        "narHash": "sha256-Y2jLSuEyXWFOioieo5vJRkjORHBrZd1Pr30jjlwatFQ=",
+        "owner": "michalrus",
+        "repo": "radio.nix",
+        "rev": "0431be9c93785f91614e69aff7df6369786aded0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "michalrus",
+        "repo": "radio.nix",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "agenix": "agenix",
@@ -403,6 +423,7 @@
         "nixpkgs-macos-sdk-13": "nixpkgs-macos-sdk-13",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "opencode-bwrap-nix": "opencode-bwrap-nix",
+        "radio-nix": "radio-nix",
         "treefmt-nix": "treefmt-nix_2",
         "wine-bwrap-nix": "wine-bwrap-nix",
         "yt-dlp": "yt-dlp"

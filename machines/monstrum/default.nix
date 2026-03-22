@@ -95,7 +95,7 @@ in
       {users.groups.pipewire.members = ["k" "m" "km"];}
 
       ({pkgs, ...}: {
-        environment.systemPackages = [flake.packages.${pkgs.stdenv.hostPlatform.system}.radio];
+        environment.systemPackages = [flake.inputs.radio-nix.packages.${pkgs.stdenv.hostPlatform.system}.radio];
         home-manager.sharedModules = [{home.shellAliases.accuradio = "radio";}];
       })
 
