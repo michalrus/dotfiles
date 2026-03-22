@@ -50,7 +50,7 @@ in {
         cargo-nextest
         clippy
         opencode-bwrap
-        flake.packages.${pkgs.stdenv.hostPlatform.system}.nixlint
+        flake.inputs.nixlint.packages.${pkgs.stdenv.hostPlatform.system}.nixlint
         fd
         gh
         httpie # HTTP requests

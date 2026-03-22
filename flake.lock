@@ -198,6 +198,26 @@
         "type": "github"
       }
     },
+    "nixlint": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-2511"
+        ]
+      },
+      "locked": {
+        "lastModified": 1774142184,
+        "narHash": "sha256-0kdJSrwKwOqZ6tKXN50q4JP5cBYcsUpYP/xGM6EeGC0=",
+        "owner": "michalrus",
+        "repo": "nixlint",
+        "rev": "db1b17016a9715ddafbbb18d7258f7012d548c4a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "michalrus",
+        "repo": "nixlint",
+        "type": "github"
+      }
+    },
     "nixos-hardware": {
       "locked": {
         "lastModified": 1771969195,
@@ -352,6 +372,7 @@
         "home-manager-2511": "home-manager-2511",
         "malicious-hosts": "malicious-hosts",
         "nix-darwin-2511": "nix-darwin-2511",
+        "nixlint": "nixlint",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs-2311": "nixpkgs-2311",
         "nixpkgs-2511": "nixpkgs-2511",

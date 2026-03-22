@@ -67,6 +67,11 @@
       url = "github:oraios/serena/main";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+
+    nixlint = {
+      url = "github:michalrus/nixlint";
+      inputs.nixpkgs.follows = "nixpkgs-2511";
+    };
   };
 
   outputs = inputs: {
@@ -138,7 +143,6 @@
           hyprland-screenshot = callPackage ./packages/hyprland-screenshot {};
           jumpcloud-password-manager = callPackage ./packages/jumpcloud-password-manager {};
           lv2-cpp-tools = callPackage ./packages/lv2-cpp-tools {};
-          nixlint = callPackage ./packages/nixlint {};
           opencode-bwrap = callPackage ./packages/opencode-bwrap {
             inherit (inputs) nixpkgs-unstable;
             bun2nix = inputs.bun2nix.packages.${system}.default;
