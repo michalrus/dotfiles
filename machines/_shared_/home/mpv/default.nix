@@ -18,7 +18,13 @@
 in {
   programs.mpv = {
     enable = true;
-    scripts = with pkgs.mpvScripts; [mpris thumbnail autosub easycrop acompressor];
+    scripts = with pkgs.mpvScripts; [
+      mpris
+      thumbfast
+      autosub
+      easycrop
+      acompressor
+    ];
   };
 
   home = {
@@ -60,7 +66,7 @@ in {
       '';
 
       ".config/mpv/mpv.conf".text = ''
-        # for `mpvScripts.thumbnail`
+        # Required by the patched `osc.lua` with `thumbfast` support:
         osc=no
 
         volume-max=400.0
@@ -80,9 +86,14 @@ in {
         cache-pause-wait=15
       '';
 
-      # Enable timeline preview for videos up to 5 hours (default: 1 hour); if longer, press Shift+T
-      ".config/mpv/script-opts/mpv_thumbnail_script.conf".text = ''
-        autogenerate_max_duration=${toString (5 * 60 * 60)}
+      # Stock mpv `osc.lua` patched with ~60 lines of thumbfast integration. The
+      # upstream `po5/thumbfast` `vanilla-osc` branch is based on a ~2019
+      # `osc.lua` and misses 5+ years of improvements, so we patch the current one:
+      ".config/mpv/scripts/osc.lua".source = pkgs.runCommandLocal "osc-thumbfast.lua" {} ''
+        ${lib.getExe pkgs.rsync} -R ${pkgs.mpv-unwrapped.src}/./player/lua/osc.lua .
+        chmod -R +w .
+        ${lib.getExe pkgs.patch} -p1 < ${./thumbfast-osc.patch}
+        cp player/lua/osc.lua $out
       '';
 
       ".config/yt-dlp/config".text = ''
