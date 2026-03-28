@@ -299,9 +299,20 @@ in {
       error_symbol = '[❯](bold red)'
     '';
 
-    packages = [
-      # Has to be managed by home-manager, to trigger installation on Darwin:
-      pkgs.nerd-fonts.iosevka
-    ];
+    packages =
+      [
+        # Has to be managed by home-manager, to trigger installation on Darwin:
+        pkgs.nerd-fonts.iosevka
+      ]
+      ++ (lib.optionals pkgs.stdenv.isLinux [
+        # Like macOS `open` – `xdg-open` but completely detached from the calling terminal:
+        (pkgs.writeShellApplication {
+          name = "open";
+          runtimeInputs = with pkgs; [util-linux xdg-utils];
+          text = ''
+            exec setsid xdg-open "$@" >/dev/null 2>/dev/null </dev/null
+          '';
+        })
+      ]);
   };
 }
