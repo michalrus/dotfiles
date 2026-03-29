@@ -50,6 +50,7 @@ in
         ../_shared_/features/games
         ../_shared_/features/wine
         ../_shared_/features/amscope-amlite
+        ../_shared_/features/flirc
         ../_shared_/features/logitech-mouse
 
         ../_shared_/features/pipewire-system-wide

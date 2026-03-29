@@ -37,6 +37,7 @@ in
       ../_shared_/features/chromium
       ../_shared_/features/games
       ../_shared_/features/wine
+      ../_shared_/features/flirc
       ../_shared_/features/logitech-mouse
 
       ./features/wireguard-michalrus
@@ -80,15 +81,6 @@ in
             ../_shared_/home/alacritty
           ];
         };
-      }
-
-      {
-        services.udev.extraHwdb = ''
-          # Flirc USB (common: 20A0:0006)
-          evdev:input:b0003v20A0p0006*
-            KEYBOARD_KEY_000c00b0=playcd
-            KEYBOARD_KEY_000c00b1=pausecd
-        '';
       }
 
       ../_shared_/features/pipewire-system-wide

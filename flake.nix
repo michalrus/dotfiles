@@ -144,6 +144,7 @@
           dmenu-is-rofi = callPackage ./packages/dmenu-is-rofi {};
           doom-emacs = callPackage ./packages/doom-emacs {inherit (inputs) doom-emacs;};
           doom-emacs-mine = callPackage ./packages/doom-emacs-mine {inherit doom-emacs;};
+          flirc = callPackage ./packages/flirc {};
           git-annex-hacks = callPackage ./packages/git-annex-hacks {};
           gettext-emacs = callPackage ./packages/gettext-emacs {};
           gregorio = callPackage ./packages/gregorio {};
