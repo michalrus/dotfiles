@@ -137,7 +137,6 @@ in {
     };
 
     htop.enable = true;
-    btop.enable = true;
 
     direnv = {
       enable = true;
