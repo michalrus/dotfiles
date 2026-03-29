@@ -164,13 +164,6 @@ in {
       umask 0077
     '';
 
-    file.".ssh/config".text = ''
-      HashKnownHosts no
-      ServerAliveInterval 20
-      PasswordAuthentication no
-      Include ~/.ssh/config.d/*
-    '';
-
     shellAliases = rec {
       l = ''ls -lh --color --group-directories-first $([ "$PWD" = "$HOME" ] && echo "" || echo "-A")'';
       ll = l;
@@ -182,99 +175,108 @@ in {
       spell-password = ''bash -c 'read -s -p "Password: " pw ; echo ; fold -w1 <<<"$pw" | cat -n' '';
     };
 
-    file.".config/starship.toml".text = let
-      darwinSpace =
-        if pkgs.stdenv.isDarwin
-        then " "
-        else ""; # in ‘Terminal.app’ some characters take space of 2?
-    in ''
-      add_newline = true
+    file = {
+      ".ssh/config".text = ''
+        HashKnownHosts no
+        ServerAliveInterval 20
+        PasswordAuthentication no
+        Include ~/.ssh/config.d/*
+      '';
 
-      format = """
-      $status\
-      [\\(](bold bright-blue)\
-      $time\
-      ([·](bright-blue)$cmd_duration)\
-      [\\)](bold bright-blue)\
-      $username\
-      [@](bold bright-blue)\
-      $hostname\
-      [:](bold bright-blue)\
-      $directory\
-      ([\\(](bold bright-blue)\
-      $git_branch$git_commit$git_state$git_metrics$git_status\
-      [\\)](bold bright-blue))$nix_shell
-      $character\
-      """
+      ".config/starship.toml".text = let
+        darwinSpace =
+          if pkgs.stdenv.isDarwin
+          then " "
+          else ""; # in ‘Terminal.app’ some characters take space of 2?
+      in ''
+        add_newline = true
 
-      [status]
-      disabled = false
-      format = '[\(](bold bright-blue)[$int(·$signal_name)]($style)[\)](bold bright-blue)'
-      style = 'bg:red fg:bright-white'
+        format = """
+        $status\
+        [\\(](bold bright-blue)\
+        $time\
+        ([·](bright-blue)$cmd_duration)\
+        [\\)](bold bright-blue)\
+        $username\
+        [@](bold bright-blue)\
+        $hostname\
+        [:](bold bright-blue)\
+        $directory\
+        ([\\(](bold bright-blue)\
+        $git_branch$git_commit$git_state$git_metrics$git_status\
+        [\\)](bold bright-blue))$nix_shell
+        $character\
+        """
 
-      [cmd_duration]
-      min_time = 0
-      show_milliseconds = true
-      format = '[$duration]($style)'
-      show_notifications = true
-      min_time_to_notify = 15_000
-      style = 'cyan bold'
+        [status]
+        disabled = false
+        format = '[\(](bold bright-blue)[$int(·$signal_name)]($style)[\)](bold bright-blue)'
+        style = 'bg:red fg:bright-white'
 
-      [time]
-      disabled = false
-      format = '[$time]($style)'
-      style = 'cyan'
+        [cmd_duration]
+        min_time = 0
+        show_milliseconds = true
+        format = '[$duration]($style)'
+        show_notifications = true
+        min_time_to_notify = 15_000
+        style = 'cyan bold'
 
-      [username]
-      show_always = true
-      format = '[$user]($style)'
-      style_user = 'cyan'
-      style_root = 'bg:purple bright-white bold blink'
+        [time]
+        disabled = false
+        format = '[$time]($style)'
+        style = 'cyan'
 
-      [hostname]
-      ssh_only = false
-      trim_at = ""
-      format = '[$hostname]($style)'
-      style = 'cyan'
+        [username]
+        show_always = true
+        format = '[$user]($style)'
+        style_user = 'cyan'
+        style_root = 'bg:purple bright-white bold blink'
 
-      [directory]
-      format = '[$path]($style)'
-      truncate_to_repo = false
-      truncation_symbol = '…/'
-      truncation_length = 3
-      fish_style_pwd_dir_length = 1
+        [hostname]
+        ssh_only = false
+        trim_at = ""
+        format = '[$hostname]($style)'
+        style = 'cyan'
 
-      [git_branch]
-      always_show_remote = true
-      format = '[$branch(:$remote_name)]($style)'
-      truncation_length = 25
-      truncation_symbol = '…${darwinSpace}'   # FIXME: darwinSpace doesn’t work here – what do?
-      style = 'cyan'
+        [directory]
+        format = '[$path]($style)'
+        truncate_to_repo = false
+        truncation_symbol = '…/'
+        truncation_length = 3
+        fish_style_pwd_dir_length = 1
 
-      [git_commit]
-      format = '[$hash$tag]($style)'
-      style = 'cyan'
-      commit_hash_length = 11
+        [git_branch]
+        always_show_remote = true
+        format = '[$branch(:$remote_name)]($style)'
+        truncation_length = 25
+        truncation_symbol = '…${darwinSpace}'   # FIXME: darwinSpace doesn’t work here – what do?
+        style = 'cyan'
 
-      [git_state]
-      format = ' [$state( $progress_current/$progress_total)]($style)'
+        [git_commit]
+        format = '[$hash$tag]($style)'
+        style = 'cyan'
+        commit_hash_length = 11
 
-      [git_status]
-      format = '( [$all_status$ahead_behind$ahead_count]($style))'
-      up_to_date = ""
-      ahead = '⇡${darwinSpace}'
-      behind = '⇣${darwinSpace}'
-      diverged = '⇡${darwinSpace}$ahead_count⇣${darwinSpace}$behind_count'
-      deleted = '×'
+        [git_state]
+        format = ' [$state( $progress_current/$progress_total)]($style)'
 
-      [nix_shell]
-      symbol = 'nix'
-      format = '[:](bold bright-blue)[$symbol](cyan)'
+        [git_status]
+        format = '( [$all_status$ahead_behind$ahead_count]($style))'
+        up_to_date = ""
+        ahead = '⇡${darwinSpace}'
+        behind = '⇣${darwinSpace}'
+        diverged = '⇡${darwinSpace}$ahead_count⇣${darwinSpace}$behind_count'
+        deleted = '×'
 
-      [character]
-      success_symbol = '[❯](bold bright-blue)'
-      error_symbol = '[❯](bold red)'
-    '';
+        [nix_shell]
+        symbol = 'nix'
+        format = '[:](bold bright-blue)[$symbol](cyan)'
+
+        [character]
+        success_symbol = '[❯](bold bright-blue)'
+        error_symbol = '[❯](bold red)'
+      '';
+    };
 
     packages =
       [
