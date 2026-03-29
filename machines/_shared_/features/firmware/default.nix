@@ -30,6 +30,7 @@
     hwinfo
     i2c-tools
     intel-gpu-tools
+    libva-utils
     linuxPackages.cpupower
     linuxPackages.turbostat
     lm_sensors

@@ -78,7 +78,6 @@
         hunspellDicts.en_US
         mc
         cool-retro-term
-        libva-utils
         kdePackages.kdenlive
         sshfs
       ];
