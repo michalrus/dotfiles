@@ -387,6 +387,26 @@
         "type": "github"
       }
     },
+    "qemu-win10-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-2511"
+        ]
+      },
+      "locked": {
+        "lastModified": 1774751239,
+        "narHash": "sha256-uwhHG5WgDe+xY+ijm9j5L2dzLlJwd2KMtQrzwNJLxNA=",
+        "owner": "michalrus",
+        "repo": "qemu-win10-nix",
+        "rev": "a7d3417bdd3a54876c05785c59da8036381a3a31",
+        "type": "github"
+      },
+      "original": {
+        "owner": "michalrus",
+        "repo": "qemu-win10-nix",
+        "type": "github"
+      }
+    },
     "radio-nix": {
       "inputs": {
         "nixpkgs": [
@@ -423,6 +443,7 @@
         "nixpkgs-macos-sdk-13": "nixpkgs-macos-sdk-13",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "opencode-bwrap-nix": "opencode-bwrap-nix",
+        "qemu-win10-nix": "qemu-win10-nix",
         "radio-nix": "radio-nix",
         "treefmt-nix": "treefmt-nix_2",
         "wine-bwrap-nix": "wine-bwrap-nix",
