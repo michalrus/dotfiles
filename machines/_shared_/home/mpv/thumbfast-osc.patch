@@ -8,7 +8,7 @@
  
  --
  -- Parameters
-@@ -268,6 +269,12 @@
+@@ -268,6 +269,13 @@
      osc_tracklist_warned = false,
  }
  
@@ -16,12 +16,13 @@
 +    width = 0,
 +    height = 0,
 +    disabled = false,
++    has_thumbnail = false,
 +}
 +
  local logo_lines = {
      -- White border
      "{\\c&HE5E5E5&\\p6}m 895 10 b 401 10 0 410 0 905 0 1399 401 1800 895 1800 1390 1800 1790 1399 1790 905 1790 410 1390 10 895 10 {\\p0}",
-@@ -1009,6 +1016,7 @@
+@@ -1009,6 +1017,7 @@
                      end
  
                      local tx = get_virt_mouse_pos()
@@ -29,15 +30,16 @@
                      if slider_lo.adjust_tooltip then
                          if an == 2 then
                              if sliderpos < (s_min + 3) then
-@@ -1033,6 +1041,44 @@
+@@ -1033,6 +1042,46 @@
                      ass_append_alpha(elem_ass, slider_lo.alpha, 0)
                      elem_ass:append(tooltiplabel)
  
 +                    -- thumbfast thumbnail
 +                    if not thumbfast.disabled and thumbfast.width ~= 0 and thumbfast.height ~= 0 then
-+                        local osd_w = mp.get_property_number("osd-width")
-+                        if osd_w then
-+                            local r_w, r_h = get_virt_scale_factor()
++                        local osd_w, osd_h = mp.get_osd_size()
++                        if osd_w and osd_w > 0 and osd_h > 0 then
++                            local r_w = osc_param.playresx / osd_w
++                            local r_h = osc_param.playresy / osd_h
 +
 +                            local tooltip_font_size = (user_opts.layout == "box" or user_opts.layout == "slimbox") and 2 or 12
 +                            local thumb_ty = user_opts.layout ~= "topbar" and element.hitbox.y1 - 8 or element.hitbox.y2 + tooltip_font_size + 8
@@ -65,26 +67,28 @@
 +                                thumb_x,
 +                                thumb_y
 +                            )
++
++                            thumbfast.has_thumbnail = true
 +                        end
 +                    end
-+                else
-+                    if thumbfast.width ~= 0 and thumbfast.height ~= 0 then
-+                        mp.commandv("script-message-to", "thumbfast", "clear")
-+                    end
++                elseif thumbfast.has_thumbnail then
++                    mp.commandv("script-message-to", "thumbfast", "clear")
++                    thumbfast.has_thumbnail = false
                  end
              end
  
-@@ -2225,6 +2271,9 @@
+@@ -2225,6 +2274,10 @@
  
  local function hide_osc()
      msg.trace("hide_osc")
-+    if thumbfast.width ~= 0 and thumbfast.height ~= 0 then
++    if thumbfast.has_thumbnail then
 +        mp.commandv("script-message-to", "thumbfast", "clear")
++        thumbfast.has_thumbnail = false
 +    end
      if not state.enabled then
          -- typically hide happens at render() from tick(), but now tick() is
          -- no-op and won't render again to remove the osc, so do that manually.
-@@ -2975,3 +3024,13 @@
+@@ -2975,3 +3028,15 @@
  set_virt_mouse_area(0, 0, 0, 0, "input")
  set_virt_mouse_area(0, 0, 0, 0, "window-controls")
  set_virt_mouse_area(0, 0, 0, 0, "window-controls-title")
@@ -96,5 +100,7 @@
 +        msg.error("thumbfast-info: received json didn't produce a table with thumbnail information")
 +    else
 +        thumbfast = data
++        thumbfast.has_thumbnail = false
++        request_tick()
 +    end
 +end)

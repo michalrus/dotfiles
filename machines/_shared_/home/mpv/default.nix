@@ -90,6 +90,8 @@ in {
             else ''
               # Required by the patched `osc.lua` with `thumbfast` support:
               osc=no
+              # Match OSC tick rate to display refresh (uosc does this by default):
+              script-opts-append=osc-tick_delay_follow_display_fps=yes
             ''
           }
 
