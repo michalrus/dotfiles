@@ -46,19 +46,12 @@
     };
   };
 
-  # OpenGL
-  nixpkgs.config.packageOverrides = pkgs: {
-    intel-vaapi-driver = pkgs.intel-vaapi-driver.override {enableHybridCodec = true;};
-  };
+  # VA-API hardware video decoding (Intel iGPU)
+  environment.sessionVariables.LIBVA_DRIVER_NAME = "iHD";
   hardware.graphics = {
     enable = true;
-    extraPackages = with pkgs; [
-      intel-media-driver # LIBVA_DRIVER_NAME=iHD
-      intel-vaapi-driver # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
-      libvdpau-va-gl
-    ];
+    extraPackages = [pkgs.intel-media-driver];
   };
-  environment.sessionVariables.LIBVA_DRIVER_NAME = "iHD";
 
   swapDevices = [
     {device = "/dev/disk/by-uuid/5e5256ed-b8a7-48c3-b815-d85792d621d6";}
